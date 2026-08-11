@@ -1103,6 +1103,9 @@ After the main build system feels good:
 - Final boss
 - Unlockable weapons
 - Unlockable upgrade pool
+- Browser-local profile persistence
+- Export complete progress as an encoded text file or copyable save code
+- Import a save from a text file or pasted code with validation, preview, backup, and migration
 - Endless mode
 - More advanced statistics
 
@@ -1128,7 +1131,11 @@ npm run dev
 
 No backend is required.
 
-Save data can initially use browser-local storage.
+Save data can initially use browser-local storage. The complete persistent profile must also be portable as an encoded text save that can be downloaded/uploaded as a `.txt` file or copied/pasted as a save code.
+
+The portable save contains all persistent statistics, unlocks, progression, resources, settings, version metadata, and future persistent fields. It uses stable content IDs rather than themed display names. Import must decode, migrate, validate, preview, and back up the current profile before atomically replacing it; a failed or cancelled import must not alter current progress.
+
+The encoding is for portability, not secrecy or anti-cheat. Players may deliberately transfer or adjust progress/unlocks through exported data, while strict validation prevents malformed values from crashing or corrupting the game. See [`SAVE_DATA.md`](./SAVE_DATA.md) for the format, state boundary, safety rules, and verification plan.
 
 Future free hosting options can include:
 

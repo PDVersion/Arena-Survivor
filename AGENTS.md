@@ -9,6 +9,8 @@ Consult `build/PLAN.md` whenever product intent or game behaviour needs more det
 
 Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, rendering, or wiring any character, weapon, enemy/monster, skill, upgrade, pickup, shrine, curse, or other themed content.
 
+Consult `build/SAVE_DATA.md` before changing profile state, progression, unlocks, statistics, persistent settings, stable saved IDs, persistence adapters, migrations, or save import/export.
+
 Before changing code:
 
 - Confirm the active phase and do not pull later-phase scope forward without recording why.
