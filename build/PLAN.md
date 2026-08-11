@@ -1165,6 +1165,28 @@ Run Modifiers
 
 This makes it easier to add new content without rewriting the underlying game.
 
+## Theme and Archetype Modularity
+
+The initial fiction is knights and magic, but it must be treated as a replaceable content theme rather than embedded into the engine.
+
+Basic stats, formulas, and reusable mechanic contracts are theme-neutral. Characters, weapons, enemies/monsters, skills, upgrades, pickups, shrines, curses, names, descriptions, tuning, and presentation references belong to an active theme manifest.
+
+Core systems should use stable semantic archetype IDs such as:
+
+```text
+character.starter
+weapon.starter_projectile
+enemy.swarm_basic
+shrine.spawn_surge
+skill.on_kill_explosion
+```
+
+They should not use themed display names such as `Grunt`, `Magic Bolt`, or `Shrine of the Horde` as behavioural keys.
+
+The current knight-magic theme should have one root manifest, one centralized copy catalog for names/descriptions, focused category definition files, and theme-owned visual/audio tokens. A future theme can be added beside it and selected from one active-theme entry point without changing simulation systems.
+
+See [`THEME_ARCHETYPES.md`](./THEME_ARCHETYPES.md) for the required boundaries, source layout, validation, and safe retheme workflow.
+
 ---
 
 # Primary Design Principles

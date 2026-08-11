@@ -5,6 +5,7 @@ A browser-first arena survival game built around player-controlled swarm escalat
 ## Project documents
 
 - [V0.1 build plan](build/BUILD_PLAN.md) — implementation phases, verification gates, and commit boundaries.
+- [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 

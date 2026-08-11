@@ -134,9 +134,33 @@ Rendering code must not be the authority for combat state; later assets should b
 Revisit when:
 An art direction is approved or V0.2 feedback/audio work begins.
 
+### REC-005 — Fiction is an interchangeable theme pack
+
+- Status: Accepted
+- Date: 2026-08-11
+- Affects: All phases, every content category, UI, assets, testing, saves/telemetry
+- Blocks: None
+
+Context / observation:
+The current design reads as knights and magic, but the project may pivot to another theme. If current names and assumptions enter class names, scene logic, UI, tests, and asset paths, a later pivot would require a fragile repository-wide search and refactor.
+
+Decision / solution:
+Build the knights-and-magic fiction as the first theme pack from Phase 1. Core uses stable theme-neutral archetype IDs/contracts. A root theme manifest assembles category definitions; one copy catalog owns every player-facing name/description; theme tokens own presentation references; and one active-theme facade is the only production selection point. Generic actors and systems consume definitions and never branch on themed strings. A small test-only alternate manifest proves the boundary without adding a second production theme.
+
+Why:
+This isolates rename-only, presentation-only, per-category mechanical, and full-theme changes to increasingly narrow and predictable files while keeping the current theme intact.
+
+Future guardrail:
+Manifest validation checks IDs, copy, references, and values. Import-boundary tests prevent concrete-theme imports outside the selection layer. Rule tests assert stable IDs/outcomes, and current names appear only in theme validation/presentation tests. Persisted data uses stable IDs plus theme/schema versions.
+
+Revisit when:
+Phase 1 implementation reveals that the proposed manifest is too broad, the first real alternate theme is designed, or a mechanic cannot be expressed through reusable contracts without theme-specific system logic.
+
 ## Open questions to reconcile during implementation
 
 - The exact XP curve, upgrade magnitudes, Grunt spawn ramp, contact-damage cooldown, and five-minute balance are tuning assumptions, not settled design.
 - The practical live-enemy/projectile budget must be measured on representative desktop browsers. The design's 300+ target is aspirational and not a V0.1 release gate.
 - Phaser physics choice, pooling thresholds, and deterministic seeding details should be recorded after the foundation is exercised rather than guessed in advance.
 - Accessibility details beyond alternate movement keys—reduced motion, colour independence, remapping, and readable scaling—need an explicit later decision.
+- The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
+- The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.

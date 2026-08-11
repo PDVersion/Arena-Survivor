@@ -7,10 +7,13 @@ Every work session in this repository starts by reading, in order:
 
 Consult `build/PLAN.md` whenever product intent or game behaviour needs more detail. It is the product/design source; `build/BUILD_PLAN.md` is the implementation source.
 
+Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, rendering, or wiring any character, weapon, enemy/monster, skill, upgrade, pickup, shrine, curse, or other themed content.
+
 Before changing code:
 
 - Confirm the active phase and do not pull later-phase scope forward without recording why.
 - Check `RECONCILIATION.md` for an existing decision before making a new one.
+- Preserve the theme/archetype boundary: systems use stable IDs/contracts, while player-facing identity and themed definitions remain in the active theme pack.
 - Add or update a reconciliation entry when work reveals a reusable decision, pitfall, issue, workaround, performance limit, or invalid assumption.
 
 Before completing a phase:
