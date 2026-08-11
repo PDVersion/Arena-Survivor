@@ -109,7 +109,7 @@ Content definitions may compose reusable core effects such as projectile, contac
 4. Resolve the active theme through `active-theme.ts`; application code must not deep-import `themes/knight-magic`.
 5. Validate each manifest at startup/build time for unique IDs, missing copy, broken references, invalid stat values, and unsupported effect descriptors.
 6. Tests for game rules assert stable IDs and outcomes. Only theme validation/presentation tests assert current names.
-7. Save data and telemetry store stable IDs plus a theme/schema version, never display names.
+7. Save data and telemetry store stable IDs plus a theme/schema version, never display names. Portable save requirements and migrations are defined in [`SAVE_DATA.md`](./SAVE_DATA.md).
 8. A deferred content category gets a contract or registry hook only when useful; do not implement its gameplay early merely to fill the theme.
 
 ## Safe change workflows

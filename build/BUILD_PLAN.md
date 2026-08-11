@@ -26,7 +26,7 @@ Update this tracker in the corresponding phase commit. Add the commit hash after
 
 ## Resolved V0.1 scope
 
-The design document's V0.1 list does not mention shrines, while its First Milestone requires one. V0.1 therefore includes one minimal **Shrine of the Horde** so the first playable demonstrates the game's defining player-controlled difficulty spike. Other shrine types, Chaos progression, curses, overcrit, chain reactions, extra enemies, audio, and save data remain later work.
+The design document's V0.1 list does not mention shrines, while its First Milestone requires one. V0.1 therefore includes one minimal **Shrine of the Horde** so the first playable demonstrates the game's defining player-controlled difficulty spike. Other shrine types, Chaos progression, curses, overcrit, chain reactions, extra enemies, audio, and portable save import/export remain later work.
 
 The current fiction is a **knights-and-magic theme**. V0.1 builds it as the first interchangeable theme pack. Basic stats and reusable rules stay in core; characters, weapons, enemies, skills, upgrades, pickups, shrines, curses, names, tuning, and presentation references enter the game through stable archetype contracts and an active theme manifest.
 
@@ -50,6 +50,7 @@ V0.1 is complete when a player can:
 - `npm run dev`, `npm run build`, `npm test -- --run`, and `npm run test:e2e` are the standard commands.
 - Use simple generated geometry and placeholder effects in V0.1; external art and audio are not prerequisites.
 - Validate the active theme manifest during tests/build and fail clearly on duplicate IDs, missing copy, broken content references, invalid values, or unsupported effects.
+- Keep profile/progression data serializable and separate from Phaser runtime objects. Persisted references use stable IDs and explicit schema versions in preparation for the portable save system in [`SAVE_DATA.md`](./SAVE_DATA.md).
 - Expose a read-only, test-build-only telemetry seam (for example `window.__ARENA_TEST__`) so browser tests can assert player, enemy, run, and pause state without depending on pixels or timing guesses. It must not ship in production builds.
 
 ## Intended code shape
@@ -72,7 +73,7 @@ src/
     scenes/       Boot, run, and overlay/end-state coordination
     entities/     Generic configured actors: player, enemy, projectile, pickup, shrine
     systems/      Spawning, targeting, combat, XP, upgrades, run lifecycle
-    state/        Typed run state and statistics
+    state/        Typed run state, profile boundary, and statistics
     ui/           HUD and level-up choice UI
   test-support/   Browser telemetry/instrumentation, excluded from production
 tests/
@@ -81,6 +82,8 @@ tests/
 ```
 
 Core owns primitive stats, formulas, stable semantic IDs, and reusable effect contracts. The active theme owns content definitions, tuning, player-facing copy, and presentation references. Systems own rules. Scenes coordinate systems and rendering. UI resolves copy from the active theme, reads state, and emits explicit choices; it does not contain themed strings, combat, or progression rules.
+
+Run state and future persistent profile state are distinct. Neither contains Phaser/DOM instances, and all cross-content references use stable IDs. V0.1 does not implement persistence or import/export UI; it avoids state shapes that would make the planned text-save codec and migrations invasive later.
 
 ### Theme boundary
 
@@ -128,6 +131,7 @@ Deliver:
 - Add the large bounded arena, player body, eight-direction WASD/arrow movement, and normalized diagonal speed.
 - Follow the player with the camera while keeping the player inside arena boundaries.
 - Introduce typed, resettable run state with theme-neutral base stats from the design plan and a starter-character definition resolved from the active theme.
+- Separate ephemeral run state from the serializable profile/progression boundary; use stable IDs for content references and reserve explicit schema-version ownership for future persistence.
 - Start the five-minute timer and distinguish `playing`, `paused`, `dead`, and `complete` states.
 - Ensure pause/end state stops movement and simulation time cleanly.
 
@@ -261,4 +265,4 @@ The single V0.1 pull request is ready for review when:
 
 ## Explicitly deferred
 
-Runner, Tank, Broodmother, overcrit tiers, piercing momentum, explosions, fracture, bloodlust, chains, curses, non-Horde shrines, full Chaos scaling, elites, audio, damage breakdown, persistence, bosses, additional weapons, endless mode, a second production theme, and production deployment belong to later milestones. The theme contracts and boundary start in Phase 1; deferred themed content does not.
+Runner, Tank, Broodmother, overcrit tiers, piercing momentum, explosions, fracture, bloodlust, chains, curses, non-Horde shrines, full Chaos scaling, elites, audio, damage breakdown, persistence and portable save import/export, bosses, additional weapons, endless mode, a second production theme, and production deployment belong to later milestones. The theme contracts, stable IDs, and serializable state boundary start in V0.1; the deferred persistence adapters, codec, migrations, and UI do not.
