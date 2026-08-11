@@ -5,7 +5,7 @@ Read this file immediately after `build/BUILD_PLAN.md` before beginning any work
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.1**
-- Active phase: **Phase 1 — Project foundation and browser boot**
+- Active phase: **Phase 1 complete — Phase 2 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -177,6 +177,94 @@ V0.1 keeps profile data serializable and separate from runtime objects. Save fix
 
 Revisit when:
 V0.3 persistence implementation begins, active-run suspension enters scope, cloud sync is considered, or imported saves participate in competitive/online systems requiring trust rules.
+
+### REC-007 — Browser telemetry is test-mode-only and resize is viewport-anchored
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phase 1, browser testing, rendering, future scene telemetry
+- Blocks: None
+
+Context / observation:
+The first Chromium smoke test booted one canvas successfully but caught that a percentage-sized child inside the centred CSS grid retained its original 1280×720 intrinsic size after the viewport changed. Phase 1 also requires browser state assertions without shipping a writable test hook in production.
+
+Decision / solution:
+Anchor `#game-container` to the viewport with fixed insets so Phaser's RESIZE scale mode receives the actual viewport dimensions. Install the read-only `window.__ARENA_TEST__` facade only when Vite runs in `test` mode; scenes publish through an inert bridge in other modes, and production output contains no test global or alternate fixture.
+
+Why:
+Viewport anchoring keeps the canvas independent of its own intrinsic dimensions. A mode-gated facade gives Playwright deterministic state without pixel guesses while keeping the production surface free of test controls.
+
+Future guardrail:
+The boot smoke test asserts one canvas, clean console output, theme/scene telemetry, and a 900×600 resize. Production verification checks that `dist` does not contain `__ARENA_TEST__` or `alternate_test`.
+
+Revisit when:
+The game introduces camera zoom, parent-embedded layouts, production diagnostics, or telemetry beyond read-only snapshots.
+
+### REC-008 — Audit toolchain pins and refresh Playwright browsers together
+
+- Status: Resolved
+- Date: 2026-08-12
+- Affects: Phase 1, dependency maintenance, CI, browser tests
+- Blocks: None
+
+Context / observation:
+The first exact development-tool pins installed successfully but `npm audit` reported seven advisories, including a critical Vitest advisory and high-severity Vite and Playwright advisories. Advancing Playwright then made the previously downloaded Chromium build obsolete; the smoke test failed clearly because its new expected browser executable was absent.
+
+Decision / solution:
+Pin the patched releases recommended by the advisory data: Vite `6.4.3`, Vitest `3.2.7`, Playwright `1.62.1`, and ESLint packages `9.39.5`. Refresh `package-lock.json` and run `npx playwright install chromium` after changing Playwright. The resulting full install audit reported zero known vulnerabilities, and all Phase 1 gates passed again.
+
+Why:
+Exact pins preserve reproducible installs, while auditing before phase completion avoids establishing a vulnerable baseline. Playwright browser binaries are versioned external test assets, so a package upgrade and browser download must be treated as one maintenance operation even though only the package and lockfile belong in Git.
+
+Future guardrail:
+After dependency changes, run `npm audit`, the phase verification suite, and—whenever Playwright changes—`npx playwright install chromium` before the browser tests. CI continues to install its matching browser on every clean runner.
+
+Revisit when:
+A dependency advisory requires a major-version upgrade, Node support changes, or browser downloads become centrally cached in CI.
+
+### REC-009 — Theme contracts grow with scheduled gameplay phases
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phases 1–6, content manifests, theme validation
+- Blocks: None
+
+Context / observation:
+The intended repository shape lists contracts and category files for the complete game, but Phase 1 explicitly asks for only the V0.1 hooks needed initially. Creating tuning or effect descriptors before their owning systems exist would settle open balance and taxonomy questions without executable tests.
+
+Decision / solution:
+Phase 1 defines all stable V0.1 content IDs and centralized copy so names cannot leak into systems. It implements and validates only the starter-character behavioural definition needed by the boot scene. Add weapon/enemy definitions in Phase 3, upgrades in Phase 4, and shrine definitions in Phase 6 alongside their rules and deterministic tests.
+
+Why:
+This proves the active-theme boundary now while keeping tuning, reusable effects, and validation rules close to the phase that can exercise them. Missing future category directories are intentional, not unfinished Phase 1 work.
+
+Future guardrail:
+Each content-bearing phase extends the generic contracts, concrete manifest, alternate fixture, and validation tests together. Systems continue to import only the active-theme facade and branch only on stable capabilities/IDs.
+
+Revisit when:
+A scheduled phase cannot express its mechanic without a broader shared effect contract, or a second production theme is introduced.
+
+### REC-010 — Phaser is the current production bundle baseline
+
+- Status: Provisional
+- Date: 2026-08-12
+- Affects: Build output, loading performance, future deployment
+- Blocks: None
+
+Context / observation:
+The final Phase 1 production build succeeds but Vite warns that the main minified JavaScript chunk is larger than 500 kB. The measured output is approximately 1,488 kB minified and 341 kB gzip; Phaser is the dominant dependency. Local Chromium boot and resize tests pass.
+
+Decision / solution:
+Accept this as the Phase 1 baseline and do not add speculative chunk splitting before gameplay exists. Track compressed size and real startup behavior as features are added, and separate optional/heavy systems only when measurement shows a useful boundary.
+
+Why:
+The warning is a performance signal rather than a correctness failure. Phaser is needed at initial game boot, so arbitrary splitting may add complexity without reducing time to first playable frame.
+
+Future guardrail:
+Keep production build-size output visible in phase verification. Avoid adding large asset blobs or unrelated libraries to the entry chunk without recording their cost.
+
+Revisit when:
+Compressed entry size grows materially beyond this baseline, deployment performance is measured on representative connections, or optional screens/assets provide a natural lazy-load boundary.
 
 ## Open questions to reconcile during implementation
 

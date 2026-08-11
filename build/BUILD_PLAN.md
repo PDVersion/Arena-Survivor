@@ -17,12 +17,24 @@ This is the implementation plan for the product vision in [`PLAN.md`](./PLAN.md)
 
 Update this tracker in the corresponding phase commit. Add the commit hash after the commit exists in the next phase's status update or in the pull request description.
 
-- [ ] Phase 1 — Project foundation and browser boot
+- [x] Phase 1 — Project foundation and browser boot
 - [ ] Phase 2 — Arena, player movement, and run state
 - [ ] Phase 3 — Grunt swarm and Needle combat
 - [ ] Phase 4 — XP, levels, and data-driven upgrades
 - [ ] Phase 5 — HUD, run completion, and restart loop
 - [ ] Phase 6 — Horde shrine and V0.1 hardening
+
+### Phase 1 outcome — 2026-08-12
+
+Phase 1 is implemented and manually accepted. Type-checking, focused content/architecture tests, lint, the production build, the Chromium boot/resize smoke test, and the dependency audit pass. Manual verification confirmed one canvas loads and resizes without console errors.
+
+Implementation notes relative to the original plan:
+
+- The Phase 1 manifest establishes every stable V0.1 ID and its centralized presentation copy, but only the starter-character behavioural definition is active. Weapon, enemy, pickup, shrine, upgrade-effect, stats, entity, system, state, and UI implementations remain in their scheduled phases rather than being speculative placeholders.
+- The browser telemetry facade is installed only in Vite `test` mode. Production scenes call an inert bridge, allowing the same scene code to run without shipping `window.__ARENA_TEST__` or the alternate theme fixture.
+- The responsive canvas container is viewport-anchored after the first browser smoke test exposed intrinsic canvas sizing inside the original centred grid layout.
+- Initial toolchain pins were advanced to patched releases after `npm audit` found advisories. The committed lockfile reports zero known vulnerabilities as of completion.
+- Phaser currently produces a non-blocking large-chunk build warning. The measured bundle and the point at which it should be revisited are recorded in `RECONCILIATION.md`; Phase 1 load and browser checks pass.
 
 ## Resolved V0.1 scope
 
