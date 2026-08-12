@@ -30,6 +30,9 @@ import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
 import { claimExperiencePickup } from "../systems/xp";
+import { Hud } from "../ui/hud";
+import { RunEndOverlay } from "../ui/run-end-overlay";
+import { selectHudValues } from "../state/statistics";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
@@ -37,6 +40,14 @@ const GRID_SIZE = 64;
 const SPAWN_INTERVAL_MS = 400;
 const SPAWN_RADIUS = 360;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
+let runGenerationSequence = 0;
+
+function testRunDurationMs(): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const configured = Number(new URLSearchParams(window.location.search).get("runDurationMs"));
+  return Number.isFinite(configured) && configured > 0 ? configured : undefined;
+}
 
 interface MovementKeys {
   readonly up: Phaser.Input.Keyboard.Key;
@@ -62,8 +73,10 @@ export class RunScene extends Phaser.Scene {
   private weaponDefinition?: WeaponDefinition;
   private pickupDefinition?: PickupDefinition;
   private levelUpUi?: LevelUpChoiceUi;
+  private hud?: Hud;
+  private runEndOverlay?: RunEndOverlay;
   private currentChoices: readonly UpgradeDefinition[] = [];
-  private readonly upgradeRandom = createSeededRandom(0xa7e4_0001);
+  private upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
   private nextSpawnAtMs = 0;
   private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
@@ -78,12 +91,20 @@ export class RunScene extends Phaser.Scene {
   private pickupsDropped = 0;
   private pickupsCollected = 0;
   private claimedPickupIds: ReadonlySet<string> = new Set();
+  private focusPaused = false;
+  private terminalShown = false;
+  private runGeneration = 0;
+  private hitFlashes = 0;
+  private trailsEmitted = 0;
+  private pickupCues = 0;
 
   constructor() {
     super("run");
   }
 
   create(): void {
+    this.resetTransientRuntime();
+    this.runGeneration = ++runGenerationSequence;
     const keyboard = this.input.keyboard;
     if (!keyboard) throw new Error("Keyboard input is unavailable");
 
@@ -118,6 +139,7 @@ export class RunScene extends Phaser.Scene {
       themeId: activeTheme.id,
       characterId: selectedCharacter.id,
       baseStats: selectedCharacter.baseStats,
+      durationMs: testRunDurationMs(),
     });
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
@@ -157,18 +179,29 @@ export class RunScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     }) as MovementKeys;
     this.pauseKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    window.addEventListener("keydown", this.handleRestartKey);
     this.choiceKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
     ];
     this.levelUpUi = new LevelUpChoiceUi(this, activeTheme);
+    this.hud = new Hud(this, activeTheme);
+    this.runEndOverlay = new RunEndOverlay(this, activeTheme);
 
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
+    this.game.events.on(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
+    this.game.events.on(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.scale.off(Phaser.Scale.Events.RESIZE, this.handleResize, this);
-      this.physics.world.resume();
+      this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
+      this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
+      window.removeEventListener("keydown", this.handleRestartKey);
+      this.hud?.destroy();
+      this.levelUpUi?.hide();
+      this.runEndOverlay?.hide();
     });
+    this.hud.update(this.runState);
     this.publishTelemetry();
   }
 
@@ -179,6 +212,7 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
 
     this.runState = advanceRunState(this.runState, delta);
+    if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
       this.player.move(this.readMovementInput(), this.runState.player.stats.moveSpeed);
       this.updateEnemies();
@@ -192,7 +226,50 @@ export class RunScene extends Phaser.Scene {
       if (this.runState.status === "complete") this.physics.world.pause();
     }
 
+    this.hud?.update(this.runState);
     this.publishTelemetry();
+  }
+
+  private resetTransientRuntime(): void {
+    this.player = undefined;
+    this.runState = undefined;
+    this.cursors = undefined;
+    this.wasd = undefined;
+    this.pauseKey = undefined;
+    this.choiceKeys = [];
+    this.enemyGroup = undefined;
+    this.projectileGroup = undefined;
+    this.pickupGroup = undefined;
+    this.enemies = new Set();
+    this.projectiles = new Set();
+    this.pickups = new Set();
+    this.enemyDefinition = undefined;
+    this.weaponDefinition = undefined;
+    this.pickupDefinition = undefined;
+    this.levelUpUi = undefined;
+    this.hud = undefined;
+    this.runEndOverlay = undefined;
+    this.currentChoices = [];
+    this.upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
+    this.nextSpawnAtMs = 0;
+    this.nextFireAtMs = 0;
+    this.lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
+    this.invulnerableUntilMs = 0;
+    this.spawnSequence = 0;
+    this.enemySequence = 0;
+    this.projectileSequence = 0;
+    this.shotsFired = 0;
+    this.criticalShots = 0;
+    this.contactHits = 0;
+    this.pickupSequence = 0;
+    this.pickupsDropped = 0;
+    this.pickupsCollected = 0;
+    this.claimedPickupIds = new Set();
+    this.focusPaused = false;
+    this.terminalShown = false;
+    this.hitFlashes = 0;
+    this.trailsEmitted = 0;
+    this.pickupCues = 0;
   }
 
   private updateEnemies(): void {
@@ -206,7 +283,11 @@ export class RunScene extends Phaser.Scene {
   private updateProjectiles(): void {
     if (!this.runState) return;
     for (const projectile of this.projectiles) {
-      if (projectile.active && projectile.hasExpired(this.runState.elapsedMs)) projectile.destroy();
+      if (projectile.active && projectile.hasExpired(this.runState.elapsedMs)) {
+        projectile.destroy();
+      } else if (projectile.emitTrail(this.runState.elapsedMs)) {
+        this.trailsEmitted += 1;
+      }
     }
   }
 
@@ -332,6 +413,7 @@ export class RunScene extends Phaser.Scene {
   private handleProjectileEnemyOverlap(projectile: ProjectileActor, enemy: EnemyActor): void {
     if (!this.runState || !projectile.canHit(enemy.targetId) || enemy.defeated) return;
     const result = enemy.takeDamage(projectile.damage);
+    if (result.applied) this.hitFlashes += 1;
     projectile.registerHit(enemy.targetId);
     if (!result.killed) return;
     this.runState = recordKill(this.runState);
@@ -366,7 +448,8 @@ export class RunScene extends Phaser.Scene {
     this.claimedPickupIds = claim.claimedPickupIds;
     this.runState = awardRunExperience(this.runState, claim.awardedXp);
     this.pickupsCollected += 1;
-    pickup.destroy();
+    pickup.playCollectCue();
+    this.pickupCues += 1;
     if (this.runState.status === "level_up") this.beginLevelUpChoice();
   }
 
@@ -418,11 +501,54 @@ export class RunScene extends Phaser.Scene {
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
     this.player.setAlpha(0.35);
+    this.player.flashDamage(activeTheme.tokens.palette.critical);
+    this.hitFlashes += 1;
     if (this.runState.status === "dead") {
-      this.player.stop();
-      for (const projectile of this.projectiles) projectile.destroy();
-      this.physics.world.pause();
+      this.enterTerminalState();
     }
+  }
+
+  private enterTerminalState(): void {
+    if (!this.runState || this.terminalShown) return;
+    if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
+    this.terminalShown = true;
+    this.player?.stop();
+    for (const projectile of this.projectiles) projectile.destroy();
+    this.physics.world.pause();
+    this.runEndOverlay?.show(this.runState.status, () => this.restartRun());
+  }
+
+  private restartRun(): void {
+    if (!this.runState || (this.runState.status !== "dead" && this.runState.status !== "complete")) {
+      return;
+    }
+    this.physics.world.resume();
+    const sceneKey = this.scene.key;
+    this.scene.manager.stop(sceneKey);
+    this.scene.manager.start(sceneKey);
+  }
+
+  private readonly handleRestartKey = (event: KeyboardEvent): void => {
+    if (event.code === "KeyR" || event.code === "Enter") this.restartRun();
+  };
+
+  private handleGameBlur(): void {
+    if (!this.runState || this.runState.status !== "playing") return;
+    this.runState = setRunStatus(this.runState, "paused");
+    this.player?.stop();
+    this.physics.world.pause();
+    this.focusPaused = true;
+    this.hud?.update(this.runState);
+    this.publishTelemetry();
+  }
+
+  private handleGameFocus(): void {
+    if (!this.runState || !this.focusPaused || this.runState.status !== "paused") return;
+    this.focusPaused = false;
+    this.runState = setRunStatus(this.runState, "playing");
+    this.physics.world.resume();
+    this.hud?.update(this.runState);
+    this.publishTelemetry();
   }
 
   private drawArena(): void {
@@ -485,8 +611,12 @@ export class RunScene extends Phaser.Scene {
 
   private handleResize(gameSize: Phaser.Structs.Size): void {
     this.cameras.resize(gameSize.width, gameSize.height);
+    this.hud?.resize();
     if (this.runState?.status === "level_up" && this.currentChoices.length === 3) {
       this.levelUpUi?.show(this.currentChoices, (choice) => this.chooseUpgrade(choice));
+    }
+    if (this.runState?.status === "dead" || this.runState?.status === "complete") {
+      this.runEndOverlay?.resize(() => this.restartRun());
     }
     this.publishTelemetry();
   }
@@ -494,6 +624,7 @@ export class RunScene extends Phaser.Scene {
   private publishTelemetry(): void {
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
+    const hud = this.runState ? selectHudValues(this.runState) : undefined;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -564,6 +695,20 @@ export class RunScene extends Phaser.Scene {
         selectedUpgradeIds: this.runState?.selectedUpgradeIds ?? [],
         pierceBonus: this.runState?.weaponModifiers.pierce ?? 0,
         projectileCountBonus: this.runState?.weaponModifiers.projectileCount ?? 0,
+      },
+      hud,
+      lifecycle: {
+        runGeneration: this.runGeneration,
+        terminalOverlay:
+          this.runState?.status === "dead" || this.runState?.status === "complete"
+            ? this.runState.status
+            : null,
+        focusPaused: this.focusPaused,
+      },
+      feedback: {
+        hitFlashes: this.hitFlashes,
+        trailsEmitted: this.trailsEmitted,
+        pickupCues: this.pickupCues,
       },
     });
   }

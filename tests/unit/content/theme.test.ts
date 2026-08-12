@@ -24,6 +24,24 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
     expect(knightMagicTheme.weapons).toEqual(alternateTheme.weapons);
     expect(knightMagicTheme.enemies).toEqual(alternateTheme.enemies);
+    expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);
+  });
+
+  it("requires complete theme-owned HUD and ending vocabulary", () => {
+    const invalid = {
+      ...alternateTheme,
+      copy: {
+        ...alternateTheme.copy,
+        vocabulary: { ...alternateTheme.copy.vocabulary, health: "", completeTitle: "" },
+      },
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(
+      expect.arrayContaining([
+        "vocabulary.health is required",
+        "vocabulary.completeTitle is required",
+      ]),
+    );
   });
 
   it("reports missing copy, duplicate IDs, bad values, and broken tokens", () => {

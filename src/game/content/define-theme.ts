@@ -4,6 +4,20 @@ import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats
 import { upgradeStatTargets } from "../core/archetypes/effects";
 
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
+const vocabularyKeys = [
+  "health",
+  "experience",
+  "level",
+  "time",
+  "kills",
+  "enemies",
+  "paused",
+  "deathTitle",
+  "deathMessage",
+  "completeTitle",
+  "completeMessage",
+  "restartAction",
+] as const;
 
 export class ThemeValidationError extends Error {
   readonly issues: readonly string[];
@@ -25,6 +39,13 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!theme.copy.bootFailure.trim()) issues.push("boot failure copy is required");
   if (!theme.copy.movementHint.trim()) issues.push("movement hint copy is required");
   if (!theme.copy.levelUpTitle.trim()) issues.push("level-up title copy is required");
+  if (!theme.copy.vocabulary) {
+    issues.push("HUD vocabulary is required");
+  } else {
+    for (const key of vocabularyKeys) {
+      if (!theme.copy.vocabulary[key]?.trim()) issues.push(`vocabulary.${key} is required`);
+    }
+  }
 
   for (const id of v01ContentIds) {
     const copy = theme.copy.content[id];

@@ -7,6 +7,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly definition: EnemyDefinition;
   health: number;
   defeated = false;
+  private readonly baseColour: number;
 
   constructor(
     scene: Phaser.Scene,
@@ -23,9 +24,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.targetId = targetId;
     this.definition = definition;
     this.health = definition.maxHealth;
+    this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.radius);
+    this.setDepth(20);
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -47,6 +50,12 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     const result = applyDamage(this.health, damage);
     this.health = result.health;
     if (result.killed) this.defeated = true;
+    if (result.applied && !result.killed) {
+      this.setFillStyle(0xffffff);
+      this.scene.time.delayedCall(70, () => {
+        if (this.active) this.setFillStyle(this.baseColour);
+      });
+    }
     return result;
   }
 }

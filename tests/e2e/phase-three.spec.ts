@@ -82,4 +82,5 @@ test("contact damage is visible, throttled, and can cause death", async ({ page 
   expect(dead?.player?.velocityY).toBe(0);
   expect(dead?.combat?.projectiles).toBe(0);
   expect(dead?.combat?.projectileSample).toBeNull();
+  expect(dead?.lifecycle?.terminalOverlay).toBe("dead");
 });

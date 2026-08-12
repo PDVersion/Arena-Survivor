@@ -4,6 +4,7 @@ import { resolveMovement, type DirectionalInput } from "../systems/player-moveme
 
 export class PlayerActor extends Phaser.GameObjects.Rectangle {
   readonly definition: CharacterDefinition;
+  private readonly baseColour: number;
 
   constructor(
     scene: Phaser.Scene,
@@ -18,12 +19,14 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
     ).color;
     super(scene, x, y, diameter, diameter, colour);
     this.definition = definition;
+    this.baseColour = colour;
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
     if (tokens.playerShape === "diamond") this.setRotation(Math.PI / 4);
 
     this.arcadeBody.setCollideWorldBounds(true);
+    this.setDepth(30);
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -37,5 +40,12 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
 
   stop(): void {
     this.arcadeBody.setVelocity(0, 0);
+  }
+
+  flashDamage(colour: string): void {
+    this.setFillStyle(Phaser.Display.Color.HexStringToColor(colour).color);
+    this.scene.time.delayedCall(90, () => {
+      if (this.active) this.setFillStyle(this.baseColour);
+    });
   }
 }
