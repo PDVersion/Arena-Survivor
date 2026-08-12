@@ -33,6 +33,7 @@ export type WeaponId = Values<typeof archetypeIds.weapon>;
 export type EnemyId = Values<typeof archetypeIds.enemy>;
 export type PickupId = Values<typeof archetypeIds.pickup>;
 export type UpgradeId = Values<typeof archetypeIds.upgrade>;
+export type ShrineId = Values<typeof archetypeIds.shrine>;
 export type ContentId =
   | Values<typeof archetypeIds.character>
   | Values<typeof archetypeIds.weapon>

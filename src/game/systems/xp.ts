@@ -36,7 +36,7 @@ export function awardExperience(
     throw new Error("XP multiplier must be greater than zero");
   }
 
-  const awardedXp = Math.floor(amount * multiplier);
+  const awardedXp = amount * multiplier;
   let xp = state.xp + awardedXp;
   let level = state.level;
   let levelsGained = 0;

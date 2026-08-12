@@ -5,7 +5,7 @@ Read this file immediately after `build/BUILD_PLAN.md` before beginning any work
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.1**
-- Active phase: **Phase 5 complete — Phase 6 not started**
+- Active phase: **Phase 6 complete — V0.1 ready for review**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -538,10 +538,32 @@ Browser tests select a level-up card and restart through visible canvas coordina
 Revisit when:
 UI moves to DOM/accessibility overlays, cameras are split, gamepad focus navigation is added, or a shared screen-space button component replaces these overlays.
 
+### REC-023 — Shrine surges retain due work under the shared enemy cap
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phase 6 shrine scheduling, XP attribution, entity load, restart
+- Blocks: None
+
+Context / observation:
+The Horde shrine must schedule exactly 100 enemies over 20 seconds while the ambient swarm continues, but the established V0.1 arena destroys high-churn actors at an 80-live-enemy cap. A repeating wall-clock timer could lose spawns while full, outlive a restarted run, or diverge when level-up and pause freeze simulation.
+
+Decision / solution:
+Derive cumulative due slots from elapsed simulation time, retain due-but-unspawned work as back-pressure, and give shrine work first access to available capacity before ambient spawning each frame. Tag each shrine enemy with stable source `shrine.spawn_surge` and reward multiplier `1.5`; propagate that source into its XP pickup. Preserve fractional XP rather than rounding the bonus away. Reconstruct all scheduler and attribution state on restart.
+
+Why:
+Simulation-time derivation naturally respects pause and level-up freezes, exact cumulative scheduling avoids timer drift, and retained backlog guarantees all 100 slots without exceeding the measured V0.1 cap. Explicit data provenance keeps reward logic generic and makes shrine-only XP observable through collection.
+
+Future guardrail:
+Unit tests require zero immediate spawn, the 100th due slot at exactly 20 seconds, backlog retention, and no second activation. Browser tests require one feedback event after repeated inputs, 100 scheduled slots, tagged +50% XP collection, cap compliance, and clean restart during a live surge.
+
+Revisit when:
+Multiple simultaneous shrines, distinct enemy compositions, pooling, save/resume of active runs, multiplier stacking, or a higher measured live-entity budget enters scope.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
-- The practical live-enemy/projectile cap above the current 80/64 baseline and whether Phase 6 requires pooling must be measured on representative desktop browsers; deterministic runtime seeding remains unsettled.
+- V0.1 shrine load passes with capped destruction at the current 80/64 enemy/projectile baseline, so Phase 6 does not require pooling. The safe higher cap and production randomness policy remain unsettled.
 - Accessibility details beyond alternate movement keys—reduced motion, colour independence, remapping, and readable scaling—need an explicit later decision.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
 - The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.

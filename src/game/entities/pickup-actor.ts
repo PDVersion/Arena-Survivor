@@ -1,10 +1,12 @@
 import Phaser from "phaser";
 import type { PickupDefinition, ThemeTokens } from "../core/archetypes/contracts";
+import type { EnemySpawnSource } from "./enemy-actor";
 
 export class PickupActor extends Phaser.GameObjects.Arc {
   readonly pickupId: string;
   readonly definition: PickupDefinition;
   readonly xpValue: number;
+  readonly rewardSource: EnemySpawnSource;
   private collected = false;
 
   constructor(
@@ -15,6 +17,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     definition: PickupDefinition,
     tokens: ThemeTokens,
     xpValue: number,
+    rewardSource: EnemySpawnSource = "ambient",
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -23,6 +26,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     this.pickupId = pickupId;
     this.definition = definition;
     this.xpValue = xpValue;
+    this.rewardSource = rewardSource;
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.radius);

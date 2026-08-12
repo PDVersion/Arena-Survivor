@@ -17,6 +17,8 @@ describe("theme manifests", () => {
   it("changes presentation without changing the stable starter role", () => {
     const current = knightMagicTheme.copy.content[archetypeIds.character.starter];
     const alternate = alternateTheme.copy.content[archetypeIds.character.starter];
+    const currentShrine = knightMagicTheme.copy.content[archetypeIds.shrine.spawnSurge];
+    const alternateShrine = alternateTheme.copy.content[archetypeIds.shrine.spawnSurge];
 
     expect(current.name).not.toBe(alternate.name);
     expect(knightMagicTheme.tokens.palette.player).not.toBe(alternateTheme.tokens.palette.player);
@@ -24,7 +26,9 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
     expect(knightMagicTheme.weapons).toEqual(alternateTheme.weapons);
     expect(knightMagicTheme.enemies).toEqual(alternateTheme.enemies);
+    expect(knightMagicTheme.shrines).toEqual(alternateTheme.shrines);
     expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);
+    expect(currentShrine.name).not.toBe(alternateShrine.name);
   });
 
   it("requires complete theme-owned HUD and ending vocabulary", () => {
@@ -105,6 +109,7 @@ describe("theme manifests", () => {
       enemies: undefined,
       pickups: undefined,
       upgrades: undefined,
+      shrines: undefined,
     } as unknown as ThemeManifest;
 
     expect(validateTheme(invalid)).toEqual(
@@ -117,6 +122,8 @@ describe("theme manifests", () => {
         `missing required pickup: ${archetypeIds.pickup.experience}`,
         "upgrades registry is required",
         `missing required upgrade: ${archetypeIds.upgrade.damage}`,
+        "shrines registry is required",
+        `missing required shrine: ${archetypeIds.shrine.spawnSurge}`,
       ]),
     );
   });
@@ -143,6 +150,36 @@ describe("theme manifests", () => {
         `${archetypeIds.pickup.experience} radius must be greater than zero`,
         `duplicate upgrade id: ${archetypeIds.upgrade.damage}`,
         `${archetypeIds.upgrade.damage} has unsupported effect kind: unsupported`,
+      ]),
+    );
+  });
+
+  it("reports duplicate and invalid shrine definitions", () => {
+    const shrine = alternateTheme.shrines[0];
+    if (!shrine) throw new Error("Missing alternate shrine fixture");
+    const invalid = {
+      ...alternateTheme,
+      shrines: [
+        shrine,
+        {
+          ...shrine,
+          interactionRadius: 0,
+          spawnCount: 0,
+          spawnDurationMs: 0,
+          rewardMultiplier: 1,
+          presentationToken: "missing",
+        },
+      ],
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(
+      expect.arrayContaining([
+        `duplicate shrine id: ${archetypeIds.shrine.spawnSurge}`,
+        `${archetypeIds.shrine.spawnSurge} interactionRadius must exceed its radius`,
+        `${archetypeIds.shrine.spawnSurge} spawnCount must be a positive integer`,
+        `${archetypeIds.shrine.spawnSurge} spawnDurationMs must be greater than zero`,
+        `${archetypeIds.shrine.spawnSurge} rewardMultiplier must be greater than one`,
+        `${archetypeIds.shrine.spawnSurge} references missing presentation token: missing`,
       ]),
     );
   });

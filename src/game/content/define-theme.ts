@@ -17,6 +17,8 @@ const vocabularyKeys = [
   "completeTitle",
   "completeMessage",
   "restartAction",
+  "shrinePrompt",
+  "surgeActive",
 ] as const;
 
 export class ThemeValidationError extends Error {
@@ -215,6 +217,35 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   for (const requiredId of Object.values(archetypeIds.upgrade)) {
     if (!upgradeIds.has(requiredId)) issues.push(`missing required upgrade: ${requiredId}`);
+  }
+
+  const shrineIds = new Set<string>();
+  const shrines = Array.isArray(theme.shrines) ? theme.shrines : [];
+  if (!Array.isArray(theme.shrines)) issues.push("shrines registry is required");
+  for (const shrine of shrines) {
+    if (shrineIds.has(shrine.id)) issues.push(`duplicate shrine id: ${shrine.id}`);
+    shrineIds.add(shrine.id);
+    if (!Number.isFinite(shrine.radius) || shrine.radius <= 0) {
+      issues.push(`${shrine.id} radius must be greater than zero`);
+    }
+    if (!Number.isFinite(shrine.interactionRadius) || shrine.interactionRadius <= shrine.radius) {
+      issues.push(`${shrine.id} interactionRadius must exceed its radius`);
+    }
+    if (!Number.isInteger(shrine.spawnCount) || shrine.spawnCount < 1) {
+      issues.push(`${shrine.id} spawnCount must be a positive integer`);
+    }
+    if (!Number.isFinite(shrine.spawnDurationMs) || shrine.spawnDurationMs <= 0) {
+      issues.push(`${shrine.id} spawnDurationMs must be greater than zero`);
+    }
+    if (!Number.isFinite(shrine.rewardMultiplier) || shrine.rewardMultiplier <= 1) {
+      issues.push(`${shrine.id} rewardMultiplier must be greater than one`);
+    }
+    if (!(shrine.presentationToken in theme.tokens.palette)) {
+      issues.push(`${shrine.id} references missing presentation token: ${shrine.presentationToken}`);
+    }
+  }
+  if (!shrineIds.has(archetypeIds.shrine.spawnSurge)) {
+    issues.push(`missing required shrine: ${archetypeIds.shrine.spawnSurge}`);
   }
 
   return issues;

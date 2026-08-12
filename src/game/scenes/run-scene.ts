@@ -4,6 +4,7 @@ import { archetypeIds } from "../core/archetypes/ids";
 import type {
   EnemyDefinition,
   PickupDefinition,
+  ShrineDefinition,
   UpgradeDefinition,
   WeaponDefinition,
 } from "../core/archetypes/contracts";
@@ -11,6 +12,8 @@ import { EnemyActor } from "../entities/enemy-actor";
 import { PickupActor } from "../entities/pickup-actor";
 import { PlayerActor } from "../entities/player-actor";
 import { ProjectileActor } from "../entities/projectile-actor";
+import { ShrineActor } from "../entities/shrine-actor";
+import type { EnemySpawnSource } from "../entities/enemy-actor";
 import { createInitialProfile } from "../state/profile-state";
 import {
   advanceRunState,
@@ -33,6 +36,12 @@ import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
 import { selectHudValues } from "../state/statistics";
+import {
+  activateShrineSurge,
+  createShrineSurgeState,
+  updateShrineSurge,
+  type ShrineSurgeState,
+} from "../systems/shrine-surge";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
@@ -49,6 +58,12 @@ function testRunDurationMs(): number | undefined {
   return Number.isFinite(configured) && configured > 0 ? configured : undefined;
 }
 
+function testSurgeDurationMs(): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const configured = Number(new URLSearchParams(window.location.search).get("surgeDurationMs"));
+  return Number.isFinite(configured) && configured > 0 ? configured : undefined;
+}
+
 interface MovementKeys {
   readonly up: Phaser.Input.Keyboard.Key;
   readonly down: Phaser.Input.Keyboard.Key;
@@ -62,6 +77,7 @@ export class RunScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private wasd?: MovementKeys;
   private pauseKey?: Phaser.Input.Keyboard.Key;
+  private interactKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private choiceKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private enemyGroup?: Phaser.Physics.Arcade.Group;
   private projectileGroup?: Phaser.Physics.Arcade.Group;
@@ -72,6 +88,9 @@ export class RunScene extends Phaser.Scene {
   private enemyDefinition?: EnemyDefinition;
   private weaponDefinition?: WeaponDefinition;
   private pickupDefinition?: PickupDefinition;
+  private shrineDefinition?: ShrineDefinition;
+  private shrine?: ShrineActor;
+  private surgeState: ShrineSurgeState = createShrineSurgeState();
   private levelUpUi?: LevelUpChoiceUi;
   private hud?: Hud;
   private runEndOverlay?: RunEndOverlay;
@@ -97,6 +116,13 @@ export class RunScene extends Phaser.Scene {
   private hitFlashes = 0;
   private trailsEmitted = 0;
   private pickupCues = 0;
+  private shrineFeedback = 0;
+  private shrineEnemiesSpawned = 0;
+  private shrineEnemiesDefeated = 0;
+  private ambientXpDropped = 0;
+  private shrineXpDropped = 0;
+  private ambientXpCollected = 0;
+  private shrineXpCollected = 0;
 
   constructor() {
     super("run");
@@ -131,7 +157,18 @@ export class RunScene extends Phaser.Scene {
     this.pickupDefinition = activeTheme.pickups.find(
       (pickup) => pickup.id === archetypeIds.pickup.experience,
     );
-    if (!this.enemyDefinition || !this.weaponDefinition || !this.pickupDefinition) {
+    const themedShrine = activeTheme.shrines.find(
+      (shrine) => shrine.id === archetypeIds.shrine.spawnSurge,
+    );
+    this.shrineDefinition = themedShrine
+      ? { ...themedShrine, spawnDurationMs: testSurgeDurationMs() ?? themedShrine.spawnDurationMs }
+      : undefined;
+    if (
+      !this.enemyDefinition ||
+      !this.weaponDefinition ||
+      !this.pickupDefinition ||
+      !this.shrineDefinition
+    ) {
       throw new Error("The active theme is missing required run content");
     }
 
@@ -153,6 +190,15 @@ export class RunScene extends Phaser.Scene {
       ARENA_SIZE.height / 2,
       selectedCharacter,
       activeTheme.tokens,
+    );
+    this.shrine = new ShrineActor(
+      this,
+      ARENA_SIZE.width / 2 + 96,
+      ARENA_SIZE.height / 2,
+      this.shrineDefinition,
+      activeTheme.tokens,
+      activeTheme.copy.content[this.shrineDefinition.id].name,
+      activeTheme.copy.vocabulary.shrinePrompt,
     );
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
 
@@ -179,6 +225,10 @@ export class RunScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     }) as MovementKeys;
     this.pauseKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.interactKeys = [
+      keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
+      keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
+    ];
     window.addEventListener("keydown", this.handleRestartKey);
     this.choiceKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
@@ -218,6 +268,8 @@ export class RunScene extends Phaser.Scene {
       this.updateEnemies();
       this.updateProjectiles();
       this.updatePickups();
+      this.updateShrine();
+      this.updateSurge();
       this.spawnIfReady();
       this.fireIfReady();
       if (this.runState.elapsedMs >= this.invulnerableUntilMs) this.player.setAlpha(1);
@@ -236,6 +288,7 @@ export class RunScene extends Phaser.Scene {
     this.cursors = undefined;
     this.wasd = undefined;
     this.pauseKey = undefined;
+    this.interactKeys = [];
     this.choiceKeys = [];
     this.enemyGroup = undefined;
     this.projectileGroup = undefined;
@@ -246,6 +299,9 @@ export class RunScene extends Phaser.Scene {
     this.enemyDefinition = undefined;
     this.weaponDefinition = undefined;
     this.pickupDefinition = undefined;
+    this.shrineDefinition = undefined;
+    this.shrine = undefined;
+    this.surgeState = createShrineSurgeState();
     this.levelUpUi = undefined;
     this.hud = undefined;
     this.runEndOverlay = undefined;
@@ -270,6 +326,13 @@ export class RunScene extends Phaser.Scene {
     this.hitFlashes = 0;
     this.trailsEmitted = 0;
     this.pickupCues = 0;
+    this.shrineFeedback = 0;
+    this.shrineEnemiesSpawned = 0;
+    this.shrineEnemiesDefeated = 0;
+    this.ambientXpDropped = 0;
+    this.shrineXpDropped = 0;
+    this.ambientXpCollected = 0;
+    this.shrineXpCollected = 0;
   }
 
   private updateEnemies(): void {
@@ -308,18 +371,96 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
+  private updateShrine(): void {
+    if (!this.player || !this.runState || !this.shrine || !this.shrineDefinition) return;
+    const distance = Phaser.Math.Distance.Between(
+      this.player.x,
+      this.player.y,
+      this.shrine.x,
+      this.shrine.y,
+    );
+    const inRange = distance <= this.shrineDefinition.interactionRadius;
+    this.shrine.setInRange(inRange);
+    if (
+      inRange &&
+      !this.shrine.activated &&
+      this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key))
+    ) {
+      this.activateShrine();
+    }
+  }
+
+  private activateShrine(): void {
+    if (!this.runState || !this.shrine || this.shrine.activated) return;
+    this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
+    this.shrine.activate();
+    this.shrineFeedback += 1;
+    this.cameras.main.flash(240, 251, 113, 133, false);
+    this.cameras.main.shake(220, 0.006);
+    const message = this.add.text(
+      this.scale.width / 2,
+      105,
+      activeTheme.copy.vocabulary.surgeActive,
+      {
+        color: activeTheme.tokens.palette.shrine,
+        fontFamily: "Georgia, serif",
+        fontSize: "28px",
+        fontStyle: "bold",
+        stroke: activeTheme.tokens.palette.background,
+        strokeThickness: 6,
+      },
+    ).setOrigin(0.5).setScrollFactor(0).setDepth(950);
+    this.tweens.add({
+      targets: message,
+      alpha: 0,
+      y: 80,
+      duration: 900,
+      onComplete: () => message.destroy(),
+    });
+  }
+
+  private updateSurge(): void {
+    if (!this.runState || !this.shrineDefinition || !this.player) return;
+    const result = updateShrineSurge(
+      this.surgeState,
+      this.shrineDefinition,
+      this.runState.elapsedMs,
+      V01_SPAWN_LIMITS.maxAlive - this.enemies.size,
+    );
+    this.surgeState = result.state;
+    for (let index = 0; index < result.spawnNow; index += 1) {
+      this.spawnEnemy(
+        archetypeIds.shrine.spawnSurge,
+        this.shrineDefinition.rewardMultiplier,
+      );
+    }
+  }
+
   private spawnIfReady(): void {
     if (
       !this.player ||
       !this.runState ||
       !this.enemyDefinition ||
-      !this.enemyGroup ||
       this.runState.elapsedMs < this.nextSpawnAtMs ||
       !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
     ) {
       return;
     }
 
+    this.spawnEnemy("ambient", 1);
+    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS;
+  }
+
+  private spawnEnemy(spawnSource: EnemySpawnSource, rewardMultiplier: number): boolean {
+    if (
+      !this.player ||
+      !this.runState ||
+      !this.enemyDefinition ||
+      !this.enemyGroup ||
+      !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
+    ) {
+      return false;
+    }
     const point = pointOnSpawnRing(
       this.player,
       SPAWN_RADIUS,
@@ -336,15 +477,18 @@ export class RunScene extends Phaser.Scene {
       point.y,
       this.enemyDefinition,
       activeTheme.tokens,
+      spawnSource,
+      rewardMultiplier,
     );
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
+    if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
       this.enemies.delete(enemy);
       if (this.runState) this.runState = setLiveEnemyCount(this.runState, this.enemies.size);
     });
     this.runState = setLiveEnemyCount(this.runState, this.enemies.size);
-    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS;
+    return true;
   }
 
   private fireIfReady(): void {
@@ -417,11 +561,23 @@ export class RunScene extends Phaser.Scene {
     projectile.registerHit(enemy.targetId);
     if (!result.killed) return;
     this.runState = recordKill(this.runState);
-    this.dropExperience(enemy.x, enemy.y, enemy.definition.xpReward);
+    const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
+    this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
+    if (enemy.spawnSource === archetypeIds.shrine.spawnSurge) {
+      this.shrineEnemiesDefeated += 1;
+      this.shrineXpDropped += xpReward;
+    } else {
+      this.ambientXpDropped += xpReward;
+    }
     enemy.destroy();
   }
 
-  private dropExperience(x: number, y: number, xpValue: number): void {
+  private dropExperience(
+    x: number,
+    y: number,
+    xpValue: number,
+    rewardSource: EnemySpawnSource,
+  ): void {
     if (!this.pickupDefinition || !this.pickupGroup || xpValue <= 0) return;
     this.pickupSequence += 1;
     const pickup = new PickupActor(
@@ -432,6 +588,7 @@ export class RunScene extends Phaser.Scene {
       this.pickupDefinition,
       activeTheme.tokens,
       xpValue,
+      rewardSource,
     );
     this.pickups.add(pickup);
     this.pickupGroup.add(pickup);
@@ -447,6 +604,11 @@ export class RunScene extends Phaser.Scene {
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
     this.runState = awardRunExperience(this.runState, claim.awardedXp);
+    if (pickup.rewardSource === archetypeIds.shrine.spawnSurge) {
+      this.shrineXpCollected += claim.awardedXp;
+    } else {
+      this.ambientXpCollected += claim.awardedXp;
+    }
     this.pickupsCollected += 1;
     pickup.playCollectCue();
     this.pickupCues += 1;
@@ -625,6 +787,10 @@ export class RunScene extends Phaser.Scene {
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
     const hud = this.runState ? selectHudValues(this.runState) : undefined;
+    const shrineDistance =
+      this.player && this.shrine
+        ? Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shrine.x, this.shrine.y)
+        : Number.POSITIVE_INFINITY;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -709,6 +875,28 @@ export class RunScene extends Phaser.Scene {
         hitFlashes: this.hitFlashes,
         trailsEmitted: this.trailsEmitted,
         pickupCues: this.pickupCues,
+      },
+      shrine: {
+        id: this.shrineDefinition?.id ?? null,
+        x: this.shrine?.x ?? 0,
+        y: this.shrine?.y ?? 0,
+        inRange: Boolean(
+          this.shrineDefinition && shrineDistance <= this.shrineDefinition.interactionRadius,
+        ),
+        activated: this.shrine?.activated ?? false,
+        active: this.surgeState.active,
+        scheduled: this.surgeState.scheduled,
+        spawned: this.surgeState.spawned,
+        targetCount: this.shrineDefinition?.spawnCount ?? 0,
+        durationMs: this.shrineDefinition?.spawnDurationMs ?? 0,
+        rewardMultiplier: this.shrineDefinition?.rewardMultiplier ?? 1,
+        enemiesSpawned: this.shrineEnemiesSpawned,
+        enemiesDefeated: this.shrineEnemiesDefeated,
+        shrineXpDropped: this.shrineXpDropped,
+        ambientXpDropped: this.ambientXpDropped,
+        shrineXpCollected: this.shrineXpCollected,
+        ambientXpCollected: this.ambientXpCollected,
+        feedbackCount: this.shrineFeedback,
       },
     });
   }

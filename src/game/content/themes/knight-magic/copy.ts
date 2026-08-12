@@ -21,6 +21,8 @@ export const copy = {
     completeTitle: "The Trial Is Complete",
     completeMessage: "You endured the arena's full assault.",
     restartAction: "Begin Again",
+    shrinePrompt: "Press E or Space to invoke",
+    surgeActive: "The horde answers",
   },
   content: {
     [archetypeIds.character.starter]: {

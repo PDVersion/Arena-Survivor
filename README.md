@@ -21,13 +21,16 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). Phase 3 displays a bounded arena with a camera-followed player, an automatically firing starter projectile, and spawning swarm enemies.
+Open the URL printed by Vite (normally `http://localhost:5173`). V0.1 includes a five-minute arena run, automatic projectile combat, XP and upgrades, a player-activated Horde shrine, distinct run endings, and same-page restart.
 
 Controls:
 
 ```text
 WASD / Arrow keys = Move
 Escape           = Pause or resume
+E / Space         = Activate a shrine while in range
+1 / 2 / 3         = Choose a level-up upgrade
+R / Enter         = Restart after death or completion
 ```
 
 ## Test and build
@@ -38,22 +41,20 @@ Install Playwright's Chromium once on a new machine:
 npx playwright install chromium
 ```
 
-Run the Phase 3 verification gate:
+Run the complete V0.1 verification gate:
 
 ```bash
 npm run typecheck
-npm test -- --run tests/unit/combat tests/unit/targeting tests/unit/spawning
-npm test -- --run tests/unit/content
-npm run test:e2e -- --grep "combat|death"
+npm test -- --run
 npm run build
+npm run test:e2e
 ```
 
 Optional checks:
 
 ```bash
 npm run lint
-npm test -- --run
-npm run test:e2e
+npm audit --audit-level=high
 ```
 
-For a manual smoke test, run `npm run dev`; confirm enemies pursue the player, projectiles retarget and kill them, contact damage visibly dims the player no more than once per second, and enough contact damage ends movement in death. Also recheck movement, boundaries, pause, camera follow, and the browser console.
+For a manual smoke test, run `npm run dev`; verify movement, combat, XP collection, level-up choices, the HUD, pause/focus behavior, death/completion restart, and the browser console. Activate the nearby shrine with E or Space and confirm its one-time pulse produces a sustained tagged swarm with visibly accelerated XP rewards.

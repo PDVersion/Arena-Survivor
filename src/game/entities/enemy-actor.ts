@@ -1,10 +1,15 @@
 import Phaser from "phaser";
 import type { EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
+import type { ShrineId } from "../core/archetypes/ids";
+
+export type EnemySpawnSource = "ambient" | ShrineId;
 
 export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly targetId: string;
   readonly definition: EnemyDefinition;
+  readonly spawnSource: EnemySpawnSource;
+  readonly rewardMultiplier: number;
   health: number;
   defeated = false;
   private readonly baseColour: number;
@@ -16,6 +21,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     y: number,
     definition: EnemyDefinition,
     tokens: ThemeTokens,
+    spawnSource: EnemySpawnSource = "ambient",
+    rewardMultiplier = 1,
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -24,6 +31,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.targetId = targetId;
     this.definition = definition;
     this.health = definition.maxHealth;
+    this.spawnSource = spawnSource;
+    this.rewardMultiplier = rewardMultiplier;
     this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
