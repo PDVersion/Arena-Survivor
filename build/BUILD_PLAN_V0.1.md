@@ -105,6 +105,7 @@ Implementation notes relative to the original plan:
 - Restart reconstructs the shrine actor, scheduler, tagged actors, counters, and input bindings with the rest of the run. Browser coverage restarts during a live surge and proves that no scheduled work or tagged reward state leaks into the next generation.
 - The nearby shrine and range prompt were visually inspected in Chromium. Automated early and late activation, repeated-input rejection, exact scheduling, reward collection, high-density feedback, and active-surge restart cover the interaction paths that require precise telemetry.
 - Phase 6 adds approximately 6.3 kB minified / 1.4 kB gzip to the Phase 5 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+- Post-acceptance CI correction: shrine reward integration asserts the deterministic tagged reward created per defeated shrine enemy instead of assuming a distant pickup reaches an idle player. Short test-mode completion paths pause immediately after restart before inspecting reset state, and hosted-runner completion polls include explicit simulation-time headroom.
 
 ## Resolved V0.1 scope
 

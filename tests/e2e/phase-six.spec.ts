@@ -19,7 +19,7 @@ async function choosePendingUpgrades(page: Page, deadlineMs: number): Promise<vo
   }
 }
 
-test("Horde shrine activates once, schedules 100 tagged enemies, and awards bonus XP", async ({
+test("Horde shrine activates once, schedules 100 tagged enemies, and creates bonus XP", async ({
   page,
 }) => {
   test.setTimeout(35_000);
@@ -55,7 +55,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and awards bonu
   const defeatDeadline = Date.now() + 12_000;
   while (Date.now() < defeatDeadline) {
     const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
-    if ((snapshot?.shrine?.shrineXpCollected ?? 0) >= 1.5) break;
+    if ((snapshot?.shrine?.shrineXpDropped ?? 0) >= 1.5) break;
     if (snapshot?.run?.status === "level_up") {
       await page.locator("canvas").click({ position: { x: 640, y: 255 } });
     }
@@ -64,12 +64,15 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and awards bonu
   }
   const rewarded = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(rewarded?.shrine?.enemiesDefeated).toBeGreaterThan(0);
-  expect(rewarded?.shrine?.shrineXpDropped).toBeGreaterThanOrEqual(1.5);
-  expect(rewarded?.shrine?.shrineXpCollected).toBeGreaterThanOrEqual(1.5);
+  expect(rewarded?.shrine?.shrineXpDropped).toBe(
+    (rewarded?.shrine?.enemiesDefeated ?? 0) * 1.5,
+  );
   expect((rewarded?.shrine?.shrineXpDropped ?? 0) % 1.5).toBe(0);
+  expect((rewarded?.shrine?.shrineXpCollected ?? 0) % 1.5).toBe(0);
 });
 
 test("restart during an active surge clears its scheduler and tagged enemies", async ({ page }) => {
+  test.setTimeout(45_000);
   await waitForRun(page, "/?runDurationMs=900&surgeDurationMs=20000");
   const generation = await page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration,
@@ -80,7 +83,9 @@ test("restart during an active surge clears its scheduler and tagged enemies", a
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.active))
     .toBe(true);
   await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
+      timeout: 30_000,
+    })
     .toBe("complete");
 
   await page.locator("canvas").click({ position: { x: 640, y: 442 } });

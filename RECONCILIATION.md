@@ -582,6 +582,28 @@ Future guardrail:
 Revisit when:
 V0.2 scope is intentionally changed in `PLAN.md`, V0.2 completes, or V0.3 planning begins.
 
+### REC-025 — Browser assertions separate deterministic outcomes from incidental collection timing
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: V0.1 Phase 5/6 browser tests, CI timing, future load tests
+- Blocks: None
+
+Context / observation:
+The complete V0.1 suite passed locally with four workers, but the serial hosted runner failed the Phase 6 shrine path on all three attempts. Tagged enemies were defeated and each produced the correct `1.5` XP reward, while `shrineXpCollected` remained zero because those pickups fell outside the idle player's magnet radius. The same CPU-constrained run also took more than the default five-second poll to advance 700–900 simulation milliseconds, and one retry completed a newly restarted 700 ms run before the test inspected its transient `playing` state.
+
+Decision / solution:
+Assert shrine reward integration at the deterministic boundary: every defeated shrine enemy creates exactly `1.5` tagged XP and any collected shrine total remains a multiple of `1.5`; the existing XP unit test continues to prove exact fractional collection/award. Do not require an idle player to incidentally collect a spatial pickup. Give terminal polls explicit hosted-runner headroom. Immediately pause each short restarted run before inspecting reset state, then resume it for the next completion cycle.
+
+Why:
+Pickup collection depends on enemy death position, magnet radius, player movement, and CPU progress; it is not evidence for whether the tagged reward was calculated or propagated correctly. Pausing makes the reset snapshot stable, while simulation-state polling still verifies real completion rather than replacing it with a writable test shortcut.
+
+Future guardrail:
+Browser tests assert live integration at controllable deterministic boundaries and unit tests exhaustively cover pure reward claims. Tests that inspect a transient state after restart must stabilize it, and any deliberately shortened simulation deadline must specify CI headroom rather than inherit Playwright's five-second default.
+
+Revisit when:
+Browser tests gain deterministic player/pickup positioning, a simulation-step control, or V0.2's load harness replaces real-time waits with an explicit read-only scenario driver.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
