@@ -28,7 +28,7 @@ test("HUD shows health, XP, level, timer, kills, and live enemies", async ({ pag
 });
 
 test("complete overlay freezes at zero and restart resets without navigation", async ({ page }) => {
-  test.setTimeout(30_000);
+  test.setTimeout(90_000);
   const pageErrors: string[] = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
   await waitForReady(page, "/?runDurationMs=700");
@@ -36,7 +36,9 @@ test("complete overlay freezes at zero and restart resets without navigation", a
 
   for (let expectedGeneration = 1; expectedGeneration <= 3; expectedGeneration += 1) {
     await expect
-      .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
+      .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
+        timeout: 30_000,
+      })
       .toBe("complete");
     const complete = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
     expect(complete?.hud?.time).toBe("0:00");
@@ -47,13 +49,17 @@ test("complete overlay freezes at zero and restart resets without navigation", a
 
     if (expectedGeneration === 3) break;
     await page.locator("canvas").click({ position: { x: 640, y: 442 } });
+    await page.keyboard.press("Escape");
     await expect
-      .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration))
+      .poll(
+        () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration),
+        { timeout: 10_000 },
+      )
       .toBe(expectedGeneration + 1);
     expect(pageErrors).toEqual([]);
     const restarted = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
     expect(restarted?.run).toMatchObject({
-      status: "playing",
+      status: "paused",
       kills: 0,
       level: 1,
       xp: 0,
@@ -62,6 +68,7 @@ test("complete overlay freezes at zero and restart resets without navigation", a
     expect(restarted?.player).toMatchObject({ health: 100, maxHealth: 100, damageBonus: 0 });
     expect(restarted?.progression?.selectedUpgradeIds).toEqual([]);
     expect(restarted?.lifecycle?.terminalOverlay).toBeNull();
+    await page.keyboard.press("Escape");
   }
 
   expect(await page.evaluate(() => performance.getEntriesByType("navigation").length)).toBe(

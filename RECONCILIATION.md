@@ -1,11 +1,11 @@
 # Reconciliation Log
 
-Read this file immediately after `build/BUILD_PLAN.md` before beginning any work. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built.
+Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V0.2.md`, before beginning any work. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. The completed V0.1 plan is preserved as `build/BUILD_PLAN_V0.1.md`.
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
-- Current milestone: **V0.1**
-- Active phase: **Phase 6 complete — V0.1 ready for review**
+- Current milestone: **V0.2**
+- Active phase: **Planning complete — Phase 1 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -559,6 +559,50 @@ Unit tests require zero immediate spawn, the 100th due slot at exactly 20 second
 
 Revisit when:
 Multiple simultaneous shrines, distinct enemy compositions, pooling, save/resume of active runs, multiplier stacking, or a higher measured live-entity budget enters scope.
+
+### REC-024 — Milestone plans are versioned and V0.2 follows product scope
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: planning workflow, V0.2 scope, future milestone transitions
+- Blocks: None
+
+Context / observation:
+V0.1 completed all six phases, but the generic `BUILD_PLAN.md` filename still looked current and repository instructions pointed every future session to it. The V0.1 deferred list deliberately grouped work from several later milestones, while `PLAN.md` defines a narrower authoritative V0.2 scope.
+
+Decision / solution:
+Preserve the completed milestone as `build/BUILD_PLAN_V0.1.md`, make `build/BUILD_PLAN_V0.2.md` the current implementation source, and update repository/README references. Derive V0.2 from the product plan's V0.2 section: expanded enemies; overcrit, piercing, and on-kill interactions; Chaos, multipliers, shrines, and baseline elites; scalable feedback; and the named statistics. Use V0.1's deferred list only as candidate context. Keep persistence/export, additional weapons, bosses, general curses, elite modifiers, endless mode, and other V0.3 work out.
+
+Why:
+Versioned plans retain the evidence and commit history of a completed milestone without making stale instructions appear active. Product scope prevents the broad deferred list from silently expanding V0.2, while seven dependency-ordered phases put provenance and load safety before recursive interaction mechanics.
+
+Future guardrail:
+`AGENTS.md`, README, and reconciliation point to one explicitly current versioned plan. Each milestone plan states its source scope, acceptance points, phase commits, and explicit exclusions; completed plans become immutable implementation records except for corrected links or factual errata.
+
+Revisit when:
+V0.2 scope is intentionally changed in `PLAN.md`, V0.2 completes, or V0.3 planning begins.
+
+### REC-025 — Browser assertions separate deterministic outcomes from incidental collection timing
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: V0.1 Phase 5/6 browser tests, CI timing, future load tests
+- Blocks: None
+
+Context / observation:
+The complete V0.1 suite passed locally with four workers, but the serial hosted runner failed the Phase 6 shrine path on all three attempts. Tagged enemies were defeated and each produced the correct `1.5` XP reward, while `shrineXpCollected` remained zero because those pickups fell outside the idle player's magnet radius. The same CPU-constrained run also took more than the default five-second poll to advance 700–900 simulation milliseconds, and one retry completed a newly restarted 700 ms run before the test inspected its transient `playing` state.
+
+Decision / solution:
+Assert shrine reward integration at the deterministic boundary: every defeated shrine enemy creates exactly `1.5` tagged XP and any collected shrine total remains a multiple of `1.5`; the existing XP unit test continues to prove exact fractional collection/award. Do not require an idle player to incidentally collect a spatial pickup. Give terminal polls explicit hosted-runner headroom. Immediately pause each short restarted run before inspecting reset state, then resume it for the next completion cycle.
+
+Why:
+Pickup collection depends on enemy death position, magnet radius, player movement, and CPU progress; it is not evidence for whether the tagged reward was calculated or propagated correctly. Pausing makes the reset snapshot stable, while simulation-state polling still verifies real completion rather than replacing it with a writable test shortcut.
+
+Future guardrail:
+Browser tests assert live integration at controllable deterministic boundaries and unit tests exhaustively cover pure reward claims. Tests that inspect a transient state after restart must stabilize it, and any deliberately shortened simulation deadline must specify CI headroom rather than inherit Playwright's five-second default.
+
+Revisit when:
+Browser tests gain deterministic player/pickup positioning, a simulation-step control, or V0.2's load harness replaces real-time waits with an explicit read-only scenario driver.
 
 ## Open questions to reconcile during implementation
 

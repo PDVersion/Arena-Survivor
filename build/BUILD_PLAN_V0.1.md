@@ -1,6 +1,6 @@
-# Arena Survivor V0.1 Build Plan
+# Arena Survivor V0.1 Build Plan — Complete
 
-This is the implementation plan for the product vision in [`PLAN.md`](./PLAN.md). It deliberately turns the broad design into a small, testable first playable. Every work session must read this file and then [`../RECONCILIATION.md`](../RECONCILIATION.md) before making changes.
+This is the completed implementation record for the V0.1 first playable described in [`PLAN.md`](./PLAN.md). All six phases and the milestone verification gate are complete. Current work is planned in [`BUILD_PLAN_V0.2.md`](./BUILD_PLAN_V0.2.md); consult this file only for V0.1 scope, architecture, verification history, and commit boundaries.
 
 ## Delivery contract
 
@@ -22,7 +22,7 @@ Update this tracker in the corresponding phase commit. Add the commit hash after
 - [x] Phase 3 — Grunt swarm and Needle combat (`1a554e6`; runtime fix `3f4f39a`; CI fix `8a28568`)
 - [x] Phase 4 — XP, levels, and data-driven upgrades (`36c293c`)
 - [x] Phase 5 — HUD, run completion, and restart loop (`c07dd5d`)
-- [x] Phase 6 — Horde shrine and V0.1 hardening
+- [x] Phase 6 — Horde shrine and V0.1 hardening (`a96802c`)
 
 ### Phase 1 outcome — 2026-08-12
 
@@ -105,6 +105,7 @@ Implementation notes relative to the original plan:
 - Restart reconstructs the shrine actor, scheduler, tagged actors, counters, and input bindings with the rest of the run. Browser coverage restarts during a live surge and proves that no scheduled work or tagged reward state leaks into the next generation.
 - The nearby shrine and range prompt were visually inspected in Chromium. Automated early and late activation, repeated-input rejection, exact scheduling, reward collection, high-density feedback, and active-surge restart cover the interaction paths that require precise telemetry.
 - Phase 6 adds approximately 6.3 kB minified / 1.4 kB gzip to the Phase 5 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+- Post-acceptance CI correction: shrine reward integration asserts the deterministic tagged reward created per defeated shrine enemy instead of assuming a distant pickup reaches an idle player. Short test-mode completion paths pause immediately after restart before inspecting reset state, and hosted-runner completion polls include explicit simulation-time headroom.
 
 ## Resolved V0.1 scope
 
