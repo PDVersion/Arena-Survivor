@@ -1,6 +1,6 @@
-# Arena Survivor V0.1 Build Plan
+# Arena Survivor V0.1 Build Plan — Complete
 
-This is the implementation plan for the product vision in [`PLAN.md`](./PLAN.md). It deliberately turns the broad design into a small, testable first playable. Every work session must read this file and then [`../RECONCILIATION.md`](../RECONCILIATION.md) before making changes.
+This is the completed implementation record for the V0.1 first playable described in [`PLAN.md`](./PLAN.md). All six phases and the milestone verification gate are complete. Current work is planned in [`BUILD_PLAN_V0.2.md`](./BUILD_PLAN_V0.2.md); consult this file only for V0.1 scope, architecture, verification history, and commit boundaries.
 
 ## Delivery contract
 
@@ -22,7 +22,7 @@ Update this tracker in the corresponding phase commit. Add the commit hash after
 - [x] Phase 3 — Grunt swarm and Needle combat (`1a554e6`; runtime fix `3f4f39a`; CI fix `8a28568`)
 - [x] Phase 4 — XP, levels, and data-driven upgrades (`36c293c`)
 - [x] Phase 5 — HUD, run completion, and restart loop (`c07dd5d`)
-- [x] Phase 6 — Horde shrine and V0.1 hardening
+- [x] Phase 6 — Horde shrine and V0.1 hardening (`a96802c`)
 
 ### Phase 1 outcome — 2026-08-12
 

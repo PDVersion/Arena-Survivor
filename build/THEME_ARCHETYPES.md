@@ -1,6 +1,6 @@
 # Theme and Archetype System
 
-This document is the design reference for making Arena Survivor's fiction replaceable without rewriting its game systems. The current working theme is **knights and magic**. Its labels are provisional, but it remains the only content pack required for V0.1.
+This document is the design reference for making Arena Survivor's fiction replaceable without rewriting its game systems. The current working theme is **knights and magic**. Its labels are provisional, and it remains the only production content pack required by the completed V0.1 milestone and the current V0.2 plan.
 
 Once implementation begins, the source-level authority becomes the active theme manifest under `src/game/content/themes/`. This document continues to explain the boundary and the safe refactor process.
 
@@ -60,7 +60,7 @@ src/game/
 
 IDs describe gameplay roles, not fiction. They remain stable across theme packs and must never be shown directly to players.
 
-| Stable archetype ID | Current knight-magic label | V0.1 status |
+| Stable archetype ID | Current knight-magic label | Milestone status |
 | --- | --- | --- |
 | `character.starter` | Player character (name TBD) | Required |
 | `weapon.starter_projectile` | Magic Bolt / Needle (final label TBD) | Required |
@@ -139,9 +139,9 @@ Pivot the entire theme:
 3. Run contract, content, and critical-path tests.
 4. Keep the old pack until the new pack is validated; a pivot should be reversible as a one-line selection change.
 
-## V0.1 proof that the boundary works
+## Completed V0.1 proof that the boundary works
 
-Phase 1 will include a tiny test-only theme fixture with deliberately different labels and tokens. Automated tests must prove that:
+V0.1 includes a tiny test-only theme fixture with deliberately different labels and tokens. Automated tests prove that:
 
 - the same run systems accept both manifests;
 - changing the active fixture changes presented labels without changing rules;
@@ -149,4 +149,4 @@ Phase 1 will include a tiny test-only theme fixture with deliberately different 
 - theme-specific directories are not imported by systems/scenes/UI;
 - production selects the knight-magic manifest.
 
-This fixture proves interchangeability without building or maintaining a second real theme.
+This fixture proves interchangeability without building or maintaining a second real theme. V0.2 extends the same validation and rename-only tests as its enemy, skill, shrine, elite, and feedback contracts enter scope.

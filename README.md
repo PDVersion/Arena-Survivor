@@ -2,15 +2,20 @@
 
 A browser-first arena survival game built around player-controlled swarm escalation and explosive build interactions.
 
+## Status
+
+V0.1 is implementation-complete: the five-minute core loop, progression, Horde shrine, endings, restart, and full verification gate are built. V0.2 is planned but implementation has not started.
+
 ## Project documents
 
-- [V0.1 build plan](build/BUILD_PLAN.md) — implementation phases, verification gates, and commit boundaries.
+- [V0.2 build plan](build/BUILD_PLAN_V0.2.md) — current scope, phase order, verification gates, and commit boundaries.
+- [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
 - [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 
-Before beginning any work, read the V0.1 build plan and then the reconciliation log. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
+Before beginning any work, read the current V0.2 build plan and then the reconciliation log. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
 ## Run locally
 

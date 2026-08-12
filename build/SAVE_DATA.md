@@ -2,7 +2,7 @@
 
 Arena Survivor will keep local browser progress while also allowing the complete persistent save to be exported as encoded text and restored by importing a text file or pasting the save code. This is a portability and player-control feature, not encryption or anti-cheat.
 
-The export/import UI is planned with the unlock/progression systems in V0.3. V0.1 must still use stable IDs and serializable state boundaries so adding persistence later does not require rewriting gameplay systems.
+The export/import UI is planned with the unlock/progression systems in V0.3. Completed V0.1 established stable IDs, schema-versioned profile state, and a serializable runtime boundary. V0.2 must preserve those constraints while adding statistics and modifiers; it does not implement persistence, codecs, migrations, or import/export UI.
 
 ## Player experience
 

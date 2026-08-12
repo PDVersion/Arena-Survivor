@@ -1,11 +1,11 @@
 # Reconciliation Log
 
-Read this file immediately after `build/BUILD_PLAN.md` before beginning any work. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built.
+Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V0.2.md`, before beginning any work. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. The completed V0.1 plan is preserved as `build/BUILD_PLAN_V0.1.md`.
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
-- Current milestone: **V0.1**
-- Active phase: **Phase 6 complete — V0.1 ready for review**
+- Current milestone: **V0.2**
+- Active phase: **Planning complete — Phase 1 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -559,6 +559,28 @@ Unit tests require zero immediate spawn, the 100th due slot at exactly 20 second
 
 Revisit when:
 Multiple simultaneous shrines, distinct enemy compositions, pooling, save/resume of active runs, multiplier stacking, or a higher measured live-entity budget enters scope.
+
+### REC-024 — Milestone plans are versioned and V0.2 follows product scope
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: planning workflow, V0.2 scope, future milestone transitions
+- Blocks: None
+
+Context / observation:
+V0.1 completed all six phases, but the generic `BUILD_PLAN.md` filename still looked current and repository instructions pointed every future session to it. The V0.1 deferred list deliberately grouped work from several later milestones, while `PLAN.md` defines a narrower authoritative V0.2 scope.
+
+Decision / solution:
+Preserve the completed milestone as `build/BUILD_PLAN_V0.1.md`, make `build/BUILD_PLAN_V0.2.md` the current implementation source, and update repository/README references. Derive V0.2 from the product plan's V0.2 section: expanded enemies; overcrit, piercing, and on-kill interactions; Chaos, multipliers, shrines, and baseline elites; scalable feedback; and the named statistics. Use V0.1's deferred list only as candidate context. Keep persistence/export, additional weapons, bosses, general curses, elite modifiers, endless mode, and other V0.3 work out.
+
+Why:
+Versioned plans retain the evidence and commit history of a completed milestone without making stale instructions appear active. Product scope prevents the broad deferred list from silently expanding V0.2, while seven dependency-ordered phases put provenance and load safety before recursive interaction mechanics.
+
+Future guardrail:
+`AGENTS.md`, README, and reconciliation point to one explicitly current versioned plan. Each milestone plan states its source scope, acceptance points, phase commits, and explicit exclusions; completed plans become immutable implementation records except for corrected links or factual errata.
+
+Revisit when:
+V0.2 scope is intentionally changed in `PLAN.md`, V0.2 completes, or V0.3 planning begins.
 
 ## Open questions to reconcile during implementation
 
