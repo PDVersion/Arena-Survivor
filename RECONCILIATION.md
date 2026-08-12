@@ -5,7 +5,7 @@ Read this file immediately after `build/BUILD_PLAN.md` before beginning any work
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.1**
-- Active phase: **Phase 2 complete — Phase 3 not started**
+- Active phase: **Phase 3 complete — Phase 4 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -258,6 +258,8 @@ The final Phase 1 production build succeeds but Vite warns that the main minifie
 
 Phase 2 measurement: the main chunk is approximately 1,493 kB minified and 342 kB gzip, an increase of about 4.7 kB minified / 1.0 kB gzip from the Phase 1 baseline.
 
+Phase 3 measurement: the main chunk is approximately 1,502 kB minified and 344 kB gzip, an increase of about 9.7 kB minified / 2.3 kB gzip from the Phase 2 baseline.
+
 Decision / solution:
 Accept this as the Phase 1 baseline and do not add speculative chunk splitting before gameplay exists. Track compressed size and real startup behavior as features are added, and separate optional/heavy systems only when measurement shows a useful boundary.
 
@@ -360,11 +362,54 @@ Derive real-time test budgets from the configured distance and speed, then leave
 Revisit when:
 Movement speed, spawn position, arena dimensions, Playwright worker count, or the browser timing model changes.
 
+### REC-015 — Phase 3 uses capped destruction and provisional swarm tuning
+
+- Status: Provisional
+- Date: 2026-08-12
+- Affects: Phase 3 combat/spawning, Phase 4 XP pacing, Phase 6 surge performance
+- Blocks: None
+
+Context / observation:
+The product examples define the basic enemy and starter weapon stats but do not settle spawn cadence, spawn distance, player-wide contact immunity, or initial entity budgets. Phase 3 needs enough pressure to demonstrate targeting, kills, damage, and death without allowing unbounded high-churn objects.
+
+Decision / solution:
+Use the product baselines: enemy health 20, speed 70, damage 10, XP value 1; weapon damage 10, cooldown 1000 ms, speed 400, one projectile, base pierce 0; player crit 5% at 2×. Spawn one enemy every 400 ms on a deterministic golden-angle ring 360 units from the current player position. Cap live enemies at 80 and live projectiles at 64. Destroy defeated enemies and expired/spent projectiles, removing them from tracked sets. Apply a global 1000 ms player contact-immunity window using run simulation time.
+
+Why:
+The cadence reliably demonstrates both player kills and eventual death in a short smoke test, while fixed caps prevent leaks and give the Phase 6 surge work an explicit back-pressure boundary. A global immunity window avoids damage scaling directly with overlap callback count or frame rate.
+
+Future guardrail:
+Deterministic tests cover cap exclusivity and contact cooldown; Chromium telemetry exposes live counts, caps, shots, kills, contact hits, health, and immunity. Spawning must ask the cap rule before allocation, and destroy handlers must remove actors from tracked sets exactly once.
+
+Revisit when:
+Phase 4 tunes XP/level pacing, Phase 6 schedules 100 shrine enemies through back-pressure, or representative-browser profiling establishes a safe higher budget.
+
+### REC-016 — Projectile damage and pierce are immutable per shot
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phase 3 combat, Phase 4 stat upgrades, future overcrit and on-hit effects
+- Blocks: None
+
+Context / observation:
+Frame-based overlap callbacks can report the same projectile/enemy pair more than once. Crit chance must remain representable above 100% for future overcrit, but V0.1 has only normal versus critical damage and no tier conversion.
+
+Decision / solution:
+Roll each projectile's damage once at fire time using injected randomness in the rule function. V0.1 clamps only the roll probability to `[0, 1]`; it does not clamp the stored crit stat. A projectile owns an immutable damage/critical result plus a set of stable runtime target IDs and a remaining hit budget equal to `1 + pierce`. Duplicate target overlap consumes nothing and deals no damage. Enemy damage is idempotent after defeat, and only the first lethal result increments kills.
+
+Why:
+One roll per projectile makes multi-hit pierce consistent, target-ID tracking prevents physics callback duplication, and uncapped stat representation avoids a Phase 4/overcrit migration. Exact-once lethal accounting keeps statistics and later XP drops trustworthy.
+
+Future guardrail:
+Unit tests cover deterministic normal/crit rolls, crit chance above 100%, duplicate hits, pierce exhaustion, lethal damage, and already-dead targets. Runtime actors never compare player-facing names.
+
+Revisit when:
+Overcrit tiers, per-target rerolls, chain effects, or projectile-owned on-hit modifiers enter scope.
+
 ## Open questions to reconcile during implementation
 
-- The exact XP curve, upgrade magnitudes, Grunt spawn ramp, contact-damage cooldown, and five-minute balance are tuning assumptions, not settled design.
-- The practical live-enemy/projectile budget must be measured on representative desktop browsers. The design's 300+ target is aspirational and not a V0.1 release gate.
-- Phaser physics choice, pooling thresholds, and deterministic seeding details should be recorded after the foundation is exercised rather than guessed in advance.
+- The exact XP curve, upgrade magnitudes, longer-run spawn ramp, and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity are provisional smoke-test baselines.
+- The practical live-enemy/projectile cap above the current 80/64 baseline and whether Phase 6 requires pooling must be measured on representative desktop browsers; deterministic runtime seeding remains unsettled.
 - Accessibility details beyond alternate movement keys—reduced motion, colour independence, remapping, and readable scaling—need an explicit later decision.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
 - The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.

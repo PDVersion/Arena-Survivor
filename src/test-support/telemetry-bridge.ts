@@ -9,6 +9,8 @@ export interface ArenaTestSnapshot {
     status: "playing" | "paused" | "dead" | "complete";
     elapsedMs: number;
     durationMs: number;
+    kills: number;
+    liveEnemies: number;
   }>;
   readonly player?: Readonly<{
     characterId: string;
@@ -18,6 +20,18 @@ export interface ArenaTestSnapshot {
     moveSpeed: number;
     velocityX: number;
     velocityY: number;
+    health: number;
+    invulnerable: boolean;
+  }>;
+  readonly combat?: Readonly<{
+    weaponId: string | null;
+    enemyId: string | null;
+    projectiles: number;
+    shotsFired: number;
+    criticalShots: number;
+    contactHits: number;
+    enemyCap: number;
+    projectileCap: number;
   }>;
   readonly error?: string;
 }

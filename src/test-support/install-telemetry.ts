@@ -24,6 +24,7 @@ registerTestTelemetryUpdater((nextSnapshot) => {
     camera: nextSnapshot.camera ? Object.freeze({ ...nextSnapshot.camera }) : undefined,
     run: nextSnapshot.run ? Object.freeze({ ...nextSnapshot.run }) : undefined,
     player: nextSnapshot.player ? Object.freeze({ ...nextSnapshot.player }) : undefined,
+    combat: nextSnapshot.combat ? Object.freeze({ ...nextSnapshot.combat }) : undefined,
   });
 });
 

@@ -8,6 +8,9 @@ export const tokens = {
     accent: "#d6ad55",
     text: "#f7e7b5",
     player: "#7dd3fc",
+    enemy: "#e87979",
+    projectile: "#c4b5fd",
+    critical: "#fbbf24",
   },
   playerShape: "diamond",
 } as const satisfies ThemeTokens;

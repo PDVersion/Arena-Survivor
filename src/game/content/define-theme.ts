@@ -77,6 +77,73 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required character: ${archetypeIds.character.starter}`);
   }
 
+  const weaponIds = new Set<string>();
+  const weapons = Array.isArray(theme.weapons) ? theme.weapons : [];
+  if (!Array.isArray(theme.weapons)) issues.push("weapons registry is required");
+  for (const weapon of weapons) {
+    if (weaponIds.has(weapon.id)) issues.push(`duplicate weapon id: ${weapon.id}`);
+    weaponIds.add(weapon.id);
+    if (!Number.isFinite(weapon.damage) || weapon.damage <= 0) {
+      issues.push(`${weapon.id} damage must be greater than zero`);
+    }
+    if (!Number.isFinite(weapon.cooldownMs) || weapon.cooldownMs <= 0) {
+      issues.push(`${weapon.id} cooldownMs must be greater than zero`);
+    }
+    if (!Number.isFinite(weapon.projectileSpeed) || weapon.projectileSpeed <= 0) {
+      issues.push(`${weapon.id} projectileSpeed must be greater than zero`);
+    }
+    if (!Number.isFinite(weapon.projectileLifetimeMs) || weapon.projectileLifetimeMs <= 0) {
+      issues.push(`${weapon.id} projectileLifetimeMs must be greater than zero`);
+    }
+    if (!Number.isFinite(weapon.projectileRadius) || weapon.projectileRadius <= 0) {
+      issues.push(`${weapon.id} projectileRadius must be greater than zero`);
+    }
+    if (!Number.isInteger(weapon.projectileCount) || weapon.projectileCount < 1) {
+      issues.push(`${weapon.id} projectileCount must be a positive integer`);
+    }
+    if (!Number.isInteger(weapon.pierce) || weapon.pierce < 0) {
+      issues.push(`${weapon.id} pierce must be a non-negative integer`);
+    }
+    if (!(weapon.presentationToken in theme.tokens.palette)) {
+      issues.push(`${weapon.id} references missing presentation token: ${weapon.presentationToken}`);
+    }
+  }
+  if (!weaponIds.has(archetypeIds.weapon.starterProjectile)) {
+    issues.push(`missing required weapon: ${archetypeIds.weapon.starterProjectile}`);
+  }
+
+  const enemyIds = new Set<string>();
+  const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
+  if (!Array.isArray(theme.enemies)) issues.push("enemies registry is required");
+  for (const enemy of enemies) {
+    if (enemyIds.has(enemy.id)) issues.push(`duplicate enemy id: ${enemy.id}`);
+    enemyIds.add(enemy.id);
+    if (!Number.isFinite(enemy.maxHealth) || enemy.maxHealth <= 0) {
+      issues.push(`${enemy.id} maxHealth must be greater than zero`);
+    }
+    if (!Number.isFinite(enemy.moveSpeed) || enemy.moveSpeed <= 0) {
+      issues.push(`${enemy.id} moveSpeed must be greater than zero`);
+    }
+    if (!Number.isFinite(enemy.contactDamage) || enemy.contactDamage <= 0) {
+      issues.push(`${enemy.id} contactDamage must be greater than zero`);
+    }
+    if (!Number.isFinite(enemy.contactCooldownMs) || enemy.contactCooldownMs <= 0) {
+      issues.push(`${enemy.id} contactCooldownMs must be greater than zero`);
+    }
+    if (!Number.isFinite(enemy.radius) || enemy.radius <= 0) {
+      issues.push(`${enemy.id} radius must be greater than zero`);
+    }
+    if (!Number.isFinite(enemy.xpReward) || enemy.xpReward < 0) {
+      issues.push(`${enemy.id} xpReward cannot be negative`);
+    }
+    if (!(enemy.presentationToken in theme.tokens.palette)) {
+      issues.push(`${enemy.id} references missing presentation token: ${enemy.presentationToken}`);
+    }
+  }
+  if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
+    issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
+  }
+
   return issues;
 }
 
