@@ -32,6 +32,13 @@ registerTestTelemetryUpdater((nextSnapshot) => {
             : null,
         })
       : undefined,
+    progression: nextSnapshot.progression
+      ? Object.freeze({
+          ...nextSnapshot.progression,
+          choiceIds: Object.freeze([...nextSnapshot.progression.choiceIds]),
+          selectedUpgradeIds: Object.freeze([...nextSnapshot.progression.selectedUpgradeIds]),
+        })
+      : undefined,
   });
 });
 

@@ -19,8 +19,8 @@ Update this tracker in the corresponding phase commit. Add the commit hash after
 
 - [x] Phase 1 — Project foundation and browser boot (`ed9dea2`)
 - [x] Phase 2 — Arena, player movement, and run state (`d8a4ce6`; CI fix `73c6847`)
-- [x] Phase 3 — Grunt swarm and Needle combat
-- [ ] Phase 4 — XP, levels, and data-driven upgrades
+- [x] Phase 3 — Grunt swarm and Needle combat (`1a554e6`; runtime fix `3f4f39a`; CI fix `8a28568`)
+- [x] Phase 4 — XP, levels, and data-driven upgrades
 - [ ] Phase 5 — HUD, run completion, and restart loop
 - [ ] Phase 6 — Horde shrine and V0.1 hardening
 
@@ -64,6 +64,19 @@ Implementation notes relative to the original plan:
 - Phase 3 adds approximately 9.7 kB minified / 2.3 kB gzip to the Phase 2 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
 - Manual-test correction: projectile velocity is now applied only after Arcade Physics group enrollment, active projectiles are cleared on death, and the browser suite tracks one projectile's ID/velocity/displacement so creation cannot be mistaken for firing.
 - CI correction: GitHub Actions runs the real-time Chromium suite with one worker. Two concurrent Phaser simulations on the shared runner slowed combat, death, and boundary paths together enough to exhaust otherwise generous state-poll budgets; local Playwright runs retain automatic parallelism.
+
+### Phase 4 outcome — 2026-08-12
+
+Phase 4 is implemented and its automated gates pass: exact-once XP pickup claims, magnet/collection behavior, the explicit XP curve, multi-level overflow, queued choices, seeded distinct offers, all eight modifier categories, themed content validation, frozen live level-up presentation, input-driven selection/resume, all earlier unit/browser regressions, type-check, lint, and production build.
+
+Implementation notes relative to the original plan:
+
+- Each defeated basic swarm enemy drops one `pickup.experience` actor carrying its definition's XP reward. Stable runtime pickup IDs guard awards exactly once; collected actors are destroyed and removed from tracking.
+- V0.1 uses a deliberately short linear curve of 2, 4, 6, 8… XP for successive levels. One award can cross multiple thresholds, retains overflow, and queues one mandatory choice per gained level.
+- The active theme owns eight upgrades covering damage, attack speed, crit chance, pierce, projectile count, move speed, maximum health, and pickup radius. Reusable `stat.add` descriptors target stable player/weapon stat paths; presentation copy and tokens remain theme-owned.
+- Level-up is a distinct frozen run state. Offers contain three unique choices selected by an injected seeded generator; keyboard or pointer selection applies the modifier, advances any queued choice, and resumes physics only when the queue is empty.
+- The full-screen choice panel was made opaque after manual canvas inspection showed underlying arena copy reducing title readability. Manual smoke confirmed three clear themed choices and no browser warnings/errors.
+- Phase 4 adds approximately 12.3 kB minified / 3.3 kB gzip to the Phase 3 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
 
 ## Resolved V0.1 scope
 

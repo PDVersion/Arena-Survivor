@@ -5,7 +5,7 @@ Read this file immediately after `build/BUILD_PLAN.md` before beginning any work
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.1**
-- Active phase: **Phase 3 complete — Phase 4 not started**
+- Active phase: **Phase 4 complete — Phase 5 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -450,9 +450,31 @@ CI browser simulations remain serial until measured shared-runner headroom suppo
 Revisit when:
 The CI runner class changes, browser tests gain deterministic time controls, Phase 6 load tests need a separate job, or measured serial runtime becomes excessive.
 
+### REC-019 — Phase 4 progression uses queued choices and additive stable stat targets
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phase 4 XP/upgrades, Phase 5 restart/HUD, Phase 6 reward modifiers, future balance
+- Blocks: None
+
+Context / observation:
+The product plan requires explicit XP progression and eight observable upgrade categories but leaves the initial curve, magnitudes, offer randomness, and representation of weapon-affecting upgrades unsettled. With the Phase 3 combat baseline and the starter 80-unit pickup radius, an initial three-XP threshold was not reliably reached before death in parallel browser smoke runs.
+
+Decision / solution:
+Use successive V0.1 thresholds of 2, 4, 6, 8… XP. Retain overflow and queue one mandatory choice for every level crossed by an award. Model themed upgrades with reusable additive descriptors targeting stable player or weapon stat paths. Initial values are +25% damage, +20% attack speed, +10 percentage points crit chance, +1 pierce, +1 projectile, +30 move speed, +25 maximum/current health, and +40 pickup radius. Select three unique offers using an injected random source; the live run uses a fixed seed for repeatability.
+
+Why:
+The two-XP first threshold makes the progression loop reliably visible before the provisional swarm can kill an idle player without weakening combat or changing the established base pickup radius. Stable effect targets let systems apply the same mechanics regardless of theme copy, while queued choices ensure a large future reward cannot skip upgrade decisions.
+
+Future guardrail:
+Unit tests cover exact-once pickup identities, curve overflow, XP multipliers, seeded unique offers, every modifier target, health adjustment, and clean reset to base stats. Browser tests require a frozen `level_up` state, three distinct stable choice IDs, observable selected effects, safe resume, and continued reachability of death through later choices.
+
+Revisit when:
+Phase 6 adds +50% shrine XP, longer-run playtesting produces balance data, randomized run seeding becomes a product requirement, multiplicative modifiers enter scope, or weapon/loadout state needs its own richer runtime model.
+
 ## Open questions to reconcile during implementation
 
-- The exact XP curve, upgrade magnitudes, longer-run spawn ramp, and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity are provisional smoke-test baselines.
+- The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
 - The practical live-enemy/projectile cap above the current 80/64 baseline and whether Phase 6 requires pooling must be measured on representative desktop browsers; deterministic runtime seeding remains unsettled.
 - Accessibility details beyond alternate movement keys—reduced motion, colour independence, remapping, and readable scaling—need an explicit later decision.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.

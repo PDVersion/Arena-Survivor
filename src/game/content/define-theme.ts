@@ -1,6 +1,7 @@
 import { archetypeIds, v01ContentIds } from "../core/archetypes/ids";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
+import { upgradeStatTargets } from "../core/archetypes/effects";
 
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
 
@@ -23,6 +24,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!theme.copy.bootStatus.trim()) issues.push("boot status copy is required");
   if (!theme.copy.bootFailure.trim()) issues.push("boot failure copy is required");
   if (!theme.copy.movementHint.trim()) issues.push("movement hint copy is required");
+  if (!theme.copy.levelUpTitle.trim()) issues.push("level-up title copy is required");
 
   for (const id of v01ContentIds) {
     const copy = theme.copy.content[id];
@@ -142,6 +144,56 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
+  }
+
+  const pickupIds = new Set<string>();
+  const pickups = Array.isArray(theme.pickups) ? theme.pickups : [];
+  if (!Array.isArray(theme.pickups)) issues.push("pickups registry is required");
+  for (const pickup of pickups) {
+    if (pickupIds.has(pickup.id)) issues.push(`duplicate pickup id: ${pickup.id}`);
+    pickupIds.add(pickup.id);
+    if (!Number.isFinite(pickup.radius) || pickup.radius <= 0) {
+      issues.push(`${pickup.id} radius must be greater than zero`);
+    }
+    if (!Number.isFinite(pickup.magnetSpeed) || pickup.magnetSpeed <= 0) {
+      issues.push(`${pickup.id} magnetSpeed must be greater than zero`);
+    }
+    if (!(pickup.presentationToken in theme.tokens.palette)) {
+      issues.push(`${pickup.id} references missing presentation token: ${pickup.presentationToken}`);
+    }
+  }
+  if (!pickupIds.has(archetypeIds.pickup.experience)) {
+    issues.push(`missing required pickup: ${archetypeIds.pickup.experience}`);
+  }
+
+  const upgradeIds = new Set<string>();
+  const upgrades = Array.isArray(theme.upgrades) ? theme.upgrades : [];
+  if (!Array.isArray(theme.upgrades)) issues.push("upgrades registry is required");
+  for (const upgrade of upgrades) {
+    if (upgradeIds.has(upgrade.id)) issues.push(`duplicate upgrade id: ${upgrade.id}`);
+    upgradeIds.add(upgrade.id);
+    if (!Array.isArray(upgrade.effects) || upgrade.effects.length === 0) {
+      issues.push(`${upgrade.id} must define at least one effect`);
+    } else {
+      for (const effect of upgrade.effects) {
+        if (effect.kind !== "stat.add") {
+          issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
+          continue;
+        }
+        if (!upgradeStatTargets.includes(effect.target)) {
+          issues.push(`${upgrade.id} has unsupported stat target: ${String(effect.target)}`);
+        }
+        if (!Number.isFinite(effect.value) || effect.value <= 0) {
+          issues.push(`${upgrade.id} effect value must be greater than zero`);
+        }
+      }
+    }
+    if (!(upgrade.presentationToken in theme.tokens.palette)) {
+      issues.push(`${upgrade.id} references missing presentation token: ${upgrade.presentationToken}`);
+    }
+  }
+  for (const requiredId of Object.values(archetypeIds.upgrade)) {
+    if (!upgradeIds.has(requiredId)) issues.push(`missing required upgrade: ${requiredId}`);
   }
 
   return issues;

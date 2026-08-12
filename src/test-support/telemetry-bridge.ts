@@ -6,11 +6,15 @@ export interface ArenaTestSnapshot {
   readonly arena?: Readonly<{ width: number; height: number }>;
   readonly camera?: Readonly<{ scrollX: number; scrollY: number }>;
   readonly run?: Readonly<{
-    status: "playing" | "paused" | "dead" | "complete";
+    status: "playing" | "paused" | "level_up" | "dead" | "complete";
     elapsedMs: number;
     durationMs: number;
     kills: number;
     liveEnemies: number;
+    level: number;
+    xp: number;
+    xpToNextLevel: number;
+    pendingChoices: number;
   }>;
   readonly player?: Readonly<{
     characterId: string;
@@ -22,6 +26,20 @@ export interface ArenaTestSnapshot {
     velocityY: number;
     health: number;
     invulnerable: boolean;
+    maxHealth: number;
+    pickupRadius: number;
+    damageBonus: number;
+    attackSpeedBonus: number;
+    critChance: number;
+  }>;
+  readonly progression?: Readonly<{
+    pickups: number;
+    pickupsDropped: number;
+    pickupsCollected: number;
+    choiceIds: readonly string[];
+    selectedUpgradeIds: readonly string[];
+    pierceBonus: number;
+    projectileCountBonus: number;
   }>;
   readonly combat?: Readonly<{
     weaponId: string | null;

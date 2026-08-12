@@ -85,6 +85,8 @@ describe("theme manifests", () => {
       ...alternateTheme,
       weapons: undefined,
       enemies: undefined,
+      pickups: undefined,
+      upgrades: undefined,
     } as unknown as ThemeManifest;
 
     expect(validateTheme(invalid)).toEqual(
@@ -93,6 +95,36 @@ describe("theme manifests", () => {
         `missing required weapon: ${archetypeIds.weapon.starterProjectile}`,
         "enemies registry is required",
         `missing required enemy: ${archetypeIds.enemy.swarmBasic}`,
+        "pickups registry is required",
+        `missing required pickup: ${archetypeIds.pickup.experience}`,
+        "upgrades registry is required",
+        `missing required upgrade: ${archetypeIds.upgrade.damage}`,
+      ]),
+    );
+  });
+
+  it("reports malformed progression registries and unsupported effects", () => {
+    const pickup = alternateTheme.pickups[0];
+    const upgrade = alternateTheme.upgrades[0];
+    if (!pickup || !upgrade) throw new Error("Missing alternate progression fixture");
+    const invalid = {
+      ...alternateTheme,
+      pickups: [pickup, { ...pickup, radius: 0 }],
+      upgrades: [
+        ...alternateTheme.upgrades,
+        {
+          ...upgrade,
+          effects: [{ kind: "unsupported", target: "player.damageBonus", value: 0 }],
+        },
+      ],
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(
+      expect.arrayContaining([
+        `duplicate pickup id: ${archetypeIds.pickup.experience}`,
+        `${archetypeIds.pickup.experience} radius must be greater than zero`,
+        `duplicate upgrade id: ${archetypeIds.upgrade.damage}`,
+        `${archetypeIds.upgrade.damage} has unsupported effect kind: unsupported`,
       ]),
     );
   });
