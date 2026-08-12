@@ -48,6 +48,7 @@ Implementation notes relative to the original plan:
 - Ephemeral run state and the future persistent profile boundary are separate serializable models. Both use stable character/theme IDs, while the profile reserves explicit profile/content schema versions without implementing storage early.
 - Theme validation now treats missing runtime `baseStats` as a reported manifest issue rather than assuming compile-time typing makes malformed data impossible.
 - Phase 2 adds approximately 4.7 kB minified / 1.0 kB gzip to the Phase 1 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+- Post-acceptance CI correction: the boundary browser smoke now traverses the shorter centre-to-top path with shared-runner timing headroom. The original centre-to-right test had an 8-second budget despite taking 7.8 seconds locally and timed out under GitHub Actions load; the physics assertion itself was unchanged.
 
 ## Resolved V0.1 scope
 

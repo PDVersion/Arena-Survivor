@@ -40,26 +40,24 @@ test("opposing movement inputs cancel", async ({ page }) => {
 });
 
 test("arena boundaries contain the player body", async ({ page }) => {
-  test.setTimeout(15_000);
+  test.setTimeout(25_000);
   await waitForRun(page);
-  await page.keyboard.down("ArrowRight");
+  await page.keyboard.down("ArrowUp");
   await expect
     .poll(
       () =>
         page.evaluate(() => {
           const snapshot = window.__ARENA_TEST__?.getSnapshot();
           if (!snapshot?.player || !snapshot.arena) return false;
-          return snapshot.player.x >= snapshot.arena.width - snapshot.player.radius - 0.5;
+          return snapshot.player.y <= snapshot.player.radius + 0.5;
         }),
-      { timeout: 8000 },
+      { timeout: 15_000 },
     )
     .toBe(true);
-  await page.keyboard.up("ArrowRight");
+  await page.keyboard.up("ArrowUp");
 
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
-  expect(snapshot?.player?.x).toBeLessThanOrEqual(
-    (snapshot?.arena?.width ?? 0) - (snapshot?.player?.radius ?? 0),
-  );
+  expect(snapshot?.player?.y).toBeGreaterThanOrEqual(snapshot?.player?.radius ?? 0);
 });
 
 test("pause stops movement and simulation time until resumed", async ({ page }) => {

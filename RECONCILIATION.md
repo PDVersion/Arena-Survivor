@@ -338,6 +338,28 @@ Every new manifest category includes malformed runtime fixtures for missing cont
 Revisit when:
 Manifest validation moves to a shared schema library or external theme loading is introduced.
 
+### REC-014 — Real-time browser traversals need CI headroom
+
+- Status: Resolved
+- Date: 2026-08-12
+- Affects: Phase 2 browser tests, CI reliability, future real-time smoke tests
+- Blocks: None
+
+Context / observation:
+The Phase 2 boundary test held Right from the 2400×1600 arena centre and allowed eight seconds to travel approximately 1,182 units at 200 units/second. Its ideal traversal was about 5.9 seconds and the local passing run already took 7.8 seconds. On the two-worker GitHub Actions runner, all three attempts exceeded the eight-second poll timeout even though movement, camera, pause, and local boundary behavior passed.
+
+Decision / solution:
+Keep the real Arcade Physics integration assertion, but traverse from the centre to the nearer top edge (approximately 782 units, 3.9 seconds ideally). Give the state-based poll 15 seconds inside a 25-second test budget, then assert the final centre remains at or below the body-radius boundary. The framework-independent unit suite continues to cover clamping at every edge.
+
+Why:
+The failure measured runner scheduling/performance rather than an eight-second gameplay requirement. Testing the nearer edge reduces wall time, and explicit headroom prevents shared-runner load from becoming a false gameplay regression without introducing a writable test hook or weakening the actual world-boundary check.
+
+Future guardrail:
+Derive real-time test budgets from the configured distance and speed, then leave substantial CI headroom. Prefer state-based polling and the shortest representative integration path; cover exhaustive geometry and edge cases in deterministic unit tests.
+
+Revisit when:
+Movement speed, spawn position, arena dimensions, Playwright worker count, or the browser timing model changes.
+
 ## Open questions to reconcile during implementation
 
 - The exact XP curve, upgrade magnitudes, Grunt spawn ramp, contact-damage cooldown, and five-minute balance are tuning assumptions, not settled design.
