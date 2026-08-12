@@ -21,7 +21,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). Phase 2 displays a large bounded arena with a camera-followed player.
+Open the URL printed by Vite (normally `http://localhost:5173`). Phase 3 displays a bounded arena with a camera-followed player, an automatically firing starter projectile, and spawning swarm enemies.
 
 Controls:
 
@@ -38,12 +38,13 @@ Install Playwright's Chromium once on a new machine:
 npx playwright install chromium
 ```
 
-Run the Phase 2 verification gate:
+Run the Phase 3 verification gate:
 
 ```bash
 npm run typecheck
-npm test -- --run tests/unit/player tests/unit/run-state
-npm run test:e2e -- --grep "movement|boundaries|pause"
+npm test -- --run tests/unit/combat tests/unit/targeting tests/unit/spawning
+npm test -- --run tests/unit/content
+npm run test:e2e -- --grep "combat|death"
 npm run build
 ```
 
@@ -55,4 +56,4 @@ npm test -- --run
 npm run test:e2e
 ```
 
-For a manual smoke test, run `npm run dev`; move in all eight directions, press opposing directions together, walk into every arena boundary, toggle pause, and confirm the camera follows smoothly with no browser-console errors.
+For a manual smoke test, run `npm run dev`; confirm enemies pursue the player, projectiles retarget and kill them, contact damage visibly dims the player no more than once per second, and enough contact damage ends movement in death. Also recheck movement, boundaries, pause, camera follow, and the browser console.

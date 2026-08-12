@@ -18,8 +18,8 @@ This is the implementation plan for the product vision in [`PLAN.md`](./PLAN.md)
 Update this tracker in the corresponding phase commit. Add the commit hash after the commit exists in the next phase's status update or in the pull request description.
 
 - [x] Phase 1 — Project foundation and browser boot (`ed9dea2`)
-- [x] Phase 2 — Arena, player movement, and run state
-- [ ] Phase 3 — Grunt swarm and Needle combat
+- [x] Phase 2 — Arena, player movement, and run state (`d8a4ce6`; CI fix `73c6847`)
+- [x] Phase 3 — Grunt swarm and Needle combat
 - [ ] Phase 4 — XP, levels, and data-driven upgrades
 - [ ] Phase 5 — HUD, run completion, and restart loop
 - [ ] Phase 6 — Horde shrine and V0.1 hardening
@@ -49,6 +49,21 @@ Implementation notes relative to the original plan:
 - Theme validation now treats missing runtime `baseStats` as a reported manifest issue rather than assuming compile-time typing makes malformed data impossible.
 - Phase 2 adds approximately 4.7 kB minified / 1.0 kB gzip to the Phase 1 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
 - Post-acceptance CI correction: the boundary browser smoke now traverses the shorter centre-to-top path with shared-runner timing headroom. The original centre-to-right test had an 8-second budget despite taking 7.8 seconds locally and timed out under GitHub Actions load; the physics assertion itself was unchanged.
+
+### Phase 3 outcome — 2026-08-12
+
+Phase 3 is implemented and its automated gates pass: theme/content validation, nearest targeting, deterministic normal/critical damage, pierce accounting, spawn caps, live auto-fire and collisions, exact-once kills, throttled contact damage, visible immunity, death, all earlier browser regressions, type-check, lint, and production build.
+
+Implementation notes relative to the original plan:
+
+- The active theme now owns the `enemy.swarm_basic` and `weapon.starter_projectile` definitions and their presentation tokens. Generic `EnemyActor` and `ProjectileActor` classes receive definitions; runtime logic uses stable IDs only.
+- V0.1 crit rolls cap probability at 100% while the stat model preserves values above 100% for later overcrit rules. Each projectile rolls damage once when fired.
+- Projectile hit identity is tracked per projectile, so one projectile cannot damage the same enemy twice; its hit budget is one base target plus configured pierce.
+- Player contact immunity is global and simulation-time based: one contact hit can land per 1000 ms regardless of how many enemies overlap. The player marker dims during that interval.
+- The provisional swarm baseline spawns one enemy every 400 ms on a deterministic ring 360 units from the player, with caps of 80 live enemies and 64 live projectiles. High-churn actors are destroyed on expiry/death and cannot grow beyond those caps.
+- Phase 3 adds approximately 9.7 kB minified / 2.3 kB gzip to the Phase 2 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+- Manual-test correction: projectile velocity is now applied only after Arcade Physics group enrollment, active projectiles are cleared on death, and the browser suite tracks one projectile's ID/velocity/displacement so creation cannot be mistaken for firing.
+- CI correction: GitHub Actions runs the real-time Chromium suite with one worker. Two concurrent Phaser simulations on the shared runner slowed combat, death, and boundary paths together enough to exhaust otherwise generous state-poll budgets; local Playwright runs retain automatic parallelism.
 
 ## Resolved V0.1 scope
 

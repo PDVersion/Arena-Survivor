@@ -5,6 +5,7 @@ import { createInitialProfile } from "../../../src/game/state/profile-state";
 import {
   advanceRunState,
   createRunState,
+  damageRunPlayer,
   isRunStateSerializable,
   resetRunState,
   setRunStatus,
@@ -61,6 +62,20 @@ describe("run state", () => {
     expect(advanceRunState(paused, 500)).toBe(paused);
     expect(advanceRunState(dead, 500)).toBe(dead);
     expect(setRunStatus(dead, "playing")).toBe(dead);
+  });
+
+  it("enters death exactly when health reaches zero", () => {
+    const run = createRunState({
+      themeId: knightMagicTheme.id,
+      characterId,
+      baseStats: character.baseStats,
+    });
+    const injured = damageRunPlayer(run, 90);
+    const dead = damageRunPlayer(injured, 10);
+
+    expect(injured).toMatchObject({ status: "playing", player: { health: 10 } });
+    expect(dead).toMatchObject({ status: "dead", player: { health: 0 } });
+    expect(damageRunPlayer(dead, 10)).toBe(dead);
   });
 
   it("resets all transient values to a fresh independent baseline", () => {

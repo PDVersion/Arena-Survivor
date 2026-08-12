@@ -22,6 +22,8 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.tokens.palette.player).not.toBe(alternateTheme.tokens.palette.player);
     expect(knightMagicTheme.characters[0]?.id).toBe(alternateTheme.characters[0]?.id);
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
+    expect(knightMagicTheme.weapons).toEqual(alternateTheme.weapons);
+    expect(knightMagicTheme.enemies).toEqual(alternateTheme.enemies);
   });
 
   it("reports missing copy, duplicate IDs, bad values, and broken tokens", () => {
@@ -52,6 +54,45 @@ describe("theme manifests", () => {
         `${archetypeIds.character.starter} radius must be greater than zero`,
         `${archetypeIds.character.starter} references missing presentation token: missing`,
         `${archetypeIds.character.starter} baseStats are required`,
+      ]),
+    );
+  });
+
+  it("reports duplicate and invalid combat definitions", () => {
+    const weapon = alternateTheme.weapons[0];
+    const enemy = alternateTheme.enemies[0];
+    if (!weapon || !enemy) throw new Error("Missing alternate combat fixture");
+    const invalid = {
+      ...alternateTheme,
+      weapons: [weapon, { ...weapon, damage: 0, pierce: -1 }],
+      enemies: [enemy, { ...enemy, maxHealth: 0, radius: 0 }],
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(
+      expect.arrayContaining([
+        `duplicate weapon id: ${archetypeIds.weapon.starterProjectile}`,
+        `${archetypeIds.weapon.starterProjectile} damage must be greater than zero`,
+        `${archetypeIds.weapon.starterProjectile} pierce must be a non-negative integer`,
+        `duplicate enemy id: ${archetypeIds.enemy.swarmBasic}`,
+        `${archetypeIds.enemy.swarmBasic} maxHealth must be greater than zero`,
+        `${archetypeIds.enemy.swarmBasic} radius must be greater than zero`,
+      ]),
+    );
+  });
+
+  it("reports missing combat registries without throwing", () => {
+    const invalid = {
+      ...alternateTheme,
+      weapons: undefined,
+      enemies: undefined,
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(
+      expect.arrayContaining([
+        "weapons registry is required",
+        `missing required weapon: ${archetypeIds.weapon.starterProjectile}`,
+        "enemies registry is required",
+        `missing required enemy: ${archetypeIds.enemy.swarmBasic}`,
       ]),
     );
   });

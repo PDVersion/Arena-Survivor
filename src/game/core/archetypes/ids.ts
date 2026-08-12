@@ -25,6 +25,8 @@ export const archetypeIds = {
 type Values<T> = T[keyof T];
 
 export type CharacterId = Values<typeof archetypeIds.character>;
+export type WeaponId = Values<typeof archetypeIds.weapon>;
+export type EnemyId = Values<typeof archetypeIds.enemy>;
 export type ContentId =
   | Values<typeof archetypeIds.character>
   | Values<typeof archetypeIds.weapon>

@@ -1,4 +1,4 @@
-import type { CharacterId, ContentId } from "./ids";
+import type { CharacterId, ContentId, EnemyId, WeaponId } from "./ids";
 import type { PlayerBaseStats } from "../stats/player-stats";
 
 export interface ContentCopy {
@@ -22,6 +22,9 @@ export interface ThemePalette {
   readonly accent: string;
   readonly text: string;
   readonly player: string;
+  readonly enemy: string;
+  readonly projectile: string;
+  readonly critical: string;
 }
 
 export interface ThemeTokens {
@@ -36,10 +39,35 @@ export interface CharacterDefinition {
   readonly baseStats: PlayerBaseStats;
 }
 
+export interface WeaponDefinition {
+  readonly id: WeaponId;
+  readonly damage: number;
+  readonly cooldownMs: number;
+  readonly projectileSpeed: number;
+  readonly projectileLifetimeMs: number;
+  readonly projectileRadius: number;
+  readonly projectileCount: number;
+  readonly pierce: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "projectile" | "critical">;
+}
+
+export interface EnemyDefinition {
+  readonly id: EnemyId;
+  readonly maxHealth: number;
+  readonly moveSpeed: number;
+  readonly contactDamage: number;
+  readonly contactCooldownMs: number;
+  readonly radius: number;
+  readonly xpReward: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "enemy">;
+}
+
 export interface ThemeManifest {
   readonly id: string;
   readonly schemaVersion: 1;
   readonly copy: ThemeCopy;
   readonly tokens: ThemeTokens;
   readonly characters: readonly CharacterDefinition[];
+  readonly weapons: readonly WeaponDefinition[];
+  readonly enemies: readonly EnemyDefinition[];
 }

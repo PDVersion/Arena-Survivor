@@ -19,6 +19,10 @@ export interface RunState {
   readonly elapsedMs: number;
   readonly durationMs: number;
   readonly player: RunPlayerState;
+  readonly statistics: {
+    readonly kills: number;
+    readonly liveEnemies: number;
+  };
 }
 
 export interface CreateRunOptions {
@@ -49,6 +53,7 @@ export function createRunState(options: CreateRunOptions): RunState {
       health: options.baseStats.maxHealth,
       stats: cloneStats(options.baseStats),
     },
+    statistics: { kills: 0, liveEnemies: 0 },
   };
 }
 
@@ -68,6 +73,24 @@ export function setRunStatus(state: RunState, status: RunStatus): RunState {
   if (state.status === "dead" || state.status === "complete") return state;
   if (status === state.status) return state;
   return { ...state, status };
+}
+
+export function damageRunPlayer(state: RunState, damage: number): RunState {
+  if (state.status !== "playing" || damage <= 0) return state;
+  const health = Math.max(0, state.player.health - damage);
+  return {
+    ...state,
+    status: health === 0 ? "dead" : state.status,
+    player: { ...state.player, health },
+  };
+}
+
+export function setLiveEnemyCount(state: RunState, liveEnemies: number): RunState {
+  return { ...state, statistics: { ...state.statistics, liveEnemies: Math.max(0, liveEnemies) } };
+}
+
+export function recordKill(state: RunState): RunState {
+  return { ...state, statistics: { ...state.statistics, kills: state.statistics.kills + 1 } };
 }
 
 export function resetRunState(state: RunState): RunState {
