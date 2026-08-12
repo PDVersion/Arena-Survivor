@@ -23,11 +23,15 @@ describe("experience progression", () => {
     expect(consumePendingChoice(result.progression).pendingChoices).toBe(1);
   });
 
-  it("applies the XP multiplier before resolving levels", () => {
+  it("preserves fractional bonus XP before resolving levels", () => {
     expect(awardExperience(createProgressionState(), 2, 1.5)).toMatchObject({
       awardedXp: 3,
       levelsGained: 1,
       progression: { level: 2, xp: 1 },
+    });
+    expect(awardExperience(createProgressionState(), 1, 1.5)).toMatchObject({
+      awardedXp: 1.5,
+      progression: { level: 1, xp: 1.5 },
     });
   });
 

@@ -31,6 +31,8 @@ export const alternateTheme = defineTheme({
       completeTitle: "Test victory",
       completeMessage: "Test victory message",
       restartAction: "Test restart",
+      shrinePrompt: "Use test interact",
+      surgeActive: "Test surge active",
     },
     content,
   },
@@ -46,6 +48,7 @@ export const alternateTheme = defineTheme({
       projectile: "#ffff00",
       critical: "#ff8800",
       pickup: "#88ff88",
+      shrine: "#ff4488",
     },
     playerShape: "circle",
   },
@@ -111,5 +114,16 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.upgrade.moveSpeed, effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }], presentationToken: "accent" },
     { id: archetypeIds.upgrade.health, effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }], presentationToken: "accent" },
     { id: archetypeIds.upgrade.pickupRadius, effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }], presentationToken: "accent" },
+  ],
+  shrines: [
+    {
+      id: archetypeIds.shrine.spawnSurge,
+      radius: 24,
+      interactionRadius: 120,
+      spawnCount: 100,
+      spawnDurationMs: 20_000,
+      rewardMultiplier: 1.5,
+      presentationToken: "shrine",
+    },
   ],
 });

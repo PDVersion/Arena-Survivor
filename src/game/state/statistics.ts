@@ -18,9 +18,11 @@ export function formatRunTime(remainingMs: number): string {
 }
 
 export function selectHudValues(state: RunState): HudValues {
+  const formatXp = (value: number): string =>
+    Number.isInteger(value) ? String(value) : value.toFixed(1).replace(/\.0$/, "");
   return {
     health: `${Math.ceil(state.player.health)} / ${Math.ceil(state.player.stats.maxHealth)}`,
-    experience: `${state.progression.xp} / ${state.progression.xpToNextLevel}`,
+    experience: `${formatXp(state.progression.xp)} / ${formatXp(state.progression.xpToNextLevel)}`,
     level: String(state.progression.level),
     time: formatRunTime(state.durationMs - state.elapsedMs),
     kills: String(state.statistics.kills),

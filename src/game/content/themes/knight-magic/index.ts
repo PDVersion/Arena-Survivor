@@ -6,6 +6,7 @@ import { tokens } from "./tokens";
 import { weapons } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades } from "./upgrades";
+import { shrines } from "./shrines";
 
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
@@ -17,4 +18,5 @@ export const knightMagicTheme = defineTheme({
   enemies,
   pickups,
   upgrades,
+  shrines,
 });

@@ -21,8 +21,8 @@ Update this tracker in the corresponding phase commit. Add the commit hash after
 - [x] Phase 2 — Arena, player movement, and run state (`d8a4ce6`; CI fix `73c6847`)
 - [x] Phase 3 — Grunt swarm and Needle combat (`1a554e6`; runtime fix `3f4f39a`; CI fix `8a28568`)
 - [x] Phase 4 — XP, levels, and data-driven upgrades (`36c293c`)
-- [x] Phase 5 — HUD, run completion, and restart loop
-- [ ] Phase 6 — Horde shrine and V0.1 hardening
+- [x] Phase 5 — HUD, run completion, and restart loop (`c07dd5d`)
+- [x] Phase 6 — Horde shrine and V0.1 hardening
 
 ### Phase 1 outcome — 2026-08-12
 
@@ -92,6 +92,19 @@ Implementation notes relative to the original plan:
 - Focus loss pauses only an actively playing run and focus restores only that focus-created pause; manual Escape pauses are never auto-resumed. Camera-fixed overlay children use screen-space pointer bounds to remain interactive after camera travel and resize.
 - Local Playwright concurrency is capped at four after nine simultaneous Phaser canvases starved the live level-up path once; CI remains serial. The complete 12-test Chromium suite passes with four workers.
 - Phase 5 adds approximately 8.9 kB minified / 2.1 kB gzip to the Phase 4 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+
+### Phase 6 outcome — 2026-08-12
+
+Phase 6 is implemented and the complete V0.1 gate passes: stable theme-owned shrine content, discoverable interaction, exact-once activation, 100 deterministic surge slots over 20 seconds, capped back-pressure, source-tagged +50% XP through collection, activation feedback, telemetry, active-surge restart cleanup, the rename-only theme boundary, all 45 unit tests, all 14 Chromium paths, type-check, lint, production build, and dependency audit.
+
+Implementation notes relative to the original plan:
+
+- The active theme defines `shrine.spawn_surge`; a generic star-shaped shrine actor receives its mechanics, token, label, and prompt without importing knight-magic content into simulation code.
+- Surge slots are derived from elapsed simulation time instead of wall-clock timers. Capacity pressure retains due work rather than dropping it, shrine work gets first use of the existing 80-enemy cap each frame, and the scheduler finishes only after all 100 tagged enemies have spawned.
+- Enemy and XP-pickup runtime data carry an explicit spawn/reward source. Shrine enemies use a `1.5` multiplier and fractional XP is preserved through award and statistics formatting, so small base rewards remain exactly 50% larger.
+- Restart reconstructs the shrine actor, scheduler, tagged actors, counters, and input bindings with the rest of the run. Browser coverage restarts during a live surge and proves that no scheduled work or tagged reward state leaks into the next generation.
+- The nearby shrine and range prompt were visually inspected in Chromium. Automated early and late activation, repeated-input rejection, exact scheduling, reward collection, high-density feedback, and active-surge restart cover the interaction paths that require precise telemetry.
+- Phase 6 adds approximately 6.3 kB minified / 1.4 kB gzip to the Phase 5 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
 
 ## Resolved V0.1 scope
 

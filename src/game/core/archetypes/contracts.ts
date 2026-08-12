@@ -1,4 +1,12 @@
-import type { CharacterId, ContentId, EnemyId, PickupId, UpgradeId, WeaponId } from "./ids";
+import type {
+  CharacterId,
+  ContentId,
+  EnemyId,
+  PickupId,
+  ShrineId,
+  UpgradeId,
+  WeaponId,
+} from "./ids";
 import type { UpgradeEffect } from "./effects";
 import type { PlayerBaseStats } from "../stats/player-stats";
 
@@ -20,6 +28,8 @@ export interface ThemeVocabulary {
   readonly completeTitle: string;
   readonly completeMessage: string;
   readonly restartAction: string;
+  readonly shrinePrompt: string;
+  readonly surgeActive: string;
 }
 
 export interface ThemeCopy {
@@ -44,6 +54,7 @@ export interface ThemePalette {
   readonly projectile: string;
   readonly critical: string;
   readonly pickup: string;
+  readonly shrine: string;
 }
 
 export interface ThemeTokens {
@@ -94,6 +105,16 @@ export interface UpgradeDefinition {
   readonly presentationToken: keyof Pick<ThemePalette, "accent">;
 }
 
+export interface ShrineDefinition {
+  readonly id: ShrineId;
+  readonly radius: number;
+  readonly interactionRadius: number;
+  readonly spawnCount: number;
+  readonly spawnDurationMs: number;
+  readonly rewardMultiplier: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "shrine">;
+}
+
 export interface ThemeManifest {
   readonly id: string;
   readonly schemaVersion: 1;
@@ -104,4 +125,5 @@ export interface ThemeManifest {
   readonly enemies: readonly EnemyDefinition[];
   readonly pickups: readonly PickupDefinition[];
   readonly upgrades: readonly UpgradeDefinition[];
+  readonly shrines: readonly ShrineDefinition[];
 }

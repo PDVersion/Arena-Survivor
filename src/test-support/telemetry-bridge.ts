@@ -59,6 +59,26 @@ export interface ArenaTestSnapshot {
     trailsEmitted: number;
     pickupCues: number;
   }>;
+  readonly shrine?: Readonly<{
+    id: string | null;
+    x: number;
+    y: number;
+    inRange: boolean;
+    activated: boolean;
+    active: boolean;
+    scheduled: number;
+    spawned: number;
+    targetCount: number;
+    durationMs: number;
+    rewardMultiplier: number;
+    enemiesSpawned: number;
+    enemiesDefeated: number;
+    shrineXpDropped: number;
+    ambientXpDropped: number;
+    shrineXpCollected: number;
+    ambientXpCollected: number;
+    feedbackCount: number;
+  }>;
   readonly combat?: Readonly<{
     weaponId: string | null;
     enemyId: string | null;
