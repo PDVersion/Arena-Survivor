@@ -406,6 +406,28 @@ Unit tests cover deterministic normal/crit rolls, crit chance above 100%, duplic
 Revisit when:
 Overcrit tiers, per-target rerolls, chain effects, or projectile-owned on-hit modifiers enter scope.
 
+### REC-017 — Projectile launch follows physics-group enrollment
+
+- Status: Resolved
+- Date: 2026-08-12
+- Affects: Phase 3 projectile runtime, browser telemetry, terminal cleanup
+- Blocks: None
+
+Context / observation:
+Manual Phase 3 testing reported that the starter projectile appeared inside the player but seemed stuck rather than visibly targeting and firing. The actor assigned velocity before it was enrolled in its Arcade Physics group, leaving launch behavior dependent on whether group setup preserved the existing body velocity. Death then paused the physics world with the most recently created projectile still visible, making a center-spawned pellet look permanently stuck because Phase 5 has not added a death overlay yet. The original browser test proved eventual kills but did not prove that a particular projectile changed position.
+
+Decision / solution:
+Construct and enroll the projectile in the physics group first, then explicitly launch it at the computed target angle and configured speed. Give each projectile a stable runtime ID in test telemetry. On death, destroy all active projectiles before pausing physics. Strengthen the browser combat test to require the same projectile ID to report speed 400 and move more than 20 world units; strengthen the death test to require zero remaining projectiles and no sample.
+
+Why:
+Physics container setup should finish before motion is applied. Direct displacement coverage verifies the observed behavior rather than inferring firing from a later kill, and terminal cleanup prevents a correct frozen simulation from presenting a misleading projectile artifact.
+
+Future guardrail:
+Any pooled or group-managed moving actor must be activated/enrolled before its final velocity is assigned. Browser telemetry for motion-sensitive actors should include identity, position, and velocity, and tests should assert displacement when movement itself is the acceptance criterion.
+
+Revisit when:
+Projectile pooling, pause-resume projectile persistence, trails, or Phase 5 terminal presentation changes actor cleanup policy.
+
 ## Open questions to reconcile during implementation
 
 - The exact XP curve, upgrade magnitudes, longer-run spawn ramp, and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity are provisional smoke-test baselines.

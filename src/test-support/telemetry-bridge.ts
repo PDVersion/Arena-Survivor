@@ -32,6 +32,13 @@ export interface ArenaTestSnapshot {
     contactHits: number;
     enemyCap: number;
     projectileCap: number;
+    projectileSample: Readonly<{
+      id: string;
+      x: number;
+      y: number;
+      velocityX: number;
+      velocityY: number;
+    }> | null;
   }>;
   readonly error?: string;
 }

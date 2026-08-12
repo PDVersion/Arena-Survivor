@@ -52,6 +52,7 @@ export class RunScene extends Phaser.Scene {
   private invulnerableUntilMs = 0;
   private spawnSequence = 0;
   private enemySequence = 0;
+  private projectileSequence = 0;
   private shotsFired = 0;
   private criticalShots = 0;
   private contactHits = 0;
@@ -251,9 +252,9 @@ export class RunScene extends Phaser.Scene {
       const offset = (index - (this.weaponDefinition.projectileCount - 1) / 2) * 0.12;
       const projectile = new ProjectileActor(
         this,
+        `projectile-${this.projectileSequence + 1}`,
         this.player.x,
         this.player.y,
-        baseAngle + offset,
         this.weaponDefinition,
         activeTheme.tokens,
         damage.damage,
@@ -262,6 +263,8 @@ export class RunScene extends Phaser.Scene {
       );
       this.projectiles.add(projectile);
       this.projectileGroup.add(projectile);
+      this.projectileSequence += 1;
+      projectile.launch(baseAngle + offset, this.weaponDefinition.projectileSpeed);
       projectile.once(Phaser.GameObjects.Events.DESTROY, () => this.projectiles.delete(projectile));
       this.shotsFired += 1;
       if (damage.critical) this.criticalShots += 1;
@@ -297,6 +300,7 @@ export class RunScene extends Phaser.Scene {
     this.player.setAlpha(0.35);
     if (this.runState.status === "dead") {
       this.player.stop();
+      for (const projectile of this.projectiles) projectile.destroy();
       this.physics.world.pause();
     }
   }
@@ -366,6 +370,7 @@ export class RunScene extends Phaser.Scene {
 
   private publishTelemetry(): void {
     const body = this.player?.arcadeBody;
+    const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -409,6 +414,15 @@ export class RunScene extends Phaser.Scene {
         contactHits: this.contactHits,
         enemyCap: V01_SPAWN_LIMITS.maxAlive,
         projectileCap: V01_SPAWN_LIMITS.maxProjectiles,
+        projectileSample: projectileSample
+          ? {
+              id: projectileSample.projectileId,
+              x: projectileSample.x,
+              y: projectileSample.y,
+              velocityX: projectileSample.arcadeBody.velocity.x,
+              velocityY: projectileSample.arcadeBody.velocity.y,
+            }
+          : null,
       },
     });
   }

@@ -62,6 +62,7 @@ Implementation notes relative to the original plan:
 - Player contact immunity is global and simulation-time based: one contact hit can land per 1000 ms regardless of how many enemies overlap. The player marker dims during that interval.
 - The provisional swarm baseline spawns one enemy every 400 ms on a deterministic ring 360 units from the player, with caps of 80 live enemies and 64 live projectiles. High-churn actors are destroyed on expiry/death and cannot grow beyond those caps.
 - Phase 3 adds approximately 9.7 kB minified / 2.3 kB gzip to the Phase 2 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+- Manual-test correction: projectile velocity is now applied only after Arcade Physics group enrollment, active projectiles are cleared on death, and the browser suite tracks one projectile's ID/velocity/displacement so creation cannot be mistaken for firing.
 
 ## Resolved V0.1 scope
 

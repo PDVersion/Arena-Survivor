@@ -3,6 +3,7 @@ import type { ThemeTokens, WeaponDefinition } from "../core/archetypes/contracts
 import { consumePierce, createPierceState, type PierceState } from "../systems/combat";
 
 export class ProjectileActor extends Phaser.GameObjects.Arc {
+  readonly projectileId: string;
   readonly damage: number;
   readonly critical: boolean;
   private pierceState: PierceState;
@@ -10,9 +11,9 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
 
   constructor(
     scene: Phaser.Scene,
+    projectileId: string,
     x: number,
     y: number,
-    angleRadians: number,
     definition: WeaponDefinition,
     tokens: ThemeTokens,
     damage: number,
@@ -22,6 +23,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     const token = critical ? "critical" : definition.presentationToken;
     const colour = Phaser.Display.Color.HexStringToColor(tokens.palette[token]).color;
     super(scene, x, y, definition.projectileRadius, 0, 360, false, colour);
+    this.projectileId = projectileId;
     this.damage = damage;
     this.critical = critical;
     this.pierceState = createPierceState(definition.pierce);
@@ -29,14 +31,14 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.projectileRadius);
-    this.arcadeBody.setVelocity(
-      Math.cos(angleRadians) * definition.projectileSpeed,
-      Math.sin(angleRadians) * definition.projectileSpeed,
-    );
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
     return this.body as Phaser.Physics.Arcade.Body;
+  }
+
+  launch(angleRadians: number, speed: number): void {
+    this.arcadeBody.setVelocity(Math.cos(angleRadians) * speed, Math.sin(angleRadians) * speed);
   }
 
   canHit(targetId: string): boolean {

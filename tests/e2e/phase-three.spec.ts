@@ -13,6 +13,20 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.shotsFired))
     .toBeGreaterThan(0);
   await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.projectileSample))
+    .not.toBeNull();
+  const fired = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.projectileSample);
+  expect(Math.hypot(fired?.velocityX ?? 0, fired?.velocityY ?? 0)).toBeCloseTo(400);
+  await expect
+    .poll(() =>
+      page.evaluate((sample) => {
+        const current = window.__ARENA_TEST__?.getSnapshot().combat?.projectileSample;
+        if (!current || current.id !== sample?.id) return 0;
+        return Math.hypot(current.x - sample.x, current.y - sample.y);
+      }, fired),
+    )
+    .toBeGreaterThan(20);
+  await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.kills), {
       timeout: 12_000,
     })
@@ -50,4 +64,6 @@ test("contact damage is visible, throttled, and can cause death", async ({ page 
   expect(dead?.player?.health).toBe(0);
   expect(dead?.player?.velocityX).toBe(0);
   expect(dead?.player?.velocityY).toBe(0);
+  expect(dead?.combat?.projectiles).toBe(0);
+  expect(dead?.combat?.projectileSample).toBeNull();
 });
