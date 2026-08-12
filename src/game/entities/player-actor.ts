@@ -30,8 +30,8 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
     return this.body as Phaser.Physics.Arcade.Body;
   }
 
-  move(input: DirectionalInput): void {
-    const velocity = resolveMovement(input, this.definition.baseStats.moveSpeed);
+  move(input: DirectionalInput, moveSpeed = this.definition.baseStats.moveSpeed): void {
+    const velocity = resolveMovement(input, moveSpeed);
     this.arcadeBody.setVelocity(velocity.x, velocity.y);
   }
 

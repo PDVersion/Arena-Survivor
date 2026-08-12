@@ -44,7 +44,7 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
 });
 
 test("contact damage is visible, throttled, and can cause death", async ({ page }) => {
-  test.setTimeout(80_000);
+  test.setTimeout(100_000);
   await waitForCombat(page);
 
   await expect
@@ -56,11 +56,26 @@ test("contact damage is visible, throttled, and can cause death", async ({ page 
   expect(firstHit?.player?.health).toBeLessThan(100);
   expect(firstHit?.player?.invulnerable).toBe(true);
 
-  await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
-      timeout: 35_000,
-    })
-    .toBe("dead");
+  const deadline = Date.now() + 55_000;
+  while (Date.now() < deadline) {
+    const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+    if (snapshot?.run?.status === "dead") break;
+    if (snapshot?.run?.status === "level_up") {
+      const choices = snapshot.progression?.choiceIds ?? [];
+      const preferred = [
+        "upgrade.move_speed",
+        "upgrade.health",
+        "upgrade.pickup_radius",
+      ];
+      const index = Math.max(
+        0,
+        choices.findIndex((choice) => preferred.includes(choice)),
+      );
+      await page.keyboard.press(`Digit${index + 1}`);
+    }
+    await page.waitForTimeout(100);
+  }
+  expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("dead");
   const dead = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(dead?.player?.health).toBe(0);
   expect(dead?.player?.velocityX).toBe(0);

@@ -11,6 +11,7 @@ export const tokens = {
     enemy: "#e87979",
     projectile: "#c4b5fd",
     critical: "#fbbf24",
+    pickup: "#6ee7b7",
   },
   playerShape: "diamond",
 } as const satisfies ThemeTokens;

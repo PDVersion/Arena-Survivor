@@ -19,6 +19,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     damage: number,
     critical: boolean,
     nowMs: number,
+    pierce = definition.pierce,
   ) {
     const token = critical ? "critical" : definition.presentationToken;
     const colour = Phaser.Display.Color.HexStringToColor(tokens.palette[token]).color;
@@ -26,7 +27,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     this.projectileId = projectileId;
     this.damage = damage;
     this.critical = critical;
-    this.pierceState = createPierceState(definition.pierce);
+    this.pierceState = createPierceState(pierce);
     this.expiresAtMs = nowMs + definition.projectileLifetimeMs;
     scene.add.existing(this);
     scene.physics.add.existing(this);

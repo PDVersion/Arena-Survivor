@@ -7,6 +7,7 @@ export const copy = {
   bootStatus: "The arena awaits",
   bootFailure: "The arena could not be summoned.",
   movementHint: "Move with WASD or arrow keys · Pause with Escape",
+  levelUpTitle: "Choose a new blessing",
   content: {
     [archetypeIds.character.starter]: {
       name: "Wandering Knight",
@@ -43,6 +44,22 @@ export const copy = {
     [archetypeIds.upgrade.pierce]: {
       name: "Sharpened Tip",
       description: "Projectiles pass through another enemy.",
+    },
+    [archetypeIds.upgrade.projectileCount]: {
+      name: "Twin Casting",
+      description: "Launch one additional projectile with every attack.",
+    },
+    [archetypeIds.upgrade.moveSpeed]: {
+      name: "Fleet-Footed",
+      description: "Move more quickly through the arena.",
+    },
+    [archetypeIds.upgrade.health]: {
+      name: "Knight's Vigor",
+      description: "Increase maximum health and heal by the same amount.",
+    },
+    [archetypeIds.upgrade.pickupRadius]: {
+      name: "Arcane Reach",
+      description: "Draw experience sparks from farther away.",
     },
   },
 } as const satisfies ThemeCopy;

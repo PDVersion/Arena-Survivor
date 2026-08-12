@@ -19,6 +19,10 @@ export const archetypeIds = {
     attackSpeed: "upgrade.attack_speed",
     critChance: "upgrade.crit_chance",
     pierce: "upgrade.pierce",
+    projectileCount: "upgrade.projectile_count",
+    moveSpeed: "upgrade.move_speed",
+    health: "upgrade.health",
+    pickupRadius: "upgrade.pickup_radius",
   },
 } as const;
 
@@ -27,6 +31,8 @@ type Values<T> = T[keyof T];
 export type CharacterId = Values<typeof archetypeIds.character>;
 export type WeaponId = Values<typeof archetypeIds.weapon>;
 export type EnemyId = Values<typeof archetypeIds.enemy>;
+export type PickupId = Values<typeof archetypeIds.pickup>;
+export type UpgradeId = Values<typeof archetypeIds.upgrade>;
 export type ContentId =
   | Values<typeof archetypeIds.character>
   | Values<typeof archetypeIds.weapon>

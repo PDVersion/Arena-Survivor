@@ -1,13 +1,21 @@
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
-import type { EnemyDefinition, WeaponDefinition } from "../core/archetypes/contracts";
+import type {
+  EnemyDefinition,
+  PickupDefinition,
+  UpgradeDefinition,
+  WeaponDefinition,
+} from "../core/archetypes/contracts";
 import { EnemyActor } from "../entities/enemy-actor";
+import { PickupActor } from "../entities/pickup-actor";
 import { PlayerActor } from "../entities/player-actor";
 import { ProjectileActor } from "../entities/projectile-actor";
 import { createInitialProfile } from "../state/profile-state";
 import {
   advanceRunState,
+  applyRunUpgrade,
+  awardRunExperience,
   createRunState,
   damageRunPlayer,
   recordKill,
@@ -19,6 +27,9 @@ import type { DirectionalInput } from "../systems/player-movement";
 import { canApplyContactDamage, rollDamage } from "../systems/combat";
 import { canSpawn, pointOnSpawnRing, V01_SPAWN_LIMITS } from "../systems/spawning";
 import { findNearestTarget } from "../systems/targeting";
+import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
+import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
+import { claimExperiencePickup } from "../systems/xp";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
@@ -40,12 +51,19 @@ export class RunScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private wasd?: MovementKeys;
   private pauseKey?: Phaser.Input.Keyboard.Key;
+  private choiceKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private enemyGroup?: Phaser.Physics.Arcade.Group;
   private projectileGroup?: Phaser.Physics.Arcade.Group;
+  private pickupGroup?: Phaser.Physics.Arcade.Group;
   private enemies = new Set<EnemyActor>();
   private projectiles = new Set<ProjectileActor>();
+  private pickups = new Set<PickupActor>();
   private enemyDefinition?: EnemyDefinition;
   private weaponDefinition?: WeaponDefinition;
+  private pickupDefinition?: PickupDefinition;
+  private levelUpUi?: LevelUpChoiceUi;
+  private currentChoices: readonly UpgradeDefinition[] = [];
+  private readonly upgradeRandom = createSeededRandom(0xa7e4_0001);
   private nextSpawnAtMs = 0;
   private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
@@ -56,6 +74,10 @@ export class RunScene extends Phaser.Scene {
   private shotsFired = 0;
   private criticalShots = 0;
   private contactHits = 0;
+  private pickupSequence = 0;
+  private pickupsDropped = 0;
+  private pickupsCollected = 0;
+  private claimedPickupIds: ReadonlySet<string> = new Set();
 
   constructor() {
     super("run");
@@ -85,8 +107,11 @@ export class RunScene extends Phaser.Scene {
     this.weaponDefinition = activeTheme.weapons.find(
       (weapon) => weapon.id === archetypeIds.weapon.starterProjectile,
     );
-    if (!this.enemyDefinition || !this.weaponDefinition) {
-      throw new Error("The active theme is missing required combat content");
+    this.pickupDefinition = activeTheme.pickups.find(
+      (pickup) => pickup.id === archetypeIds.pickup.experience,
+    );
+    if (!this.enemyDefinition || !this.weaponDefinition || !this.pickupDefinition) {
+      throw new Error("The active theme is missing required run content");
     }
 
     this.runState = createRunState({
@@ -111,6 +136,7 @@ export class RunScene extends Phaser.Scene {
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
     this.projectileGroup = this.physics.add.group({ runChildUpdate: false });
+    this.pickupGroup = this.physics.add.group({ runChildUpdate: false });
     this.physics.add.overlap(
       this.player,
       this.enemyGroup,
@@ -131,6 +157,12 @@ export class RunScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     }) as MovementKeys;
     this.pauseKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.choiceKeys = [
+      keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
+      keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
+      keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
+    ];
+    this.levelUpUi = new LevelUpChoiceUi(this, activeTheme);
 
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -144,12 +176,14 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !this.pauseKey) return;
 
     if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.togglePause();
+    if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
 
     this.runState = advanceRunState(this.runState, delta);
     if (this.runState.status === "playing") {
-      this.player.move(this.readMovementInput());
+      this.player.move(this.readMovementInput(), this.runState.player.stats.moveSpeed);
       this.updateEnemies();
       this.updateProjectiles();
+      this.updatePickups();
       this.spawnIfReady();
       this.fireIfReady();
       if (this.runState.elapsedMs >= this.invulnerableUntilMs) this.player.setAlpha(1);
@@ -173,6 +207,23 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState) return;
     for (const projectile of this.projectiles) {
       if (projectile.active && projectile.hasExpired(this.runState.elapsedMs)) projectile.destroy();
+    }
+  }
+
+  private updatePickups(): void {
+    if (!this.player || !this.runState) return;
+    const target = new Phaser.Math.Vector2(this.player.x, this.player.y);
+    for (const pickup of this.pickups) {
+      if (!pickup.active) continue;
+      const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, pickup.x, pickup.y);
+      if (distance <= this.player.definition.radius + pickup.definition.radius) {
+        this.collectPickup(pickup);
+        if (this.runState.status === "level_up") break;
+      } else if (distance <= this.runState.player.stats.pickupRadius) {
+        pickup.magnetToward(target);
+      } else {
+        pickup.stop();
+      }
     }
   }
 
@@ -247,9 +298,13 @@ export class RunScene extends Phaser.Scene {
       critDamage: this.runState.player.stats.critDamage,
       random: Math.random,
     });
-    for (let index = 0; index < this.weaponDefinition.projectileCount; index += 1) {
+    const projectileCount = Math.max(
+      1,
+      Math.floor(this.weaponDefinition.projectileCount + this.runState.weaponModifiers.projectileCount),
+    );
+    for (let index = 0; index < projectileCount; index += 1) {
       if (!canSpawn(this.projectiles.size, V01_SPAWN_LIMITS.maxProjectiles)) break;
-      const offset = (index - (this.weaponDefinition.projectileCount - 1) / 2) * 0.12;
+      const offset = (index - (projectileCount - 1) / 2) * 0.12;
       const projectile = new ProjectileActor(
         this,
         `projectile-${this.projectileSequence + 1}`,
@@ -260,6 +315,7 @@ export class RunScene extends Phaser.Scene {
         damage.damage,
         damage.critical,
         this.runState.elapsedMs,
+        Math.max(0, Math.floor(this.weaponDefinition.pierce + this.runState.weaponModifiers.pierce)),
       );
       this.projectiles.add(projectile);
       this.projectileGroup.add(projectile);
@@ -279,7 +335,71 @@ export class RunScene extends Phaser.Scene {
     projectile.registerHit(enemy.targetId);
     if (!result.killed) return;
     this.runState = recordKill(this.runState);
+    this.dropExperience(enemy.x, enemy.y, enemy.definition.xpReward);
     enemy.destroy();
+  }
+
+  private dropExperience(x: number, y: number, xpValue: number): void {
+    if (!this.pickupDefinition || !this.pickupGroup || xpValue <= 0) return;
+    this.pickupSequence += 1;
+    const pickup = new PickupActor(
+      this,
+      `pickup-${this.pickupSequence}`,
+      x,
+      y,
+      this.pickupDefinition,
+      activeTheme.tokens,
+      xpValue,
+    );
+    this.pickups.add(pickup);
+    this.pickupGroup.add(pickup);
+    this.pickupsDropped += 1;
+    pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
+  }
+
+  private collectPickup(pickup: PickupActor): void {
+    if (!this.runState) return;
+    const value = pickup.claim();
+    if (value === null) return;
+    const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
+    if (!claim.claimed) return;
+    this.claimedPickupIds = claim.claimedPickupIds;
+    this.runState = awardRunExperience(this.runState, claim.awardedXp);
+    this.pickupsCollected += 1;
+    pickup.destroy();
+    if (this.runState.status === "level_up") this.beginLevelUpChoice();
+  }
+
+  private beginLevelUpChoice(): void {
+    if (!this.runState || !this.levelUpUi || this.runState.progression.pendingChoices < 1) return;
+    this.player?.stop();
+    this.physics.world.pause();
+    this.currentChoices = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom);
+    this.levelUpUi.show(this.currentChoices, (choice) => this.chooseUpgrade(choice));
+  }
+
+  private readUpgradeChoiceInput(): void {
+    for (let index = 0; index < this.choiceKeys.length; index += 1) {
+      const key = this.choiceKeys[index];
+      const choice = this.currentChoices[index];
+      if (key && choice && Phaser.Input.Keyboard.JustDown(key)) {
+        this.chooseUpgrade(choice);
+        return;
+      }
+    }
+  }
+
+  private chooseUpgrade(choice: UpgradeDefinition): void {
+    if (!this.runState || this.runState.status !== "level_up") return;
+    this.runState = applyRunUpgrade(this.runState, choice);
+    if (this.runState.status === "level_up") {
+      this.beginLevelUpChoice();
+    } else {
+      this.currentChoices = [];
+      this.levelUpUi?.hide();
+      this.physics.world.resume();
+    }
+    this.publishTelemetry();
   }
 
   private handlePlayerEnemyOverlap(enemy: EnemyActor): void {
@@ -365,6 +485,9 @@ export class RunScene extends Phaser.Scene {
 
   private handleResize(gameSize: Phaser.Structs.Size): void {
     this.cameras.resize(gameSize.width, gameSize.height);
+    if (this.runState?.status === "level_up" && this.currentChoices.length === 3) {
+      this.levelUpUi?.show(this.currentChoices, (choice) => this.chooseUpgrade(choice));
+    }
     this.publishTelemetry();
   }
 
@@ -388,6 +511,10 @@ export class RunScene extends Phaser.Scene {
             durationMs: this.runState.durationMs,
             kills: this.runState.statistics.kills,
             liveEnemies: this.runState.statistics.liveEnemies,
+            level: this.runState.progression.level,
+            xp: this.runState.progression.xp,
+            xpToNextLevel: this.runState.progression.xpToNextLevel,
+            pendingChoices: this.runState.progression.pendingChoices,
           }
         : undefined,
       player: this.player
@@ -396,13 +523,18 @@ export class RunScene extends Phaser.Scene {
             x: this.player.x,
             y: this.player.y,
             radius: this.player.definition.radius,
-            moveSpeed: this.player.definition.baseStats.moveSpeed,
+            moveSpeed: this.runState?.player.stats.moveSpeed ?? this.player.definition.baseStats.moveSpeed,
             velocityX: body?.velocity.x ?? 0,
             velocityY: body?.velocity.y ?? 0,
             health: this.runState?.player.health ?? 0,
             invulnerable: Boolean(
               this.runState && this.runState.elapsedMs < this.invulnerableUntilMs,
             ),
+            maxHealth: this.runState?.player.stats.maxHealth ?? 0,
+            pickupRadius: this.runState?.player.stats.pickupRadius ?? 0,
+            damageBonus: this.runState?.player.stats.damageBonus ?? 0,
+            attackSpeedBonus: this.runState?.player.stats.attackSpeedBonus ?? 0,
+            critChance: this.runState?.player.stats.critChance ?? 0,
           }
         : undefined,
       combat: {
@@ -423,6 +555,15 @@ export class RunScene extends Phaser.Scene {
               velocityY: projectileSample.arcadeBody.velocity.y,
             }
           : null,
+      },
+      progression: {
+        pickups: this.pickups.size,
+        pickupsDropped: this.pickupsDropped,
+        pickupsCollected: this.pickupsCollected,
+        choiceIds: this.currentChoices.map((choice) => choice.id),
+        selectedUpgradeIds: this.runState?.selectedUpgradeIds ?? [],
+        pierceBonus: this.runState?.weaponModifiers.pierce ?? 0,
+        projectileCountBonus: this.runState?.weaponModifiers.projectileCount ?? 0,
       },
     });
   }

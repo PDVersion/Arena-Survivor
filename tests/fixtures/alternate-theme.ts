@@ -17,6 +17,7 @@ export const alternateTheme = defineTheme({
     bootStatus: "Fixture ready",
     bootFailure: "Fixture failed",
     movementHint: "Use test controls",
+    levelUpTitle: "Select test modifier",
     content,
   },
   tokens: {
@@ -30,6 +31,7 @@ export const alternateTheme = defineTheme({
       enemy: "#00ffff",
       projectile: "#ffff00",
       critical: "#ff8800",
+      pickup: "#88ff88",
     },
     playerShape: "circle",
   },
@@ -77,5 +79,23 @@ export const alternateTheme = defineTheme({
       xpReward: 1,
       presentationToken: "enemy",
     },
+  ],
+  pickups: [
+    {
+      id: archetypeIds.pickup.experience,
+      radius: 7,
+      magnetSpeed: 320,
+      presentationToken: "pickup",
+    },
+  ],
+  upgrades: [
+    { id: archetypeIds.upgrade.damage, effects: [{ kind: "stat.add", target: "player.damageBonus", value: 0.25 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.attackSpeed, effects: [{ kind: "stat.add", target: "player.attackSpeedBonus", value: 0.2 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.critChance, effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.pierce, effects: [{ kind: "stat.add", target: "weapon.pierce", value: 1 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.projectileCount, effects: [{ kind: "stat.add", target: "weapon.projectileCount", value: 1 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.moveSpeed, effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.health, effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.pickupRadius, effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }], presentationToken: "accent" },
   ],
 });

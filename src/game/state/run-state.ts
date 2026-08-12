@@ -1,14 +1,27 @@
-import type { CharacterId } from "../core/archetypes/ids";
+import type { CharacterId, UpgradeId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
+import type { UpgradeDefinition } from "../core/archetypes/contracts";
+import {
+  applyUpgrade,
+  createWeaponStatModifiers,
+  type WeaponStatModifiers,
+} from "../systems/upgrades";
+import {
+  awardExperience,
+  consumePendingChoice,
+  createProgressionState,
+  type ProgressionState,
+} from "../systems/xp";
 
 export const RUN_STATE_VERSION = 1 as const;
 export const DEFAULT_RUN_DURATION_MS = 5 * 60 * 1000;
 
-export type RunStatus = "playing" | "paused" | "dead" | "complete";
+export type RunStatus = "playing" | "paused" | "level_up" | "dead" | "complete";
 
 export interface RunPlayerState {
   readonly characterId: CharacterId;
   readonly health: number;
+  readonly baseStats: PlayerBaseStats;
   readonly stats: PlayerBaseStats;
 }
 
@@ -19,6 +32,9 @@ export interface RunState {
   readonly elapsedMs: number;
   readonly durationMs: number;
   readonly player: RunPlayerState;
+  readonly progression: ProgressionState;
+  readonly weaponModifiers: WeaponStatModifiers;
+  readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly statistics: {
     readonly kills: number;
     readonly liveEnemies: number;
@@ -51,8 +67,12 @@ export function createRunState(options: CreateRunOptions): RunState {
     player: {
       characterId: options.characterId,
       health: options.baseStats.maxHealth,
+      baseStats: cloneStats(options.baseStats),
       stats: cloneStats(options.baseStats),
     },
+    progression: createProgressionState(),
+    weaponModifiers: createWeaponStatModifiers(),
+    selectedUpgradeIds: [],
     statistics: { kills: 0, liveEnemies: 0 },
   };
 }
@@ -71,6 +91,7 @@ export function advanceRunState(state: RunState, deltaMs: number): RunState {
 
 export function setRunStatus(state: RunState, status: RunStatus): RunState {
   if (state.status === "dead" || state.status === "complete") return state;
+  if (state.status === "level_up") return state;
   if (status === state.status) return state;
   return { ...state, status };
 }
@@ -93,11 +114,32 @@ export function recordKill(state: RunState): RunState {
   return { ...state, statistics: { ...state.statistics, kills: state.statistics.kills + 1 } };
 }
 
+export function awardRunExperience(state: RunState, amount: number): RunState {
+  if (state.status !== "playing") return state;
+  const result = awardExperience(state.progression, amount, state.player.stats.xpMultiplier);
+  return {
+    ...state,
+    status: result.levelsGained > 0 ? "level_up" : state.status,
+    progression: result.progression,
+  };
+}
+
+export function applyRunUpgrade(state: RunState, upgrade: UpgradeDefinition): RunState {
+  if (state.status !== "level_up" || state.progression.pendingChoices < 1) return state;
+  const upgraded = applyUpgrade(state, upgrade);
+  const progression = consumePendingChoice(upgraded.progression);
+  return {
+    ...upgraded,
+    progression,
+    status: progression.pendingChoices > 0 ? "level_up" : "playing",
+  };
+}
+
 export function resetRunState(state: RunState): RunState {
   return createRunState({
     themeId: state.themeId,
     characterId: state.player.characterId,
-    baseStats: state.player.stats,
+    baseStats: state.player.baseStats,
     durationMs: state.durationMs,
   });
 }

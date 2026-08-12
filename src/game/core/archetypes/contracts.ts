@@ -1,4 +1,5 @@
-import type { CharacterId, ContentId, EnemyId, WeaponId } from "./ids";
+import type { CharacterId, ContentId, EnemyId, PickupId, UpgradeId, WeaponId } from "./ids";
+import type { UpgradeEffect } from "./effects";
 import type { PlayerBaseStats } from "../stats/player-stats";
 
 export interface ContentCopy {
@@ -12,6 +13,7 @@ export interface ThemeCopy {
   readonly bootStatus: string;
   readonly bootFailure: string;
   readonly movementHint: string;
+  readonly levelUpTitle: string;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
 }
 
@@ -25,6 +27,7 @@ export interface ThemePalette {
   readonly enemy: string;
   readonly projectile: string;
   readonly critical: string;
+  readonly pickup: string;
 }
 
 export interface ThemeTokens {
@@ -62,6 +65,19 @@ export interface EnemyDefinition {
   readonly presentationToken: keyof Pick<ThemePalette, "enemy">;
 }
 
+export interface PickupDefinition {
+  readonly id: PickupId;
+  readonly radius: number;
+  readonly magnetSpeed: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "pickup">;
+}
+
+export interface UpgradeDefinition {
+  readonly id: UpgradeId;
+  readonly effects: readonly UpgradeEffect[];
+  readonly presentationToken: keyof Pick<ThemePalette, "accent">;
+}
+
 export interface ThemeManifest {
   readonly id: string;
   readonly schemaVersion: 1;
@@ -70,4 +86,6 @@ export interface ThemeManifest {
   readonly characters: readonly CharacterDefinition[];
   readonly weapons: readonly WeaponDefinition[];
   readonly enemies: readonly EnemyDefinition[];
+  readonly pickups: readonly PickupDefinition[];
+  readonly upgrades: readonly UpgradeDefinition[];
 }
