@@ -63,6 +63,7 @@ Implementation notes relative to the original plan:
 - The provisional swarm baseline spawns one enemy every 400 ms on a deterministic ring 360 units from the player, with caps of 80 live enemies and 64 live projectiles. High-churn actors are destroyed on expiry/death and cannot grow beyond those caps.
 - Phase 3 adds approximately 9.7 kB minified / 2.3 kB gzip to the Phase 2 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
 - Manual-test correction: projectile velocity is now applied only after Arcade Physics group enrollment, active projectiles are cleared on death, and the browser suite tracks one projectile's ID/velocity/displacement so creation cannot be mistaken for firing.
+- CI correction: GitHub Actions runs the real-time Chromium suite with one worker. Two concurrent Phaser simulations on the shared runner slowed combat, death, and boundary paths together enough to exhaust otherwise generous state-poll budgets; local Playwright runs retain automatic parallelism.
 
 ## Resolved V0.1 scope
 

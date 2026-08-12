@@ -8,6 +8,7 @@ async function waitForCombat(page: Page): Promise<void> {
 }
 
 test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => {
+  test.setTimeout(45_000);
   await waitForCombat(page);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.shotsFired))
@@ -28,7 +29,7 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
     .toBeGreaterThan(20);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.kills), {
-      timeout: 12_000,
+      timeout: 25_000,
     })
     .toBeGreaterThan(0);
 
@@ -43,12 +44,12 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
 });
 
 test("contact damage is visible, throttled, and can cause death", async ({ page }) => {
-  test.setTimeout(40_000);
+  test.setTimeout(80_000);
   await waitForCombat(page);
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.contactHits), {
-      timeout: 18_000,
+      timeout: 35_000,
     })
     .toBeGreaterThan(0);
   const firstHit = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
@@ -57,7 +58,7 @@ test("contact damage is visible, throttled, and can cause death", async ({ page 
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
-      timeout: 20_000,
+      timeout: 35_000,
     })
     .toBe("dead");
   const dead = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());

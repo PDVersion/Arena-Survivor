@@ -428,6 +428,28 @@ Any pooled or group-managed moving actor must be activated/enrolled before its f
 Revisit when:
 Projectile pooling, pause-resume projectile persistence, trails, or Phase 5 terminal presentation changes actor cleanup policy.
 
+### REC-018 — CI serializes real-time Phaser browser simulations
+
+- Status: Resolved
+- Date: 2026-08-12
+- Affects: Browser tests, GitHub Actions, Phases 2–6
+- Blocks: None
+
+Context / observation:
+After Phase 3 added long-running live combat and death paths, GitHub Actions ran seven tests with two Chromium workers. Three unrelated real-time paths slowed together: the kill test missed a 12-second poll once and passed on retry, the boundary test missed a 15-second poll twice and passed on retry, and the contact/death test never reached its first hit inside 18 seconds across all retries. Short movement tests also grew from sub-second local times to 3–4 seconds. The suite passed locally with two workers, showing the shared runner was CPU-starved by concurrent Phaser simulations rather than exposing a single rule defect.
+
+Decision / solution:
+Set Playwright `workers` to one only when `CI` is present; local runs retain automatic parallelism. Give the long state-based paths ceilings derived from their behavior plus shared-runner margin: 30 seconds for boundary arrival, 25 seconds for a kill, and 35 seconds each for first contact and subsequent death. Retain retries as diagnostic protection, not as the expected success path.
+
+Why:
+Each test controls an independent browser page whose Phaser loop, physics world, rendering, telemetry polling, and tracing compete for the same small hosted runner. Serial execution gives simulation time predictable CPU progress and is faster than repeated parallel failures. The higher ceilings are maximum waits; state polling still returns as soon as the condition is satisfied.
+
+Future guardrail:
+CI browser simulations remain serial until measured shared-runner headroom supports parallelism. Long tests use state polling rather than fixed sleeps and must pass on the first CI attempt. Deterministic unit tests carry exhaustive rule coverage; browser tests remain representative integration paths.
+
+Revisit when:
+The CI runner class changes, browser tests gain deterministic time controls, Phase 6 load tests need a separate job, or measured serial runtime becomes excessive.
+
 ## Open questions to reconcile during implementation
 
 - The exact XP curve, upgrade magnitudes, longer-run spawn ramp, and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity are provisional smoke-test baselines.
