@@ -5,7 +5,7 @@ Read this file immediately after `build/BUILD_PLAN.md` before beginning any work
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.1**
-- Active phase: **Phase 4 complete — Phase 5 not started**
+- Active phase: **Phase 5 complete — Phase 6 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -430,7 +430,7 @@ Projectile pooling, pause-resume projectile persistence, trails, or Phase 5 term
 
 ### REC-018 — CI serializes real-time Phaser browser simulations
 
-- Status: Resolved
+- Status: Superseded by REC-021
 - Date: 2026-08-12
 - Affects: Browser tests, GitHub Actions, Phases 2–6
 - Blocks: None
@@ -471,6 +471,72 @@ Unit tests cover exact-once pickup identities, curve overflow, XP multipliers, s
 
 Revisit when:
 Phase 6 adds +50% shrine XP, longer-run playtesting produces balance data, randomized run seeding becomes a product requirement, multiplicative modifiers enter scope, or weapon/loadout state needs its own richer runtime model.
+
+### REC-020 — Restart reconstructs scene runtime and respects physics shutdown order
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phase 5 restart, future run setup, scene cleanup
+- Blocks: None
+
+Context / observation:
+Phaser may reuse or reconstruct configured Scene instances depending on the start path, while a run owns actor sets, physics groups, input listeners, seeded randomness, timers, upgrade state, UI, and exact-once identity sets. During the first immediate restart implementation, shutdown cleanup attempted to resume `physics.world` after Phaser had nulled it and raised `Cannot read properties of null (reading 'resume')`.
+
+Decision / solution:
+Every `RunScene.create()` begins by resetting every transient runtime field before rebuilding the run. Terminal restart resumes Arcade Physics before synchronously stopping and starting the run scene; shutdown removes listeners and destroys UI but never accesses the already-torn-down physics world. Test-only run-generation telemetry spans scene instances so same-page reconstruction can be distinguished from a static terminal frame.
+
+Why:
+Explicit reconstruction makes restart equivalent to a fresh run without relying on Phaser instance reuse details. Respecting plugin shutdown order prevents cleanup from touching invalid framework state.
+
+Future guardrail:
+Unit tests require reset to discard modifiers and statistics. Browser coverage completes and restarts multiple consecutive runs, asserts baseline health/XP/level/upgrades/kills, checks no navigation occurred, and fails on page errors.
+
+Revisit when:
+Phase 6 adds shrine entities/schedulers, a scene-level run factory replaces field initialization, or suspended-run restoration enters scope.
+
+### REC-021 — Real-time browser concurrency is bounded locally and serial in CI
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Browser tests, local verification, CI, rendering feedback
+- Blocks: None
+
+Context / observation:
+REC-018 serialized CI after two simultaneous Phaser simulations starved hosted runners. Phase 5 expanded the local suite to 12 tests and added transient rendering feedback. With Playwright's automatic local worker count, nine simultaneous canvases caused one level-up path to die before collecting enough XP; the other 11 tests passed. The same suite passed all 12 tests in 20.2 seconds with four workers.
+
+Decision / solution:
+Keep CI at one worker and cap local Playwright runs at four workers. Projectile trail markers are emitted at most once per projectile per 160 simulation milliseconds and self-destroy after 180 milliseconds.
+
+Why:
+Four workers retain useful parallel speed while giving live simulations enough CPU progress. Bounding trail churn keeps cosmetic feedback from becoming unbounded load as projectile count rises.
+
+Future guardrail:
+The full browser suite must pass without retries at the configured worker count. Exhaustive rules stay in unit tests; live smoke paths remain representative rather than multiplying long simulations.
+
+Revisit when:
+Runner hardware changes, browser tests gain deterministic time control, Phase 6 surge profiling establishes new limits, or the suite is split into isolated jobs.
+
+### REC-022 — Camera-fixed container input uses explicit screen-space bounds
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Level-up UI, terminal overlays, future fixed-camera controls
+- Blocks: None
+
+Context / observation:
+Level-up and terminal container children rendered correctly after the camera followed the player, but their child object pointer hit tests did not align with visible screen positions. Setting scroll factor only on the container did not propagate it to children, and nested interactive rectangles remained unreliable in automated and manual smoke tests.
+
+Decision / solution:
+Propagate zero scroll factor to camera-fixed container children and handle choice/restart pointer actions through scene-level pointer events checked against explicit screen-space button rectangles. Remove those listeners whenever the overlay hides or the scene shuts down.
+
+Why:
+Screen-space bounds match what the player sees regardless of camera scroll and resize. Explicit listener cleanup prevents stale overlays from receiving later input.
+
+Future guardrail:
+Browser tests select a level-up card and restart through visible canvas coordinates after the camera has moved. Manual smoke confirms both controls and resize behavior.
+
+Revisit when:
+UI moves to DOM/accessibility overlays, cameras are split, gamepad focus navigation is added, or a shared screen-space button component replaces these overlays.
 
 ## Open questions to reconcile during implementation
 

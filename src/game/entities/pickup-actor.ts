@@ -26,6 +26,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.radius);
+    this.setDepth(10);
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -47,5 +48,18 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     if (this.collected || !this.active) return null;
     this.collected = true;
     return this.xpValue;
+  }
+
+  playCollectCue(): void {
+    this.arcadeBody.enable = false;
+    this.setDepth(45);
+    this.scene.tweens.add({
+      targets: this,
+      alpha: 0,
+      scale: 2.2,
+      duration: 180,
+      ease: "Quad.Out",
+      onComplete: () => this.destroy(),
+    });
   }
 }

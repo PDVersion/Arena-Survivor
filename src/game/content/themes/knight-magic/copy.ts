@@ -8,6 +8,20 @@ export const copy = {
   bootFailure: "The arena could not be summoned.",
   movementHint: "Move with WASD or arrow keys · Pause with Escape",
   levelUpTitle: "Choose a new blessing",
+  vocabulary: {
+    health: "Vitality",
+    experience: "Arcane Power",
+    level: "Rank",
+    time: "Time",
+    kills: "Foes Vanquished",
+    enemies: "Foes Remaining",
+    paused: "The arena is paused",
+    deathTitle: "The Knight Has Fallen",
+    deathMessage: "The Ember Court claims another challenger.",
+    completeTitle: "The Trial Is Complete",
+    completeMessage: "You endured the arena's full assault.",
+    restartAction: "Begin Again",
+  },
   content: {
     [archetypeIds.character.starter]: {
       name: "Wandering Knight",

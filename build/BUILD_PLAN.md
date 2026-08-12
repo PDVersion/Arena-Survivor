@@ -20,8 +20,8 @@ Update this tracker in the corresponding phase commit. Add the commit hash after
 - [x] Phase 1 — Project foundation and browser boot (`ed9dea2`)
 - [x] Phase 2 — Arena, player movement, and run state (`d8a4ce6`; CI fix `73c6847`)
 - [x] Phase 3 — Grunt swarm and Needle combat (`1a554e6`; runtime fix `3f4f39a`; CI fix `8a28568`)
-- [x] Phase 4 — XP, levels, and data-driven upgrades
-- [ ] Phase 5 — HUD, run completion, and restart loop
+- [x] Phase 4 — XP, levels, and data-driven upgrades (`36c293c`)
+- [x] Phase 5 — HUD, run completion, and restart loop
 - [ ] Phase 6 — Horde shrine and V0.1 hardening
 
 ### Phase 1 outcome — 2026-08-12
@@ -77,6 +77,21 @@ Implementation notes relative to the original plan:
 - Level-up is a distinct frozen run state. Offers contain three unique choices selected by an injected seeded generator; keyboard or pointer selection applies the modifier, advances any queued choice, and resumes physics only when the queue is empty.
 - The full-screen choice panel was made opaque after manual canvas inspection showed underlying arena copy reducing title readability. Manual smoke confirmed three clear themed choices and no browser warnings/errors.
 - Phase 4 adds approximately 12.3 kB minified / 3.3 kB gzip to the Phase 3 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+
+### Phase 5 outcome — 2026-08-12
+
+Phase 5 is implemented and its automated gates pass: deterministic HUD selection/formatting, complete theme-owned vocabulary, live HUD values, distinct death/completion overlays, pointer and keyboard restart actions, repeated same-page reset, test-shortened completion, focus-loss freezing/resume, resize coherence, feedback instrumentation, all earlier unit/browser regressions, type-check, lint, and production build.
+
+Implementation notes relative to the original plan:
+
+- A fixed-camera HUD shows themed labels for health, XP, level, remaining time, kills, and live enemies. Generic vocabulary and both ending messages live in the active theme copy catalog and are validated for alternate manifests.
+- Death and completion share a generic overlay implementation but resolve distinct theme-owned titles/messages. R, Enter, and a visible pointer action reconstruct the run without page navigation.
+- Restart explicitly rebuilds all Phaser actors/groups, input bindings, timers, counters, seeded offer randomness, modifiers, UI, feedback counters, and claimed pickup identities. Arcade Physics resumes before scene shutdown; accessing its world after shutdown is invalid.
+- Test mode alone accepts a positive `runDurationMs` query for deterministic completion coverage. Production always retains the five-minute default.
+- V0.1 feedback now includes enemy/player hit flashes, short capped projectile trails, critical projectile scaling, pickup collection tweens, and level-up title emphasis. Rendering remains downstream of simulation state.
+- Focus loss pauses only an actively playing run and focus restores only that focus-created pause; manual Escape pauses are never auto-resumed. Camera-fixed overlay children use screen-space pointer bounds to remain interactive after camera travel and resize.
+- Local Playwright concurrency is capped at four after nine simultaneous Phaser canvases starved the live level-up path once; CI remains serial. The complete 12-test Chromium suite passes with four workers.
+- Phase 5 adds approximately 8.9 kB minified / 2.1 kB gzip to the Phase 4 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
 
 ## Resolved V0.1 scope
 

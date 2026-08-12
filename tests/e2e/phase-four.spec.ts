@@ -34,7 +34,7 @@ test("choosing an upgrade applies its stable effect and resumes safely", async (
   const chosenId = before?.progression?.choiceIds[0];
   expect(chosenId).toBeTruthy();
 
-  await page.keyboard.press("Digit1");
+  await page.locator("canvas").click({ position: { x: 640, y: 255 } });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");

@@ -8,6 +8,8 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
   readonly critical: boolean;
   private pierceState: PierceState;
   private expiresAtMs: number;
+  private nextTrailAtMs: number;
+  private readonly trailColour: number;
 
   constructor(
     scene: Phaser.Scene,
@@ -29,9 +31,13 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     this.critical = critical;
     this.pierceState = createPierceState(pierce);
     this.expiresAtMs = nowMs + definition.projectileLifetimeMs;
+    this.nextTrailAtMs = nowMs;
+    this.trailColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.projectileRadius);
+    this.setDepth(40);
+    if (critical) this.setScale(1.35);
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -53,5 +59,20 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
 
   hasExpired(nowMs: number): boolean {
     return nowMs >= this.expiresAtMs;
+  }
+
+  emitTrail(nowMs: number): boolean {
+    if (!this.active || nowMs < this.nextTrailAtMs) return false;
+    this.nextTrailAtMs = nowMs + 160;
+    const marker = this.scene.add.circle(this.x, this.y, Math.max(2, this.displayWidth * 0.25), this.trailColour, 0.45)
+      .setDepth(35);
+    this.scene.tweens.add({
+      targets: marker,
+      alpha: 0,
+      scale: 0.25,
+      duration: 180,
+      onComplete: () => marker.destroy(),
+    });
+    return true;
   }
 }

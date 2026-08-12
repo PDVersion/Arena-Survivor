@@ -7,6 +7,21 @@ export interface ContentCopy {
   readonly description: string;
 }
 
+export interface ThemeVocabulary {
+  readonly health: string;
+  readonly experience: string;
+  readonly level: string;
+  readonly time: string;
+  readonly kills: string;
+  readonly enemies: string;
+  readonly paused: string;
+  readonly deathTitle: string;
+  readonly deathMessage: string;
+  readonly completeTitle: string;
+  readonly completeMessage: string;
+  readonly restartAction: string;
+}
+
 export interface ThemeCopy {
   readonly gameTitle: string;
   readonly arenaName: string;
@@ -14,6 +29,7 @@ export interface ThemeCopy {
   readonly bootFailure: string;
   readonly movementHint: string;
   readonly levelUpTitle: string;
+  readonly vocabulary: ThemeVocabulary;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
 }
 

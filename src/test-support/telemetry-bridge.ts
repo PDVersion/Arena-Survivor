@@ -41,6 +41,24 @@ export interface ArenaTestSnapshot {
     pierceBonus: number;
     projectileCountBonus: number;
   }>;
+  readonly hud?: Readonly<{
+    health: string;
+    experience: string;
+    level: string;
+    time: string;
+    kills: string;
+    enemies: string;
+  }>;
+  readonly lifecycle?: Readonly<{
+    runGeneration: number;
+    terminalOverlay: "dead" | "complete" | null;
+    focusPaused: boolean;
+  }>;
+  readonly feedback?: Readonly<{
+    hitFlashes: number;
+    trailsEmitted: number;
+    pickupCues: number;
+  }>;
   readonly combat?: Readonly<{
     weaponId: string | null;
     enemyId: string | null;
