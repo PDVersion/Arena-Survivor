@@ -17,8 +17,8 @@ This is the implementation plan for the product vision in [`PLAN.md`](./PLAN.md)
 
 Update this tracker in the corresponding phase commit. Add the commit hash after the commit exists in the next phase's status update or in the pull request description.
 
-- [x] Phase 1 — Project foundation and browser boot
-- [ ] Phase 2 — Arena, player movement, and run state
+- [x] Phase 1 — Project foundation and browser boot (`ed9dea2`)
+- [x] Phase 2 — Arena, player movement, and run state
 - [ ] Phase 3 — Grunt swarm and Needle combat
 - [ ] Phase 4 — XP, levels, and data-driven upgrades
 - [ ] Phase 5 — HUD, run completion, and restart loop
@@ -35,6 +35,20 @@ Implementation notes relative to the original plan:
 - The responsive canvas container is viewport-anchored after the first browser smoke test exposed intrinsic canvas sizing inside the original centred grid layout.
 - Initial toolchain pins were advanced to patched releases after `npm audit` found advisories. The committed lockfile reports zero known vulnerabilities as of completion.
 - Phaser currently produces a non-blocking large-chunk build warning. The measured bundle and the point at which it should be revisited are recorded in `RECONCILIATION.md`; Phase 1 load and browser checks pass.
+
+### Phase 2 outcome — 2026-08-12
+
+Phase 2 is implemented and manually accepted on 2026-08-12. Its automated and localhost smoke gates pass: cardinal and normalized diagonal movement, opposing-input cancellation, body containment at arena edges, camera follow, pause/resume, frozen paused time, deterministic completion, reset, profile separation, and the Phase 1 boot/resize regression.
+
+Implementation notes relative to the original plan:
+
+- The initial arena is 2400×1600 world units. Phaser Arcade Physics owns the runtime body/world bounds while framework-independent functions own direction normalization and position-clamp rules.
+- The active theme's starter-character definition now owns the complete V0.1 base-stat baseline. The generic player actor receives that definition and contains no knight-magic identity or tuning.
+- Escape toggles the Phase 2 pause state. The run clock advances only while `playing`; paused and terminal states stop velocity and simulation time.
+- Ephemeral run state and the future persistent profile boundary are separate serializable models. Both use stable character/theme IDs, while the profile reserves explicit profile/content schema versions without implementing storage early.
+- Theme validation now treats missing runtime `baseStats` as a reported manifest issue rather than assuming compile-time typing makes malformed data impossible.
+- Phase 2 adds approximately 4.7 kB minified / 1.0 kB gzip to the Phase 1 JavaScript baseline. The existing Phaser large-chunk warning remains non-blocking.
+- Post-acceptance CI correction: the boundary browser smoke now traverses the shorter centre-to-top path with shared-runner timing headroom. The original centre-to-right test had an 8-second budget despite taking 7.8 seconds locally and timed out under GitHub Actions load; the physics assertion itself was unchanged.
 
 ## Resolved V0.1 scope
 

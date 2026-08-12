@@ -21,7 +21,14 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). Phase 1 displays a single themed Phaser canvas that fills and resizes with the browser window. Gameplay and movement begin in Phase 2.
+Open the URL printed by Vite (normally `http://localhost:5173`). Phase 2 displays a large bounded arena with a camera-followed player.
+
+Controls:
+
+```text
+WASD / Arrow keys = Move
+Escape           = Pause or resume
+```
 
 ## Test and build
 
@@ -31,13 +38,13 @@ Install Playwright's Chromium once on a new machine:
 npx playwright install chromium
 ```
 
-Run the complete Phase 1 verification gate:
+Run the Phase 2 verification gate:
 
 ```bash
 npm run typecheck
-npm test -- --run tests/unit/content tests/unit/architecture
+npm test -- --run tests/unit/player tests/unit/run-state
+npm run test:e2e -- --grep "movement|boundaries|pause"
 npm run build
-npm run test:e2e -- --grep "boots"
 ```
 
 Optional checks:
@@ -45,6 +52,7 @@ Optional checks:
 ```bash
 npm run lint
 npm test -- --run
+npm run test:e2e
 ```
 
-For a manual smoke test, run `npm run dev`, resize the browser, and confirm exactly one canvas remains visible with no errors in the browser console.
+For a manual smoke test, run `npm run dev`; move in all eight directions, press opposing directions together, walk into every arena boundary, toggle pause, and confirm the camera follows smoothly with no browser-console errors.

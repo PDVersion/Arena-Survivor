@@ -8,6 +8,13 @@ export function createGameConfig(parent: string): Phaser.Types.Core.GameConfig {
     parent,
     backgroundColor: "#0a0f1b",
     scene: [BootScene, RunScene],
+    physics: {
+      default: "arcade",
+      arcade: {
+        gravity: { x: 0, y: 0 },
+        debug: false,
+      },
+    },
     scale: {
       mode: Phaser.Scale.RESIZE,
       width: "100%",

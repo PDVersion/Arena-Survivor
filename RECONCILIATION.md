@@ -5,7 +5,7 @@ Read this file immediately after `build/BUILD_PLAN.md` before beginning any work
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.1**
-- Active phase: **Phase 1 complete — Phase 2 not started**
+- Active phase: **Phase 2 complete — Phase 3 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -70,13 +70,15 @@ V0.2 introduces global Chaos, stacking world modifiers, or multiple simultaneous
 
 ### REC-002 — Separate deterministic rules from Phaser integration
 
-- Status: Provisional
+- Status: Accepted
 - Date: 2026-08-11
 - Affects: All V0.1 phases, testing, future content systems
 - Blocks: None
 
 Context / observation:
 Combat, XP, upgrades, and modifier stacking will become interaction-heavy, while Phaser scenes and physics depend on frame timing and browser state.
+
+Phase 2 evidence: movement normalization, arena clamping, run timing, status transitions, reset, and profile construction are deterministic modules with unit tests. The Phaser scene remains an input/render/physics coordinator, and the Chromium suite verifies the connection without duplicating those rules.
 
 Decision / solution:
 Keep stats and game rules in framework-independent TypeScript modules with injected randomness/time where needed. Use Vitest for those rules and a thin Playwright suite for the Phaser wiring and critical path.
@@ -88,7 +90,7 @@ Future guardrail:
 New mechanics require rule-level tests; browser tests should assert public/test telemetry rather than canvas pixels or arbitrary sleeps.
 
 Revisit when:
-The first two implemented phases show that the boundary creates excessive synchronization or duplication.
+Profiling or later mechanics show that the boundary creates excessive synchronization, allocation, or duplicated authority.
 
 ### REC-003 — V0.1 ships as one branch and one pull request
 
@@ -254,6 +256,8 @@ A scheduled phase cannot express its mechanic without a broader shared effect co
 Context / observation:
 The final Phase 1 production build succeeds but Vite warns that the main minified JavaScript chunk is larger than 500 kB. The measured output is approximately 1,488 kB minified and 341 kB gzip; Phaser is the dominant dependency. Local Chromium boot and resize tests pass.
 
+Phase 2 measurement: the main chunk is approximately 1,493 kB minified and 342 kB gzip, an increase of about 4.7 kB minified / 1.0 kB gzip from the Phase 1 baseline.
+
 Decision / solution:
 Accept this as the Phase 1 baseline and do not add speculative chunk splitting before gameplay exists. Track compressed size and real startup behavior as features are added, and separate optional/heavy systems only when measurement shows a useful boundary.
 
@@ -265,6 +269,96 @@ Keep production build-size output visible in phase verification. Avoid adding la
 
 Revisit when:
 Compressed entry size grows materially beyond this baseline, deployment performance is measured on representative connections, or optional screens/assets provide a natural lazy-load boundary.
+
+### REC-011 — Arcade Physics and a 2400×1600 arena are the initial runtime baseline
+
+- Status: Provisional
+- Date: 2026-08-12
+- Affects: Phase 2, player entity, camera, Phase 3 collision/performance
+- Blocks: None
+
+Context / observation:
+Phase 2 needs a physical player body, hard world boundaries, and a following camera, while Phase 3 will add many moving enemies and projectiles. The product plan does not settle a physics implementation or initial arena dimensions.
+
+Manual acceptance on 2026-08-12 confirmed movement, boundaries, camera behavior, pause/resume, and localhost operation match the Phase 2 intent.
+
+Decision / solution:
+Use Phaser Arcade Physics with zero gravity, a 2400×1600 world, a 36-unit starter body, `collideWorldBounds`, and a bounded follow camera using 0.12 lerp. Keep input-vector normalization and clamp rules framework-independent. The generic `PlayerActor` receives its radius, movement speed, presentation token, and other base stats from the active theme definition.
+
+Why:
+Arcade Physics supplies inexpensive axis-aligned bodies and world bounds suited to a top-down swarm without introducing a general rigid-body solver. The arena is large enough for camera travel at the 200-unit base speed while keeping boundary smoke tests practical.
+
+Future guardrail:
+Unit tests cover cardinal/diagonal/opposing input and all-edge clamping. Chromium tests verify configured velocity, camera displacement, and the actual physics body stopping at the right edge. No system may read themed names to move or render the actor.
+
+Revisit when:
+Phase 3 measures enemy/projectile collision throughput, the arena feels cramped or empty during tuning, or body rotation/shape becomes mechanically meaningful.
+
+### REC-012 — Run time is transient state; profile identity is separately versioned
+
+- Status: Accepted
+- Date: 2026-08-12
+- Affects: Phase 2, run lifecycle, future persistence, save migrations
+- Blocks: None
+
+Context / observation:
+The game needs resettable five-minute runs now and complete portable persistence later. Combining elapsed time, current health, and Phaser objects with unlock/profile data would make restart and future migrations unsafe.
+
+Decision / solution:
+Represent the active run as a plain versioned object containing stable theme/character IDs, status, elapsed/duration milliseconds, current health, and a cloned stat baseline. Pure functions create, advance, transition, and reset it. Represent the initial profile separately with its own schema version, content schema version, selected stable character ID, and unlocked stable IDs. No storage adapter is added in V0.1.
+
+Why:
+The scene can be discarded without losing the definition of persistent progress, and the future save codec receives data rather than runtime objects. Explicit elapsed time makes pause/completion deterministic and avoids wall-clock advancement while gameplay is stopped.
+
+Future guardrail:
+Run/profile unit tests require JSON round trips, clean reset, terminal-state immutability, paused-time freezing, and no elapsed run fields in the profile. Gameplay systems communicate profile-worthy results explicitly rather than retaining scene references.
+
+Revisit when:
+Phase 3 adds death/health mutation, Phase 5 adds restart and statistics, or suspended runs/persistence enter scope.
+
+### REC-013 — Manifest validation must defend against malformed runtime data
+
+- Status: Resolved
+- Date: 2026-08-12
+- Affects: Phase 2, theme validation, future imported/external content
+- Blocks: None
+
+Context / observation:
+After character base stats became required, the malformed-manifest regression fixture omitted `baseStats`. The validator indexed the missing object and threw a `TypeError` instead of returning actionable validation issues. TypeScript contracts do not protect JSON, imported data, or deliberately malformed tests at runtime.
+
+Decision / solution:
+Check for the required stats object before validating individual finite/range constraints. Report `<character-id> baseStats are required` and continue validating the rest of the manifest rather than crashing.
+
+Why:
+A validator is an untrusted-input boundary. It must explain invalid shape even when callers bypass compile-time types, especially before themes or saves can be loaded from serialized data.
+
+Future guardrail:
+Every new manifest category includes malformed runtime fixtures for missing containers, values, duplicate IDs, and broken references; validation functions return issue lists and do not throw incidental property-access errors.
+
+Revisit when:
+Manifest validation moves to a shared schema library or external theme loading is introduced.
+
+### REC-014 — Real-time browser traversals need CI headroom
+
+- Status: Resolved
+- Date: 2026-08-12
+- Affects: Phase 2 browser tests, CI reliability, future real-time smoke tests
+- Blocks: None
+
+Context / observation:
+The Phase 2 boundary test held Right from the 2400×1600 arena centre and allowed eight seconds to travel approximately 1,182 units at 200 units/second. Its ideal traversal was about 5.9 seconds and the local passing run already took 7.8 seconds. On the two-worker GitHub Actions runner, all three attempts exceeded the eight-second poll timeout even though movement, camera, pause, and local boundary behavior passed.
+
+Decision / solution:
+Keep the real Arcade Physics integration assertion, but traverse from the centre to the nearer top edge (approximately 782 units, 3.9 seconds ideally). Give the state-based poll 15 seconds inside a 25-second test budget, then assert the final centre remains at or below the body-radius boundary. The framework-independent unit suite continues to cover clamping at every edge.
+
+Why:
+The failure measured runner scheduling/performance rather than an eight-second gameplay requirement. Testing the nearer edge reduces wall time, and explicit headroom prevents shared-runner load from becoming a false gameplay regression without introducing a writable test hook or weakening the actual world-boundary check.
+
+Future guardrail:
+Derive real-time test budgets from the configured distance and speed, then leave substantial CI headroom. Prefer state-based polling and the shortest representative integration path; cover exhaustive geometry and edge cases in deterministic unit tests.
+
+Revisit when:
+Movement speed, spawn position, arena dimensions, Playwright worker count, or the browser timing model changes.
 
 ## Open questions to reconcile during implementation
 

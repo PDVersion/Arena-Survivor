@@ -51,6 +51,7 @@ describe("theme manifests", () => {
         `duplicate character id: ${archetypeIds.character.starter}`,
         `${archetypeIds.character.starter} radius must be greater than zero`,
         `${archetypeIds.character.starter} references missing presentation token: missing`,
+        `${archetypeIds.character.starter} baseStats are required`,
       ]),
     );
   });

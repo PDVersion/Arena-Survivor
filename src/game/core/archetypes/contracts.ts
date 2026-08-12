@@ -1,4 +1,5 @@
 import type { CharacterId, ContentId } from "./ids";
+import type { PlayerBaseStats } from "../stats/player-stats";
 
 export interface ContentCopy {
   readonly name: string;
@@ -10,6 +11,7 @@ export interface ThemeCopy {
   readonly arenaName: string;
   readonly bootStatus: string;
   readonly bootFailure: string;
+  readonly movementHint: string;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
 }
 
@@ -31,6 +33,7 @@ export interface CharacterDefinition {
   readonly id: CharacterId;
   readonly radius: number;
   readonly presentationToken: keyof Pick<ThemePalette, "player">;
+  readonly baseStats: PlayerBaseStats;
 }
 
 export interface ThemeManifest {

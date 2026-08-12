@@ -6,6 +6,7 @@ export const copy = {
   arenaName: "The Ember Court",
   bootStatus: "The arena awaits",
   bootFailure: "The arena could not be summoned.",
+  movementHint: "Move with WASD or arrow keys · Pause with Escape",
   content: {
     [archetypeIds.character.starter]: {
       name: "Wandering Knight",
