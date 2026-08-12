@@ -20,6 +20,10 @@ registerTestTelemetryUpdater((nextSnapshot) => {
   snapshot = Object.freeze({
     ...nextSnapshot,
     canvas: Object.freeze({ ...nextSnapshot.canvas }),
+    arena: nextSnapshot.arena ? Object.freeze({ ...nextSnapshot.arena }) : undefined,
+    camera: nextSnapshot.camera ? Object.freeze({ ...nextSnapshot.camera }) : undefined,
+    run: nextSnapshot.run ? Object.freeze({ ...nextSnapshot.run }) : undefined,
+    player: nextSnapshot.player ? Object.freeze({ ...nextSnapshot.player }) : undefined,
   });
 });
 

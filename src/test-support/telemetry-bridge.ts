@@ -3,6 +3,22 @@ export interface ArenaTestSnapshot {
   readonly scene: string | null;
   readonly themeId: string;
   readonly canvas: Readonly<{ width: number; height: number }>;
+  readonly arena?: Readonly<{ width: number; height: number }>;
+  readonly camera?: Readonly<{ scrollX: number; scrollY: number }>;
+  readonly run?: Readonly<{
+    status: "playing" | "paused" | "dead" | "complete";
+    elapsedMs: number;
+    durationMs: number;
+  }>;
+  readonly player?: Readonly<{
+    characterId: string;
+    x: number;
+    y: number;
+    radius: number;
+    moveSpeed: number;
+    velocityX: number;
+    velocityY: number;
+  }>;
   readonly error?: string;
 }
 

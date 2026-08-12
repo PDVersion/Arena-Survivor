@@ -16,6 +16,7 @@ export const alternateTheme = defineTheme({
     arenaName: "Neon Test Grid",
     bootStatus: "Fixture ready",
     bootFailure: "Fixture failed",
+    movementHint: "Use test controls",
     content,
   },
   tokens: {
@@ -34,6 +35,19 @@ export const alternateTheme = defineTheme({
       id: archetypeIds.character.starter,
       radius: 18,
       presentationToken: "player",
+      baseStats: {
+        maxHealth: 100,
+        moveSpeed: 200,
+        armour: 0,
+        regeneration: 0,
+        pickupRadius: 80,
+        damageBonus: 0,
+        attackSpeedBonus: 0,
+        critChance: 0.05,
+        critDamage: 2,
+        luck: 0,
+        xpMultiplier: 1,
+      },
     },
   ],
 });
