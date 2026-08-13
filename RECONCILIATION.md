@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phase 1 complete — Phase 2 not started**
+- Active phase: **Phases 1–2 complete — awaiting combined review and manual testing**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -623,6 +623,8 @@ Data-only events keep Phaser and callback objects out of simulation state, while
 Future guardrail:
 Queue unit tests cover order, budgeting, duplicate IDs, exact-once claims, and a lossless 300-event run. Effects enqueue follow-up data rather than invoking collision handlers recursively.
 
+Phase 2 integration evidence: the first full browser regression found that two consumers shared one FIFO; the offspring consumer drained Phase 1 load requests that it did not understand. The run scene now activates only the consumer matching the configured test scenario. Future general gameplay routing must use a single kind-aware dispatcher rather than multiple consumers that dequeue before checking ownership.
+
 Revisit when:
 Profiling shows FIFO shifting is material under representative compound interactions, persistence requires suspended queued work, or priority classes become necessary.
 
@@ -669,6 +671,50 @@ Production output contains no `__ARENA_TEST__` facade or alternate fixture. The 
 
 Revisit when:
 Phase 7 measures a safe higher live cap, a deterministic browser stepper replaces real-time execution, or the representative scenario needs mixed content and interactions.
+
+### REC-029 — Expanded roster cadence and Broodmother offspring are provisional theme data
+
+- Status: Provisional
+- Date: 2026-08-13
+- Affects: V0.2 Phase 2, enemy spawning, progression balance, swarm load
+- Blocks: None
+
+Context / observation:
+The product plan specifies exact Runner and Tank stats and five Broodmother offspring, but it does not specify roster cadence/weights, Broodmother stats, offspring role/reward, or final fantasy geometry. Phase 2 needs all roles to become observable during a normal five-minute run without replacing the established ambient cadence.
+
+Decision / solution:
+Retain the 400 ms ambient cadence and select deterministically from unlocked theme definitions using injected seeded randomness. Unlock Grunt/Runner/Tank/Broodmother at 0/8/16/24 seconds with weights 56/24/14/6. Use the product Runner baseline (10 health, 140 speed, 8 damage, 1 XP) and Tank baseline (80 health, 45 speed, 20 damage, 4 XP). Provisionally give Broodmother 50 health, 55 speed, 12 damage, 3 XP and five zero-XP Runner offspring. Render the four roles as theme-owned circle, triangle, square, and outlined hexagon tokens through one generic actor.
+
+Why:
+Staged unlocks introduce threats legibly, weighted seeded selection keeps tests deterministic, and zero-XP offspring prevent one natural split from becoming an automatic reward multiplier before world/reward balance exists. Circular physics bodies remain inexpensive while generated geometry makes roles visually distinguishable pending assets.
+
+Future guardrail:
+Content tests lock product baselines and validate weights, unlocks, geometry, and death-spawn references. Spawn tests cover boundary rolls. Browser tests observe all four roles and exactly five eventually spawned children under the shared live cap.
+
+Revisit when:
+Combined Phase 1–2 playtesting provides cadence/readability feedback, Phase 4 adds Fracture, Phase 5 formalizes reward multipliers, or Phase 7 measures a higher live cap.
+
+### REC-030 — Natural offspring use retained spawn events and do not inherit parent rewards
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 2, 4, 5, 7; death spawning, rewards, statistics
+- Blocks: None
+
+Context / observation:
+Broodmother death can occur at the live-enemy cap and physics may report duplicate lethal overlaps. Creating children directly in the collision callback would either drop them at capacity or risk duplicate offspring. Shrine-tagged Broodmothers also make reward inheritance ambiguous.
+
+Decision / solution:
+The first lethal claim commits a death event and the first `enemy.death_spawn` claim enqueues exactly five child spawn requests with parent event/entity IDs. Due children remain queued until capacity exists. The child definition carries an explicit configured reward multiplier and uses the Broodmother role as its spawn source; it does not inherit the parent's shrine reward multiplier.
+
+Why:
+This makes natural offspring count independent of callback duplication and current capacity. Explicit child reward provenance prevents a source bonus intended for one parent from multiplying a new generation implicitly.
+
+Future guardrail:
+Unit tests prove one lethal/effect claim and five retained requests. Chromium telemetry separately records queued and spawned offspring, role high-water counts, and cap compliance. Restart/terminal reconstruction clears the queue.
+
+Revisit when:
+Phase 4 defines Fracture inheritance, Phase 5 defines duplication/source stacking, or a design choice explicitly grants descendant rewards.
 
 ## Open questions to reconcile during implementation
 

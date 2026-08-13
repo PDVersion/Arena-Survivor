@@ -167,12 +167,37 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(enemy.xpReward) || enemy.xpReward < 0) {
       issues.push(`${enemy.id} xpReward cannot be negative`);
     }
+    if (!Number.isFinite(enemy.spawnWeight) || enemy.spawnWeight < 0) {
+      issues.push(`${enemy.id} spawnWeight cannot be negative`);
+    }
+    if (!Number.isFinite(enemy.unlockAtMs) || enemy.unlockAtMs < 0) {
+      issues.push(`${enemy.id} unlockAtMs cannot be negative`);
+    }
+    if (!(["circle", "triangle", "square", "hexagon"] as const).includes(enemy.geometry)) {
+      issues.push(`${enemy.id} geometry is unsupported: ${String(enemy.geometry)}`);
+    }
+    if (enemy.deathSpawn) {
+      if (!Number.isInteger(enemy.deathSpawn.count) || enemy.deathSpawn.count < 1) {
+        issues.push(`${enemy.id} deathSpawn count must be a positive integer`);
+      }
+      if (!Number.isFinite(enemy.deathSpawn.rewardMultiplier) || enemy.deathSpawn.rewardMultiplier < 0) {
+        issues.push(`${enemy.id} deathSpawn rewardMultiplier cannot be negative`);
+      }
+    }
     if (!(enemy.presentationToken in theme.tokens.palette)) {
       issues.push(`${enemy.id} references missing presentation token: ${enemy.presentationToken}`);
     }
   }
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
+  }
+  for (const requiredId of Object.values(archetypeIds.enemy)) {
+    if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
+  }
+  for (const enemy of enemies) {
+    if (enemy.deathSpawn && !enemyIds.has(enemy.deathSpawn.enemyId)) {
+      issues.push(`${enemy.id} references missing death-spawn enemy: ${enemy.deathSpawn.enemyId}`);
+    }
   }
 
   const pickupIds = new Set<string>();

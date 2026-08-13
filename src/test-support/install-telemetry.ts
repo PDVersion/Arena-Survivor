@@ -32,6 +32,8 @@ registerTestTelemetryUpdater((nextSnapshot) => {
     combat: nextSnapshot.combat
       ? Object.freeze({
           ...nextSnapshot.combat,
+          roster: Object.freeze({ ...nextSnapshot.combat.roster }),
+          rosterHighWater: Object.freeze({ ...nextSnapshot.combat.rosterHighWater }),
           projectileSample: nextSnapshot.combat.projectileSample
             ? Object.freeze({ ...nextSnapshot.combat.projectileSample })
             : null,

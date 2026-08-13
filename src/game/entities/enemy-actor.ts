@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 import type { EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
-import type { ShrineId } from "../core/archetypes/ids";
+import type { ContentId, ShrineId } from "../core/archetypes/ids";
 
-export type EnemySpawnSource = "ambient" | ShrineId;
+export type EnemySpawnSource = "ambient" | ShrineId | ContentId;
 
 export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly targetId: string;
@@ -37,6 +37,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.radius);
+    if (definition.geometry === "triangle") this.setIterations(1 / 3).setAngle(-90);
+    if (definition.geometry === "square") this.setIterations(1 / 4).setAngle(45);
+    if (definition.geometry === "hexagon") {
+      this.setIterations(1 / 6).setAngle(30).setStrokeStyle(5, 0xffffff, 0.45);
+    }
     this.setDepth(20);
   }
 

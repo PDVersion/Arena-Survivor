@@ -106,6 +106,10 @@ export interface ArenaTestSnapshot {
       velocityX: number;
       velocityY: number;
     }> | null;
+    roster: Readonly<Record<string, number>>;
+    rosterHighWater: Readonly<Record<string, number>>;
+    offspringQueued: number;
+    offspringSpawned: number;
   }>;
   readonly error?: string;
 }
