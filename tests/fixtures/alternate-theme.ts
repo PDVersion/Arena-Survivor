@@ -1,6 +1,7 @@
 import { archetypeIds } from "../../src/game/core/archetypes/ids";
 import type { ThemeCopy } from "../../src/game/core/archetypes/contracts";
 import { defineTheme } from "../../src/game/content/define-theme";
+import { eliteIds } from "../../src/game/core/archetypes/categories";
 
 const content = Object.fromEntries(
   Object.values(archetypeIds).flatMap((category) =>
@@ -51,6 +52,15 @@ export const alternateTheme = defineTheme({
       shrine: "#ff4488",
     },
     playerShape: "circle",
+    feedback: {
+      damage: "test.damage",
+      critical: "test.critical",
+      overcritical: "test.overcritical",
+      pierce: "test.pierce",
+      explosion: "test.explosion",
+      shrine: "test.shrine",
+      elite: "test.elite",
+    },
   },
   characters: [
     {
@@ -126,4 +136,6 @@ export const alternateTheme = defineTheme({
       presentationToken: "shrine",
     },
   ],
+  skills: Object.values(archetypeIds.skill).map((id) => ({ id })),
+  elites: [{ id: eliteIds.baseline }],
 });

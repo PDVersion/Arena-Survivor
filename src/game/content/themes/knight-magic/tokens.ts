@@ -15,4 +15,13 @@ export const tokens = {
     shrine: "#fb7185",
   },
   playerShape: "diamond",
+  feedback: {
+    damage: "feedback.damage",
+    critical: "feedback.critical",
+    overcritical: "feedback.overcritical",
+    pierce: "feedback.pierce",
+    explosion: "feedback.explosion",
+    shrine: "feedback.shrine",
+    elite: "feedback.elite",
+  },
 } as const satisfies ThemeTokens;

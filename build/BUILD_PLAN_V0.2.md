@@ -18,7 +18,7 @@ This is the current implementation plan for the V0.2 scope in [`PLAN.md`](./PLAN
 
 Add a completed phase's commit hash in the next phase status update or the pull request description.
 
-- [ ] Phase 1 — Interaction contracts, causal events, and load harness
+- [x] Phase 1 — Interaction contracts, causal events, and load harness
 - [ ] Phase 2 — Runner, Tank, and Broodmother roster
 - [ ] Phase 3 — Overcrit tiers and Piercing Momentum
 - [ ] Phase 4 — Explosions, Fracture, Bloodlust, and chain reactions

@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Planning complete — Phase 1 not started**
+- Active phase: **Phase 1 complete — Phase 2 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -603,6 +603,72 @@ Browser tests assert live integration at controllable deterministic boundaries a
 
 Revisit when:
 Browser tests gain deterministic player/pickup positioning, a simulation-step control, or V0.2's load harness replaces real-time waits with an explicit read-only scenario driver.
+
+### REC-026 — Causal queues retain serializable work and own exact-once claims
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 1–7, combat interactions, spawning, restart
+- Blocks: None
+
+Context / observation:
+Later V0.2 mechanics need to compose deaths, spawns, rewards, and feedback without recursive physics callbacks or callback-bearing state. Duplicate overlap callbacks and capped spawning make exact-once ownership and retained back-pressure necessary before Broodmother and chain mechanics enter.
+
+Decision / solution:
+Use an iterative FIFO queue whose events are structured-cloned serializable data with stable event/entity IDs and explicit source, parent, and effect provenance. The queue rejects duplicate event IDs and owns per-entity lethal and per-entity/effect claims. A caller chooses a per-tick budget; unprocessed work remains queued. Restart reconstructs the queue.
+
+Why:
+Data-only events keep Phaser and callback objects out of simulation state, while central claims make duplicate deaths/effects testable independently of collision timing. Retained work allows later phases to apply measured budgets without silently losing gameplay.
+
+Future guardrail:
+Queue unit tests cover order, budgeting, duplicate IDs, exact-once claims, and a lossless 300-event run. Effects enqueue follow-up data rather than invoking collision handlers recursively.
+
+Revisit when:
+Profiling shows FIFO shifting is material under representative compound interactions, persistence requires suspended queued work, or priority classes become necessary.
+
+### REC-027 — Modifier resolution is additive then multiplicative across stable layers
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 1, 3, 5–7; player, weapon, enemy, world, reward modifiers
+- Blocks: None
+
+Context / observation:
+V0.2 will combine modifiers from several owners. Applying them ad hoc in scenes would make ordering dependent on call sites and risk rounding or double application.
+
+Decision / solution:
+Resolve `(base + sum(additive)) × product(multiplicative)` centrally. Order inputs deterministically by the stable player, weapon, enemy, world, and reward layers, then by source ID. Preserve fractional results; formatting and presentation may round only downstream.
+
+Why:
+This matches the existing additive upgrade model while giving Chaos, shrines, enemies, and rewards one deterministic multiplicative seam.
+
+Future guardrail:
+Modifier tests cover mixed input order, layer ordering, fractional products, and input immutability. Systems submit typed inputs rather than performing their own stacking.
+
+Revisit when:
+A named mechanic explicitly requires a different stage, caps/soft caps enter scope, or balance evidence requires multiplicative groups rather than one product.
+
+### REC-028 — Load instrumentation is read-only and test-build initiated
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 1, 2, 4, 6, 7; performance testing, production surface
+- Blocks: None
+
+Context / observation:
+The browser needs a reproducible spawn scenario without adding a writable production console hook. The established live enemy cap is 80, while the milestone's 300-work representative load also needs a fast deterministic headless proof.
+
+Decision / solution:
+Keep the production test global absent. In test mode only, a positive `loadHarness` query value (bounded to 300) preloads causal spawn requests; browser coverage uses 80 to prove live cap/back-pressure telemetry. A pure headless harness separately processes 300 events. Telemetry exposes backlog, processed work, dropped presentation cues, and live/tracked high-water marks as frozen snapshots.
+
+Why:
+The query is fixed before boot and cannot mutate a running simulation. Splitting live-cap and headless checks provides deterministic loss detection now without prematurely raising the V0.1 cap before representative profiling.
+
+Future guardrail:
+Production output contains no `__ARENA_TEST__` facade or alternate fixture. The browser load test asserts 80 exact scripted spawns and clean console output; the unit harness asserts 300 unique processed events.
+
+Revisit when:
+Phase 7 measures a safe higher live cap, a deterministic browser stepper replaces real-time execution, or the representative scenario needs mixed content and interactions.
 
 ## Open questions to reconcile during implementation
 

@@ -59,6 +59,17 @@ export interface ArenaTestSnapshot {
     trailsEmitted: number;
     pickupCues: number;
   }>;
+  readonly load?: Readonly<{
+    enabled: boolean;
+    requested: number;
+    spawned: number;
+    eventBacklog: number;
+    eventBacklogHighWater: number;
+    processedEffects: number;
+    droppedPresentationCues: number;
+    liveHighWater: number;
+    trackedHighWater: number;
+  }>;
   readonly shrine?: Readonly<{
     id: string | null;
     x: number;

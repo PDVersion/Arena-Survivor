@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { archetypeIds, v01ContentIds } from "../../../src/game/core/archetypes/ids";
+import { archetypeIds, v02ContentIds } from "../../../src/game/core/archetypes/ids";
 import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { validateTheme } from "../../../src/game/content/define-theme";
@@ -11,7 +11,7 @@ describe("theme manifests", () => {
     ["alternate", alternateTheme],
   ])("validates the %s manifest", (_name, theme) => {
     expect(validateTheme(theme)).toEqual([]);
-    expect(Object.keys(theme.copy.content)).toEqual(expect.arrayContaining(v01ContentIds));
+    expect(Object.keys(theme.copy.content)).toEqual(expect.arrayContaining(v02ContentIds));
   });
 
   it("changes presentation without changing the stable starter role", () => {

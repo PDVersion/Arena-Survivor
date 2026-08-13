@@ -43,6 +43,7 @@ import {
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
+import { CausalEventQueue } from "../systems/events/causal-events";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
@@ -62,6 +63,12 @@ function testSurgeDurationMs(): number | undefined {
   if (import.meta.env.MODE !== "test") return undefined;
   const configured = Number(new URLSearchParams(window.location.search).get("surgeDurationMs"));
   return Number.isFinite(configured) && configured > 0 ? configured : undefined;
+}
+
+function testLoadHarnessCount(): number {
+  if (import.meta.env.MODE !== "test") return 0;
+  const configured = Number(new URLSearchParams(window.location.search).get("loadHarness"));
+  return Number.isInteger(configured) && configured > 0 ? Math.min(configured, 300) : 0;
 }
 
 interface MovementKeys {
@@ -123,6 +130,12 @@ export class RunScene extends Phaser.Scene {
   private shrineXpDropped = 0;
   private ambientXpCollected = 0;
   private shrineXpCollected = 0;
+  private eventQueue = new CausalEventQueue();
+  private loadHarnessRequested = 0;
+  private loadHarnessSpawned = 0;
+  private liveHighWater = 0;
+  private trackedHighWater = 0;
+  private droppedPresentationCues = 0;
 
   constructor() {
     super("run");
@@ -252,6 +265,7 @@ export class RunScene extends Phaser.Scene {
       this.runEndOverlay?.hide();
     });
     this.hud.update(this.runState);
+    this.prepareTestLoadHarness();
     this.publishTelemetry();
   }
 
@@ -270,8 +284,10 @@ export class RunScene extends Phaser.Scene {
       this.updatePickups();
       this.updateShrine();
       this.updateSurge();
-      this.spawnIfReady();
+      this.processTestLoadHarness();
+      if (this.loadHarnessRequested === 0) this.spawnIfReady();
       this.fireIfReady();
+      this.updateLoadHighWaterMarks();
       if (this.runState.elapsedMs >= this.invulnerableUntilMs) this.player.setAlpha(1);
     } else {
       this.player.stop();
@@ -333,6 +349,40 @@ export class RunScene extends Phaser.Scene {
     this.shrineXpDropped = 0;
     this.ambientXpCollected = 0;
     this.shrineXpCollected = 0;
+    this.eventQueue = new CausalEventQueue();
+    this.loadHarnessRequested = 0;
+    this.loadHarnessSpawned = 0;
+    this.liveHighWater = 0;
+    this.trackedHighWater = 0;
+    this.droppedPresentationCues = 0;
+  }
+
+  private prepareTestLoadHarness(): void {
+    this.loadHarnessRequested = testLoadHarnessCount();
+    for (let index = 0; index < this.loadHarnessRequested; index += 1) {
+      this.eventQueue.enqueue({
+        eventId: `load-spawn-${index + 1}`,
+        kind: "spawn.requested",
+        provenance: { sourceCategory: "world", sourceId: "load.harness" },
+        payload: { sequence: index + 1 },
+      });
+    }
+  }
+
+  private processTestLoadHarness(): void {
+    if (this.loadHarnessRequested === 0) return;
+    const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    this.eventQueue.process(Math.min(12, capacity), () => {
+      if (this.spawnEnemy("ambient", 1)) this.loadHarnessSpawned += 1;
+    });
+  }
+
+  private updateLoadHighWaterMarks(): void {
+    this.liveHighWater = Math.max(this.liveHighWater, this.enemies.size);
+    this.trackedHighWater = Math.max(
+      this.trackedHighWater,
+      this.enemies.size + this.projectiles.size + this.pickups.size,
+    );
   }
 
   private updateEnemies(): void {
@@ -875,6 +925,17 @@ export class RunScene extends Phaser.Scene {
         hitFlashes: this.hitFlashes,
         trailsEmitted: this.trailsEmitted,
         pickupCues: this.pickupCues,
+      },
+      load: {
+        enabled: this.loadHarnessRequested > 0,
+        requested: this.loadHarnessRequested,
+        spawned: this.loadHarnessSpawned,
+        eventBacklog: this.eventQueue.snapshot().backlog,
+        eventBacklogHighWater: this.eventQueue.snapshot().backlogHighWater,
+        processedEffects: this.eventQueue.snapshot().processed,
+        droppedPresentationCues: this.droppedPresentationCues,
+        liveHighWater: this.liveHighWater,
+        trackedHighWater: this.trackedHighWater,
       },
       shrine: {
         id: this.shrineDefinition?.id ?? null,
