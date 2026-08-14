@@ -17,4 +17,10 @@ export interface AddStatEffect {
   readonly value: number;
 }
 
-export type UpgradeEffect = AddStatEffect;
+export interface EnableSkillEffect {
+  readonly kind: "skill.enable";
+  readonly skillId: SkillId;
+}
+
+export type UpgradeEffect = AddStatEffect | EnableSkillEffect;
+import type { SkillId } from "./ids";

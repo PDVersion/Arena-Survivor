@@ -1,11 +1,14 @@
 import Phaser from "phaser";
 import type { ThemeTokens, WeaponDefinition } from "../core/archetypes/contracts";
-import { consumePierce, createPierceState, type PierceState } from "../systems/combat";
+import { consumePierce, createPierceState, piercingMomentumDamage, type PierceState } from "../systems/combat";
 
 export class ProjectileActor extends Phaser.GameObjects.Arc {
   readonly projectileId: string;
-  readonly damage: number;
+  readonly baseDamage: number;
   readonly critical: boolean;
+  readonly critTier: number;
+  readonly momentumPerHit: number;
+  private chainIndex = 0;
   private pierceState: PierceState;
   private expiresAtMs: number;
   private nextTrailAtMs: number;
@@ -20,15 +23,19 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     tokens: ThemeTokens,
     damage: number,
     critical: boolean,
+    critTier: number,
     nowMs: number,
     pierce = definition.pierce,
+    momentumPerHit = 0,
   ) {
-    const token = critical ? "critical" : definition.presentationToken;
+    const token = critTier > 1 ? "overcritical" : critical ? "critical" : definition.presentationToken;
     const colour = Phaser.Display.Color.HexStringToColor(tokens.palette[token]).color;
     super(scene, x, y, definition.projectileRadius, 0, 360, false, colour);
     this.projectileId = projectileId;
-    this.damage = damage;
+    this.baseDamage = damage;
     this.critical = critical;
+    this.critTier = critTier;
+    this.momentumPerHit = momentumPerHit;
     this.pierceState = createPierceState(pierce);
     this.expiresAtMs = nowMs + definition.projectileLifetimeMs;
     this.nextTrailAtMs = nowMs;
@@ -37,7 +44,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.projectileRadius);
     this.setDepth(40);
-    if (critical) this.setScale(1.35);
+    if (critical) this.setScale(1 + Math.min(0.8, critTier * 0.18));
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -52,8 +59,17 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     return this.active && this.pierceState.remainingHits > 0 && !this.pierceState.hitTargetIds.has(targetId);
   }
 
+  get damage(): number {
+    return piercingMomentumDamage(this.baseDamage, this.chainIndex, this.momentumPerHit);
+  }
+
+  get pierceChainIndex(): number {
+    return this.chainIndex;
+  }
+
   registerHit(targetId: string): void {
     this.pierceState = consumePierce(this.pierceState, targetId);
+    this.chainIndex += 1;
     if (this.pierceState.remainingHits === 0) this.destroy();
   }
 

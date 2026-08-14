@@ -42,4 +42,13 @@ export const upgrades = [
     effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }],
     presentationToken: "accent",
   },
+  {
+    id: archetypeIds.upgrade.piercingMomentum,
+    effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.piercingMomentum }],
+    presentationToken: "accent",
+  },
+  { id: archetypeIds.upgrade.onKillExplosion, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.onKillExplosion }], presentationToken: "accent" },
+  { id: archetypeIds.upgrade.fracture, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.fracture }], presentationToken: "accent" },
+  { id: archetypeIds.upgrade.bloodlust, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.bloodlust }], presentationToken: "accent" },
+  { id: archetypeIds.upgrade.chainReaction, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.chainReaction }], presentationToken: "accent" },
 ] as const satisfies readonly UpgradeDefinition[];

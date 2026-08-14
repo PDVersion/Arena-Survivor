@@ -32,6 +32,7 @@ describe("upgrade application", () => {
       player: { health: 60, stats: { ...baseStats } },
       weaponModifiers: createWeaponStatModifiers(),
       selectedUpgradeIds: [],
+      activeSkillIds: [],
     };
     for (const upgrade of knightMagicTheme.upgrades) state = applyUpgrade(state, upgrade);
 
@@ -47,6 +48,7 @@ describe("upgrade application", () => {
     });
     expect(state.player.stats.critChance).toBeCloseTo(0.15);
     expect(state.weaponModifiers).toEqual({ pierce: 1, projectileCount: 1 });
-    expect(state.selectedUpgradeIds).toHaveLength(8);
+    expect(state.selectedUpgradeIds).toHaveLength(13);
+    expect(state.activeSkillIds).toHaveLength(5);
   });
 });

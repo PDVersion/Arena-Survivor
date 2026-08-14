@@ -17,7 +17,7 @@ describe("combat rules", () => {
         critDamage: 2,
         random: () => 0.5,
       }),
-    ).toEqual({ damage: 15, critical: false });
+    ).toMatchObject({ damage: 15, critical: false, tier: 0, multiplier: 1, baseDamage: 15, bonusDamage: 0 });
     expect(
       rollDamage({
         baseDamage: 10,
@@ -26,10 +26,10 @@ describe("combat rules", () => {
         critDamage: 2,
         random: () => 0.1,
       }),
-    ).toEqual({ damage: 30, critical: true });
+    ).toMatchObject({ damage: 30, critical: true, tier: 1, multiplier: 2, baseDamage: 15, bonusDamage: 15 });
   });
 
-  it("preserves uncapped crit chance in stats while V0.1 rolls always crit above 100%", () => {
+  it("resolves uncapped crit chance into guaranteed and fractional tiers", () => {
     expect(
       rollDamage({
         baseDamage: 10,
@@ -38,7 +38,9 @@ describe("combat rules", () => {
         critDamage: 2,
         random: () => 0.999,
       }),
-    ).toEqual({ damage: 20, critical: true });
+    ).toMatchObject({ damage: 20, critical: true, tier: 1, multiplier: 2 });
+    expect(rollDamage({ baseDamage: 10, damageBonus: 0, critChance: 1.75, critDamage: 2, random: () => 0.5 }))
+      .toMatchObject({ damage: 40, tier: 2, multiplier: 4, bonusDamage: 30 });
   });
 
   it("applies lethal damage once without negative health", () => {

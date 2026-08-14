@@ -11,7 +11,8 @@ export type CausalEventKind =
   | "spawn.requested"
   | "spawn.committed"
   | "reward.committed"
-  | "feedback.requested";
+  | "feedback.requested"
+  | "effect.explosion";
 
 export interface EventProvenance {
   readonly sourceCategory: EventSourceCategory;
@@ -55,15 +56,20 @@ export class CausalEventQueue {
     return true;
   }
 
-  process(maximum: number, consumer: (event: CausalEvent) => void): number {
+  process(maximum: number, consumer: (event: CausalEvent) => unknown): number {
     const count = Math.min(Math.max(0, Math.floor(maximum)), this.pending.length);
+    let processedNow = 0;
     for (let index = 0; index < count; index += 1) {
       const event = this.pending.shift();
       if (!event) break;
-      consumer(event);
+      if (consumer(event) === false) {
+        this.pending.unshift(event);
+        break;
+      }
       this.processed += 1;
+      processedNow += 1;
     }
-    return count;
+    return processedNow;
   }
 
   claimLethal(entityId: RuntimeEntityId): boolean {

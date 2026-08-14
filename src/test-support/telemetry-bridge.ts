@@ -38,6 +38,7 @@ export interface ArenaTestSnapshot {
     pickupsCollected: number;
     choiceIds: readonly string[];
     selectedUpgradeIds: readonly string[];
+    activeSkillIds: readonly string[];
     pierceBonus: number;
     projectileCountBonus: number;
   }>;
@@ -70,6 +71,18 @@ export interface ArenaTestSnapshot {
     liveHighWater: number;
     trackedHighWater: number;
   }>;
+  readonly effects?: Readonly<{
+    explosionsCommitted: number;
+    chainExplosionsCommitted: number;
+    fractureQueued: number;
+    fractureSpawned: number;
+    bloodlustKills: number;
+    bloodlustAttackSpeedBonus: number;
+    directDamage: number;
+    explosionDamage: number;
+    chainedExplosionDamage: number;
+    eventBacklog: number;
+  }>;
   readonly shrine?: Readonly<{
     id: string | null;
     x: number;
@@ -96,6 +109,8 @@ export interface ArenaTestSnapshot {
     projectiles: number;
     shotsFired: number;
     criticalShots: number;
+    highestCritTier: number;
+    longestPierceChain: number;
     contactHits: number;
     enemyCap: number;
     projectileCap: number;
@@ -105,6 +120,9 @@ export interface ArenaTestSnapshot {
       y: number;
       velocityX: number;
       velocityY: number;
+      damage: number;
+      critTier: number;
+      pierceChainIndex: number;
     }> | null;
     roster: Readonly<Record<string, number>>;
     rosterHighWater: Readonly<Record<string, number>>;

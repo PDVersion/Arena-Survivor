@@ -28,10 +28,12 @@ describe("run stat modifiers", () => {
       player: { stats: { damageBonus: 0.25 } },
       progression: { pendingChoices: 0 },
       selectedUpgradeIds: [archetypeIds.upgrade.damage],
+      activeSkillIds: [],
     });
     expect(resetRunState(upgraded)).toMatchObject({
       player: { stats: { damageBonus: 0 } },
       selectedUpgradeIds: [],
+      activeSkillIds: [],
     });
   });
 });

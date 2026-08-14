@@ -230,6 +230,12 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
+        if (effect.kind === "skill.enable") {
+          if (!Object.values(archetypeIds.skill).includes(effect.skillId)) {
+            issues.push(`${upgrade.id} references unsupported skill: ${String(effect.skillId)}`);
+          }
+          continue;
+        }
         if (effect.kind !== "stat.add") {
           issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
           continue;
@@ -285,6 +291,25 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const skill of skills) {
     if (skillIds.has(skill.id)) issues.push(`duplicate skill id: ${skill.id}`);
     skillIds.add(skill.id);
+    for (const effect of skill.effects ?? []) {
+      if (effect.kind === "piercing_momentum" && (!Number.isFinite(effect.damagePerUniqueHit) || effect.damagePerUniqueHit <= 0)) {
+        issues.push(`${skill.id} damagePerUniqueHit must be greater than zero`);
+      }
+      if (effect.kind === "on_kill_explosion" &&
+        (!Number.isFinite(effect.radius) || effect.radius <= 0 || !Number.isFinite(effect.damage) || effect.damage <= 0)) {
+        issues.push(`${skill.id} explosion radius and damage must be greater than zero`);
+      }
+      if (effect.kind === "fracture") {
+        if (!Number.isFinite(effect.chance) || effect.chance < 0 || effect.chance > 1) issues.push(`${skill.id} fracture chance must be between zero and one`);
+        if (!Number.isInteger(effect.childCount) || effect.childCount < 1) issues.push(`${skill.id} fracture childCount must be a positive integer`);
+        if (!enemyIds.has(effect.childEnemyId)) issues.push(`${skill.id} references missing fracture enemy: ${effect.childEnemyId}`);
+        if (!Number.isFinite(effect.rewardMultiplier) || effect.rewardMultiplier < 0) issues.push(`${skill.id} fracture rewardMultiplier cannot be negative`);
+      }
+      if (effect.kind === "bloodlust" &&
+        (!Number.isFinite(effect.windowMs) || effect.windowMs <= 0 || !Number.isInteger(effect.killsPerStep) || effect.killsPerStep < 1 || !Number.isFinite(effect.attackSpeedPerStep) || effect.attackSpeedPerStep <= 0)) {
+        issues.push(`${skill.id} Bloodlust values must be positive`);
+      }
+    }
   }
   for (const requiredId of Object.values(archetypeIds.skill)) {
     if (!skillIds.has(requiredId)) issues.push(`missing required skill: ${requiredId}`);
