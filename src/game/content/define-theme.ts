@@ -1,4 +1,5 @@
-import { archetypeIds, v01ContentIds } from "../core/archetypes/ids";
+import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
+import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
@@ -49,7 +50,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
   }
 
-  for (const id of v01ContentIds) {
+  for (const id of v02ContentIds) {
     const copy = theme.copy.content[id];
     if (!copy?.name.trim()) issues.push(`${id} name is required`);
     if (!copy?.description.trim()) issues.push(`${id} description is required`);
@@ -57,6 +58,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
 
   for (const [token, colour] of Object.entries(theme.tokens.palette)) {
     if (!HEX_COLOUR.test(colour)) issues.push(`palette.${token} must be a six-digit hex colour`);
+  }
+  for (const category of feedbackCategories) {
+    if (!theme.tokens.feedback?.[category]?.trim()) {
+      issues.push(`feedback.${category} token is required`);
+    }
   }
 
   const characterIds = new Set<string>();
@@ -161,12 +167,37 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(enemy.xpReward) || enemy.xpReward < 0) {
       issues.push(`${enemy.id} xpReward cannot be negative`);
     }
+    if (!Number.isFinite(enemy.spawnWeight) || enemy.spawnWeight < 0) {
+      issues.push(`${enemy.id} spawnWeight cannot be negative`);
+    }
+    if (!Number.isFinite(enemy.unlockAtMs) || enemy.unlockAtMs < 0) {
+      issues.push(`${enemy.id} unlockAtMs cannot be negative`);
+    }
+    if (!(["circle", "triangle", "square", "hexagon"] as const).includes(enemy.geometry)) {
+      issues.push(`${enemy.id} geometry is unsupported: ${String(enemy.geometry)}`);
+    }
+    if (enemy.deathSpawn) {
+      if (!Number.isInteger(enemy.deathSpawn.count) || enemy.deathSpawn.count < 1) {
+        issues.push(`${enemy.id} deathSpawn count must be a positive integer`);
+      }
+      if (!Number.isFinite(enemy.deathSpawn.rewardMultiplier) || enemy.deathSpawn.rewardMultiplier < 0) {
+        issues.push(`${enemy.id} deathSpawn rewardMultiplier cannot be negative`);
+      }
+    }
     if (!(enemy.presentationToken in theme.tokens.palette)) {
       issues.push(`${enemy.id} references missing presentation token: ${enemy.presentationToken}`);
     }
   }
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
+  }
+  for (const requiredId of Object.values(archetypeIds.enemy)) {
+    if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
+  }
+  for (const enemy of enemies) {
+    if (enemy.deathSpawn && !enemyIds.has(enemy.deathSpawn.enemyId)) {
+      issues.push(`${enemy.id} references missing death-spawn enemy: ${enemy.deathSpawn.enemyId}`);
+    }
   }
 
   const pickupIds = new Set<string>();
@@ -246,6 +277,28 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   if (!shrineIds.has(archetypeIds.shrine.spawnSurge)) {
     issues.push(`missing required shrine: ${archetypeIds.shrine.spawnSurge}`);
+  }
+
+  const skillIds = new Set<string>();
+  const skills = Array.isArray(theme.skills) ? theme.skills : [];
+  if (!Array.isArray(theme.skills)) issues.push("skills registry is required");
+  for (const skill of skills) {
+    if (skillIds.has(skill.id)) issues.push(`duplicate skill id: ${skill.id}`);
+    skillIds.add(skill.id);
+  }
+  for (const requiredId of Object.values(archetypeIds.skill)) {
+    if (!skillIds.has(requiredId)) issues.push(`missing required skill: ${requiredId}`);
+  }
+
+  const eliteIdsFound = new Set<string>();
+  const elites = Array.isArray(theme.elites) ? theme.elites : [];
+  if (!Array.isArray(theme.elites)) issues.push("elites registry is required");
+  for (const elite of elites) {
+    if (eliteIdsFound.has(elite.id)) issues.push(`duplicate elite id: ${elite.id}`);
+    eliteIdsFound.add(elite.id);
+  }
+  if (!eliteIdsFound.has(eliteIds.baseline)) {
+    issues.push(`missing required elite: ${eliteIds.baseline}`);
   }
 
   return issues;

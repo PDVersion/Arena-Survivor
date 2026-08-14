@@ -1,6 +1,7 @@
 import { archetypeIds } from "../../src/game/core/archetypes/ids";
 import type { ThemeCopy } from "../../src/game/core/archetypes/contracts";
 import { defineTheme } from "../../src/game/content/define-theme";
+import { eliteIds } from "../../src/game/core/archetypes/categories";
 
 const content = Object.fromEntries(
   Object.values(archetypeIds).flatMap((category) =>
@@ -45,12 +46,24 @@ export const alternateTheme = defineTheme({
       text: "#ffffff",
       player: "#ff00ff",
       enemy: "#00ffff",
+      enemyFast: "#00ffaa",
+      enemyTank: "#0088ff",
+      enemySpawner: "#aa00ff",
       projectile: "#ffff00",
       critical: "#ff8800",
       pickup: "#88ff88",
       shrine: "#ff4488",
     },
     playerShape: "circle",
+    feedback: {
+      damage: "test.damage",
+      critical: "test.critical",
+      overcritical: "test.overcritical",
+      pierce: "test.pierce",
+      explosion: "test.explosion",
+      shrine: "test.shrine",
+      elite: "test.elite",
+    },
   },
   characters: [
     {
@@ -94,8 +107,14 @@ export const alternateTheme = defineTheme({
       contactCooldownMs: 1000,
       radius: 14,
       xpReward: 1,
+      spawnWeight: 56,
+      unlockAtMs: 0,
+      geometry: "circle",
       presentationToken: "enemy",
     },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 140, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 1, spawnWeight: 24, unlockAtMs: 8_000, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 45, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 4, spawnWeight: 14, unlockAtMs: 16_000, geometry: "square", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 55, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 3, spawnWeight: 6, unlockAtMs: 24_000, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0 } },
   ],
   pickups: [
     {
@@ -126,4 +145,6 @@ export const alternateTheme = defineTheme({
       presentationToken: "shrine",
     },
   ],
+  skills: Object.values(archetypeIds.skill).map((id) => ({ id })),
+  elites: [{ id: eliteIds.baseline }],
 });

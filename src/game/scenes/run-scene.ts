@@ -29,6 +29,7 @@ import {
 import type { DirectionalInput } from "../systems/player-movement";
 import { canApplyContactDamage, rollDamage } from "../systems/combat";
 import { canSpawn, pointOnSpawnRing, V01_SPAWN_LIMITS } from "../systems/spawning";
+import { createDeathSpawns, selectEnemyDefinition } from "../systems/spawning";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
@@ -43,6 +44,7 @@ import {
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
+import { CausalEventQueue } from "../systems/events/causal-events";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
@@ -62,6 +64,17 @@ function testSurgeDurationMs(): number | undefined {
   if (import.meta.env.MODE !== "test") return undefined;
   const configured = Number(new URLSearchParams(window.location.search).get("surgeDurationMs"));
   return Number.isFinite(configured) && configured > 0 ? configured : undefined;
+}
+
+function testLoadHarnessCount(): number {
+  if (import.meta.env.MODE !== "test") return 0;
+  const configured = Number(new URLSearchParams(window.location.search).get("loadHarness"));
+  return Number.isInteger(configured) && configured > 0 ? Math.min(configured, 300) : 0;
+}
+
+function testRosterHarnessSelection(): string | null {
+  if (import.meta.env.MODE !== "test") return null;
+  return new URLSearchParams(window.location.search).get("enemyRoster");
 }
 
 interface MovementKeys {
@@ -86,6 +99,7 @@ export class RunScene extends Phaser.Scene {
   private projectiles = new Set<ProjectileActor>();
   private pickups = new Set<PickupActor>();
   private enemyDefinition?: EnemyDefinition;
+  private enemyDefinitions: readonly EnemyDefinition[] = [];
   private weaponDefinition?: WeaponDefinition;
   private pickupDefinition?: PickupDefinition;
   private shrineDefinition?: ShrineDefinition;
@@ -96,6 +110,7 @@ export class RunScene extends Phaser.Scene {
   private runEndOverlay?: RunEndOverlay;
   private currentChoices: readonly UpgradeDefinition[] = [];
   private upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
+  private enemyRandom = createSeededRandom(0xe11e_0002);
   private nextSpawnAtMs = 0;
   private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
@@ -123,6 +138,16 @@ export class RunScene extends Phaser.Scene {
   private shrineXpDropped = 0;
   private ambientXpCollected = 0;
   private shrineXpCollected = 0;
+  private eventQueue = new CausalEventQueue();
+  private loadHarnessRequested = 0;
+  private loadHarnessSpawned = 0;
+  private liveHighWater = 0;
+  private trackedHighWater = 0;
+  private droppedPresentationCues = 0;
+  private rosterHighWater: Record<string, number> = {};
+  private offspringQueued = 0;
+  private offspringSpawned = 0;
+  private eventSequence = 0;
 
   constructor() {
     super("run");
@@ -148,7 +173,8 @@ export class RunScene extends Phaser.Scene {
       (character) => character.id === profile.selectedCharacterId,
     );
     if (!selectedCharacter) throw new Error("The selected character is unavailable");
-    this.enemyDefinition = activeTheme.enemies.find(
+    this.enemyDefinitions = activeTheme.enemies;
+    this.enemyDefinition = this.enemyDefinitions.find(
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
     );
     this.weaponDefinition = activeTheme.weapons.find(
@@ -252,6 +278,8 @@ export class RunScene extends Phaser.Scene {
       this.runEndOverlay?.hide();
     });
     this.hud.update(this.runState);
+    this.prepareTestLoadHarness();
+    this.prepareTestRosterHarness();
     this.publishTelemetry();
   }
 
@@ -270,8 +298,11 @@ export class RunScene extends Phaser.Scene {
       this.updatePickups();
       this.updateShrine();
       this.updateSurge();
-      this.spawnIfReady();
+      this.processTestLoadHarness();
+      if (this.loadHarnessRequested === 0) this.processQueuedEnemySpawns();
+      if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) this.spawnIfReady();
       this.fireIfReady();
+      this.updateLoadHighWaterMarks();
       if (this.runState.elapsedMs >= this.invulnerableUntilMs) this.player.setAlpha(1);
     } else {
       this.player.stop();
@@ -297,6 +328,7 @@ export class RunScene extends Phaser.Scene {
     this.projectiles = new Set();
     this.pickups = new Set();
     this.enemyDefinition = undefined;
+    this.enemyDefinitions = [];
     this.weaponDefinition = undefined;
     this.pickupDefinition = undefined;
     this.shrineDefinition = undefined;
@@ -307,6 +339,7 @@ export class RunScene extends Phaser.Scene {
     this.runEndOverlay = undefined;
     this.currentChoices = [];
     this.upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
+    this.enemyRandom = createSeededRandom(0xe11e_0002);
     this.nextSpawnAtMs = 0;
     this.nextFireAtMs = 0;
     this.lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
@@ -333,6 +366,95 @@ export class RunScene extends Phaser.Scene {
     this.shrineXpDropped = 0;
     this.ambientXpCollected = 0;
     this.shrineXpCollected = 0;
+    this.eventQueue = new CausalEventQueue();
+    this.loadHarnessRequested = 0;
+    this.loadHarnessSpawned = 0;
+    this.liveHighWater = 0;
+    this.trackedHighWater = 0;
+    this.droppedPresentationCues = 0;
+    this.rosterHighWater = {};
+    this.offspringQueued = 0;
+    this.offspringSpawned = 0;
+    this.eventSequence = 0;
+  }
+
+  private prepareTestLoadHarness(): void {
+    this.loadHarnessRequested = testLoadHarnessCount();
+    for (let index = 0; index < this.loadHarnessRequested; index += 1) {
+      this.eventQueue.enqueue({
+        eventId: `load-spawn-${index + 1}`,
+        kind: "spawn.requested",
+        provenance: { sourceCategory: "world", sourceId: "load.harness" },
+        payload: { sequence: index + 1 },
+      });
+    }
+  }
+
+  private processTestLoadHarness(): void {
+    if (this.loadHarnessRequested === 0) return;
+    const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    this.eventQueue.process(Math.min(12, capacity), () => {
+      if (this.spawnEnemy("ambient", 1)) this.loadHarnessSpawned += 1;
+    });
+  }
+
+  private prepareTestRosterHarness(): void {
+    const selection = testRosterHarnessSelection();
+    if (selection === null) return;
+    const definitions = selection === "broodmother"
+      ? this.enemyDefinitions.filter((definition) => definition.id === archetypeIds.enemy.deathSpawner)
+      : this.enemyDefinitions;
+    for (const definition of definitions) {
+      this.enqueueSpawnRequest(definition.id, "ambient", 1, undefined, undefined, "roster");
+    }
+  }
+
+  private enqueueSpawnRequest(
+    enemyId: EnemyDefinition["id"],
+    spawnSource: EnemySpawnSource,
+    rewardMultiplier: number,
+    parentEntityId?: string,
+    parentEventId?: string,
+    reason: "roster" | "offspring" = "offspring",
+  ): void {
+    this.eventSequence += 1;
+    this.eventQueue.enqueue({
+      eventId: `spawn-${this.eventSequence}`,
+      kind: "spawn.requested",
+      provenance: {
+        sourceCategory: reason === "offspring" ? "enemy" : "world",
+        sourceId: spawnSource,
+        parentEventId,
+        effectId: reason === "offspring" ? "enemy.death_spawn" : undefined,
+      },
+      entityId: parentEntityId,
+      payload: { enemyId, spawnSource, rewardMultiplier, reason },
+    });
+  }
+
+  private processQueuedEnemySpawns(): void {
+    const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    this.eventQueue.process(Math.min(12, capacity), (event) => {
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string };
+      if (!payload.enemyId) return;
+      const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
+      if (!definition) return;
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition)) {
+        if (payload.reason === "offspring") this.offspringSpawned += 1;
+      }
+    });
+  }
+
+  private updateLoadHighWaterMarks(): void {
+    this.liveHighWater = Math.max(this.liveHighWater, this.enemies.size);
+    this.trackedHighWater = Math.max(
+      this.trackedHighWater,
+      this.enemies.size + this.projectiles.size + this.pickups.size,
+    );
+    for (const definition of this.enemyDefinitions) {
+      const count = [...this.enemies].filter((enemy) => enemy.definition.id === definition.id).length;
+      this.rosterHighWater[definition.id] = Math.max(this.rosterHighWater[definition.id] ?? 0, count);
+    }
   }
 
   private updateEnemies(): void {
@@ -447,15 +569,25 @@ export class RunScene extends Phaser.Scene {
       return;
     }
 
-    this.spawnEnemy("ambient", 1);
+    const definition = selectEnemyDefinition(
+      this.enemyDefinitions,
+      this.runState.elapsedMs,
+      this.enemyRandom,
+    );
+    if (!definition) return;
+    this.spawnEnemy("ambient", 1, definition);
     this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS;
   }
 
-  private spawnEnemy(spawnSource: EnemySpawnSource, rewardMultiplier: number): boolean {
+  private spawnEnemy(
+    spawnSource: EnemySpawnSource,
+    rewardMultiplier: number,
+    definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
+  ): boolean {
     if (
       !this.player ||
       !this.runState ||
-      !this.enemyDefinition ||
+      !definition ||
       !this.enemyGroup ||
       !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
     ) {
@@ -466,7 +598,7 @@ export class RunScene extends Phaser.Scene {
       SPAWN_RADIUS,
       this.spawnSequence * GOLDEN_ANGLE,
       ARENA_SIZE,
-      this.enemyDefinition.radius,
+      definition.radius,
     );
     this.spawnSequence += 1;
     this.enemySequence += 1;
@@ -475,7 +607,7 @@ export class RunScene extends Phaser.Scene {
       `enemy-${this.enemySequence}`,
       point.x,
       point.y,
-      this.enemyDefinition,
+      definition,
       activeTheme.tokens,
       spawnSource,
       rewardMultiplier,
@@ -560,6 +692,32 @@ export class RunScene extends Phaser.Scene {
     if (result.applied) this.hitFlashes += 1;
     projectile.registerHit(enemy.targetId);
     if (!result.killed) return;
+    if (!this.eventQueue.claimLethal(enemy.targetId)) return;
+    this.eventSequence += 1;
+    const deathEventId = `death-${this.eventSequence}`;
+    this.eventQueue.enqueue({
+      eventId: deathEventId,
+      kind: "death.committed",
+      entityId: enemy.targetId,
+      provenance: { sourceCategory: "weapon", sourceId: this.weaponDefinition?.id },
+      payload: { enemyId: enemy.definition.id },
+    });
+    const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
+    if (
+      deathSpawns &&
+      this.eventQueue.claimEffect(enemy.targetId, "enemy.death_spawn")
+    ) {
+      for (let index = 0; index < deathSpawns.count; index += 1) {
+        this.enqueueSpawnRequest(
+          deathSpawns.enemyId,
+          deathSpawns.spawnSource as EnemySpawnSource,
+          deathSpawns.rewardMultiplier,
+          deathSpawns.parentEntityId,
+          deathSpawns.parentEventId,
+        );
+        this.offspringQueued += 1;
+      }
+    }
     this.runState = recordKill(this.runState);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
@@ -675,6 +833,7 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
     this.terminalShown = true;
     this.player?.stop();
+    this.eventQueue.clear();
     for (const projectile of this.projectiles) projectile.destroy();
     this.physics.world.pause();
     this.runEndOverlay?.show(this.runState.status, () => this.restartRun());
@@ -852,6 +1011,15 @@ export class RunScene extends Phaser.Scene {
               velocityY: projectileSample.arcadeBody.velocity.y,
             }
           : null,
+        roster: Object.fromEntries(
+          this.enemyDefinitions.map((definition) => [
+            definition.id,
+            [...this.enemies].filter((enemy) => enemy.definition.id === definition.id).length,
+          ]),
+        ),
+        rosterHighWater: this.rosterHighWater,
+        offspringQueued: this.offspringQueued,
+        offspringSpawned: this.offspringSpawned,
       },
       progression: {
         pickups: this.pickups.size,
@@ -875,6 +1043,17 @@ export class RunScene extends Phaser.Scene {
         hitFlashes: this.hitFlashes,
         trailsEmitted: this.trailsEmitted,
         pickupCues: this.pickupCues,
+      },
+      load: {
+        enabled: this.loadHarnessRequested > 0,
+        requested: this.loadHarnessRequested,
+        spawned: this.loadHarnessSpawned,
+        eventBacklog: this.eventQueue.snapshot().backlog,
+        eventBacklogHighWater: this.eventQueue.snapshot().backlogHighWater,
+        processedEffects: this.eventQueue.snapshot().processed,
+        droppedPresentationCues: this.droppedPresentationCues,
+        liveHighWater: this.liveHighWater,
+        trackedHighWater: this.trackedHighWater,
       },
       shrine: {
         id: this.shrineDefinition?.id ?? null,

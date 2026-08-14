@@ -4,11 +4,13 @@ import type {
   EnemyId,
   PickupId,
   ShrineId,
+  SkillId,
   UpgradeId,
   WeaponId,
 } from "./ids";
 import type { UpgradeEffect } from "./effects";
 import type { PlayerBaseStats } from "../stats/player-stats";
+import type { EliteId, FeedbackCategory } from "./categories";
 
 export interface ContentCopy {
   readonly name: string;
@@ -51,6 +53,9 @@ export interface ThemePalette {
   readonly text: string;
   readonly player: string;
   readonly enemy: string;
+  readonly enemyFast: string;
+  readonly enemyTank: string;
+  readonly enemySpawner: string;
   readonly projectile: string;
   readonly critical: string;
   readonly pickup: string;
@@ -60,6 +65,15 @@ export interface ThemePalette {
 export interface ThemeTokens {
   readonly palette: ThemePalette;
   readonly playerShape: "circle" | "diamond" | "square";
+  readonly feedback: Readonly<Record<FeedbackCategory, string>>;
+}
+
+export interface SkillDefinition {
+  readonly id: SkillId;
+}
+
+export interface EliteDefinition {
+  readonly id: EliteId;
 }
 
 export interface CharacterDefinition {
@@ -89,7 +103,18 @@ export interface EnemyDefinition {
   readonly contactCooldownMs: number;
   readonly radius: number;
   readonly xpReward: number;
-  readonly presentationToken: keyof Pick<ThemePalette, "enemy">;
+  readonly spawnWeight: number;
+  readonly unlockAtMs: number;
+  readonly geometry: "circle" | "triangle" | "square" | "hexagon";
+  readonly presentationToken: keyof Pick<
+    ThemePalette,
+    "enemy" | "enemyFast" | "enemyTank" | "enemySpawner"
+  >;
+  readonly deathSpawn?: Readonly<{
+    enemyId: EnemyId;
+    count: number;
+    rewardMultiplier: number;
+  }>;
 }
 
 export interface PickupDefinition {
@@ -126,4 +151,6 @@ export interface ThemeManifest {
   readonly pickups: readonly PickupDefinition[];
   readonly upgrades: readonly UpgradeDefinition[];
   readonly shrines: readonly ShrineDefinition[];
+  readonly skills: readonly SkillDefinition[];
+  readonly elites: readonly EliteDefinition[];
 }

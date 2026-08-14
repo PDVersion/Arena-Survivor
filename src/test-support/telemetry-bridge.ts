@@ -59,6 +59,17 @@ export interface ArenaTestSnapshot {
     trailsEmitted: number;
     pickupCues: number;
   }>;
+  readonly load?: Readonly<{
+    enabled: boolean;
+    requested: number;
+    spawned: number;
+    eventBacklog: number;
+    eventBacklogHighWater: number;
+    processedEffects: number;
+    droppedPresentationCues: number;
+    liveHighWater: number;
+    trackedHighWater: number;
+  }>;
   readonly shrine?: Readonly<{
     id: string | null;
     x: number;
@@ -95,6 +106,10 @@ export interface ArenaTestSnapshot {
       velocityX: number;
       velocityY: number;
     }> | null;
+    roster: Readonly<Record<string, number>>;
+    rosterHighWater: Readonly<Record<string, number>>;
+    offspringQueued: number;
+    offspringSpawned: number;
   }>;
   readonly error?: string;
 }

@@ -7,6 +7,8 @@ import { weapons } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades } from "./upgrades";
 import { shrines } from "./shrines";
+import { skills } from "./skills";
+import { elites } from "./elites";
 
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
@@ -19,4 +21,6 @@ export const knightMagicTheme = defineTheme({
   pickups,
   upgrades,
   shrines,
+  skills,
+  elites,
 });

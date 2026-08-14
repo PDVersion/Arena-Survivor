@@ -37,6 +37,18 @@ export const copy = {
       name: "Grunt",
       description: "A frail creature dangerous in great numbers.",
     },
+    [archetypeIds.enemy.fastFragile]: {
+      name: "Runner",
+      description: "A swift, fragile hunter that forces constant movement.",
+    },
+    [archetypeIds.enemy.slowDurable]: {
+      name: "Tank",
+      description: "A slow, durable obstacle that anchors the horde.",
+    },
+    [archetypeIds.enemy.deathSpawner]: {
+      name: "Broodmother",
+      description: "A swollen creature whose defeat releases a fresh brood.",
+    },
     [archetypeIds.pickup.experience]: {
       name: "Arcane Spark",
       description: "A trace of power left by a fallen enemy.",
@@ -45,6 +57,14 @@ export const copy = {
       name: "Shrine of the Horde",
       description: "Invite a dangerous swarm in exchange for greater rewards.",
     },
+    [archetypeIds.shrine.greed]: { name: "Shrine of Greed", description: "Trade lasting danger for greater power." },
+    [archetypeIds.shrine.multiplicity]: { name: "Shrine of Multiplicity", description: "Multiply both the horde and its rewards." },
+    [archetypeIds.shrine.duplication]: { name: "Shrine of Duplication", description: "Copy every living foe for richer rewards." },
+    [archetypeIds.skill.piercingMomentum]: { name: "Piercing Momentum", description: "A projectile gains force with every unique foe pierced." },
+    [archetypeIds.skill.onKillExplosion]: { name: "Detonation", description: "Defeated foes damage nearby enemies." },
+    [archetypeIds.skill.fracture]: { name: "Fracture", description: "Some defeated foes split into smaller enemies." },
+    [archetypeIds.skill.bloodlust]: { name: "Bloodlust", description: "Recent kills quicken your attacks." },
+    [archetypeIds.skill.chainReaction]: { name: "Chain Reaction", description: "Explosion kills may detonate in turn." },
     [archetypeIds.upgrade.damage]: {
       name: "Tempered Power",
       description: "Increase damage dealt.",

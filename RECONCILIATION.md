@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Planning complete — Phase 1 not started**
+- Active phase: **Phases 1–2 complete — awaiting combined review and manual testing**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -603,6 +603,118 @@ Browser tests assert live integration at controllable deterministic boundaries a
 
 Revisit when:
 Browser tests gain deterministic player/pickup positioning, a simulation-step control, or V0.2's load harness replaces real-time waits with an explicit read-only scenario driver.
+
+### REC-026 — Causal queues retain serializable work and own exact-once claims
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 1–7, combat interactions, spawning, restart
+- Blocks: None
+
+Context / observation:
+Later V0.2 mechanics need to compose deaths, spawns, rewards, and feedback without recursive physics callbacks or callback-bearing state. Duplicate overlap callbacks and capped spawning make exact-once ownership and retained back-pressure necessary before Broodmother and chain mechanics enter.
+
+Decision / solution:
+Use an iterative FIFO queue whose events are structured-cloned serializable data with stable event/entity IDs and explicit source, parent, and effect provenance. The queue rejects duplicate event IDs and owns per-entity lethal and per-entity/effect claims. A caller chooses a per-tick budget; unprocessed work remains queued. Restart reconstructs the queue.
+
+Why:
+Data-only events keep Phaser and callback objects out of simulation state, while central claims make duplicate deaths/effects testable independently of collision timing. Retained work allows later phases to apply measured budgets without silently losing gameplay.
+
+Future guardrail:
+Queue unit tests cover order, budgeting, duplicate IDs, exact-once claims, and a lossless 300-event run. Effects enqueue follow-up data rather than invoking collision handlers recursively.
+
+Phase 2 integration evidence: the first full browser regression found that two consumers shared one FIFO; the offspring consumer drained Phase 1 load requests that it did not understand. The run scene now activates only the consumer matching the configured test scenario. Future general gameplay routing must use a single kind-aware dispatcher rather than multiple consumers that dequeue before checking ownership.
+
+Revisit when:
+Profiling shows FIFO shifting is material under representative compound interactions, persistence requires suspended queued work, or priority classes become necessary.
+
+### REC-027 — Modifier resolution is additive then multiplicative across stable layers
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 1, 3, 5–7; player, weapon, enemy, world, reward modifiers
+- Blocks: None
+
+Context / observation:
+V0.2 will combine modifiers from several owners. Applying them ad hoc in scenes would make ordering dependent on call sites and risk rounding or double application.
+
+Decision / solution:
+Resolve `(base + sum(additive)) × product(multiplicative)` centrally. Order inputs deterministically by the stable player, weapon, enemy, world, and reward layers, then by source ID. Preserve fractional results; formatting and presentation may round only downstream.
+
+Why:
+This matches the existing additive upgrade model while giving Chaos, shrines, enemies, and rewards one deterministic multiplicative seam.
+
+Future guardrail:
+Modifier tests cover mixed input order, layer ordering, fractional products, and input immutability. Systems submit typed inputs rather than performing their own stacking.
+
+Revisit when:
+A named mechanic explicitly requires a different stage, caps/soft caps enter scope, or balance evidence requires multiplicative groups rather than one product.
+
+### REC-028 — Load instrumentation is read-only and test-build initiated
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 1, 2, 4, 6, 7; performance testing, production surface
+- Blocks: None
+
+Context / observation:
+The browser needs a reproducible spawn scenario without adding a writable production console hook. The established live enemy cap is 80, while the milestone's 300-work representative load also needs a fast deterministic headless proof.
+
+Decision / solution:
+Keep the production test global absent. In test mode only, a positive `loadHarness` query value (bounded to 300) preloads causal spawn requests; browser coverage uses 80 to prove live cap/back-pressure telemetry. A pure headless harness separately processes 300 events. Telemetry exposes backlog, processed work, dropped presentation cues, and live/tracked high-water marks as frozen snapshots.
+
+Why:
+The query is fixed before boot and cannot mutate a running simulation. Splitting live-cap and headless checks provides deterministic loss detection now without prematurely raising the V0.1 cap before representative profiling.
+
+Future guardrail:
+Production output contains no `__ARENA_TEST__` facade or alternate fixture. The browser load test asserts 80 exact scripted spawns and clean console output; the unit harness asserts 300 unique processed events.
+
+Revisit when:
+Phase 7 measures a safe higher live cap, a deterministic browser stepper replaces real-time execution, or the representative scenario needs mixed content and interactions.
+
+### REC-029 — Expanded roster cadence and Broodmother offspring are provisional theme data
+
+- Status: Provisional
+- Date: 2026-08-13
+- Affects: V0.2 Phase 2, enemy spawning, progression balance, swarm load
+- Blocks: None
+
+Context / observation:
+The product plan specifies exact Runner and Tank stats and five Broodmother offspring, but it does not specify roster cadence/weights, Broodmother stats, offspring role/reward, or final fantasy geometry. Phase 2 needs all roles to become observable during a normal five-minute run without replacing the established ambient cadence.
+
+Decision / solution:
+Retain the 400 ms ambient cadence and select deterministically from unlocked theme definitions using injected seeded randomness. Unlock Grunt/Runner/Tank/Broodmother at 0/8/16/24 seconds with weights 56/24/14/6. Use the product Runner baseline (10 health, 140 speed, 8 damage, 1 XP) and Tank baseline (80 health, 45 speed, 20 damage, 4 XP). Provisionally give Broodmother 50 health, 55 speed, 12 damage, 3 XP and five zero-XP Runner offspring. Render the four roles as theme-owned circle, triangle, square, and outlined hexagon tokens through one generic actor.
+
+Why:
+Staged unlocks introduce threats legibly, weighted seeded selection keeps tests deterministic, and zero-XP offspring prevent one natural split from becoming an automatic reward multiplier before world/reward balance exists. Circular physics bodies remain inexpensive while generated geometry makes roles visually distinguishable pending assets.
+
+Future guardrail:
+Content tests lock product baselines and validate weights, unlocks, geometry, and death-spawn references. Spawn tests cover boundary rolls. Browser tests observe all four roles and exactly five eventually spawned children under the shared live cap.
+
+Revisit when:
+Combined Phase 1–2 playtesting provides cadence/readability feedback, Phase 4 adds Fracture, Phase 5 formalizes reward multipliers, or Phase 7 measures a higher live cap.
+
+### REC-030 — Natural offspring use retained spawn events and do not inherit parent rewards
+
+- Status: Accepted
+- Date: 2026-08-13
+- Affects: V0.2 Phases 2, 4, 5, 7; death spawning, rewards, statistics
+- Blocks: None
+
+Context / observation:
+Broodmother death can occur at the live-enemy cap and physics may report duplicate lethal overlaps. Creating children directly in the collision callback would either drop them at capacity or risk duplicate offspring. Shrine-tagged Broodmothers also make reward inheritance ambiguous.
+
+Decision / solution:
+The first lethal claim commits a death event and the first `enemy.death_spawn` claim enqueues exactly five child spawn requests with parent event/entity IDs. Due children remain queued until capacity exists. The child definition carries an explicit configured reward multiplier and uses the Broodmother role as its spawn source; it does not inherit the parent's shrine reward multiplier.
+
+Why:
+This makes natural offspring count independent of callback duplication and current capacity. Explicit child reward provenance prevents a source bonus intended for one parent from multiplying a new generation implicitly.
+
+Future guardrail:
+Unit tests prove one lethal/effect claim and five retained requests. Chromium telemetry separately records queued and spawned offspring, role high-water counts, and cap compliance. Restart/terminal reconstruction clears the queue.
+
+Revisit when:
+Phase 4 defines Fracture inheritance, Phase 5 defines duplication/source stacking, or a design choice explicitly grants descendant rewards.
 
 ## Open questions to reconcile during implementation
 
