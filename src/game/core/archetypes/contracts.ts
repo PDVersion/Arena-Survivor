@@ -24,6 +24,7 @@ export interface ThemeVocabulary {
   readonly time: string;
   readonly kills: string;
   readonly enemies: string;
+  readonly chaos: string;
   readonly paused: string;
   readonly deathTitle: string;
   readonly deathMessage: string;
@@ -147,6 +148,10 @@ export interface ShrineDefinition {
   readonly spawnCount: number;
   readonly spawnDurationMs: number;
   readonly rewardMultiplier: number;
+  readonly effectKind: "spawn_surge" | "world_multiplier" | "duplicate_living";
+  readonly chaosIncrease: number;
+  readonly enemySpawnMultiplier: number;
+  readonly xpMultiplier: number;
   readonly presentationToken: keyof Pick<ThemePalette, "shrine">;
 }
 

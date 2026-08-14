@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phases 3–4 complete — awaiting combined review and manual testing**
+- Active phase: **Phase 5 complete — Phase 6 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -803,6 +803,50 @@ The interaction matrix covers direct, explosion, chained, enabled, and disabled 
 
 Revisit when:
 Combined manual testing provides balance feedback, Phase 5 defines reward stacking, Phase 6 tunes presentation limits, or Phase 7 reconciles the final damage ledger.
+
+### REC-035 — Chaos and shrine products resolve from one serializable world model
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phases 5–7, Chaos, spawning, enemies, XP, elites, shrine rewards
+- Blocks: None
+
+Context / observation:
+The product names systems affected by Chaos but gives only example Chaos progression, not exact curves or how permanent shrine products compose with it. V0.1 Horde rewards already carry a source multiplier that must remain distinguishable.
+
+Decision / solution:
+Store per-run Chaos, permanent enemy-spawn and XP products, and shrine activation counts in one serializable world state starting at `1.0`. Resolve all consumers from one selector. For pressure `p = Chaos - 1`, use `1 + 0.25p` spawn pressure, `1 + 0.20p` enemy health, `1 + 0.15p` enemy damage, `1 + 0.25p` XP, `min(0.4, 0.04p)` elite chance, and `1 + 0.20p` shrine rewards. Permanent shrine spawn/XP products multiply after their Chaos curves through the centralized modifier resolver. Source reward applies first, then Chaos shrine reward; world XP applies when the pickup is awarded. Preserve fractional values throughout.
+
+Why:
+One model prevents scattered Chaos conditionals and makes every declared output observable. Separating source reward from world XP keeps Horde/Duplication provenance intact while still rewarding dangerous world choices.
+
+Future guardrail:
+Unit tests cover the clean baseline, repeated Multiplicity products, fractional output, and JSON round trips. Browser telemetry exposes every selected multiplier and activation count. Restart reconstructs `1.0` world state.
+
+Revisit when:
+Combined balance testing evaluates the curves, Phase 7 measures 300-enemy pressure, or rarity/loot systems need additional Chaos outputs.
+
+### REC-036 — Four shrine roles are exact-once actors; Multiplicity has two instances
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phase 5, shrines, duplication, rewards, content
+- Blocks: None
+
+Context / observation:
+V0.2 requires Horde, Greed, Multiplicity, and Duplication and explicitly requires multiplicative stacking. One actor per definition cannot demonstrate two activations of the same stackable role in a single run.
+
+Decision / solution:
+Instantiate one Horde, one Greed, two Multiplicity, and one Duplication actor from four theme definitions. Each actor activates once. Horde, Greed, each Multiplicity, and Duplication add `0.4`, `0.4`, `0.7`, and `1.0` Chaos respectively. Greed applies `1.5×` spawn and `1.25×` XP; Multiplicity applies `2×` spawn and `1.5×` XP per actor. Duplication snapshots living enemies at activation, queues one copy each through back-pressure, and gives copies its `1.5×` source reward multiplied by the resolved Chaos shrine-reward curve. Copies do not recursively inherit arbitrary parent reward multipliers.
+
+Why:
+Multiple generic actors prove stacking without permitting repeat activation or branching on display names. Snapshot-and-queue makes Duplication exact even at capacity.
+
+Future guardrail:
+Theme validation requires all four stable shrine IDs and effect values. Browser tests activate all five actors, prove two Multiplicity activations, exact products, exact duplicated copy counts, cap compliance, and clean restart.
+
+Revisit when:
+Shrine placement becomes procedural, repeated definitions need save identity, or duplication inheritance changes alongside elites/splits.
 
 ## Open questions to reconcile during implementation
 

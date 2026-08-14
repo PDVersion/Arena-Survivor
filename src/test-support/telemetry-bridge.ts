@@ -102,6 +102,19 @@ export interface ArenaTestSnapshot {
     shrineXpCollected: number;
     ambientXpCollected: number;
     feedbackCount: number;
+    instances: readonly Readonly<{ id: string; activated: boolean }>[];
+  }>;
+  readonly world?: Readonly<{
+    chaos: number;
+    enemySpawnMultiplier: number;
+    enemyHealthMultiplier: number;
+    enemyDamageMultiplier: number;
+    xpMultiplier: number;
+    eliteChance: number;
+    shrineRewardMultiplier: number;
+    activations: Readonly<Record<string, number>>;
+    duplicatedEnemiesQueued: number;
+    duplicatedEnemiesSpawned: number;
   }>;
   readonly combat?: Readonly<{
     weaponId: string | null;

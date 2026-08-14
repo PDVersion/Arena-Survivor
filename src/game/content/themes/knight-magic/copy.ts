@@ -15,6 +15,7 @@ export const copy = {
     time: "Time",
     kills: "Foes Vanquished",
     enemies: "Foes Remaining",
+    chaos: "Chaos",
     paused: "The arena is paused",
     deathTitle: "The Knight Has Fallen",
     deathMessage: "The Ember Court claims another challenger.",

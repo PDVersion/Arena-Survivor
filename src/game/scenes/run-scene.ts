@@ -51,6 +51,7 @@ import {
   shouldFracture,
   targetsWithinRadius,
 } from "../systems/effects/on-kill-effects";
+import { applyWorldChoice, selectWorldModifiers } from "../systems/chaos/world-modifiers";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
@@ -93,6 +94,11 @@ function testSkillEnabled(name: string): boolean {
   return import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has(name);
 }
 
+function testWorldScenario(): string | null {
+  if (import.meta.env.MODE !== "test") return null;
+  return new URLSearchParams(window.location.search).get("worldScenario");
+}
+
 interface MovementKeys {
   readonly up: Phaser.Input.Keyboard.Key;
   readonly down: Phaser.Input.Keyboard.Key;
@@ -129,6 +135,7 @@ export class RunScene extends Phaser.Scene {
   private pickupDefinition?: PickupDefinition;
   private shrineDefinition?: ShrineDefinition;
   private shrine?: ShrineActor;
+  private shrineActors: ShrineActor[] = [];
   private surgeState: ShrineSurgeState = createShrineSurgeState();
   private levelUpUi?: LevelUpChoiceUi;
   private hud?: Hud;
@@ -185,6 +192,9 @@ export class RunScene extends Phaser.Scene {
   private fractureSpawned = 0;
   private damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
   private activeExplosionCues = 0;
+  private testWorldScenarioApplied = false;
+  private duplicatedEnemiesQueued = 0;
+  private duplicatedEnemiesSpawned = 0;
 
   constructor() {
     super("run");
@@ -284,15 +294,7 @@ export class RunScene extends Phaser.Scene {
       selectedCharacter,
       activeTheme.tokens,
     );
-    this.shrine = new ShrineActor(
-      this,
-      ARENA_SIZE.width / 2 + 96,
-      ARENA_SIZE.height / 2,
-      this.shrineDefinition,
-      activeTheme.tokens,
-      activeTheme.copy.content[this.shrineDefinition.id].name,
-      activeTheme.copy.vocabulary.shrinePrompt,
-    );
+    this.createShrineActors();
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
@@ -364,6 +366,7 @@ export class RunScene extends Phaser.Scene {
       this.updateProjectiles();
       this.updatePickups();
       this.updateShrine();
+      this.updateTestWorldScenario();
       this.updateSurge();
       this.processTestLoadHarness();
       this.processCausalEvents();
@@ -401,6 +404,7 @@ export class RunScene extends Phaser.Scene {
     this.pickupDefinition = undefined;
     this.shrineDefinition = undefined;
     this.shrine = undefined;
+    this.shrineActors = [];
     this.surgeState = createShrineSurgeState();
     this.levelUpUi = undefined;
     this.hud = undefined;
@@ -456,6 +460,9 @@ export class RunScene extends Phaser.Scene {
     this.fractureSpawned = 0;
     this.damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
     this.activeExplosionCues = 0;
+    this.testWorldScenarioApplied = false;
+    this.duplicatedEnemiesQueued = 0;
+    this.duplicatedEnemiesSpawned = 0;
   }
 
   private prepareTestLoadHarness(): void {
@@ -495,7 +502,7 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" | "fracture" = "offspring",
+    reason: "roster" | "offspring" | "fracture" | "duplication" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
   ): void {
     this.eventSequence += 1;
@@ -503,7 +510,7 @@ export class RunScene extends Phaser.Scene {
       eventId: `spawn-${this.eventSequence}`,
       kind: "spawn.requested",
       provenance: {
-        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : "world",
+        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
         sourceId: spawnSource,
         parentEventId,
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
@@ -530,6 +537,7 @@ export class RunScene extends Phaser.Scene {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
+        if (payload.reason === "duplication") this.duplicatedEnemiesSpawned += 1;
       }
     });
   }
@@ -582,36 +590,86 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
+  private createShrineActors(): void {
+    const centreX = ARENA_SIZE.width / 2;
+    const centreY = ARENA_SIZE.height / 2;
+    const placements: readonly [ShrineDefinition["id"], number, number][] = [
+      [archetypeIds.shrine.spawnSurge, centreX + 96, centreY],
+      [archetypeIds.shrine.greed, centreX - 210, centreY],
+      [archetypeIds.shrine.multiplicity, centreX, centreY - 210],
+      [archetypeIds.shrine.multiplicity, centreX, centreY + 210],
+      [archetypeIds.shrine.duplication, centreX + 310, centreY],
+    ];
+    this.shrineActors = placements.flatMap(([id, x, y]) => {
+      const definition = activeTheme.shrines.find((candidate) => candidate.id === id);
+      if (!definition) return [];
+      return [new ShrineActor(
+        this, x, y, definition, activeTheme.tokens,
+        activeTheme.copy.content[id].name,
+        activeTheme.copy.vocabulary.shrinePrompt,
+      )];
+    });
+    this.shrine = this.shrineActors.find((actor) => actor.definition.id === archetypeIds.shrine.spawnSurge);
+  }
+
   private updateShrine(): void {
-    if (!this.player || !this.runState || !this.shrine || !this.shrineDefinition) return;
-    const distance = Phaser.Math.Distance.Between(
-      this.player.x,
-      this.player.y,
-      this.shrine.x,
-      this.shrine.y,
-    );
-    const inRange = distance <= this.shrineDefinition.interactionRadius;
-    this.shrine.setInRange(inRange);
-    if (
-      inRange &&
-      !this.shrine.activated &&
-      this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key))
-    ) {
-      this.activateShrine();
+    if (!this.player || !this.runState) return;
+    const interact = this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key));
+    for (const shrine of this.shrineActors) {
+      const inRange = Phaser.Math.Distance.Between(this.player.x, this.player.y, shrine.x, shrine.y) <= shrine.definition.interactionRadius;
+      shrine.setInRange(inRange);
+      if (interact && inRange && !shrine.activated) {
+        this.activateShrine(shrine);
+        return;
+      }
     }
   }
 
-  private activateShrine(): void {
-    if (!this.runState || !this.shrine || this.shrine.activated) return;
-    this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
-    this.shrine.activate();
+  private updateTestWorldScenario(): void {
+    const scenario = testWorldScenario();
+    if (this.testWorldScenarioApplied || scenario === null || this.enemies.size === 0 || this.runGeneration > 1) return;
+    this.testWorldScenarioApplied = true;
+    const targets = scenario === "multiplicity2"
+      ? this.shrineActors.filter((actor) => actor.definition.id === archetypeIds.shrine.multiplicity)
+      : this.shrineActors;
+    for (const shrine of targets) this.activateShrine(shrine);
+  }
+
+  private activateShrine(shrine: ShrineActor): void {
+    if (!this.runState || shrine.activated) return;
+    const definition = shrine.definition;
+    if (definition.effectKind === "spawn_surge") {
+      this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
+    }
+    const livingSnapshot = definition.effectKind === "duplicate_living"
+      ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated)
+      : [];
+    this.runState = {
+      ...this.runState,
+      world: applyWorldChoice(this.runState.world, {
+        shrineId: definition.id,
+        chaosIncrease: definition.chaosIncrease,
+        enemySpawnMultiplier: definition.enemySpawnMultiplier,
+        xpMultiplier: definition.xpMultiplier,
+      }),
+    };
+    if (definition.effectKind === "duplicate_living") {
+      const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world).shrineRewardMultiplier;
+      for (const enemy of livingSnapshot) {
+        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 });
+        this.duplicatedEnemiesQueued += 1;
+      }
+    }
+    shrine.activate();
     this.shrineFeedback += 1;
     this.cameras.main.flash(240, 251, 113, 133, false);
     this.cameras.main.shake(220, 0.006);
     const message = this.add.text(
       this.scale.width / 2,
       105,
-      activeTheme.copy.vocabulary.surgeActive,
+      definition.effectKind === "spawn_surge"
+        ? activeTheme.copy.vocabulary.surgeActive
+        : activeTheme.copy.content[definition.id].name,
       {
         color: activeTheme.tokens.palette.shrine,
         fontFamily: "Georgia, serif",
@@ -642,7 +700,8 @@ export class RunScene extends Phaser.Scene {
     for (let index = 0; index < result.spawnNow; index += 1) {
       this.spawnEnemy(
         archetypeIds.shrine.spawnSurge,
-        this.shrineDefinition.rewardMultiplier,
+        this.shrineDefinition.rewardMultiplier *
+          selectWorldModifiers(this.runState.world).shrineRewardMultiplier,
       );
     }
   }
@@ -665,7 +724,8 @@ export class RunScene extends Phaser.Scene {
     );
     if (!definition) return;
     this.spawnEnemy("ambient", 1, definition);
-    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS;
+    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS /
+      selectWorldModifiers(this.runState.world).enemySpawnMultiplier;
   }
 
   private spawnEnemy(
@@ -701,6 +761,10 @@ export class RunScene extends Phaser.Scene {
       activeTheme.tokens,
       spawnSource,
       rewardMultiplier,
+      {
+        healthMultiplier: selectWorldModifiers(this.runState.world).enemyHealthMultiplier,
+        damageMultiplier: selectWorldModifiers(this.runState.world).enemyDamageMultiplier,
+      },
     );
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
@@ -992,11 +1056,12 @@ export class RunScene extends Phaser.Scene {
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
-    this.runState = awardRunExperience(this.runState, claim.awardedXp);
+    const awardedXp = claim.awardedXp * selectWorldModifiers(this.runState.world).xpMultiplier;
+    this.runState = awardRunExperience(this.runState, awardedXp);
     if (pickup.rewardSource === archetypeIds.shrine.spawnSurge) {
-      this.shrineXpCollected += claim.awardedXp;
+      this.shrineXpCollected += awardedXp;
     } else {
-      this.ambientXpCollected += claim.awardedXp;
+      this.ambientXpCollected += awardedXp;
     }
     this.pickupsCollected += 1;
     pickup.playCollectCue();
@@ -1047,7 +1112,7 @@ export class RunScene extends Phaser.Scene {
     ) {
       return;
     }
-    this.runState = damageRunPlayer(this.runState, enemy.definition.contactDamage);
+    this.runState = damageRunPlayer(this.runState, enemy.contactDamage);
     this.lastContactDamageAtMs = this.runState.elapsedMs;
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
@@ -1184,6 +1249,7 @@ export class RunScene extends Phaser.Scene {
       this.player && this.shrine
         ? Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shrine.x, this.shrine.y)
         : Number.POSITIVE_INFINITY;
+    const world = this.runState ? selectWorldModifiers(this.runState.world) : undefined;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -1320,7 +1386,8 @@ export class RunScene extends Phaser.Scene {
         spawned: this.surgeState.spawned,
         targetCount: this.shrineDefinition?.spawnCount ?? 0,
         durationMs: this.shrineDefinition?.spawnDurationMs ?? 0,
-        rewardMultiplier: this.shrineDefinition?.rewardMultiplier ?? 1,
+        rewardMultiplier: (this.shrineDefinition?.rewardMultiplier ?? 1) *
+          (world?.shrineRewardMultiplier ?? 1),
         enemiesSpawned: this.shrineEnemiesSpawned,
         enemiesDefeated: this.shrineEnemiesDefeated,
         shrineXpDropped: this.shrineXpDropped,
@@ -1328,7 +1395,14 @@ export class RunScene extends Phaser.Scene {
         shrineXpCollected: this.shrineXpCollected,
         ambientXpCollected: this.ambientXpCollected,
         feedbackCount: this.shrineFeedback,
+        instances: this.shrineActors.map((actor) => ({ id: actor.definition.id, activated: actor.activated })),
       },
+      world: world && this.runState ? {
+        ...world,
+        activations: this.runState.world.shrineActivations,
+        duplicatedEnemiesQueued: this.duplicatedEnemiesQueued,
+        duplicatedEnemiesSpawned: this.duplicatedEnemiesSpawned,
+      } : undefined,
     });
   }
 }

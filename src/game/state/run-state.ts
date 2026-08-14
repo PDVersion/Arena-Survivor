@@ -12,6 +12,7 @@ import {
   createProgressionState,
   type ProgressionState,
 } from "../systems/xp";
+import { createWorldState, type WorldState } from "../systems/chaos/world-modifiers";
 
 export const RUN_STATE_VERSION = 1 as const;
 export const DEFAULT_RUN_DURATION_MS = 5 * 60 * 1000;
@@ -36,6 +37,7 @@ export interface RunState {
   readonly weaponModifiers: WeaponStatModifiers;
   readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly activeSkillIds: readonly SkillId[];
+  readonly world: WorldState;
   readonly statistics: {
     readonly kills: number;
     readonly liveEnemies: number;
@@ -75,6 +77,7 @@ export function createRunState(options: CreateRunOptions): RunState {
     weaponModifiers: createWeaponStatModifiers(),
     selectedUpgradeIds: [],
     activeSkillIds: [],
+    world: createWorldState(),
     statistics: { kills: 0, liveEnemies: 0 },
   };
 }

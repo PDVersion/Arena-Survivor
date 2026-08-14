@@ -11,6 +11,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly spawnSource: EnemySpawnSource;
   readonly rewardMultiplier: number;
   health: number;
+  readonly moveSpeed: number;
+  readonly contactDamage: number;
   defeated = false;
   private readonly baseColour: number;
 
@@ -23,6 +25,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     tokens: ThemeTokens,
     spawnSource: EnemySpawnSource = "ambient",
     rewardMultiplier = 1,
+    modifiers: Readonly<{ healthMultiplier: number; damageMultiplier: number }> = {
+      healthMultiplier: 1,
+      damageMultiplier: 1,
+    },
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -30,7 +36,9 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     super(scene, x, y, definition.radius, 0, 360, false, colour);
     this.targetId = targetId;
     this.definition = definition;
-    this.health = definition.maxHealth;
+    this.health = definition.maxHealth * modifiers.healthMultiplier;
+    this.moveSpeed = definition.moveSpeed;
+    this.contactDamage = definition.contactDamage * modifiers.damageMultiplier;
     this.spawnSource = spawnSource;
     this.rewardMultiplier = rewardMultiplier;
     this.baseColour = colour;
@@ -55,7 +63,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       this.arcadeBody.setVelocity(0, 0);
       return;
     }
-    direction.normalize().scale(this.definition.moveSpeed);
+    direction.normalize().scale(this.moveSpeed);
     this.arcadeBody.setVelocity(direction.x, direction.y);
   }
 

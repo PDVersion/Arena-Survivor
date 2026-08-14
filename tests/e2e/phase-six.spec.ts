@@ -64,11 +64,16 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   }
   const rewarded = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(rewarded?.shrine?.enemiesDefeated).toBeGreaterThan(0);
-  expect(rewarded?.shrine?.shrineXpDropped).toBe(
-    (rewarded?.shrine?.enemiesDefeated ?? 0) * 1.5,
+  const resolvedReward = rewarded?.shrine?.rewardMultiplier ?? 0;
+  expect(resolvedReward).toBeGreaterThan(1.5);
+  expect(rewarded?.shrine?.shrineXpDropped).toBeCloseTo(
+    (rewarded?.shrine?.enemiesDefeated ?? 0) * resolvedReward,
   );
-  expect((rewarded?.shrine?.shrineXpDropped ?? 0) % 1.5).toBe(0);
-  expect((rewarded?.shrine?.shrineXpCollected ?? 0) % 1.5).toBe(0);
+  const collected = rewarded?.shrine?.shrineXpCollected ?? 0;
+  if (collected > 0) {
+    const perPickup = resolvedReward * (rewarded?.world?.xpMultiplier ?? 1);
+    expect(collected / perPickup).toBeCloseTo(Math.round(collected / perPickup));
+  }
 });
 
 test("restart during an active surge clears its scheduler and tagged enemies", async ({ page }) => {

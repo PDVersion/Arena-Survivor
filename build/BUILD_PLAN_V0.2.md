@@ -21,8 +21,8 @@ Add a completed phase's commit hash in the next phase status update or the pull 
 - [x] Phase 1 — Interaction contracts, causal events, and load harness (`a7f343d`)
 - [x] Phase 2 — Runner, Tank, and Broodmother roster (`52a16ea`)
 - [x] Phase 3 — Overcrit tiers and Piercing Momentum (`1c170fb`)
-- [x] Phase 4 — Explosions, Fracture, Bloodlust, and chain reactions
-- [ ] Phase 5 — Chaos, world multipliers, and additional shrines
+- [x] Phase 4 — Explosions, Fracture, Bloodlust, and chain reactions (`57a1126`)
+- [x] Phase 5 — Chaos, world multipliers, and additional shrines
 - [ ] Phase 6 — Baseline elites and audiovisual feedback
 - [ ] Phase 7 — Statistics, performance hardening, and V0.2 acceptance
 

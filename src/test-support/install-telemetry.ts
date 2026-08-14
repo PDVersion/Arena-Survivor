@@ -29,7 +29,14 @@ registerTestTelemetryUpdater((nextSnapshot) => {
     feedback: nextSnapshot.feedback ? Object.freeze({ ...nextSnapshot.feedback }) : undefined,
     load: nextSnapshot.load ? Object.freeze({ ...nextSnapshot.load }) : undefined,
     effects: nextSnapshot.effects ? Object.freeze({ ...nextSnapshot.effects }) : undefined,
-    shrine: nextSnapshot.shrine ? Object.freeze({ ...nextSnapshot.shrine }) : undefined,
+    shrine: nextSnapshot.shrine ? Object.freeze({
+      ...nextSnapshot.shrine,
+      instances: Object.freeze(nextSnapshot.shrine.instances.map((instance) => Object.freeze({ ...instance }))),
+    }) : undefined,
+    world: nextSnapshot.world ? Object.freeze({
+      ...nextSnapshot.world,
+      activations: Object.freeze({ ...nextSnapshot.world.activations }),
+    }) : undefined,
     combat: nextSnapshot.combat
       ? Object.freeze({
           ...nextSnapshot.combat,
