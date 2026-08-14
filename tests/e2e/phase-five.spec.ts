@@ -48,14 +48,17 @@ test("complete overlay freezes at zero and restart resets without navigation", a
     });
 
     if (expectedGeneration === 3) break;
-    await page.locator("canvas").click({ position: { x: 640, y: 442 } });
-    await page.keyboard.press("Escape");
+    await page.keyboard.press("KeyR");
     await expect
       .poll(
         () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration),
         { timeout: 10_000 },
       )
       .toBe(expectedGeneration + 1);
+    await page.keyboard.press("Escape");
+    await expect.poll(
+      () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status),
+    ).toBe("paused");
     expect(pageErrors).toEqual([]);
     const restarted = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
     expect(restarted?.run).toMatchObject({

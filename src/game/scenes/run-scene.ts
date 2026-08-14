@@ -22,14 +22,18 @@ import {
   awardRunExperience,
   createRunState,
   damageRunPlayer,
+  observeRunChaos,
+  observeRunCrit,
+  observeRunPierce,
   recordKill,
+  recordRunDamage,
   setLiveEnemyCount,
   setRunStatus,
   type RunState,
 } from "../state/run-state";
 import type { DirectionalInput } from "../systems/player-movement";
 import { canApplyContactDamage, rollDamage } from "../systems/combat";
-import { canSpawn, pointOnSpawnRing, V01_SPAWN_LIMITS } from "../systems/spawning";
+import { canSpawn, pointOnSpawnRing, V02_SPAWN_LIMITS } from "../systems/spawning";
 import { createDeathSpawns, selectEnemyDefinition } from "../systems/spawning";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
@@ -37,7 +41,7 @@ import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
 import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
-import { selectHudValues } from "../state/statistics";
+import { selectHudValues, selectRunSummaryValues } from "../state/statistics";
 import {
   activateShrineSurge,
   createShrineSurgeState,
@@ -45,7 +49,7 @@ import {
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
-import { CausalEventQueue } from "../systems/events/causal-events";
+import { CausalEventQueue, type EventQueueSnapshot } from "../systems/events/causal-events";
 import {
   selectBloodlust,
   shouldExplodeOnKill,
@@ -161,8 +165,6 @@ export class RunScene extends Phaser.Scene {
   private projectileSequence = 0;
   private shotsFired = 0;
   private criticalShots = 0;
-  private highestCritTier = 0;
-  private longestPierceChain = 0;
   private contactHits = 0;
   private pickupSequence = 0;
   private pickupsDropped = 0;
@@ -183,23 +185,26 @@ export class RunScene extends Phaser.Scene {
   private shrineXpCollected = 0;
   private eventQueue = new CausalEventQueue();
   private loadEventQueue = new CausalEventQueue();
+  private terminalLoadMetrics?: EventQueueSnapshot;
+  private terminalEventMetrics?: EventQueueSnapshot;
   private loadHarnessRequested = 0;
   private loadHarnessSpawned = 0;
   private liveHighWater = 0;
   private trackedHighWater = 0;
+  private frameSamples = 0;
+  private frameTotalMs = 0;
+  private maxFrameMs = 0;
   private droppedPresentationCues = 0;
   private rosterHighWater: Record<string, number> = {};
   private offspringQueued = 0;
   private offspringSpawned = 0;
   private eventSequence = 0;
   private effectRandom = createSeededRandom(0xeffe_0004);
-  private killTimesMs: number[] = [];
   private bloodlustAttackSpeedBonus = 0;
   private explosionsCommitted = 0;
   private chainExplosionsCommitted = 0;
   private fractureQueued = 0;
   private fractureSpawned = 0;
-  private damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
   private activeExplosionCues = 0;
   private testWorldScenarioApplied = false;
   private duplicatedEnemiesQueued = 0;
@@ -211,6 +216,7 @@ export class RunScene extends Phaser.Scene {
   private feedbackLimiter = new FeedbackLimiter();
   private audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
   private reducedMotion = false;
+  private feedbackObjects = new Set<Phaser.GameObjects.GameObject>();
 
   constructor() {
     super("run");
@@ -285,7 +291,15 @@ export class RunScene extends Phaser.Scene {
           ...this.runState.weaponModifiers,
           pierce: testPierce,
         },
-        activeSkillIds: testSkillEnabled("interactions")
+        activeSkillIds: testSkillEnabled("compoundBuild")
+          ? [
+              archetypeIds.skill.piercingMomentum,
+              archetypeIds.skill.onKillExplosion,
+              archetypeIds.skill.fracture,
+              archetypeIds.skill.bloodlust,
+              archetypeIds.skill.chainReaction,
+            ]
+          : testSkillEnabled("interactions")
           ? [
               archetypeIds.skill.onKillExplosion,
               archetypeIds.skill.fracture,
@@ -297,6 +311,7 @@ export class RunScene extends Phaser.Scene {
           : this.runState.activeSkillIds,
       };
     }
+    this.runState = observeRunCrit(this.runState);
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
@@ -382,6 +397,11 @@ export class RunScene extends Phaser.Scene {
     this.runState = advanceRunState(this.runState, delta);
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
+      if (testSkillEnabled("representativeLoad")) {
+        this.frameSamples += 1;
+        this.frameTotalMs += delta;
+        this.maxFrameMs = Math.max(this.maxFrameMs, delta);
+      }
       this.player.move(this.readMovementInput(), this.runState.player.stats.moveSpeed);
       this.updateEnemies();
       this.updateProjectiles();
@@ -443,8 +463,6 @@ export class RunScene extends Phaser.Scene {
     this.projectileSequence = 0;
     this.shotsFired = 0;
     this.criticalShots = 0;
-    this.highestCritTier = 0;
-    this.longestPierceChain = 0;
     this.contactHits = 0;
     this.pickupSequence = 0;
     this.pickupsDropped = 0;
@@ -464,23 +482,26 @@ export class RunScene extends Phaser.Scene {
     this.shrineXpCollected = 0;
     this.eventQueue = new CausalEventQueue();
     this.loadEventQueue = new CausalEventQueue();
+    this.terminalLoadMetrics = undefined;
+    this.terminalEventMetrics = undefined;
     this.loadHarnessRequested = 0;
     this.loadHarnessSpawned = 0;
     this.liveHighWater = 0;
     this.trackedHighWater = 0;
+    this.frameSamples = 0;
+    this.frameTotalMs = 0;
+    this.maxFrameMs = 0;
     this.droppedPresentationCues = 0;
     this.rosterHighWater = {};
     this.offspringQueued = 0;
     this.offspringSpawned = 0;
     this.eventSequence = 0;
     this.effectRandom = createSeededRandom(0xeffe_0004);
-    this.killTimesMs = [];
     this.bloodlustAttackSpeedBonus = 0;
     this.explosionsCommitted = 0;
     this.chainExplosionsCommitted = 0;
     this.fractureQueued = 0;
     this.fractureSpawned = 0;
-    this.damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
     this.activeExplosionCues = 0;
     this.testWorldScenarioApplied = false;
     this.duplicatedEnemiesQueued = 0;
@@ -492,6 +513,7 @@ export class RunScene extends Phaser.Scene {
     this.feedbackLimiter = new FeedbackLimiter();
     this.audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
     this.reducedMotion = prefersReducedMotion();
+    this.feedbackObjects = new Set();
   }
 
   private prepareTestLoadHarness(): void {
@@ -508,9 +530,16 @@ export class RunScene extends Phaser.Scene {
 
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
-    const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
-    this.loadEventQueue.process(Math.min(12, capacity), () => {
-      if (this.spawnEnemy("ambient", 1)) this.loadHarnessSpawned += 1;
+    const capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    this.loadEventQueue.process(Math.min(12, capacity), (event) => {
+      const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
+      const representative = testSkillEnabled("representativeLoad");
+      const definition = representative
+        ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
+        : this.enemyDefinition;
+      if (definition && this.spawnEnemy("ambient", 1, definition, undefined, representative && sequence % 5 === 0)) {
+        this.loadHarnessSpawned += 1;
+      }
     });
   }
 
@@ -551,7 +580,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private processCausalEvents(): void {
-    let capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    let capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
     this.eventQueue.process(24, (event) => {
       if (event.kind === "effect.explosion") {
         this.processExplosionEvent(event.payload as unknown as ExplosionEventPayload, event.eventId);
@@ -657,6 +686,7 @@ export class RunScene extends Phaser.Scene {
 
   private updateTestWorldScenario(): void {
     const scenario = testWorldScenario();
+    if (testSkillEnabled("representativeLoad") && this.loadHarnessSpawned < this.loadHarnessRequested) return;
     if (this.testWorldScenarioApplied || scenario === null || this.enemies.size === 0 || this.runGeneration > 1) return;
     this.testWorldScenarioApplied = true;
     const targets = scenario === "multiplicity2"
@@ -683,6 +713,7 @@ export class RunScene extends Phaser.Scene {
         xpMultiplier: definition.xpMultiplier,
       }),
     };
+    this.runState = observeRunChaos(this.runState);
     if (definition.effectKind === "duplicate_living") {
       const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world).shrineRewardMultiplier;
       for (const enemy of livingSnapshot) {
@@ -727,7 +758,7 @@ export class RunScene extends Phaser.Scene {
       this.surgeState,
       this.shrineDefinition,
       this.runState.elapsedMs,
-      V01_SPAWN_LIMITS.maxAlive - this.enemies.size,
+      V02_SPAWN_LIMITS.maxAlive - this.enemies.size,
     );
     this.surgeState = result.state;
     for (let index = 0; index < result.spawnNow; index += 1) {
@@ -745,7 +776,7 @@ export class RunScene extends Phaser.Scene {
       !this.runState ||
       !this.enemyDefinition ||
       this.runState.elapsedMs < this.nextSpawnAtMs ||
-      !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
     ) {
       return;
     }
@@ -773,7 +804,7 @@ export class RunScene extends Phaser.Scene {
       !this.runState ||
       !definition ||
       !this.enemyGroup ||
-      !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
     ) {
       return false;
     }
@@ -831,7 +862,7 @@ export class RunScene extends Phaser.Scene {
       !this.weaponDefinition ||
       !this.projectileGroup ||
       this.runState.elapsedMs < this.nextFireAtMs ||
-      !canSpawn(this.projectiles.size, V01_SPAWN_LIMITS.maxProjectiles)
+      !canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)
     ) {
       return;
     }
@@ -867,7 +898,7 @@ export class RunScene extends Phaser.Scene {
       Math.floor(this.weaponDefinition.projectileCount + this.runState.weaponModifiers.projectileCount),
     );
     for (let index = 0; index < projectileCount; index += 1) {
-      if (!canSpawn(this.projectiles.size, V01_SPAWN_LIMITS.maxProjectiles)) break;
+      if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) break;
       const offset = (index - (projectileCount - 1) / 2) * 0.12;
       const projectile = new ProjectileActor(
         this,
@@ -877,6 +908,8 @@ export class RunScene extends Phaser.Scene {
         this.weaponDefinition,
         activeTheme.tokens,
         damage.damage,
+        damage.baseDamage,
+        damage.bonusDamage,
         damage.critical,
         damage.tier,
         this.runState.elapsedMs,
@@ -890,7 +923,7 @@ export class RunScene extends Phaser.Scene {
       projectile.once(Phaser.GameObjects.Events.DESTROY, () => this.projectiles.delete(projectile));
       this.shotsFired += 1;
       if (damage.critical) this.criticalShots += 1;
-      this.highestCritTier = Math.max(this.highestCritTier, damage.tier);
+      this.runState = observeRunCrit(this.runState, damage.tier);
     }
     const attackSpeedMultiplier = Math.max(
       0.01,
@@ -906,9 +939,13 @@ export class RunScene extends Phaser.Scene {
       : projectile.critTier === 1 ? "critical" : "damage";
     this.emitFeedback(category, enemy.x, enemy.y, String(Math.round(projectile.damage)));
     if (projectile.pierceChainIndex > 0) this.emitFeedback("pierce", enemy.x, enemy.y, "PIERCE");
-    this.commitEnemyDamage(enemy, projectile.damage, "direct");
+    this.commitEnemyDamage(enemy, projectile.damage, "direct", undefined, {
+      directBase: projectile.normalDamage,
+      criticalBonus: projectile.criticalBonusDamage,
+      piercingMomentum: projectile.damage - projectile.baseDamage,
+    });
     projectile.registerHit(enemy.targetId);
-    this.longestPierceChain = Math.max(this.longestPierceChain, projectile.pierceChainIndex);
+    this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
   }
 
   private commitEnemyDamage(
@@ -916,13 +953,18 @@ export class RunScene extends Phaser.Scene {
     damage: number,
     damageSource: DamageSource,
     parentEventId?: string,
+    direct?: Readonly<{ directBase: number; criticalBonus: number; piercingMomentum: number }>,
   ): void {
     if (!this.runState || enemy.defeated) return;
     const appliedDamage = Math.min(enemy.health, Math.max(0, damage));
     const result = enemy.takeDamage(damage);
     if (!result.applied) return;
     this.hitFlashes += 1;
-    this.damageBySource[damageSource] += appliedDamage;
+    this.runState = recordRunDamage(this.runState, {
+      amount: appliedDamage,
+      source: damageSource,
+      ...direct,
+    });
     if (!result.killed) return;
     if (!this.eventQueue.claimLethal(enemy.targetId)) return;
     this.eventSequence += 1;
@@ -958,7 +1000,6 @@ export class RunScene extends Phaser.Scene {
       }
     }
     this.enqueueConfiguredOnKillEffects(enemy, deathEventId, damageSource);
-    this.killTimesMs.push(this.runState.elapsedMs);
     if (enemy.elite) this.eliteDefeated += 1;
     this.runState = recordKill(this.runState);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
@@ -1070,8 +1111,12 @@ export class RunScene extends Phaser.Scene {
           Phaser.Display.Color.HexStringToColor(colour).color,
           0.8,
         ).setDepth(59);
+    this.feedbackObjects.add(cue);
+    if (impact) this.feedbackObjects.add(impact);
     const finish = (): void => {
       this.feedbackLimiter.endVisual();
+      this.feedbackObjects.delete(cue);
+      if (impact) this.feedbackObjects.delete(impact);
       cue.destroy();
       impact?.destroy();
     };
@@ -1093,6 +1138,7 @@ export class RunScene extends Phaser.Scene {
     const cue = this.add.circle(payload.x, payload.y, payload.radius, explosionColour, 0.18)
       .setStrokeStyle(3, criticalColour, 0.75)
       .setDepth(30);
+    this.feedbackObjects.add(cue);
     this.tweens.add({
       targets: cue,
       alpha: 0,
@@ -1100,6 +1146,7 @@ export class RunScene extends Phaser.Scene {
       duration: 220,
       onComplete: () => {
         this.activeExplosionCues = Math.max(0, this.activeExplosionCues - 1);
+        this.feedbackObjects.delete(cue);
         cue.destroy();
       },
     });
@@ -1114,8 +1161,7 @@ export class RunScene extends Phaser.Scene {
       this.bloodlustAttackSpeedBonus = 0;
       return;
     }
-    const selected = selectBloodlust(this.killTimesMs, this.runState.elapsedMs, bloodlust);
-    this.killTimesMs = [...selected.killTimesMs];
+    const selected = selectBloodlust(this.runState.statistics.recentKillTimesMs, this.runState.elapsedMs, bloodlust);
     this.bloodlustAttackSpeedBonus = selected.attackSpeedBonus;
   }
 
@@ -1198,6 +1244,7 @@ export class RunScene extends Phaser.Scene {
 
   private handlePlayerEnemyOverlap(enemy: EnemyActor): void {
     if (!this.runState || !this.player || enemy.defeated) return;
+    if (testSkillEnabled("noContact")) return;
     if (
       !canApplyContactDamage(
         this.runState.elapsedMs,
@@ -1224,13 +1271,19 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
     this.terminalShown = true;
     this.player?.stop();
+    this.terminalLoadMetrics = this.loadEventQueue.snapshot();
+    this.terminalEventMetrics = this.eventQueue.snapshot();
     this.eventQueue.clear();
     this.loadEventQueue.clear();
-    this.killTimesMs = [];
     this.bloodlustAttackSpeedBonus = 0;
     for (const projectile of this.projectiles) projectile.destroy();
+    for (const object of this.feedbackObjects) object.destroy();
+    this.feedbackObjects.clear();
+    this.feedbackLimiter.clearVisuals();
+    this.activeExplosionCues = 0;
+    this.audioFeedback.destroy();
     this.physics.world.pause();
-    this.runEndOverlay?.show(this.runState.status, () => this.restartRun());
+    this.runEndOverlay?.show(this.runState, () => this.restartRun());
   }
 
   private restartRun(): void {
@@ -1354,6 +1407,9 @@ export class RunScene extends Phaser.Scene {
     const world = this.runState ? selectWorldModifiers(this.runState.world) : undefined;
     const feedback = this.feedbackLimiter.snapshot();
     const audio = this.audioFeedback.snapshot();
+    const loadMetrics = this.terminalLoadMetrics ?? this.loadEventQueue.snapshot();
+    const eventMetrics = this.terminalEventMetrics ?? this.eventQueue.snapshot();
+    const summary = this.runState ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary) : undefined;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -1403,11 +1459,11 @@ export class RunScene extends Phaser.Scene {
         projectiles: this.projectiles.size,
         shotsFired: this.shotsFired,
         criticalShots: this.criticalShots,
-        highestCritTier: this.highestCritTier,
-        longestPierceChain: this.longestPierceChain,
+        highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
+        longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,
         contactHits: this.contactHits,
-        enemyCap: V01_SPAWN_LIMITS.maxAlive,
-        projectileCap: V01_SPAWN_LIMITS.maxProjectiles,
+        enemyCap: V02_SPAWN_LIMITS.maxAlive,
+        projectileCap: V02_SPAWN_LIMITS.maxProjectiles,
         projectileSample: projectileSample
           ? {
               id: projectileSample.projectileId,
@@ -1469,28 +1525,50 @@ export class RunScene extends Phaser.Scene {
         live: [...this.enemies].filter((enemy) => Boolean(enemy.elite)).length,
         byRole: { ...this.eliteSpawnedByRole },
       },
+      statistics: this.runState && summary ? {
+        kills: this.runState.statistics.kills,
+        peakEnemiesAlive: this.runState.statistics.peakEnemiesAlive,
+        highestChaos: this.runState.statistics.highestChaos,
+        highestCritChance: this.runState.statistics.highestCritChance,
+        highestCritTier: this.runState.statistics.highestCritTier,
+        longestPierceChain: this.runState.statistics.longestPierceChain,
+        largestKillChain: this.runState.statistics.largestKillChain,
+        totalDamage: this.runState.statistics.totalDamage,
+        damageBreakdown: this.runState.statistics.damageBreakdown,
+        summaryMetrics: summary.metrics,
+        summaryDamage: summary.damage,
+      } : undefined,
       load: {
         enabled: this.loadHarnessRequested > 0,
         requested: this.loadHarnessRequested,
         spawned: this.loadHarnessSpawned,
         eventBacklog: this.loadEventQueue.snapshot().backlog,
-        eventBacklogHighWater: this.loadEventQueue.snapshot().backlogHighWater,
-        processedEffects: this.loadEventQueue.snapshot().processed,
+        eventBacklogHighWater: loadMetrics.backlogHighWater,
+        processedEffects: loadMetrics.processed,
+        gameplayBacklogHighWater: eventMetrics.backlogHighWater,
+        processedGameplayEvents: eventMetrics.processed,
         droppedPresentationCues: this.droppedPresentationCues + feedback.dropped,
         liveHighWater: this.liveHighWater,
         trackedHighWater: this.trackedHighWater,
+        frameSamples: this.frameSamples,
+        averageFrameMs: this.frameSamples === 0 ? 0 : this.frameTotalMs / this.frameSamples,
+        maxFrameMs: this.maxFrameMs,
       },
       effects: {
         explosionsCommitted: this.explosionsCommitted,
         chainExplosionsCommitted: this.chainExplosionsCommitted,
         fractureQueued: this.fractureQueued,
         fractureSpawned: this.fractureSpawned,
-        bloodlustKills: this.killTimesMs.length,
+        bloodlustKills: this.runState?.statistics.recentKillTimesMs.length ?? 0,
         bloodlustAttackSpeedBonus: this.bloodlustAttackSpeedBonus,
-        directDamage: this.damageBySource.direct,
-        explosionDamage: this.damageBySource.explosion,
-        chainedExplosionDamage: this.damageBySource.chained_explosion,
+        directDamage: (this.runState?.statistics.damageBreakdown.direct ?? 0) +
+          (this.runState?.statistics.damageBreakdown.criticalBonus ?? 0) +
+          (this.runState?.statistics.damageBreakdown.piercingMomentum ?? 0),
+        explosionDamage: this.runState?.statistics.damageBreakdown.explosion ?? 0,
+        chainedExplosionDamage: this.runState?.statistics.damageBreakdown.chainedExplosion ?? 0,
         eventBacklog: this.eventQueue.snapshot().backlog,
+        eventBacklogHighWater: eventMetrics.backlogHighWater,
+        processedEvents: eventMetrics.processed,
       },
       shrine: {
         id: this.shrineDefinition?.id ?? null,

@@ -33,6 +33,21 @@ export interface ThemeVocabulary {
   readonly restartAction: string;
   readonly shrinePrompt: string;
   readonly surgeActive: string;
+  readonly statisticsTitle: string;
+  readonly peakEnemiesAlive: string;
+  readonly highestChaos: string;
+  readonly highestCrit: string;
+  readonly highestCritTier: string;
+  readonly longestPierce: string;
+  readonly largestKillChain: string;
+  readonly totalDamage: string;
+  readonly damageBreakdown: string;
+  readonly directDamage: string;
+  readonly criticalBonusDamage: string;
+  readonly piercingMomentumDamage: string;
+  readonly explosionDamage: string;
+  readonly chainedExplosionDamage: string;
+  readonly remainderDamage: string;
 }
 
 export interface ThemeCopy {

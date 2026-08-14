@@ -21,6 +21,21 @@ const vocabularyKeys = [
   "restartAction",
   "shrinePrompt",
   "surgeActive",
+  "statisticsTitle",
+  "peakEnemiesAlive",
+  "highestChaos",
+  "highestCrit",
+  "highestCritTier",
+  "longestPierce",
+  "largestKillChain",
+  "totalDamage",
+  "damageBreakdown",
+  "directDamage",
+  "criticalBonusDamage",
+  "piercingMomentumDamage",
+  "explosionDamage",
+  "chainedExplosionDamage",
+  "remainderDamage",
 ] as const;
 
 export class ThemeValidationError extends Error {

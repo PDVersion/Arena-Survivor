@@ -1,4 +1,5 @@
 import type { RunState } from "./run-state";
+import type { ThemeVocabulary } from "../core/archetypes/contracts";
 
 export interface HudValues {
   readonly health: string;
@@ -28,4 +29,40 @@ export function selectHudValues(state: RunState): HudValues {
     kills: String(state.statistics.kills),
     enemies: String(state.statistics.liveEnemies),
   };
+}
+
+function formatStatistic(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+}
+
+export interface RunSummaryValues {
+  readonly title: string;
+  readonly metrics: readonly string[];
+  readonly damage: readonly string[];
+}
+
+export function selectRunSummaryValues(state: RunState, vocabulary: ThemeVocabulary): RunSummaryValues {
+  const statistics = state.statistics;
+  const breakdown = statistics.damageBreakdown;
+  return Object.freeze({
+    title: vocabulary.statisticsTitle,
+    metrics: Object.freeze([
+      `${vocabulary.kills}: ${statistics.kills}`,
+      `${vocabulary.peakEnemiesAlive}: ${statistics.peakEnemiesAlive}`,
+      `${vocabulary.highestChaos}: ${formatStatistic(statistics.highestChaos)}×`,
+      `${vocabulary.highestCrit}: ${formatStatistic(statistics.highestCritChance * 100)}%`,
+      `${vocabulary.highestCritTier}: ${statistics.highestCritTier}`,
+      `${vocabulary.longestPierce}: ${statistics.longestPierceChain}`,
+      `${vocabulary.largestKillChain}: ${statistics.largestKillChain}`,
+    ]),
+    damage: Object.freeze([
+      `${vocabulary.totalDamage}: ${formatStatistic(statistics.totalDamage)}`,
+      `${vocabulary.directDamage}: ${formatStatistic(breakdown.direct)}`,
+      `${vocabulary.criticalBonusDamage}: ${formatStatistic(breakdown.criticalBonus)}`,
+      `${vocabulary.piercingMomentumDamage}: ${formatStatistic(breakdown.piercingMomentum)}`,
+      `${vocabulary.explosionDamage}: ${formatStatistic(breakdown.explosion)}`,
+      `${vocabulary.chainedExplosionDamage}: ${formatStatistic(breakdown.chainedExplosion)}`,
+      `${vocabulary.remainderDamage}: ${formatStatistic(breakdown.remainder)}`,
+    ]),
+  });
 }

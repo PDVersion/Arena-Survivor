@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { createRunState } from "../../../src/game/state/run-state";
-import { formatRunTime, selectHudValues } from "../../../src/game/state/statistics";
+import { formatRunTime, selectHudValues, selectRunSummaryValues } from "../../../src/game/state/statistics";
 
 const character = knightMagicTheme.characters[0];
 if (!character) throw new Error("Missing starter character");
@@ -30,5 +30,17 @@ describe("run statistics presentation", () => {
       kills: "0",
       enemies: "0",
     });
+  });
+
+  it("formats a terminal ledger entirely with theme-owned vocabulary", () => {
+    const run = createRunState({
+      themeId: knightMagicTheme.id,
+      characterId: character.id,
+      baseStats: character.baseStats,
+    });
+    const summary = selectRunSummaryValues(run, knightMagicTheme.copy.vocabulary);
+    expect(summary.title).toBe("Trial Record");
+    expect(summary.metrics).toContain("Peak Foes: 0");
+    expect(summary.damage).toContain("Total Damage: 0");
   });
 });

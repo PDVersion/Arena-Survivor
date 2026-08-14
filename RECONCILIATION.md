@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phases 5–6 complete — awaiting combined review**
+- Active phase: **Phase 7 complete — V0.2 awaiting milestone review**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -259,6 +259,8 @@ The final Phase 1 production build succeeds but Vite warns that the main minifie
 Phase 2 measurement: the main chunk is approximately 1,493 kB minified and 342 kB gzip, an increase of about 4.7 kB minified / 1.0 kB gzip from the Phase 1 baseline.
 
 Phase 3 measurement: the main chunk is approximately 1,502 kB minified and 344 kB gzip, an increase of about 9.7 kB minified / 2.3 kB gzip from the Phase 2 baseline.
+
+Phase 7 measurement: the completed V0.2 main chunk is approximately 1,566 kB minified and 360 kB gzip. The production output contains none of the test telemetry global, alternate-theme ID, or Phase 7 scenario query keys.
 
 Decision / solution:
 Accept this as the Phase 1 baseline and do not add speculative chunk splitting before gameplay exists. Track compressed size and real startup behavior as features are added, and separate optional/heavy systems only when measurement shows a useful boundary.
@@ -652,7 +654,7 @@ A named mechanic explicitly requires a different stage, caps/soft caps enter sco
 
 ### REC-028 — Load instrumentation is read-only and test-build initiated
 
-- Status: Accepted
+- Status: Superseded by REC-040
 - Date: 2026-08-13
 - Affects: V0.2 Phases 1, 2, 4, 6, 7; performance testing, production surface
 - Blocks: None
@@ -892,10 +894,54 @@ Limiter tests cover caps and per-category aggregation. Browser tests cover gestu
 Revisit when:
 Real audio assets replace oscillators, user settings become persistent, profiling justifies object pools, or accessibility review requires additional controls.
 
+### REC-039 — The run ledger owns exact damage and a five-second kill chain
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phase 7, statistics, terminal presentation, damage provenance
+- Blocks: None
+
+Context / observation:
+Phase 7 requires total damage to reconcile exactly with direct base, critical bonus, Piercing Momentum, explosion, chained explosion, and remainder categories. Independently accumulating the total and categories during the first 300-enemy browser run produced a `6.4e-10` floating-point difference despite correct events.
+
+Decision / solution:
+Store one serializable run-statistics ledger fed only by committed gameplay results. Allocate overkill-adjusted direct damage in stable order—base, critical bonus, Momentum, then remainder—and assign explosion sources directly. Derive `totalDamage` from the ordered category ledger after every record instead of accumulating it independently. Use one central 5,000 simulation-millisecond window for largest kill chain and retain exact high-water observations for enemies, Chaos, crit chance/tier, and pierce chain. Terminal copy and telemetry format this ledger without becoming authoritative.
+
+Why:
+One sum has no second floating-point history to diverge from. Stable overkill allocation documents which contribution receives limited applied health, and committed-event updates prevent rendering, duplicate overlaps, or dropped feedback from changing statistics.
+
+Future guardrail:
+Unit tests require exact equality between total and the ordered breakdown, cover overkill/remainder allocation and the exclusive five-second boundary, and verify high-water behavior. The compound browser path compares the terminal ledger with telemetry and requires zero remainder for its known sources.
+
+Revisit when:
+Armour, damage-over-time, reflected damage, summons, or another source category enters scope.
+
+### REC-040 — Representative Chromium evidence supports a 300/192 entity budget
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phase 7, spawning, performance, feedback, CI
+- Blocks: None
+
+Context / observation:
+The Phase 7 local headless Chromium scenario loaded 300 simultaneous mixed-role enemies with 60 initially scripted elites, activated all shrine roles after capacity was reached, and ran the complete Overcrit + Momentum + Detonation + Fracture + Bloodlust + Chain Reaction build for six simulation seconds. It processed all 300 load requests, reached 300 live enemies, 321 tracked gameplay objects, and a 300-event gameplay backlog without losing due work. Across 315 measured frames it averaged `19.03 ms` with a `24.16 ms` maximum on the development machine. The run committed 1,203 kills, 338 direct explosions, 114 chained explosions, and 336 Fracture requests. Visuals reached but did not exceed the 48-cue limit; 2,389 presentation requests were intentionally dropped while simulation queues and the damage ledger remained complete. Terminal cleanup left zero gameplay/load backlog, projectiles, voices, and active limited visuals; the path then restarted twice.
+
+Decision / solution:
+Raise the shared production budgets from 80/64 to 300 live enemies and 192 projectiles. Keep destruction and existing bounded presentation rather than add speculative pooling: the measured tracked high-water was well below the combined 492 actor budget, and no uncaught browser error occurred. Record frame measurements as evidence only; do not impose a hardware-sensitive CI FPS threshold.
+
+Why:
+The milestone explicitly targets 300 live enemies, and the representative compound path now exercises substantially more than isolated spawn objects. A threefold projectile budget accommodates high attack speed/projectile-count builds while remaining bounded. Current evidence does not show allocation pressure that justifies pooling complexity.
+
+Future guardrail:
+The browser acceptance path requires exactly 300 processed scripted spawns, all four roles, elites, a retained 300-item shrine backlog, capped tracked objects/effects/audio, exact terminal cleanup, and repeated restart. Telemetry records average/maximum frame delta without pass/fail thresholds. Production builds remain free of test seams and telemetry globals.
+
+Revisit when:
+Manual testing on lower-powered representative hardware exceeds acceptable frame times, richer assets materially raise object cost, entity caps grow, or profiling identifies allocation/GC pressure.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
-- V0.1 shrine load passes with capped destruction at the current 80/64 enemy/projectile baseline, so Phase 6 does not require pooling. The safe higher cap and production randomness policy remain unsettled.
+- The 300/192 enemy/projectile budget is supported by one local Chromium profile but remains provisional pending broader hardware testing; production randomness policy is also unsettled.
 - Accessibility details beyond alternate movement keys and reduced-motion feedback—colour independence, remapping, and readable scaling—need an explicit later decision.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
 - The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.

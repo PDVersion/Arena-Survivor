@@ -26,6 +26,10 @@ export class FeedbackLimiter {
     this.activeVisuals = Math.max(0, this.activeVisuals - 1);
   }
 
+  clearVisuals(): void {
+    this.activeVisuals = 0;
+  }
+
   allowAudio(category: FeedbackCategory, nowMs: number): boolean {
     const last = this.lastAudioAt.get(category) ?? Number.NEGATIVE_INFINITY;
     if (nowMs < last + this.audioCooldownMs) {

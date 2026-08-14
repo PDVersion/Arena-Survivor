@@ -75,6 +75,26 @@ export interface ArenaTestSnapshot {
     live: number;
     byRole: Readonly<Record<string, number>>;
   }>;
+  readonly statistics?: Readonly<{
+    kills: number;
+    peakEnemiesAlive: number;
+    highestChaos: number;
+    highestCritChance: number;
+    highestCritTier: number;
+    longestPierceChain: number;
+    largestKillChain: number;
+    totalDamage: number;
+    damageBreakdown: Readonly<{
+      direct: number;
+      criticalBonus: number;
+      piercingMomentum: number;
+      explosion: number;
+      chainedExplosion: number;
+      remainder: number;
+    }>;
+    summaryMetrics: readonly string[];
+    summaryDamage: readonly string[];
+  }>;
   readonly load?: Readonly<{
     enabled: boolean;
     requested: number;
@@ -82,9 +102,14 @@ export interface ArenaTestSnapshot {
     eventBacklog: number;
     eventBacklogHighWater: number;
     processedEffects: number;
+    gameplayBacklogHighWater: number;
+    processedGameplayEvents: number;
     droppedPresentationCues: number;
     liveHighWater: number;
     trackedHighWater: number;
+    frameSamples: number;
+    averageFrameMs: number;
+    maxFrameMs: number;
   }>;
   readonly effects?: Readonly<{
     explosionsCommitted: number;
@@ -97,6 +122,8 @@ export interface ArenaTestSnapshot {
     explosionDamage: number;
     chainedExplosionDamage: number;
     eventBacklog: number;
+    eventBacklogHighWater: number;
+    processedEvents: number;
   }>;
   readonly shrine?: Readonly<{
     id: string | null;

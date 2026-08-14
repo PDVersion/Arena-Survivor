@@ -93,7 +93,7 @@ test("restart during an active surge clears its scheduler and tagged enemies", a
     })
     .toBe("complete");
 
-  await page.locator("canvas").click({ position: { x: 640, y: 442 } });
+  await page.keyboard.press("KeyR");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration))
     .toBe((generation ?? 0) + 1);

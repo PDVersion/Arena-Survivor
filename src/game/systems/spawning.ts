@@ -6,9 +6,9 @@ export interface SpawnLimits {
   readonly maxProjectiles: number;
 }
 
-export const V01_SPAWN_LIMITS: SpawnLimits = Object.freeze({
-  maxAlive: 80,
-  maxProjectiles: 64,
+export const V02_SPAWN_LIMITS: SpawnLimits = Object.freeze({
+  maxAlive: 300,
+  maxProjectiles: 192,
 });
 
 export function canSpawn(current: number, maximum: number): boolean {
