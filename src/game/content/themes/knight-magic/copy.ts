@@ -97,5 +97,10 @@ export const copy = {
       name: "Arcane Reach",
       description: "Draw experience sparks from farther away.",
     },
+    [archetypeIds.upgrade.piercingMomentum]: { name: "Piercing Momentum", description: "Each unique foe pierced adds 10% of the projectile's base damage." },
+    [archetypeIds.upgrade.onKillExplosion]: { name: "Detonation", description: "Defeated foes erupt and damage nearby enemies." },
+    [archetypeIds.upgrade.fracture]: { name: "Fracture", description: "Some defeated foes split into two fragile enemies." },
+    [archetypeIds.upgrade.bloodlust]: { name: "Bloodlust", description: "Recent kills increase attack speed." },
+    [archetypeIds.upgrade.chainReaction]: { name: "Chain Reaction", description: "Explosion kills can create further explosions." },
   },
 } as const satisfies ThemeCopy;

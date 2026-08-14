@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phases 1–2 complete — awaiting combined review and manual testing**
+- Active phase: **Phase 3 complete — Phase 4 not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -715,6 +715,50 @@ Unit tests prove one lethal/effect claim and five retained requests. Chromium te
 
 Revisit when:
 Phase 4 defines Fracture inheritance, Phase 5 defines duplication/source stacking, or a design choice explicitly grants descendant rewards.
+
+### REC-031 — Overcrit tiers double damage and Momentum scales from immutable shot damage
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phase 3, crit, projectiles, statistics, feedback
+- Blocks: None
+
+Context / observation:
+The product examples show 10/20/40/80/160 damage but leave exact higher-tier and custom crit-damage interaction open. Fractional decimal chances also produce binary floating-point residue at documented boundaries such as 247%.
+
+Decision / solution:
+Treat crit chance as an uncapped ratio where `2.47` means 247%. Resolve `floor(chance)` guaranteed tiers plus one roll against the fractional remainder, normalized to twelve decimal places. Each tier applies the configured crit-damage multiplier again; the current 2× base therefore yields the product's unbounded doubling sequence. Return tier, multiplier, modified base damage, bonus damage, and total damage explicitly. Piercing Momentum is a selectable stable-ID skill and adds 10% of a projectile's immutable rolled shot damage per prior unique target; duplicate overlaps do not advance it.
+
+Why:
+Repeated configured crit multiplication preserves the existing crit-damage stat while matching every product example. Shot-local immutable base damage keeps one projectile internally consistent, and unique target identity prevents physics overlap frequency from increasing Momentum.
+
+Future guardrail:
+Crit tests cover exact 0/100/200/300% boundaries, 247% high/low rolls, and uncapped multipliers. Piercing tests cover duplicate target rejection and monotonic projectile-local damage. Browser telemetry records highest tier, active skill IDs, longest pierce chain, and live next-hit damage.
+
+Revisit when:
+Balance testing changes overcrit multipliers, crit-damage upgrades enter scope, or presentation needs named tiers beyond numeric tier identity.
+
+### REC-032 — Reusable mechanics are skills enabled by upgrade offers
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phases 3–5, content taxonomy, run state, upgrade system
+- Blocks: None
+
+Context / observation:
+The first non-stat mechanics need both a theme-owned reusable definition and a way to enter the existing three-choice level-up flow. Treating skill and upgrade IDs as interchangeable would make presentation, acquisition, and future unlock pools ambiguous.
+
+Decision / solution:
+A skill ID owns the reusable mechanic definition. A distinct upgrade ID owns the level-up offer and uses a generic `skill.enable` effect to add that skill ID to serializable per-run active skills. Re-selecting an offer records the choice but active skill identity remains set-like.
+
+Why:
+This keeps acquisition separate from mechanics while reusing the established upgrade UI and stable content boundary. Future shrines or unlocks can enable the same skill without pretending they are level-up offers.
+
+Future guardrail:
+Theme validation requires all skill and upgrade roles, validates skill references, and alternate-theme fixtures carry both categories. Upgrade tests cover stat effects and enabled skill identity separately.
+
+Revisit when:
+Skills gain ranks, mutually exclusive variants, weapon ownership, or acquisition outside the run upgrade pool.
 
 ## Open questions to reconcile during implementation
 

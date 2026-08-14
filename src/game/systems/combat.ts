@@ -9,7 +9,12 @@ export interface DamageRollOptions {
 export interface DamageRoll {
   readonly damage: number;
   readonly critical: boolean;
+  readonly tier: number;
+  readonly multiplier: number;
+  readonly baseDamage: number;
+  readonly bonusDamage: number;
 }
+import { resolveCritTier } from "../core/combat/crit";
 
 export interface HitResult {
   readonly health: number;
@@ -23,12 +28,22 @@ export interface PierceState {
 }
 
 export function rollDamage(options: DamageRollOptions): DamageRoll {
-  const critical = options.random() < Math.min(1, Math.max(0, options.critChance));
   const modifiedDamage = options.baseDamage * (1 + options.damageBonus);
+  const crit = resolveCritTier(options.critChance, options.random);
+  const multiplier = crit.tier === 0 ? 1 : options.critDamage ** crit.tier;
+  const damage = modifiedDamage * multiplier;
   return {
-    damage: modifiedDamage * (critical ? options.critDamage : 1),
-    critical,
+    damage,
+    critical: crit.tier > 0,
+    tier: crit.tier,
+    multiplier,
+    baseDamage: modifiedDamage,
+    bonusDamage: damage - modifiedDamage,
   };
+}
+
+export function piercingMomentumDamage(baseDamage: number, chainIndex: number, damagePerUniqueHit: number): number {
+  return baseDamage * (1 + Math.max(0, Math.floor(chainIndex)) * Math.max(0, damagePerUniqueHit));
 }
 
 export function applyDamage(health: number, damage: number): HitResult {

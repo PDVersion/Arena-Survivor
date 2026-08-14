@@ -73,6 +73,15 @@ test("choosing an upgrade applies its stable effect and resumes safely", async (
     case "upgrade.pickup_radius":
       expect(after?.player?.pickupRadius).toBeGreaterThan(before?.player?.pickupRadius ?? Infinity);
       break;
+    case "upgrade.piercing_momentum":
+    case "upgrade.on_kill_explosion":
+    case "upgrade.fracture":
+    case "upgrade.bloodlust":
+    case "upgrade.chain_reaction":
+      expect(after?.progression?.activeSkillIds.length).toBeGreaterThan(
+        before?.progression?.activeSkillIds.length ?? 0,
+      );
+      break;
     default:
       throw new Error(`Unexpected upgrade choice: ${chosenId}`);
   }

@@ -58,6 +58,7 @@ export interface ThemePalette {
   readonly enemySpawner: string;
   readonly projectile: string;
   readonly critical: string;
+  readonly overcritical: string;
   readonly pickup: string;
   readonly shrine: string;
 }
@@ -70,7 +71,15 @@ export interface ThemeTokens {
 
 export interface SkillDefinition {
   readonly id: SkillId;
+  readonly effects?: readonly SkillEffectDefinition[];
 }
+
+export type SkillEffectDefinition =
+  | Readonly<{ kind: "piercing_momentum"; damagePerUniqueHit: number }>
+  | Readonly<{ kind: "on_kill_explosion"; radius: number; damage: number }>
+  | Readonly<{ kind: "fracture"; chance: number; childEnemyId: EnemyId; childCount: number; rewardMultiplier: number }>
+  | Readonly<{ kind: "bloodlust"; windowMs: number; killsPerStep: number; attackSpeedPerStep: number }>
+  | Readonly<{ kind: "chain_reaction" }>;
 
 export interface EliteDefinition {
   readonly id: EliteId;
@@ -92,7 +101,7 @@ export interface WeaponDefinition {
   readonly projectileRadius: number;
   readonly projectileCount: number;
   readonly pierce: number;
-  readonly presentationToken: keyof Pick<ThemePalette, "projectile" | "critical">;
+  readonly presentationToken: keyof Pick<ThemePalette, "projectile" | "critical" | "overcritical">;
 }
 
 export interface EnemyDefinition {

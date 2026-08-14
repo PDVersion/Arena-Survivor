@@ -1,5 +1,5 @@
 import type { UpgradeDefinition } from "../core/archetypes/contracts";
-import type { UpgradeId } from "../core/archetypes/ids";
+import type { SkillId, UpgradeId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 
 export type RandomSource = () => number;
@@ -16,6 +16,7 @@ export interface UpgradeableState {
   };
   readonly weaponModifiers: WeaponStatModifiers;
   readonly selectedUpgradeIds: readonly UpgradeId[];
+  readonly activeSkillIds: readonly SkillId[];
 }
 
 export function createWeaponStatModifiers(): WeaponStatModifiers {
@@ -58,8 +59,13 @@ export function applyUpgrade<T extends UpgradeableState>(state: T, upgrade: Upgr
   const stats = { ...state.player.stats };
   let health = state.player.health;
   const weaponModifiers = { ...state.weaponModifiers };
+  const activeSkillIds = new Set(state.activeSkillIds);
 
   for (const effect of upgrade.effects) {
+    if (effect.kind === "skill.enable") {
+      activeSkillIds.add(effect.skillId);
+      continue;
+    }
     switch (effect.target) {
       case "player.maxHealth":
         stats.maxHealth += effect.value;
@@ -93,6 +99,7 @@ export function applyUpgrade<T extends UpgradeableState>(state: T, upgrade: Upgr
     ...state,
     player: { ...state.player, health, stats },
     weaponModifiers,
+    activeSkillIds: [...activeSkillIds],
     selectedUpgradeIds: [...state.selectedUpgradeIds, upgrade.id],
   };
 }

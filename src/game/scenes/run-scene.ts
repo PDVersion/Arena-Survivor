@@ -77,6 +77,16 @@ function testRosterHarnessSelection(): string | null {
   return new URLSearchParams(window.location.search).get("enemyRoster");
 }
 
+function testCombatNumber(name: string): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const value = Number(new URLSearchParams(window.location.search).get(name));
+  return Number.isFinite(value) && value >= 0 ? value : undefined;
+}
+
+function testSkillEnabled(name: string): boolean {
+  return import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has(name);
+}
+
 interface MovementKeys {
   readonly up: Phaser.Input.Keyboard.Key;
   readonly down: Phaser.Input.Keyboard.Key;
@@ -120,6 +130,8 @@ export class RunScene extends Phaser.Scene {
   private projectileSequence = 0;
   private shotsFired = 0;
   private criticalShots = 0;
+  private highestCritTier = 0;
+  private longestPierceChain = 0;
   private contactHits = 0;
   private pickupSequence = 0;
   private pickupsDropped = 0;
@@ -204,6 +216,24 @@ export class RunScene extends Phaser.Scene {
       baseStats: selectedCharacter.baseStats,
       durationMs: testRunDurationMs(),
     });
+    const testCritChance = testCombatNumber("critChance");
+    const testPierce = testCombatNumber("pierce");
+    if (testCritChance !== undefined || testPierce !== undefined || testSkillEnabled("piercingMomentum")) {
+      this.runState = {
+        ...this.runState,
+        player: testCritChance === undefined ? this.runState.player : {
+          ...this.runState.player,
+          stats: { ...this.runState.player.stats, critChance: testCritChance },
+        },
+        weaponModifiers: testPierce === undefined ? this.runState.weaponModifiers : {
+          ...this.runState.weaponModifiers,
+          pierce: testPierce,
+        },
+        activeSkillIds: testSkillEnabled("piercingMomentum")
+          ? [archetypeIds.skill.piercingMomentum]
+          : this.runState.activeSkillIds,
+      };
+    }
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
@@ -349,6 +379,8 @@ export class RunScene extends Phaser.Scene {
     this.projectileSequence = 0;
     this.shotsFired = 0;
     this.criticalShots = 0;
+    this.highestCritTier = 0;
+    this.longestPierceChain = 0;
     this.contactHits = 0;
     this.pickupSequence = 0;
     this.pickupsDropped = 0;
@@ -655,6 +687,12 @@ export class RunScene extends Phaser.Scene {
       critDamage: this.runState.player.stats.critDamage,
       random: Math.random,
     });
+    const momentum = activeTheme.skills
+      .find((skill) => skill.id === archetypeIds.skill.piercingMomentum)
+      ?.effects?.find((effect) => effect.kind === "piercing_momentum");
+    const momentumPerHit = this.runState.activeSkillIds.includes(archetypeIds.skill.piercingMomentum)
+      ? momentum?.damagePerUniqueHit ?? 0
+      : 0;
     const projectileCount = Math.max(
       1,
       Math.floor(this.weaponDefinition.projectileCount + this.runState.weaponModifiers.projectileCount),
@@ -671,8 +709,10 @@ export class RunScene extends Phaser.Scene {
         activeTheme.tokens,
         damage.damage,
         damage.critical,
+        damage.tier,
         this.runState.elapsedMs,
         Math.max(0, Math.floor(this.weaponDefinition.pierce + this.runState.weaponModifiers.pierce)),
+        momentumPerHit,
       );
       this.projectiles.add(projectile);
       this.projectileGroup.add(projectile);
@@ -681,6 +721,7 @@ export class RunScene extends Phaser.Scene {
       projectile.once(Phaser.GameObjects.Events.DESTROY, () => this.projectiles.delete(projectile));
       this.shotsFired += 1;
       if (damage.critical) this.criticalShots += 1;
+      this.highestCritTier = Math.max(this.highestCritTier, damage.tier);
     }
     const attackSpeedMultiplier = Math.max(0.01, 1 + this.runState.player.stats.attackSpeedBonus);
     this.nextFireAtMs = this.runState.elapsedMs + this.weaponDefinition.cooldownMs / attackSpeedMultiplier;
@@ -691,6 +732,7 @@ export class RunScene extends Phaser.Scene {
     const result = enemy.takeDamage(projectile.damage);
     if (result.applied) this.hitFlashes += 1;
     projectile.registerHit(enemy.targetId);
+    this.longestPierceChain = Math.max(this.longestPierceChain, projectile.pierceChainIndex);
     if (!result.killed) return;
     if (!this.eventQueue.claimLethal(enemy.targetId)) return;
     this.eventSequence += 1;
@@ -736,6 +778,7 @@ export class RunScene extends Phaser.Scene {
     xpValue: number,
     rewardSource: EnemySpawnSource,
   ): void {
+    if (testSkillEnabled("noXp")) return;
     if (!this.pickupDefinition || !this.pickupGroup || xpValue <= 0) return;
     this.pickupSequence += 1;
     const pickup = new PickupActor(
@@ -999,6 +1042,8 @@ export class RunScene extends Phaser.Scene {
         projectiles: this.projectiles.size,
         shotsFired: this.shotsFired,
         criticalShots: this.criticalShots,
+        highestCritTier: this.highestCritTier,
+        longestPierceChain: this.longestPierceChain,
         contactHits: this.contactHits,
         enemyCap: V01_SPAWN_LIMITS.maxAlive,
         projectileCap: V01_SPAWN_LIMITS.maxProjectiles,
@@ -1009,6 +1054,9 @@ export class RunScene extends Phaser.Scene {
               y: projectileSample.y,
               velocityX: projectileSample.arcadeBody.velocity.x,
               velocityY: projectileSample.arcadeBody.velocity.y,
+              damage: projectileSample.damage,
+              critTier: projectileSample.critTier,
+              pierceChainIndex: projectileSample.pierceChainIndex,
             }
           : null,
         roster: Object.fromEntries(
@@ -1027,6 +1075,7 @@ export class RunScene extends Phaser.Scene {
         pickupsCollected: this.pickupsCollected,
         choiceIds: this.currentChoices.map((choice) => choice.id),
         selectedUpgradeIds: this.runState?.selectedUpgradeIds ?? [],
+        activeSkillIds: this.runState?.activeSkillIds ?? [],
         pierceBonus: this.runState?.weaponModifiers.pierce ?? 0,
         projectileCountBonus: this.runState?.weaponModifiers.projectileCount ?? 0,
       },

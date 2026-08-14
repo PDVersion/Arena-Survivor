@@ -230,6 +230,12 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
+        if (effect.kind === "skill.enable") {
+          if (!Object.values(archetypeIds.skill).includes(effect.skillId)) {
+            issues.push(`${upgrade.id} references unsupported skill: ${String(effect.skillId)}`);
+          }
+          continue;
+        }
         if (effect.kind !== "stat.add") {
           issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
           continue;
@@ -285,6 +291,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const skill of skills) {
     if (skillIds.has(skill.id)) issues.push(`duplicate skill id: ${skill.id}`);
     skillIds.add(skill.id);
+    for (const effect of skill.effects ?? []) {
+      if (effect.kind === "piercing_momentum" && (!Number.isFinite(effect.damagePerUniqueHit) || effect.damagePerUniqueHit <= 0)) {
+        issues.push(`${skill.id} damagePerUniqueHit must be greater than zero`);
+      }
+    }
   }
   for (const requiredId of Object.values(archetypeIds.skill)) {
     if (!skillIds.has(requiredId)) issues.push(`missing required skill: ${requiredId}`);

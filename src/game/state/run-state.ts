@@ -1,4 +1,4 @@
-import type { CharacterId, UpgradeId } from "../core/archetypes/ids";
+import type { CharacterId, SkillId, UpgradeId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 import type { UpgradeDefinition } from "../core/archetypes/contracts";
 import {
@@ -35,6 +35,7 @@ export interface RunState {
   readonly progression: ProgressionState;
   readonly weaponModifiers: WeaponStatModifiers;
   readonly selectedUpgradeIds: readonly UpgradeId[];
+  readonly activeSkillIds: readonly SkillId[];
   readonly statistics: {
     readonly kills: number;
     readonly liveEnemies: number;
@@ -73,6 +74,7 @@ export function createRunState(options: CreateRunOptions): RunState {
     progression: createProgressionState(),
     weaponModifiers: createWeaponStatModifiers(),
     selectedUpgradeIds: [],
+    activeSkillIds: [],
     statistics: { kills: 0, liveEnemies: 0 },
   };
 }

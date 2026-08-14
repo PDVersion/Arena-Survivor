@@ -51,6 +51,7 @@ export const alternateTheme = defineTheme({
       enemySpawner: "#aa00ff",
       projectile: "#ffff00",
       critical: "#ff8800",
+      overcritical: "#ffffff",
       pickup: "#88ff88",
       shrine: "#ff4488",
     },
@@ -133,6 +134,11 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.upgrade.moveSpeed, effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }], presentationToken: "accent" },
     { id: archetypeIds.upgrade.health, effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }], presentationToken: "accent" },
     { id: archetypeIds.upgrade.pickupRadius, effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.piercingMomentum, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.piercingMomentum }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.onKillExplosion, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.onKillExplosion }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.fracture, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.fracture }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.bloodlust, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.bloodlust }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.chainReaction, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.chainReaction }], presentationToken: "accent" },
   ],
   shrines: [
     {
@@ -145,6 +151,8 @@ export const alternateTheme = defineTheme({
       presentationToken: "shrine",
     },
   ],
-  skills: Object.values(archetypeIds.skill).map((id) => ({ id })),
+  skills: Object.values(archetypeIds.skill).map((id) => id === archetypeIds.skill.piercingMomentum
+    ? { id, effects: [{ kind: "piercing_momentum" as const, damagePerUniqueHit: 0.1 }] }
+    : { id }),
   elites: [{ id: eliteIds.baseline }],
 });

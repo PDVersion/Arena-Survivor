@@ -36,6 +36,11 @@ export const archetypeIds = {
     moveSpeed: "upgrade.move_speed",
     health: "upgrade.health",
     pickupRadius: "upgrade.pickup_radius",
+    piercingMomentum: "upgrade.piercing_momentum",
+    onKillExplosion: "upgrade.on_kill_explosion",
+    fracture: "upgrade.fracture",
+    bloodlust: "upgrade.bloodlust",
+    chainReaction: "upgrade.chain_reaction",
   },
 } as const;
 

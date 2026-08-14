@@ -14,6 +14,7 @@ export const tokens = {
     enemySpawner: "#f472b6",
     projectile: "#c4b5fd",
     critical: "#fbbf24",
+    overcritical: "#ffffff",
     pickup: "#6ee7b7",
     shrine: "#fb7185",
   },
