@@ -4,7 +4,7 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 ## Status
 
-V0.1 is implementation-complete: the five-minute core loop, progression, Horde shrine, endings, restart, and full verification gate are built. V0.2 is planned but implementation has not started.
+V0.2 is implementation-complete and ready for milestone review. The game now includes the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
 ## Project documents
 
@@ -26,7 +26,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). V0.1 includes a five-minute arena run, automatic projectile combat, XP and upgrades, a player-activated Horde shrine, distinct run endings, and same-page restart.
+Open the URL printed by Vite (normally `http://localhost:5173`). Runs last five minutes, combat fires automatically, and risk/reward shrines permanently increase Chaos and world pressure.
 
 Controls:
 
@@ -36,6 +36,7 @@ Escape           = Pause or resume
 E / Space         = Activate a shrine while in range
 1 / 2 / 3         = Choose a level-up upgrade
 R / Enter         = Restart after death or completion
+M                 = Mute or unmute session audio
 ```
 
 ## Test and build
@@ -46,20 +47,32 @@ Install Playwright's Chromium once on a new machine:
 npx playwright install chromium
 ```
 
-Run the complete V0.1 verification gate:
+Run the complete V0.2 verification gate:
 
 ```bash
 npm run typecheck
 npm test -- --run
-npm run build
-npm run test:e2e
-```
-
-Optional checks:
-
-```bash
 npm run lint
+npm run build
+npm run test:e2e:ci
+npm run test:e2e:stress
 npm audit --audit-level=high
 ```
 
-For a manual smoke test, run `npm run dev`; verify movement, combat, XP collection, level-up choices, the HUD, pause/focus behavior, death/completion restart, and the browser console. Activate the nearby shrine with E or Space and confirm its one-time pulse produces a sustained tagged swarm with visibly accelerated XP rewards.
+Focused Phase 7 checks:
+
+```bash
+npm test -- --run tests/unit/statistics tests/unit/content tests/unit/architecture
+npm run test:e2e:stress
+```
+
+The normal Chromium regression suite runs on every pull request. The tagged 300-enemy stress path is a separate manual GitHub Actions workflow; run it before a release and after changes to spawning, combat/effect queues, statistics, feedback limits, or restart cleanup.
+
+For a manual smoke test, verify movement, combat, XP collection, upgrade choices, pause/focus behavior, all shrine roles, elites, mute and reduced-motion behavior, the terminal statistics ledger, repeated restart, and a clean browser console.
+
+## Current limitations
+
+- Visuals and sounds are generated placeholders; audio uses theme-defined synthesized cues.
+- Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting.
+- Profile persistence, save export/import, additional weapons, bosses, and advanced elite variants remain later-milestone work.
+- The production bundle currently includes Phaser in the initial chunk, so Vite reports its large-chunk advisory during builds.

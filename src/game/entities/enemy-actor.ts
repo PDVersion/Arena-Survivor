@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import type { EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
+import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
 
@@ -11,6 +11,9 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly spawnSource: EnemySpawnSource;
   readonly rewardMultiplier: number;
   health: number;
+  readonly moveSpeed: number;
+  readonly contactDamage: number;
+  readonly elite?: EliteDefinition;
   defeated = false;
   private readonly baseColour: number;
 
@@ -23,26 +26,39 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     tokens: ThemeTokens,
     spawnSource: EnemySpawnSource = "ambient",
     rewardMultiplier = 1,
+    modifiers: Readonly<{ healthMultiplier: number; damageMultiplier: number }> = {
+      healthMultiplier: 1,
+      damageMultiplier: 1,
+    },
+    elite?: EliteDefinition,
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
     ).color;
-    super(scene, x, y, definition.radius, 0, 360, false, colour);
+    const radius = definition.radius * (elite?.radiusMultiplier ?? 1);
+    super(scene, x, y, radius, 0, 360, false, colour);
     this.targetId = targetId;
     this.definition = definition;
-    this.health = definition.maxHealth;
+    this.health = definition.maxHealth * modifiers.healthMultiplier;
+    this.moveSpeed = definition.moveSpeed;
+    this.contactDamage = definition.contactDamage * modifiers.damageMultiplier;
+    this.elite = elite;
     this.spawnSource = spawnSource;
     this.rewardMultiplier = rewardMultiplier;
     this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    this.arcadeBody.setCircle(definition.radius);
+    this.arcadeBody.setCircle(radius);
     if (definition.geometry === "triangle") this.setIterations(1 / 3).setAngle(-90);
     if (definition.geometry === "square") this.setIterations(1 / 4).setAngle(45);
     if (definition.geometry === "hexagon") {
       this.setIterations(1 / 6).setAngle(30).setStrokeStyle(5, 0xffffff, 0.45);
     }
-    this.setDepth(20);
+    if (elite) {
+      const eliteColour = Phaser.Display.Color.HexStringToColor(tokens.palette[elite.presentationToken]).color;
+      this.setStrokeStyle(5, eliteColour, 1).setDepth(25);
+    }
+    if (!elite) this.setDepth(20);
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -55,7 +71,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       this.arcadeBody.setVelocity(0, 0);
       return;
     }
-    direction.normalize().scale(this.definition.moveSpeed);
+    direction.normalize().scale(this.moveSpeed);
     this.arcadeBody.setVelocity(direction.x, direction.y);
   }
 

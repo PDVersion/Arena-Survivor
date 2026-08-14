@@ -47,6 +47,7 @@ export class Hud {
       `${vocabulary.time}: ${values.time}`,
       `${vocabulary.kills}: ${values.kills}`,
       `${vocabulary.enemies}: ${values.enemies}`,
+      `${vocabulary.chaos}: x${state.world.chaos.toFixed(1)}`,
     ]);
     this.status.setText(state.status === "paused" ? vocabulary.paused : "");
   }

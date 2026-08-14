@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phases 3–4 complete — awaiting combined review and manual testing**
+- Active phase: **Phase 7 complete — V0.2 awaiting milestone review**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -259,6 +259,8 @@ The final Phase 1 production build succeeds but Vite warns that the main minifie
 Phase 2 measurement: the main chunk is approximately 1,493 kB minified and 342 kB gzip, an increase of about 4.7 kB minified / 1.0 kB gzip from the Phase 1 baseline.
 
 Phase 3 measurement: the main chunk is approximately 1,502 kB minified and 344 kB gzip, an increase of about 9.7 kB minified / 2.3 kB gzip from the Phase 2 baseline.
+
+Phase 7 measurement: the completed V0.2 main chunk is approximately 1,566 kB minified and 360 kB gzip. The production output contains none of the test telemetry global, alternate-theme ID, or Phase 7 scenario query keys.
 
 Decision / solution:
 Accept this as the Phase 1 baseline and do not add speculative chunk splitting before gameplay exists. Track compressed size and real startup behavior as features are added, and separate optional/heavy systems only when measurement shows a useful boundary.
@@ -652,7 +654,7 @@ A named mechanic explicitly requires a different stage, caps/soft caps enter sco
 
 ### REC-028 — Load instrumentation is read-only and test-build initiated
 
-- Status: Accepted
+- Status: Superseded by REC-040
 - Date: 2026-08-13
 - Affects: V0.2 Phases 1, 2, 4, 6, 7; performance testing, production surface
 - Blocks: None
@@ -804,11 +806,187 @@ The interaction matrix covers direct, explosion, chained, enabled, and disabled 
 Revisit when:
 Combined manual testing provides balance feedback, Phase 5 defines reward stacking, Phase 6 tunes presentation limits, or Phase 7 reconciles the final damage ledger.
 
+### REC-035 — Chaos and shrine products resolve from one serializable world model
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phases 5–7, Chaos, spawning, enemies, XP, elites, shrine rewards
+- Blocks: None
+
+Context / observation:
+The product names systems affected by Chaos but gives only example Chaos progression, not exact curves or how permanent shrine products compose with it. V0.1 Horde rewards already carry a source multiplier that must remain distinguishable.
+
+Decision / solution:
+Store per-run Chaos, permanent enemy-spawn and XP products, and shrine activation counts in one serializable world state starting at `1.0`. Resolve all consumers from one selector. For pressure `p = Chaos - 1`, use `1 + 0.25p` spawn pressure, `1 + 0.20p` enemy health, `1 + 0.15p` enemy damage, `1 + 0.25p` XP, `min(0.4, 0.04p)` elite chance, and `1 + 0.20p` shrine rewards. Permanent shrine spawn/XP products multiply after their Chaos curves through the centralized modifier resolver. Source reward applies first, then Chaos shrine reward; world XP applies when the pickup is awarded. Preserve fractional values throughout.
+
+Why:
+One model prevents scattered Chaos conditionals and makes every declared output observable. Separating source reward from world XP keeps Horde/Duplication provenance intact while still rewarding dangerous world choices.
+
+Future guardrail:
+Unit tests cover the clean baseline, repeated Multiplicity products, fractional output, and JSON round trips. Browser telemetry exposes every selected multiplier and activation count. Restart reconstructs `1.0` world state.
+
+Revisit when:
+Combined balance testing evaluates the curves, Phase 7 measures 300-enemy pressure, or rarity/loot systems need additional Chaos outputs.
+
+### REC-036 — Four shrine roles are exact-once actors; Multiplicity has two instances
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phase 5, shrines, duplication, rewards, content
+- Blocks: None
+
+Context / observation:
+V0.2 requires Horde, Greed, Multiplicity, and Duplication and explicitly requires multiplicative stacking. One actor per definition cannot demonstrate two activations of the same stackable role in a single run.
+
+Decision / solution:
+Instantiate one Horde, one Greed, two Multiplicity, and one Duplication actor from four theme definitions. Each actor activates once. Horde, Greed, each Multiplicity, and Duplication add `0.4`, `0.4`, `0.7`, and `1.0` Chaos respectively. Greed applies `1.5×` spawn and `1.25×` XP; Multiplicity applies `2×` spawn and `1.5×` XP per actor. Duplication snapshots living enemies at activation, queues one copy each through back-pressure, and gives copies its `1.5×` source reward multiplied by the resolved Chaos shrine-reward curve. Copies do not recursively inherit arbitrary parent reward multipliers.
+
+Why:
+Multiple generic actors prove stacking without permitting repeat activation or branching on display names. Snapshot-and-queue makes Duplication exact even at capacity.
+
+Future guardrail:
+Theme validation requires all four stable shrine IDs and effect values. Browser tests activate all five actors, prove two Multiplicity activations, exact products, exact duplicated copy counts, cap compliance, and clean restart.
+
+Revisit when:
+Shrine placement becomes procedural, repeated definitions need save identity, or duplication inheritance changes alongside elites/splits.
+
+### REC-037 — Baseline elites preserve identity across descendant creation
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phases 6–7, enemies, spawning, rewards, feedback
+- Blocks: None
+
+Context / observation:
+The product requires one elite capability for every enemy role and preservation through splits, duplication, death, and rewards, but does not provide baseline multipliers or specify whether descendants reroll elite status.
+
+Decision / solution:
+Use one theme-owned baseline elite definition with `2×` health, `1.5×` contact damage, `2×` reward, and `1.3×` radius. New ambient enemies roll deterministically against the Chaos-resolved elite chance. Duplication copies, Broodmother offspring, and Fracture children inherit the parent's elite boolean without rerolling; each newly created elite applies the baseline multipliers once. Elite reward multiplies the spawn source reward, while the existing world XP multiplier remains applied when XP is awarded.
+
+Why:
+Explicit inheritance makes identity stable across causal work and avoids timing-dependent rerolls. Theme data keeps presentation and tuning outside generic enemy logic, while the boolean passed through spawn requests prevents stat multipliers themselves from compounding across generations.
+
+Future guardrail:
+Unit tests lock deterministic chance boundaries and inheritance precedence. Browser tests force all four roles through the generic path, duplicate them, and verify at least two elite instances per role. Telemetry separates spawned, defeated, live, and role counts.
+
+Revisit when:
+Elite variants, role-specific elite tuning, descendant mutation, or elite-exclusive drops enter scope.
+
+### REC-038 — Combat feedback is bounded and never authoritative
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phases 6–7, feedback, audio, accessibility, load behavior
+- Blocks: None
+
+Context / observation:
+Dense crit, pierce, explosion, shrine, and elite events can create more simultaneous cues and oscillator voices than remain legible. Browser audio also cannot be initialized safely before a user gesture, and reduced motion must not change simulation.
+
+Decision / solution:
+Treat audiovisual feedback as a downstream consumer only. Limit transient text cues to 48, oscillator voices to eight, and repeated audio per feedback category to one cue per 45 simulation milliseconds. Keep sound frequency, duration, and gain in theme tokens. Unlock the session audio context on keyboard or pointer interaction, use `M` for session-only mute, suspend emission on focus loss, and replace moving feedback tweens and camera shake/flash with short static cues under reduced motion. Dropped cues increment presentation telemetry without changing damage, deaths, rewards, or statistics.
+
+Why:
+Category throttling preserves distinct simultaneous events better than one global audio cooldown. Hard presentation limits make dense chains measurable, while a one-way simulation-to-feedback boundary guarantees muted, reduced, unavailable, or saturated presentation cannot alter results.
+
+Future guardrail:
+Limiter tests cover caps and per-category aggregation. Browser tests cover gesture gating, mute, voice/visual high-water bounds, reduced motion, focus, resize, and scene reconstruction cleanup.
+
+Revisit when:
+Real audio assets replace oscillators, user settings become persistent, profiling justifies object pools, or accessibility review requires additional controls.
+
+### REC-039 — The run ledger owns exact damage and a five-second kill chain
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phase 7, statistics, terminal presentation, damage provenance
+- Blocks: None
+
+Context / observation:
+Phase 7 requires total damage to reconcile exactly with direct base, critical bonus, Piercing Momentum, explosion, chained explosion, and remainder categories. Independently accumulating the total and categories during the first 300-enemy browser run produced a `6.4e-10` floating-point difference despite correct events.
+
+Decision / solution:
+Store one serializable run-statistics ledger fed only by committed gameplay results. Allocate overkill-adjusted direct damage in stable order—base, critical bonus, Momentum, then remainder—and assign explosion sources directly. Derive `totalDamage` from the ordered category ledger after every record instead of accumulating it independently. Use one central 5,000 simulation-millisecond window for largest kill chain and retain exact high-water observations for enemies, Chaos, crit chance/tier, and pierce chain. Terminal copy and telemetry format this ledger without becoming authoritative.
+
+Why:
+One sum has no second floating-point history to diverge from. Stable overkill allocation documents which contribution receives limited applied health, and committed-event updates prevent rendering, duplicate overlaps, or dropped feedback from changing statistics.
+
+Future guardrail:
+Unit tests require exact equality between total and the ordered breakdown, cover overkill/remainder allocation and the exclusive five-second boundary, and verify high-water behavior. The compound browser path compares the terminal ledger with telemetry and requires zero remainder for its known sources.
+
+Revisit when:
+Armour, damage-over-time, reflected damage, summons, or another source category enters scope.
+
+### REC-040 — Representative Chromium evidence supports a 300/192 entity budget
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phase 7, spawning, performance, feedback, CI
+- Blocks: None
+
+Context / observation:
+The Phase 7 local headless Chromium scenario loaded 300 simultaneous mixed-role enemies with 60 initially scripted elites, activated all shrine roles after capacity was reached, and ran the complete Overcrit + Momentum + Detonation + Fracture + Bloodlust + Chain Reaction build for six simulation seconds. It processed all 300 load requests, reached 300 live enemies, 321 tracked gameplay objects, and a 300-event gameplay backlog without losing due work. Across 315 measured frames it averaged `19.03 ms` with a `24.16 ms` maximum on the development machine. The run committed 1,203 kills, 338 direct explosions, 114 chained explosions, and 336 Fracture requests. Visuals reached but did not exceed the 48-cue limit; 2,389 presentation requests were intentionally dropped while simulation queues and the damage ledger remained complete. Terminal cleanup left zero gameplay/load backlog, projectiles, voices, and active limited visuals; the path then restarted twice.
+
+Decision / solution:
+Raise the shared production budgets from 80/64 to 300 live enemies and 192 projectiles. Keep destruction and existing bounded presentation rather than add speculative pooling: the measured tracked high-water was well below the combined 492 actor budget, and no uncaught browser error occurred. Record frame measurements as evidence only; do not impose a hardware-sensitive CI FPS threshold.
+
+Why:
+The milestone explicitly targets 300 live enemies, and the representative compound path now exercises substantially more than isolated spawn objects. A threefold projectile budget accommodates high attack speed/projectile-count builds while remaining bounded. Current evidence does not show allocation pressure that justifies pooling complexity.
+
+Future guardrail:
+The browser acceptance path requires exactly 300 processed scripted spawns, all four roles, elites, a retained 300-item shrine backlog, capped tracked objects/effects/audio, exact terminal cleanup, and repeated restart. Telemetry records average/maximum frame delta without pass/fail thresholds. Production builds remain free of test seams and telemetry globals.
+
+Revisit when:
+Manual testing on lower-powered representative hardware exceeds acceptable frame times, richer assets materially raise object cost, entity caps grow, or profiling identifies allocation/GC pressure.
+
+### REC-041 — CI load paths wait on simulation boundaries, not local wall time
+
+- Status: Resolved
+- Date: 2026-08-14
+- Affects: V0.2 acceptance, Playwright CI, feedback and representative load scenarios
+- Blocks: None
+
+Context / observation:
+GitHub Actions pull-request run `31773404032` and push run `31773376078` failed the same two Chromium paths on the serial hosted runner. The 300-enemy test reached capacity but its enemies had not traversed the 360-unit spawn ring before a 15-second wall-clock explosion poll expired. The feedback test used a default five-second poll before proving that its scripted 80-enemy load had advanced. Every deterministic/unit gate and the other 26 browser paths passed; local four-worker runs passed all 28. Retrying both failures three times reproduced the same state boundaries, so retries were not useful.
+
+Decision / solution:
+Make both test-build scenarios explicit about their prerequisites. Feedback coverage now waits for all 80 scripted spawns before inspecting the visual high-water mark. The representative acceptance URL uses a test-only 100-unit close-density layout, gates automatic fire and its shortened run clock until all 300 scripted enemies are simultaneously live, and then runs 1,500 simulation milliseconds with hosted-runner poll/test headroom. Production spawn geometry, cadence, combat, timing, and limits are unchanged; the production bundle continues to omit scenario query keys.
+
+Why:
+The acceptance requirement is simultaneous capacity and compound interaction correctness, not a fixed amount of wall-clock time for enemies to walk toward the player. Waiting on load completion proves the intended prerequisite, while gating fire prevents early kills from making a close-density test miss the 300-live high-water condition.
+
+Future guardrail:
+Run the two paths with `CI=1` before pushing browser-load changes. Long live tests poll authoritative telemetry with explicit hosted-runner budgets, and scripted scenarios order their prerequisites instead of relying on locally fast frame progression.
+
+Revisit when:
+Browser tests gain deterministic simulation stepping, CI hardware changes materially, or the representative scenario is replaced by a production replay format.
+
+### REC-042 — Representative load is a manual release stress gate
+
+- Status: Resolved
+- Date: 2026-08-14
+- Affects: V0.2 acceptance, GitHub Actions, browser regression coverage
+- Blocks: None
+
+Context / observation:
+GitHub Actions pull-request run `31782554164` passed 27 browser paths but the combined 300-enemy scenario failed all three attempts while waiting for its first explosion. The assertion duplicated the dedicated Phase 4 explosion integration path and made a hardware-sensitive stress scenario block unrelated pull-request work. The workflow also ran the same verification for both a branch push and its pull request. A subsequent zero-retry audit found that the retained Horde reward regression could spend its bounded combat window defeating ambient enemies rather than the tagged shrine enemies whose provenance it asserts.
+
+Decision / solution:
+Tag the representative 300-enemy path `@stress` and run it without retries in a separate manually dispatched `Stress` workflow. Required pull-request CI retains type checking, all unit tests, lint, the production build, dependency audit, and every non-stress Chromium regression. Branch pushes run required CI only on `main`, avoiding duplicate feature-branch push and pull-request runs. Keep the stress path as a release gate and run it after changes to spawning, combat/effect queues, statistics, feedback limits, or restart cleanup. Remove its redundant wait for a first explosion; Phase 4 remains authoritative for explosion integration while the stress path continues to require reconciled direct/critical damage, pierce and kill chains, bounded presentation, complete queues, terminal cleanup, and repeated restart. Give the Horde reward path a test-build-only `noAmbient` scenario so its bounded combat window contains only enemies with the provenance under test; production spawning remains unchanged.
+
+Why:
+Fast deterministic regressions should block every pull request. The representative load remains important acceptance evidence, but hosted-runner throughput is not a product invariant and its broad compound scope makes it unsuitable as an always-on change gate.
+
+Future guardrail:
+Do not remove earlier unit or focused browser regressions when moving a hardware-sensitive scenario out of required CI. Manual stress runs must use zero retries, and V0.2 cannot be released without a passing representative-load run.
+
+Revisit when:
+The browser harness gains deterministic simulation stepping, the stress path becomes reliably bounded on hosted runners, or GitHub Actions provides a stable performance runner.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
-- V0.1 shrine load passes with capped destruction at the current 80/64 enemy/projectile baseline, so Phase 6 does not require pooling. The safe higher cap and production randomness policy remain unsettled.
-- Accessibility details beyond alternate movement keys—reduced motion, colour independence, remapping, and readable scaling—need an explicit later decision.
+- The 300/192 enemy/projectile budget is supported by one local Chromium profile but remains provisional pending broader hardware testing; production randomness policy is also unsettled.
+- Accessibility details beyond alternate movement keys and reduced-motion feedback—colour independence, remapping, and readable scaling—need an explicit later decision.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
 - The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.
 - The portable save checksum algorithm, import size limit, unknown-content policy details, and whether settings travel in every export remain provisional until persistence implementation.

@@ -12,6 +12,7 @@ const vocabularyKeys = [
   "time",
   "kills",
   "enemies",
+  "chaos",
   "paused",
   "deathTitle",
   "deathMessage",
@@ -20,6 +21,21 @@ const vocabularyKeys = [
   "restartAction",
   "shrinePrompt",
   "surgeActive",
+  "statisticsTitle",
+  "peakEnemiesAlive",
+  "highestChaos",
+  "highestCrit",
+  "highestCritTier",
+  "longestPierce",
+  "largestKillChain",
+  "totalDamage",
+  "damageBreakdown",
+  "directDamage",
+  "criticalBonusDamage",
+  "piercingMomentumDamage",
+  "explosionDamage",
+  "chainedExplosionDamage",
+  "remainderDamage",
 ] as const;
 
 export class ThemeValidationError extends Error {
@@ -62,6 +78,12 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const category of feedbackCategories) {
     if (!theme.tokens.feedback?.[category]?.trim()) {
       issues.push(`feedback.${category} token is required`);
+    }
+    const sound = theme.tokens.sounds?.[category];
+    if (!sound || !Number.isFinite(sound.frequency) || sound.frequency <= 0 ||
+      !Number.isFinite(sound.durationMs) || sound.durationMs <= 0 ||
+      !Number.isFinite(sound.gain) || sound.gain <= 0 || sound.gain > 1) {
+      issues.push(`sounds.${category} must define positive frequency, duration, and gain at most one`);
     }
   }
 
@@ -268,21 +290,21 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(shrine.interactionRadius) || shrine.interactionRadius <= shrine.radius) {
       issues.push(`${shrine.id} interactionRadius must exceed its radius`);
     }
-    if (!Number.isInteger(shrine.spawnCount) || shrine.spawnCount < 1) {
-      issues.push(`${shrine.id} spawnCount must be a positive integer`);
-    }
-    if (!Number.isFinite(shrine.spawnDurationMs) || shrine.spawnDurationMs <= 0) {
-      issues.push(`${shrine.id} spawnDurationMs must be greater than zero`);
-    }
-    if (!Number.isFinite(shrine.rewardMultiplier) || shrine.rewardMultiplier <= 1) {
-      issues.push(`${shrine.id} rewardMultiplier must be greater than one`);
-    }
+    if (shrine.effectKind === "spawn_surge" && (!Number.isInteger(shrine.spawnCount) || shrine.spawnCount < 1)) issues.push(`${shrine.id} spawnCount must be a positive integer`);
+    if (shrine.effectKind === "spawn_surge" && (!Number.isFinite(shrine.spawnDurationMs) || shrine.spawnDurationMs <= 0)) issues.push(`${shrine.id} spawnDurationMs must be greater than zero`);
+    if ((shrine.effectKind === "spawn_surge" || shrine.effectKind === "duplicate_living") && (!Number.isFinite(shrine.rewardMultiplier) || shrine.rewardMultiplier <= 1)) issues.push(`${shrine.id} rewardMultiplier must be greater than one`);
+    if (!Number.isFinite(shrine.chaosIncrease) || shrine.chaosIncrease <= 0) issues.push(`${shrine.id} chaosIncrease must be greater than zero`);
+    if (!Number.isFinite(shrine.enemySpawnMultiplier) || shrine.enemySpawnMultiplier <= 0) issues.push(`${shrine.id} enemySpawnMultiplier must be greater than zero`);
+    if (!Number.isFinite(shrine.xpMultiplier) || shrine.xpMultiplier <= 0) issues.push(`${shrine.id} xpMultiplier must be greater than zero`);
     if (!(shrine.presentationToken in theme.tokens.palette)) {
       issues.push(`${shrine.id} references missing presentation token: ${shrine.presentationToken}`);
     }
   }
   if (!shrineIds.has(archetypeIds.shrine.spawnSurge)) {
     issues.push(`missing required shrine: ${archetypeIds.shrine.spawnSurge}`);
+  }
+  for (const requiredId of Object.values(archetypeIds.shrine)) {
+    if (!shrineIds.has(requiredId)) issues.push(`missing required shrine: ${requiredId}`);
   }
 
   const skillIds = new Set<string>();
@@ -321,6 +343,15 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const elite of elites) {
     if (eliteIdsFound.has(elite.id)) issues.push(`duplicate elite id: ${elite.id}`);
     eliteIdsFound.add(elite.id);
+    for (const [key, value] of Object.entries({
+      healthMultiplier: elite.healthMultiplier,
+      damageMultiplier: elite.damageMultiplier,
+      rewardMultiplier: elite.rewardMultiplier,
+      radiusMultiplier: elite.radiusMultiplier,
+    })) {
+      if (!Number.isFinite(value) || value <= 1) issues.push(`${elite.id} ${key} must be greater than one`);
+    }
+    if (!(elite.presentationToken in theme.tokens.palette)) issues.push(`${elite.id} references missing presentation token: ${elite.presentationToken}`);
   }
   if (!eliteIdsFound.has(eliteIds.baseline)) {
     issues.push(`missing required elite: ${eliteIds.baseline}`);

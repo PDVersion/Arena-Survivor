@@ -27,9 +27,26 @@ registerTestTelemetryUpdater((nextSnapshot) => {
     hud: nextSnapshot.hud ? Object.freeze({ ...nextSnapshot.hud }) : undefined,
     lifecycle: nextSnapshot.lifecycle ? Object.freeze({ ...nextSnapshot.lifecycle }) : undefined,
     feedback: nextSnapshot.feedback ? Object.freeze({ ...nextSnapshot.feedback }) : undefined,
+    elites: nextSnapshot.elites ? Object.freeze({
+      ...nextSnapshot.elites,
+      byRole: Object.freeze({ ...nextSnapshot.elites.byRole }),
+    }) : undefined,
+    statistics: nextSnapshot.statistics ? Object.freeze({
+      ...nextSnapshot.statistics,
+      damageBreakdown: Object.freeze({ ...nextSnapshot.statistics.damageBreakdown }),
+      summaryMetrics: Object.freeze([...nextSnapshot.statistics.summaryMetrics]),
+      summaryDamage: Object.freeze([...nextSnapshot.statistics.summaryDamage]),
+    }) : undefined,
     load: nextSnapshot.load ? Object.freeze({ ...nextSnapshot.load }) : undefined,
     effects: nextSnapshot.effects ? Object.freeze({ ...nextSnapshot.effects }) : undefined,
-    shrine: nextSnapshot.shrine ? Object.freeze({ ...nextSnapshot.shrine }) : undefined,
+    shrine: nextSnapshot.shrine ? Object.freeze({
+      ...nextSnapshot.shrine,
+      instances: Object.freeze(nextSnapshot.shrine.instances.map((instance) => Object.freeze({ ...instance }))),
+    }) : undefined,
+    world: nextSnapshot.world ? Object.freeze({
+      ...nextSnapshot.world,
+      activations: Object.freeze({ ...nextSnapshot.world.activations }),
+    }) : undefined,
     combat: nextSnapshot.combat
       ? Object.freeze({
           ...nextSnapshot.combat,

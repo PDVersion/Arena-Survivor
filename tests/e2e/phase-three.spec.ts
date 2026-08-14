@@ -37,8 +37,8 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
   expect(snapshot?.combat).toMatchObject({
     weaponId: "weapon.starter_projectile",
     enemyId: "enemy.swarm_basic",
-    enemyCap: 80,
-    projectileCap: 64,
+    enemyCap: 300,
+    projectileCap: 192,
   });
   expect(snapshot?.run?.liveEnemies).toBeGreaterThan(0);
 });

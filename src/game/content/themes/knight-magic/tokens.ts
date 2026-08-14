@@ -18,6 +18,7 @@ export const tokens = {
     pickup: "#6ee7b7",
     shrine: "#fb7185",
     explosion: "#f97316",
+    elite: "#fde047",
   },
   playerShape: "diamond",
   feedback: {
@@ -28,5 +29,14 @@ export const tokens = {
     explosion: "feedback.explosion",
     shrine: "feedback.shrine",
     elite: "feedback.elite",
+  },
+  sounds: {
+    damage: { frequency: 180, durationMs: 35, gain: 0.025 },
+    critical: { frequency: 440, durationMs: 55, gain: 0.035 },
+    overcritical: { frequency: 760, durationMs: 85, gain: 0.045 },
+    pierce: { frequency: 520, durationMs: 45, gain: 0.025 },
+    explosion: { frequency: 110, durationMs: 100, gain: 0.05 },
+    shrine: { frequency: 330, durationMs: 140, gain: 0.05 },
+    elite: { frequency: 220, durationMs: 180, gain: 0.045 },
   },
 } as const satisfies ThemeTokens;

@@ -24,6 +24,7 @@ export interface ThemeVocabulary {
   readonly time: string;
   readonly kills: string;
   readonly enemies: string;
+  readonly chaos: string;
   readonly paused: string;
   readonly deathTitle: string;
   readonly deathMessage: string;
@@ -32,6 +33,21 @@ export interface ThemeVocabulary {
   readonly restartAction: string;
   readonly shrinePrompt: string;
   readonly surgeActive: string;
+  readonly statisticsTitle: string;
+  readonly peakEnemiesAlive: string;
+  readonly highestChaos: string;
+  readonly highestCrit: string;
+  readonly highestCritTier: string;
+  readonly longestPierce: string;
+  readonly largestKillChain: string;
+  readonly totalDamage: string;
+  readonly damageBreakdown: string;
+  readonly directDamage: string;
+  readonly criticalBonusDamage: string;
+  readonly piercingMomentumDamage: string;
+  readonly explosionDamage: string;
+  readonly chainedExplosionDamage: string;
+  readonly remainderDamage: string;
 }
 
 export interface ThemeCopy {
@@ -62,12 +78,18 @@ export interface ThemePalette {
   readonly pickup: string;
   readonly shrine: string;
   readonly explosion: string;
+  readonly elite: string;
 }
 
 export interface ThemeTokens {
   readonly palette: ThemePalette;
   readonly playerShape: "circle" | "diamond" | "square";
   readonly feedback: Readonly<Record<FeedbackCategory, string>>;
+  readonly sounds: Readonly<Record<FeedbackCategory, Readonly<{
+    frequency: number;
+    durationMs: number;
+    gain: number;
+  }>>>;
 }
 
 export interface SkillDefinition {
@@ -84,6 +106,11 @@ export type SkillEffectDefinition =
 
 export interface EliteDefinition {
   readonly id: EliteId;
+  readonly healthMultiplier: number;
+  readonly damageMultiplier: number;
+  readonly rewardMultiplier: number;
+  readonly radiusMultiplier: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "elite">;
 }
 
 export interface CharacterDefinition {
@@ -147,6 +174,10 @@ export interface ShrineDefinition {
   readonly spawnCount: number;
   readonly spawnDurationMs: number;
   readonly rewardMultiplier: number;
+  readonly effectKind: "spawn_surge" | "world_multiplier" | "duplicate_living";
+  readonly chaosIncrease: number;
+  readonly enemySpawnMultiplier: number;
+  readonly xpMultiplier: number;
   readonly presentationToken: keyof Pick<ThemePalette, "shrine">;
 }
 

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
+import { eliteIds, type FeedbackCategory } from "../core/archetypes/categories";
 import type {
   EnemyDefinition,
   PickupDefinition,
@@ -21,14 +22,18 @@ import {
   awardRunExperience,
   createRunState,
   damageRunPlayer,
+  observeRunChaos,
+  observeRunCrit,
+  observeRunPierce,
   recordKill,
+  recordRunDamage,
   setLiveEnemyCount,
   setRunStatus,
   type RunState,
 } from "../state/run-state";
 import type { DirectionalInput } from "../systems/player-movement";
 import { canApplyContactDamage, rollDamage } from "../systems/combat";
-import { canSpawn, pointOnSpawnRing, V01_SPAWN_LIMITS } from "../systems/spawning";
+import { canSpawn, pointOnSpawnRing, V02_SPAWN_LIMITS } from "../systems/spawning";
 import { createDeathSpawns, selectEnemyDefinition } from "../systems/spawning";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
@@ -36,7 +41,7 @@ import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
 import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
-import { selectHudValues } from "../state/statistics";
+import { selectHudValues, selectRunSummaryValues } from "../state/statistics";
 import {
   activateShrineSurge,
   createShrineSurgeState,
@@ -44,13 +49,16 @@ import {
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
-import { CausalEventQueue } from "../systems/events/causal-events";
+import { CausalEventQueue, type EventQueueSnapshot } from "../systems/events/causal-events";
 import {
   selectBloodlust,
   shouldExplodeOnKill,
   shouldFracture,
   targetsWithinRadius,
 } from "../systems/effects/on-kill-effects";
+import { applyWorldChoice, selectWorldModifiers } from "../systems/chaos/world-modifiers";
+import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
+import { shouldSpawnElite } from "../systems/elites/elites";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
@@ -93,6 +101,16 @@ function testSkillEnabled(name: string): boolean {
   return import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has(name);
 }
 
+function testWorldScenario(): string | null {
+  if (import.meta.env.MODE !== "test") return null;
+  return new URLSearchParams(window.location.search).get("worldScenario");
+}
+
+function prefersReducedMotion(): boolean {
+  if (import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has("reducedMotion")) return true;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+}
+
 interface MovementKeys {
   readonly up: Phaser.Input.Keyboard.Key;
   readonly down: Phaser.Input.Keyboard.Key;
@@ -115,6 +133,7 @@ export class RunScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private wasd?: MovementKeys;
   private pauseKey?: Phaser.Input.Keyboard.Key;
+  private muteKey?: Phaser.Input.Keyboard.Key;
   private interactKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private choiceKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private enemyGroup?: Phaser.Physics.Arcade.Group;
@@ -129,6 +148,7 @@ export class RunScene extends Phaser.Scene {
   private pickupDefinition?: PickupDefinition;
   private shrineDefinition?: ShrineDefinition;
   private shrine?: ShrineActor;
+  private shrineActors: ShrineActor[] = [];
   private surgeState: ShrineSurgeState = createShrineSurgeState();
   private levelUpUi?: LevelUpChoiceUi;
   private hud?: Hud;
@@ -145,8 +165,6 @@ export class RunScene extends Phaser.Scene {
   private projectileSequence = 0;
   private shotsFired = 0;
   private criticalShots = 0;
-  private highestCritTier = 0;
-  private longestPierceChain = 0;
   private contactHits = 0;
   private pickupSequence = 0;
   private pickupsDropped = 0;
@@ -167,24 +185,38 @@ export class RunScene extends Phaser.Scene {
   private shrineXpCollected = 0;
   private eventQueue = new CausalEventQueue();
   private loadEventQueue = new CausalEventQueue();
+  private terminalLoadMetrics?: EventQueueSnapshot;
+  private terminalEventMetrics?: EventQueueSnapshot;
   private loadHarnessRequested = 0;
   private loadHarnessSpawned = 0;
   private liveHighWater = 0;
   private trackedHighWater = 0;
+  private frameSamples = 0;
+  private frameTotalMs = 0;
+  private maxFrameMs = 0;
   private droppedPresentationCues = 0;
   private rosterHighWater: Record<string, number> = {};
   private offspringQueued = 0;
   private offspringSpawned = 0;
   private eventSequence = 0;
   private effectRandom = createSeededRandom(0xeffe_0004);
-  private killTimesMs: number[] = [];
   private bloodlustAttackSpeedBonus = 0;
   private explosionsCommitted = 0;
   private chainExplosionsCommitted = 0;
   private fractureQueued = 0;
   private fractureSpawned = 0;
-  private damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
   private activeExplosionCues = 0;
+  private testWorldScenarioApplied = false;
+  private duplicatedEnemiesQueued = 0;
+  private duplicatedEnemiesSpawned = 0;
+  private eliteRandom = createSeededRandom(0xe117_0006);
+  private eliteSpawned = 0;
+  private eliteDefeated = 0;
+  private eliteSpawnedByRole: Record<string, number> = {};
+  private feedbackLimiter = new FeedbackLimiter();
+  private audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
+  private reducedMotion = false;
+  private feedbackObjects = new Set<Phaser.GameObjects.GameObject>();
 
   constructor() {
     super("run");
@@ -259,7 +291,15 @@ export class RunScene extends Phaser.Scene {
           ...this.runState.weaponModifiers,
           pierce: testPierce,
         },
-        activeSkillIds: testSkillEnabled("interactions")
+        activeSkillIds: testSkillEnabled("compoundBuild")
+          ? [
+              archetypeIds.skill.piercingMomentum,
+              archetypeIds.skill.onKillExplosion,
+              archetypeIds.skill.fracture,
+              archetypeIds.skill.bloodlust,
+              archetypeIds.skill.chainReaction,
+            ]
+          : testSkillEnabled("interactions")
           ? [
               archetypeIds.skill.onKillExplosion,
               archetypeIds.skill.fracture,
@@ -271,6 +311,7 @@ export class RunScene extends Phaser.Scene {
           : this.runState.activeSkillIds,
       };
     }
+    this.runState = observeRunCrit(this.runState);
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
@@ -284,15 +325,7 @@ export class RunScene extends Phaser.Scene {
       selectedCharacter,
       activeTheme.tokens,
     );
-    this.shrine = new ShrineActor(
-      this,
-      ARENA_SIZE.width / 2 + 96,
-      ARENA_SIZE.height / 2,
-      this.shrineDefinition,
-      activeTheme.tokens,
-      activeTheme.copy.content[this.shrineDefinition.id].name,
-      activeTheme.copy.vocabulary.shrinePrompt,
-    );
+    this.createShrineActors();
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
@@ -318,11 +351,13 @@ export class RunScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     }) as MovementKeys;
     this.pauseKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.muteKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     this.interactKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
     ];
     window.addEventListener("keydown", this.handleRestartKey);
+    this.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
     this.choiceKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
@@ -340,9 +375,11 @@ export class RunScene extends Phaser.Scene {
       this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
       this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
       window.removeEventListener("keydown", this.handleRestartKey);
+      this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
       this.hud?.destroy();
       this.levelUpUi?.hide();
       this.runEndOverlay?.hide();
+      this.audioFeedback.destroy();
     });
     this.hud.update(this.runState);
     this.prepareTestLoadHarness();
@@ -354,16 +391,27 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !this.pauseKey) return;
 
     if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.togglePause();
+    if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.audioFeedback.toggleMuted();
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
 
-    this.runState = advanceRunState(this.runState, delta);
+    const preparingRepresentativeLoad =
+      testSkillEnabled("representativeLoad") &&
+      testSkillEnabled("closeLoad") &&
+      this.loadHarnessSpawned < this.loadHarnessRequested;
+    if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
+      if (testSkillEnabled("representativeLoad")) {
+        this.frameSamples += 1;
+        this.frameTotalMs += delta;
+        this.maxFrameMs = Math.max(this.maxFrameMs, delta);
+      }
       this.player.move(this.readMovementInput(), this.runState.player.stats.moveSpeed);
       this.updateEnemies();
       this.updateProjectiles();
       this.updatePickups();
       this.updateShrine();
+      this.updateTestWorldScenario();
       this.updateSurge();
       this.processTestLoadHarness();
       this.processCausalEvents();
@@ -387,6 +435,7 @@ export class RunScene extends Phaser.Scene {
     this.cursors = undefined;
     this.wasd = undefined;
     this.pauseKey = undefined;
+    this.muteKey = undefined;
     this.interactKeys = [];
     this.choiceKeys = [];
     this.enemyGroup = undefined;
@@ -401,6 +450,7 @@ export class RunScene extends Phaser.Scene {
     this.pickupDefinition = undefined;
     this.shrineDefinition = undefined;
     this.shrine = undefined;
+    this.shrineActors = [];
     this.surgeState = createShrineSurgeState();
     this.levelUpUi = undefined;
     this.hud = undefined;
@@ -417,8 +467,6 @@ export class RunScene extends Phaser.Scene {
     this.projectileSequence = 0;
     this.shotsFired = 0;
     this.criticalShots = 0;
-    this.highestCritTier = 0;
-    this.longestPierceChain = 0;
     this.contactHits = 0;
     this.pickupSequence = 0;
     this.pickupsDropped = 0;
@@ -438,24 +486,38 @@ export class RunScene extends Phaser.Scene {
     this.shrineXpCollected = 0;
     this.eventQueue = new CausalEventQueue();
     this.loadEventQueue = new CausalEventQueue();
+    this.terminalLoadMetrics = undefined;
+    this.terminalEventMetrics = undefined;
     this.loadHarnessRequested = 0;
     this.loadHarnessSpawned = 0;
     this.liveHighWater = 0;
     this.trackedHighWater = 0;
+    this.frameSamples = 0;
+    this.frameTotalMs = 0;
+    this.maxFrameMs = 0;
     this.droppedPresentationCues = 0;
     this.rosterHighWater = {};
     this.offspringQueued = 0;
     this.offspringSpawned = 0;
     this.eventSequence = 0;
     this.effectRandom = createSeededRandom(0xeffe_0004);
-    this.killTimesMs = [];
     this.bloodlustAttackSpeedBonus = 0;
     this.explosionsCommitted = 0;
     this.chainExplosionsCommitted = 0;
     this.fractureQueued = 0;
     this.fractureSpawned = 0;
-    this.damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
     this.activeExplosionCues = 0;
+    this.testWorldScenarioApplied = false;
+    this.duplicatedEnemiesQueued = 0;
+    this.duplicatedEnemiesSpawned = 0;
+    this.eliteRandom = createSeededRandom(0xe117_0006);
+    this.eliteSpawned = 0;
+    this.eliteDefeated = 0;
+    this.eliteSpawnedByRole = {};
+    this.feedbackLimiter = new FeedbackLimiter();
+    this.audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
+    this.reducedMotion = prefersReducedMotion();
+    this.feedbackObjects = new Set();
   }
 
   private prepareTestLoadHarness(): void {
@@ -472,9 +534,25 @@ export class RunScene extends Phaser.Scene {
 
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
-    const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
-    this.loadEventQueue.process(Math.min(12, capacity), () => {
-      if (this.spawnEnemy("ambient", 1)) this.loadHarnessSpawned += 1;
+    const capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    this.loadEventQueue.process(Math.min(12, capacity), (event) => {
+      const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
+      const representative = testSkillEnabled("representativeLoad");
+      const definition = representative
+        ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
+        : this.enemyDefinition;
+      const requestedPoint = representative && testSkillEnabled("closeLoad") && this.player && definition
+        ? pointOnSpawnRing(
+            this.player,
+            100,
+            sequence * GOLDEN_ANGLE,
+            ARENA_SIZE,
+            definition.radius,
+          )
+        : undefined;
+      if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
+        this.loadHarnessSpawned += 1;
+      }
     });
   }
 
@@ -495,26 +573,27 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" | "fracture" = "offspring",
+    reason: "roster" | "offspring" | "fracture" | "duplication" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
+    elite?: boolean,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
       eventId: `spawn-${this.eventSequence}`,
       kind: "spawn.requested",
       provenance: {
-        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : "world",
+        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
         sourceId: spawnSource,
         parentEventId,
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite },
     });
   }
 
   private processCausalEvents(): void {
-    let capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    let capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
     this.eventQueue.process(24, (event) => {
       if (event.kind === "effect.explosion") {
         this.processExplosionEvent(event.payload as unknown as ExplosionEventPayload, event.eventId);
@@ -522,14 +601,15 @@ export class RunScene extends Phaser.Scene {
       }
       if (event.kind !== "spawn.requested") return;
       if (capacity <= 0) return false;
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }> };
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
+        if (payload.reason === "duplication") this.duplicatedEnemiesSpawned += 1;
       }
     });
   }
@@ -582,36 +662,91 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
+  private createShrineActors(): void {
+    const centreX = ARENA_SIZE.width / 2;
+    const centreY = ARENA_SIZE.height / 2;
+    const placements: readonly [ShrineDefinition["id"], number, number][] = [
+      [archetypeIds.shrine.spawnSurge, centreX + 96, centreY],
+      [archetypeIds.shrine.greed, centreX - 210, centreY],
+      [archetypeIds.shrine.multiplicity, centreX, centreY - 210],
+      [archetypeIds.shrine.multiplicity, centreX, centreY + 210],
+      [archetypeIds.shrine.duplication, centreX + 310, centreY],
+    ];
+    this.shrineActors = placements.flatMap(([id, x, y]) => {
+      const definition = activeTheme.shrines.find((candidate) => candidate.id === id);
+      if (!definition) return [];
+      return [new ShrineActor(
+        this, x, y, definition, activeTheme.tokens,
+        activeTheme.copy.content[id].name,
+        activeTheme.copy.vocabulary.shrinePrompt,
+      )];
+    });
+    this.shrine = this.shrineActors.find((actor) => actor.definition.id === archetypeIds.shrine.spawnSurge);
+  }
+
   private updateShrine(): void {
-    if (!this.player || !this.runState || !this.shrine || !this.shrineDefinition) return;
-    const distance = Phaser.Math.Distance.Between(
-      this.player.x,
-      this.player.y,
-      this.shrine.x,
-      this.shrine.y,
-    );
-    const inRange = distance <= this.shrineDefinition.interactionRadius;
-    this.shrine.setInRange(inRange);
-    if (
-      inRange &&
-      !this.shrine.activated &&
-      this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key))
-    ) {
-      this.activateShrine();
+    if (!this.player || !this.runState) return;
+    const interact = this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key));
+    for (const shrine of this.shrineActors) {
+      const inRange = Phaser.Math.Distance.Between(this.player.x, this.player.y, shrine.x, shrine.y) <= shrine.definition.interactionRadius;
+      shrine.setInRange(inRange);
+      if (interact && inRange && !shrine.activated) {
+        this.activateShrine(shrine);
+        return;
+      }
     }
   }
 
-  private activateShrine(): void {
-    if (!this.runState || !this.shrine || this.shrine.activated) return;
-    this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
-    this.shrine.activate();
+  private updateTestWorldScenario(): void {
+    const scenario = testWorldScenario();
+    if (testSkillEnabled("representativeLoad") && this.loadHarnessSpawned < this.loadHarnessRequested) return;
+    if (this.testWorldScenarioApplied || scenario === null || this.enemies.size === 0 || this.runGeneration > 1) return;
+    this.testWorldScenarioApplied = true;
+    const targets = scenario === "multiplicity2"
+      ? this.shrineActors.filter((actor) => actor.definition.id === archetypeIds.shrine.multiplicity)
+      : this.shrineActors;
+    for (const shrine of targets) this.activateShrine(shrine);
+  }
+
+  private activateShrine(shrine: ShrineActor): void {
+    if (!this.runState || shrine.activated) return;
+    const definition = shrine.definition;
+    if (definition.effectKind === "spawn_surge") {
+      this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
+    }
+    const livingSnapshot = definition.effectKind === "duplicate_living"
+      ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated)
+      : [];
+    this.runState = {
+      ...this.runState,
+      world: applyWorldChoice(this.runState.world, {
+        shrineId: definition.id,
+        chaosIncrease: definition.chaosIncrease,
+        enemySpawnMultiplier: definition.enemySpawnMultiplier,
+        xpMultiplier: definition.xpMultiplier,
+      }),
+    };
+    this.runState = observeRunChaos(this.runState);
+    if (definition.effectKind === "duplicate_living") {
+      const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world).shrineRewardMultiplier;
+      for (const enemy of livingSnapshot) {
+        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, Boolean(enemy.elite));
+        this.duplicatedEnemiesQueued += 1;
+      }
+    }
+    shrine.activate();
     this.shrineFeedback += 1;
-    this.cameras.main.flash(240, 251, 113, 133, false);
-    this.cameras.main.shake(220, 0.006);
+    this.emitFeedback("shrine", shrine.x, shrine.y, "+Chaos");
+    if (!this.reducedMotion) {
+      this.cameras.main.flash(240, 251, 113, 133, false);
+      this.cameras.main.shake(220, 0.006);
+    }
     const message = this.add.text(
       this.scale.width / 2,
       105,
-      activeTheme.copy.vocabulary.surgeActive,
+      definition.effectKind === "spawn_surge"
+        ? activeTheme.copy.vocabulary.surgeActive
+        : activeTheme.copy.content[definition.id].name,
       {
         color: activeTheme.tokens.palette.shrine,
         fontFamily: "Georgia, serif",
@@ -636,24 +771,26 @@ export class RunScene extends Phaser.Scene {
       this.surgeState,
       this.shrineDefinition,
       this.runState.elapsedMs,
-      V01_SPAWN_LIMITS.maxAlive - this.enemies.size,
+      V02_SPAWN_LIMITS.maxAlive - this.enemies.size,
     );
     this.surgeState = result.state;
     for (let index = 0; index < result.spawnNow; index += 1) {
       this.spawnEnemy(
         archetypeIds.shrine.spawnSurge,
-        this.shrineDefinition.rewardMultiplier,
+        this.shrineDefinition.rewardMultiplier *
+          selectWorldModifiers(this.runState.world).shrineRewardMultiplier,
       );
     }
   }
 
   private spawnIfReady(): void {
+    if (testSkillEnabled("noAmbient")) return;
     if (
       !this.player ||
       !this.runState ||
       !this.enemyDefinition ||
       this.runState.elapsedMs < this.nextSpawnAtMs ||
-      !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
     ) {
       return;
     }
@@ -665,7 +802,8 @@ export class RunScene extends Phaser.Scene {
     );
     if (!definition) return;
     this.spawnEnemy("ambient", 1, definition);
-    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS;
+    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS /
+      selectWorldModifiers(this.runState.world).enemySpawnMultiplier;
   }
 
   private spawnEnemy(
@@ -673,13 +811,14 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
     requestedPoint?: Readonly<{ x: number; y: number }>,
+    eliteOverride?: boolean,
   ): boolean {
     if (
       !this.player ||
       !this.runState ||
       !definition ||
       !this.enemyGroup ||
-      !canSpawn(this.enemies.size, V01_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
     ) {
       return false;
     }
@@ -692,6 +831,13 @@ export class RunScene extends Phaser.Scene {
     );
     this.spawnSequence += 1;
     this.enemySequence += 1;
+    const worldModifiers = selectWorldModifiers(this.runState.world);
+    const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
+    const elite = eliteDefinition && shouldSpawnElite(
+      testSkillEnabled("forceElite") ? 1 : worldModifiers.eliteChance,
+      this.eliteRandom,
+      eliteOverride,
+    ) ? eliteDefinition : undefined;
     const enemy = new EnemyActor(
       this,
       `enemy-${this.enemySequence}`,
@@ -700,10 +846,20 @@ export class RunScene extends Phaser.Scene {
       definition,
       activeTheme.tokens,
       spawnSource,
-      rewardMultiplier,
+      rewardMultiplier * (elite?.rewardMultiplier ?? 1),
+      {
+        healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
+        damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
+      },
+      elite,
     );
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
+    if (elite) {
+      this.eliteSpawned += 1;
+      this.eliteSpawnedByRole[definition.id] = (this.eliteSpawnedByRole[definition.id] ?? 0) + 1;
+      this.emitFeedback("elite", enemy.x, enemy.y, "ELITE");
+    }
     if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
       this.enemies.delete(enemy);
@@ -715,12 +871,17 @@ export class RunScene extends Phaser.Scene {
 
   private fireIfReady(): void {
     if (
+      testSkillEnabled("representativeLoad") &&
+      testSkillEnabled("closeLoad") &&
+      this.loadHarnessSpawned < this.loadHarnessRequested
+    ) return;
+    if (
       !this.player ||
       !this.runState ||
       !this.weaponDefinition ||
       !this.projectileGroup ||
       this.runState.elapsedMs < this.nextFireAtMs ||
-      !canSpawn(this.projectiles.size, V01_SPAWN_LIMITS.maxProjectiles)
+      !canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)
     ) {
       return;
     }
@@ -756,7 +917,7 @@ export class RunScene extends Phaser.Scene {
       Math.floor(this.weaponDefinition.projectileCount + this.runState.weaponModifiers.projectileCount),
     );
     for (let index = 0; index < projectileCount; index += 1) {
-      if (!canSpawn(this.projectiles.size, V01_SPAWN_LIMITS.maxProjectiles)) break;
+      if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) break;
       const offset = (index - (projectileCount - 1) / 2) * 0.12;
       const projectile = new ProjectileActor(
         this,
@@ -766,6 +927,8 @@ export class RunScene extends Phaser.Scene {
         this.weaponDefinition,
         activeTheme.tokens,
         damage.damage,
+        damage.baseDamage,
+        damage.bonusDamage,
         damage.critical,
         damage.tier,
         this.runState.elapsedMs,
@@ -779,7 +942,7 @@ export class RunScene extends Phaser.Scene {
       projectile.once(Phaser.GameObjects.Events.DESTROY, () => this.projectiles.delete(projectile));
       this.shotsFired += 1;
       if (damage.critical) this.criticalShots += 1;
-      this.highestCritTier = Math.max(this.highestCritTier, damage.tier);
+      this.runState = observeRunCrit(this.runState, damage.tier);
     }
     const attackSpeedMultiplier = Math.max(
       0.01,
@@ -790,9 +953,18 @@ export class RunScene extends Phaser.Scene {
 
   private handleProjectileEnemyOverlap(projectile: ProjectileActor, enemy: EnemyActor): void {
     if (!this.runState || !projectile.canHit(enemy.targetId) || enemy.defeated) return;
-    this.commitEnemyDamage(enemy, projectile.damage, "direct");
+    const category: FeedbackCategory = projectile.critTier > 1
+      ? "overcritical"
+      : projectile.critTier === 1 ? "critical" : "damage";
+    this.emitFeedback(category, enemy.x, enemy.y, String(Math.round(projectile.damage)));
+    if (projectile.pierceChainIndex > 0) this.emitFeedback("pierce", enemy.x, enemy.y, "PIERCE");
+    this.commitEnemyDamage(enemy, projectile.damage, "direct", undefined, {
+      directBase: projectile.normalDamage,
+      criticalBonus: projectile.criticalBonusDamage,
+      piercingMomentum: projectile.damage - projectile.baseDamage,
+    });
     projectile.registerHit(enemy.targetId);
-    this.longestPierceChain = Math.max(this.longestPierceChain, projectile.pierceChainIndex);
+    this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
   }
 
   private commitEnemyDamage(
@@ -800,13 +972,18 @@ export class RunScene extends Phaser.Scene {
     damage: number,
     damageSource: DamageSource,
     parentEventId?: string,
+    direct?: Readonly<{ directBase: number; criticalBonus: number; piercingMomentum: number }>,
   ): void {
     if (!this.runState || enemy.defeated) return;
     const appliedDamage = Math.min(enemy.health, Math.max(0, damage));
     const result = enemy.takeDamage(damage);
     if (!result.applied) return;
     this.hitFlashes += 1;
-    this.damageBySource[damageSource] += appliedDamage;
+    this.runState = recordRunDamage(this.runState, {
+      amount: appliedDamage,
+      source: damageSource,
+      ...direct,
+    });
     if (!result.killed) return;
     if (!this.eventQueue.claimLethal(enemy.targetId)) return;
     this.eventSequence += 1;
@@ -820,7 +997,7 @@ export class RunScene extends Phaser.Scene {
         sourceId: damageSource === "direct" ? this.weaponDefinition?.id : archetypeIds.skill.onKillExplosion,
         parentEventId,
       },
-      payload: { enemyId: enemy.definition.id, damageSource },
+      payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite) },
     });
     const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
@@ -836,12 +1013,13 @@ export class RunScene extends Phaser.Scene {
           deathSpawns.parentEventId,
           "offspring",
           { x: enemy.x, y: enemy.y },
+          Boolean(enemy.elite),
         );
         this.offspringQueued += 1;
       }
     }
     this.enqueueConfiguredOnKillEffects(enemy, deathEventId, damageSource);
-    this.killTimesMs.push(this.runState.elapsedMs);
+    if (enemy.elite) this.eliteDefeated += 1;
     this.runState = recordKill(this.runState);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
@@ -904,6 +1082,7 @@ export class RunScene extends Phaser.Scene {
           deathEventId,
           "fracture",
           { x: enemy.x + (index === 0 ? -8 : 8), y: enemy.y },
+          Boolean(enemy.elite),
         );
         this.fractureQueued += 1;
       }
@@ -920,7 +1099,51 @@ export class RunScene extends Phaser.Scene {
       payload.radius,
     );
     for (const target of targets) this.commitEnemyDamage(target.enemy, payload.damage, source, eventId);
+    this.emitFeedback("explosion", payload.x, payload.y, "BOOM");
     this.renderExplosionCue(payload);
+  }
+
+  private emitFeedback(category: FeedbackCategory, x: number, y: number, label: string): void {
+    const nowMs = this.runState?.elapsedMs ?? 0;
+    if (this.feedbackLimiter.allowAudio(category, nowMs)) this.audioFeedback.play(category);
+    if (!this.feedbackLimiter.beginVisual()) return;
+    const palette = activeTheme.tokens.palette;
+    const colour = category === "critical"
+      ? palette.critical
+      : category === "overcritical" ? palette.overcritical
+        : category === "explosion" ? palette.explosion
+          : category === "elite" ? palette.elite : palette.text;
+    const cue = this.add.text(x, y - 18, label, {
+      color: colour,
+      fontFamily: "Georgia, serif",
+      fontSize: category === "damage" ? "16px" : category === "overcritical" ? "26px" : "20px",
+      fontStyle: "bold",
+      stroke: palette.background,
+      strokeThickness: 3,
+    }).setOrigin(0.5).setDepth(60);
+    const impact = category === "shrine" || category === "elite"
+      ? undefined
+      : this.add.circle(
+          x,
+          y,
+          category === "explosion" ? 14 : 5,
+          Phaser.Display.Color.HexStringToColor(colour).color,
+          0.8,
+        ).setDepth(59);
+    this.feedbackObjects.add(cue);
+    if (impact) this.feedbackObjects.add(impact);
+    const finish = (): void => {
+      this.feedbackLimiter.endVisual();
+      this.feedbackObjects.delete(cue);
+      if (impact) this.feedbackObjects.delete(impact);
+      cue.destroy();
+      impact?.destroy();
+    };
+    if (this.reducedMotion) this.time.delayedCall(120, finish);
+    else {
+      if (impact) this.tweens.add({ targets: impact, alpha: 0, scale: 2.4, duration: 220 });
+      this.tweens.add({ targets: cue, y: cue.y - 24, alpha: 0, duration: 360, onComplete: finish });
+    }
   }
 
   private renderExplosionCue(payload: ExplosionEventPayload): void {
@@ -934,6 +1157,7 @@ export class RunScene extends Phaser.Scene {
     const cue = this.add.circle(payload.x, payload.y, payload.radius, explosionColour, 0.18)
       .setStrokeStyle(3, criticalColour, 0.75)
       .setDepth(30);
+    this.feedbackObjects.add(cue);
     this.tweens.add({
       targets: cue,
       alpha: 0,
@@ -941,6 +1165,7 @@ export class RunScene extends Phaser.Scene {
       duration: 220,
       onComplete: () => {
         this.activeExplosionCues = Math.max(0, this.activeExplosionCues - 1);
+        this.feedbackObjects.delete(cue);
         cue.destroy();
       },
     });
@@ -955,8 +1180,7 @@ export class RunScene extends Phaser.Scene {
       this.bloodlustAttackSpeedBonus = 0;
       return;
     }
-    const selected = selectBloodlust(this.killTimesMs, this.runState.elapsedMs, bloodlust);
-    this.killTimesMs = [...selected.killTimesMs];
+    const selected = selectBloodlust(this.runState.statistics.recentKillTimesMs, this.runState.elapsedMs, bloodlust);
     this.bloodlustAttackSpeedBonus = selected.attackSpeedBonus;
   }
 
@@ -992,11 +1216,12 @@ export class RunScene extends Phaser.Scene {
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
-    this.runState = awardRunExperience(this.runState, claim.awardedXp);
+    const awardedXp = claim.awardedXp * selectWorldModifiers(this.runState.world).xpMultiplier;
+    this.runState = awardRunExperience(this.runState, awardedXp);
     if (pickup.rewardSource === archetypeIds.shrine.spawnSurge) {
-      this.shrineXpCollected += claim.awardedXp;
+      this.shrineXpCollected += awardedXp;
     } else {
-      this.ambientXpCollected += claim.awardedXp;
+      this.ambientXpCollected += awardedXp;
     }
     this.pickupsCollected += 1;
     pickup.playCollectCue();
@@ -1038,6 +1263,7 @@ export class RunScene extends Phaser.Scene {
 
   private handlePlayerEnemyOverlap(enemy: EnemyActor): void {
     if (!this.runState || !this.player || enemy.defeated) return;
+    if (testSkillEnabled("noContact")) return;
     if (
       !canApplyContactDamage(
         this.runState.elapsedMs,
@@ -1047,7 +1273,7 @@ export class RunScene extends Phaser.Scene {
     ) {
       return;
     }
-    this.runState = damageRunPlayer(this.runState, enemy.definition.contactDamage);
+    this.runState = damageRunPlayer(this.runState, enemy.contactDamage);
     this.lastContactDamageAtMs = this.runState.elapsedMs;
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
@@ -1064,13 +1290,19 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
     this.terminalShown = true;
     this.player?.stop();
+    this.terminalLoadMetrics = this.loadEventQueue.snapshot();
+    this.terminalEventMetrics = this.eventQueue.snapshot();
     this.eventQueue.clear();
     this.loadEventQueue.clear();
-    this.killTimesMs = [];
     this.bloodlustAttackSpeedBonus = 0;
     for (const projectile of this.projectiles) projectile.destroy();
+    for (const object of this.feedbackObjects) object.destroy();
+    this.feedbackObjects.clear();
+    this.feedbackLimiter.clearVisuals();
+    this.activeExplosionCues = 0;
+    this.audioFeedback.destroy();
     this.physics.world.pause();
-    this.runEndOverlay?.show(this.runState.status, () => this.restartRun());
+    this.runEndOverlay?.show(this.runState, () => this.restartRun());
   }
 
   private restartRun(): void {
@@ -1084,7 +1316,12 @@ export class RunScene extends Phaser.Scene {
   }
 
   private readonly handleRestartKey = (event: KeyboardEvent): void => {
+    this.audioFeedback.unlock();
     if (event.code === "KeyR" || event.code === "Enter") this.restartRun();
+  };
+
+  private readonly handlePointerGesture = (): void => {
+    this.audioFeedback.unlock();
   };
 
   private handleGameBlur(): void {
@@ -1093,6 +1330,7 @@ export class RunScene extends Phaser.Scene {
     this.player?.stop();
     this.physics.world.pause();
     this.focusPaused = true;
+    this.audioFeedback.setFocused(false);
     this.hud?.update(this.runState);
     this.publishTelemetry();
   }
@@ -1100,6 +1338,7 @@ export class RunScene extends Phaser.Scene {
   private handleGameFocus(): void {
     if (!this.runState || !this.focusPaused || this.runState.status !== "paused") return;
     this.focusPaused = false;
+    this.audioFeedback.setFocused(true);
     this.runState = setRunStatus(this.runState, "playing");
     this.physics.world.resume();
     this.hud?.update(this.runState);
@@ -1184,6 +1423,12 @@ export class RunScene extends Phaser.Scene {
       this.player && this.shrine
         ? Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shrine.x, this.shrine.y)
         : Number.POSITIVE_INFINITY;
+    const world = this.runState ? selectWorldModifiers(this.runState.world) : undefined;
+    const feedback = this.feedbackLimiter.snapshot();
+    const audio = this.audioFeedback.snapshot();
+    const loadMetrics = this.terminalLoadMetrics ?? this.loadEventQueue.snapshot();
+    const eventMetrics = this.terminalEventMetrics ?? this.eventQueue.snapshot();
+    const summary = this.runState ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary) : undefined;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -1233,11 +1478,11 @@ export class RunScene extends Phaser.Scene {
         projectiles: this.projectiles.size,
         shotsFired: this.shotsFired,
         criticalShots: this.criticalShots,
-        highestCritTier: this.highestCritTier,
-        longestPierceChain: this.longestPierceChain,
+        highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
+        longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,
         contactHits: this.contactHits,
-        enemyCap: V01_SPAWN_LIMITS.maxAlive,
-        projectileCap: V01_SPAWN_LIMITS.maxProjectiles,
+        enemyCap: V02_SPAWN_LIMITS.maxAlive,
+        projectileCap: V02_SPAWN_LIMITS.maxProjectiles,
         projectileSample: projectileSample
           ? {
               id: projectileSample.projectileId,
@@ -1283,29 +1528,66 @@ export class RunScene extends Phaser.Scene {
         hitFlashes: this.hitFlashes,
         trailsEmitted: this.trailsEmitted,
         pickupCues: this.pickupCues,
+        audioUnlocked: audio.unlocked,
+        muted: audio.muted,
+        focused: audio.focused,
+        voices: audio.voices,
+        audioEmitted: audio.emitted,
+        activeVisuals: feedback.activeVisuals,
+        visualHighWater: feedback.visualHighWater,
+        dropped: feedback.dropped,
+        reducedMotion: this.reducedMotion,
       },
+      elites: {
+        spawned: this.eliteSpawned,
+        defeated: this.eliteDefeated,
+        live: [...this.enemies].filter((enemy) => Boolean(enemy.elite)).length,
+        byRole: { ...this.eliteSpawnedByRole },
+      },
+      statistics: this.runState && summary ? {
+        kills: this.runState.statistics.kills,
+        peakEnemiesAlive: this.runState.statistics.peakEnemiesAlive,
+        highestChaos: this.runState.statistics.highestChaos,
+        highestCritChance: this.runState.statistics.highestCritChance,
+        highestCritTier: this.runState.statistics.highestCritTier,
+        longestPierceChain: this.runState.statistics.longestPierceChain,
+        largestKillChain: this.runState.statistics.largestKillChain,
+        totalDamage: this.runState.statistics.totalDamage,
+        damageBreakdown: this.runState.statistics.damageBreakdown,
+        summaryMetrics: summary.metrics,
+        summaryDamage: summary.damage,
+      } : undefined,
       load: {
         enabled: this.loadHarnessRequested > 0,
         requested: this.loadHarnessRequested,
         spawned: this.loadHarnessSpawned,
         eventBacklog: this.loadEventQueue.snapshot().backlog,
-        eventBacklogHighWater: this.loadEventQueue.snapshot().backlogHighWater,
-        processedEffects: this.loadEventQueue.snapshot().processed,
-        droppedPresentationCues: this.droppedPresentationCues,
+        eventBacklogHighWater: loadMetrics.backlogHighWater,
+        processedEffects: loadMetrics.processed,
+        gameplayBacklogHighWater: eventMetrics.backlogHighWater,
+        processedGameplayEvents: eventMetrics.processed,
+        droppedPresentationCues: this.droppedPresentationCues + feedback.dropped,
         liveHighWater: this.liveHighWater,
         trackedHighWater: this.trackedHighWater,
+        frameSamples: this.frameSamples,
+        averageFrameMs: this.frameSamples === 0 ? 0 : this.frameTotalMs / this.frameSamples,
+        maxFrameMs: this.maxFrameMs,
       },
       effects: {
         explosionsCommitted: this.explosionsCommitted,
         chainExplosionsCommitted: this.chainExplosionsCommitted,
         fractureQueued: this.fractureQueued,
         fractureSpawned: this.fractureSpawned,
-        bloodlustKills: this.killTimesMs.length,
+        bloodlustKills: this.runState?.statistics.recentKillTimesMs.length ?? 0,
         bloodlustAttackSpeedBonus: this.bloodlustAttackSpeedBonus,
-        directDamage: this.damageBySource.direct,
-        explosionDamage: this.damageBySource.explosion,
-        chainedExplosionDamage: this.damageBySource.chained_explosion,
+        directDamage: (this.runState?.statistics.damageBreakdown.direct ?? 0) +
+          (this.runState?.statistics.damageBreakdown.criticalBonus ?? 0) +
+          (this.runState?.statistics.damageBreakdown.piercingMomentum ?? 0),
+        explosionDamage: this.runState?.statistics.damageBreakdown.explosion ?? 0,
+        chainedExplosionDamage: this.runState?.statistics.damageBreakdown.chainedExplosion ?? 0,
         eventBacklog: this.eventQueue.snapshot().backlog,
+        eventBacklogHighWater: eventMetrics.backlogHighWater,
+        processedEvents: eventMetrics.processed,
       },
       shrine: {
         id: this.shrineDefinition?.id ?? null,
@@ -1320,7 +1602,8 @@ export class RunScene extends Phaser.Scene {
         spawned: this.surgeState.spawned,
         targetCount: this.shrineDefinition?.spawnCount ?? 0,
         durationMs: this.shrineDefinition?.spawnDurationMs ?? 0,
-        rewardMultiplier: this.shrineDefinition?.rewardMultiplier ?? 1,
+        rewardMultiplier: (this.shrineDefinition?.rewardMultiplier ?? 1) *
+          (world?.shrineRewardMultiplier ?? 1),
         enemiesSpawned: this.shrineEnemiesSpawned,
         enemiesDefeated: this.shrineEnemiesDefeated,
         shrineXpDropped: this.shrineXpDropped,
@@ -1328,7 +1611,14 @@ export class RunScene extends Phaser.Scene {
         shrineXpCollected: this.shrineXpCollected,
         ambientXpCollected: this.ambientXpCollected,
         feedbackCount: this.shrineFeedback,
+        instances: this.shrineActors.map((actor) => ({ id: actor.definition.id, activated: actor.activated })),
       },
+      world: world && this.runState ? {
+        ...world,
+        activations: this.runState.world.shrineActivations,
+        duplicatedEnemiesQueued: this.duplicatedEnemiesQueued,
+        duplicatedEnemiesSpawned: this.duplicatedEnemiesSpawned,
+      } : undefined,
     });
   }
 }

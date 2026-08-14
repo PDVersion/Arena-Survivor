@@ -5,6 +5,8 @@ import { consumePierce, createPierceState, piercingMomentumDamage, type PierceSt
 export class ProjectileActor extends Phaser.GameObjects.Arc {
   readonly projectileId: string;
   readonly baseDamage: number;
+  readonly normalDamage: number;
+  readonly criticalBonusDamage: number;
   readonly critical: boolean;
   readonly critTier: number;
   readonly momentumPerHit: number;
@@ -22,6 +24,8 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     definition: WeaponDefinition,
     tokens: ThemeTokens,
     damage: number,
+    normalDamage: number,
+    criticalBonusDamage: number,
     critical: boolean,
     critTier: number,
     nowMs: number,
@@ -33,6 +37,8 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     super(scene, x, y, definition.projectileRadius, 0, 360, false, colour);
     this.projectileId = projectileId;
     this.baseDamage = damage;
+    this.normalDamage = normalDamage;
+    this.criticalBonusDamage = criticalBonusDamage;
     this.critical = critical;
     this.critTier = critTier;
     this.momentumPerHit = momentumPerHit;

@@ -12,6 +12,18 @@ import {
   createProgressionState,
   type ProgressionState,
 } from "../systems/xp";
+import { createWorldState, type WorldState } from "../systems/chaos/world-modifiers";
+import {
+  createRunStatistics,
+  observeChaos,
+  observeCrit,
+  observeLiveEnemies,
+  observePierceChain,
+  recordCommittedDamage,
+  recordCommittedKill,
+  type DamageRecord,
+  type RunStatistics,
+} from "../systems/statistics/run-statistics";
 
 export const RUN_STATE_VERSION = 1 as const;
 export const DEFAULT_RUN_DURATION_MS = 5 * 60 * 1000;
@@ -36,10 +48,8 @@ export interface RunState {
   readonly weaponModifiers: WeaponStatModifiers;
   readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly activeSkillIds: readonly SkillId[];
-  readonly statistics: {
-    readonly kills: number;
-    readonly liveEnemies: number;
-  };
+  readonly world: WorldState;
+  readonly statistics: RunStatistics;
 }
 
 export interface CreateRunOptions {
@@ -75,7 +85,8 @@ export function createRunState(options: CreateRunOptions): RunState {
     weaponModifiers: createWeaponStatModifiers(),
     selectedUpgradeIds: [],
     activeSkillIds: [],
-    statistics: { kills: 0, liveEnemies: 0 },
+    world: createWorldState(),
+    statistics: createRunStatistics(options.baseStats.critChance),
   };
 }
 
@@ -109,11 +120,27 @@ export function damageRunPlayer(state: RunState, damage: number): RunState {
 }
 
 export function setLiveEnemyCount(state: RunState, liveEnemies: number): RunState {
-  return { ...state, statistics: { ...state.statistics, liveEnemies: Math.max(0, liveEnemies) } };
+  return { ...state, statistics: observeLiveEnemies(state.statistics, liveEnemies) };
 }
 
 export function recordKill(state: RunState): RunState {
-  return { ...state, statistics: { ...state.statistics, kills: state.statistics.kills + 1 } };
+  return { ...state, statistics: recordCommittedKill(state.statistics, state.elapsedMs) };
+}
+
+export function recordRunDamage(state: RunState, damage: DamageRecord): RunState {
+  return { ...state, statistics: recordCommittedDamage(state.statistics, damage) };
+}
+
+export function observeRunChaos(state: RunState): RunState {
+  return { ...state, statistics: observeChaos(state.statistics, state.world.chaos) };
+}
+
+export function observeRunCrit(state: RunState, tier = 0): RunState {
+  return { ...state, statistics: observeCrit(state.statistics, state.player.stats.critChance, tier) };
+}
+
+export function observeRunPierce(state: RunState, chain: number): RunState {
+  return { ...state, statistics: observePierceChain(state.statistics, chain) };
 }
 
 export function awardRunExperience(state: RunState, amount: number): RunState {
@@ -130,11 +157,12 @@ export function applyRunUpgrade(state: RunState, upgrade: UpgradeDefinition): Ru
   if (state.status !== "level_up" || state.progression.pendingChoices < 1) return state;
   const upgraded = applyUpgrade(state, upgrade);
   const progression = consumePendingChoice(upgraded.progression);
-  return {
+  const next: RunState = {
     ...upgraded,
     progression,
     status: progression.pendingChoices > 0 ? "level_up" : "playing",
   };
+  return observeRunCrit(next);
 }
 
 export function resetRunState(state: RunState): RunState {

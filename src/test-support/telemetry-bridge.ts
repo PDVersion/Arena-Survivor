@@ -59,6 +59,41 @@ export interface ArenaTestSnapshot {
     hitFlashes: number;
     trailsEmitted: number;
     pickupCues: number;
+    audioUnlocked: boolean;
+    muted: boolean;
+    focused: boolean;
+    voices: number;
+    audioEmitted: number;
+    activeVisuals: number;
+    visualHighWater: number;
+    dropped: number;
+    reducedMotion: boolean;
+  }>;
+  readonly elites?: Readonly<{
+    spawned: number;
+    defeated: number;
+    live: number;
+    byRole: Readonly<Record<string, number>>;
+  }>;
+  readonly statistics?: Readonly<{
+    kills: number;
+    peakEnemiesAlive: number;
+    highestChaos: number;
+    highestCritChance: number;
+    highestCritTier: number;
+    longestPierceChain: number;
+    largestKillChain: number;
+    totalDamage: number;
+    damageBreakdown: Readonly<{
+      direct: number;
+      criticalBonus: number;
+      piercingMomentum: number;
+      explosion: number;
+      chainedExplosion: number;
+      remainder: number;
+    }>;
+    summaryMetrics: readonly string[];
+    summaryDamage: readonly string[];
   }>;
   readonly load?: Readonly<{
     enabled: boolean;
@@ -67,9 +102,14 @@ export interface ArenaTestSnapshot {
     eventBacklog: number;
     eventBacklogHighWater: number;
     processedEffects: number;
+    gameplayBacklogHighWater: number;
+    processedGameplayEvents: number;
     droppedPresentationCues: number;
     liveHighWater: number;
     trackedHighWater: number;
+    frameSamples: number;
+    averageFrameMs: number;
+    maxFrameMs: number;
   }>;
   readonly effects?: Readonly<{
     explosionsCommitted: number;
@@ -82,6 +122,8 @@ export interface ArenaTestSnapshot {
     explosionDamage: number;
     chainedExplosionDamage: number;
     eventBacklog: number;
+    eventBacklogHighWater: number;
+    processedEvents: number;
   }>;
   readonly shrine?: Readonly<{
     id: string | null;
@@ -102,6 +144,19 @@ export interface ArenaTestSnapshot {
     shrineXpCollected: number;
     ambientXpCollected: number;
     feedbackCount: number;
+    instances: readonly Readonly<{ id: string; activated: boolean }>[];
+  }>;
+  readonly world?: Readonly<{
+    chaos: number;
+    enemySpawnMultiplier: number;
+    enemyHealthMultiplier: number;
+    enemyDamageMultiplier: number;
+    xpMultiplier: number;
+    eliteChance: number;
+    shrineRewardMultiplier: number;
+    activations: Readonly<Record<string, number>>;
+    duplicatedEnemiesQueued: number;
+    duplicatedEnemiesSpawned: number;
   }>;
   readonly combat?: Readonly<{
     weaponId: string | null;
