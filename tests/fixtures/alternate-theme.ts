@@ -56,6 +56,7 @@ export const alternateTheme = defineTheme({
       pickup: "#88ff88",
       shrine: "#ff4488",
       explosion: "#ff3300",
+      elite: "#eeee00",
     },
     playerShape: "circle",
     feedback: {
@@ -66,6 +67,15 @@ export const alternateTheme = defineTheme({
       explosion: "test.explosion",
       shrine: "test.shrine",
       elite: "test.elite",
+    },
+    sounds: {
+      damage: { frequency: 180, durationMs: 35, gain: 0.025 },
+      critical: { frequency: 440, durationMs: 55, gain: 0.035 },
+      overcritical: { frequency: 760, durationMs: 85, gain: 0.045 },
+      pierce: { frequency: 520, durationMs: 45, gain: 0.025 },
+      explosion: { frequency: 110, durationMs: 100, gain: 0.05 },
+      shrine: { frequency: 330, durationMs: 140, gain: 0.05 },
+      elite: { frequency: 220, durationMs: 180, gain: 0.045 },
     },
   },
   characters: [
@@ -167,5 +177,5 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.skill.bloodlust, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01 }] },
     { id: archetypeIds.skill.chainReaction, effects: [{ kind: "chain_reaction" }] },
   ],
-  elites: [{ id: eliteIds.baseline }],
+  elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2, radiusMultiplier: 1.3, presentationToken: "elite" }],
 });

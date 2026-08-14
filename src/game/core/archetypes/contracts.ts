@@ -63,12 +63,18 @@ export interface ThemePalette {
   readonly pickup: string;
   readonly shrine: string;
   readonly explosion: string;
+  readonly elite: string;
 }
 
 export interface ThemeTokens {
   readonly palette: ThemePalette;
   readonly playerShape: "circle" | "diamond" | "square";
   readonly feedback: Readonly<Record<FeedbackCategory, string>>;
+  readonly sounds: Readonly<Record<FeedbackCategory, Readonly<{
+    frequency: number;
+    durationMs: number;
+    gain: number;
+  }>>>;
 }
 
 export interface SkillDefinition {
@@ -85,6 +91,11 @@ export type SkillEffectDefinition =
 
 export interface EliteDefinition {
   readonly id: EliteId;
+  readonly healthMultiplier: number;
+  readonly damageMultiplier: number;
+  readonly rewardMultiplier: number;
+  readonly radiusMultiplier: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "elite">;
 }
 
 export interface CharacterDefinition {

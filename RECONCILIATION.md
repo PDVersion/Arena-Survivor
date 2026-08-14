@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phase 5 complete — Phase 6 not started**
+- Active phase: **Phases 5–6 complete — awaiting combined review**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -848,11 +848,55 @@ Theme validation requires all four stable shrine IDs and effect values. Browser 
 Revisit when:
 Shrine placement becomes procedural, repeated definitions need save identity, or duplication inheritance changes alongside elites/splits.
 
+### REC-037 — Baseline elites preserve identity across descendant creation
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phases 6–7, enemies, spawning, rewards, feedback
+- Blocks: None
+
+Context / observation:
+The product requires one elite capability for every enemy role and preservation through splits, duplication, death, and rewards, but does not provide baseline multipliers or specify whether descendants reroll elite status.
+
+Decision / solution:
+Use one theme-owned baseline elite definition with `2×` health, `1.5×` contact damage, `2×` reward, and `1.3×` radius. New ambient enemies roll deterministically against the Chaos-resolved elite chance. Duplication copies, Broodmother offspring, and Fracture children inherit the parent's elite boolean without rerolling; each newly created elite applies the baseline multipliers once. Elite reward multiplies the spawn source reward, while the existing world XP multiplier remains applied when XP is awarded.
+
+Why:
+Explicit inheritance makes identity stable across causal work and avoids timing-dependent rerolls. Theme data keeps presentation and tuning outside generic enemy logic, while the boolean passed through spawn requests prevents stat multipliers themselves from compounding across generations.
+
+Future guardrail:
+Unit tests lock deterministic chance boundaries and inheritance precedence. Browser tests force all four roles through the generic path, duplicate them, and verify at least two elite instances per role. Telemetry separates spawned, defeated, live, and role counts.
+
+Revisit when:
+Elite variants, role-specific elite tuning, descendant mutation, or elite-exclusive drops enter scope.
+
+### REC-038 — Combat feedback is bounded and never authoritative
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phases 6–7, feedback, audio, accessibility, load behavior
+- Blocks: None
+
+Context / observation:
+Dense crit, pierce, explosion, shrine, and elite events can create more simultaneous cues and oscillator voices than remain legible. Browser audio also cannot be initialized safely before a user gesture, and reduced motion must not change simulation.
+
+Decision / solution:
+Treat audiovisual feedback as a downstream consumer only. Limit transient text cues to 48, oscillator voices to eight, and repeated audio per feedback category to one cue per 45 simulation milliseconds. Keep sound frequency, duration, and gain in theme tokens. Unlock the session audio context on keyboard or pointer interaction, use `M` for session-only mute, suspend emission on focus loss, and replace moving feedback tweens and camera shake/flash with short static cues under reduced motion. Dropped cues increment presentation telemetry without changing damage, deaths, rewards, or statistics.
+
+Why:
+Category throttling preserves distinct simultaneous events better than one global audio cooldown. Hard presentation limits make dense chains measurable, while a one-way simulation-to-feedback boundary guarantees muted, reduced, unavailable, or saturated presentation cannot alter results.
+
+Future guardrail:
+Limiter tests cover caps and per-category aggregation. Browser tests cover gesture gating, mute, voice/visual high-water bounds, reduced motion, focus, resize, and scene reconstruction cleanup.
+
+Revisit when:
+Real audio assets replace oscillators, user settings become persistent, profiling justifies object pools, or accessibility review requires additional controls.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
 - V0.1 shrine load passes with capped destruction at the current 80/64 enemy/projectile baseline, so Phase 6 does not require pooling. The safe higher cap and production randomness policy remain unsettled.
-- Accessibility details beyond alternate movement keys—reduced motion, colour independence, remapping, and readable scaling—need an explicit later decision.
+- Accessibility details beyond alternate movement keys and reduced-motion feedback—colour independence, remapping, and readable scaling—need an explicit later decision.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
 - The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.
 - The portable save checksum algorithm, import size limit, unknown-content policy details, and whether settings travel in every export remain provisional until persistence implementation.

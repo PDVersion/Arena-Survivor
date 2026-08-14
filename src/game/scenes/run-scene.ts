@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
+import { eliteIds, type FeedbackCategory } from "../core/archetypes/categories";
 import type {
   EnemyDefinition,
   PickupDefinition,
@@ -52,6 +53,8 @@ import {
   targetsWithinRadius,
 } from "../systems/effects/on-kill-effects";
 import { applyWorldChoice, selectWorldModifiers } from "../systems/chaos/world-modifiers";
+import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
+import { shouldSpawnElite } from "../systems/elites/elites";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
@@ -99,6 +102,11 @@ function testWorldScenario(): string | null {
   return new URLSearchParams(window.location.search).get("worldScenario");
 }
 
+function prefersReducedMotion(): boolean {
+  if (import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has("reducedMotion")) return true;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+}
+
 interface MovementKeys {
   readonly up: Phaser.Input.Keyboard.Key;
   readonly down: Phaser.Input.Keyboard.Key;
@@ -121,6 +129,7 @@ export class RunScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private wasd?: MovementKeys;
   private pauseKey?: Phaser.Input.Keyboard.Key;
+  private muteKey?: Phaser.Input.Keyboard.Key;
   private interactKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private choiceKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private enemyGroup?: Phaser.Physics.Arcade.Group;
@@ -195,6 +204,13 @@ export class RunScene extends Phaser.Scene {
   private testWorldScenarioApplied = false;
   private duplicatedEnemiesQueued = 0;
   private duplicatedEnemiesSpawned = 0;
+  private eliteRandom = createSeededRandom(0xe117_0006);
+  private eliteSpawned = 0;
+  private eliteDefeated = 0;
+  private eliteSpawnedByRole: Record<string, number> = {};
+  private feedbackLimiter = new FeedbackLimiter();
+  private audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
+  private reducedMotion = false;
 
   constructor() {
     super("run");
@@ -320,11 +336,13 @@ export class RunScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     }) as MovementKeys;
     this.pauseKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.muteKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
     this.interactKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
     ];
     window.addEventListener("keydown", this.handleRestartKey);
+    this.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
     this.choiceKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
@@ -342,9 +360,11 @@ export class RunScene extends Phaser.Scene {
       this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
       this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
       window.removeEventListener("keydown", this.handleRestartKey);
+      this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
       this.hud?.destroy();
       this.levelUpUi?.hide();
       this.runEndOverlay?.hide();
+      this.audioFeedback.destroy();
     });
     this.hud.update(this.runState);
     this.prepareTestLoadHarness();
@@ -356,6 +376,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !this.pauseKey) return;
 
     if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.togglePause();
+    if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.audioFeedback.toggleMuted();
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
 
     this.runState = advanceRunState(this.runState, delta);
@@ -390,6 +411,7 @@ export class RunScene extends Phaser.Scene {
     this.cursors = undefined;
     this.wasd = undefined;
     this.pauseKey = undefined;
+    this.muteKey = undefined;
     this.interactKeys = [];
     this.choiceKeys = [];
     this.enemyGroup = undefined;
@@ -463,6 +485,13 @@ export class RunScene extends Phaser.Scene {
     this.testWorldScenarioApplied = false;
     this.duplicatedEnemiesQueued = 0;
     this.duplicatedEnemiesSpawned = 0;
+    this.eliteRandom = createSeededRandom(0xe117_0006);
+    this.eliteSpawned = 0;
+    this.eliteDefeated = 0;
+    this.eliteSpawnedByRole = {};
+    this.feedbackLimiter = new FeedbackLimiter();
+    this.audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
+    this.reducedMotion = prefersReducedMotion();
   }
 
   private prepareTestLoadHarness(): void {
@@ -504,6 +533,7 @@ export class RunScene extends Phaser.Scene {
     parentEventId?: string,
     reason: "roster" | "offspring" | "fracture" | "duplication" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
+    elite?: boolean,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
@@ -516,7 +546,7 @@ export class RunScene extends Phaser.Scene {
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite },
     });
   }
 
@@ -529,11 +559,11 @@ export class RunScene extends Phaser.Scene {
       }
       if (event.kind !== "spawn.requested") return;
       if (capacity <= 0) return false;
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }> };
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -656,14 +686,17 @@ export class RunScene extends Phaser.Scene {
     if (definition.effectKind === "duplicate_living") {
       const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world).shrineRewardMultiplier;
       for (const enemy of livingSnapshot) {
-        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 });
+        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, Boolean(enemy.elite));
         this.duplicatedEnemiesQueued += 1;
       }
     }
     shrine.activate();
     this.shrineFeedback += 1;
-    this.cameras.main.flash(240, 251, 113, 133, false);
-    this.cameras.main.shake(220, 0.006);
+    this.emitFeedback("shrine", shrine.x, shrine.y, "+Chaos");
+    if (!this.reducedMotion) {
+      this.cameras.main.flash(240, 251, 113, 133, false);
+      this.cameras.main.shake(220, 0.006);
+    }
     const message = this.add.text(
       this.scale.width / 2,
       105,
@@ -733,6 +766,7 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
     requestedPoint?: Readonly<{ x: number; y: number }>,
+    eliteOverride?: boolean,
   ): boolean {
     if (
       !this.player ||
@@ -752,6 +786,13 @@ export class RunScene extends Phaser.Scene {
     );
     this.spawnSequence += 1;
     this.enemySequence += 1;
+    const worldModifiers = selectWorldModifiers(this.runState.world);
+    const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
+    const elite = eliteDefinition && shouldSpawnElite(
+      testSkillEnabled("forceElite") ? 1 : worldModifiers.eliteChance,
+      this.eliteRandom,
+      eliteOverride,
+    ) ? eliteDefinition : undefined;
     const enemy = new EnemyActor(
       this,
       `enemy-${this.enemySequence}`,
@@ -760,14 +801,20 @@ export class RunScene extends Phaser.Scene {
       definition,
       activeTheme.tokens,
       spawnSource,
-      rewardMultiplier,
+      rewardMultiplier * (elite?.rewardMultiplier ?? 1),
       {
-        healthMultiplier: selectWorldModifiers(this.runState.world).enemyHealthMultiplier,
-        damageMultiplier: selectWorldModifiers(this.runState.world).enemyDamageMultiplier,
+        healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
+        damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
       },
+      elite,
     );
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
+    if (elite) {
+      this.eliteSpawned += 1;
+      this.eliteSpawnedByRole[definition.id] = (this.eliteSpawnedByRole[definition.id] ?? 0) + 1;
+      this.emitFeedback("elite", enemy.x, enemy.y, "ELITE");
+    }
     if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
       this.enemies.delete(enemy);
@@ -854,6 +901,11 @@ export class RunScene extends Phaser.Scene {
 
   private handleProjectileEnemyOverlap(projectile: ProjectileActor, enemy: EnemyActor): void {
     if (!this.runState || !projectile.canHit(enemy.targetId) || enemy.defeated) return;
+    const category: FeedbackCategory = projectile.critTier > 1
+      ? "overcritical"
+      : projectile.critTier === 1 ? "critical" : "damage";
+    this.emitFeedback(category, enemy.x, enemy.y, String(Math.round(projectile.damage)));
+    if (projectile.pierceChainIndex > 0) this.emitFeedback("pierce", enemy.x, enemy.y, "PIERCE");
     this.commitEnemyDamage(enemy, projectile.damage, "direct");
     projectile.registerHit(enemy.targetId);
     this.longestPierceChain = Math.max(this.longestPierceChain, projectile.pierceChainIndex);
@@ -884,7 +936,7 @@ export class RunScene extends Phaser.Scene {
         sourceId: damageSource === "direct" ? this.weaponDefinition?.id : archetypeIds.skill.onKillExplosion,
         parentEventId,
       },
-      payload: { enemyId: enemy.definition.id, damageSource },
+      payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite) },
     });
     const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
@@ -900,12 +952,14 @@ export class RunScene extends Phaser.Scene {
           deathSpawns.parentEventId,
           "offspring",
           { x: enemy.x, y: enemy.y },
+          Boolean(enemy.elite),
         );
         this.offspringQueued += 1;
       }
     }
     this.enqueueConfiguredOnKillEffects(enemy, deathEventId, damageSource);
     this.killTimesMs.push(this.runState.elapsedMs);
+    if (enemy.elite) this.eliteDefeated += 1;
     this.runState = recordKill(this.runState);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
@@ -968,6 +1022,7 @@ export class RunScene extends Phaser.Scene {
           deathEventId,
           "fracture",
           { x: enemy.x + (index === 0 ? -8 : 8), y: enemy.y },
+          Boolean(enemy.elite),
         );
         this.fractureQueued += 1;
       }
@@ -984,7 +1039,47 @@ export class RunScene extends Phaser.Scene {
       payload.radius,
     );
     for (const target of targets) this.commitEnemyDamage(target.enemy, payload.damage, source, eventId);
+    this.emitFeedback("explosion", payload.x, payload.y, "BOOM");
     this.renderExplosionCue(payload);
+  }
+
+  private emitFeedback(category: FeedbackCategory, x: number, y: number, label: string): void {
+    const nowMs = this.runState?.elapsedMs ?? 0;
+    if (this.feedbackLimiter.allowAudio(category, nowMs)) this.audioFeedback.play(category);
+    if (!this.feedbackLimiter.beginVisual()) return;
+    const palette = activeTheme.tokens.palette;
+    const colour = category === "critical"
+      ? palette.critical
+      : category === "overcritical" ? palette.overcritical
+        : category === "explosion" ? palette.explosion
+          : category === "elite" ? palette.elite : palette.text;
+    const cue = this.add.text(x, y - 18, label, {
+      color: colour,
+      fontFamily: "Georgia, serif",
+      fontSize: category === "damage" ? "16px" : category === "overcritical" ? "26px" : "20px",
+      fontStyle: "bold",
+      stroke: palette.background,
+      strokeThickness: 3,
+    }).setOrigin(0.5).setDepth(60);
+    const impact = category === "shrine" || category === "elite"
+      ? undefined
+      : this.add.circle(
+          x,
+          y,
+          category === "explosion" ? 14 : 5,
+          Phaser.Display.Color.HexStringToColor(colour).color,
+          0.8,
+        ).setDepth(59);
+    const finish = (): void => {
+      this.feedbackLimiter.endVisual();
+      cue.destroy();
+      impact?.destroy();
+    };
+    if (this.reducedMotion) this.time.delayedCall(120, finish);
+    else {
+      if (impact) this.tweens.add({ targets: impact, alpha: 0, scale: 2.4, duration: 220 });
+      this.tweens.add({ targets: cue, y: cue.y - 24, alpha: 0, duration: 360, onComplete: finish });
+    }
   }
 
   private renderExplosionCue(payload: ExplosionEventPayload): void {
@@ -1149,7 +1244,12 @@ export class RunScene extends Phaser.Scene {
   }
 
   private readonly handleRestartKey = (event: KeyboardEvent): void => {
+    this.audioFeedback.unlock();
     if (event.code === "KeyR" || event.code === "Enter") this.restartRun();
+  };
+
+  private readonly handlePointerGesture = (): void => {
+    this.audioFeedback.unlock();
   };
 
   private handleGameBlur(): void {
@@ -1158,6 +1258,7 @@ export class RunScene extends Phaser.Scene {
     this.player?.stop();
     this.physics.world.pause();
     this.focusPaused = true;
+    this.audioFeedback.setFocused(false);
     this.hud?.update(this.runState);
     this.publishTelemetry();
   }
@@ -1165,6 +1266,7 @@ export class RunScene extends Phaser.Scene {
   private handleGameFocus(): void {
     if (!this.runState || !this.focusPaused || this.runState.status !== "paused") return;
     this.focusPaused = false;
+    this.audioFeedback.setFocused(true);
     this.runState = setRunStatus(this.runState, "playing");
     this.physics.world.resume();
     this.hud?.update(this.runState);
@@ -1250,6 +1352,8 @@ export class RunScene extends Phaser.Scene {
         ? Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shrine.x, this.shrine.y)
         : Number.POSITIVE_INFINITY;
     const world = this.runState ? selectWorldModifiers(this.runState.world) : undefined;
+    const feedback = this.feedbackLimiter.snapshot();
+    const audio = this.audioFeedback.snapshot();
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -1349,6 +1453,21 @@ export class RunScene extends Phaser.Scene {
         hitFlashes: this.hitFlashes,
         trailsEmitted: this.trailsEmitted,
         pickupCues: this.pickupCues,
+        audioUnlocked: audio.unlocked,
+        muted: audio.muted,
+        focused: audio.focused,
+        voices: audio.voices,
+        audioEmitted: audio.emitted,
+        activeVisuals: feedback.activeVisuals,
+        visualHighWater: feedback.visualHighWater,
+        dropped: feedback.dropped,
+        reducedMotion: this.reducedMotion,
+      },
+      elites: {
+        spawned: this.eliteSpawned,
+        defeated: this.eliteDefeated,
+        live: [...this.enemies].filter((enemy) => Boolean(enemy.elite)).length,
+        byRole: { ...this.eliteSpawnedByRole },
       },
       load: {
         enabled: this.loadHarnessRequested > 0,
@@ -1357,7 +1476,7 @@ export class RunScene extends Phaser.Scene {
         eventBacklog: this.loadEventQueue.snapshot().backlog,
         eventBacklogHighWater: this.loadEventQueue.snapshot().backlogHighWater,
         processedEffects: this.loadEventQueue.snapshot().processed,
-        droppedPresentationCues: this.droppedPresentationCues,
+        droppedPresentationCues: this.droppedPresentationCues + feedback.dropped,
         liveHighWater: this.liveHighWater,
         trackedHighWater: this.trackedHighWater,
       },

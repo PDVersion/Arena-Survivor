@@ -27,6 +27,10 @@ registerTestTelemetryUpdater((nextSnapshot) => {
     hud: nextSnapshot.hud ? Object.freeze({ ...nextSnapshot.hud }) : undefined,
     lifecycle: nextSnapshot.lifecycle ? Object.freeze({ ...nextSnapshot.lifecycle }) : undefined,
     feedback: nextSnapshot.feedback ? Object.freeze({ ...nextSnapshot.feedback }) : undefined,
+    elites: nextSnapshot.elites ? Object.freeze({
+      ...nextSnapshot.elites,
+      byRole: Object.freeze({ ...nextSnapshot.elites.byRole }),
+    }) : undefined,
     load: nextSnapshot.load ? Object.freeze({ ...nextSnapshot.load }) : undefined,
     effects: nextSnapshot.effects ? Object.freeze({ ...nextSnapshot.effects }) : undefined,
     shrine: nextSnapshot.shrine ? Object.freeze({

@@ -183,4 +183,28 @@ describe("theme manifests", () => {
       ]),
     );
   });
+
+  it("reports invalid sound tokens and elite multipliers", () => {
+    const invalid = {
+      ...alternateTheme,
+      tokens: {
+        ...alternateTheme.tokens,
+        sounds: {
+          ...alternateTheme.tokens.sounds,
+          critical: { frequency: 0, durationMs: 0, gain: 2 },
+        },
+      },
+      elites: [{
+        ...alternateTheme.elites[0],
+        healthMultiplier: 1,
+        presentationToken: "missing",
+      }],
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(expect.arrayContaining([
+      "sounds.critical must define positive frequency, duration, and gain at most one",
+      "elite.baseline healthMultiplier must be greater than one",
+      "elite.baseline references missing presentation token: missing",
+    ]));
+  });
 });

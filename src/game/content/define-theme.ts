@@ -64,6 +64,12 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!theme.tokens.feedback?.[category]?.trim()) {
       issues.push(`feedback.${category} token is required`);
     }
+    const sound = theme.tokens.sounds?.[category];
+    if (!sound || !Number.isFinite(sound.frequency) || sound.frequency <= 0 ||
+      !Number.isFinite(sound.durationMs) || sound.durationMs <= 0 ||
+      !Number.isFinite(sound.gain) || sound.gain <= 0 || sound.gain > 1) {
+      issues.push(`sounds.${category} must define positive frequency, duration, and gain at most one`);
+    }
   }
 
   const characterIds = new Set<string>();
@@ -322,6 +328,15 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const elite of elites) {
     if (eliteIdsFound.has(elite.id)) issues.push(`duplicate elite id: ${elite.id}`);
     eliteIdsFound.add(elite.id);
+    for (const [key, value] of Object.entries({
+      healthMultiplier: elite.healthMultiplier,
+      damageMultiplier: elite.damageMultiplier,
+      rewardMultiplier: elite.rewardMultiplier,
+      radiusMultiplier: elite.radiusMultiplier,
+    })) {
+      if (!Number.isFinite(value) || value <= 1) issues.push(`${elite.id} ${key} must be greater than one`);
+    }
+    if (!(elite.presentationToken in theme.tokens.palette)) issues.push(`${elite.id} references missing presentation token: ${elite.presentationToken}`);
   }
   if (!eliteIdsFound.has(eliteIds.baseline)) {
     issues.push(`missing required elite: ${eliteIds.baseline}`);

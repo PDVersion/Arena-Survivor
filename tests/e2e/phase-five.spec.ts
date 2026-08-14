@@ -83,6 +83,7 @@ test("HUD and run remain coherent through focus loss and resize", async ({ page 
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.focusPaused))
     .toBe(true);
   const paused = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  expect(paused?.feedback?.focused).toBe(false);
   await page.waitForTimeout(250);
   expect((await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.elapsedMs))).toBe(
     paused?.run?.elapsedMs,
@@ -97,4 +98,5 @@ test("HUD and run remain coherent through focus loss and resize", async ({ page 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
+  expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().feedback?.focused)).toBe(true);
 });

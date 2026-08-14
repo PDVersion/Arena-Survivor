@@ -59,6 +59,21 @@ export interface ArenaTestSnapshot {
     hitFlashes: number;
     trailsEmitted: number;
     pickupCues: number;
+    audioUnlocked: boolean;
+    muted: boolean;
+    focused: boolean;
+    voices: number;
+    audioEmitted: number;
+    activeVisuals: number;
+    visualHighWater: number;
+    dropped: number;
+    reducedMotion: boolean;
+  }>;
+  readonly elites?: Readonly<{
+    spawned: number;
+    defeated: number;
+    live: number;
+    byRole: Readonly<Record<string, number>>;
   }>;
   readonly load?: Readonly<{
     enabled: boolean;
