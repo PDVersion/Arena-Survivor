@@ -938,6 +938,28 @@ The browser acceptance path requires exactly 300 processed scripted spawns, all 
 Revisit when:
 Manual testing on lower-powered representative hardware exceeds acceptable frame times, richer assets materially raise object cost, entity caps grow, or profiling identifies allocation/GC pressure.
 
+### REC-041 — CI load paths wait on simulation boundaries, not local wall time
+
+- Status: Resolved
+- Date: 2026-08-14
+- Affects: V0.2 acceptance, Playwright CI, feedback and representative load scenarios
+- Blocks: None
+
+Context / observation:
+GitHub Actions pull-request run `31773404032` and push run `31773376078` failed the same two Chromium paths on the serial hosted runner. The 300-enemy test reached capacity but its enemies had not traversed the 360-unit spawn ring before a 15-second wall-clock explosion poll expired. The feedback test used a default five-second poll before proving that its scripted 80-enemy load had advanced. Every deterministic/unit gate and the other 26 browser paths passed; local four-worker runs passed all 28. Retrying both failures three times reproduced the same state boundaries, so retries were not useful.
+
+Decision / solution:
+Make both test-build scenarios explicit about their prerequisites. Feedback coverage now waits for all 80 scripted spawns before inspecting the visual high-water mark. The representative acceptance URL uses a test-only 100-unit close-density layout, gates automatic fire and its shortened run clock until all 300 scripted enemies are simultaneously live, and then runs 1,500 simulation milliseconds with hosted-runner poll/test headroom. Production spawn geometry, cadence, combat, timing, and limits are unchanged; the production bundle continues to omit scenario query keys.
+
+Why:
+The acceptance requirement is simultaneous capacity and compound interaction correctness, not a fixed amount of wall-clock time for enemies to walk toward the player. Waiting on load completion proves the intended prerequisite, while gating fire prevents early kills from making a close-density test miss the 300-live high-water condition.
+
+Future guardrail:
+Run the two paths with `CI=1` before pushing browser-load changes. Long live tests poll authoritative telemetry with explicit hosted-runner budgets, and scripted scenarios order their prerequisites instead of relying on locally fast frame progression.
+
+Revisit when:
+Browser tests gain deterministic simulation stepping, CI hardware changes materially, or the representative scenario is replaced by a production replay format.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

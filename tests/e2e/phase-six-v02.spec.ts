@@ -20,8 +20,11 @@ test("elite capability applies to every enemy role and survives duplication", as
 test("feedback unlocks after interaction, throttles dense combat, and supports mute", async ({ page }) => {
   await page.goto("/?forceElite=1&loadHarness=80&critChance=3&attackSpeedBonus=9&noXp=1");
   await expect.poll(() => page.evaluate(
+    () => window.__ARENA_TEST__?.getSnapshot().load?.spawned,
+  ), { timeout: 30_000 }).toBe(80);
+  await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().feedback?.visualHighWater,
-  )).toBeGreaterThan(0);
+  ), { timeout: 15_000 }).toBeGreaterThan(0);
   expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().feedback?.audioUnlocked)).toBe(false);
   await page.keyboard.press("ArrowLeft");
   await expect.poll(() => page.evaluate(

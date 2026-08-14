@@ -394,7 +394,11 @@ export class RunScene extends Phaser.Scene {
     if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.audioFeedback.toggleMuted();
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
 
-    this.runState = advanceRunState(this.runState, delta);
+    const preparingRepresentativeLoad =
+      testSkillEnabled("representativeLoad") &&
+      testSkillEnabled("closeLoad") &&
+      this.loadHarnessSpawned < this.loadHarnessRequested;
+    if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
       if (testSkillEnabled("representativeLoad")) {
@@ -537,7 +541,16 @@ export class RunScene extends Phaser.Scene {
       const definition = representative
         ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
         : this.enemyDefinition;
-      if (definition && this.spawnEnemy("ambient", 1, definition, undefined, representative && sequence % 5 === 0)) {
+      const requestedPoint = representative && testSkillEnabled("closeLoad") && this.player && definition
+        ? pointOnSpawnRing(
+            this.player,
+            100,
+            sequence * GOLDEN_ANGLE,
+            ARENA_SIZE,
+            definition.radius,
+          )
+        : undefined;
+      if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
         this.loadHarnessSpawned += 1;
       }
     });
@@ -856,6 +869,11 @@ export class RunScene extends Phaser.Scene {
   }
 
   private fireIfReady(): void {
+    if (
+      testSkillEnabled("representativeLoad") &&
+      testSkillEnabled("closeLoad") &&
+      this.loadHarnessSpawned < this.loadHarnessRequested
+    ) return;
     if (
       !this.player ||
       !this.runState ||
