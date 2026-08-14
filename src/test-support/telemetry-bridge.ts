@@ -71,6 +71,18 @@ export interface ArenaTestSnapshot {
     liveHighWater: number;
     trackedHighWater: number;
   }>;
+  readonly effects?: Readonly<{
+    explosionsCommitted: number;
+    chainExplosionsCommitted: number;
+    fractureQueued: number;
+    fractureSpawned: number;
+    bloodlustKills: number;
+    bloodlustAttackSpeedBonus: number;
+    directDamage: number;
+    explosionDamage: number;
+    chainedExplosionDamage: number;
+    eventBacklog: number;
+  }>;
   readonly shrine?: Readonly<{
     id: string | null;
     x: number;

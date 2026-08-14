@@ -61,6 +61,7 @@ export interface ThemePalette {
   readonly overcritical: string;
   readonly pickup: string;
   readonly shrine: string;
+  readonly explosion: string;
 }
 
 export interface ThemeTokens {

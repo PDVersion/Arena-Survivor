@@ -26,6 +26,14 @@ describe("causal event queue", () => {
     expect(queue.claimEffect("enemy-1", "split")).toBe(false);
   });
 
+  it("retains the head event when a capacity-aware consumer defers it", () => {
+    const queue = new CausalEventQueue();
+    queue.enqueue({ eventId: "spawn-1", kind: "spawn.requested", provenance: { sourceCategory: "enemy" }, payload: {} });
+    expect(queue.process(1, () => false)).toBe(0);
+    expect(queue.snapshot()).toMatchObject({ backlog: 1, processed: 0 });
+    expect(queue.process(1, () => true)).toBe(1);
+  });
+
   it("processes a deterministic 300-event representative load without loss", () => {
     const result = runHeadlessLoadHarness(300, 17);
     expect(result).toMatchObject({ requested: 300, processed: 300, backlogHighWater: 300 });

@@ -45,6 +45,12 @@ import {
 } from "../systems/shrine-surge";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 import { CausalEventQueue } from "../systems/events/causal-events";
+import {
+  selectBloodlust,
+  shouldExplodeOnKill,
+  shouldFracture,
+  targetsWithinRadius,
+} from "../systems/effects/on-kill-effects";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
@@ -92,6 +98,15 @@ interface MovementKeys {
   readonly down: Phaser.Input.Keyboard.Key;
   readonly left: Phaser.Input.Keyboard.Key;
   readonly right: Phaser.Input.Keyboard.Key;
+}
+
+type DamageSource = "direct" | "explosion" | "chained_explosion";
+interface ExplosionEventPayload {
+  readonly x: number;
+  readonly y: number;
+  readonly radius: number;
+  readonly damage: number;
+  readonly depth: number;
 }
 
 export class RunScene extends Phaser.Scene {
@@ -151,6 +166,7 @@ export class RunScene extends Phaser.Scene {
   private ambientXpCollected = 0;
   private shrineXpCollected = 0;
   private eventQueue = new CausalEventQueue();
+  private loadEventQueue = new CausalEventQueue();
   private loadHarnessRequested = 0;
   private loadHarnessSpawned = 0;
   private liveHighWater = 0;
@@ -160,6 +176,15 @@ export class RunScene extends Phaser.Scene {
   private offspringQueued = 0;
   private offspringSpawned = 0;
   private eventSequence = 0;
+  private effectRandom = createSeededRandom(0xeffe_0004);
+  private killTimesMs: number[] = [];
+  private bloodlustAttackSpeedBonus = 0;
+  private explosionsCommitted = 0;
+  private chainExplosionsCommitted = 0;
+  private fractureQueued = 0;
+  private fractureSpawned = 0;
+  private damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
+  private activeExplosionCues = 0;
 
   constructor() {
     super("run");
@@ -218,18 +243,30 @@ export class RunScene extends Phaser.Scene {
     });
     const testCritChance = testCombatNumber("critChance");
     const testPierce = testCombatNumber("pierce");
+    const testAttackSpeedBonus = testCombatNumber("attackSpeedBonus");
     if (testCritChance !== undefined || testPierce !== undefined || testSkillEnabled("piercingMomentum")) {
       this.runState = {
         ...this.runState,
-        player: testCritChance === undefined ? this.runState.player : {
+        player: testCritChance === undefined && testAttackSpeedBonus === undefined ? this.runState.player : {
           ...this.runState.player,
-          stats: { ...this.runState.player.stats, critChance: testCritChance },
+          stats: {
+            ...this.runState.player.stats,
+            critChance: testCritChance ?? this.runState.player.stats.critChance,
+            attackSpeedBonus: testAttackSpeedBonus ?? this.runState.player.stats.attackSpeedBonus,
+          },
         },
         weaponModifiers: testPierce === undefined ? this.runState.weaponModifiers : {
           ...this.runState.weaponModifiers,
           pierce: testPierce,
         },
-        activeSkillIds: testSkillEnabled("piercingMomentum")
+        activeSkillIds: testSkillEnabled("interactions")
+          ? [
+              archetypeIds.skill.onKillExplosion,
+              archetypeIds.skill.fracture,
+              archetypeIds.skill.bloodlust,
+              archetypeIds.skill.chainReaction,
+            ]
+          : testSkillEnabled("piercingMomentum")
           ? [archetypeIds.skill.piercingMomentum]
           : this.runState.activeSkillIds,
       };
@@ -329,7 +366,8 @@ export class RunScene extends Phaser.Scene {
       this.updateShrine();
       this.updateSurge();
       this.processTestLoadHarness();
-      if (this.loadHarnessRequested === 0) this.processQueuedEnemySpawns();
+      this.processCausalEvents();
+      this.updateBloodlust();
       if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) this.spawnIfReady();
       this.fireIfReady();
       this.updateLoadHighWaterMarks();
@@ -399,6 +437,7 @@ export class RunScene extends Phaser.Scene {
     this.ambientXpCollected = 0;
     this.shrineXpCollected = 0;
     this.eventQueue = new CausalEventQueue();
+    this.loadEventQueue = new CausalEventQueue();
     this.loadHarnessRequested = 0;
     this.loadHarnessSpawned = 0;
     this.liveHighWater = 0;
@@ -408,12 +447,21 @@ export class RunScene extends Phaser.Scene {
     this.offspringQueued = 0;
     this.offspringSpawned = 0;
     this.eventSequence = 0;
+    this.effectRandom = createSeededRandom(0xeffe_0004);
+    this.killTimesMs = [];
+    this.bloodlustAttackSpeedBonus = 0;
+    this.explosionsCommitted = 0;
+    this.chainExplosionsCommitted = 0;
+    this.fractureQueued = 0;
+    this.fractureSpawned = 0;
+    this.damageBySource = { direct: 0, explosion: 0, chained_explosion: 0 };
+    this.activeExplosionCues = 0;
   }
 
   private prepareTestLoadHarness(): void {
     this.loadHarnessRequested = testLoadHarnessCount();
     for (let index = 0; index < this.loadHarnessRequested; index += 1) {
-      this.eventQueue.enqueue({
+      this.loadEventQueue.enqueue({
         eventId: `load-spawn-${index + 1}`,
         kind: "spawn.requested",
         provenance: { sourceCategory: "world", sourceId: "load.harness" },
@@ -425,7 +473,7 @@ export class RunScene extends Phaser.Scene {
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
     const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
-    this.eventQueue.process(Math.min(12, capacity), () => {
+    this.loadEventQueue.process(Math.min(12, capacity), () => {
       if (this.spawnEnemy("ambient", 1)) this.loadHarnessSpawned += 1;
     });
   }
@@ -447,32 +495,41 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" = "offspring",
+    reason: "roster" | "offspring" | "fracture" = "offspring",
+    point?: Readonly<{ x: number; y: number }>,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
       eventId: `spawn-${this.eventSequence}`,
       kind: "spawn.requested",
       provenance: {
-        sourceCategory: reason === "offspring" ? "enemy" : "world",
+        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : "world",
         sourceId: spawnSource,
         parentEventId,
-        effectId: reason === "offspring" ? "enemy.death_spawn" : undefined,
+        effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point },
     });
   }
 
-  private processQueuedEnemySpawns(): void {
-    const capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
-    this.eventQueue.process(Math.min(12, capacity), (event) => {
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string };
+  private processCausalEvents(): void {
+    let capacity = Math.max(0, V01_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    this.eventQueue.process(24, (event) => {
+      if (event.kind === "effect.explosion") {
+        this.processExplosionEvent(event.payload as unknown as ExplosionEventPayload, event.eventId);
+        return;
+      }
+      if (event.kind !== "spawn.requested") return;
+      if (capacity <= 0) return false;
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }> };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point)) {
+        capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
+        if (payload.reason === "fracture") this.fractureSpawned += 1;
       }
     });
   }
@@ -615,6 +672,7 @@ export class RunScene extends Phaser.Scene {
     spawnSource: EnemySpawnSource,
     rewardMultiplier: number,
     definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
+    requestedPoint?: Readonly<{ x: number; y: number }>,
   ): boolean {
     if (
       !this.player ||
@@ -625,7 +683,7 @@ export class RunScene extends Phaser.Scene {
     ) {
       return false;
     }
-    const point = pointOnSpawnRing(
+    const point = requestedPoint ?? pointOnSpawnRing(
       this.player,
       SPAWN_RADIUS,
       this.spawnSequence * GOLDEN_ANGLE,
@@ -723,16 +781,32 @@ export class RunScene extends Phaser.Scene {
       if (damage.critical) this.criticalShots += 1;
       this.highestCritTier = Math.max(this.highestCritTier, damage.tier);
     }
-    const attackSpeedMultiplier = Math.max(0.01, 1 + this.runState.player.stats.attackSpeedBonus);
+    const attackSpeedMultiplier = Math.max(
+      0.01,
+      1 + this.runState.player.stats.attackSpeedBonus + this.bloodlustAttackSpeedBonus,
+    );
     this.nextFireAtMs = this.runState.elapsedMs + this.weaponDefinition.cooldownMs / attackSpeedMultiplier;
   }
 
   private handleProjectileEnemyOverlap(projectile: ProjectileActor, enemy: EnemyActor): void {
     if (!this.runState || !projectile.canHit(enemy.targetId) || enemy.defeated) return;
-    const result = enemy.takeDamage(projectile.damage);
-    if (result.applied) this.hitFlashes += 1;
+    this.commitEnemyDamage(enemy, projectile.damage, "direct");
     projectile.registerHit(enemy.targetId);
     this.longestPierceChain = Math.max(this.longestPierceChain, projectile.pierceChainIndex);
+  }
+
+  private commitEnemyDamage(
+    enemy: EnemyActor,
+    damage: number,
+    damageSource: DamageSource,
+    parentEventId?: string,
+  ): void {
+    if (!this.runState || enemy.defeated) return;
+    const appliedDamage = Math.min(enemy.health, Math.max(0, damage));
+    const result = enemy.takeDamage(damage);
+    if (!result.applied) return;
+    this.hitFlashes += 1;
+    this.damageBySource[damageSource] += appliedDamage;
     if (!result.killed) return;
     if (!this.eventQueue.claimLethal(enemy.targetId)) return;
     this.eventSequence += 1;
@@ -741,8 +815,12 @@ export class RunScene extends Phaser.Scene {
       eventId: deathEventId,
       kind: "death.committed",
       entityId: enemy.targetId,
-      provenance: { sourceCategory: "weapon", sourceId: this.weaponDefinition?.id },
-      payload: { enemyId: enemy.definition.id },
+      provenance: {
+        sourceCategory: damageSource === "direct" ? "weapon" : "skill",
+        sourceId: damageSource === "direct" ? this.weaponDefinition?.id : archetypeIds.skill.onKillExplosion,
+        parentEventId,
+      },
+      payload: { enemyId: enemy.definition.id, damageSource },
     });
     const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
@@ -756,10 +834,14 @@ export class RunScene extends Phaser.Scene {
           deathSpawns.rewardMultiplier,
           deathSpawns.parentEntityId,
           deathSpawns.parentEventId,
+          "offspring",
+          { x: enemy.x, y: enemy.y },
         );
         this.offspringQueued += 1;
       }
     }
+    this.enqueueConfiguredOnKillEffects(enemy, deathEventId, damageSource);
+    this.killTimesMs.push(this.runState.elapsedMs);
     this.runState = recordKill(this.runState);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
@@ -770,6 +852,112 @@ export class RunScene extends Phaser.Scene {
       this.ambientXpDropped += xpReward;
     }
     enemy.destroy();
+  }
+
+  private enqueueConfiguredOnKillEffects(
+    enemy: EnemyActor,
+    deathEventId: string,
+    damageSource: DamageSource,
+  ): void {
+    if (!this.runState) return;
+    const explosion = activeTheme.skills
+      .find((skill) => skill.id === archetypeIds.skill.onKillExplosion)
+      ?.effects?.find((effect) => effect.kind === "on_kill_explosion");
+    const explosionEnabled = this.runState.activeSkillIds.includes(archetypeIds.skill.onKillExplosion);
+    const chainEnabled = this.runState.activeSkillIds.includes(archetypeIds.skill.chainReaction);
+    if (
+      explosion &&
+      shouldExplodeOnKill(damageSource, explosionEnabled, chainEnabled) &&
+      this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.onKillExplosion)
+    ) {
+      this.eventSequence += 1;
+      const depth = damageSource === "direct" ? 0 : damageSource === "explosion" ? 1 : 2;
+      this.eventQueue.enqueue({
+        eventId: `explosion-${this.eventSequence}`,
+        kind: "effect.explosion",
+        entityId: enemy.targetId,
+        provenance: {
+          sourceCategory: "skill",
+          sourceId: archetypeIds.skill.onKillExplosion,
+          parentEventId: deathEventId,
+          effectId: archetypeIds.skill.onKillExplosion,
+        },
+        payload: { x: enemy.x, y: enemy.y, radius: explosion.radius, damage: explosion.damage, depth },
+      });
+    }
+
+    const fracture = activeTheme.skills
+      .find((skill) => skill.id === archetypeIds.skill.fracture)
+      ?.effects?.find((effect) => effect.kind === "fracture");
+    if (
+      fracture &&
+      this.runState.activeSkillIds.includes(archetypeIds.skill.fracture) &&
+      shouldFracture(fracture.chance, this.effectRandom) &&
+      this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.fracture)
+    ) {
+      for (let index = 0; index < fracture.childCount; index += 1) {
+        this.enqueueSpawnRequest(
+          fracture.childEnemyId,
+          archetypeIds.skill.fracture,
+          fracture.rewardMultiplier,
+          enemy.targetId,
+          deathEventId,
+          "fracture",
+          { x: enemy.x + (index === 0 ? -8 : 8), y: enemy.y },
+        );
+        this.fractureQueued += 1;
+      }
+    }
+  }
+
+  private processExplosionEvent(payload: ExplosionEventPayload, eventId: string): void {
+    const source: DamageSource = payload.depth === 0 ? "explosion" : "chained_explosion";
+    if (payload.depth === 0) this.explosionsCommitted += 1;
+    else this.chainExplosionsCommitted += 1;
+    const targets = targetsWithinRadius(
+      [...this.enemies].map((enemy) => ({ id: enemy.targetId, x: enemy.x, y: enemy.y, active: enemy.active && !enemy.defeated, enemy })),
+      payload,
+      payload.radius,
+    );
+    for (const target of targets) this.commitEnemyDamage(target.enemy, payload.damage, source, eventId);
+    this.renderExplosionCue(payload);
+  }
+
+  private renderExplosionCue(payload: ExplosionEventPayload): void {
+    if (this.activeExplosionCues >= 24) {
+      this.droppedPresentationCues += 1;
+      return;
+    }
+    this.activeExplosionCues += 1;
+    const explosionColour = Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.explosion).color;
+    const criticalColour = Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.critical).color;
+    const cue = this.add.circle(payload.x, payload.y, payload.radius, explosionColour, 0.18)
+      .setStrokeStyle(3, criticalColour, 0.75)
+      .setDepth(30);
+    this.tweens.add({
+      targets: cue,
+      alpha: 0,
+      scale: 1.2,
+      duration: 220,
+      onComplete: () => {
+        this.activeExplosionCues = Math.max(0, this.activeExplosionCues - 1);
+        cue.destroy();
+      },
+    });
+  }
+
+  private updateBloodlust(): void {
+    if (!this.runState) return;
+    const bloodlust = activeTheme.skills
+      .find((skill) => skill.id === archetypeIds.skill.bloodlust)
+      ?.effects?.find((effect) => effect.kind === "bloodlust");
+    if (!bloodlust || !this.runState.activeSkillIds.includes(archetypeIds.skill.bloodlust)) {
+      this.bloodlustAttackSpeedBonus = 0;
+      return;
+    }
+    const selected = selectBloodlust(this.killTimesMs, this.runState.elapsedMs, bloodlust);
+    this.killTimesMs = [...selected.killTimesMs];
+    this.bloodlustAttackSpeedBonus = selected.attackSpeedBonus;
   }
 
   private dropExperience(
@@ -877,6 +1065,9 @@ export class RunScene extends Phaser.Scene {
     this.terminalShown = true;
     this.player?.stop();
     this.eventQueue.clear();
+    this.loadEventQueue.clear();
+    this.killTimesMs = [];
+    this.bloodlustAttackSpeedBonus = 0;
     for (const projectile of this.projectiles) projectile.destroy();
     this.physics.world.pause();
     this.runEndOverlay?.show(this.runState.status, () => this.restartRun());
@@ -1097,12 +1288,24 @@ export class RunScene extends Phaser.Scene {
         enabled: this.loadHarnessRequested > 0,
         requested: this.loadHarnessRequested,
         spawned: this.loadHarnessSpawned,
-        eventBacklog: this.eventQueue.snapshot().backlog,
-        eventBacklogHighWater: this.eventQueue.snapshot().backlogHighWater,
-        processedEffects: this.eventQueue.snapshot().processed,
+        eventBacklog: this.loadEventQueue.snapshot().backlog,
+        eventBacklogHighWater: this.loadEventQueue.snapshot().backlogHighWater,
+        processedEffects: this.loadEventQueue.snapshot().processed,
         droppedPresentationCues: this.droppedPresentationCues,
         liveHighWater: this.liveHighWater,
         trackedHighWater: this.trackedHighWater,
+      },
+      effects: {
+        explosionsCommitted: this.explosionsCommitted,
+        chainExplosionsCommitted: this.chainExplosionsCommitted,
+        fractureQueued: this.fractureQueued,
+        fractureSpawned: this.fractureSpawned,
+        bloodlustKills: this.killTimesMs.length,
+        bloodlustAttackSpeedBonus: this.bloodlustAttackSpeedBonus,
+        directDamage: this.damageBySource.direct,
+        explosionDamage: this.damageBySource.explosion,
+        chainedExplosionDamage: this.damageBySource.chained_explosion,
+        eventBacklog: this.eventQueue.snapshot().backlog,
       },
       shrine: {
         id: this.shrineDefinition?.id ?? null,

@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.2**
-- Active phase: **Phase 3 complete — Phase 4 not started**
+- Active phase: **Phases 3–4 complete — awaiting combined review and manual testing**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -759,6 +759,50 @@ Theme validation requires all skill and upgrade roles, validates skill reference
 
 Revisit when:
 Skills gain ranks, mutually exclusive variants, weapon ownership, or acquisition outside the run upgrade pool.
+
+### REC-033 — On-kill mechanics use a kind-aware dispatcher with retained capacity work
+
+- Status: Accepted
+- Date: 2026-08-14
+- Affects: V0.2 Phase 4, causal events, explosions, Fracture, spawning, restart
+- Blocks: None
+
+Context / observation:
+Phase 4 is the first point where death, explosion, and spawn work coexist. The Phase 2 scenario-specific consumer guard cannot safely scale to mixed event kinds, and a spawn at the live cap must not be removed merely so later work can run.
+
+Decision / solution:
+Use one budgeted, kind-aware gameplay dispatcher for committed deaths, explosion effects, and spawn requests. Keep the scripted load harness on its own queue. A queue consumer may explicitly defer its head event; deferred work is restored without incrementing processed metrics. Spawn requests at capacity therefore retain FIFO back-pressure. Terminal state and restart clear both queues and all exact-once claims.
+
+Why:
+One dispatcher prevents a consumer from claiming unknown work. Strict FIFO keeps causal order explainable, and explicit deferral proves the difference between processed and merely inspected work.
+
+Future guardrail:
+Queue tests assert deferral retains the head and does not increment processed totals. The compound browser path waits for zero live enemies and zero gameplay backlog, then proves every queued Fracture child eventually spawned. New event kinds must be routed in the dispatcher before they can be enqueued live.
+
+Revisit when:
+Profiling requires priority lanes, strict FIFO causes unacceptable head-of-line blocking, or suspended-run persistence serializes active queues.
+
+### REC-034 — Phase 4 interaction tuning and inheritance are explicit theme data
+
+- Status: Provisional
+- Date: 2026-08-14
+- Affects: V0.2 Phase 4, skills, balance, rewards, feedback
+- Blocks: None
+
+Context / observation:
+The product specifies Fracture at 15% and Bloodlust at +1% per ten kills in the previous five seconds, but does not specify explosion tuning, fracture child rewards, or chain inheritance details.
+
+Decision / solution:
+Use a 96-unit, 15-damage on-kill explosion. Direct kills explode when Detonation is active; explosion kills only explode when Chain Reaction is also active. Every enemy claims the explosion effect at most once, so chains remain iterative and finite over committed deaths. Fracture rolls 15% once per death using seeded randomness and schedules two zero-XP Runner children at the death position; it does not inherit the parent's reward multiplier. Bloodlust retains committed kill timestamps strictly within the previous 5,000 simulation milliseconds and adds 0.01 attack-speed bonus per complete ten kills. Presentation uses a theme-owned explosion colour and is capped at 24 simultaneous cues; omitted cues increment telemetry without affecting simulation.
+
+Why:
+The explosion values are strong enough to compose in dense swarms without replacing direct damage. Zero-XP splits avoid reward multiplication before Phase 5 formalizes world rewards. Simulation-time windows naturally freeze during pause and level-up.
+
+Future guardrail:
+The interaction matrix covers direct, explosion, chained, enabled, and disabled combinations. Spatial, chance, rolling-window, damage-source, cue-drop, queue, terminal, and restart telemetry remain separate. Damage is attributed as direct, explosion, or chained explosion at commit time.
+
+Revisit when:
+Combined manual testing provides balance feedback, Phase 5 defines reward stacking, Phase 6 tunes presentation limits, or Phase 7 reconciles the final damage ledger.
 
 ## Open questions to reconcile during implementation
 
