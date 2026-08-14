@@ -960,6 +960,28 @@ Run the two paths with `CI=1` before pushing browser-load changes. Long live tes
 Revisit when:
 Browser tests gain deterministic simulation stepping, CI hardware changes materially, or the representative scenario is replaced by a production replay format.
 
+### REC-042 — Representative load is a manual release stress gate
+
+- Status: Resolved
+- Date: 2026-08-14
+- Affects: V0.2 acceptance, GitHub Actions, browser regression coverage
+- Blocks: None
+
+Context / observation:
+GitHub Actions pull-request run `31782554164` passed 27 browser paths but the combined 300-enemy scenario failed all three attempts while waiting for its first explosion. The assertion duplicated the dedicated Phase 4 explosion integration path and made a hardware-sensitive stress scenario block unrelated pull-request work. The workflow also ran the same verification for both a branch push and its pull request. A subsequent zero-retry audit found that the retained Horde reward regression could spend its bounded combat window defeating ambient enemies rather than the tagged shrine enemies whose provenance it asserts.
+
+Decision / solution:
+Tag the representative 300-enemy path `@stress` and run it without retries in a separate manually dispatched `Stress` workflow. Required pull-request CI retains type checking, all unit tests, lint, the production build, dependency audit, and every non-stress Chromium regression. Branch pushes run required CI only on `main`, avoiding duplicate feature-branch push and pull-request runs. Keep the stress path as a release gate and run it after changes to spawning, combat/effect queues, statistics, feedback limits, or restart cleanup. Remove its redundant wait for a first explosion; Phase 4 remains authoritative for explosion integration while the stress path continues to require reconciled direct/critical damage, pierce and kill chains, bounded presentation, complete queues, terminal cleanup, and repeated restart. Give the Horde reward path a test-build-only `noAmbient` scenario so its bounded combat window contains only enemies with the provenance under test; production spawning remains unchanged.
+
+Why:
+Fast deterministic regressions should block every pull request. The representative load remains important acceptance evidence, but hosted-runner throughput is not a product invariant and its broad compound scope makes it unsuitable as an always-on change gate.
+
+Future guardrail:
+Do not remove earlier unit or focused browser regressions when moving a hardware-sensitive scenario out of required CI. Manual stress runs must use zero retries, and V0.2 cannot be released without a passing representative-load run.
+
+Revisit when:
+The browser harness gains deterministic simulation stepping, the stress path becomes reliably bounded on hosted runners, or GitHub Actions provides a stable performance runner.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

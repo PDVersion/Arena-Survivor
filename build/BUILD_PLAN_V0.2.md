@@ -308,7 +308,8 @@ npm test -- --run
 npm run typecheck
 npm run lint
 npm run build
-npm run test:e2e
+npm run test:e2e:ci
+npm run test:e2e:stress
 npm audit --audit-level=high
 ```
 

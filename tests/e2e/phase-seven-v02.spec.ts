@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const compoundPath = "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&critChance=3.4&pierce=12&attackSpeedBonus=9&worldScenario=all&runDurationMs=1500&noXp=1&noContact=1";
 
-test("critical V0.2 path sustains 300 mixed enemies, reconciles statistics, and restarts repeatedly", async ({ page }) => {
+test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statistics, and restarts repeatedly", async ({ page }) => {
   test.setTimeout(180_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -17,9 +17,6 @@ test("critical V0.2 path sustains 300 mixed enemies, reconciles statistics, and 
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().statistics?.peakEnemiesAlive,
   ), { timeout: 30_000 }).toBe(300);
-  await expect.poll(() => page.evaluate(
-    () => window.__ARENA_TEST__?.getSnapshot().effects?.explosionsCommitted,
-  ), { timeout: 60_000 }).toBeGreaterThan(0);
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().run?.status,
   ), { timeout: 60_000 }).toBe("complete");

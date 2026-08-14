@@ -784,6 +784,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private spawnIfReady(): void {
+    if (testSkillEnabled("noAmbient")) return;
     if (
       !this.player ||
       !this.runState ||

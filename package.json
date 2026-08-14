@@ -10,7 +10,9 @@
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint .",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:ci": "playwright test --grep-invert @stress",
+    "test:e2e:stress": "playwright test --grep @stress --retries=0"
   },
   "dependencies": {
     "phaser": "3.90.0"

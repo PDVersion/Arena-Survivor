@@ -54,7 +54,8 @@ npm run typecheck
 npm test -- --run
 npm run lint
 npm run build
-npm run test:e2e
+npm run test:e2e:ci
+npm run test:e2e:stress
 npm audit --audit-level=high
 ```
 
@@ -62,8 +63,10 @@ Focused Phase 7 checks:
 
 ```bash
 npm test -- --run tests/unit/statistics tests/unit/content tests/unit/architecture
-npm run test:e2e -- --grep "critical V0.2 path"
+npm run test:e2e:stress
 ```
+
+The normal Chromium regression suite runs on every pull request. The tagged 300-enemy stress path is a separate manual GitHub Actions workflow; run it before a release and after changes to spawning, combat/effect queues, statistics, feedback limits, or restart cleanup.
 
 For a manual smoke test, verify movement, combat, XP collection, upgrade choices, pause/focus behavior, all shrine roles, elites, mute and reduced-motion behavior, the terminal statistics ledger, repeated restart, and a clean browser console.
 

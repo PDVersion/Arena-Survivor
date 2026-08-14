@@ -23,7 +23,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   page,
 }) => {
   test.setTimeout(35_000);
-  await waitForRun(page, "/?surgeDurationMs=1000");
+  await waitForRun(page, "/?surgeDurationMs=1000&noAmbient=1");
   const ready = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(ready?.shrine).toMatchObject({
     id: "shrine.spawn_surge",
