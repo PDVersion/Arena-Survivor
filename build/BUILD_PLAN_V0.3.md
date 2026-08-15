@@ -29,7 +29,7 @@ The re-sequencing is already recorded: `PLAN.md` carries the new V0.3 and V0.4 s
 ## Delivery contract
 
 - Begin from `main` after the merged V0.2 milestone.
-- Build V0.3 on `codex/v0.3` and deliver it as one pull request into `main`.
+- Build V0.3 on `claude/v0.3` and deliver it as one pull request into `main`. The `claude/` prefix records that this milestone is built with Claude Code; see the branch-naming convention in [`../AGENTS.md`](../AGENTS.md).
 - Complete phases in order. Each numbered phase ends in one reviewable commit using the listed subject.
 - Keep implementation, tests, plan status, and material reconciliation findings in the same phase commit.
 - Run a phase's short verification before marking it complete or starting the next.

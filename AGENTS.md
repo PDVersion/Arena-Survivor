@@ -25,6 +25,21 @@ Before completing a phase:
 - Keep the phase implementation, tests, plan status, and reconciliation updates in the same phase commit.
 - Do not mark a phase complete or begin the next phase until its verification passes.
 
+## Branch naming
+
+Milestone branches are named `<agent>/<milestone>`, where the prefix records which coding agent built the work:
+
+| Prefix | Built with | Example |
+| --- | --- | --- |
+| `codex/` | ChatGPT Codex | `codex/v0.1`, `codex/v0.2` |
+| `claude/` | Claude Code | `claude/v0.3` |
+
+Use the prefix for the agent that is actually doing the work, decided when the branch is created. The prefix is a provenance record, not a permission boundary — any agent may read, review, or continue any branch.
+
+A milestone built by more than one agent keeps the prefix of the agent that created the branch; note the split in the pull request description rather than renaming. Renaming a branch on GitHub **closes** any pull request that used it as the head, so pick the prefix before opening the pull request.
+
+Everything else about a branch — one branch per milestone, one pull request into `main`, one reviewable commit per numbered phase — is unchanged by the prefix.
+
 ## Git workflow for V0.2
 
 - Branch: `codex/v0.2`

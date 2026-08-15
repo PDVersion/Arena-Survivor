@@ -1004,6 +1004,28 @@ Future guardrail:
 Revisit when:
 V0.3 completes, `PLAN.md` scope is intentionally changed again, or the education pivot in `build/EDUCATION_PIVOT.md` is scheduled into a milestone.
 
+### REC-044 — Milestone branches carry an agent prefix
+
+- Status: Accepted
+- Date: 2026-08-15
+- Affects: git workflow, milestone branch naming, pull request creation
+- Blocks: None
+
+Context / observation:
+V0.1 and V0.2 were built with ChatGPT Codex on `codex/v0.1` and `codex/v0.2`, and the `codex/` prefix was treated as a fixed part of the branch convention rather than as a record of which agent produced the work. V0.3 is being built with Claude Code, so the prefix no longer described reality. The V0.3 planning branch was opened as `codex/v0.3` and had to be renamed after its pull request already existed.
+
+Decision / solution:
+Name milestone branches `<agent>/<milestone>`, where the prefix records the coding agent doing the work: `codex/` for ChatGPT Codex, `claude/` for Claude Code. Decide the prefix when the branch is created. A milestone built by more than one agent keeps the prefix of the agent that created the branch and notes the split in the pull request description. The prefix is provenance only; it grants and withholds nothing, and any agent may read, review, or continue any branch. One branch per milestone, one pull request into `main`, and one reviewable commit per numbered phase are all unchanged.
+
+Why:
+Branch history is the cheapest available record of which tool produced which milestone, which matters when reviewing style differences, tracing an unfamiliar decision back to its author, or comparing how the two agents handle the same repository conventions. Encoding it in the branch name costs nothing and needs no separate log.
+
+Future guardrail:
+`AGENTS.md` carries the convention as a milestone-independent section, so it does not go stale when the current milestone plan is repointed. Renaming a branch on GitHub **closes** any pull request that used it as the head — the rename API retargets pull requests whose *base* was renamed, not their head — so the prefix must be chosen before the pull request is opened. V0.3 planning pull request #13 was closed this way and reopened as a new pull request from `claude/v0.3` with the same commit.
+
+Revisit when:
+A third coding agent is used, a milestone is genuinely co-built and the single-prefix rule becomes misleading, or branch protection rules start depending on the prefix.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
