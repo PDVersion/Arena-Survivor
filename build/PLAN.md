@@ -1093,9 +1093,62 @@ Once the basic loop works:
 
 # V0.3 Scope
 
-After the main build system feels good:
+Once every mechanic exists, make the loop feel right before adding more content to it.
+
+V0.3 is a rebalancing and readability milestone. It changes almost no mechanics; it changes how they scale, escalate, and communicate.
+
+## Rebuild Progression
+
+- Exponential experience curve rather than a linear one
+- Experience rewards that depend on enemy role
+- Experience rewards that scale with how tough an enemy spawned
+- Per-upgrade counts in the run statistics
+
+## Give the World Pressure
+
+- Enemy health, damage, and speed scale with elapsed time as well as Chaos
+- Timer-gated enemy roster milestones rather than a full roster within 30 seconds
+- Spawn rate, batch size, and role mix driven by one spawn director
+- Chaos shifts the composition of the swarm, not only its size
+- Telegraphed milestone waves
+
+## Give Enemies Presence
+
+- Enemies occupy space and cannot perfectly overlap
+- Small enemies bunch; large enemies block both enemies and the player
+- Enemies spawn outside the visible viewport
+- A fixed logical viewport so difficulty does not depend on window size
+
+## Make Skills Scale
+
+- Skills gain levels rather than being a one-time toggle
+- Detonation starts small and grows in radius and damage
+- Detonation damage derives from the killed enemy rather than a flat value
+- Chain reactions gain declared depth limits and falloff
+- No upgrade offer is ever a wasted pick
+
+## Tell the Player Everything
+
+- Level-up cards state the exact before and after values
+- Level-up cards show the upgrade level and mark new options
+- A detail toggle for players who prefer clean cards
+- A pause menu showing current stats, owned upgrades, and world modifiers
+- An experience bar, threat indicator, and wave announcements in the HUD
+
+## Close the Gaps
+
+- Armour, regeneration, and luck become real stats
+- Pickup pressure is bounded and readable
+- A published time-to-kill table and damage budget backing every tuned value
+
+---
+
+# V0.4 Scope
+
+After the loop feels good, grow the content:
 
 - Additional weapons
+- Weapon evolution
 - Additional shrine types
 - Additional curses
 - Elite modifiers

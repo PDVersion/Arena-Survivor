@@ -982,6 +982,28 @@ Do not remove earlier unit or focused browser regressions when moving a hardware
 Revisit when:
 The browser harness gains deterministic simulation stepping, the stress path becomes reliably bounded on hosted runners, or GitHub Actions provides a stable performance runner.
 
+### REC-043 — V0.3 becomes the rebalancing milestone and prior V0.3 content moves to V0.4
+
+- Status: Accepted
+- Date: 2026-08-15
+- Affects: planning workflow, `PLAN.md` scope sections, V0.3 and V0.4 milestone boundaries, `SAVE_DATA.md` timing
+- Blocks: None
+
+Context / observation:
+V0.2 completed every named mechanic, but play testing showed the loop reads as flat: `xpRequiredForLevel` is linear (`src/game/systems/xp.ts:20`) while XP income is not; enemies share a physics group with no collider (`src/game/scenes/run-scene.ts:334`); `SPAWN_RADIUS` is 360 against a viewport half-extent of roughly 960, so spawns are visible; the roster fully unlocks within 24 seconds; enemy strength scales with Chaos but not elapsed time; upgrade cards state no values; and Detonation is one fixed 96/15 blast forever. Three defects surfaced alongside those: `eliteChance` is `min(0.4, 0.04p)` so a shrine-free run sees no elites; `selectUpgradeChoices` can re-offer an already-enabled skill, wasting a level-up; and `armour`, `regeneration`, and `luck` are declared and validated but read by no system. The prior `PLAN.md` V0.3 section listed content growth — weapons, bosses, unlocks, persistence, endless mode — none of which addresses these.
+
+Decision / solution:
+Re-sequence rather than expand. `PLAN.md` V0.3 now describes a rebalancing, escalation, and readability milestone; the previous V0.3 content list moves verbatim to a new V0.4 section, gaining weapon evolution. `build/BUILD_PLAN_V0.3.md` is the implementation plan for the new V0.3 in eight phases. `SAVE_DATA.md` moves its export/import UI expectation to V0.4 and records that V0.3 adds only a serializable settings slice behind a marked adapter seam. Completed milestone plans stay immutable except for forward-looking factual errata, so `BUILD_PLAN_V0.2.md` gains one corrected milestone reference and nothing else.
+
+Why:
+Every V0.4 item inherits whatever curve exists when it lands. Tuning four enemy roles, one weapon, and five skills is materially cheaper than tuning them after adding more weapons, bosses, and unlockable pools on top, and a wrong curve would be re-tuned twice. The three defects above are also cheapest to fix before content multiplies the surface they affect.
+
+Future guardrail:
+`PLAN.md` remains the authoritative scope source and one milestone plan is current at a time, as REC-024 requires. `AGENTS.md` and `README.md` must be repointed from V0.2 to V0.3 in the V0.3 Phase 1 commit, not before, so no session begins milestone work against an unapproved plan. Every balance value introduced by V0.3 lives in theme-owned tuning data and is asserted by the pacing simulator, so a later re-sequencing does not require another literal hunt through systems and scenes.
+
+Revisit when:
+V0.3 completes, `PLAN.md` scope is intentionally changed again, or the education pivot in `build/EDUCATION_PIVOT.md` is scheduled into a milestone.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.
