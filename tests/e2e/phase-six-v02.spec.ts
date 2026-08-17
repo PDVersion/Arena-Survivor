@@ -18,7 +18,11 @@ test("elite capability applies to every enemy role and survives duplication", as
 });
 
 test("feedback unlocks after interaction, throttles dense combat, and supports mute", async ({ page }) => {
-  await page.goto("/?forceElite=1&loadHarness=80&critChance=3&attackSpeedBonus=9&noXp=1");
+  // `closeLoad` spawns the harness beside the player. Since V0.3 Phase 4 the
+  // ambient ring sits ~958 units out, so without it this path spends its whole
+  // window waiting for projectiles to cross the arena rather than measuring
+  // what it is about: feedback limits under dense combat.
+  await page.goto("/?forceElite=1&loadHarness=80&closeLoad=1&critChance=3&attackSpeedBonus=9&noXp=1");
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().load?.spawned,
   ), { timeout: 30_000 }).toBe(80);

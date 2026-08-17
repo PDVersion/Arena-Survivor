@@ -1168,6 +1168,8 @@ Future guardrail:
 `tests/unit/director` asserts the envelope directly for both production themes: weapon range must exceed the spawn ring by at least 20 percent, every role must reach the player within 12 seconds, the opening role within 8, and exactly one role may outrun the player. A tuning edit that breaks the coupling now fails in milliseconds instead of on a hosted runner.
 
 Test-design pitfalls found alongside:
+A third pitfall surfaced later and is the same shape: the feedback-throttling path drove combat through the load harness at the ambient ring, so most of its window went on projectiles crossing the arena rather than on the density it measures. It passed locally in two seconds and failed intermittently on hosted runners. The `closeLoad` seam already existed for exactly this but was gated behind `representativeLoad`; it is now usable on its own, and that path uses it. Any browser path whose subject is combat density, feedback, or statistics should place its enemies with `closeLoad` rather than waiting out the spawn ring.
+
 Two browser paths were wall-clock dependent in ways local runs never showed. One polled a progress threshold on a fixed 30-second timeout, which fails whenever simulation advances slower than real time — the case REC-041 already warned about. The other stalled indefinitely because the run entered `level_up` and waited for a choice the test never made; simulation time stops there, so no wall-clock timeout can ever help. Director paths now use the `noXp` seam to stay out of progression entirely, following the REC-042 precedent of isolating the path under test.
 
 Revisit when:

@@ -588,7 +588,11 @@ export class RunScene extends Phaser.Scene {
         ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
         : this.enemyDefinition;
       const closeAngle = sequence * GOLDEN_ANGLE;
-      const requestedPoint = representative && testSkillEnabled("closeLoad") && this.player && definition
+      // `closeLoad` places harness spawns next to the player so a path that is
+      // about combat density does not also depend on travel time across the
+      // off-screen spawn ring. Usable on its own, not only with
+      // `representativeLoad`.
+      const requestedPoint = testSkillEnabled("closeLoad") && this.player && definition
         ? {
             x: Math.min(ARENA_SIZE.width - definition.radius, Math.max(definition.radius, this.player.x + Math.cos(closeAngle) * 100)),
             y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * 100)),
