@@ -1,4 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+
+// Resolved from the active theme: a rule test must never assert themed copy.
+const vocabulary = activeTheme.copy.vocabulary;
 
 const compoundPath = "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&critChance=3.4&pierce=12&attackSpeedBonus=9&worldScenario=all&runDurationMs=1500&noXp=1&noContact=1";
 
@@ -46,8 +50,8 @@ test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statisti
   expect(breakdown?.direct).toBeGreaterThan(0);
   expect(breakdown?.criticalBonus).toBeGreaterThan(0);
   expect(breakdown?.remainder).toBe(0);
-  expect(terminal?.statistics?.summaryMetrics).toContain("Peak Foes: 300");
-  expect(terminal?.statistics?.summaryDamage[0]).toContain("Total Damage:");
+  expect(terminal?.statistics?.summaryMetrics).toContain(`${vocabulary.peakEnemiesAlive}: 300`);
+  expect(terminal?.statistics?.summaryDamage[0]).toContain(`${vocabulary.totalDamage}:`);
   expect(terminal?.feedback?.visualHighWater).toBeLessThanOrEqual(48);
   expect(terminal?.feedback?.voices).toBe(0);
   expect(terminal?.feedback?.activeVisuals).toBe(0);

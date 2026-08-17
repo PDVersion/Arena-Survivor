@@ -51,7 +51,7 @@ The swap is deliberately bounded: it re-skins and re-tunes the existing four ene
 
 - [x] Phase 1 — Tuning seams, balance simulator, and plan re-pointing (REC-045)
 - [x] Phase 2 — Environment theme as the primary content pack (REC-046)
-- [ ] Phase 3 — Progression curve, per-role rewards, and upgrade tallies
+- [x] Phase 3 — Progression curve, per-role rewards, and upgrade tallies (REC-047)
 - [ ] Phase 4 — Procedural spawn director, fixed view, and off-screen spawning
 - [ ] Phase 5 — Physical presence, spatial index, and crowd separation
 - [ ] Phase 6 — Time and Chaos scaling, and arena hazards
@@ -259,23 +259,25 @@ Covers requests 1, 2, and 5.
 Replace the linear requirement with banded geometric growth. Growth is fast early so the opening minute is generous, then compounds so late levels are milestones.
 
 ```text
-xpRequiredForLevel(1) = 4
-band 1  levels  1–4    growth ×1.35
-band 2  levels  5–11   growth ×1.22
-band 3  levels 12–24   growth ×1.16
-band 4  levels 25+     growth ×1.12
+xpRequiredForLevel(1) = 3
+band 1  levels  1–4    growth ×1.30
+band 2  levels  5–11   growth ×1.18
+band 3  levels 12–24   growth ×1.12
+band 4  levels 25+     growth ×1.09
 ```
 
 Resulting requirements (rounded):
 
 | Level | 1 | 2 | 3 | 4 | 5 | 8 | 10 | 12 | 15 | 20 | 25 | 30 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Need | 4 | 5 | 7 | 10 | 13 | 24 | 36 | 53 | 83 | 175 | 368 | 649 |
-| Cumulative | 4 | 9 | 16 | 26 | 39 | 99 | 164 | 261 | 478 | 1,143 | 2,539 | 5,252 |
+| Need | 3 | 4 | 5 | 7 | 9 | 14 | 20 | 27 | 38 | 68 | 119 | 183 |
+| Cumulative | 3 | 7 | 12 | 19 | 28 | 64 | 101 | 151 | 254 | 527 | 1,008 | 1,784 |
 
 The curve is data (`progression.ts`), the formula is pure, and both are covered by table-driven tests including the exact boundary levels. Band 4 is open-ended, so longer and endless runs need no new authoring.
 
 Target pacing, asserted by the simulator: roughly level 8–10 at 1:00, 14–17 at 2:30, and 26–31 at 5:00 for an average build. That lands close to the `PLAN.md` example run-end screen (level 28) and gives ~30 upgrade choices per run.
+
+**These growth rates were selected with the simulator, not chosen up front.** The first candidate (base 4, growth ×1.35/1.22/1.16/1.12) made level 28 roughly five times more expensive than the linear curve it replaced, and every build model finished between level 10 and 23 — well under the band. Worse, it fed back on itself: slower levelling means lower damage, which means fewer kills, which means slower levelling. Phase 1's simulator turned that into a five-candidate sweep instead of five five-minute runs. Recorded in REC-047.
 
 ### Reward scaling (request 5)
 

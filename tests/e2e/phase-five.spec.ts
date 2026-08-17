@@ -1,4 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+import { xpRequiredForLevelOn } from "../../src/game/systems/xp";
+
+// Resolved from theme tuning so a curve change is a data edit, not a test edit.
+const firstLevelRequirement = xpRequiredForLevelOn(
+  activeTheme.tuning.progression.xpCurve,
+  1,
+);
 
 async function waitForReady(page: Page, path = "/"): Promise<void> {
   await page.goto(path);
@@ -12,7 +20,7 @@ test("HUD shows health, XP, level, timer, kills, and live enemies", async ({ pag
   const initial = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(initial?.hud).toMatchObject({
     health: "100 / 100",
-    experience: "0 / 2",
+    experience: `0 / ${firstLevelRequirement}`,
     level: "1",
     time: "1:00",
     kills: "0",

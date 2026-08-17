@@ -27,7 +27,7 @@ export class RunEndOverlay {
     const vocabulary = this.theme.copy.vocabulary;
     const title = status === "dead" ? vocabulary.deathTitle : vocabulary.completeTitle;
     const message = status === "dead" ? vocabulary.deathMessage : vocabulary.completeMessage;
-    const summary = selectRunSummaryValues(state, vocabulary);
+    const summary = selectRunSummaryValues(state, vocabulary, this.theme.copy.content);
     const background = Phaser.Display.Color.HexStringToColor(palette.background).color;
     const floor = Phaser.Display.Color.HexStringToColor(palette.floor).color;
     const accent = Phaser.Display.Color.HexStringToColor(palette.accent).color;
@@ -55,19 +55,38 @@ export class RunEndOverlay {
       fontSize: "22px",
       fontStyle: "bold",
     }).setOrigin(0.5);
-    const columnWidth = Math.min(390, (width - 90) / 2);
-    const metrics = this.scene.add.text(width / 2 - columnWidth - 10, top + 165, summary.metrics.join("\n"), {
+    // Three columns: metrics, damage ledger, and the upgrade tally. The tally
+    // is capped and summarised rather than paged, so a long build never pushes
+    // the restart button off the panel.
+    const columnWidth = Math.min(270, (width - 110) / 3);
+    const columnStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: palette.text,
       fontFamily: "Georgia, serif",
-      fontSize: "17px",
-      lineSpacing: 7,
-    });
-    const damage = this.scene.add.text(width / 2 + 10, top + 165, `${vocabulary.damageBreakdown}\n${summary.damage.join("\n")}`, {
-      color: palette.text,
-      fontFamily: "Georgia, serif",
-      fontSize: "17px",
+      fontSize: "16px",
       lineSpacing: 5,
-    });
+      wordWrap: { width: columnWidth },
+    };
+    const left = width / 2 - columnWidth * 1.5 - 20;
+    const metrics = this.scene.add.text(left, top + 165, summary.metrics.join("\n"), columnStyle);
+    const damage = this.scene.add.text(
+      left + columnWidth + 20,
+      top + 165,
+      `${vocabulary.damageBreakdown}\n${summary.damage.join("\n")}`,
+      columnStyle,
+    );
+
+    const maxUpgradeRows = 12;
+    const shown = summary.upgrades.slice(0, maxUpgradeRows);
+    const hidden = summary.upgrades.length - shown.length;
+    const upgradeLines = summary.upgrades.length === 0
+      ? ["—"]
+      : hidden > 0 ? [...shown, `+${hidden} more`] : shown;
+    const upgrades = this.scene.add.text(
+      left + (columnWidth + 20) * 2,
+      top + 165,
+      `${summary.upgradesTitle}\n${upgradeLines.join("\n")}`,
+      columnStyle,
+    );
     const buttonY = top + panelHeight - 48;
     const button = this.scene.add.rectangle(width / 2, buttonY, 260, 56, floor, 1)
       .setStrokeStyle(2, accent)
@@ -80,7 +99,7 @@ export class RunEndOverlay {
     }).setOrigin(0.5);
     this.restartBounds = new Phaser.Geom.Rectangle(width / 2 - 130, buttonY - 28, 260, 56);
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
-    this.container = this.scene.add.container(0, 0, [panel, heading, detail, summaryTitle, metrics, damage, button, action])
+    this.container = this.scene.add.container(0, 0, [panel, heading, detail, summaryTitle, metrics, damage, upgrades, button, action])
       .setScrollFactor(0, 0, true)
       .setDepth(1100);
   }

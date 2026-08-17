@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 2 complete — Phase 3 next**
+- Active phase: **Phase 3 complete — Phase 4 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1081,6 +1081,36 @@ Future guardrail:
 
 Revisit when:
 Phase 3 retunes rewards, Phase 10's time-to-kill table evaluates the widened glass gap, real persistence sources are cited in a codex, or the type system arrives and enemy identity gains a material attribute.
+
+### REC-047 — The XP curve was selected by simulation, not chosen
+
+- Status: Provisional
+- Date: 2026-08-17
+- Affects: V0.3 Phases 3, 6, 7, 10; progression, rewards, early-game difficulty
+- Blocks: None
+
+Context / observation:
+The Phase 3 plan proposed a banded curve of base 4 with growth 1.35/1.22/1.16/1.12. Implemented as written it made level 28 roughly five times more expensive than the linear curve it replaced, and every build model finished between level 10 and 23 against a declared band of 26-31. It also fed back on itself: slower levelling means lower damage, which means fewer kills, which means slower levelling still. The `passive` and `crit` models pinned the 300-enemy cap, confirming they were damage-constrained rather than supply-constrained.
+
+Decision / solution:
+Select the curve with the Phase 1 simulator instead of by hand. A five-candidate sweep took seconds and settled on base 3 with growth 1.30/1.18/1.12/1.09, which lands damage-rush at 26, crit at 25, and explosion at 30, with level 5 at 0:26 and level 25 at 4:29. Per-role rewards land as planned (1/2/7/5, offspring at half their own role, elite x2.5), and `toughnessRewardShare` is 0.5. Update the plan's curve table to the selected values, and add a simulator test asserting the band and the deceleration so drift fails in CI rather than in a manual run.
+
+Note that the toughness share is inert at Chaos 1.0 until Phase 6 adds elapsed-time health scaling. It is a declared seam now and an income lever later; Phase 10 re-tunes with every income source live.
+
+Why:
+The plan's numbers were a reasonable hand estimate and were wrong by a factor of five. Phase 1 existed precisely so that being wrong costs a sweep rather than five five-minute runs. Recording the miss matters more than quietly correcting it: the same hand-estimation error is likely in the Phase 6 and Phase 7 tables, which should also be simulated before they are trusted.
+
+Discovered defect:
+The stress path asserted knight-magic vocabulary (`Peak Foes`, `Total Damage`) and so broke on the Phase 2 theme swap, but CI never caught it because `@stress` is excluded from the required suite. Both assertions now resolve from the active theme. Any assertion on themed copy outside a presentation test is a boundary violation under THEME_ARCHETYPES rule 6, and the excluded stress path is where such violations hide.
+
+Early-game observation to re-check after Phase 4:
+A completely stationary player now dies before reaching level 2, where under V0.2 it survived. Level 2 costs 3 experience rather than 2, which is one extra kill at roughly two seconds each. The level-up browser path uses the existing `noContact` seam so it tests the overlay rather than survival, following the REC-042 precedent. This should resolve on its own in Phase 4, whose director opens at a 900 ms cadence instead of 400 ms; verify it there rather than tuning for it now.
+
+Future guardrail:
+`tests/unit/simulation` asserts the level band, the front-loaded opening, the late-game deceleration, and parity between both production themes. Browser expectations derive requirements and reward products from theme tuning rather than pinning numbers, so a balance edit does not require a test edit.
+
+Revisit when:
+Phase 4 changes spawn cadence, Phase 6 activates the toughness share through time-based health scaling, Phase 7 adds skill scaling income, or Phase 10 re-tunes with every source live.
 
 ## Open questions to reconcile during implementation
 

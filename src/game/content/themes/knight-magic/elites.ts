@@ -5,7 +5,7 @@ export const elites = [{
   id: eliteIds.baseline,
   healthMultiplier: 2,
   damageMultiplier: 1.5,
-  rewardMultiplier: 2,
+  rewardMultiplier: 2.5,
   radiusMultiplier: 1.3,
   presentationToken: "elite",
 }] as const satisfies readonly EliteDefinition[];

@@ -1,5 +1,6 @@
 import type { RunState } from "./run-state";
-import type { ThemeVocabulary } from "../core/archetypes/contracts";
+import type { ThemeCopy, ThemeVocabulary } from "../core/archetypes/contracts";
+import type { UpgradeId } from "../core/archetypes/ids";
 
 export interface HudValues {
   readonly health: string;
@@ -39,12 +40,47 @@ export interface RunSummaryValues {
   readonly title: string;
   readonly metrics: readonly string[];
   readonly damage: readonly string[];
+  readonly upgradesTitle: string;
+  readonly upgrades: readonly string[];
 }
 
-export function selectRunSummaryValues(state: RunState, vocabulary: ThemeVocabulary): RunSummaryValues {
+/**
+ * Upgrades taken, most-taken first, then by first-selection order so repeated
+ * runs read consistently. Names come from the theme copy catalog; an unknown
+ * ID falls back to the stable ID rather than being dropped, so a content gap is
+ * visible instead of silent.
+ */
+export function selectUpgradeTally(
+  state: RunState,
+  content: ThemeCopy["content"],
+): readonly string[] {
+  const counts = state.statistics.upgradeCounts;
+  const firstSelected = new Map<string, number>();
+  state.selectedUpgradeIds.forEach((id, index) => {
+    if (!firstSelected.has(id)) firstSelected.set(id, index);
+  });
+
+  return Object.freeze(
+    (Object.keys(counts) as UpgradeId[])
+      .sort((left, right) => {
+        const byCount = (counts[right] ?? 0) - (counts[left] ?? 0);
+        if (byCount !== 0) return byCount;
+        return (firstSelected.get(left) ?? 0) - (firstSelected.get(right) ?? 0);
+      })
+      .map((id) => `${content[id]?.name ?? id} ×${counts[id] ?? 0}`),
+  );
+}
+
+export function selectRunSummaryValues(
+  state: RunState,
+  vocabulary: ThemeVocabulary,
+  content: ThemeCopy["content"] = {} as ThemeCopy["content"],
+): RunSummaryValues {
   const statistics = state.statistics;
   const breakdown = statistics.damageBreakdown;
   return Object.freeze({
+    upgradesTitle: vocabulary.upgradesTaken,
+    upgrades: selectUpgradeTally(state, content),
     title: vocabulary.statisticsTitle,
     metrics: Object.freeze([
       `${vocabulary.kills}: ${statistics.kills}`,

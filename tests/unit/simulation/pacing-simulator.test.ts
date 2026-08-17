@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
+import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
 import {
   buildModels,
   expectedCritMultiplier,
@@ -131,5 +132,57 @@ describe("expected crit multiplier", () => {
 
   it("never returns less than one", () => {
     expect(expectedCritMultiplier(-3, 2)).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("V0.3 pacing targets", () => {
+  const FIVE = 5 * 60_000;
+
+  /**
+   * The curve and rewards are tuned against this band, so a drift in either
+   * fails here rather than in a five-minute manual run. See REC-047.
+   */
+  it("lands an average build inside the declared level band", () => {
+    for (const id of ["damage-rush", "crit", "explosion"]) {
+      const report = simulatePacing({
+        theme: ecoGuardianTheme,
+        build: findBuildModel(id)!,
+        durationMs: FIVE,
+      });
+      expect(report.finalLevel).toBeGreaterThanOrEqual(24);
+      expect(report.finalLevel).toBeLessThanOrEqual(34);
+    }
+  });
+
+  it("front-loads the opening minute and decelerates after it", () => {
+    const report = simulatePacing({
+      theme: ecoGuardianTheme,
+      build: findBuildModel("damage-rush")!,
+      durationMs: FIVE,
+    });
+
+    // Levels arrive quickly at first...
+    expect(timeToLevel(report, 5)!).toBeLessThan(60_000);
+    expect(levelAt(report, 60_000)).toBeGreaterThanOrEqual(7);
+
+    // ...and the last stretch must cost visibly more than the first.
+    const firstFive = timeToLevel(report, 6)! - timeToLevel(report, 1)!;
+    const lastFive = timeToLevel(report, report.finalLevel)! -
+      timeToLevel(report, report.finalLevel - 5)!;
+    expect(lastFive).toBeGreaterThan(firstFive * 2);
+  });
+
+  it("keeps both production themes inside the same band", () => {
+    const eco = simulatePacing({
+      theme: ecoGuardianTheme,
+      build: findBuildModel("damage-rush")!,
+      durationMs: FIVE,
+    });
+    const knight = simulatePacing({
+      theme: knightMagicTheme,
+      build: findBuildModel("damage-rush")!,
+      durationMs: FIVE,
+    });
+    expect(Math.abs(eco.finalLevel - knight.finalLevel)).toBeLessThanOrEqual(4);
   });
 });

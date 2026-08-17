@@ -36,7 +36,7 @@ describe("spawning rules", () => {
       parentEntityId: "enemy-7",
       parentEventId: "death-9",
       spawnSource: archetypeIds.enemy.deathSpawner,
-      rewardMultiplier: 0,
+      rewardMultiplier: 0.5,
     });
   });
 

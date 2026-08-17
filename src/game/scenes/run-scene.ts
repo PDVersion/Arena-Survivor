@@ -849,6 +849,11 @@ export class RunScene extends Phaser.Scene {
       this.eliteRandom,
       eliteOverride,
     ) ? eliteDefinition : undefined;
+    // Tougher spawns are worth more. The share applies to the world health
+    // multiplier only: elite reward is already an explicit multiplier, so
+    // folding elite health in here would pay for the same thing twice.
+    const toughnessReward = 1 +
+      (worldModifiers.enemyHealthMultiplier - 1) * activeTheme.tuning.progression.toughnessRewardShare;
     const enemy = new EnemyActor(
       this,
       `enemy-${this.enemySequence}`,
@@ -857,7 +862,7 @@ export class RunScene extends Phaser.Scene {
       definition,
       activeTheme.tokens,
       spawnSource,
-      rewardMultiplier * (elite?.rewardMultiplier ?? 1),
+      rewardMultiplier * (elite?.rewardMultiplier ?? 1) * toughnessReward,
       {
         healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
         damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
@@ -1453,7 +1458,9 @@ export class RunScene extends Phaser.Scene {
     const audio = this.audioFeedback.snapshot();
     const loadMetrics = this.terminalLoadMetrics ?? this.loadEventQueue.snapshot();
     const eventMetrics = this.terminalEventMetrics ?? this.eventQueue.snapshot();
-    const summary = this.runState ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary) : undefined;
+    const summary = this.runState
+      ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
+      : undefined;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -1581,6 +1588,8 @@ export class RunScene extends Phaser.Scene {
         damageBreakdown: this.runState.statistics.damageBreakdown,
         summaryMetrics: summary.metrics,
         summaryDamage: summary.damage,
+        upgradeCounts: { ...this.runState.statistics.upgradeCounts },
+        summaryUpgrades: summary.upgrades,
       } : undefined,
       pacing: this.runState
         ? {

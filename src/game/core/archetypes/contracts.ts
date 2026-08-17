@@ -49,6 +49,7 @@ export interface ThemeVocabulary {
   readonly explosionDamage: string;
   readonly chainedExplosionDamage: string;
   readonly remainderDamage: string;
+  readonly upgradesTaken: string;
 }
 
 export interface ThemeCopy {

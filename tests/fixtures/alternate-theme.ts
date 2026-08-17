@@ -50,6 +50,7 @@ export const alternateTheme = defineTheme({
       explosionDamage: "Test explosion damage",
       chainedExplosionDamage: "Test chained damage",
       remainderDamage: "Test remainder damage",
+      upgradesTaken: "Test upgrades taken",
     },
     content,
   },
@@ -140,9 +141,9 @@ export const alternateTheme = defineTheme({
       geometry: "circle",
       presentationToken: "enemy",
     },
-    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 140, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 1, spawnWeight: 24, unlockAtMs: 8_000, geometry: "triangle", presentationToken: "enemyFast" },
-    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 45, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 4, spawnWeight: 14, unlockAtMs: 16_000, geometry: "square", presentationToken: "enemyTank" },
-    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 55, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 3, spawnWeight: 6, unlockAtMs: 24_000, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0 } },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 140, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, spawnWeight: 24, unlockAtMs: 8_000, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 45, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, spawnWeight: 14, unlockAtMs: 16_000, geometry: "square", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 55, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, spawnWeight: 6, unlockAtMs: 24_000, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
   ],
   pickups: [
     {
@@ -192,7 +193,7 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.skill.bloodlust, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01 }] },
     { id: archetypeIds.skill.chainReaction, effects: [{ kind: "chain_reaction" }] },
   ],
-  elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2, radiusMultiplier: 1.3, presentationToken: "elite" }],
+  elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2.5, radiusMultiplier: 1.3, presentationToken: "elite" }],
   tuning: {
     progression: {
       xpCurve: { kind: "linear", baseXp: 2, step: 2 },

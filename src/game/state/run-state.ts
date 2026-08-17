@@ -23,6 +23,7 @@ import {
   observePierceChain,
   recordCommittedDamage,
   recordCommittedKill,
+  recordUpgradeSelection,
   type DamageRecord,
   type RunStatistics,
 } from "../systems/statistics/run-statistics";
@@ -176,6 +177,9 @@ export function applyRunUpgrade(state: RunState, upgrade: UpgradeDefinition): Ru
     ...upgraded,
     progression,
     status: progression.pendingChoices > 0 ? "level_up" : "playing",
+    // Tallied at the same commit point as `selectedUpgradeIds` so the two can
+    // never disagree about what was taken.
+    statistics: recordUpgradeSelection(upgraded.statistics, upgrade.id),
   };
   return observeRunCrit(next);
 }
