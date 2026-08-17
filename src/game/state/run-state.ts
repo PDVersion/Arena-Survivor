@@ -147,6 +147,18 @@ export function damageRunPlayer(
   };
 }
 
+/** Health per second on the simulation clock, so it pauses with the run. */
+export function regenerateRunPlayer(state: RunState, deltaMs: number): RunState {
+  if (state.status !== "playing") return state;
+  const perSecond = state.player.stats.regeneration;
+  if (perSecond <= 0 || state.player.health >= state.player.stats.maxHealth) return state;
+  const health = Math.min(
+    state.player.stats.maxHealth,
+    state.player.health + (perSecond * deltaMs) / 1000,
+  );
+  return { ...state, player: { ...state.player, health } };
+}
+
 export function setLiveEnemyCount(state: RunState, liveEnemies: number): RunState {
   return { ...state, statistics: observeLiveEnemies(state.statistics, liveEnemies) };
 }

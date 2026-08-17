@@ -5,8 +5,9 @@ import type { EnemySpawnSource } from "./enemy-actor";
 export class PickupActor extends Phaser.GameObjects.Arc {
   readonly pickupId: string;
   readonly definition: PickupDefinition;
-  readonly xpValue: number;
   readonly rewardSource: EnemySpawnSource;
+  /** Mutable so two pickups can merge into one worth the sum. */
+  private value: number;
   private collected = false;
 
   constructor(
@@ -25,12 +26,37 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     super(scene, x, y, definition.radius, 0, 360, false, colour);
     this.pickupId = pickupId;
     this.definition = definition;
-    this.xpValue = xpValue;
+    this.value = xpValue;
     this.rewardSource = rewardSource;
+    this.applyTier();
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.radius);
     this.setDepth(10);
+  }
+
+  get xpValue(): number {
+    return this.value;
+  }
+
+  /**
+   * Absorb another pickup's value.
+   *
+   * Merging keeps the reward exact while bounding how many actors exist, which
+   * matters most in a chain where every kill drops one.
+   */
+  absorb(other: PickupActor): void {
+    this.value += other.xpValue;
+    this.applyTier();
+  }
+
+  /** Three visual tiers, so a durable enemy's drop is worth crossing for. */
+  private applyTier(): void {
+    const tier = this.value >= 12 ? 2 : this.value >= 4 ? 1 : 0;
+    const radius = this.definition.radius * (1 + tier * 0.45);
+    this.setRadius(radius);
+    this.arcadeBody?.setCircle(radius);
+    if (tier > 0) this.setStrokeStyle(2 + tier, 0xffffff, 0.55);
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {

@@ -75,6 +75,22 @@ export const upgrades = [
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.chainReaction }],
     maxLevel: 5, rarity: "epic", category: "skill", presentationToken: "overcritical",
   },
+  // Survivability, so the answer to every problem is not simply more damage.
+  {
+    id: archetypeIds.upgrade.armour,
+    effects: [{ kind: "stat.add", target: "player.armour", value: 12 }],
+    maxLevel: 8, rarity: "common", category: "survival", presentationToken: "accent",
+  },
+  {
+    id: archetypeIds.upgrade.regeneration,
+    effects: [{ kind: "stat.add", target: "player.regeneration", value: 0.8 }],
+    maxLevel: 6, rarity: "rare", category: "survival", presentationToken: "accent",
+  },
+  {
+    id: archetypeIds.upgrade.luck,
+    effects: [{ kind: "stat.add", target: "player.luck", value: 25 }],
+    maxLevel: 6, rarity: "rare", category: "utility", presentationToken: "accent",
+  },
   // The deliberately dangerous choices: more pressure bought with more reward.
   {
     id: archetypeIds.upgrade.worldSurge,

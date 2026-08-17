@@ -4,6 +4,7 @@
  *   npm run balance
  *   npm run balance -- --build crit --minutes 10 --chaos 3
  *   npm run balance -- --build all --theme knight-magic
+ *   npm run balance -- --ttk                            # time-to-kill table
  *
  * A five-minute balance question becomes a sub-second one. See
  * `src/game/systems/simulation/pacing-simulator.ts` for what the model does
@@ -12,14 +13,15 @@
 import { activeTheme } from "../src/game/content/active-theme";
 import { themeRegistry } from "../src/game/content/theme-registry";
 import { buildModels, findBuildModel } from "../src/game/systems/simulation/build-models";
-import { formatPacingReport } from "../src/game/systems/simulation/format-report";
-import { simulatePacing } from "../src/game/systems/simulation/pacing-simulator";
+import { formatPacingReport, formatTimeToKill } from "../src/game/systems/simulation/format-report";
+import { simulatePacing, timeToKillTable } from "../src/game/systems/simulation/pacing-simulator";
 
 interface Options {
   readonly build: string;
   readonly minutes: number;
   readonly chaos: number;
   readonly theme: string | undefined;
+  readonly ttk: boolean;
 }
 
 function parseArgs(argv: readonly string[]): Options {
@@ -39,6 +41,7 @@ function parseArgs(argv: readonly string[]): Options {
     minutes,
     chaos,
     theme: values.get("theme"),
+    ttk: values.has("ttk"),
   };
 }
 
@@ -62,14 +65,21 @@ function main(): void {
   }
 
   for (const build of models) {
-    const report = simulatePacing({
+    const pacingOptions = {
       theme,
       build,
       durationMs: options.minutes * 60_000,
       chaos: options.chaos,
-    });
+    };
+    const report = simulatePacing(pacingOptions);
     process.stdout.write(`\n${build.description}\n`);
     process.stdout.write(`${formatPacingReport(report)}\n`);
+    if (options.ttk) {
+      process.stdout.write("\ntime to kill\n");
+      process.stdout.write(
+        `${formatTimeToKill(timeToKillTable(report, pacingOptions), theme.enemies.map((enemy) => enemy.id))}\n`,
+      );
+    }
   }
   process.stdout.write("\n");
 }

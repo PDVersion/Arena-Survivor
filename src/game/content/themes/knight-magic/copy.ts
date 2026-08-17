@@ -167,5 +167,17 @@ export const copy = {
       name: "Glass World",
       description: "Double your power, and let the arena turn far deadlier.",
     },
+    [archetypeIds.upgrade.armour]: {
+      name: "Plated Guard",
+      description: "Reduce the harm foes do on contact.",
+    },
+    [archetypeIds.upgrade.regeneration]: {
+      name: "Renewing Vow",
+      description: "Recover health steadily through the trial.",
+    },
+    [archetypeIds.upgrade.luck]: {
+      name: "Fortune's Favour",
+      description: "Rarer blessings turn up more often.",
+    },
   },
 } as const satisfies ThemeCopy;

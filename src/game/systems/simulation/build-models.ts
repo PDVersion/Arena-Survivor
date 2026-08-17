@@ -73,6 +73,25 @@ const models: readonly BuildModel[] = [
     },
   },
   {
+    id: "spread",
+    description:
+      "Spreads picks across damage, attack speed, crit and projectiles: the multiplicative build the DPS budget is written for.",
+    damagePerSecond: (level, context) => {
+      // A real player does not pour every level into one axis. Roughly a fifth
+      // of picks land on each offensive axis, and those axes multiply.
+      const perAxis = Math.floor((level - 1) / 5);
+      const projectiles = 1 + Math.min(6, perAxis);
+      const critChance = context.baseCritChance + 0.1 * perAxis;
+      return (
+        baseDps(context) *
+        (1 + 0.25 * perAxis) *
+        (1 + 0.2 * perAxis) *
+        projectiles *
+        expectedCritMultiplier(critChance, context.critDamage)
+      );
+    },
+  },
+  {
     id: "explosion",
     description:
       "Splits between damage and on-kill detonation; output rises with enemy density.",

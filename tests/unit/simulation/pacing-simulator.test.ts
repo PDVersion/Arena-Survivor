@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
+import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import {
   buildModels,
   expectedCritMultiplier,
@@ -9,6 +10,7 @@ import {
 import {
   levelAt,
   simulatePacing,
+  timeToKillTable,
   timeToLevel,
 } from "../../../src/game/systems/simulation/pacing-simulator";
 import { formatPacingReport } from "../../../src/game/systems/simulation/format-report";
@@ -193,5 +195,78 @@ describe("V0.3 pacing targets", () => {
       durationMs: FIVE,
     });
     expect(Math.abs(eco.finalLevel - knight.finalLevel)).toBeLessThanOrEqual(4);
+  });
+});
+
+describe("V0.3 balance pass", () => {
+  const FIVE = 5 * 60_000;
+
+  function runBuild(id: string, chaos = 1) {
+    const options = {
+      theme: ecoGuardianTheme,
+      build: findBuildModel(id)!,
+      durationMs: FIVE,
+      chaos,
+    };
+    return { options, report: simulatePacing(options) };
+  }
+
+  it("keeps every role killable at every point of the run", () => {
+    // The failure this catches is player damage and enemy health diverging
+    // quietly until the late run is a wall.
+    for (const id of ["damage-rush", "crit", "explosion", "spread"]) {
+      const { options, report } = runBuild(id);
+      for (const row of timeToKillTable(report, options)) {
+        for (const [role, seconds] of Object.entries(row.seconds)) {
+          expect(Number.isFinite(seconds), `${id} ${role}`).toBe(true);
+          expect(seconds, `${id} ${role} at ${row.progress}`).toBeLessThan(25);
+        }
+      }
+    }
+  });
+
+  it("kills faster as the run progresses, never slower", () => {
+    const { options, report } = runBuild("spread");
+    const rows = timeToKillTable(report, options);
+    const first = rows[0]!.seconds[archetypeIds.enemy.swarmBasic]!;
+    const last = rows.at(-1)!.seconds[archetypeIds.enemy.swarmBasic]!;
+
+    // Health scales, but damage must scale faster or the ramp becomes a wall.
+    expect(last).toBeLessThan(first);
+  });
+
+  it("meets the DPS budget on a multiplicative build", () => {
+    // Base is 10 DPS. A build that spreads across damage, attack speed, crit,
+    // and projectile count must reach several hundred by the end, or Phase 6's
+    // health ramp has nothing to answer it.
+    const { report, options } = runBuild("spread");
+    const final = timeToKillTable(report, options).at(-1)!;
+    expect(final.damagePerSecond).toBeGreaterThan(400);
+    // Upper bound is deliberately loose: PLAN.md wants a strong build to become
+    // temporarily ridiculous rather than be suppressed.
+    expect(final.damagePerSecond).toBeLessThan(1_500);
+  });
+
+  it("rewards a strong build with more levels than an average one", () => {
+    expect(runBuild("spread").report.finalLevel).toBeGreaterThan(
+      runBuild("damage-rush").report.finalLevel,
+    );
+    expect(runBuild("damage-rush").report.finalLevel).toBeGreaterThan(
+      runBuild("passive").report.finalLevel,
+    );
+  });
+
+  it("holds up at ten minutes, a length nobody tuned by hand", () => {
+    const long = simulatePacing({
+      theme: ecoGuardianTheme,
+      build: findBuildModel("damage-rush")!,
+      durationMs: 10 * 60_000,
+    });
+    const short = runBuild("damage-rush").report;
+
+    expect(long.finalLevel).toBeGreaterThan(short.finalLevel);
+    expect(long.peakLiveEnemies).toBeLessThanOrEqual(300);
+    // Levels keep arriving rather than stalling out past the tuned length.
+    expect(long.levelTimestampsMs.length).toBe(long.finalLevel - 1);
   });
 });

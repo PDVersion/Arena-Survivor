@@ -36,6 +36,8 @@ export interface ArenaTestSnapshot {
     pickups: number;
     pickupsDropped: number;
     pickupsCollected: number;
+    /** Orbs merged to hold the population under its cap. */
+    pickupsMerged: number;
     choiceIds: readonly string[];
     selectedUpgradeIds: readonly string[];
     skillLevels: Readonly<Record<string, number>>;

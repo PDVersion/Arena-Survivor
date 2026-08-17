@@ -178,6 +178,12 @@ export function applyUpgrade<T extends UpgradeableState>(
       case "player.luck":
         stats.luck += effect.value;
         break;
+      case "player.armour":
+        stats.armour += effect.value;
+        break;
+      case "player.regeneration":
+        stats.regeneration += effect.value;
+        break;
       case "weapon.pierce":
         weaponModifiers.pierce += effect.value;
         break;

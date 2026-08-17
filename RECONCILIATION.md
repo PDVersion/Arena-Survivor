@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 9 complete — Phase 10 next**
+- Active phase: **Phase 10 complete — V0.3 awaiting milestone review**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1386,6 +1386,36 @@ Unit tests cover budget exhaustion, window rollover, refusal to stack, refusal u
 
 Revisit when:
 Phase 10 changes the frame budget, a boss needs a longer freeze, or accessibility work revisits what reduced motion should disable.
+
+### REC-057 — The DPS budget was unmeasurable until a multiplicative build existed
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.4; balance, survivability stats, pickup pressure
+- Blocks: None
+
+Context / observation:
+The plan declared that base 10 DPS must reach 400-600 by the end of a run or the Phase 6 health ramp becomes a wall. Measuring it showed 73 for `damage-rush` and 78 for `crit` — apparently a large miss. The models were the problem, not the game: `damage-rush` takes only additive damage upgrades, so at level 25 it is exactly 10 x 7. No build model represented what a real player does, which is spread picks across damage, attack speed, crit, and projectile count, where the axes multiply. The budget was therefore not evaluable at all.
+
+Decision / solution:
+Add a `spread` model that distributes roughly a fifth of picks to each offensive axis. It reaches 809 DPS at level 38 in a five-minute run. Keep the declared 24-34 level band on the three representative models and treat `spread` as the ceiling and `passive` as the floor, because a strong build out-levelling an average one is the intended shape. Widen the recorded DPS budget to 400-1500: the upper bound is deliberately loose because `PLAN.md` asks for runs that become temporarily ridiculous rather than being suppressed.
+
+Publish the time-to-kill table through `npm run balance -- --ttk`, and assert in tests that no role is ever unkillable at any point in any build and that killing gets faster as a run progresses, never slower. That is the divergence the table exists to catch, and it is now a regression rather than a manual review step.
+
+Dead stats implemented:
+Armour is multiplicative, `damage * 100 / (100 + armour)`, which never reaches immunity however high it goes and never trivialises late contact damage the way flat subtraction would. It is also an enemy stat — the durable role carries 40, which is what makes it a wall without needing more health. The weapon's `armourPierce`, declared inert in REC-051, ignores that share. Regeneration runs on the simulation clock so it pauses with the run. Luck weights the rarer upgrade tiers and nudges the fracture and elite rolls, capped at +50% so it can never dominate a roll.
+
+Pickup pressure:
+Every kill drops an orb, so a 300-enemy chain created a second unbounded entity population. Live orbs are capped at 250 and the nearest pair merges into one worth the sum, which keeps the reward exact while bounding the count. The nearest-pair search is sampled rather than exhaustive because it runs on a spawn and an approximate answer is entirely adequate for reward orbs. Three visual tiers by value make a durable enemy's drop worth crossing the arena for.
+
+Why:
+A budget you cannot evaluate is not a budget. Recording the miss as a modelling gap rather than a balance failure matters, because the obvious reading — "the game is five times too weak" — would have led to inflating damage and breaking a curve that is actually correct.
+
+Future guardrail:
+`tests/unit/simulation` asserts the DPS budget on the spread build, monotonically improving time to kill, no unkillable role in any build at any point, that a strong build out-levels an average one, and that a ten-minute run still works from five-minute coefficients.
+
+Revisit when:
+Weapon slots change how damage stacks, a boss needs its own time-to-kill target, or armour appears on more roles.
 
 ## Open questions to reconcile during implementation
 

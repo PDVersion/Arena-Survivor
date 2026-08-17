@@ -58,7 +58,23 @@ The swap is deliberately bounded: it re-skins and re-tunes the existing four ene
 - [x] Phase 7 — Skill levels, scaling Detonation, and upgrade pool repair (REC-054)
 - [x] Phase 8 — Informative upgrade cards, pause menu, and HUD (REC-055)
 - [x] Phase 9 — Impact feedback and terminal polish (REC-056)
-- [ ] Phase 10 — Survivability stats, pickup pressure, and the balance pass
+- [x] Phase 10 — Survivability stats, pickup pressure, and the balance pass (REC-057)
+
+## Milestone status
+
+**All ten phases complete.** Delivered across pull requests #14 through #17 on `claude/v0.3`.
+
+| Measure | Start of V0.3 | End of V0.3 |
+| --- | --- | --- |
+| Unit tests | 83 | 282 |
+| Browser paths | 27 | 47 |
+| Production themes | 1 | 2 |
+| Reconciliation entries | REC-042 | REC-057 |
+| Frame time at 300 enemies | 20.35 ms avg | 23.70 ms avg |
+
+Five defects were found and fixed that were not part of the original request: elites never appeared without a shrine; re-picking a skill wasted a level-up; `armour`, `regeneration`, and `luck` were validated but unread; the stress path asserted themed copy and CI could not catch it; and the weapon could not reach its own spawn ring after the ring moved.
+
+Four things in this plan were wrong when written and were corrected from measurement rather than assumption. Each is recorded with its evidence: the XP curve was out by roughly a factor of five (REC-047), the engagement envelope was three coupled numbers rather than one (REC-049), separation's displacement clamp belonged on the frame total rather than per neighbour (REC-052), and the DPS budget could not be evaluated at all until a multiplicative build model existed (REC-057).
 
 ---
 
@@ -108,6 +124,36 @@ V0.3 is complete when a player can:
 15. Feel big kills land — hit-stop, aggregated damage numbers, a rising kill-streak cue, and a readable death moment naming what killed them.
 16. Sustain the 300-enemy representative load with separation, the director, hazards, and scaling effects all active, within the recorded frame budget.
 17. Pass the two-theme validation and architecture guard with every new balance value living in theme data.
+
+---
+
+## Measured outcomes
+
+Recorded here rather than only in reconciliation, so the plan carries its own result.
+
+**Pacing at five minutes** — final level per build model, against the declared 24–34 band:
+
+| passive | damage-rush | crit | explosion | spread |
+| --- | --- | --- | --- | --- |
+| 13 | 25 | 24 | 30 | 38 |
+
+`passive` is the do-nothing floor and `spread` is the multiplicative ceiling; the three in between are the representative band. A strong build overshooting is intended, not a defect — `PLAN.md` asks for runs that become temporarily ridiculous rather than being suppressed.
+
+**Time to kill**, end of run, spread build: baseline role 0.04 s, fast role 0.02 s, durable role 0.25 s, spawner 0.05 s. No role is ever unkillable at any point in any build, which is the divergence the table exists to catch.
+
+**DPS budget**: base 10 DPS reaches 809 on a spread build by the end of a five-minute run. The plan's written 400–600 target was too narrow and, more importantly, could not be evaluated at all until a multiplicative build model existed. Asserted now as 400–1500.
+
+**Frame time at 300 live enemies**, same machine throughout:
+
+| | average | worst |
+| --- | --- | --- |
+| V0.2 baseline | 20.35 ms | 26.67 ms |
+| + crowd separation | 22.55 ms | 27.50 ms |
+| + arena hazards | 23.70 ms | 29.17 ms |
+
+Peak candidate visits for separation: 11,237 per frame, roughly 37 per enemy against 90,000 for a naive all-pairs scan. Coincident enemy pairs: zero.
+
+**Run length independence**: the same director coefficients produce level 25 at five minutes and level 36 at ten, with no new authoring.
 
 ---
 

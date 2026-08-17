@@ -235,6 +235,49 @@ export function timeToLevel(report: PacingReport, level: number): number | undef
   return report.levelTimestampsMs[level - 2];
 }
 
+export interface TimeToKillRow {
+  readonly progress: number;
+  /** Seconds to kill one of each role at that moment, for this build. */
+  readonly seconds: Readonly<Record<string, number>>;
+  readonly damagePerSecond: number;
+  readonly level: number;
+}
+
+/**
+ * Time to kill each role across the run.
+ *
+ * The failure this catches is the one V0.2 had and nobody could see: player
+ * damage scaling and enemy health scaling diverging quietly until the late run
+ * is either trivial or a wall.
+ */
+export function timeToKillTable(report: PacingReport, options: PacingOptions): readonly TimeToKillRow[] {
+  const theme = options.theme;
+  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starterProjectile)!;
+  const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
+  const world = chaosWorldState(options.chaos ?? 1);
+
+  return Object.freeze(
+    report.buckets.map((bucket) => {
+      const progress = bucket.endMs / options.durationMs;
+      const modifiers = selectWorldModifiers(world, theme.tuning.difficulty, progress);
+      const dps = options.build.damagePerSecond(bucket.level, {
+        weaponDamage: weapon.damage,
+        weaponCooldownMs: weapon.cooldownMs,
+        baseCritChance: character.baseStats.critChance,
+        critDamage: character.baseStats.critDamage,
+        liveEnemies: bucket.liveEnemies,
+      });
+      const seconds: Record<string, number> = {};
+      for (const enemy of theme.enemies) {
+        // Armour is multiplicative, exactly as the scene applies it.
+        const effective = enemy.maxHealth * modifiers.enemyHealthMultiplier * (1 + enemy.armour / 100);
+        seconds[enemy.id] = dps > 0 ? effective / dps : Number.POSITIVE_INFINITY;
+      }
+      return Object.freeze({ progress, seconds, damagePerSecond: dps, level: bucket.level });
+    }),
+  );
+}
+
 /** Player level at a moment in the run, from the closed buckets. */
 export function levelAt(report: PacingReport, atMs: number): number {
   let level = 1;

@@ -27,12 +27,13 @@ import {
   observeRunPierce,
   recordKill,
   recordRunDamage,
+  regenerateRunPlayer,
   setLiveEnemyCount,
   setRunStatus,
   type RunState,
 } from "../state/run-state";
 import type { DirectionalInput } from "../systems/player-movement";
-import { canApplyContactDamage, rollDamage } from "../systems/combat";
+import { canApplyContactDamage, reduceByArmour, rollDamage } from "../systems/combat";
 import {
   canSpawn,
   findOffScreenSpawnPoint,
@@ -136,6 +137,8 @@ const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 const PACING_BUCKET_MS = 15_000;
 /** Window over which one enemy's damage is drawn as a single number. */
 const DAMAGE_NUMBER_WINDOW_MS = 120;
+/** Live reward orbs allowed before the nearest pair merges. */
+const PICKUP_CAP = 250;
 /** How far past the arena a drifting enemy travels before it is reclaimed. */
 const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
@@ -294,6 +297,7 @@ export class RunScene extends Phaser.Scene {
   private pickupSequence = 0;
   private pickupsDropped = 0;
   private pickupsCollected = 0;
+  private pickupsMerged = 0;
   private claimedPickupIds: ReadonlySet<string> = new Set();
   private focusPaused = false;
   private terminalShown = false;
@@ -575,6 +579,7 @@ export class RunScene extends Phaser.Scene {
       this.processCausalEvents();
       this.updateBloodlust();
       this.flushDamageNumbers();
+      this.runState = regenerateRunPlayer(this.runState, delta);
       if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) {
         this.releaseMilestoneWaves();
         this.spawnIfReady();
@@ -662,6 +667,7 @@ export class RunScene extends Phaser.Scene {
     this.pickupSequence = 0;
     this.pickupsDropped = 0;
     this.pickupsCollected = 0;
+    this.pickupsMerged = 0;
     this.claimedPickupIds = new Set();
     this.focusPaused = false;
     this.terminalShown = false;
@@ -1335,7 +1341,7 @@ export class RunScene extends Phaser.Scene {
       worldModifiers.eliteChance,
     );
     const elite = eliteDefinition && shouldSpawnElite(
-      testSkillEnabled("forceElite") ? 1 : directorEliteChance,
+      testSkillEnabled("forceElite") ? 1 : directorEliteChance * this.luckScale(),
       this.eliteRandom,
       eliteOverride,
     ) ? eliteDefinition : undefined;
@@ -1546,8 +1552,14 @@ export class RunScene extends Phaser.Scene {
     direct?: Readonly<{ directBase: number; criticalBonus: number; piercingMomentum: number }>,
   ): void {
     if (!this.runState || enemy.defeated) return;
-    const appliedDamage = Math.min(enemy.health, Math.max(0, damage));
-    const result = enemy.takeDamage(damage);
+    // Enemy armour is multiplicative and the weapon may ignore a share of it.
+    const reduced = reduceByArmour(
+      damage,
+      enemy.definition.armour,
+      this.weaponDefinition?.armourPierce ?? 0,
+    );
+    const appliedDamage = Math.min(enemy.health, Math.max(0, reduced));
+    const result = enemy.takeDamage(reduced);
     if (!result.applied) return;
     this.hitFlashes += 1;
     this.runState = recordRunDamage(this.runState, {
@@ -1673,7 +1685,10 @@ export class RunScene extends Phaser.Scene {
     if (
       fracture &&
       fractureLevel > 0 &&
-      shouldFracture(resolveFractureChance(fracture, fractureLevel), this.effectRandom) &&
+      shouldFracture(
+        resolveFractureChance(fracture, fractureLevel) * this.luckScale(),
+        this.effectRandom,
+      ) &&
       this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.fracture)
     ) {
       for (let index = 0; index < fracture.childCount; index += 1) {
@@ -1837,7 +1852,42 @@ export class RunScene extends Phaser.Scene {
     this.pickups.add(pickup);
     this.pickupGroup.add(pickup);
     this.pickupsDropped += 1;
+    this.enforcePickupCap();
     pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
+  }
+
+  /**
+   * Bound the pickup population by merging the two nearest into one.
+   *
+   * Every kill drops a pickup, so a 300-enemy chain creates a second unbounded
+   * entity population competing for frame time. Merging keeps the reward exact
+   * while capping the count.
+   */
+  private enforcePickupCap(): void {
+    if (this.pickups.size <= PICKUP_CAP) return;
+    const live = [...this.pickups].filter((pickup) => pickup.active);
+    let best: readonly [PickupActor, PickupActor] | undefined;
+    let bestDistance = Number.POSITIVE_INFINITY;
+
+    // Sampled rather than exhaustive: this runs on a spawn, and an approximate
+    // nearest pair is entirely adequate for merging reward orbs.
+    for (let index = 0; index < live.length; index += 1) {
+      const first = live[index]!;
+      for (let step = 1; step <= 6 && index + step < live.length; step += 1) {
+        const second = live[index + step]!;
+        const distance = Phaser.Math.Distance.Between(first.x, first.y, second.x, second.y);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = [first, second];
+        }
+      }
+    }
+
+    if (!best) return;
+    const [keep, absorbed] = best;
+    keep.absorb(absorbed);
+    this.pickupsMerged += 1;
+    absorbed.destroy();
   }
 
   private collectPickup(pickup: PickupActor): void {
@@ -1883,6 +1933,12 @@ export class RunScene extends Phaser.Scene {
       luck: this.runState.player.stats.luck,
     });
     this.levelUpUi.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
+  }
+
+  /** Luck nudges chance-based rolls, with a ceiling so it cannot dominate. */
+  private luckScale(): number {
+    const luck = this.runState?.player.stats.luck ?? 0;
+    return 1 + Math.min(0.5, Math.max(0, luck) / 400);
   }
 
   private hudExtras() {
@@ -1980,7 +2036,8 @@ export class RunScene extends Phaser.Scene {
     ) {
       return;
     }
-    this.runState = damageRunPlayer(this.runState, enemy.contactDamage, {
+    const mitigated = reduceByArmour(enemy.contactDamage, this.runState.player.stats.armour);
+    this.runState = damageRunPlayer(this.runState, mitigated, {
       sourceId: enemy.definition.id,
       elite: Boolean(enemy.elite),
     });
@@ -2263,6 +2320,7 @@ export class RunScene extends Phaser.Scene {
         pickups: this.pickups.size,
         pickupsDropped: this.pickupsDropped,
         pickupsCollected: this.pickupsCollected,
+        pickupsMerged: this.pickupsMerged,
         choiceIds: this.currentChoices.map((choice) => choice.id),
         selectedUpgradeIds: this.runState?.selectedUpgradeIds ?? [],
         skillLevels: { ...(this.runState?.skillLevels ?? {}) },
