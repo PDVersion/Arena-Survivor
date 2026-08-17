@@ -1,6 +1,8 @@
 # Arena Survivor V0.3 Build Plan — Feel, Pacing, and Readability
 
-This is the implementation plan for the milestone after the completed V0.2 interaction milestone. Where [`BUILD_PLAN_V0.2.md`](./BUILD_PLAN_V0.2.md) added mechanics, V0.3 makes the existing mechanics **feel** like a modern bullet-heaven: a progression curve that keeps climbing, enemies with physical presence, a spawn director that escalates on a schedule, upgrade cards that state exactly what they do, and on-kill effects that grow with investment.
+This is the implementation plan for the milestone after the completed V0.2 interaction milestone. Where [`BUILD_PLAN_V0.2.md`](./BUILD_PLAN_V0.2.md) added mechanics, V0.3 makes the existing mechanics **feel** like a modern bullet-heaven: a progression curve that keeps climbing, enemies with physical presence, a procedural spawn director that escalates on a schedule, upgrade cards that state exactly what they do, and on-kill effects that grow with investment.
+
+It also swaps the production theme to **environment/nature**, which becomes the primary fiction for the game from this milestone onward.
 
 Every work session must read this file and then [`../RECONCILIATION.md`](../RECONCILIATION.md) before changing code.
 
@@ -26,6 +28,14 @@ The re-sequencing is already recorded: `PLAN.md` carries the new V0.3 and V0.4 s
 
 `AGENTS.md` and `README.md` still point every session at the completed V0.2 plan. They are repointed in **Phase 1 of this milestone**, deliberately not before, so no session begins V0.3 work against a plan that has not been approved.
 
+## Why the theme swap is inside this milestone
+
+The environment theme is now the primary fiction for the game, including the pure-fun stream — see [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md). That decision interacts directly with this milestone, because **every balance value V0.3 introduces is theme-owned data.**
+
+If the swap landed after V0.3, the XP curve, spawn director, difficulty curves, body masses, and skill scaling would all be derived against knight-magic and then re-derived against environment content — the exact "tune it twice" cost this milestone was re-sequenced to avoid. So the swap lands in **Phase 2**, before any tuning phase, and everything after it is tuned once against the content that ships.
+
+The swap is deliberately bounded: it re-skins and re-tunes the existing four enemy roles, one weapon, four shrines, and five skills. It adds **no new roles, no type system, and no knowledge layer**. Those are V0.4 and later.
+
 ## Delivery contract
 
 - Begin from `main` after the merged V0.2 milestone.
@@ -39,14 +49,16 @@ The re-sequencing is already recorded: `PLAN.md` carries the new V0.3 and V0.4 s
 
 ## Phase tracker
 
-- [ ] Phase 1 — Tuning seams, balance simulator, and plan re-sequencing
-- [ ] Phase 2 — Progression curve, per-role rewards, and upgrade tallies
-- [ ] Phase 3 — Spawn director, timer gating, and off-screen spawning
-- [ ] Phase 4 — Physical presence, spatial index, and crowd separation
-- [ ] Phase 5 — Time and Chaos difficulty scaling
-- [ ] Phase 6 — Skill levels, scaling Detonation, and upgrade pool repair
-- [ ] Phase 7 — Informative upgrade cards, pause menu, and HUD
-- [ ] Phase 8 — Survivability stats, pickup pressure, and the balance pass
+- [ ] Phase 1 — Tuning seams, balance simulator, and plan re-pointing
+- [ ] Phase 2 — Environment theme as the primary content pack
+- [ ] Phase 3 — Progression curve, per-role rewards, and upgrade tallies
+- [ ] Phase 4 — Procedural spawn director, fixed view, and off-screen spawning
+- [ ] Phase 5 — Physical presence, spatial index, and crowd separation
+- [ ] Phase 6 — Time and Chaos scaling, and arena hazards
+- [ ] Phase 7 — Skill levels, scaling Detonation, and upgrade pool repair
+- [ ] Phase 8 — Informative upgrade cards, pause menu, and HUD
+- [ ] Phase 9 — Impact feedback and terminal polish
+- [ ] Phase 10 — Survivability stats, pickup pressure, and the balance pass
 
 ---
 
@@ -79,48 +91,58 @@ Each requested change below is anchored to what the code does today. These are t
 
 V0.3 is complete when a player can:
 
-1. Complete every V0.1 and V0.2 path without regression.
-2. Watch level-ups start fast and visibly slow into deliberate milestones, while per-kill XP visibly grows, so late levels feel earned rather than automatic.
-3. See a per-upgrade tally on the run-end screen showing each upgrade taken and how many times.
-4. Push through a crowd where small enemies bunch and overlap slightly, large enemies block movement, and neither the player nor enemies pass through a Tank.
-5. Never see an enemy appear inside the visible viewport during normal play.
-6. Earn clearly different XP from a Grunt, a Runner, a Tank, a Broodmother, and an elite, with tougher late-run variants worth more than early ones.
-7. Face enemies that get measurably tougher as the timer runs down and as Chaos rises, from one declared curve.
-8. Watch the roster unlock on telegraphed timer milestones (Grunts, then Runners, then Tanks and Broodmothers, then elites), with Chaos raising both rate and the share of dangerous roles.
-9. Read exactly what an upgrade does before taking it — current value, resulting value, its level, and whether it is new — with a pause-menu toggle to hide the numbers.
-10. Open the pause menu mid-run and read current stats, every upgrade owned with counts, active skills, and world modifiers.
-11. Take Detonation early for a small blast and grow it into a large one, with blast damage scaling from the killed enemy's health rather than a flat number.
-12. Never be offered an upgrade that does nothing, and never lose a level-up to a duplicate skill pick.
-13. Sustain the 300-enemy representative load with separation, the spawn director, and scaling effects active, within the recorded frame budget.
-14. Pass the rename-only alternate-theme test and architecture guard with every new balance value living in theme data.
+1. Complete every V0.1 and V0.2 path without regression, against the environment theme.
+2. Play the environment theme as the production fiction, with knight-magic retained as a second real theme that still passes rename-only validation.
+3. Watch level-ups start fast and visibly slow into deliberate milestones, while per-kill XP visibly grows, so late levels feel earned rather than automatic.
+4. See a per-upgrade tally on the run-end screen showing each upgrade taken and how many times.
+5. Push through a crowd where small enemies bunch and overlap slightly, large enemies block movement, and neither the player nor enemies pass through a durable enemy.
+6. Never see an enemy appear inside the visible viewport during normal play, at any supported window size.
+7. Earn clearly different rewards from each enemy role and from elites, with tougher late-run variants worth more than early ones.
+8. Face enemies that get measurably tougher as the timer runs down and as Pollution rises, from one declared curve.
+9. Watch the roster unlock on telegraphed milestones, with Pollution raising both rate and the share of dangerous roles — all derived from curves, so a run of any length needs no new authoring.
+10. Encounter two or three arena hazards that create map variety and interact with movement and positioning.
+11. Read exactly what an upgrade does before taking it — current value, resulting value, its level, and whether it is new — with a pause-menu toggle to hide the numbers.
+12. Open the pause menu mid-run and read current stats, every upgrade owned with counts, active skills, and world modifiers.
+13. Take the on-kill detonation early for a small blast and grow it into a large one, with blast damage scaling from the killed enemy's health rather than a flat number.
+14. Never be offered an upgrade that does nothing, and never lose a level-up to a duplicate skill pick.
+15. Feel big kills land — hit-stop, aggregated damage numbers, a rising kill-streak cue, and a readable death moment naming what killed them.
+16. Sustain the 300-enemy representative load with separation, the director, hazards, and scaling effects all active, within the recorded frame budget.
+17. Pass the two-theme validation and architecture guard with every new balance value living in theme data.
 
 ---
 
 # Architecture additions
 
-V0.3 adds five seams. Each exists because more than one phase needs it.
+V0.3 adds six seams. Each exists because more than one phase needs it.
 
 ### Theme-owned tuning packs
 
-All numbers introduced by this milestone live in new theme files, not in systems or scenes:
+All numbers introduced by this milestone live in tuning files inside the **active theme**, not in systems or scenes:
 
 ```text
-content/themes/knight-magic/
+content/themes/<theme>/
   progression.ts   XP curve bands, per-role reward weights, toughness reward share
-  director.ts      Spawn phases, intervals, batch sizes, role weights, wave events
-  difficulty.ts    Time and Chaos curves for enemy health/damage/speed/elite chance
+  director.ts      Director curve coefficients, unlock fractions, weight ramps
+  difficulty.ts    Time and Pollution curves for enemy health/damage/speed/elite chance
   bodies.ts        Per-role separation radius scale, mass, and solidity
+  hazards.ts       Arena hazard definitions
 ```
 
 `SPAWN_INTERVAL_MS`, `SPAWN_RADIUS`, and the `unlockAtMs` fields move out of the scene and the enemy definitions into `director.ts`. The scene reads a resolved plan; it never holds a cadence literal.
 
+Both themes carry a full tuning pack. Knight-magic's is kept in step so the second theme stays a real regression target, not a stale fixture.
+
+### Procedural director curves
+
+The director resolves everything from **normalized run progress** rather than an authored phase list, so a 5-minute run, a 10-minute run, and an endless run all work from the same data. See Phase 4.
+
 ### Spatial index
 
-One `systems/spatial/spatial-hash.ts` uniform grid, rebuilt once per frame from live enemies, consumed by crowd separation, explosion radius queries, nearest-target selection, and pickup magnetism. It replaces four independent O(n) scans with one build plus bounded neighbourhood lookups, and it is the enabler for separation at 300 enemies rather than an optimisation added afterwards.
+One `systems/spatial/spatial-hash.ts` uniform grid, rebuilt once per frame from live enemies, consumed by crowd separation, explosion radius queries, nearest-target selection, hazard overlap, and pickup magnetism. It replaces four independent O(n) scans with one build plus bounded neighbourhood lookups, and it is the enabler for separation at 300 enemies rather than an optimisation added afterwards.
 
 ### Skill levels
 
-`RunState` gains `skillLevels: Readonly<Partial<Record<SkillId, number>>>`. `skill.enable` becomes `skill.level` (+1, capped by the skill's `maxLevel`). Effect resolution takes a level and returns resolved values. This is what makes Detonation grow, and it is what removes wasted duplicate picks.
+`RunState` gains `skillLevels: Readonly<Partial<Record<SkillId, number>>>`. `skill.enable` becomes `skill.level` (+1, capped by the skill's `maxLevel`). Effect resolution takes a level and returns resolved values. This is what makes the detonation grow, and it is what removes wasted duplicate picks.
 
 ### Upgrade description selectors
 
@@ -128,11 +150,11 @@ One pure module, `systems/upgrades/describe-upgrade.ts`, answers "what does taki
 
 ### Settings state
 
-`settings: { detailedUpgradeCards, reducedMotion, muted }` in a serializable slice shaped for [`SAVE_DATA.md`](./SAVE_DATA.md). Session-only by default; the localStorage adapter is a marked seam that Phase 7 may fill if the decision below says yes.
+`settings: { detailedUpgradeCards, reducedMotion, muted, viewScale }` in a serializable slice shaped for [`SAVE_DATA.md`](./SAVE_DATA.md). Session-only in this milestone; the localStorage adapter is a marked seam that V0.4 fills.
 
 ---
 
-# Phase 1 — Tuning seams, balance simulator, and plan re-sequencing
+# Phase 1 — Tuning seams, balance simulator, and plan re-pointing
 
 **Commit:** `build(v0.3): establish balance instrumentation and tuning seams`
 
@@ -140,11 +162,11 @@ The reason this is first: a five-minute run takes five minutes to evaluate. Ever
 
 Deliver:
 
-- Create the four theme tuning files above with the current values, so this phase is behaviour-neutral and reviewable as a pure move.
+- Create the five theme tuning files above in knight-magic with the current values, so this phase is behaviour-neutral and reviewable as a pure move.
 - Add `systems/simulation/pacing-simulator.ts`: a deterministic, Phaser-free model that steps a full run at a fixed timestep and reports, per 15-second bucket — enemies spawned by role, live enemy estimate, player DPS from a supplied build model, kills, XP earned, level, and cumulative XP. It consumes the same tuning data and the same pure selectors as the game.
-- Add a `npm run balance` script that prints the pacing table for a named build model (`passive`, `damage-rush`, `crit`, `explosion`) as a readable text report.
-- Add telemetry fields for pacing: current director phase, spawn interval in effect, live count by role, XP earned per bucket, level timestamps.
-- Repoint `AGENTS.md` and `README.md` from the completed V0.2 plan to this one, including the `codex/v0.3` branch and delivery workflow. `PLAN.md`, `SAVE_DATA.md`, and REC-043 already carry the re-sequencing.
+- Add a `npm run balance` script that prints the pacing table for a named build model (`passive`, `damage-rush`, `crit`, `explosion`) and a named run length, as a readable text report.
+- Add telemetry fields for pacing: resolved director progress, spawn interval in effect, live count by role, XP earned per bucket, level timestamps.
+- Repoint `AGENTS.md` and `README.md` from the completed V0.2 plan to this one, including the `claude/v0.3` branch and delivery workflow. `PLAN.md`, `SAVE_DATA.md`, and REC-043 already carry the re-sequencing.
 
 Short verification:
 
@@ -161,7 +183,72 @@ Exit gate: no behaviour changed, every V0.2 test passes untouched, and a tuning 
 
 ---
 
-# Phase 2 — Progression curve, per-role rewards, and upgrade tallies
+# Phase 2 — Environment theme as the primary content pack
+
+**Commit:** `feat(v0.3): make the environment theme the production content pack`
+
+The environment/nature theme becomes the game's primary fiction, for the pure-fun stream as well as any later education layer. Knight-magic is retained as a **second real theme** — a far better boundary regression target than the synthetic fixture, because it is production-shaped content that must keep passing every rule test.
+
+### Bounded scope
+
+This phase re-skins and re-tunes **existing roles only**. It adds no enemy roles, no type/effectiveness system, no facts, and no codex. Those live in V0.4 and later, per [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md).
+
+### Content mapping
+
+| Stable ID | Environment identity | Notes |
+| --- | --- | --- |
+| `character.starter` | Environment Protector | Ranger/cleanup operative |
+| `weapon.starter_projectile` | Sorting Pulse | Auto-targeting reclaim shot |
+| `enemy.swarm_basic` | Plastic Bottle | **The baseline enemy.** Plastic dominates real litter counts, so the generic grunt being plastic is accurate as well as convenient |
+| `enemy.fast_fragile` | Plastic Bag | Wind-blown, fast, fragile |
+| `enemy.slow_durable` | Glass Bottle | Very high health, **high armour**, low contact damage — inert but effectively permanent |
+| `enemy.death_spawner` | Rubbish Bag | Bursts into loose litter on death |
+| `elite.baseline` | Illegal Dump variant | Existing elite treatment, re-skinned |
+| `pickup.experience` | Impact Point | XP becomes "Impact" |
+| `shrine.spawn_surge` | Landfill Breach | |
+| `shrine.greed` | Fast Fashion Boom | |
+| `shrine.multiplicity` | Single-Use Boom | |
+| `shrine.duplication` | Overproduction Order | |
+| `skill.piercing_momentum` | Sorting Momentum | |
+| `skill.on_kill_explosion` | Compaction Burst | |
+| `skill.fracture` | Fragmentation | Plastics fragment rather than decompose — the mechanic was already accurate |
+| `skill.bloodlust` | Cleanup Streak | |
+| `skill.chain_reaction` | Cascade | |
+| Chaos | **Pollution Level** | HUD vocabulary change only |
+
+`skill.fracture` deserves a note: the mechanic shipped in V0.2 already models what plastic actually does. That is the first evidence that the environment fiction fits these systems better than the fantasy one did.
+
+### Stats derived from persistence
+
+Enemy health is derived from real persistence, **log-scaled and normalized so the Plastic Bottle is the baseline**. Literal persistence would make glass 10,000× a banana peel and unplayable; log scaling keeps the ordering and the intuition while staying inside a playable band. This is a design decision to record, not a hidden fudge — the codex will later state the real figure alongside the modelled one.
+
+Health and harm are deliberately decoupled: glass is a wall that barely hurts, and a small fast item can hurt disproportionately. That is both better enemy design and the actual lesson about what makes litter dangerous.
+
+Deliver:
+
+- Add `content/themes/eco-guardian/` implementing every required archetype, with its own copy, tokens, tuning pack, and derived stats.
+- Switch `active-theme.ts` to the new pack; keep knight-magic complete and passing every rule and validation test.
+- Extend theme validation and the architecture guard to require **both** production packs to satisfy every contract, and keep the synthetic alternate fixture for rename-only proof.
+- Update `THEME_ARCHETYPES.md`: the primary theme, the stable-ID mapping table, and the two-production-theme workflow.
+- Update the pacing simulator's build models to the new content.
+- Record the log-scaling decision, the persistence sources used, and the resulting stat table in reconciliation.
+
+Short verification:
+
+```text
+npm run typecheck
+npm test -- --run tests/unit/content tests/unit/architecture tests/unit/enemies tests/unit/simulation
+npm run build
+npm run test:e2e:ci
+```
+
+Manual smoke: play a full run in the environment theme, then flip `active-theme.ts` to knight-magic and confirm the same run plays with different names, colours, and tuning and no code changes.
+
+Exit gate: two complete production themes pass every contract, no system or scene branches on a themed string, and the environment pack is the default.
+
+---
+
+# Phase 3 — Progression curve, per-role rewards, and upgrade tallies
 
 **Commit:** `feat(v0.3): rebuild the progression curve and reward scaling`
 
@@ -186,35 +273,35 @@ Resulting requirements (rounded):
 | Need | 4 | 5 | 7 | 10 | 13 | 24 | 36 | 53 | 83 | 175 | 368 | 649 |
 | Cumulative | 4 | 9 | 16 | 26 | 39 | 99 | 164 | 261 | 478 | 1,143 | 2,539 | 5,252 |
 
-The curve is data (`progression.ts`), the formula is pure, and both are covered by table-driven tests including the exact boundary levels.
+The curve is data (`progression.ts`), the formula is pure, and both are covered by table-driven tests including the exact boundary levels. Band 4 is open-ended, so longer and endless runs need no new authoring.
 
 Target pacing, asserted by the simulator: roughly level 8–10 at 1:00, 14–17 at 2:30, and 26–31 at 5:00 for an average build. That lands close to the `PLAN.md` example run-end screen (level 28) and gives ~30 upgrade choices per run.
 
 ### Reward scaling (request 5)
 
-Per-role base XP, separated so a Tank is genuinely worth killing:
+Per-role base rewards, separated so a durable enemy is genuinely worth killing:
 
-| Role | Current | Proposed | Rationale |
-| --- | --- | --- | --- |
-| Grunt (`enemy.swarm_basic`) | 1 | 1 | The unit of account |
-| Runner (`enemy.fast_fragile`) | 1 | 2 | Harder to hit, forces movement |
-| Tank (`enemy.slow_durable`) | 4 | 7 | 4× the health of a Grunt and blocks space |
-| Broodmother (`enemy.death_spawner`) | 3 | 5 | Plus its brood, see below |
-| Broodmother offspring | 0 | 1 | The brood is part of the package |
-| Fracture children | 0 | 0 | Unchanged — a player skill must not mint XP |
-| Elite | ×2 | ×2.5 | Already a reward multiplier |
+| Role | Environment identity | Current | Proposed | Rationale |
+| --- | --- | --- | --- | --- |
+| `enemy.swarm_basic` | Plastic Bottle | 1 | 1 | The unit of account |
+| `enemy.fast_fragile` | Plastic Bag | 1 | 2 | Harder to hit, forces movement |
+| `enemy.slow_durable` | Glass Bottle | 4 | 7 | Far more health and armour, and blocks space |
+| `enemy.death_spawner` | Rubbish Bag | 3 | 5 | Plus its burst, see below |
+| Death-spawn offspring | Loose litter | 0 | 1 | The burst is part of the package |
+| Fracture children | Fragments | 0 | 0 | Unchanged — a player skill must not mint XP |
+| Elite | Illegal Dump | ×2 | ×2.5 | Already a reward multiplier |
 
-Add a **toughness share**: an enemy's XP is snapshotted at spawn as
+Add a **toughness share**: an enemy's reward is snapshotted at spawn as
 `xpReward × (1 + (effectiveHealthMultiplier − 1) × 0.5)`.
-A Grunt spawned at minute four with a 1.5× health multiplier is worth 1.25 XP; the same Grunt at minute zero is worth 1. This is what keeps the exponential requirement fed without inflating the early game, and it makes the late-run swarm feel like a payday rather than a wall.
+A bottle spawned at minute four with a 1.5× health multiplier is worth 1.25; the same bottle at minute zero is worth 1. This is what keeps the exponential requirement fed without inflating the early game, and it makes the late-run swarm feel like a payday rather than a wall.
 
-Giving Broodmother offspring non-zero XP changes the provisional data behind REC-030; update that entry rather than silently diverging. There is no XP loop risk because offspring are Runners, which do not spawn on death.
+Giving death-spawn offspring non-zero reward changes the provisional data behind REC-030; update that entry rather than silently diverging. There is no reward loop because offspring are the fast-fragile role, which does not spawn on death.
 
 ### Upgrade tallies (request 2)
 
 - Add `upgradeCounts: Readonly<Partial<Record<UpgradeId, number>>>` to run statistics, incremented at the same commit point as `selectedUpgradeIds`.
-- `selectRunSummaryValues` gains an `upgrades` section: theme display name, count, and — where meaningful — the resulting value ("Tempered Power ×4 — +100% damage").
-- The run-end overlay grows a third column, or a second page when the list exceeds the panel; the same selector feeds the pause menu in Phase 7.
+- `selectRunSummaryValues` gains an `upgrades` section: theme display name, count, and — where meaningful — the resulting value.
+- The run-end overlay grows a third column, or a second page when the list exceeds the panel; the same selector feeds the pause menu in Phase 8.
 
 Short verification:
 
@@ -226,56 +313,85 @@ npm run test:e2e -- --grep "level up|statistics"
 npm run balance
 ```
 
-Manual smoke: play a full run and confirm level-ups slow down without stalling, that a Tank kill is visibly worth more than a Grunt kill, and that the end screen lists every upgrade with an accurate count.
+Manual smoke: play a full run and confirm level-ups slow down without stalling, that a Glass Bottle kill is visibly worth more than a Plastic Bottle kill, and that the end screen lists every upgrade with an accurate count.
 
-Exit gate: the curve is data-driven and exactly tested at band boundaries, XP provenance still reconciles, and the simulator's predicted level at 1/3/5 minutes matches live play within one level.
+Exit gate: the curve is data-driven and exactly tested at band boundaries, reward provenance still reconciles, and the simulator's predicted level at 1/3/5 minutes matches live play within one level.
 
 ---
 
-# Phase 3 — Spawn director, timer gating, and off-screen spawning
+# Phase 4 — Procedural spawn director, fixed view, and off-screen spawning
 
-**Commit:** `feat(v0.3): add the timed spawn director and off-screen spawning`
+**Commit:** `feat(v0.3): add the procedural spawn director and off-screen spawning`
 
 Covers requests 4 and 8.
 
-### Off-screen spawning (request 4)
+## The director is a set of curves, not a phase list
 
-Two changes are needed, because a larger radius alone is not enough:
+The requirement is that longer and endless runs must work **without hand-authoring more phases**. So the director resolves everything from normalized run progress:
 
-1. **Radius derives from the viewport.** `spawnRadius = hypot(viewWidth, viewHeight) / 2 + margin`, where the view is the camera's world-space extent. At the proposed fixed view (below) that is ≈ 918 + 100 = **1020**, versus 360 today.
-2. **Clamping is replaced with rejection.** `pointOnSpawnRing` currently clamps the candidate into the arena, which drags edge spawns on screen — precisely the bug being reported when the player is near a wall. Replace with: sample the golden-angle ring, reject candidates outside the arena or inside the camera's view rectangle, and take the first valid candidate; after N rejections fall back to the farthest in-arena point from the camera centre.
+```text
+t = elapsedMs / durationMs        // 0 at start, 1 at the end, and free to exceed 1
+```
 
-Because the arena is 2400×1600, a 1020-unit ring does not fit around a player near a corner. Two supporting changes:
+Every director output is a function of `t`. Nothing in the data names a minute.
 
-- **Fixed logical view.** Set a camera zoom so the visible world is a constant **1600×900** units regardless of window size. This is worth doing for its own sake: today a player on a 27" monitor sees more of the arena, gets more warning, and has more targets in range than a player on a laptop, which means the balance work in this milestone would otherwise be monitor-dependent.
-- **Larger arena.** 2400×1600 → **3600×2400**, giving room for a full off-screen ring anywhere in the arena and making shrine placement a real traversal decision.
+| Output | Function | Coefficients (`director.ts`) |
+| --- | --- | --- |
+| Spawn interval | `max(minMs, baseMs × e^(−k·t))` | `baseMs 900`, `k 1.0`, `minMs 300` |
+| Batch size | `1 + floor(t × batchRamp)` | `batchRamp 3` |
+| Role availability | live when `t ≥ role.unlockAt` | per role, below |
+| Role weight | `w₀ × (1 + growth × clamp01((t − unlockAt) / (1 − unlockAt)))` | per role, below |
+| Baseline elite chance | `maxElite × clamp01((t − eliteUnlock) / (1 − eliteUnlock))` | `eliteUnlock 0.60`, `maxElite 0.08` |
+| Milestone wave | fires once when `t` crosses any `role.unlockAt` | burst of `15 + 15·t` |
 
-Both touch existing e2e expectations (`ARENA_SIZE` is asserted in telemetry tests) — treat the test updates as part of this phase, not as incidental churn.
+Per-role coefficients:
 
-### The spawn director (request 8)
+| Role | `unlockAt` | At 5:00 | `w₀` | `growth` |
+| --- | --- | --- | --- | --- |
+| `enemy.swarm_basic` | 0.00 | 0:00 | 100 | −0.65 |
+| `enemy.fast_fragile` | 0.20 | 1:00 | 30 | 0.00 |
+| `enemy.slow_durable` | 0.40 | 2:00 | 12 | +0.90 |
+| `enemy.death_spawner` | 0.45 | 2:15 | 5 | +2.60 |
 
-Replace the constant interval and `unlockAtMs` with declared phases keyed to **time remaining**, as requested:
+**Derived output at a 5-minute run** — this table is computed from the curves above, not authored. It exists to show the curves produce the requested milestone shape.
 
-| Remaining | Elapsed | Interval @ Chaos 1 | Batch | Role weights | Baseline elite chance |
+| Progress | Remaining | Interval | Batch | Role share | Elite baseline |
 | --- | --- | --- | --- | --- | --- |
-| 5:00–4:00 | 0–60 s | 900 ms | 1 | Grunt 100 | 0% |
-| 4:00–3:00 | 60–120 s | 700 ms | 1–2 | Grunt 70 · Runner 30 | 0% |
-| 3:00–2:00 | 120–180 s | 560 ms | 2 | Grunt 50 · Runner 28 · Tank 15 · Brood 7 | 1% |
-| 2:00–1:00 | 180–240 s | 430 ms | 2–3 | Grunt 40 · Runner 28 · Tank 20 · Brood 12 | 4% |
-| 1:00–0:00 | 240–300 s | 330 ms | 3–4 | Grunt 32 · Runner 28 · Tank 22 · Brood 18 | 8% |
+| 0.0 | 5:00 | 900 ms | 1 | Bottle 100% | 0% |
+| 0.2 | 4:00 | 737 ms | 1 | Bottle 74% · Bag 26% | 0% |
+| 0.4 | 3:00 | 603 ms | 2 | Bottle 64% · Bag 26% · Glass 10% | 0% |
+| 0.6 | 2:00 | 494 ms | 2 | Bottle 53% · Bag 26% · Glass 14% · Rubbish 7% | 0% |
+| 0.8 | 1:00 | 404 ms | 3 | Bottle 43% · Bag 27% · Glass 17% · Rubbish 12% | 4% |
+| 1.0 | 0:00 | 331 ms | 4 | Bottle 33% · Bag 28% · Glass 22% · Rubbish 17% | 8% |
 
-Chaos layers on top of the phase rather than replacing it:
+Change `durationMs` to ten minutes and the same curves stretch to it. The compressed test runs traverse every milestone for free, which also removes the `durationScale` workaround an authored table would have needed.
 
-- **Rate:** `interval / worldSpawnMultiplier` (the existing `1 + 0.25p` curve plus shrine products) — unchanged mechanism.
-- **Composition:** each role carries a `chaosWeightBias`, and its weight becomes `weight × (1 + p × bias)`. Proposed biases — Grunt 0, Runner 0.10, Tank 0.35, Broodmother 0.50. High Chaos therefore shifts the swarm toward heavy roles, not just more of the same.
-- **Elites:** `max(phaseBaselineEliteChance, min(0.4, 0.04p))`. This fixes the current situation where a shrine-free run never sees an elite at all.
+**Endless (V0.4) needs no new data.** For `t > 1` every curve clamps at its floor or ceiling and an escalation index `E = max(0, t − 1)` feeds additional health, damage, and count multipliers. The director hook exists in V0.3; endless mode itself remains V0.4.
 
-Two more director features, because scheduled escalation is most of what makes the reference games feel paced:
+### Pollution layers on top
 
-- **Batch spawning.** Spawning 1 enemy every 330 ms reads as a trickle; spawning 3 every 990 ms in a shared arc reads as a wave. Batches spawn on a shared ring segment with jitter.
-- **Telegraphed milestone events.** At each phase boundary, emit a banner and audio cue ("The pack stirs", "The brood wakes") and a burst of 15–30 of the newly unlocked role. The player should know the game just got harder, and why.
+- **Rate:** `interval / worldSpawnMultiplier` — the existing `1 + 0.25p` curve plus shrine products, unchanged mechanism.
+- **Composition:** each role carries a `chaosWeightBias`, and its weight becomes `weight × (1 + p × bias)`. Proposed biases — Bottle 0, Bag 0.10, Glass 0.35, Rubbish 0.50. High Pollution therefore shifts the swarm toward heavy roles, not just more of the same.
+- **Elites:** `max(directorBaseline(t), min(0.4, 0.04p))`. This fixes the current situation where a shrine-free run never sees an elite at all.
 
-The phase table is expressed in absolute milliseconds with a `durationScale` derived from `runDurationMs`, so the compressed test runs still traverse every phase.
+Batch spawning matters more than it sounds: one enemy every 330 ms reads as a trickle, while three every 990 ms on a shared ring arc reads as a wave. Milestone waves are announced with a banner and cue, because the player should know the game just got harder and why.
+
+## Fixed view and off-screen spawning (request 4)
+
+### Fixed logical view
+
+The game renders a **fixed 1600×900 logical view**, scaled to fit the window and letterboxed with the theme background where the aspect does not match. A small set of presentation presets (720p / 900p / 1080p) changes rendered pixel density only.
+
+The hard rule: **every preset shows the same world area.** If a preset showed more world, a bigger window would mean more warning, more targets in range, and a different game — and every balance number in this milestone would be monitor-dependent.
+
+### Spawn ring
+
+Two changes, because a larger radius alone is not enough:
+
+1. **Radius derives from the fixed view.** Half-diagonal of 1600×900 is ≈ 918, so `spawnRadius = 918 + margin ≈ 1020`, versus 360 today.
+2. **Clamping is replaced with rejection.** `pointOnSpawnRing` currently clamps the candidate into the arena, which drags edge spawns on screen — precisely the reported bug when the player is near a wall. Replace with: sample the golden-angle ring, reject candidates outside the arena or inside the view rectangle, take the first valid candidate, and after N rejections fall back to the farthest in-arena point from the view centre.
+
+The arena grows **2400×1600 → 3600×2400** so a full off-screen ring exists anywhere in the arena, and so shrine placement becomes a real traversal decision. Both changes touch existing e2e expectations that assert `ARENA_SIZE`; treat those updates as part of this phase.
 
 Short verification:
 
@@ -283,17 +399,17 @@ Short verification:
 npm run typecheck
 npm test -- --run tests/unit/spawning tests/unit/director tests/unit/content tests/unit/simulation
 npm run build
-npm run test:e2e -- --grep "spawn|enemy roster|Chaos"
+npm run test:e2e -- --grep "spawn|enemy roster|Chaos|view"
 npm run test:e2e:stress
 ```
 
-Manual smoke: play a shrine-free run and confirm no enemy ever appears on screen, that each minute boundary is announced and visibly changes the roster, and that a high-Chaos run is heavier as well as denser.
+Manual smoke: play a shrine-free run and confirm no enemy ever appears on screen; confirm each milestone is announced and visibly changes the roster; resize the window across all presets and confirm the visible world area never changes; run the simulator at 5 and 10 minutes and confirm both produce sane curves from the same data.
 
-Exit gate: zero on-screen spawns across a scripted sweep with the player at the centre, each edge, and each corner; director phases and weights are pure, data-defined, and unit-tested; the 300-enemy stress path still passes.
+Exit gate: zero on-screen spawns across a scripted sweep with the player at the centre, each edge, and each corner, at every preset; the director is pure, curve-driven, and unit-tested at several run lengths; the 300-enemy stress path still passes.
 
 ---
 
-# Phase 4 — Physical presence, spatial index, and crowd separation
+# Phase 5 — Physical presence, spatial index, and crowd separation
 
 **Commit:** `feat(v0.3): give enemies physical presence`
 
@@ -310,15 +426,15 @@ Full Arcade collider resolution between 300 enemies is the obvious approach and 
 
 Separation radius is deliberately smaller than the drawn radius so small enemies still bunch, exactly as requested:
 
-| Role | Draw radius | Separation scale | Effective | Mass | Solid |
-| --- | --- | --- | --- | --- | --- |
-| Runner | 10 | 0.55 | 5.5 | 0.6 | no |
-| Grunt | 14 | 0.70 | 9.8 | 1.0 | no |
-| Tank | 22 | 1.00 | 22 | 4.0 | **yes** |
-| Broodmother | 25 | 0.95 | 23.8 | 3.0 | **yes** |
-| Elite (any role) | ×1.3 | inherits | ×1.3 | ×2 | **yes** |
+| Role | Environment identity | Draw radius | Separation scale | Effective | Mass | Solid |
+| --- | --- | --- | --- | --- | --- | --- |
+| `enemy.fast_fragile` | Plastic Bag | 10 | 0.55 | 5.5 | 0.6 | no |
+| `enemy.swarm_basic` | Plastic Bottle | 14 | 0.70 | 9.8 | 1.0 | no |
+| `enemy.slow_durable` | Glass Bottle | 22 | 1.00 | 22 | 4.0 | **yes** |
+| `enemy.death_spawner` | Rubbish Bag | 25 | 0.95 | 23.8 | 3.0 | **yes** |
+| Elite (any role) | — | ×1.3 | inherits | ×1.3 | ×2 | **yes** |
 
-Runners overlap heavily and read as a shoal; Grunts bunch with visible gaps; Tanks and Broodmothers hold their ground and are walls.
+Bags overlap heavily and read as wind-blown drift; bottles bunch with visible gaps; glass and rubbish hold their ground and are walls.
 
 Also add **contact knockback**: a solid enemy that damages the player shoves them, which sells the mass difference and gives a moment of recovery.
 
@@ -342,52 +458,71 @@ npm run test:e2e -- --grep "separation|presence|combat"
 npm run test:e2e:stress
 ```
 
-Manual smoke: walk into a Tank and confirm it blocks; walk through a Runner shoal and confirm it parts and reforms; stand in a corner under heavy load and confirm nothing tunnels through the player or the walls.
+Manual smoke: walk into a Glass Bottle and confirm it blocks; walk through a drift of Plastic Bags and confirm it parts and reforms; stand in a corner under heavy load and confirm nothing tunnels through the player or the walls.
 
-Exit gate: no enemy pair is fully coincident for more than one frame, solids are impassable for both player and enemies, the 300-enemy load stays within the recorded frame budget, and separation never alters damage, XP, or statistics.
+Exit gate: no enemy pair is fully coincident for more than one frame, solids are impassable for both player and enemies, the 300-enemy load stays within the recorded frame budget, and separation never alters damage, rewards, or statistics.
 
 ---
 
-# Phase 5 — Time and Chaos difficulty scaling
+# Phase 6 — Time and Chaos scaling, and arena hazards
 
-**Commit:** `feat(v0.3): scale enemy strength with time and Chaos`
+**Commit:** `feat(v0.3): scale world pressure with time and add arena hazards`
 
-Covers request 6, starting conservatively as requested.
+Covers request 6, starting conservatively as requested, plus arena hazards for map variety.
 
-Add an elapsed-time curve alongside the existing Chaos curves, resolved through the same `selectWorldModifiers` selector so there is still exactly one place where world pressure is decided:
+### Difficulty scaling
 
-| Modifier | Chaos term (existing) | New time term | Combined at 5:00, Chaos 3 |
+Add an elapsed-time curve alongside the existing Pollution curves, resolved through the same `selectWorldModifiers` selector so there is still exactly one place where world pressure is decided:
+
+| Modifier | Pollution term (existing) | New time term | Combined at 5:00, Pollution 3 |
 | --- | --- | --- | --- |
-| Enemy health | `1 + 0.20p` | `1 + 0.50 × (elapsed / duration)` | 1.40 × 1.50 = **2.10×** |
-| Enemy contact damage | `1 + 0.15p` | `1 + 0.20 × (elapsed / duration)` | 1.30 × 1.20 = **1.56×** |
-| Enemy move speed | none | `1 + 0.10 × (elapsed / duration)` | **1.10×** |
-| Elite chance | `min(0.4, 0.04p)` | phase baseline from Phase 3 | max of the two |
+| Enemy health | `1 + 0.20p` | `1 + 0.50 × t` | 1.40 × 1.50 = **2.10×** |
+| Enemy contact damage | `1 + 0.15p` | `1 + 0.20 × t` | 1.30 × 1.20 = **1.56×** |
+| Enemy move speed | none | `1 + 0.10 × t` | **1.10×** |
+| Elite chance | `min(0.4, 0.04p)` | director baseline from Phase 4 | max of the two |
 
 Rules that keep this readable and safe:
 
-- The time term advances in **30-second steps**, not continuously. A smooth ramp is imperceptible; a step is felt, and it lets the HUD show a "threat level" that changes at legible moments.
+- The time term advances in **steps of `1/10` of run progress**, not continuously — 30-second steps at five minutes, and correctly proportioned at any run length. A smooth ramp is imperceptible; a step is felt, and it lets the HUD show a threat level that changes at legible moments.
 - Multipliers are **snapshotted at spawn**. Existing enemies never heal or accelerate mid-life, which would be both confusing and a statistics hazard.
-- The snapshot is what feeds the Phase 2 toughness XP share and the Phase 6 victim-health explosion damage, so tougher enemies pay out more in both currencies.
+- The snapshot is what feeds the Phase 3 toughness reward share and the Phase 7 victim-health explosion damage, so tougher enemies pay out more in both currencies.
 
-Start at these values and expect to raise them. The simulator's TTK table (Phase 8) is the instrument for deciding.
+Start at these values and expect to raise them. The simulator's TTK table (Phase 10) is the instrument for deciding.
+
+### Arena hazards
+
+Three hazards, deliberately no more, each a stable-ID contract with theme-owned identity and tuning. They exist for map variety and to make positioning matter beyond enemy avoidance.
+
+| Stable ID | Environment identity | Behaviour |
+| --- | --- | --- |
+| `hazard.damage_zone` | Contamination Spill | Telegraphed static area; damage-over-time and a slow to anything inside; expires after a lifetime |
+| `hazard.obstacle` | Debris Pile | Solid for the player and projectiles; destructible with its own health; drops a reward when cleared |
+| `hazard.periodic_burst` | Methane Vent | Fixed point that telegraphs and then bursts on a cycle |
+
+Design rules:
+
+- Hazards are **world content, not enemies**: they never count toward the enemy cap, never award kills, and never enter the damage ledger as enemy damage.
+- Count and frequency scale with Pollution and run progress from `difficulty.ts`, so they are part of the same escalation model rather than a separate system.
+- `hazard.obstacle` reuses Phase 5's solid-body resolution. Enemies get a cheap tangential avoidance steer — one vector adjustment, no pathfinding. **This is the risk in this phase**: direct-chase enemies can pile against an obstacle. Cap obstacle size and count, and verify under the 300-enemy load that no pile becomes a permanent stall.
+- Everything is telegraphed before it hurts. An untelegraphed hazard in a 300-enemy swarm is indistinguishable from a bug.
 
 Short verification:
 
 ```text
 npm run typecheck
-npm test -- --run tests/unit/chaos tests/unit/modifiers tests/unit/difficulty tests/unit/simulation
+npm test -- --run tests/unit/chaos tests/unit/modifiers tests/unit/difficulty tests/unit/hazards tests/unit/simulation
 npm run build
-npm run test:e2e -- --grep "Chaos|world multiplier|difficulty"
+npm run test:e2e -- --grep "Chaos|world multiplier|difficulty|hazard"
 npm run balance
 ```
 
-Manual smoke: compare a Grunt's time-to-kill at 0:30 and at 4:30 with the same build, and confirm the HUD threat step changes are noticeable but not punishing.
+Manual smoke: compare a Plastic Bottle's time-to-kill at 0:30 and 4:30 with the same build; confirm the HUD threat step changes are noticeable but not punishing; walk into each hazard and confirm it is telegraphed, escapable, and cleaned up on restart.
 
-Exit gate: every scaling term resolves from one selector, is exposed in telemetry, snapshots at spawn, and restarts clean.
+Exit gate: every scaling term resolves from one selector, is exposed in telemetry, snapshots at spawn, and restarts clean; hazards never corrupt kill, reward, or damage accounting; no obstacle pile stalls the swarm under load.
 
 ---
 
-# Phase 6 — Skill levels, scaling Detonation, and upgrade pool repair
+# Phase 7 — Skill levels, scaling Detonation, and upgrade pool repair
 
 **Commit:** `feat(v0.3): make skills level and scale`
 
@@ -395,9 +530,9 @@ Covers request 10, plus the wasted-pick defect.
 
 ### Skill levels
 
-`skill.enable` becomes `skill.level`: taking the upgrade increments the level, capped at the skill's `maxLevel`. Every skill effect resolver takes a level. This single change fixes the defect where re-picking Detonation is a completely wasted level-up.
+`skill.enable` becomes `skill.level`: taking the upgrade increments the level, capped at the skill's `maxLevel`. Every skill effect resolver takes a level. This single change fixes the defect where re-picking a skill is a completely wasted level-up.
 
-### Scaling Detonation
+### Scaling Compaction Burst (the on-kill detonation)
 
 Damage becomes a share of what died, as requested, rather than a flat number:
 
@@ -412,11 +547,11 @@ radius = baseRadius + radiusPerLevel × (level − 1)
 | Victim health share | 30% | 38% | 46% | 54% | 70% | 86% |
 | Flat damage | 3 | 5 | 7 | 9 | 13 | 17 |
 
-Level 1 is deliberately weaker than today's fixed blast (44 vs 96 radius, ~9 damage on a Grunt vs 15) so that investment has somewhere to go; level 8 is far stronger than today.
+Level 1 is deliberately weaker than today's fixed blast (44 vs 96 radius) so that investment has somewhere to go; level 8 is far stronger than today.
 
-`victimEffectiveMaxHealth` is the enemy's max health *including* its spawn-time elite and difficulty multipliers, so a late-run elite Tank detonates for a great deal and a Runner barely pops. This is the interaction the design is asking for: killing the right target becomes the play, and Phase 5's health scaling feeds it automatically. `EnemyActor` must store `maxHealth` at construction — today only the mutable current `health` is retained.
+`victimEffectiveMaxHealth` is the enemy's max health *including* its spawn-time elite and difficulty multipliers, so a late-run elite Glass Bottle detonates for a great deal and a Plastic Bag barely pops. This is the interaction the design is asking for: killing the right target becomes the play, and Phase 6's health scaling feeds it automatically. `EnemyActor` must store `maxHealth` at construction — today only the mutable current `health` is retained.
 
-### Scaling Chain Reaction
+### Scaling Cascade (chain reaction)
 
 | Level | 1 | 2 | 3 | 4 | 5 (max) |
 | --- | --- | --- | --- | --- | --- |
@@ -426,14 +561,14 @@ Level 1 is deliberately weaker than today's fixed blast (44 vs 96 radius, ~9 dam
 
 An explicit depth limit replaces "bounded only by exact-once claims", which keeps a 300-enemy chain finite, readable, and measurable. Falloff means chains stay spectacular without becoming the only thing that matters.
 
-Piercing Momentum, Fracture, and Bloodlust all take the same treatment: Momentum +10% per level, Fracture +5 percentage points of split chance per level, Bloodlust +0.5% attack speed per step per level.
+Sorting Momentum, Fragmentation, and Cleanup Streak all take the same treatment: Momentum +10% per level, Fragmentation +5 percentage points of split chance per level, Cleanup Streak +0.5% attack speed per step per level.
 
 ### Upgrade pool repair
 
 - `maxLevel` per upgrade; maxed upgrades leave the pool.
-- Weighted rather than uniform selection, with rarity tiers (common / rare / epic) and `luck` feeding the weights (see Phase 8).
+- Weighted rather than uniform selection, with rarity tiers (common / rare / epic) and `luck` feeding the weights (see Phase 10).
 - Never offer three upgrades from the same category in one draw.
-- Introduce the **dangerous third choice** that `PLAN.md` describes but the build never implemented — a world/curse upgrade such as Swarming (`enemy spawn ×1.5`, `+20 luck`) or Glass World (`player damage ×2`, `enemy damage ×2`). These are the clearest expression of the "difficulty should be player-controlled" principle and they cost almost nothing to add now that the world model exists.
+- Introduce the **dangerous third choice** that `PLAN.md` describes but the build never implemented — a world/curse upgrade such as Single-Use Surge (`enemy spawn ×1.5`, `+20 luck`) or Brittle World (`player damage ×2`, `enemy damage ×2`). These are the clearest expression of the "difficulty should be player-controlled" principle and they cost almost nothing now that the world model exists.
 
 Short verification:
 
@@ -445,13 +580,13 @@ npm run test:e2e -- --grep "explosion|chain reaction|level up"
 npm run test:e2e:stress
 ```
 
-Manual smoke: take Detonation five times and confirm each pick visibly enlarges the blast; kill an elite Tank in a crowd and confirm the explosion is dramatically larger than a Runner's; confirm no offered upgrade is ever a no-op.
+Manual smoke: take the detonation five times and confirm each pick visibly enlarges the blast; kill an elite Glass Bottle in a crowd and confirm the explosion is dramatically larger than a Plastic Bag's; confirm no offered upgrade is ever a no-op.
 
 Exit gate: every skill level resolves from data, chains terminate at the declared depth, the damage ledger still reconciles exactly, and duplicate-pick waste is impossible.
 
 ---
 
-# Phase 7 — Informative upgrade cards, pause menu, and HUD
+# Phase 8 — Informative upgrade cards, pause menu, and HUD
 
 **Commit:** `feat(v0.3): show the player what everything does`
 
@@ -463,27 +598,28 @@ Each card renders through `describeUpgrade(state, upgrade)`:
 
 ```text
 ┌──────────────────────────────────────────────┐
-│ 1.  TEMPERED POWER                    Lv 3→4 │
+│ 1.  REINFORCED TOOLS                  Lv 3→4 │
 │     Increase damage dealt.                   │
 │     Damage        15.0  →  17.5   (+25%)     │
 └──────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────┐
-│ 2.  TWIN CASTING                      Lv 1→2 │
+│ 2.  SPLIT NOZZLE                      Lv 1→2 │
 │     Launch one additional projectile.        │
 │     Projectiles      1  →  2                 │
 └──────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────┐
-│ 3.  DETONATION                          NEW  │
-│     Defeated foes erupt.                     │
+│ 3.  COMPACTION BURST                    NEW  │
+│     Defeated waste bursts.                   │
 │     Blast radius        44                   │
-│     Blast damage        30% of victim health │
+│     Blast damage        30% of target health │
 └──────────────────────────────────────────────┘
 ```
 
 - The **level badge** (`Lv 3→4`) and the **NEW** badge are always shown — they are identity, not detail.
-- The **numeric before → after lines** are gated by the pause-menu toggle `Detailed upgrade cards`, defaulting to on.
+- The **numeric before → after lines** are gated by the pause-menu toggle `Detailed upgrade cards`, **defaulting to on**.
 - Multi-hit upgrades read as counts (`1 → 2 projectiles`, later `9 → 10`), stat upgrades read as resolved values plus the percentage, and skills read as their resolved effect values at the level being offered.
 - Rarity is expressed by card border colour.
+- A **level-up queue indicator** shows "2 more choices" when several levels land at once, so stacked pauses are legible.
 
 ### Pause menu (request 9)
 
@@ -492,28 +628,28 @@ Each card renders through `describeUpgrade(state, upgrade)`:
 ```text
 STATS          UPGRADES          WORLD          SETTINGS
 
-Vitality        86 / 125         Tempered Power        ×4
-Damage          17.5             Twin Casting          ×2
-Attack rate     1.62 /s          Critical Mass         ×3
-Crit chance     145%  (Tier 1)   Sharpened Tip         ×2
-Crit damage     200%             Detonation            ×3
-Projectiles     3                Chain Reaction        ×1
-Pierce          2                Bloodlust             ×1
+Health          86 / 125         Reinforced Tools      ×4
+Damage          17.5             Split Nozzle          ×2
+Attack rate     1.62 /s          Precision Sort        ×3
+Crit chance     145%  (Tier 1)   Deep Reach            ×2
+Crit damage     200%             Compaction Burst      ×3
+Projectiles     3                Cascade               ×1
+Pierce          2                Cleanup Streak        ×1
 Move speed      260
-Pickup radius   160              CHAOS         ×2.8
+Pickup radius   160              POLLUTION     ×2.8
 Armour          4                Enemy spawn   ×1.90
 Regeneration    0.5 /s           Enemy health  ×1.86
-XP multiplier   ×1.50            XP gain       ×2.25
+Impact bonus    ×1.50            Impact gain   ×2.25
 ```
 
-Everything on this screen comes from the same selectors as the cards and the run-end tally. Settings tab hosts `Detailed upgrade cards`, `Reduced motion`, and `Mute`, replacing the current keyboard-only mute.
+Everything on this screen comes from the same selectors as the cards and the run-end tally. The Settings tab hosts `Detailed upgrade cards`, `Reduced motion`, `Mute`, and the view preset, replacing the current keyboard-only mute.
 
 ### HUD
 
 - Replace the XP text with a real progress bar plus `LVL n`.
-- Timer shows the current director phase marker, so "3:00" reads as a milestone.
+- Timer shows the current director milestone marker.
 - Add live kill-chain counter and threat step indicator.
-- Milestone/wave banner from Phase 3 renders here.
+- Milestone and wave banners from Phase 4 render here.
 
 Short verification:
 
@@ -524,43 +660,84 @@ npm run build
 npm run test:e2e -- --grep "level up|pause|hud|resize"
 ```
 
-Manual smoke: confirm every card's stated "after" value matches the stat shown in the pause menu after taking it; toggle detail off and on; resize the window during level-up and pause and confirm both overlays reflow.
+Manual smoke: confirm every card's stated "after" value matches the stat shown in the pause menu after taking it; toggle detail off and on; resize across presets during level-up and pause and confirm both overlays reflow.
 
 Exit gate: card numbers are derived from the same code that applies the upgrade (so they cannot drift), the pause overlay never leaks input or resumes physics accidentally, and both overlays are resize- and restart-safe.
 
 ---
 
-# Phase 8 — Survivability stats, pickup pressure, and the balance pass
+# Phase 9 — Impact feedback and terminal polish
+
+**Commit:** `feat(v0.3): make big moments land`
+
+The four presentation items that separate a game that is numerically correct from one that feels good. All four are downstream consumers of committed events and must never alter simulation results.
+
+### Hit-stop
+
+Two or three frames of freeze on an elite kill or a large chain. It is the cheapest possible "that felt good" and it is a large part of why the reference games land harder than their numbers suggest.
+
+Implemented as a brief global time scale, so the run clock slows with it and simulation stays internally consistent. Because it does hand the player free real-world time, it is **budgeted**: a maximum total hit-stop per second, and no hit-stop at all while the frame budget is under pressure. Both are recorded in telemetry.
+
+### Damage-number aggregation
+
+With Phase 7's scaling explosions, per-hit numbers will become unreadable. Aggregate per enemy over a ~120 ms window and render one larger number. This also cuts feedback object churn under load, which partly pays for hit-stop.
+
+### Kill-streak audio ramp
+
+The pierce system already ramps pitch per projectile. Extend the same treatment to kill chains so a good run is audible — which `PLAN.md` explicitly asks for and the current build only half-delivers.
+
+### Death moment
+
+Brief slow-motion on death, then a cause-of-death line — "Overwhelmed by an elite Glass Bottle at 4:12" — above the existing statistics ledger. Requires recording the killing enemy's role, elite flag, and timestamp at the lethal transition.
+
+Short verification:
+
+```text
+npm run typecheck
+npm test -- --run tests/unit/feedback tests/unit/statistics tests/unit/effects
+npm run build
+npm run test:e2e -- --grep "feedback|death|elite"
+npm run test:e2e:stress
+```
+
+Manual smoke: trigger a large chain and confirm hit-stop reads as emphasis rather than lag; confirm damage numbers stay legible at 300 enemies; die deliberately to each role and confirm the cause line is correct.
+
+Exit gate: simulation results are bit-identical with all four features enabled, muted, reduced, or disabled; hit-stop stays inside its budget under the 300-enemy load; aggregation never loses or double-counts damage.
+
+---
+
+# Phase 10 — Survivability stats, pickup pressure, and the balance pass
 
 **Commit:** `feat(v0.3): complete the rebalancing milestone`
 
 ### Dead stats
 
-`armour`, `regeneration`, and `luck` are declared, validated, and unread. Either implement or delete them — leaving validated-but-ignored stats is a trap for future work. Recommendation is to implement, because a rebalancing milestone that only adds offense will produce a game where the answer to every problem is more damage:
+`armour`, `regeneration`, and `luck` are declared, validated, and unread. Implement all three, because a rebalancing milestone that only adds offense produces a game where the answer to every problem is more damage:
 
-- **Armour:** multiplicative reduction `damage × 100 / (100 + armour)`, which never reaches immunity and never trivialises late contact damage.
+- **Armour:** multiplicative reduction `damage × 100 / (100 + armour)`, which never reaches immunity and never trivialises late contact damage. Also becomes an **enemy** stat — the Glass Bottle's defining trait.
 - **Regeneration:** health per second, applied on the simulation clock, paused with the run.
-- **Luck:** weights rare/epic upgrade offers and nudges the Fracture and elite rolls.
+- **Luck:** weights rare/epic upgrade offers and nudges the fragmentation and elite rolls.
 
-Add one upgrade for each so they are reachable, which also broadens the pool that Phase 6 draws from.
+Add one upgrade for each so they are reachable, which also broadens the pool that Phase 7 draws from.
 
-Also reconsider the **global invulnerability window**: one `lastContactDamageAtMs` means being surrounded by forty enemies costs exactly as much health as touching one. Per-enemy cooldowns make crowds genuinely dangerous; a global window with a shorter duration is the middle path. This interacts directly with Phase 4's solid enemies and Phase 5's damage ramp, so decide it here with all three visible.
+The global invulnerability window stays as it is for this milestone, per the recorded decision; revisit in V0.4 with solid enemies, hazards, and the damage ramp all live.
 
 ### Pickup pressure
 
 Every kill currently drops an uncapped pickup actor. At 300 enemies with chains, that is a second unbounded entity population competing for frame time and covering the arena.
 
 - Cap live pickups (proposed 250); on overflow, merge the two nearest into one worth the sum.
-- Three visual tiers by value, so a Tank's drop is visibly worth crossing the arena for.
-- Route magnetism through the Phase 4 spatial hash.
+- Three visual tiers by value, so a Glass Bottle's drop is visibly worth crossing the arena for.
+- Route magnetism through the Phase 5 spatial hash.
 
 ### The balance pass
 
 This is the phase where the numbers actually get decided, using the simulator plus real play:
 
-- Publish a **time-to-kill table** — for each role, at minutes 0 / 1 / 2 / 3 / 4 / 5, for four reference builds — and tune until TTK stays inside the declared band. The failure mode this catches is the one the current build has: player DPS scaling and enemy health scaling diverging quietly.
-- Publish a **DPS budget**: base 10 DPS at level 1 must reach roughly 400–600 effective DPS by minute five through multiplicative stacking, or the Phase 5 health ramp becomes a wall.
+- Publish a **time-to-kill table** — for each role, at ten evenly spaced points across the run, for four reference builds — and tune until TTK stays inside the declared band. The failure mode this catches is the one the current build has: player DPS scaling and enemy health scaling diverging quietly.
+- Publish a **DPS budget**: base 10 DPS at level 1 must reach roughly 400–600 effective DPS by the end of the run through multiplicative stacking, or the Phase 6 health ramp becomes a wall.
 - Re-run the full stress path with every V0.3 system active.
+- Re-run the simulator at 5 and 10 minutes to confirm the procedural director degrades gracefully at a length nobody tuned by hand.
 - Record every provisional value and its evidence in reconciliation.
 
 Short verification:
@@ -576,59 +753,65 @@ npm run balance
 npm audit --audit-level=high
 ```
 
-Manual smoke: three full runs — a cautious shrine-free run, a Chaos-stacking run, and a Detonation build — confirming each ends between roughly level 24 and 32, that death feels earned, and that the console stays clean.
+Manual smoke: three full runs — a cautious shrine-free run, a Pollution-stacking run, and a detonation build — confirming each ends between roughly level 24 and 32, that death feels earned, and that the console stays clean. Then one run with `durationMs` set to ten minutes, confirming the director and curves hold up untuned.
 
-Exit gate: all fourteen acceptance points pass, TTK stays in band across the reference builds, the stress path meets its budget, and reconciliation records the final tuning values with the evidence behind them.
+Exit gate: all seventeen acceptance points pass, TTK stays in band across the reference builds, the stress path meets its budget, and reconciliation records the final tuning values with the evidence behind them.
+
+---
+
+# Decisions taken
+
+Recorded here so later phases do not relitigate them.
+
+| # | Decision | Resolution | Lands in |
+| --- | --- | --- | --- |
+| 1 | Viewport | **Fixed 1600×900 logical view**, scaled to fit with letterboxed background. A few presentation presets change pixel density only — every preset shows the same world area | Phase 4 |
+| 2 | Run length | **Stays 5 minutes.** Longer and endless runs must be **procedural** — the director and curves resolve from normalized progress, so no milestone is ever hand-authored again | Phase 4 |
+| 3 | Detailed cards | **Default on**, with a pause-menu toggle to hide the numbers | Phase 8 |
+| 4 | Dangerous upgrades | **Yes**, plus **2–3 arena hazards** for map variety, kept deliberately simple | Phases 6, 7 |
+| 5 | Settings persistence | **Deferred to V0.4.** Session-only, with the adapter seam left in place | — |
+| 6 | Armour / regeneration / luck | **Implement all three**; armour also becomes an enemy stat | Phase 10 |
+| 7 | Invulnerability window | **Leave as is.** Revisit in V0.4 once solid enemies, hazards, and the damage ramp are all live | — |
+| 8 | Primary theme | **Environment**, replacing knight-magic, which is retained as a second real theme. Swap lands before any tuning phase so nothing is tuned twice | Phase 2 |
 
 ---
 
 # Additional recommendations
 
-These came out of reading the code and comparing against the reference games. They are ordered by value-per-effort. Nothing here is scheduled above; pull items into a phase deliberately or defer them to V0.4.
+Where each recommendation from the original review ended up.
 
-### Strongly recommended, already inside V0.3's phases
+### Scheduled into this milestone
 
-1. **Fixed logical viewport** (Phase 3) — without it, every balance number in this milestone is monitor-dependent.
-2. **Shared spatial hash** (Phase 4) — pays for separation by removing three existing O(n) scans.
-3. **Pacing simulator** (Phase 1) — turns a five-minute experiment into a sub-second test.
-4. **Upgrade pool repair** (Phase 6) — a wasted level-up is the single most frustrating thing in the current build.
-5. **Baseline elite chance from the timer** (Phase 3) — elites currently never appear without shrines.
-
-### Worth adding to V0.3 if appetite allows
-
-6. **Hit-stop on big kills.** Two or three frames of freeze on an elite kill or a large chain. It is the cheapest possible "that felt good" and it is why Risk of Rain 2 and HoloCure land harder than their numbers suggest.
-7. **Damage-number aggregation.** With scaling explosions the current per-hit numbers will become unreadable. Aggregate per enemy per ~120 ms and render one larger number.
-8. **Level-up queue indicator.** "2 more choices" when several levels land at once, so the player understands the stacked pauses.
-9. **Kill-streak audio pitch ramp.** The pierce system already does this per projectile; extending it to kill chains makes a good run audible, which `PLAN.md` explicitly asks for.
-10. **Death slow-motion and cause-of-death line.** "Slain by an elite Tank at 4:12" reads far better than an instant overlay.
+| Recommendation | Phase |
+| --- | --- |
+| Fixed logical viewport — without it every balance number is monitor-dependent | 4 |
+| Shared spatial hash — pays for separation by removing three existing O(n) scans | 5 |
+| Pacing simulator — turns a five-minute experiment into a sub-second test | 1 |
+| Upgrade pool repair — a wasted level-up is the most frustrating thing in the current build | 7 |
+| Baseline elite chance from run progress — elites currently never appear without shrines | 4 |
+| Hit-stop on big kills | 9 |
+| Damage-number aggregation | 9 |
+| Level-up queue indicator | 8 |
+| Kill-streak audio ramp | 9 |
+| Death slow-motion and cause-of-death line | 9 |
 
 ### V0.4 candidates
 
-11. **Weapon evolution.** Rather than adding many weapons, let the starter weapon evolve at max level plus a paired stat upgrade — the Vampire Survivors hook, and it fits the existing "deepen one weapon" decision.
-12. **Mini-boss at 1:00 remaining.** A single telegraphed threat gives the run a climax; the current ending is just the timer expiring.
-13. **Per-run seed display and seeded replay.** Nearly free given the existing seeded randoms, and it makes balance reports reproducible.
-14. **Profile persistence for settings and best-run statistics.** The natural first slice of `SAVE_DATA.md`, and it makes the Phase 7 settings toggle stick between sessions.
-15. **Meta-progression.** Permanent unlocks between runs are the reason Risk of Rain 2 and HoloCure retain players past the first hour, but they should land only once the in-run curve is right.
-16. **Colour-independent enemy identification.** Roles are currently distinguished by colour plus subtle geometry; distinct silhouettes would help both accessibility and split-second reads in a 300-enemy crowd.
-
----
-
-# Decisions needed before Phase 3
-
-These change the work materially, so they are worth settling early. Sensible defaults are proposed; the plan proceeds on the defaults if nothing is said.
-
-1. **Fixed 1600×900 logical view and a 3600×2400 arena?** *Default: yes.* It is a prerequisite for guaranteed off-screen spawning and for monitor-independent balance, and it will require updating existing e2e assertions.
-2. **Run length stays five minutes?** *Default: yes.* The director's milestone table is written for a 5:00 run and rescales for compressed test runs. A 10-minute run would want a sixth and seventh phase.
-3. **Detailed upgrade cards default on or off?** *Default: on*, with the pause toggle to hide them.
-4. **Add the dangerous world/curse upgrades to the pool now?** *Default: yes.* They are the clearest expression of the core design principle and the world model already supports them.
-5. **Persist settings to localStorage in this milestone?** *Default: no* — session-only, with the adapter seam left in place, keeping persistence a clean V0.4 slice.
-6. **Implement or delete `armour`, `regeneration`, and `luck`?** *Default: implement*, so survivability builds exist.
-7. **Per-enemy or global invulnerability window?** *Default: keep global but shorten it*, and revisit once solid enemies and the damage ramp are both live.
+1. **Weapon and equipment slots.** Rather than one deepening weapon, move to a small number of auto-firing weapon slots plus passive equipment slots. This is the natural home for the type system described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md), and it is where weapon level caps and evolution belong.
+2. **Type and effectiveness system.** Enemy and tool attributes with a small effectiveness matrix. Designed in `EDUCATION_PIVOT.md`; it needs the slot system first.
+3. **Endless mode.** The director already supports `t > 1`; endless needs only the escalation index and a terminal condition.
+4. **Mini-boss at the final milestone.** The run currently ends when the timer expires; a telegraphed climax is a better ending.
+5. **Per-run seed display and seeded replay.** Nearly free given the existing seeded randoms, and it makes balance reports reproducible.
+6. **Profile persistence** for settings, best-run statistics, and unlocks — the natural first slice of `SAVE_DATA.md`.
+7. **Meta-progression.** Permanent unlocks between runs are why the reference games retain players past the first hour, but they should land only once the in-run curve is right.
+8. **Layered composite enemies.** Multi-material enemies whose outer shell breaks to expose a different interior. Strong design and a natural fit for the environment theme; see `EDUCATION_PIVOT.md`.
+9. **Colour-independent enemy identification.** Roles are distinguished by colour plus subtle geometry; distinct silhouettes would help both accessibility and split-second reads in a 300-enemy crowd.
+10. **Per-enemy invulnerability windows**, revisited alongside the above.
 
 ---
 
 # Explicitly deferred beyond V0.3
 
-Additional weapons and weapon evolution; mini-bosses and bosses; unlockable content pools and meta-progression; browser-local persistence and portable save export/import; endless mode; a second production theme; final art and audio production; and the education pivot described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md).
+Weapon and equipment slots; the type/effectiveness system; layered composite enemies; weapon evolution; mini-bosses and bosses; unlockable content pools and meta-progression; browser-local persistence and portable save export/import; endless mode; final art and audio production; and every education-layer feature described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md).
 
-Stable IDs, serializable models, provenance, and theme-owned tuning data must keep all of those additions possible without implementing them early.
+Stable IDs, serializable models, provenance, procedural director curves, and theme-owned tuning data must keep all of those additions possible without implementing them early.
