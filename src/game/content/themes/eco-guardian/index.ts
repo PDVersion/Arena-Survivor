@@ -12,6 +12,8 @@ import { elites } from "./elites";
 import { progression } from "./progression";
 import { director } from "./director";
 import { difficulty } from "./difficulty";
+import { bodies } from "./bodies";
+import { hazards, hazardTuning } from "./hazards";
 
 /**
  * The production theme from V0.3 onward.
@@ -35,5 +37,6 @@ export const ecoGuardianTheme = defineTheme({
   shrines,
   skills,
   elites,
-  tuning: { progression, director, difficulty },
+  hazards,
+  tuning: { progression, director, difficulty, bodies, hazards: hazardTuning },
 });

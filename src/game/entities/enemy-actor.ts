@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
+import type { BodyRoleTuning, WaveMovement } from "../core/archetypes/tuning";
 
 export type EnemySpawnSource = "ambient" | ShrineId | ContentId;
 
@@ -11,11 +12,19 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly spawnSource: EnemySpawnSource;
   readonly rewardMultiplier: number;
   health: number;
+  /** Max health at spawn, after world and elite multipliers. */
+  readonly maxHealth: number;
   readonly moveSpeed: number;
   readonly contactDamage: number;
   readonly elite?: EliteDefinition;
+  readonly movement: WaveMovement;
+  /** Personal space in the crowd, deliberately smaller than the drawn radius. */
+  readonly separationRadius: number;
+  readonly mass: number;
+  readonly solid: boolean;
   defeated = false;
   private readonly baseColour: number;
+  private launched = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -26,11 +35,17 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     tokens: ThemeTokens,
     spawnSource: EnemySpawnSource = "ambient",
     rewardMultiplier = 1,
-    modifiers: Readonly<{ healthMultiplier: number; damageMultiplier: number }> = {
+    modifiers: Readonly<{
+      healthMultiplier: number;
+      damageMultiplier: number;
+      moveSpeedMultiplier?: number;
+    }> = {
       healthMultiplier: 1,
       damageMultiplier: 1,
     },
     elite?: EliteDefinition,
+    movement: WaveMovement = "chase",
+    body?: Readonly<{ role: BodyRoleTuning; eliteMassMultiplier: number }>,
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -40,11 +55,19 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.targetId = targetId;
     this.definition = definition;
     this.health = definition.maxHealth * modifiers.healthMultiplier;
-    this.moveSpeed = definition.moveSpeed;
+    this.maxHealth = this.health;
+    // Snapshotted at spawn: an enemy never accelerates mid-life, which would be
+    // both confusing to read and a statistics hazard.
+    this.moveSpeed = definition.moveSpeed * (modifiers.moveSpeedMultiplier ?? 1);
     this.contactDamage = definition.contactDamage * modifiers.damageMultiplier;
     this.elite = elite;
     this.spawnSource = spawnSource;
     this.rewardMultiplier = rewardMultiplier;
+    this.movement = movement;
+    this.separationRadius = radius * (body?.role.separationScale ?? 1);
+    this.mass = (body?.role.mass ?? 1) * (elite ? (body?.eliteMassMultiplier ?? 1) : 1);
+    // Elites hold their ground regardless of the role's own solidity.
+    this.solid = (body?.role.solid ?? false) || Boolean(elite);
     this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -61,8 +84,38 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     if (!elite) this.setDepth(20);
   }
 
+  /** Stable identity for the shared spatial index and targeting. */
+  get id(): string {
+    return this.targetId;
+  }
+
   get arcadeBody(): Phaser.Physics.Arcade.Body {
     return this.body as Phaser.Physics.Arcade.Body;
+  }
+
+  /**
+   * Advance one frame of movement.
+   *
+   * A chasing enemy re-aims every frame. A drifting one aims once at the
+   * player's position when it first moves and then holds that heading, so it
+   * sweeps past as an obstacle rather than pursuing.
+   */
+  advance(target: Phaser.Math.Vector2): void {
+    if (this.movement === "drift") {
+      if (this.launched) return;
+      this.launched = true;
+    }
+    this.chase(target);
+  }
+
+  /** True once a drifting enemy has left the arena and can be reclaimed. */
+  hasLeftArena(arena: Readonly<{ width: number; height: number }>, margin: number): boolean {
+    return (
+      this.x < -margin ||
+      this.y < -margin ||
+      this.x > arena.width + margin ||
+      this.y > arena.height + margin
+    );
   }
 
   chase(target: Phaser.Math.Vector2): void {

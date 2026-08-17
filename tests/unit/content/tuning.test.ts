@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { validateTheme } from "../../../src/game/content/define-theme";
 import { themeRegistry } from "../../../src/game/content/theme-registry";
@@ -109,5 +110,86 @@ describe("theme tuning packs", () => {
         "tuning.difficulty.chaos.eliteChanceCap cannot exceed one",
       ]),
     );
+  });
+});
+
+describe("wave movement validation", () => {
+  it("rejects an unsupported movement", () => {
+    const roles = validDirector.roles.map((role, index) =>
+      index === 0 ? { ...role, waveMovement: "seek" } : role,
+    );
+    const issues = validateTheme(
+      withTuning({ ...alternateTheme.tuning, director: { ...validDirector, roles } }),
+    );
+    expect(issues.some((issue) => issue.includes("waveMovement must be chase or drift"))).toBe(true);
+  });
+
+  it("rejects a chasing wave the player cannot outrun", () => {
+    // The fast role outruns the player, so declaring its wave as a chase is a
+    // guaranteed death sentence with the starter weapon.
+    const roles = validDirector.roles.map((role) =>
+      role.enemyId === archetypeIds.enemy.fastFragile
+        ? { ...role, waveMovement: "chase" }
+        : role,
+    );
+    const issues = validateTheme(
+      withTuning({ ...alternateTheme.tuning, director: { ...validDirector, roles } }),
+    );
+    expect(issues).toContain(
+      `${archetypeIds.enemy.fastFragile} outruns the player, so its wave must drift`,
+    );
+  });
+});
+
+describe("weapon stats", () => {
+  it.each(themeRegistry.map((entry) => [entry.key, entry.theme] as const))(
+    "gives every %s weapon the generic stat surface",
+    (_key, theme) => {
+      for (const weapon of theme.weapons) {
+        expect(weapon.range).toBeGreaterThan(0);
+        expect(weapon.knockback).toBeGreaterThanOrEqual(0);
+        expect(weapon.armourPierce).toBeGreaterThanOrEqual(0);
+        expect(weapon.armourPierce).toBeLessThanOrEqual(1);
+      }
+    },
+  );
+
+  it("requires delivery to cover the declared range", () => {
+    const weapon = alternateTheme.weapons[0]!;
+    const unreachable = {
+      ...alternateTheme,
+      // Range far beyond what the projectile can physically fly.
+      weapons: [{ ...weapon, range: weapon.projectileSpeed * 100 }],
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(unreachable)).toContain(
+      `${weapon.id} projectile flight cannot reach its declared range`,
+    );
+  });
+
+  it("rejects out-of-range generic stats", () => {
+    const weapon = alternateTheme.weapons[0]!;
+    const invalid = {
+      ...alternateTheme,
+      weapons: [{ ...weapon, range: 0, knockback: -1, armourPierce: 2, critDamage: 0.5 }],
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toEqual(
+      expect.arrayContaining([
+        `${weapon.id} range must be greater than zero`,
+        `${weapon.id} knockback cannot be negative`,
+        `${weapon.id} armourPierce must be between zero and one`,
+        `${weapon.id} critDamage must be at least one`,
+      ]),
+    );
+  });
+
+  it("leaves crit overrides unset so weapons inherit the player's stats", () => {
+    for (const entry of themeRegistry) {
+      for (const weapon of entry.theme.weapons) {
+        expect(weapon.critChance).toBeUndefined();
+        expect(weapon.critDamage).toBeUndefined();
+      }
+    }
   });
 });

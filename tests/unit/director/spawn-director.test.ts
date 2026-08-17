@@ -225,11 +225,14 @@ describe("engagement envelope", () => {
     const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
       theme.tuning.director.spawnMargin;
     const weapon = theme.weapons[0]!;
-    const projectileRange = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
 
-    // A shot fired the instant an enemy appears must be able to cross the ring,
-    // with headroom rather than landing exactly on the boundary.
-    expect(projectileRange).toBeGreaterThan(radius * 1.2);
+    // A shot fired the instant an enemy appears must be able to cross the ring.
+    // Asserted against the declared range, with delivery covering that range
+    // guaranteed separately by theme validation.
+    expect(weapon.range).toBeGreaterThan(radius);
+    expect((weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000).toBeGreaterThan(
+      radius * 1.2,
+    );
   });
 
   it.each([
@@ -261,5 +264,47 @@ describe("engagement envelope", () => {
     // player, kiting would stop being a strategy.
     expect(faster).toHaveLength(1);
     expect(faster[0]!.id).toBe(archetypeIds.enemy.fastFragile);
+  });
+});
+
+describe("wave movement", () => {
+  /**
+   * A milestone wave releases 15-30 enemies at once. If those enemies are
+   * faster than the player and home in, the wave cannot be survived with a
+   * single-projectile starter weapon -- so any role that outruns the player
+   * must sweep past on a fixed heading instead. See REC-050.
+   */
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("makes %s waves dodgeable when the role outruns the player", (_name, theme) => {
+    const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
+
+    for (const role of theme.tuning.director.roles) {
+      const enemy = theme.enemies.find((entry) => entry.id === role.enemyId)!;
+      if (enemy.moveSpeed >= playerSpeed) {
+        expect(role.waveMovement).toBe("drift");
+      }
+    }
+  });
+
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("keeps the first %s wave non-homing", (_name, theme) => {
+    const waves = theme.tuning.director.roles
+      .filter((role) => role.unlockAt > 0)
+      .sort((left, right) => left.unlockAt - right.unlockAt);
+
+    // The first wave arrives before the player has any crowd clearing.
+    expect(waves[0]?.waveMovement).toBe("drift");
+  });
+
+  it("still lets slower roles encircle the player", () => {
+    const chasing = ecoGuardianTheme.tuning.director.roles.filter(
+      (role) => role.waveMovement === "chase",
+    );
+    expect(chasing.length).toBeGreaterThan(0);
+    expect(chasing.map((role) => role.enemyId)).toContain(archetypeIds.enemy.slowDurable);
   });
 });

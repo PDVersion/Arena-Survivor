@@ -122,3 +122,30 @@ test("a restarted run rewinds the director to its opening state", async ({ page 
     archetypeIds.enemy.swarmBasic,
   ]);
 });
+
+test("the first milestone wave sweeps past instead of homing in", async ({ page }) => {
+  test.setTimeout(120_000);
+  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp");
+
+  // Cross the first unlock, which releases the fast role's wave.
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.milestoneWaves ?? 0), {
+      timeout: 60_000,
+    })
+    .toBeGreaterThanOrEqual(1);
+
+  const released = await snapshot(page);
+  // The fast role outruns the player, so its wave must not chase.
+  expect(released?.pacing?.driftSpawned).toBeGreaterThan(0);
+  expect(released?.pacing?.driftLive).toBeGreaterThan(0);
+
+  // Drifting enemies leave rather than accumulating against the arena edge.
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.driftReclaimed ?? 0), {
+      timeout: 60_000,
+    })
+    .toBeGreaterThan(0);
+
+  const later = await snapshot(page);
+  expect(later?.pacing?.driftLive).toBeLessThan(released?.pacing?.driftSpawned ?? 0);
+});

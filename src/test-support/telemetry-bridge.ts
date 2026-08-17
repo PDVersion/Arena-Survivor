@@ -38,7 +38,7 @@ export interface ArenaTestSnapshot {
     pickupsCollected: number;
     choiceIds: readonly string[];
     selectedUpgradeIds: readonly string[];
-    activeSkillIds: readonly string[];
+    skillLevels: Readonly<Record<string, number>>;
     pierceBonus: number;
     projectileCountBonus: number;
   }>;
@@ -97,6 +97,42 @@ export interface ArenaTestSnapshot {
     upgradeCounts: Readonly<Record<string, number>>;
     summaryUpgrades: readonly string[];
   }>;
+  readonly ui?: Readonly<{
+    pauseOpen: boolean;
+    pauseTab: string | null;
+    settings: Readonly<Record<string, boolean>>;
+    /** What each offered card claims, derived from the real upgrade application. */
+    cardDescriptions: readonly Readonly<{
+      id: string;
+      level: number;
+      nextLevel: number;
+      isNew: boolean;
+      rarity: string;
+      lines: readonly Readonly<{ label: string; from: string | null; to: string }>[];
+    }>[];
+    statLines: readonly Readonly<{ key: string; display: string }>[];
+  }>;
+  readonly crowd?: Readonly<{
+    indexed: number;
+    pairChecks: number;
+    /** Peak per-frame candidate visits; the cost signal for the 300-enemy gate. */
+    pairChecksHighWater: number;
+    adjustments: number;
+    solidResolutions: number;
+    contactShoves: number;
+    weaponShoves: number;
+    /** Enemy pairs sharing a position; separation exists to keep this at zero. */
+    coincidentPairs: number;
+  }>;
+  readonly hazards?: Readonly<{
+    active: number;
+    placed: number;
+    cleared: number;
+    /** Damage hazards dealt to the player; never part of the damage ledger. */
+    damageDealt: number;
+    slowActive: boolean;
+    byKind: Readonly<Record<string, number>>;
+  }>;
   readonly view?: Readonly<{
     /** Constant logical world area, identical at every window size. */
     logicalWidth: number;
@@ -126,6 +162,10 @@ export interface ArenaTestSnapshot {
     roleWeights: Readonly<Record<string, number>>;
     milestoneWaves: number;
     waveSpawned: number;
+    /** Wave enemies released on a fixed heading rather than chasing. */
+    driftSpawned: number;
+    driftReclaimed: number;
+    driftLive: number;
     /** Ambient spawns that landed inside the visible view; the invariant is zero. */
     spawnsInsideView: number;
   }>;
@@ -188,6 +228,9 @@ export interface ArenaTestSnapshot {
     xpMultiplier: number;
     eliteChance: number;
     shrineRewardMultiplier: number;
+    enemyMoveSpeedMultiplier: number;
+    /** Discrete elapsed-time escalation step, shown as a threat level. */
+    threatStep: number;
     activations: Readonly<Record<string, number>>;
     duplicatedEnemiesQueued: number;
     duplicatedEnemiesSpawned: number;

@@ -30,18 +30,43 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). Runs last five minutes, combat fires automatically, and risk/reward shrines permanently increase Chaos and world pressure.
+Open the URL printed by Vite (normally `http://localhost:5173`). Runs last five minutes, combat fires automatically, and risk/reward shrines permanently raise world pressure.
 
 Controls:
 
 ```text
 WASD / Arrow keys = Move
-Escape           = Pause or resume
+Escape            = Pause or resume
 E / Space         = Activate a shrine while in range
 1 / 2 / 3         = Choose a level-up upgrade
 R / Enter         = Restart after death or completion
 M                 = Mute or unmute session audio
+Tab / arrows      = Switch pause-menu tabs while paused
 ```
+
+Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, and live world pressure.
+
+### What a run looks like
+
+The active theme is **environment/nature**: plastic bottles, bags, glass, and bagged waste rather than knights and monsters. World pressure is called **Pollution**.
+
+The spawn director escalates from run progress rather than a clock, so the shape below holds at any run length:
+
+| Progress | Roster | Cadence | Batch |
+| --- | --- | --- | --- |
+| Start | Plastic Bottle only | 900 ms | 1 |
+| 20% | Plastic Bag joins — announced by a wave | 737 ms | 1 |
+| 40% | Glass Bottle joins | 603 ms | 2 |
+| 45% | Bagged Waste joins | ~570 ms | 2 |
+| 60%+ | Elites begin appearing without any shrine | — | 3–4 |
+
+Enemies also get tougher on the clock alone, in ten discrete steps, so a cautious run still escalates — under V0.2 a player who never touched a shrine faced an identical world at 4:30 and 0:30. Arena hazards appear as the run progresses: a contamination spill that damages and slows, a debris pile that blocks movement and shots until cleared, and a methane vent that flares on a cycle. Everything telegraphs before it can hurt you.
+
+Each milestone is announced before it arrives. The first wave sweeps past on a fixed heading rather than chasing, because that role is faster than you and a homing pack of them is unsurvivable with the starter weapon; later waves do home in.
+
+The game renders a fixed 1600×900 view scaled to fit the window and letterboxed, so every window shows exactly the same amount of world. Enemies always appear outside it.
+
+To play the retained knight-magic theme instead, change the one import in `src/game/content/active-theme.ts`. Both packs are complete and validated.
 
 ## Test and build
 

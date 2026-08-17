@@ -41,6 +41,33 @@ export const copy = {
     remainderDamage: "Other / Remainder",
     upgradesTaken: "Equipment Requisitioned",
   },
+  stats: {
+    health: "Health",
+    damage: "Damage",
+    attackRate: "Cycle rate",
+    critChance: "Critical chance",
+    critDamage: "Critical damage",
+    projectiles: "Charges",
+    pierce: "Pass-through",
+    range: "Range",
+    knockback: "Knockback",
+    armourPierce: "Armour pierce",
+    moveSpeed: "Move speed",
+    pickupRadius: "Collection range",
+    armour: "Armour",
+    regeneration: "Recovery",
+    luck: "Fortune",
+    xpMultiplier: "Impact bonus",
+  },
+  world: {
+    chaos: "Pollution",
+    enemySpawn: "Waste arriving",
+    enemyHealth: "Waste durability",
+    enemyDamage: "Waste harm",
+    xpGain: "Impact gain",
+    eliteChance: "Illegal dumping",
+    threat: "Threat level",
+  },
   content: {
     [archetypeIds.character.starter]: {
       name: "Environment Protector",
@@ -106,6 +133,18 @@ export const copy = {
       name: "Cascade",
       description: "A compaction burst can set off the next one.",
     },
+    [archetypeIds.hazard.damageZone]: {
+      name: "Contamination Spill",
+      description: "A lingering spill that burns and drags at anything wading through it.",
+    },
+    [archetypeIds.hazard.obstacle]: {
+      name: "Debris Pile",
+      description: "Heaped waste that blocks movement and shots until it is cleared.",
+    },
+    [archetypeIds.hazard.periodicBurst]: {
+      name: "Methane Vent",
+      description: "A vent that flares on a cycle. The warning is the only warning.",
+    },
     [archetypeIds.upgrade.damage]: {
       name: "Reinforced Tools",
       description: "Process more waste with every charge.",
@@ -157,6 +196,14 @@ export const copy = {
     [archetypeIds.upgrade.chainReaction]: {
       name: "Cascade",
       description: "Compaction clearances can trigger further compaction.",
+    },
+    [archetypeIds.upgrade.worldSurge]: {
+      name: "Single-Use Surge",
+      description: "Far more waste arrives, and clearing it is worth far more.",
+    },
+    [archetypeIds.upgrade.worldBrittle]: {
+      name: "Brittle World",
+      description: "Double your output, and let the site get much worse.",
     },
   },
 } as const satisfies ThemeCopy;

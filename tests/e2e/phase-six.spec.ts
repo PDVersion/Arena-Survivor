@@ -8,7 +8,7 @@ const toughnessReward = (healthMultiplier: number): number =>
   1 + (healthMultiplier - 1) * toughnessShare;
 
 async function waitForRun(page: Page, path: string): Promise<void> {
-  await page.goto(path);
+  await page.goto(`${path}${path.includes("?") ? "&" : "?"}spawnRadius=320`);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
@@ -30,7 +30,11 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   page,
 }) => {
   test.setTimeout(35_000);
-  await waitForRun(page, "/?surgeDurationMs=1000&noAmbient=1");
+  // Firepower so at least one tagged enemy dies inside the window. Nearest-target
+  // selection churns in a dense crowd, so a one-shot-per-second weapon spreads
+  // damage across many enemies and finishes none. The subject here is reward
+  // provenance, not weapon DPS.
+  await waitForRun(page, "/?surgeDurationMs=1000&noAmbient=1&attackSpeedBonus=5");
   const ready = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(ready?.shrine).toMatchObject({
     id: "shrine.spawn_surge",

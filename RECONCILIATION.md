@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 4 complete — Phase 5 next**
+- Active phase: **Phase 8 complete — Phase 9 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1168,10 +1168,196 @@ Future guardrail:
 `tests/unit/director` asserts the envelope directly for both production themes: weapon range must exceed the spawn ring by at least 20 percent, every role must reach the player within 12 seconds, the opening role within 8, and exactly one role may outrun the player. A tuning edit that breaks the coupling now fails in milliseconds instead of on a hosted runner.
 
 Test-design pitfalls found alongside:
+A whole class of pitfalls surfaced afterwards, all the same shape. Since the ring is derived from the visible view it sits ~958 units out, so any path where a stationary player must accumulate kills now waits seconds for the first enemy and far longer for the tenth. Three separate CI runs failed on different members of that class -- feedback throttling, then level-up progression and contact death -- each passing locally with only a few seconds of margin. Patching them one at a time was treating symptoms.
+
+Two test-only seams resolve the class. `closeLoad` places load-harness spawns beside the player and is no longer gated behind `representativeLoad`. `spawnRadius` overrides the ambient ring for a single path. Any browser path whose subject is combat, progression, feedback, or reward accounting should use one of them; the path that actually verifies off-screen spawning deliberately uses neither, and the in-view spawn counter is suppressed whenever the override is active so it cannot report a false violation. The four worst offenders went from roughly 31, 22, 30 and 23 seconds to 14.7 seconds combined, and the browser suite from 1.2 minutes to 50 seconds.
+
 Two browser paths were wall-clock dependent in ways local runs never showed. One polled a progress threshold on a fixed 30-second timeout, which fails whenever simulation advances slower than real time — the case REC-041 already warned about. The other stalled indefinitely because the run entered `level_up` and waited for a choice the test never made; simulation time stops there, so no wall-clock timeout can ever help. Director paths now use the `noXp` seam to stay out of progression entirely, following the REC-042 precedent of isolating the path under test.
 
 Revisit when:
 The view size or camera zoom changes, weapon range becomes an upgrade, enemy speed scaling arrives in Phase 6, or a role is added whose speed approaches the player's.
+
+### REC-050 — A wave the player cannot outrun must not chase
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 4-10; director waves, enemy movement, theme validation
+- Blocks: None
+
+Context / observation:
+Play testing found the first milestone wave killed the player every time. The wave releases `15 + 15t` enemies at once, and at its 0.2 unlock that is 18 of the fast role. REC-049 had set that role's speed to 240 against a player speed of 200 precisely so it could not be outrun, which is correct for one ambient enemy and fatal for eighteen simultaneous ones. The wave also arrives before the player has any crowd clearing: the starter weapon fires a single projectile with no pierce, so it cannot thin a pack.
+
+Decision / solution:
+Give each director role a declared `waveMovement` of `chase` or `drift`. A drifting enemy aims once at the player's position when it first moves and then holds that heading, so the wave sweeps through as an obstacle to dodge rather than a pursuit that cannot be broken. The fast role's wave drifts; the slower, heavier roles keep chasing, because being encircled by things you can outrun is the interesting version of that pressure. Ambient spawns always chase regardless of role.
+
+Drifting enemies never turn back, so they are reclaimed once they pass the arena edge by a margin rather than piling up against a wall.
+
+Why:
+The wave is meant to be a spike the player reacts to, not a coin flip decided before it spawns. Aiming once at the player's position preserves the "they are running at us" read the design wants, while making position and timing the answer instead of raw speed. It also keeps REC-049's speed envelope intact, which the ambient game needs.
+
+Future guardrail:
+Theme validation rejects any role whose enemy is at least as fast as the player while declaring a chasing wave, so the combination cannot be reintroduced by a tuning edit. Unit tests assert it for both production packs and that the earliest wave is non-homing. A browser path crosses the first unlock and asserts drifting enemies are released, stay live, and are reclaimed after leaving.
+
+Revisit when:
+The starter weapon gains crowd clearing early, wave sizes change materially, or a role's speed crosses the player's.
+
+### REC-051 — Weapons carry a generic stat surface; delivery kinds wait for slots
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 5, 8, 10; V0.4 weapon slots; weapon contract, theme validation
+- Blocks: None
+
+Context / observation:
+`WeaponDefinition` had eight fields, five of them projectile-specific and all of them required to be positive by validation. A melee weapon could not be expressed at all: it would have to supply a meaningless projectile speed, lifetime, and radius. Range was not a field — it was implicit in `projectileSpeed * projectileLifetimeMs`, which is exactly why the REC-049 envelope break was invisible until a hosted runner surfaced it. Crit lived only on the player, so a weapon could not have its own.
+
+Decision / solution:
+Add the generic stat surface now and park the delivery split. `range` becomes design intent rather than a derived number, with validation requiring delivery to cover it. `knockback` and `armourPierce` are declared and validated but sit at `0`, and optional `critChance` and `critDamage` override the player's stats when set. Both production weapons leave the overrides unset and the new stats at zero, so play is unchanged.
+
+Consumers are folded into phases that already touch the relevant system rather than added as dead data: Phase 5 wires `knockback` through the impulse resolution it builds for contact knockback, Phase 8 surfaces the generic stats in cards and the pause menu, and Phase 10 wires `armourPierce` alongside armour itself.
+
+Splitting delivery into a discriminated union — projectile with speed, lifetime, count, and pierce; melee with an arc, sweep, and target cap — is parked for V0.4 alongside weapon slots.
+
+Why:
+The generic half of the surface is stable regardless of how many slots exist or what delivery kinds appear, so declaring it now costs nothing and gives Phase 8's description path one shape to read. The delivery union is not stable: whether a weapon is one of four simultaneous slots changes what belongs on it, and designing that before slots decide is guessing. Making `range` explicit has value immediately and independently, because it converts a derived number nobody could inspect into a validated invariant.
+
+The Phase 1 principle still holds — no field ships without a consumer or a scheduled one. `range` is consumed by validation and the envelope guard today; the other three have named phases.
+
+Future guardrail:
+Theme validation rejects a weapon whose delivery cannot cover its declared range, which is REC-049's failure promoted from a test into the contract. The director envelope test now asserts the declared `range` against the spawn ring rather than recomputing flight distance. Tests assert both production packs leave crit overrides unset, so an accidental override is visible.
+
+Revisit when:
+Weapon slots land, a melee or area weapon is designed, splash needs a boundary against the on-kill detonation skill, or armour makes `armourPierce` meaningful.
+
+### REC-052 — Crowd separation is soft, position-based, and clamped per frame
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 6-10; enemies, targeting, explosions, performance budget
+- Blocks: None
+
+Context / observation:
+Enemies shared a physics group with no collider, so a swarm rendered as one blob rather than a crowd. Full Arcade collider resolution between 300 bodies was rejected: it fights the chase step, which overwrites velocity every frame, and its cost is unbounded in a dense pile.
+
+Decision / solution:
+Add one shared spatial index, rebuilt per frame from targetable enemies, consumed by separation, targeting, and explosion queries. Separation nudges positions and never touches velocity, so chasing is unaffected. Separation radius is theme data and deliberately smaller than the drawn radius, so light roles bunch and overlap while heavy roles hold their ground; solid roles additionally push the player out, and elites are solid regardless of role. Contact knockback and the weapon `knockback` stat share one impulse helper.
+
+Two measurements decided the tuning. Clamping displacement **per neighbour** rather than per frame let a body in a dense pile move `maxDisplacement` times its neighbour count in a single frame — roughly 2,900 units per second against enemy speeds of 140 — which flung crowds apart and pulled targets out from under fired shots. The clamp now applies to the frame's accumulated displacement. Separately, lowering the ceiling to 2 units per frame made separation too weak: chase covers about 2.3 units per frame, so a crowd converging on the player out-pulls separation and the pile never resolves. The ceiling must exceed per-frame chase movement; 6 gives 2.5x headroom.
+
+Performance evidence (same machine, 300 live enemies, 8-second representative load):
+
+  before   average 20.35 ms   worst 26.67 ms
+  after    average 22.55 ms   worst 27.50 ms
+  cost     +2.20 ms average (+11%), +0.83 ms worst (+3%)
+
+  peak candidate visits   11,237 per frame  (~37 per enemy, versus 90,000 all-pairs)
+  coincident pairs        0 at terminal
+
+Migrating explosions and targeting to the index removed a per-call allocation of a snapshot array of every live enemy — on every shot and every blast — which partly pays for separation.
+
+Why:
+A soft positional constraint gives the crowd presence without fighting the movement system or risking an unbounded solver. Bounding neighbour resolutions per body keeps worst-case cost linear in swarm size rather than quadratic.
+
+Measured non-effect worth recording:
+Separation does not change kill throughput. At 30 shots into a 100-enemy pile, kills were identical with and without it, while coincident pairs fell from 359 to 30. An early 6-shot sample suggested otherwise and was noise. What does change is which enemy is nearest from shot to shot: in a dense churning crowd a single-target weapon spreads damage across many enemies and finishes none. That is pre-existing behaviour, identical with separation disabled, and it is what pierce and area effects exist to solve.
+
+Future guardrail:
+Unit tests cover coincident separation, determinism, mass ratios, the frame clamp, bounded work, and convergence of a dense stack. Theme validation requires body tuning for every role and a cell size above twice the largest separation radius, because a smaller cell would let an overlapping pair fall in non-adjacent cells and never resolve. A browser path asserts a 200-enemy pile resolves to zero coincident pairs, that solids displace the player without pushing them out of the arena, and that the damage ledger still reconciles exactly.
+
+Revisit when:
+Phase 6 obstacles need the same solid resolution, the frame budget tightens, or a role's speed changes enough to invalidate the displacement ceiling.
+
+### REC-053 — Time escalates the run, and hazards are world content
+
+- Status: Provisional
+- Date: 2026-08-17
+- Affects: V0.3 Phases 7-10; world modifiers, enemies, hazards, statistics
+- Blocks: None
+
+Context / observation:
+V0.2 escalated only through Chaos, so a player who never touched a shrine faced an identical world at 4:30 and 0:30. Separately, the arena had no content other than enemies, so positioning only ever meant enemy avoidance.
+
+Decision / solution:
+Add an elapsed-time block to `difficulty.ts` resolved through the same `selectWorldModifiers` selector, so Chaos and time compose multiplicatively and there is still exactly one place world pressure is decided. Coefficients are the fractional increase at the end of a run: health `+0.50`, contact damage `+0.20`, move speed `+0.10`. Escalation advances in ten discrete steps rather than continuously, because a smooth ramp is imperceptible while a step is felt and gives the HUD a legible threat level. Every multiplier is snapshotted at spawn, so an enemy never heals or accelerates mid-life. The scene resolves world pressure through one helper, so Chaos and time can never be read at different progress values within a frame. The pacing simulator resolves it per step too, or its band would drift from the game.
+
+Add three arena hazards as a discriminated union — a damage zone with a slow, a destructible obstacle, and a periodic burst. Unlike the weapon delivery split parked in REC-051, the shapes are known now, so declaring the union costs nothing. Hazards are world content: they never count toward the enemy cap, never award kills, and never enter the damage ledger. Damage they deal to the player is recorded separately, so the ledger keeps meaning "damage the player dealt" and still reconciles exactly. Obstacles reuse Phase 5's solid resolution for the player and block projectiles; enemies get one tangential steering adjustment with no pathfinding.
+
+Everything telegraphs before it can hurt, enforced by validation rather than convention: an untelegraphed hazard inside a dense swarm is indistinguishable from a bug.
+
+Measurements:
+Pacing cost of the difficulty ramp is about one level: damage-rush 26 to 25, crit 24, explosion 30, all inside the declared 24-34 band. Frame cost at 300 live enemies with six hazards active, same machine as REC-052:
+
+  V0.2 baseline           average 20.35 ms   worst 26.67 ms
+  after separation        average 22.55 ms   worst 27.50 ms
+  after hazards           average 23.70 ms   worst 29.17 ms
+
+The obstacle stall the plan flagged as this phase's risk did not appear: the same load committed 1,782 kills with six hazards active and zero coincident pairs, so the swarm keeps flowing around them.
+
+Two defects found while building:
+A hazard was placed on the first frame of every run, because the next-placement clock started at zero. A run now opens clean and waits one interval. And `HazardActor` could not name its own state `state`, because Phaser reserves that property on `GameObject`; it is `hazardState`.
+
+Future guardrail:
+Validation requires a positive telegraph on every hazard, kind-appropriate fields, a placement distance clearing the largest hazard radius, and weights totalling more than zero. Unit tests cover cadence decay, Chaos bias, deterministic selection, phase transitions, tick and burst cadence, containment with target radius, and steering. A browser path proves escalation reaches its end state with Chaos pinned at 1.0, that steps are integral and few, that hazards never touch enemy accounting, and that restart clears every hazard and rewinds escalation. Test seams `noHazards` and `hazardIntervalMs` keep unrelated paths isolated.
+
+Revisit when:
+Phase 10's time-to-kill table evaluates whether the conservative coefficients should rise, the HUD surfaces the threat step in Phase 8, or a fourth hazard is proposed.
+
+### REC-054 — Skills level, and no upgrade offer can be a no-op
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 8-10; skills, upgrades, world model, run state
+- Blocks: None
+
+Context / observation:
+A skill was a boolean. `selectUpgradeChoices` drew uniformly from the whole pool with no filtering, so re-picking an already-enabled skill consumed a level-up and did nothing — the single most frustrating thing in the V0.2 build. On-kill detonation was one fixed 96-unit, 15-damage blast forever, and chains were bounded only by exact-once claims rather than a declared depth.
+
+Decision / solution:
+`skill.enable` becomes `skill.level`, and `RunState` carries `skillLevels` instead of an id list. Every skill declares `maxLevel` and every effect declares per-level increments, resolved by pure functions that clamp their own level so a caller can pass a stored value without checking it. Level 1 always returns the base values, which keeps theme data readable as "what this does when taken".
+
+Detonation damage becomes `flat + victimEffectiveMaxHealth * share`, so clearing a durable target is worth far more than popping a light one and Phase 6's health scaling feeds the effect automatically. Level 1 is deliberately weaker than the V0.2 fixed blast — 44 units against 96 — reaching 128 at the cap. Chains gain an explicit depth limit with damage and radius falloff, which keeps a 300-enemy chain finite, readable, and measurable.
+
+The pool gains `maxLevel`, `rarity`, and `category`. A maxed upgrade leaves the pool, selection is weighted by rarity with `luck` raising only the rarer tiers, and a draw avoids three of one category so the player always has a real decision. Two dangerous choices land as ordinary upgrades through a new `world.modify` effect, sharing the shrine world model: one buys spawn pressure and reward, the other buys damage with Chaos.
+
+Why:
+Levels turn every repeat pick into progress, which removes the wasted-pick defect by construction rather than by filtering it out afterwards. Scaling detonation from the victim makes target choice the play, which is the interaction the design asked for.
+
+Defect found by the new validation:
+Requiring an upgrade's `maxLevel` to stay within the cap of the skill it raises immediately caught the alternate fixture declaring caps above two skills' limits. Without the rule those last levels would have silently done nothing — the wasted-pick defect in a new shape.
+
+Future guardrail:
+Validation rejects an upgrade whose cap exceeds its skill's, a world effect that changes nothing, an unsupported rarity or category, and chain falloff at or above one, which would make chains infinite. Unit tests assert the published detonation and chain tables exactly, that a maxed upgrade never appears in 60 draws, that no draw is three of one category, that luck shifts rarity without excluding commons, and that level 1 returns base values for every scaled effect.
+
+Revisit when:
+Phase 8 surfaces levels on cards, Phase 10 wires `luck` into elite and fracture rolls, or weapon slots in V0.4 make skills per-weapon.
+
+### REC-055 — Card numbers are diffed from the real upgrade, never written twice
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 9-10; upgrade cards, pause menu, HUD, settings
+- Blocks: None
+
+Context / observation:
+Level-up cards rendered a name and a static description and never said by how much, from what, to what. The obvious implementation is a second table of display strings beside the effect data, which drifts the first time an effect is retuned and nobody notices until a player is misled.
+
+Decision / solution:
+Derive descriptions by **applying the upgrade to a copy of the state and diffing**, through the same `applyUpgrade` the game uses. A card cannot claim something the upgrade does not do, and retuning an effect changes its card automatically with no second edit. One `selectPlayerStats` produces the resolved stat set — weapon damage after the bonus, shots per second after attack speed — and the upgrade cards, the pause menu, and the terminal tally all read it, so the three surfaces cannot disagree about a number.
+
+Stat and world labels become theme-owned records keyed by stable keys rather than a dozen more vocabulary entries, and validation requires every key.
+
+Badges are identity and always render: `NEW`, or `Lv 3→4`. The numeric before/after lines are what the `Detailed upgrade cards` setting hides, defaulting to on. Rarity is a border colour. A queue indicator shows how many choices remain when several levels land at once.
+
+The pause overlay replaces a status string with four tabs — stats, upgrades, world, settings — reachable by pointer, Tab, or arrows. Mute moves into settings so the keyboard shortcut and the menu can never disagree, and reduced motion joins it. Settings live at module scope so they survive a restart, which is what "session" means to a player, shaped for the `SAVE_DATA.md` adapter deferred to V0.4.
+
+Why:
+Two sources of truth for a number is the defect this phase exists to avoid; diffing removes the possibility rather than testing for it afterwards. The same reasoning drives one stat selector shared by three surfaces.
+
+Future guardrail:
+A unit test asserts that for every upgrade in both packs, every stat the upgrade actually changes appears in its description, and that no description is empty — a silent card is a wasted pick with no warning. Browser paths assert badges match level, that a repeat card always shows a from value, that a card's claimed result is reproducible from live state after taking it, that the overlay freezes simulation and never resumes by accident, and that both overlays survive a resize.
+
+Revisit when:
+Phase 10 adds armour, regeneration, and luck upgrades that need stat lines, or V0.4 weapon slots make the stat selector per-slot.
 
 ## Open questions to reconcile during implementation
 

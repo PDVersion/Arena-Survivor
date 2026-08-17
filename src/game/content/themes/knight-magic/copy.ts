@@ -41,6 +41,33 @@ export const copy = {
     remainderDamage: "Other / Remainder",
     upgradesTaken: "Blessings Taken",
   },
+  stats: {
+    health: "Vitality",
+    damage: "Damage",
+    attackRate: "Attack rate",
+    critChance: "Critical chance",
+    critDamage: "Critical damage",
+    projectiles: "Projectiles",
+    pierce: "Pierce",
+    range: "Range",
+    knockback: "Knockback",
+    armourPierce: "Armour pierce",
+    moveSpeed: "Move speed",
+    pickupRadius: "Arcane reach",
+    armour: "Armour",
+    regeneration: "Regeneration",
+    luck: "Luck",
+    xpMultiplier: "Power bonus",
+  },
+  world: {
+    chaos: "Chaos",
+    enemySpawn: "Foes arriving",
+    enemyHealth: "Foe durability",
+    enemyDamage: "Foe harm",
+    xpGain: "Power gain",
+    eliteChance: "Elite chance",
+    threat: "Threat level",
+  },
   content: {
     [archetypeIds.character.starter]: {
       name: "Wandering Knight",
@@ -82,6 +109,18 @@ export const copy = {
     [archetypeIds.skill.fracture]: { name: "Fracture", description: "Some defeated foes split into smaller enemies." },
     [archetypeIds.skill.bloodlust]: { name: "Bloodlust", description: "Recent kills quicken your attacks." },
     [archetypeIds.skill.chainReaction]: { name: "Chain Reaction", description: "Explosion kills may detonate in turn." },
+    [archetypeIds.hazard.damageZone]: {
+      name: "Cursed Mire",
+      description: "A lingering blight that burns and drags at anything wading through it.",
+    },
+    [archetypeIds.hazard.obstacle]: {
+      name: "Rubble Barricade",
+      description: "Fallen stone that blocks movement and shots until it is cleared.",
+    },
+    [archetypeIds.hazard.periodicBurst]: {
+      name: "Ember Geyser",
+      description: "A vent that erupts on a cycle. The warning is the only warning.",
+    },
     [archetypeIds.upgrade.damage]: {
       name: "Tempered Power",
       description: "Increase damage dealt.",
@@ -119,5 +158,13 @@ export const copy = {
     [archetypeIds.upgrade.fracture]: { name: "Fracture", description: "Some defeated foes split into two fragile enemies." },
     [archetypeIds.upgrade.bloodlust]: { name: "Bloodlust", description: "Recent kills increase attack speed." },
     [archetypeIds.upgrade.chainReaction]: { name: "Chain Reaction", description: "Explosion kills can create further explosions." },
+    [archetypeIds.upgrade.worldSurge]: {
+      name: "Swarming",
+      description: "Far more foes arrive, and defeating them is worth far more.",
+    },
+    [archetypeIds.upgrade.worldBrittle]: {
+      name: "Glass World",
+      description: "Double your power, and let the arena turn far deadlier.",
+    },
   },
 } as const satisfies ThemeCopy;

@@ -1,6 +1,12 @@
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
-import type { ThemeManifest } from "../core/archetypes/contracts";
+import {
+  statKeys,
+  upgradeCategories,
+  upgradeRarities,
+  worldKeys,
+  type ThemeManifest,
+} from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
 
@@ -65,6 +71,13 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     for (const key of vocabularyKeys) {
       if (!theme.copy.vocabulary[key]?.trim()) issues.push(`vocabulary.${key} is required`);
     }
+  }
+
+  for (const key of statKeys) {
+    if (!theme.copy.stats?.[key]?.trim()) issues.push(`stats.${key} label is required`);
+  }
+  for (const key of worldKeys) {
+    if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
   }
 
   for (const id of v02ContentIds) {
@@ -158,6 +171,28 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isInteger(weapon.pierce) || weapon.pierce < 0) {
       issues.push(`${weapon.id} pierce must be a non-negative integer`);
     }
+    if (!Number.isFinite(weapon.range) || weapon.range <= 0) {
+      issues.push(`${weapon.id} range must be greater than zero`);
+    }
+    if (!Number.isFinite(weapon.knockback) || weapon.knockback < 0) {
+      issues.push(`${weapon.id} knockback cannot be negative`);
+    }
+    if (!Number.isFinite(weapon.armourPierce) || weapon.armourPierce < 0 || weapon.armourPierce > 1) {
+      issues.push(`${weapon.id} armourPierce must be between zero and one`);
+    }
+    if (weapon.critChance !== undefined && (!Number.isFinite(weapon.critChance) || weapon.critChance < 0)) {
+      issues.push(`${weapon.id} critChance cannot be negative`);
+    }
+    if (weapon.critDamage !== undefined && (!Number.isFinite(weapon.critDamage) || weapon.critDamage < 1)) {
+      issues.push(`${weapon.id} critDamage must be at least one`);
+    }
+    // Delivery has to be able to cover the declared range. Leaving range
+    // implicit in speed and lifetime is what let the REC-049 envelope break go
+    // unnoticed until a hosted runner surfaced it.
+    const projectileReach = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
+    if (Number.isFinite(projectileReach) && Number.isFinite(weapon.range) && projectileReach < weapon.range) {
+      issues.push(`${weapon.id} projectile flight cannot reach its declared range`);
+    }
     if (!(weapon.presentationToken in theme.tokens.palette)) {
       issues.push(`${weapon.id} references missing presentation token: ${weapon.presentationToken}`);
     }
@@ -247,9 +282,24 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
-        if (effect.kind === "skill.enable") {
+        if (effect.kind === "skill.level") {
           if (!Object.values(archetypeIds.skill).includes(effect.skillId)) {
             issues.push(`${upgrade.id} references unsupported skill: ${String(effect.skillId)}`);
+          }
+          continue;
+        }
+        if (effect.kind === "world.modify") {
+          // A world upgrade that changes nothing is a wasted level-up.
+          const changesSomething =
+            (effect.chaosIncrease ?? 0) > 0 ||
+            (effect.enemySpawnMultiplier ?? 1) !== 1 ||
+            (effect.xpMultiplier ?? 1) !== 1;
+          if (!changesSomething) issues.push(`${upgrade.id} world effect changes nothing`);
+          for (const [key, value] of Object.entries(effect)) {
+            if (key === "kind") continue;
+            if (!Number.isFinite(value as number) || (value as number) < 0) {
+              issues.push(`${upgrade.id} world ${key} cannot be negative`);
+            }
           }
           continue;
         }
@@ -267,6 +317,15 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (!(upgrade.presentationToken in theme.tokens.palette)) {
       issues.push(`${upgrade.id} references missing presentation token: ${upgrade.presentationToken}`);
+    }
+    if (!Number.isInteger(upgrade.maxLevel) || upgrade.maxLevel < 1) {
+      issues.push(`${upgrade.id} maxLevel must be a positive integer`);
+    }
+    if (!upgradeRarities.includes(upgrade.rarity)) {
+      issues.push(`${upgrade.id} has an unsupported rarity: ${String(upgrade.rarity)}`);
+    }
+    if (!upgradeCategories.includes(upgrade.category)) {
+      issues.push(`${upgrade.id} has an unsupported category: ${String(upgrade.category)}`);
     }
   }
   for (const requiredId of Object.values(archetypeIds.upgrade)) {
@@ -308,16 +367,35 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const skill of skills) {
     if (skillIds.has(skill.id)) issues.push(`duplicate skill id: ${skill.id}`);
     skillIds.add(skill.id);
+    if (!Number.isInteger(skill.maxLevel) || skill.maxLevel < 1) {
+      issues.push(`${skill.id} maxLevel must be a positive integer`);
+    }
     for (const effect of skill.effects ?? []) {
-      if (effect.kind === "piercing_momentum" && (!Number.isFinite(effect.damagePerUniqueHit) || effect.damagePerUniqueHit <= 0)) {
-        issues.push(`${skill.id} damagePerUniqueHit must be greater than zero`);
+      if (effect.kind === "piercing_momentum") {
+        if (!Number.isFinite(effect.damagePerUniqueHit) || effect.damagePerUniqueHit <= 0) {
+          issues.push(`${skill.id} damagePerUniqueHit must be greater than zero`);
+        }
+        if (!Number.isFinite(effect.perLevel) || effect.perLevel < 0) {
+          issues.push(`${skill.id} momentum perLevel cannot be negative`);
+        }
       }
-      if (effect.kind === "on_kill_explosion" &&
-        (!Number.isFinite(effect.radius) || effect.radius <= 0 || !Number.isFinite(effect.damage) || effect.damage <= 0)) {
-        issues.push(`${skill.id} explosion radius and damage must be greater than zero`);
+      if (effect.kind === "on_kill_explosion") {
+        if (!Number.isFinite(effect.baseRadius) || effect.baseRadius <= 0) {
+          issues.push(`${skill.id} explosion baseRadius must be greater than zero`);
+        }
+        if (!Number.isFinite(effect.radiusPerLevel) || effect.radiusPerLevel < 0) {
+          issues.push(`${skill.id} explosion radiusPerLevel cannot be negative`);
+        }
+        if (!Number.isFinite(effect.victimHealthShare) || effect.victimHealthShare < 0) {
+          issues.push(`${skill.id} explosion victimHealthShare cannot be negative`);
+        }
+        if (!Number.isFinite(effect.maxShare) || effect.maxShare < effect.victimHealthShare) {
+          issues.push(`${skill.id} explosion maxShare cannot be below its base share`);
+        }
       }
       if (effect.kind === "fracture") {
         if (!Number.isFinite(effect.chance) || effect.chance < 0 || effect.chance > 1) issues.push(`${skill.id} fracture chance must be between zero and one`);
+        if (!Number.isFinite(effect.chancePerLevel) || effect.chancePerLevel < 0) issues.push(`${skill.id} fracture chancePerLevel cannot be negative`);
         if (!Number.isInteger(effect.childCount) || effect.childCount < 1) issues.push(`${skill.id} fracture childCount must be a positive integer`);
         if (!enemyIds.has(effect.childEnemyId)) issues.push(`${skill.id} references missing fracture enemy: ${effect.childEnemyId}`);
         if (!Number.isFinite(effect.rewardMultiplier) || effect.rewardMultiplier < 0) issues.push(`${skill.id} fracture rewardMultiplier cannot be negative`);
@@ -326,10 +404,32 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         (!Number.isFinite(effect.windowMs) || effect.windowMs <= 0 || !Number.isInteger(effect.killsPerStep) || effect.killsPerStep < 1 || !Number.isFinite(effect.attackSpeedPerStep) || effect.attackSpeedPerStep <= 0)) {
         issues.push(`${skill.id} Bloodlust values must be positive`);
       }
+      if (effect.kind === "chain_reaction") {
+        if (!Number.isInteger(effect.baseDepth) || effect.baseDepth < 1) {
+          issues.push(`${skill.id} chain baseDepth must be a positive integer`);
+        }
+        for (const [key, value] of [["damageFalloff", effect.damageFalloff], ["radiusFalloff", effect.radiusFalloff]] as const) {
+          if (!Number.isFinite(value) || value <= 0 || value > 1) {
+            issues.push(`${skill.id} chain ${key} must be within (0, 1]`);
+          }
+        }
+      }
     }
   }
   for (const requiredId of Object.values(archetypeIds.skill)) {
     if (!skillIds.has(requiredId)) issues.push(`missing required skill: ${requiredId}`);
+  }
+
+  // A skill upgrade must not out-run the skill it raises, or its last levels
+  // would silently do nothing — the same wasted-pick defect in a new shape.
+  for (const upgrade of upgrades) {
+    for (const effect of upgrade.effects) {
+      if (effect.kind !== "skill.level") continue;
+      const skill = skills.find((candidate) => candidate.id === effect.skillId);
+      if (skill && upgrade.maxLevel > skill.maxLevel) {
+        issues.push(`${upgrade.id} maxLevel exceeds the cap of ${effect.skillId}`);
+      }
+    }
   }
 
   const eliteIdsFound = new Set<string>();
@@ -352,16 +452,57 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required elite: ${eliteIds.baseline}`);
   }
 
-  issues.push(...validateTuning(theme.tuning, enemyIds));
+  const hazardIds = new Set<string>();
+  const hazards = Array.isArray(theme.hazards) ? theme.hazards : [];
+  if (!Array.isArray(theme.hazards)) issues.push("hazards registry is required");
+  for (const hazard of hazards) {
+    if (hazardIds.has(hazard.id)) issues.push(`duplicate hazard id: ${hazard.id}`);
+    hazardIds.add(hazard.id);
+    if (!Number.isFinite(hazard.radius) || hazard.radius <= 0) {
+      issues.push(`${hazard.id} radius must be greater than zero`);
+    }
+    // Everything must warn before it can hurt anything: an untelegraphed hazard
+    // inside a dense swarm is indistinguishable from a bug.
+    if (!Number.isFinite(hazard.telegraphMs) || hazard.telegraphMs <= 0) {
+      issues.push(`${hazard.id} telegraphMs must be greater than zero`);
+    }
+    if (!(hazard.presentationToken in theme.tokens.palette)) {
+      issues.push(`${hazard.id} references missing presentation token: ${hazard.presentationToken}`);
+    }
+    if (hazard.kind === "damage_zone") {
+      if (!Number.isFinite(hazard.damage) || hazard.damage <= 0) issues.push(`${hazard.id} damage must be greater than zero`);
+      if (!Number.isFinite(hazard.tickMs) || hazard.tickMs <= 0) issues.push(`${hazard.id} tickMs must be greater than zero`);
+      if (!Number.isFinite(hazard.lifetimeMs) || hazard.lifetimeMs <= 0) issues.push(`${hazard.id} lifetimeMs must be greater than zero`);
+      if (!Number.isFinite(hazard.slowMultiplier) || hazard.slowMultiplier <= 0 || hazard.slowMultiplier > 1) {
+        issues.push(`${hazard.id} slowMultiplier must be within (0, 1]`);
+      }
+    } else if (hazard.kind === "obstacle") {
+      if (!Number.isFinite(hazard.health) || hazard.health <= 0) issues.push(`${hazard.id} health must be greater than zero`);
+    } else if (hazard.kind === "periodic_burst") {
+      if (!Number.isFinite(hazard.damage) || hazard.damage <= 0) issues.push(`${hazard.id} damage must be greater than zero`);
+      if (!Number.isFinite(hazard.cycleMs) || hazard.cycleMs <= 0) issues.push(`${hazard.id} cycleMs must be greater than zero`);
+      if (!Number.isFinite(hazard.lifetimeMs) || hazard.lifetimeMs <= 0) issues.push(`${hazard.id} lifetimeMs must be greater than zero`);
+    } else {
+      issues.push(`${(hazard as { id: string }).id} has an unsupported hazard kind`);
+    }
+  }
+  for (const requiredId of Object.values(archetypeIds.hazard)) {
+    if (!hazardIds.has(requiredId)) issues.push(`missing required hazard: ${requiredId}`);
+  }
+
+  issues.push(...validateTuning(theme, enemyIds, hazardIds));
 
   return issues;
 }
 
 function validateTuning(
-  tuning: ThemeManifest["tuning"] | undefined,
+  theme: ThemeManifest,
   enemyIds: ReadonlySet<string>,
+  hazardIds: ReadonlySet<string>,
 ): readonly string[] {
   const issues: string[] = [];
+  const tuning = theme.tuning;
+  const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
   if (!tuning) {
     issues.push("tuning pack is required");
     return issues;
@@ -458,9 +599,120 @@ function validateTuning(
         if (!Number.isFinite(role.chaosWeightBias) || role.chaosWeightBias < 0) {
           issues.push(`${role.enemyId} director chaosWeightBias cannot be negative`);
         }
+        if (role.waveMovement !== "chase" && role.waveMovement !== "drift") {
+          issues.push(`${role.enemyId} director waveMovement must be chase or drift`);
+        }
+        // A wave of enemies the player cannot outrun has to be dodgeable.
+        const roleEnemy = enemies.find((enemy) => enemy.id === role.enemyId);
+        const playerSpeed = theme.characters.find(
+          (character) => character.id === archetypeIds.character.starter,
+        )?.baseStats.moveSpeed;
+        if (
+          role.waveMovement === "chase" &&
+          roleEnemy &&
+          playerSpeed !== undefined &&
+          roleEnemy.moveSpeed >= playerSpeed
+        ) {
+          issues.push(`${role.enemyId} outruns the player, so its wave must drift`);
+        }
       }
       // Without a role live at t=0 the run opens with nothing to shoot.
       if (!hasOpeningRole) issues.push("tuning.director must declare a role unlocked at zero");
+    }
+  }
+
+  const bodies = tuning.bodies;
+  if (!bodies) {
+    issues.push("tuning.bodies is required");
+  } else {
+    if (!Number.isFinite(bodies.cellSize) || bodies.cellSize <= 0) {
+      issues.push("tuning.bodies.cellSize must be greater than zero");
+    }
+    if (!Number.isInteger(bodies.maxNeighbours) || bodies.maxNeighbours < 1) {
+      issues.push("tuning.bodies.maxNeighbours must be a positive integer");
+    }
+    if (!Number.isFinite(bodies.maxDisplacement) || bodies.maxDisplacement <= 0) {
+      issues.push("tuning.bodies.maxDisplacement must be greater than zero");
+    }
+    if (!Number.isFinite(bodies.eliteMassMultiplier) || bodies.eliteMassMultiplier < 1) {
+      issues.push("tuning.bodies.eliteMassMultiplier must be at least one");
+    }
+    if (!Number.isFinite(bodies.contactKnockback) || bodies.contactKnockback < 0) {
+      issues.push("tuning.bodies.contactKnockback cannot be negative");
+    }
+    const seenBodies = new Set<string>();
+    let largestSeparation = 0;
+    for (const role of bodies.roles ?? []) {
+      if (seenBodies.has(role.enemyId)) issues.push(`duplicate body role: ${role.enemyId}`);
+      seenBodies.add(role.enemyId);
+      if (!enemyIds.has(role.enemyId)) {
+        issues.push(`tuning.bodies references missing enemy: ${role.enemyId}`);
+      }
+      if (!Number.isFinite(role.separationScale) || role.separationScale <= 0 || role.separationScale > 1) {
+        issues.push(`${role.enemyId} separationScale must be within (0, 1]`);
+      }
+      if (!Number.isFinite(role.mass) || role.mass <= 0) {
+        issues.push(`${role.enemyId} mass must be greater than zero`);
+      }
+      const definition = enemies.find((enemy) => enemy.id === role.enemyId);
+      if (definition && Number.isFinite(role.separationScale)) {
+        largestSeparation = Math.max(largestSeparation, definition.radius * role.separationScale);
+      }
+    }
+    for (const enemy of enemies) {
+      if (!seenBodies.has(enemy.id)) issues.push(`${enemy.id} is missing body tuning`);
+    }
+    // A cell smaller than the largest body's diameter would let overlapping
+    // pairs fall in non-adjacent cells and never be resolved.
+    if (Number.isFinite(bodies.cellSize) && bodies.cellSize < largestSeparation * 2) {
+      issues.push("tuning.bodies.cellSize must exceed twice the largest separation radius");
+    }
+  }
+
+  const hazardTuning = tuning.hazards;
+  if (!hazardTuning) {
+    issues.push("tuning.hazards is required");
+  } else {
+    if (!Number.isInteger(hazardTuning.maxActive) || hazardTuning.maxActive < 1) {
+      issues.push("tuning.hazards.maxActive must be a positive integer");
+    }
+    if (!Number.isFinite(hazardTuning.baseIntervalMs) || hazardTuning.baseIntervalMs <= 0) {
+      issues.push("tuning.hazards.baseIntervalMs must be greater than zero");
+    }
+    if (!Number.isFinite(hazardTuning.minIntervalMs) || hazardTuning.minIntervalMs <= 0) {
+      issues.push("tuning.hazards.minIntervalMs must be greater than zero");
+    }
+    if (hazardTuning.minIntervalMs > hazardTuning.baseIntervalMs) {
+      issues.push("tuning.hazards.minIntervalMs cannot exceed baseIntervalMs");
+    }
+    if (!Number.isFinite(hazardTuning.minDistanceFromPlayer) || hazardTuning.minDistanceFromPlayer <= 0) {
+      issues.push("tuning.hazards.minDistanceFromPlayer must be greater than zero");
+    }
+    for (const entry of hazardTuning.weights ?? []) {
+      if (!hazardIds.has(entry.hazardId)) {
+        issues.push(`tuning.hazards references missing hazard: ${entry.hazardId}`);
+      }
+      if (!Number.isFinite(entry.weight) || entry.weight < 0) {
+        issues.push(`${entry.hazardId} hazard weight cannot be negative`);
+      }
+    }
+    if ((hazardTuning.weights ?? []).reduce((sum, entry) => sum + Math.max(0, entry.weight), 0) <= 0) {
+      issues.push("tuning.hazards.weights must total more than zero");
+    }
+  }
+
+  const time = tuning.difficulty?.time;
+  if (!time) {
+    issues.push("tuning.difficulty.time is required");
+  } else {
+    if (!Number.isInteger(time.steps) || time.steps < 1) {
+      issues.push("tuning.difficulty.time.steps must be a positive integer");
+    }
+    for (const [key, value] of Object.entries(time)) {
+      if (key === "steps") continue;
+      if (!Number.isFinite(value) || value < 0) {
+        issues.push(`tuning.difficulty.time.${key} cannot be negative`);
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import type { EnemyId } from "./ids";
+import type { EnemyId, HazardId } from "./ids";
 
 /**
  * Theme-owned tuning contracts.
@@ -39,11 +39,24 @@ export interface ProgressionTuning {
 }
 
 /**
+ * How a milestone wave's enemies move.
+ *
+ * `chase` re-aims at the player every frame. `drift` aims once at the player's
+ * position when it spawns and then holds that heading, so the wave sweeps
+ * through as an obstacle to dodge rather than an inescapable pursuit. A wave of
+ * enemies faster than the player must drift, or it cannot be survived with a
+ * single-projectile starter weapon.
+ */
+export type WaveMovement = "chase" | "drift";
+
+/**
  * One role's participation in the spawn director, expressed against normalized
  * run progress rather than wall-clock time.
  */
 export interface DirectorRoleTuning {
   readonly enemyId: EnemyId;
+  /** Movement used by this role's milestone wave. Ambient spawns always chase. */
+  readonly waveMovement: WaveMovement;
   /** Progress at which the role starts spawning. `0.2` is one minute into a five-minute run. */
   readonly unlockAt: number;
   /** Selection weight at the moment of unlock. */
@@ -96,12 +109,74 @@ export interface ChaosTuning {
   readonly shrineRewardPerPoint: number;
 }
 
+/**
+ * Escalation from elapsed run progress, independent of Chaos.
+ *
+ * Coefficients are the fractional increase at the end of a run, so
+ * `enemyHealthAtEnd: 0.5` means enemies spawn with 1.5x health at `t = 1`.
+ * Applied in discrete steps rather than continuously: a smooth ramp is
+ * imperceptible, while a step is felt and gives the HUD a legible threat level.
+ */
+export interface TimeTuning {
+  /** Steps across the run. `10` is a 30-second step at five minutes. */
+  readonly steps: number;
+  readonly enemyHealthAtEnd: number;
+  readonly enemyDamageAtEnd: number;
+  readonly enemyMoveSpeedAtEnd: number;
+}
+
 export interface DifficultyTuning {
   readonly chaos: ChaosTuning;
+  readonly time: TimeTuning;
+}
+
+/** One role's physical presence in the crowd. */
+export interface BodyRoleTuning {
+  readonly enemyId: EnemyId;
+  /**
+   * Personal space as a fraction of the drawn radius. Below `1` the role bunches
+   * and overlaps a little, which is what makes a swarm of small things read as a
+   * crowd rather than a grid.
+   */
+  readonly separationScale: number;
+  /** Heavier bodies are displaced less by their neighbours. */
+  readonly mass: number;
+  /** Solid roles block the player instead of being walked through. */
+  readonly solid: boolean;
+}
+
+export interface BodiesTuning {
+  /** Spatial hash cell size; should exceed twice the largest separation radius. */
+  readonly cellSize: number;
+  /** Neighbour resolutions per body per frame, bounding worst-case cost. */
+  readonly maxNeighbours: number;
+  /** Ceiling on a single frame's displacement, so a dense pile cannot explode. */
+  readonly maxDisplacement: number;
+  /** Elite mass multiplier; elites are solid regardless of their role. */
+  readonly eliteMassMultiplier: number;
+  /** How far a solid enemy shoves the player when it damages them. */
+  readonly contactKnockback: number;
+  readonly roles: readonly BodyRoleTuning[];
+}
+
+/** How often hazards appear and which ones. */
+export interface HazardsTuning {
+  readonly maxActive: number;
+  readonly baseIntervalMs: number;
+  readonly minIntervalMs: number;
+  /** Cadence tightens with run progress: `base * e^(-k*t)`. */
+  readonly intervalDecayK: number;
+  /** Extra frequency per point of Chaos pressure. */
+  readonly chaosIntervalBias: number;
+  /** Hazards never appear on top of the player. */
+  readonly minDistanceFromPlayer: number;
+  readonly weights: readonly Readonly<{ hazardId: HazardId; weight: number }>[];
 }
 
 export interface TuningPack {
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
   readonly difficulty: DifficultyTuning;
+  readonly bodies: BodiesTuning;
+  readonly hazards: HazardsTuning;
 }

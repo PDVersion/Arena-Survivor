@@ -1,5 +1,5 @@
 import { archetypeIds } from "../../src/game/core/archetypes/ids";
-import type { ThemeCopy } from "../../src/game/core/archetypes/contracts";
+import { statKeys, worldKeys, type ThemeCopy } from "../../src/game/core/archetypes/contracts";
 import { defineTheme } from "../../src/game/content/define-theme";
 import { eliteIds } from "../../src/game/core/archetypes/categories";
 
@@ -52,6 +52,8 @@ export const alternateTheme = defineTheme({
       remainderDamage: "Test remainder damage",
       upgradesTaken: "Test upgrades taken",
     },
+    stats: Object.fromEntries(statKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["stats"],
+    world: Object.fromEntries(worldKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["world"],
     content,
   },
   tokens: {
@@ -119,6 +121,9 @@ export const alternateTheme = defineTheme({
       id: archetypeIds.weapon.starterProjectile,
       damage: 10,
       cooldownMs: 1000,
+      range: 1000,
+      knockback: 0,
+      armourPierce: 0,
       projectileSpeed: 400,
       projectileLifetimeMs: 3200,
       projectileRadius: 6,
@@ -152,19 +157,21 @@ export const alternateTheme = defineTheme({
     },
   ],
   upgrades: [
-    { id: archetypeIds.upgrade.damage, effects: [{ kind: "stat.add", target: "player.damageBonus", value: 0.25 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.attackSpeed, effects: [{ kind: "stat.add", target: "player.attackSpeedBonus", value: 0.2 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.critChance, effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.pierce, effects: [{ kind: "stat.add", target: "weapon.pierce", value: 1 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.projectileCount, effects: [{ kind: "stat.add", target: "weapon.projectileCount", value: 1 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.moveSpeed, effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.health, effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.pickupRadius, effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.piercingMomentum, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.piercingMomentum }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.onKillExplosion, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.onKillExplosion }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.fracture, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.fracture }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.bloodlust, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.bloodlust }], presentationToken: "accent" },
-    { id: archetypeIds.upgrade.chainReaction, effects: [{ kind: "skill.enable", skillId: archetypeIds.skill.chainReaction }], presentationToken: "accent" },
+    { id: archetypeIds.upgrade.damage, effects: [{ kind: "stat.add", target: "player.damageBonus", value: 0.25 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.attackSpeed, effects: [{ kind: "stat.add", target: "player.attackSpeedBonus", value: 0.2 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.critChance, effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.pierce, effects: [{ kind: "stat.add", target: "weapon.pierce", value: 1 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.projectileCount, effects: [{ kind: "stat.add", target: "weapon.projectileCount", value: 1 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.moveSpeed, effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.health, effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.pickupRadius, effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.piercingMomentum, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.piercingMomentum }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.onKillExplosion, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.onKillExplosion }], maxLevel: 8, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.fracture, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.fracture }], maxLevel: 5, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.bloodlust, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.bloodlust }], maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.chainReaction, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.chainReaction }], maxLevel: 5, rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.worldSurge, effects: [{ kind: "world.modify", enemySpawnMultiplier: 1.5, xpMultiplier: 1.25 }], maxLevel: 4, rarity: "rare", category: "world", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.worldBrittle, effects: [{ kind: "stat.add", target: "player.damageBonus", value: 1 }], maxLevel: 3, rarity: "epic", category: "world", presentationToken: "accent" },
   ],
   shrines: [
     {
@@ -185,11 +192,16 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.shrine.duplication, radius: 24, interactionRadius: 120, spawnCount: 0, spawnDurationMs: 0, rewardMultiplier: 1.5, effectKind: "duplicate_living", chaosIncrease: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, presentationToken: "shrine" },
   ],
   skills: [
-    { id: archetypeIds.skill.piercingMomentum, effects: [{ kind: "piercing_momentum", damagePerUniqueHit: 0.1 }] },
-    { id: archetypeIds.skill.onKillExplosion, effects: [{ kind: "on_kill_explosion", radius: 96, damage: 15 }] },
-    { id: archetypeIds.skill.fracture, effects: [{ kind: "fracture", chance: 0.15, childEnemyId: archetypeIds.enemy.fastFragile, childCount: 2, rewardMultiplier: 0 }] },
-    { id: archetypeIds.skill.bloodlust, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01 }] },
-    { id: archetypeIds.skill.chainReaction, effects: [{ kind: "chain_reaction" }] },
+    { id: archetypeIds.skill.piercingMomentum, maxLevel: 6, effects: [{ kind: "piercing_momentum", damagePerUniqueHit: 0.1, perLevel: 0.1 }] },
+    { id: archetypeIds.skill.onKillExplosion, maxLevel: 8, effects: [{ kind: "on_kill_explosion", baseRadius: 44, radiusPerLevel: 12, flatDamage: 3, flatPerLevel: 2, victimHealthShare: 0.3, sharePerLevel: 0.08, maxShare: 0.9 }] },
+    { id: archetypeIds.skill.fracture, maxLevel: 5, effects: [{ kind: "fracture", chance: 0.15, chancePerLevel: 0.05, childEnemyId: archetypeIds.enemy.fastFragile, childCount: 2, rewardMultiplier: 0 }] },
+    { id: archetypeIds.skill.bloodlust, maxLevel: 6, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01, attackSpeedPerLevel: 0.005 }] },
+    { id: archetypeIds.skill.chainReaction, maxLevel: 5, effects: [{ kind: "chain_reaction", baseDepth: 2, depthPerLevel: 1, damageFalloff: 0.7, falloffPerLevel: 0.04, radiusFalloff: 0.85, radiusFalloffPerLevel: 0.02 }] },
+  ],
+  hazards: [
+    { id: archetypeIds.hazard.damageZone, kind: "damage_zone", radius: 110, telegraphMs: 900, lifetimeMs: 9_000, damage: 4, tickMs: 500, slowMultiplier: 0.6, presentationToken: "explosion" },
+    { id: archetypeIds.hazard.obstacle, kind: "obstacle", radius: 46, telegraphMs: 600, health: 120, presentationToken: "grid" },
+    { id: archetypeIds.hazard.periodicBurst, kind: "periodic_burst", radius: 96, telegraphMs: 800, lifetimeMs: 14_000, damage: 14, cycleMs: 2_400, presentationToken: "shrine" },
   ],
   elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2.5, radiusMultiplier: 1.3, presentationToken: "elite" }],
   tuning: {
@@ -209,10 +221,36 @@ export const alternateTheme = defineTheme({
       waveBurstGrowth: 15,
       spawnMargin: 40,
       roles: [
-        { enemyId: archetypeIds.enemy.swarmBasic, unlockAt: 0, baseWeight: 100, weightGrowth: -0.65, chaosWeightBias: 0 },
-        { enemyId: archetypeIds.enemy.fastFragile, unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },
-        { enemyId: archetypeIds.enemy.slowDurable, unlockAt: 0.4, baseWeight: 12, weightGrowth: 0.9, chaosWeightBias: 0.35 },
-        { enemyId: archetypeIds.enemy.deathSpawner, unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
+        { enemyId: archetypeIds.enemy.swarmBasic, waveMovement: "chase", unlockAt: 0, baseWeight: 100, weightGrowth: -0.65, chaosWeightBias: 0 },
+        { enemyId: archetypeIds.enemy.fastFragile, waveMovement: "drift", unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },
+        { enemyId: archetypeIds.enemy.slowDurable, waveMovement: "chase", unlockAt: 0.4, baseWeight: 12, weightGrowth: 0.9, chaosWeightBias: 0.35 },
+        { enemyId: archetypeIds.enemy.deathSpawner, waveMovement: "chase", unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
+      ],
+    },
+    hazards: {
+      maxActive: 6,
+      baseIntervalMs: 22_000,
+      minIntervalMs: 7_000,
+      intervalDecayK: 0.9,
+      chaosIntervalBias: 0.25,
+      minDistanceFromPlayer: 320,
+      weights: [
+        { hazardId: archetypeIds.hazard.damageZone, weight: 45 },
+        { hazardId: archetypeIds.hazard.obstacle, weight: 35 },
+        { hazardId: archetypeIds.hazard.periodicBurst, weight: 20 },
+      ],
+    },
+    bodies: {
+      cellSize: 64,
+      maxNeighbours: 8,
+      maxDisplacement: 6,
+      eliteMassMultiplier: 2,
+      contactKnockback: 26,
+      roles: [
+        { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6, solid: false },
+        { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1, solid: false },
+        { enemyId: archetypeIds.enemy.slowDurable, separationScale: 1, mass: 4, solid: true },
+        { enemyId: archetypeIds.enemy.deathSpawner, separationScale: 0.95, mass: 3, solid: true },
       ],
     },
     difficulty: {
@@ -225,6 +263,7 @@ export const alternateTheme = defineTheme({
         eliteChanceCap: 0.4,
         shrineRewardPerPoint: 0.2,
       },
+      time: { steps: 10, enemyHealthAtEnd: 0.5, enemyDamageAtEnd: 0.2, enemyMoveSpeedAtEnd: 0.1 },
     },
   },
 });
