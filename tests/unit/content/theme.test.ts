@@ -2,16 +2,71 @@ import { describe, expect, it } from "vitest";
 import { archetypeIds, v02ContentIds } from "../../../src/game/core/archetypes/ids";
 import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
+import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
+import { activeTheme } from "../../../src/game/content/active-theme";
 import { validateTheme } from "../../../src/game/content/define-theme";
 import { alternateTheme } from "../../fixtures/alternate-theme";
 
 describe("theme manifests", () => {
   it.each([
+    ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
     ["alternate", alternateTheme],
   ])("validates the %s manifest", (_name, theme) => {
     expect(validateTheme(theme)).toEqual([]);
     expect(Object.keys(theme.copy.content)).toEqual(expect.arrayContaining(v02ContentIds));
+  });
+
+  it("ships the environment pack as the production theme", () => {
+    expect(activeTheme.id).toBe(ecoGuardianTheme.id);
+    expect(activeTheme).toBe(ecoGuardianTheme);
+  });
+
+  it("keeps two real production themes interchangeable on stable roles", () => {
+    // Both packs are production-shaped content, so the boundary is proven by
+    // real themes rather than only by the synthetic fixture.
+    const roleIds = (theme: ThemeManifest): readonly string[] =>
+      theme.enemies.map((enemy) => enemy.id).sort();
+
+    expect(roleIds(ecoGuardianTheme)).toEqual(roleIds(knightMagicTheme));
+    expect(ecoGuardianTheme.characters[0]?.id).toBe(knightMagicTheme.characters[0]?.id);
+    expect(ecoGuardianTheme.shrines.map((shrine) => shrine.effectKind)).toEqual(
+      knightMagicTheme.shrines.map((shrine) => shrine.effectKind),
+    );
+
+    // ...while differing in identity, presentation, and tuning.
+    const ecoBottle = ecoGuardianTheme.copy.content[archetypeIds.enemy.swarmBasic];
+    const knightGrunt = knightMagicTheme.copy.content[archetypeIds.enemy.swarmBasic];
+    expect(ecoBottle.name).not.toBe(knightGrunt.name);
+    expect(ecoGuardianTheme.tokens.palette.player).not.toBe(knightMagicTheme.tokens.palette.player);
+    expect(ecoGuardianTheme.copy.vocabulary.chaos).not.toBe(knightMagicTheme.copy.vocabulary.chaos);
+  });
+
+  it("derives environment enemy health from log-scaled persistence", () => {
+    // health = 20 * 1.6 ^ (log10(years) - log10(450)), normalized to the bottle.
+    const modelled = (years: number): number =>
+      Math.round(20 * 1.6 ** (Math.log10(years) - Math.log10(450)));
+    const health = (id: string): number | undefined =>
+      ecoGuardianTheme.enemies.find((enemy) => enemy.id === id)?.maxHealth;
+
+    expect(health(archetypeIds.enemy.swarmBasic)).toBe(modelled(450));
+    expect(health(archetypeIds.enemy.fastFragile)).toBe(modelled(20));
+    expect(health(archetypeIds.enemy.deathSpawner)).toBe(modelled(1_000));
+    expect(health(archetypeIds.enemy.slowDurable)).toBe(modelled(1_000_000));
+  });
+
+  it("decouples persistence from harm on the durable role", () => {
+    const glass = ecoGuardianTheme.enemies.find(
+      (enemy) => enemy.id === archetypeIds.enemy.slowDurable,
+    );
+    const bottle = ecoGuardianTheme.enemies.find(
+      (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
+    );
+
+    // Glass is the highest health in the roster and among the lowest harm:
+    // effectively permanent, but chemically inert.
+    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.map((e) => e.maxHealth)));
+    expect(glass?.contactDamage).toBeLessThan(bottle!.contactDamage);
   });
 
   it("changes presentation without changing the stable starter role", () => {

@@ -1,8 +1,12 @@
 # Theme and Archetype System
 
-This document is the design reference for making Arena Survivor's fiction replaceable without rewriting its game systems. The current working theme is **knights and magic**. Its labels are provisional, and it remains the only production content pack required by the completed V0.1 milestone and the current V0.2 plan.
+This document is the design reference for making Arena Survivor's fiction replaceable without rewriting its game systems.
 
-Once implementation begins, the source-level authority becomes the active theme manifest under `src/game/content/themes/`. This document continues to explain the boundary and the safe refactor process.
+From V0.3 Phase 2 the production theme is **environment/nature** (`eco-guardian`). The original **knights and magic** pack (`knight-magic`) is retained as a second, complete production theme. It is not a fixture: it must keep satisfying every contract and passing every rule test, which makes it a far stronger boundary regression target than a synthetic stub.
+
+The source-level authority is the active theme manifest under `src/game/content/themes/`. `active-theme.ts` selects one pack for the runtime; `theme-registry.ts` lists every pack for tooling and validation and is deliberately kept out of the runtime path so the production bundle never carries a theme it does not render.
+
+This document continues to explain the boundary and the safe refactor process.
 
 ## Goal
 
@@ -16,10 +20,13 @@ Basic mathematical stats and engine rules are theme-neutral. Characters, weapons
 | --- | --- | --- |
 | Primitive stats and rule contracts | Core | health, speed, crit chance, damage calculation |
 | Stable semantic role | Archetype contract | `enemy.swarm_basic`, `weapon.starter_projectile` |
-| Player-facing identity and text | Theme copy catalog | “Grunt”, “Magic Bolt”, descriptions |
-| Tuning and mechanic composition | Theme category definition | Grunt health/speed; Bolt projectile behaviour |
+| Player-facing identity and text | Theme copy catalog | “Plastic Bottle”, “Sorting Pulse”, descriptions |
+| Tuning and mechanic composition | Theme category definition | enemy health/speed; projectile behaviour |
+| Balance curves and cadence | Theme tuning pack | XP curve, spawn cadence, Chaos coefficients |
 | Rendering/audio references | Theme tokens/assets | colours, texture keys, particles, sound keys |
 | Simulation and orchestration | Systems/scenes | spawning, targeting, collision, XP, run state |
+
+Balance values are theme data, not engine constants. A tuning literal inside a system, scene, or entity is a boundary violation: it makes a second theme impossible to balance independently and turns a tuning change into a code change.
 
 Systems may ask what capabilities a definition has; they must never branch on a theme name or player-facing string.
 
@@ -60,23 +67,30 @@ src/game/
 
 IDs describe gameplay roles, not fiction. They remain stable across theme packs and must never be shown directly to players.
 
-| Stable archetype ID | Current knight-magic label | Milestone status |
+| Stable archetype ID | `eco-guardian` (production) | `knight-magic` (secondary) |
 | --- | --- | --- |
-| `character.starter` | Player character (name TBD) | Required |
-| `weapon.starter_projectile` | Magic Bolt / Needle (final label TBD) | Required |
-| `enemy.swarm_basic` | Grunt | Required |
-| `pickup.experience` | XP pickup (final label TBD) | Required |
-| `shrine.spawn_surge` | Shrine of the Horde | Required |
-| `upgrade.damage` | Damage upgrade (final label TBD) | Required |
-| `upgrade.attack_speed` | Attack-speed upgrade (final label TBD) | Required |
-| `upgrade.crit_chance` | Critical Mass | Required |
-| `upgrade.pierce` | Sharpened Tip | Required |
-| `upgrade.world_spawn` | Swarming | Deferred unless needed by V0.1 choices |
-| `enemy.fast_fragile` | Runner | V0.2 |
-| `enemy.slow_durable` | Tank | V0.2 |
-| `enemy.death_spawner` | Broodmother | V0.2 |
-| `skill.piercing_momentum` | Piercing Momentum | V0.2 |
-| `skill.on_kill_explosion` | Detonation / Explosion | V0.2 |
+| `character.starter` | Environment Protector | Wandering Knight |
+| `weapon.starter_projectile` | Sorting Pulse | Magic Needle |
+| `enemy.swarm_basic` | Plastic Bottle | Grunt |
+| `enemy.fast_fragile` | Plastic Bag | Runner |
+| `enemy.slow_durable` | Glass Bottle | Tank |
+| `enemy.death_spawner` | Bagged Waste | Broodmother |
+| `pickup.experience` | Impact Point | Arcane Spark |
+| `shrine.spawn_surge` | Landfill Breach | Shrine of the Horde |
+| `shrine.greed` | Fast Fashion Boom | Shrine of Greed |
+| `shrine.multiplicity` | Single-Use Boom | Shrine of Multiplicity |
+| `shrine.duplication` | Overproduction Order | Shrine of Duplication |
+| `skill.piercing_momentum` | Sorting Momentum | Piercing Momentum |
+| `skill.on_kill_explosion` | Compaction Burst | Detonation |
+| `skill.fracture` | Fragmentation | Fracture |
+| `skill.bloodlust` | Cleanup Streak | Bloodlust |
+| `skill.chain_reaction` | Cascade | Chain Reaction |
+| `upgrade.damage` | Reinforced Tools | Tempered Power |
+| `upgrade.crit_chance` | Precision Sort | Critical Mass |
+| `upgrade.pierce` | Deep Reach | Sharpened Tip |
+| Chaos (HUD vocabulary) | Pollution | Chaos |
+
+`skill.fracture` is worth noting: the mechanic shipped in V0.2 as a fantasy curse, and it models what plastic actually does — fragment rather than decompose. The stable ID needed no change.
 
 The table is an intent map, not a second runtime catalog. When source files exist, names are edited in `copy.ts`, and this table records the conceptual mapping only.
 
@@ -134,19 +148,22 @@ Change visuals or audio:
 
 Pivot the entire theme:
 
-1. Add a sibling theme directory implementing the same required archetype roles.
-2. Select it in `active-theme.ts`.
-3. Run contract, content, and critical-path tests.
-4. Keep the old pack until the new pack is validated; a pivot should be reversible as a one-line selection change.
+1. Add a sibling theme directory implementing the same required archetype roles, including its own tuning pack.
+2. Register it in `theme-registry.ts` so validation and `npm run balance` cover it.
+3. Select it in `active-theme.ts`.
+4. Run contract, content, and critical-path tests, then compare `npm run balance` between packs.
+5. Keep the old pack complete and registered; a pivot should be reversible as a one-line selection change, and the retained pack is the boundary regression target.
 
-## Completed V0.1 proof that the boundary works
+## Proof that the boundary works
 
-V0.1 includes a tiny test-only theme fixture with deliberately different labels and tokens. Automated tests prove that:
+Three manifests are validated on every run: the two production packs and a tiny test-only fixture with deliberately different labels and tokens. Automated tests prove that:
 
-- the same run systems accept both manifests;
-- changing the active fixture changes presented labels without changing rules;
-- no required V0.1 archetype or copy entry is missing;
-- theme-specific directories are not imported by systems/scenes/UI;
-- production selects the knight-magic manifest.
+- the same run systems accept every manifest;
+- both production packs satisfy every required archetype, copy entry, token, and tuning field;
+- the two production packs expose identical stable roles while differing in identity, presentation, and tuning;
+- changing the active theme changes presented labels without changing rules;
+- theme-specific directories are not imported by systems, scenes, entities, or UI;
+- `active-theme.ts` is the only runtime selection point, and it does not reach for the registry;
+- the browser boot path resolves the expected theme from the facade rather than a hard-coded id.
 
-This fixture proves interchangeability without building or maintaining a second real theme. V0.2 extends the same validation and rename-only tests as its enemy, skill, shrine, elite, and feedback contracts enter scope.
+V0.3 Phase 2 replaced the single-production-theme assumption. Keeping `knight-magic` complete costs one content directory and buys a real second implementation of every contract — the swap to `eco-guardian` was a one-line change in `active-theme.ts` plus one test that had hard-coded a theme id.

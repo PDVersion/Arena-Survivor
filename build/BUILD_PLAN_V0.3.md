@@ -50,7 +50,7 @@ The swap is deliberately bounded: it re-skins and re-tunes the existing four ene
 ## Phase tracker
 
 - [x] Phase 1 — Tuning seams, balance simulator, and plan re-pointing (REC-045)
-- [ ] Phase 2 — Environment theme as the primary content pack
+- [x] Phase 2 — Environment theme as the primary content pack (REC-046)
 - [ ] Phase 3 — Progression curve, per-role rewards, and upgrade tallies
 - [ ] Phase 4 — Procedural spawn director, fixed view, and off-screen spawning
 - [ ] Phase 5 — Physical presence, spatial index, and crowd separation

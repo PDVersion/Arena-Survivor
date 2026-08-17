@@ -1,4 +1,5 @@
 import type { ThemeManifest } from "../core/archetypes/contracts";
+import { ecoGuardianTheme } from "./themes/eco-guardian";
 import { knightMagicTheme } from "./themes/knight-magic";
 
 export interface ThemeRegistryEntry {
@@ -16,5 +17,6 @@ export interface ThemeRegistryEntry {
  * production bundle never pulls in a pack it does not render.
  */
 export const themeRegistry: readonly ThemeRegistryEntry[] = Object.freeze([
+  Object.freeze({ key: "eco-guardian", id: ecoGuardianTheme.id, theme: ecoGuardianTheme }),
   Object.freeze({ key: "knight-magic", id: knightMagicTheme.id, theme: knightMagicTheme }),
 ]);

@@ -1,3 +1,3 @@
-import { knightMagicTheme } from "./themes/knight-magic";
+import { ecoGuardianTheme } from "./themes/eco-guardian";
 
-export const activeTheme = knightMagicTheme;
+export const activeTheme = ecoGuardianTheme;

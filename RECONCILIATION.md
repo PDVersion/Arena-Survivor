@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 1 complete — Phase 2 next**
+- Active phase: **Phase 2 complete — Phase 3 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1052,6 +1052,35 @@ The knight-magic five-minute `damage-rush` run reaches level 28 with levels arri
 
 Revisit when:
 Phase 4 replaces the director tuning shape with progress-driven curves, Phase 6 adds the time block, or the simulator's kill model needs positioning to answer a question.
+
+### REC-046 — Environment is the production theme; enemy health is log-scaled persistence
+
+- Status: Provisional
+- Date: 2026-08-17
+- Affects: V0.3 Phases 3–10; theme packs, enemy tuning, balance, education pivot
+- Blocks: None
+
+Context / observation:
+The environment/nature fiction became the primary theme for both the pure-fun and any later education stream. Because every V0.3 balance value is theme-owned data, swapping after the tuning phases would have derived every number twice — the same "tune it twice" cost that motivated re-sequencing V0.3 ahead of V0.4 in REC-043. The swap therefore lands before any tuning phase.
+
+Decision / solution:
+Add `content/themes/eco-guardian/` as a complete production pack and select it in `active-theme.ts`. Retain `knight-magic` as a second complete production theme rather than deleting it: it is production-shaped content that must keep satisfying every contract, which is a stronger boundary regression target than the synthetic fixture alone. Add `theme-registry.ts` listing both packs for validation and tooling, deliberately excluded from the runtime path so the bundle never carries an unrendered theme.
+
+Enemy health is derived from real persistence, log-scaled and normalized so the plastic bottle is the baseline: `health = 20 * 1.6 ^ (log10(years) - log10(450))`. Literal persistence is unplayable — glass outlasts food waste by roughly twenty million times — so the log scale preserves ordering and intuition inside a playable band. Resulting values: plastic bag 11 (~20 y), plastic bottle 20 (~450 y), bagged waste 24 (~1,000 y), glass bottle 96 (effectively permanent).
+
+Health and harm are decoupled deliberately. Glass has the roster's highest health and the lowest contact damage of any large enemy, because it is effectively permanent and chemically inert. Phase 2 changes identity, health, and contact damage only; rewards, spawn weights, and unlock timing stay at V0.2 values because Phase 3 owns rewards and Phase 4 owns the director.
+
+Why:
+Deriving stats from data rather than inventing them and attaching a fact afterwards is the mechanics-as-lesson principle in `build/EDUCATION_PIVOT.md`, and it costs nothing extra in a theme that needed numbers regardless. It also produces better enemy design: separating persistence from harm creates a wall that does not hurt and a fast fragile item that does.
+
+Consequence to watch:
+The log band is narrow by construction, so the death-spawner role sits at 24 rather than V0.2's invented 50. Role identity for that enemy now comes from its brood, radius, and contact damage rather than durability. The simulator shows the pack is marginally harder than knight-magic overall — level 27 versus 28, peak live 201 versus 171 — driven by glass at 96 versus 80. Both are within tolerance and both are now visible instantly rather than after a five-minute run.
+
+Future guardrail:
+`theme.test.ts` asserts the modelled health formula directly, so changing a persistence figure without changing the model fails. Both production packs are iterated by content and tuning validation. The browser boot path resolves the expected theme id from the facade instead of a literal, which was the single test that hard-coded a theme name and the only e2e failure the swap produced. Any composite item that does not fit one material is a layered enemy, not a new stat fudge — see `EDUCATION_PIVOT.md`.
+
+Revisit when:
+Phase 3 retunes rewards, Phase 10's time-to-kill table evaluates the widened glass gap, real persistence sources are cited in a codex, or the type system arrives and enemy identity gains a material attribute.
 
 ## Open questions to reconcile during implementation
 

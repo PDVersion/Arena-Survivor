@@ -1,0 +1,44 @@
+import type { ThemeTokens } from "../../../core/archetypes/contracts";
+
+export const tokens = {
+  palette: {
+    background: "#0b1410",
+    floor: "#152219",
+    grid: "#23372a",
+    accent: "#86d96a",
+    text: "#e7f5dd",
+    player: "#4ade80",
+    // Enemy colours follow the material, not the role: plastic blue, bag white,
+    // glass green, mixed waste violet.
+    enemy: "#60a5fa",
+    enemyFast: "#e2e8f0",
+    enemyTank: "#2dd4bf",
+    enemySpawner: "#c084fc",
+    projectile: "#7dd3fc",
+    critical: "#fbbf24",
+    overcritical: "#ffffff",
+    pickup: "#a3e635",
+    shrine: "#fb7185",
+    explosion: "#fb923c",
+    elite: "#fde047",
+  },
+  playerShape: "circle",
+  feedback: {
+    damage: "feedback.damage",
+    critical: "feedback.critical",
+    overcritical: "feedback.overcritical",
+    pierce: "feedback.pierce",
+    explosion: "feedback.explosion",
+    shrine: "feedback.shrine",
+    elite: "feedback.elite",
+  },
+  sounds: {
+    damage: { frequency: 200, durationMs: 35, gain: 0.025 },
+    critical: { frequency: 480, durationMs: 55, gain: 0.035 },
+    overcritical: { frequency: 820, durationMs: 85, gain: 0.045 },
+    pierce: { frequency: 560, durationMs: 45, gain: 0.025 },
+    explosion: { frequency: 95, durationMs: 110, gain: 0.05 },
+    shrine: { frequency: 300, durationMs: 140, gain: 0.05 },
+    elite: { frequency: 190, durationMs: 180, gain: 0.045 },
+  },
+} as const satisfies ThemeTokens;

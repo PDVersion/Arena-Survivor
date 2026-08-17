@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
 
 test("boots a themed arena and resizes its single canvas", async ({ page }) => {
   const consoleErrors: string[] = [];
@@ -14,7 +15,9 @@ test("boots a themed arena and resizes its single canvas", async ({ page }) => {
     .poll(() =>
       page.evaluate(() => window.__ARENA_TEST__?.getSnapshot()),
     )
-    .toMatchObject({ status: "ready", scene: "run", themeId: "knight_magic" });
+    // Resolved from the facade rather than a literal, so swapping the
+    // production pack stays a one-line change in `active-theme.ts`.
+    .toMatchObject({ status: "ready", scene: "run", themeId: activeTheme.id });
 
   await page.setViewportSize({ width: 900, height: 600 });
   await expect
