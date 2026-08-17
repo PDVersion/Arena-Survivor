@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 8 complete — Phase 9 next**
+- Active phase: **Phase 9 complete — Phase 10 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1358,6 +1358,34 @@ A unit test asserts that for every upgrade in both packs, every stat the upgrade
 
 Revisit when:
 Phase 10 adds armour, regeneration, and luck upgrades that need stat lines, or V0.4 weapon slots make the stat selector per-slot.
+
+### REC-056 — Hit-stop costs wall time, never simulated time
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phase 10; feedback, statistics, terminal presentation
+- Blocks: None
+
+Context / observation:
+The plan's exit gate for this phase asked that simulation results be bit-identical with the feedback features on or off. Three of the four qualify. Hit-stop cannot: freezing the game is a change to time by definition, and pretending otherwise would have meant either a fake exit gate or a fake hit-stop.
+
+Decision / solution:
+Resolve the contradiction by being precise about which clock moves. Hit-stop and the death moment scale the mapping from wall time to simulated time; they never change how much simulation a run performs. A five-minute run still runs five minutes of simulated time, it just takes slightly longer in real seconds, and the player gets those milliseconds as reaction time. Statistics, curves, and the damage ledger are therefore unaffected, which is the property the gate was reaching for. The amended claim is asserted directly: with hit-stop enabled under 300-enemy load, and with reduced motion disabling it entirely, the run still completes at exactly its declared duration and the ledger still reconciles.
+
+Freezes are budgeted rather than free: at most 90 ms each, 180 ms per rolling second, never stacked, and never granted while the frame is already slow — emphasis must not become lag exactly when the game is struggling. Reduced motion disables it outright.
+
+Damage numbers aggregate per enemy over a 120 ms window. Every drain path — window expiry, a target dying mid-window, and the terminal flush — is accounted, and a test asserts that everything entering aggregation is drawn exactly once. This is also a saving: with Phase 7's scaling explosions, one text object per hit is most expensive precisely when frames are scarce.
+
+The kill streak now detunes the damage cues, capped so a long chain does not shriek, giving a run's kill rate the audible shape the pierce cue already had. Death records the killing enemy's role, elite flag, and timestamp at the lethal transition, rendered above the ledger as a cause line.
+
+Why:
+A budgeted freeze is the difference between emphasis and a stall, and the budget has to be measured rather than assumed because the failure only appears under load. Aggregation had to be provably lossless, because a presentation layer that quietly drops damage numbers looks exactly like a simulation bug.
+
+Future guardrail:
+Unit tests cover budget exhaustion, window rollover, refusal to stack, refusal under slow frames, tier retention, and lossless drains. Browser paths assert the budget holds under 300 enemies, that the run still completes its full simulated duration, that reduced motion grants zero freezes while the ledger still reconciles, and that a death always records a cause.
+
+Revisit when:
+Phase 10 changes the frame budget, a boss needs a longer freeze, or accessibility work revisits what reduced motion should disable.
 
 ## Open questions to reconcile during implementation
 

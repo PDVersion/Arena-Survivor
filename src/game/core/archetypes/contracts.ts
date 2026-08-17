@@ -51,6 +51,8 @@ export interface ThemeVocabulary {
   readonly chainedExplosionDamage: string;
   readonly remainderDamage: string;
   readonly upgradesTaken: string;
+  /** Prefix for the cause-of-death line, e.g. "Overwhelmed by". */
+  readonly deathCause: string;
 }
 
 /** Stable keys for player-facing stat labels. */

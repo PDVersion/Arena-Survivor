@@ -67,12 +67,14 @@ export class AudioFeedbackService {
   toggleMuted(): void { this.muted = !this.muted; }
   setFocused(focused: boolean): void { this.focused = focused; }
 
-  play(category: FeedbackCategory): boolean {
+  /** `detuneCents` gives a kill chain an audible ramp, as the pierce cue does. */
+  play(category: FeedbackCategory, detuneCents = 0): boolean {
     if (!this.context || !this.unlocked || this.muted || !this.focused || this.voices >= this.maxVoices) return false;
     const sound = this.sounds[category];
     const oscillator = this.context.createOscillator();
     const gain = this.context.createGain();
     oscillator.frequency.value = sound.frequency;
+    oscillator.detune.value = detuneCents;
     gain.gain.value = sound.gain;
     oscillator.connect(gain).connect(this.context.destination);
     const endAt = this.context.currentTime + sound.durationMs / 1000;

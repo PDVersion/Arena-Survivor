@@ -39,6 +39,7 @@ export const copy = {
     explosionDamage: "Explosion",
     chainedExplosionDamage: "Chained Explosion",
     remainderDamage: "Other / Remainder",
+    deathCause: "Slain by",
     upgradesTaken: "Blessings Taken",
   },
   stats: {

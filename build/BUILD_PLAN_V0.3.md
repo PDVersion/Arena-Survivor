@@ -57,7 +57,7 @@ The swap is deliberately bounded: it re-skins and re-tunes the existing four ene
 - [x] Phase 6 — Time and Chaos scaling, and arena hazards (REC-053)
 - [x] Phase 7 — Skill levels, scaling Detonation, and upgrade pool repair (REC-054)
 - [x] Phase 8 — Informative upgrade cards, pause menu, and HUD (REC-055)
-- [ ] Phase 9 — Impact feedback and terminal polish
+- [x] Phase 9 — Impact feedback and terminal polish (REC-056)
 - [ ] Phase 10 — Survivability stats, pickup pressure, and the balance pass
 
 ---

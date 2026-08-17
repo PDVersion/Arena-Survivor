@@ -97,6 +97,17 @@ export interface ArenaTestSnapshot {
     upgradeCounts: Readonly<Record<string, number>>;
     summaryUpgrades: readonly string[];
   }>;
+  readonly impact?: Readonly<{
+    hitStopGranted: number;
+    hitStopDenied: number;
+    hitStopSpentMs: number;
+    /** Damage entering aggregation, and damage drawn. They must reconcile. */
+    damageAccumulated: number;
+    damageFlushed: number;
+    pendingNumbers: number;
+    killChainDetuneCents: number;
+    deathCause: Readonly<{ sourceId: string; elite: boolean; atMs: number }> | null;
+  }>;
   readonly ui?: Readonly<{
     pauseOpen: boolean;
     pauseTab: string | null;

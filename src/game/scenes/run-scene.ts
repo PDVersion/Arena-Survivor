@@ -101,6 +101,18 @@ import {
 } from "../systems/effects/on-kill-effects";
 import { applyWorldChoice, createWorldState, selectWorldModifiers } from "../systems/chaos/world-modifiers";
 import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
+import {
+  accumulateDamage,
+  createDamageAggregator,
+  createHitStopState,
+  drainAll,
+  drainDueDamage,
+  drainTarget,
+  isHitStopActive,
+  killChainDetune,
+  requestHitStop,
+  type HitStopState,
+} from "../systems/feedback/impact";
 import { shouldSpawnElite } from "../systems/elites/elites";
 import {
   chainScaleAtDepth,
@@ -122,6 +134,8 @@ const GRID_SIZE = 64;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 /** Pacing telemetry bucket, matched to the balance simulator's reporting window. */
 const PACING_BUCKET_MS = 15_000;
+/** Window over which one enemy's damage is drawn as a single number. */
+const DAMAGE_NUMBER_WINDOW_MS = 120;
 /** How far past the arena a drifting enemy travels before it is reclaimed. */
 const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
@@ -328,6 +342,11 @@ export class RunScene extends Phaser.Scene {
   private audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
   private reducedMotion = false;
   private feedbackObjects = new Set<Phaser.GameObjects.GameObject>();
+  private hitStop: HitStopState = createHitStopState();
+  private damageNumbers = createDamageAggregator();
+  private lastFrameMs = 16;
+  private deathSlowUntilMs = 0;
+  private killChainDetuneCents = 0;
 
   constructor() {
     super("run");
@@ -503,8 +522,20 @@ export class RunScene extends Phaser.Scene {
     this.publishTelemetry();
   }
 
-  update(_time: number, delta: number): void {
+  update(time: number, delta: number): void {
     if (!this.player || !this.runState || !this.pauseKey) return;
+    this.lastFrameMs = delta;
+
+    // Hit-stop and the death moment slow the mapping from wall time to
+    // simulated time. They never change how much simulation a run performs:
+    // the run still ends after its full simulated duration.
+    const frozen = isHitStopActive(this.hitStop, time);
+    const dying = time < this.deathSlowUntilMs;
+    const timeScale = this.reducedMotion ? 1 : frozen ? 0.08 : dying ? 0.35 : 1;
+    if (this.physics.world.timeScale !== 1 / timeScale) {
+      this.physics.world.timeScale = 1 / timeScale;
+    }
+    delta *= timeScale;
 
     if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.togglePause();
     if (this.runState.status === "paused" && this.pauseMenu?.isOpen) {
@@ -543,6 +574,7 @@ export class RunScene extends Phaser.Scene {
       this.processTestLoadHarness();
       this.processCausalEvents();
       this.updateBloodlust();
+      this.flushDamageNumbers();
       if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) {
         this.releaseMilestoneWaves();
         this.spawnIfReady();
@@ -677,6 +709,11 @@ export class RunScene extends Phaser.Scene {
     this.audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
     this.reducedMotion = prefersReducedMotion() || getSessionSettings().reducedMotion;
     this.feedbackObjects = new Set();
+    this.hitStop = createHitStopState();
+    this.damageNumbers = createDamageAggregator();
+    this.lastFrameMs = 16;
+    this.deathSlowUntilMs = 0;
+    this.killChainDetuneCents = 0;
   }
 
   private prepareTestLoadHarness(): void {
@@ -873,7 +910,10 @@ export class RunScene extends Phaser.Scene {
         radius: this.player.definition.radius,
       }, nowMs);
       if (effect.damage > 0) {
-        this.runState = damageRunPlayer(this.runState, effect.damage);
+        this.runState = damageRunPlayer(this.runState, effect.damage, {
+          sourceId: hazard.definition.id,
+          elite: false,
+        });
         this.hazardDamageDealt += effect.damage;
         this.player.flashDamage(activeTheme.tokens.palette.critical);
         this.emitFeedback("explosion", this.player.x, this.player.y, "!");
@@ -1440,10 +1480,18 @@ export class RunScene extends Phaser.Scene {
   private handleProjectileEnemyOverlap(projectile: ProjectileActor, enemy: EnemyActor): void {
     if (!this.runState || !projectile.canHit(enemy.targetId) || enemy.defeated) return;
     if (this.damageObstacles(projectile)) return;
-    const category: FeedbackCategory = projectile.critTier > 1
-      ? "overcritical"
-      : projectile.critTier === 1 ? "critical" : "damage";
-    this.emitFeedback(category, enemy.x, enemy.y, String(Math.round(projectile.damage)));
+    accumulateDamage(
+      this.damageNumbers,
+      {
+        targetId: enemy.targetId,
+        amount: projectile.damage,
+        tier: projectile.critTier,
+        x: enemy.x,
+        y: enemy.y,
+      },
+      this.runState.elapsedMs,
+      DAMAGE_NUMBER_WINDOW_MS,
+    );
     if (projectile.pierceChainIndex > 0) this.emitFeedback("pierce", enemy.x, enemy.y, "PIERCE");
     this.commitEnemyDamage(enemy, projectile.damage, "direct", undefined, {
       directBase: projectile.normalDamage,
@@ -1542,8 +1590,19 @@ export class RunScene extends Phaser.Scene {
       }
     }
     this.enqueueConfiguredOnKillEffects(enemy, deathEventId, damageSource);
-    if (enemy.elite) this.eliteDefeated += 1;
+    const pendingNumber = drainTarget(this.damageNumbers, enemy.targetId);
+    if (pendingNumber) {
+      this.renderDamageNumber(enemy.x, enemy.y, pendingNumber.amount, pendingNumber.tier);
+    }
+    if (enemy.elite) {
+      this.eliteDefeated += 1;
+      this.requestImpactFreeze(70);
+    }
     this.runState = recordKill(this.runState);
+    const chain = this.runState.statistics.recentKillTimesMs.length;
+    // A big chain is worth a freeze, and the streak has an audible shape.
+    if (chain >= 25 && chain % 25 === 0) this.requestImpactFreeze(60);
+    this.killChainDetuneCents = killChainDetune(chain);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
     if (enemy.spawnSource === archetypeIds.shrine.spawnSurge) {
@@ -1653,9 +1712,28 @@ export class RunScene extends Phaser.Scene {
     this.renderExplosionCue(payload);
   }
 
+  /** Draw one number per enemy per window rather than one per hit. */
+  private flushDamageNumbers(): void {
+    if (!this.runState) return;
+    for (const entry of drainDueDamage(this.damageNumbers, this.runState.elapsedMs)) {
+      this.renderDamageNumber(entry.x, entry.y, entry.amount, entry.tier);
+    }
+  }
+
+  private renderDamageNumber(x: number, y: number, amount: number, tier: number): void {
+    const category: FeedbackCategory = tier > 1 ? "overcritical" : tier === 1 ? "critical" : "damage";
+    this.emitFeedback(category, x, y, String(Math.round(amount)));
+  }
+
   private emitFeedback(category: FeedbackCategory, x: number, y: number, label: string): void {
     const nowMs = this.runState?.elapsedMs ?? 0;
-    if (this.feedbackLimiter.allowAudio(category, nowMs)) this.audioFeedback.play(category);
+    if (this.feedbackLimiter.allowAudio(category, nowMs)) {
+      // Only kill-driven cues ramp; interface cues stay at their own pitch.
+      const detune = category === "damage" || category === "critical" || category === "overcritical"
+        ? this.killChainDetuneCents
+        : 0;
+      this.audioFeedback.play(category, detune);
+    }
     if (!this.feedbackLimiter.beginVisual()) return;
     const palette = activeTheme.tokens.palette;
     const colour = category === "critical"
@@ -1902,7 +1980,10 @@ export class RunScene extends Phaser.Scene {
     ) {
       return;
     }
-    this.runState = damageRunPlayer(this.runState, enemy.contactDamage);
+    this.runState = damageRunPlayer(this.runState, enemy.contactDamage, {
+      sourceId: enemy.definition.id,
+      elite: Boolean(enemy.elite),
+    });
     this.lastContactDamageAtMs = this.runState.elapsedMs;
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
@@ -1911,8 +1992,19 @@ export class RunScene extends Phaser.Scene {
     this.player.flashDamage(activeTheme.tokens.palette.critical);
     this.hitFlashes += 1;
     if (this.runState.status === "dead") {
+      // A moment of slow motion before the overlay, so death reads as an event.
+      if (!this.reducedMotion) this.deathSlowUntilMs = this.time.now + 550;
       this.enterTerminalState();
     }
+  }
+
+  /**
+   * Ask for a brief freeze. Budgeted and skipped under frame pressure, so
+   * emphasis can never become a stall.
+   */
+  private requestImpactFreeze(durationMs: number): void {
+    if (this.reducedMotion) return;
+    this.hitStop = requestHitStop(this.hitStop, this.time.now, durationMs, this.lastFrameMs);
   }
 
   private enterTerminalState(): void {
@@ -1920,6 +2012,10 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
     this.terminalShown = true;
     this.player?.stop();
+    for (const entry of drainAll(this.damageNumbers)) {
+      this.renderDamageNumber(entry.x, entry.y, entry.amount, entry.tier);
+    }
+    this.physics.world.timeScale = 1;
     this.terminalLoadMetrics = this.loadEventQueue.snapshot();
     this.terminalEventMetrics = this.eventQueue.snapshot();
     this.eventQueue.clear();
@@ -2217,6 +2313,18 @@ export class RunScene extends Phaser.Scene {
         upgradeCounts: { ...this.runState.statistics.upgradeCounts },
         summaryUpgrades: summary.upgrades,
       } : undefined,
+      impact: {
+        hitStopGranted: this.hitStop.granted,
+        hitStopDenied: this.hitStop.denied,
+        hitStopSpentMs: this.hitStop.spentMs,
+        damageAccumulated: this.damageNumbers.accumulated,
+        damageFlushed: this.damageNumbers.flushed,
+        pendingNumbers: this.damageNumbers.pending.size,
+        killChainDetuneCents: this.killChainDetuneCents,
+        deathCause: this.runState?.deathCause
+          ? { ...this.runState.deathCause }
+          : null,
+      },
       ui: {
         pauseOpen: Boolean(this.pauseMenu?.isOpen),
         pauseTab: this.pauseMenu?.activeTab ?? null,

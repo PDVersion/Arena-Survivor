@@ -50,6 +50,7 @@ export const alternateTheme = defineTheme({
       explosionDamage: "Test explosion damage",
       chainedExplosionDamage: "Test chained damage",
       remainderDamage: "Test remainder damage",
+      deathCause: "Test death cause",
       upgradesTaken: "Test upgrades taken",
     },
     stats: Object.fromEntries(statKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["stats"],

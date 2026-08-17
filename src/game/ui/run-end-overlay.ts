@@ -49,7 +49,17 @@ export class RunEndOverlay {
       align: "center",
       wordWrap: { width: Math.min(580, width - 80) },
     }).setOrigin(0.5);
-    const summaryTitle = this.scene.add.text(width / 2, top + 132, summary.title, {
+    const causeText = summary.deathCause
+      ? this.scene.add.text(width / 2, top + 116, summary.deathCause, {
+          color: palette.critical,
+          fontFamily: "Georgia, serif",
+          fontSize: "18px",
+          fontStyle: "italic",
+          align: "center",
+          wordWrap: { width: Math.min(620, width - 80) },
+        }).setOrigin(0.5)
+      : null;
+    const summaryTitle = this.scene.add.text(width / 2, top + 148, summary.title, {
       color: palette.accent,
       fontFamily: "Georgia, serif",
       fontSize: "22px",
@@ -67,10 +77,10 @@ export class RunEndOverlay {
       wordWrap: { width: columnWidth },
     };
     const left = width / 2 - columnWidth * 1.5 - 20;
-    const metrics = this.scene.add.text(left, top + 165, summary.metrics.join("\n"), columnStyle);
+    const metrics = this.scene.add.text(left, top + 182, summary.metrics.join("\n"), columnStyle);
     const damage = this.scene.add.text(
       left + columnWidth + 20,
-      top + 165,
+      top + 182,
       `${vocabulary.damageBreakdown}\n${summary.damage.join("\n")}`,
       columnStyle,
     );
@@ -83,7 +93,7 @@ export class RunEndOverlay {
       : hidden > 0 ? [...shown, `+${hidden} more`] : shown;
     const upgrades = this.scene.add.text(
       left + (columnWidth + 20) * 2,
-      top + 165,
+      top + 182,
       `${summary.upgradesTitle}\n${upgradeLines.join("\n")}`,
       columnStyle,
     );
@@ -99,7 +109,9 @@ export class RunEndOverlay {
     }).setOrigin(0.5);
     this.restartBounds = new Phaser.Geom.Rectangle(width / 2 - 130, buttonY - 28, 260, 56);
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
-    this.container = this.scene.add.container(0, 0, [panel, heading, detail, summaryTitle, metrics, damage, upgrades, button, action])
+    const parts = [panel, heading, detail, summaryTitle, metrics, damage, upgrades, button, action];
+    if (causeText) parts.splice(3, 0, causeText);
+    this.container = this.scene.add.container(0, 0, parts)
       .setScrollFactor(0, 0, true)
       .setDepth(1100);
   }
