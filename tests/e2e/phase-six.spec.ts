@@ -1,4 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+
+// Spawn-time reward scaling is declared theme tuning, so the expectation is
+// computed from it rather than pinned to a number that drifts with balance.
+const toughnessShare = activeTheme.tuning.progression.toughnessRewardShare;
+const toughnessReward = (healthMultiplier: number): number =>
+  1 + (healthMultiplier - 1) * toughnessShare;
 
 async function waitForRun(page: Page, path: string): Promise<void> {
   await page.goto(path);
@@ -66,12 +73,13 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   expect(rewarded?.shrine?.enemiesDefeated).toBeGreaterThan(0);
   const resolvedReward = rewarded?.shrine?.rewardMultiplier ?? 0;
   expect(resolvedReward).toBeGreaterThan(1.5);
+  const toughness = toughnessReward(rewarded?.world?.enemyHealthMultiplier ?? 1);
   expect(rewarded?.shrine?.shrineXpDropped).toBeCloseTo(
-    (rewarded?.shrine?.enemiesDefeated ?? 0) * resolvedReward,
+    (rewarded?.shrine?.enemiesDefeated ?? 0) * resolvedReward * toughness,
   );
   const collected = rewarded?.shrine?.shrineXpCollected ?? 0;
   if (collected > 0) {
-    const perPickup = resolvedReward * (rewarded?.world?.xpMultiplier ?? 1);
+    const perPickup = resolvedReward * toughness * (rewarded?.world?.xpMultiplier ?? 1);
     expect(collected / perPickup).toBeCloseTo(Math.round(collected / perPickup));
   }
 });

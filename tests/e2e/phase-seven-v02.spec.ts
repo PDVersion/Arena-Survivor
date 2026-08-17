@@ -1,4 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+
+// Resolved from the active theme: a rule test must never assert themed copy.
+const vocabulary = activeTheme.copy.vocabulary;
 
 const compoundPath = "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&critChance=3.4&pierce=12&attackSpeedBonus=9&worldScenario=all&runDurationMs=1500&noXp=1&noContact=1";
 
@@ -46,8 +50,8 @@ test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statisti
   expect(breakdown?.direct).toBeGreaterThan(0);
   expect(breakdown?.criticalBonus).toBeGreaterThan(0);
   expect(breakdown?.remainder).toBe(0);
-  expect(terminal?.statistics?.summaryMetrics).toContain("Peak Foes: 300");
-  expect(terminal?.statistics?.summaryDamage[0]).toContain("Total Damage:");
+  expect(terminal?.statistics?.summaryMetrics).toContain(`${vocabulary.peakEnemiesAlive}: 300`);
+  expect(terminal?.statistics?.summaryDamage[0]).toContain(`${vocabulary.totalDamage}:`);
   expect(terminal?.feedback?.visualHighWater).toBeLessThanOrEqual(48);
   expect(terminal?.feedback?.voices).toBe(0);
   expect(terminal?.feedback?.activeVisuals).toBe(0);
@@ -64,7 +68,9 @@ test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statisti
   expect(errors).toEqual([]);
 
   const firstGeneration = terminal?.lifecycle?.runGeneration ?? 0;
-  await page.locator("canvas").click({ position: { x: 640, y: 637 } });
+  // Keyboard rather than a canvas click: the fixed logical view is letterboxed,
+  // so a CSS coordinate no longer maps to a fixed point in the overlay.
+  await page.keyboard.press("KeyR");
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration,
   )).toBe(firstGeneration + 1);

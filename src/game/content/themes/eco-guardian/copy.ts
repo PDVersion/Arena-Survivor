@@ -39,6 +39,7 @@ export const copy = {
     explosionDamage: "Compaction",
     chainedExplosionDamage: "Cascade",
     remainderDamage: "Other / Remainder",
+    upgradesTaken: "Equipment Requisitioned",
   },
   content: {
     [archetypeIds.character.starter]: {

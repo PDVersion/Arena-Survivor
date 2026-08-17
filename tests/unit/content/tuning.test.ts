@@ -5,6 +5,8 @@ import { themeRegistry } from "../../../src/game/content/theme-registry";
 import { alternateTheme } from "../../fixtures/alternate-theme";
 import { DEFAULT_DIFFICULTY_TUNING } from "../../../src/game/systems/chaos/world-modifiers";
 
+const validDirector = alternateTheme.tuning.director;
+
 function withTuning(tuning: unknown): ThemeManifest {
   return { ...alternateTheme, tuning } as unknown as ThemeManifest;
 }
@@ -15,8 +17,8 @@ describe("theme tuning packs", () => {
     (_key, theme) => {
       expect(validateTheme(theme)).toEqual([]);
       expect(theme.tuning.progression.xpCurve.baseXp).toBeGreaterThan(0);
-      expect(theme.tuning.director.spawnIntervalMs).toBeGreaterThan(0);
-      expect(theme.tuning.director.spawnRadius).toBeGreaterThan(0);
+      expect(theme.tuning.director.baseIntervalMs).toBeGreaterThan(0);
+      expect(theme.tuning.director.roles.some((role) => role.unlockAt === 0)).toBe(true);
     },
   );
 
@@ -34,7 +36,7 @@ describe("theme tuning packs", () => {
     const issues = validateTheme(
       withTuning({
         progression: { xpCurve: { kind: "linear", baseXp: 0, step: 2 }, toughnessRewardShare: 0 },
-        director: { spawnIntervalMs: 0, spawnRadius: -1 },
+        director: { ...validDirector, baseIntervalMs: 0, minIntervalMs: 0 },
         difficulty: { chaos: DEFAULT_DIFFICULTY_TUNING.chaos },
       }),
     );
@@ -42,8 +44,8 @@ describe("theme tuning packs", () => {
     expect(issues).toEqual(
       expect.arrayContaining([
         "tuning.progression.xpCurve baseXp must be greater than zero",
-        "tuning.director.spawnIntervalMs must be greater than zero",
-        "tuning.director.spawnRadius must be greater than zero",
+        "tuning.director.baseIntervalMs must be greater than zero",
+        "tuning.director.minIntervalMs must be greater than zero",
       ]),
     );
   });
@@ -62,7 +64,7 @@ describe("theme tuning packs", () => {
           },
           toughnessRewardShare: 0,
         },
-        director: { spawnIntervalMs: 400, spawnRadius: 360 },
+        director: validDirector,
         difficulty: { chaos: DEFAULT_DIFFICULTY_TUNING.chaos },
       }),
     );
@@ -77,7 +79,7 @@ describe("theme tuning packs", () => {
     const empty = validateTheme(
       withTuning({
         progression: { xpCurve: { kind: "banded", baseXp: 4, bands: [] }, toughnessRewardShare: 0 },
-        director: { spawnIntervalMs: 400, spawnRadius: 360 },
+        director: validDirector,
         difficulty: { chaos: DEFAULT_DIFFICULTY_TUNING.chaos },
       }),
     );
@@ -93,7 +95,7 @@ describe("theme tuning packs", () => {
     const issues = validateTheme(
       withTuning({
         progression: { xpCurve: { kind: "linear", baseXp: 2, step: 2 }, toughnessRewardShare: -1 },
-        director: { spawnIntervalMs: 400, spawnRadius: 360 },
+        director: validDirector,
         difficulty: {
           chaos: { ...DEFAULT_DIFFICULTY_TUNING.chaos, xpPerPoint: -0.5, eliteChanceCap: 2 },
         },

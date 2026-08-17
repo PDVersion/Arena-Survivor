@@ -12,6 +12,8 @@ export const damageCategories = [
 export type DamageCategory = (typeof damageCategories)[number];
 export type DamageBreakdown = Readonly<Record<DamageCategory, number>>;
 
+import type { UpgradeId } from "../../core/archetypes/ids";
+
 export interface RunStatistics {
   readonly kills: number;
   readonly liveEnemies: number;
@@ -24,6 +26,8 @@ export interface RunStatistics {
   readonly recentKillTimesMs: readonly number[];
   readonly totalDamage: number;
   readonly damageBreakdown: DamageBreakdown;
+  /** How many times each upgrade was taken, in selection order. */
+  readonly upgradeCounts: Readonly<Partial<Record<UpgradeId, number>>>;
 }
 
 export interface DamageRecord {
@@ -54,7 +58,21 @@ export function createRunStatistics(initialCritChance = 0): RunStatistics {
       chainedExplosion: 0,
       remainder: 0,
     }),
+    upgradeCounts: Object.freeze({}),
   });
+}
+
+export function recordUpgradeSelection(
+  statistics: RunStatistics,
+  upgradeId: UpgradeId,
+): RunStatistics {
+  return {
+    ...statistics,
+    upgradeCounts: Object.freeze({
+      ...statistics.upgradeCounts,
+      [upgradeId]: (statistics.upgradeCounts[upgradeId] ?? 0) + 1,
+    }),
+  };
 }
 
 export function observeLiveEnemies(statistics: RunStatistics, liveEnemies: number): RunStatistics {

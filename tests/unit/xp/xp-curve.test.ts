@@ -8,15 +8,15 @@ import {
 } from "../../../src/game/systems/xp";
 import type { XpCurve } from "../../../src/game/core/archetypes/tuning";
 
-/** The curve V0.3 Phase 3 switches the production themes to. */
+/** The curve both production themes ship from V0.3 Phase 3. */
 const bandedCurve: XpCurve = {
   kind: "banded",
-  baseXp: 4,
+  baseXp: 3,
   bands: [
-    { fromLevel: 1, growth: 1.35 },
-    { fromLevel: 5, growth: 1.22 },
-    { fromLevel: 12, growth: 1.16 },
-    { fromLevel: 25, growth: 1.12 },
+    { fromLevel: 1, growth: 1.3 },
+    { fromLevel: 5, growth: 1.18 },
+    { fromLevel: 12, growth: 1.12 },
+    { fromLevel: 25, growth: 1.09 },
   ],
 };
 
@@ -36,13 +36,13 @@ describe("XP curve shapes", () => {
       xpRequiredForLevelOn(bandedCurve, level),
     );
 
-    expect(requirements).toEqual([4, 5, 7, 10, 13, 24, 36, 53, 83, 175, 368, 649]);
+    expect(requirements).toEqual([3, 4, 5, 7, 9, 14, 20, 27, 38, 68, 119, 183]);
   });
 
   it("applies the band that owns the level being left", () => {
-    // Level 4 still uses band one's 1.35; level 5 is the first to use 1.22.
-    expect(xpRequiredForLevelOn(bandedCurve, 5)).toBe(Math.round(4 * 1.35 ** 4));
-    expect(xpRequiredForLevelOn(bandedCurve, 6)).toBe(Math.round(4 * 1.35 ** 4 * 1.22));
+    // Level 4 still uses band one's 1.30; level 5 is the first to use 1.18.
+    expect(xpRequiredForLevelOn(bandedCurve, 5)).toBe(Math.round(3 * 1.3 ** 4));
+    expect(xpRequiredForLevelOn(bandedCurve, 6)).toBe(Math.round(3 * 1.3 ** 4 * 1.18));
   });
 
   it("grows strictly and outpaces the linear curve past the early game", () => {
@@ -52,17 +52,17 @@ describe("XP curve shapes", () => {
       expect(requirement).toBeGreaterThan(previous);
       previous = requirement;
     }
-    expect(xpRequiredForLevelOn(bandedCurve, 30)).toBeGreaterThan(xpRequiredForLevel(30) * 10);
+    expect(xpRequiredForLevelOn(bandedCurve, 30)).toBeGreaterThan(xpRequiredForLevel(30) * 3);
   });
 
   it("resolves levels through a supplied curve when awarding experience", () => {
     const state = createProgressionState(bandedCurve);
-    expect(state.xpToNextLevel).toBe(4);
+    expect(state.xpToNextLevel).toBe(3);
 
-    const result = awardExperience(state, 9, 1, bandedCurve);
+    const result = awardExperience(state, 7, 1, bandedCurve);
     expect(result).toMatchObject({
       levelsGained: 2,
-      progression: { level: 3, xp: 0, xpToNextLevel: 7, pendingChoices: 2 },
+      progression: { level: 3, xp: 0, xpToNextLevel: 5, pendingChoices: 2 },
     });
   });
 

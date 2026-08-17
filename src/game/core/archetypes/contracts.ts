@@ -49,6 +49,7 @@ export interface ThemeVocabulary {
   readonly explosionDamage: string;
   readonly chainedExplosionDamage: string;
   readonly remainderDamage: string;
+  readonly upgradesTaken: string;
 }
 
 export interface ThemeCopy {
@@ -141,8 +142,6 @@ export interface EnemyDefinition {
   readonly contactCooldownMs: number;
   readonly radius: number;
   readonly xpReward: number;
-  readonly spawnWeight: number;
-  readonly unlockAtMs: number;
   readonly geometry: "circle" | "triangle" | "square" | "hexagon";
   readonly presentationToken: keyof Pick<
     ThemePalette,

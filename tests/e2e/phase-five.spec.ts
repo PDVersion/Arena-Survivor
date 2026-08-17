@@ -1,4 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+import { xpRequiredForLevelOn } from "../../src/game/systems/xp";
+
+// Resolved from theme tuning so a curve change is a data edit, not a test edit.
+const firstLevelRequirement = xpRequiredForLevelOn(
+  activeTheme.tuning.progression.xpCurve,
+  1,
+);
 
 async function waitForReady(page: Page, path = "/"): Promise<void> {
   await page.goto(path);
@@ -12,7 +20,7 @@ test("HUD shows health, XP, level, timer, kills, and live enemies", async ({ pag
   const initial = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(initial?.hud).toMatchObject({
     health: "100 / 100",
-    experience: "0 / 2",
+    experience: `0 / ${firstLevelRequirement}`,
     level: "1",
     time: "1:00",
     kills: "0",
@@ -94,7 +102,11 @@ test("HUD and run remain coherent through focus loss and resize", async ({ page 
 
   await page.setViewportSize({ width: 900, height: 600 });
   const resized = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
-  expect(resized?.canvas).toEqual({ width: 900, height: 600 });
+  // Fixed logical view: the canvas keeps its world area and only the letterboxed
+  // display size follows the window.
+  expect(resized?.canvas).toEqual(paused?.canvas);
+  expect(resized?.view?.worldWidth).toBe(paused?.view?.worldWidth);
+  expect(resized?.view?.displayWidth).toBeLessThanOrEqual(900);
   expect(resized?.hud).toEqual(paused?.hud);
 
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));

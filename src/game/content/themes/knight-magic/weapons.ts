@@ -7,7 +7,7 @@ export const weapons = [
     damage: 10,
     cooldownMs: 1000,
     projectileSpeed: 400,
-    projectileLifetimeMs: 2400,
+    projectileLifetimeMs: 3200,
     projectileRadius: 6,
     projectileCount: 1,
     pierce: 0,

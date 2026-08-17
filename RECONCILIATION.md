@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 2 complete — Phase 3 next**
+- Active phase: **Phase 4 complete — Phase 5 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1081,6 +1081,97 @@ Future guardrail:
 
 Revisit when:
 Phase 3 retunes rewards, Phase 10's time-to-kill table evaluates the widened glass gap, real persistence sources are cited in a codex, or the type system arrives and enemy identity gains a material attribute.
+
+### REC-047 — The XP curve was selected by simulation, not chosen
+
+- Status: Provisional
+- Date: 2026-08-17
+- Affects: V0.3 Phases 3, 6, 7, 10; progression, rewards, early-game difficulty
+- Blocks: None
+
+Context / observation:
+The Phase 3 plan proposed a banded curve of base 4 with growth 1.35/1.22/1.16/1.12. Implemented as written it made level 28 roughly five times more expensive than the linear curve it replaced, and every build model finished between level 10 and 23 against a declared band of 26-31. It also fed back on itself: slower levelling means lower damage, which means fewer kills, which means slower levelling still. The `passive` and `crit` models pinned the 300-enemy cap, confirming they were damage-constrained rather than supply-constrained.
+
+Decision / solution:
+Select the curve with the Phase 1 simulator instead of by hand. A five-candidate sweep took seconds and settled on base 3 with growth 1.30/1.18/1.12/1.09, which lands damage-rush at 26, crit at 25, and explosion at 30, with level 5 at 0:26 and level 25 at 4:29. Per-role rewards land as planned (1/2/7/5, offspring at half their own role, elite x2.5), and `toughnessRewardShare` is 0.5. Update the plan's curve table to the selected values, and add a simulator test asserting the band and the deceleration so drift fails in CI rather than in a manual run.
+
+Note that the toughness share is inert at Chaos 1.0 until Phase 6 adds elapsed-time health scaling. It is a declared seam now and an income lever later; Phase 10 re-tunes with every income source live.
+
+Why:
+The plan's numbers were a reasonable hand estimate and were wrong by a factor of five. Phase 1 existed precisely so that being wrong costs a sweep rather than five five-minute runs. Recording the miss matters more than quietly correcting it: the same hand-estimation error is likely in the Phase 6 and Phase 7 tables, which should also be simulated before they are trusted.
+
+Discovered defect:
+The stress path asserted knight-magic vocabulary (`Peak Foes`, `Total Damage`) and so broke on the Phase 2 theme swap, but CI never caught it because `@stress` is excluded from the required suite. Both assertions now resolve from the active theme. Any assertion on themed copy outside a presentation test is a boundary violation under THEME_ARCHETYPES rule 6, and the excluded stress path is where such violations hide.
+
+Early-game observation to re-check after Phase 4:
+A completely stationary player now dies before reaching level 2, where under V0.2 it survived. Level 2 costs 3 experience rather than 2, which is one extra kill at roughly two seconds each. The level-up browser path uses the existing `noContact` seam so it tests the overlay rather than survival, following the REC-042 precedent. This should resolve on its own in Phase 4, whose director opens at a 900 ms cadence instead of 400 ms; verify it there rather than tuning for it now.
+
+Future guardrail:
+`tests/unit/simulation` asserts the level band, the front-loaded opening, the late-game deceleration, and parity between both production themes. Browser expectations derive requirements and reward products from theme tuning rather than pinning numbers, so a balance edit does not require a test edit.
+
+Revisit when:
+Phase 4 changes spawn cadence, Phase 6 activates the toughness share through time-based health scaling, Phase 7 adds skill scaling income, or Phase 10 re-tunes with every source live.
+
+### REC-048 — The director is curves, and the view is fixed
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 5-10; spawning, camera, arena, enemy contracts, browser expectations
+- Blocks: None
+
+Context / observation:
+V0.2 spawned on a fixed 400 ms cadence at a fixed 360-unit radius, with roster gating as absolute `unlockAtMs` values on each enemy definition. Three consequences: a 1920x1080 window showed +/-960 x +/-540 of world so every spawn was visible; `pointOnSpawnRing` clamped candidates into the arena, which dragged edge spawns further on screen exactly when the player stood against a wall; and the roster fully unlocked within 24 seconds. Window size also silently changed difficulty, since a larger monitor meant more warning and more targets in range.
+
+Decision / solution:
+Resolve every director output from normalized progress `t = elapsedMs / durationMs`, with no value in the data naming a minute. Cadence decays `max(min, base * e^(-k*t))`, batch size ramps `1 + floor(t * ramp)`, roles unlock at progress fractions and ramp their weights, and elite chance ramps from a progress threshold. Chaos multiplies cadence and biases composition through a per-role `chaosWeightBias`, so danger sends worse things rather than only more. Milestone waves fire from the director's own unlock thresholds, so no milestone is tracked by hand. `spawnWeight` and `unlockAtMs` are removed from `EnemyDefinition` rather than left as dead data.
+
+Elite chance is now `max(directorBaseline(t), chaosCurve)` rather than the Chaos curve alone, which fixes a V0.2 defect: a run without shrine activation never spawned a single elite.
+
+Render a fixed 1600x900 logical view via `Phaser.Scale.FIT`, letterboxed. Every window renders exactly the same world area. Spawn radius derives from that view's half-diagonal plus a margin (~1020 versus 360), and the ring rejects candidates that are outside the arena or inside the view rather than clamping them, falling back to the farthest valid in-arena point. The arena grows to 3600x2400 so a full off-screen ring exists everywhere.
+
+Why:
+Curves make run length a parameter rather than an authoring task: the same coefficients produce a sensible five-minute run and a sensible ten-minute run, and endless needs only an escalation index. Compressed browser runs traverse every milestone for free, which removed the need for the `durationScale` workaround an authored table would have required. A fixed view is what makes every other balance value in V0.3 meaningful rather than monitor-dependent.
+
+Measurement:
+At five minutes the curves produce the intended shape and reach level 26 with 636 kills. At ten minutes, with no new data, level 36 with 1,523 kills and the same role progression. Cadence tightens 900 ms to 331 ms; composition moves from 100% baseline role to 33/28/22/17.
+
+Future guardrail:
+`tests/unit/director` asserts cadence, batching, gating, composition shares, Chaos bias, elite ramp, wave crossing, and run-length independence. The scene counts ambient spawns that land inside the view at the authoritative moment the point is chosen, and a browser path sweeps the player into all four walls and all four corners asserting that counter stays zero. Restart rewinds director progress and wave counters.
+
+Pitfall for later phases:
+Browser tests that click canvas CSS coordinates are now scale-dependent, because a letterboxed view maps logical points through a zoom factor. The stress path's restart click broke this way and moved to the keyboard control. Prefer keyboard input or large hit areas over pixel coordinates.
+
+Revisit when:
+Phase 6 adds time-based scaling on top of the same progress input, endless mode needs the `t > 1` escalation index, or a resolution preset menu lands in Phase 8 settings.
+
+### REC-049 — Spawn radius, enemy speed, and projectile range are one coupled envelope
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 4-10; enemy tuning, weapon range, browser test design
+- Blocks: None
+
+Context / observation:
+Phase 4 derived the spawn ring from the visible view, taking it from a fixed 360 units to roughly 1,018. Enemy move speeds and weapon projectile lifetime had both been tuned against the old 360 ring and were left unchanged, which broke two things at once. Weapon range is `projectileSpeed * projectileLifetimeMs / 1000` = 960 units, so a shot fired the instant an enemy appeared **could not reach it at all**. Approach time for the opening role went from 5.1 s to 14.5 s, so kills happened far from the player and the experience they dropped was unreachable for anyone standing still.
+
+Locally every browser path still passed, slowly. On a hosted runner six failed: the level-up paths never reached level 2 because no experience was collectible, and the contact-damage, piercing, and feedback paths never accumulated enough combat inside their windows. The suite took 1.2 minutes.
+
+Decision / solution:
+Treat spawn radius, enemy move speed, and weapon range as one envelope that must be re-derived together whenever any of them moves. Tighten `spawnMargin` from 100 to 40 (radius 958), rescale move speeds for the real ring (140 / 240 / 90 / 110 against a player speed of 200), and raise `projectileLifetimeMs` from 2,400 to 3,200 so weapon range is 1,280 with headroom over the ring. Exactly one role remains faster than the player, because that role exists to force movement; if everything outran the player, kiting would stop being a strategy.
+
+Health and contact damage keep their product baselines. Only speed changed, and only because it is measured against a distance that changed.
+
+Why:
+The failure was not a slow runner, it was a real gameplay regression that a slow runner exposed. A player standing in an arena where enemies take fifteen seconds to arrive and die out of reach has no game to play. Fixing the envelope also cut the browser suite from 1.2 minutes to 55 seconds, because combat now starts when it should.
+
+Future guardrail:
+`tests/unit/director` asserts the envelope directly for both production themes: weapon range must exceed the spawn ring by at least 20 percent, every role must reach the player within 12 seconds, the opening role within 8, and exactly one role may outrun the player. A tuning edit that breaks the coupling now fails in milliseconds instead of on a hosted runner.
+
+Test-design pitfalls found alongside:
+Two browser paths were wall-clock dependent in ways local runs never showed. One polled a progress threshold on a fixed 30-second timeout, which fails whenever simulation advances slower than real time — the case REC-041 already warned about. The other stalled indefinitely because the run entered `level_up` and waited for a choice the test never made; simulation time stops there, so no wall-clock timeout can ever help. Director paths now use the `noXp` seam to stay out of progression entirely, following the REC-042 precedent of isolating the path under test.
+
+Revisit when:
+The view size or camera zoom changes, weapon range becomes an upgrade, enemy speed scaling arrives in Phase 6, or a role is added whose speed approaches the player's.
 
 ## Open questions to reconcile during implementation
 

@@ -33,8 +33,23 @@ import {
 } from "../state/run-state";
 import type { DirectionalInput } from "../systems/player-movement";
 import { canApplyContactDamage, rollDamage } from "../systems/combat";
-import { canSpawn, pointOnSpawnRing, V02_SPAWN_LIMITS } from "../systems/spawning";
-import { createDeathSpawns, selectEnemyDefinition } from "../systems/spawning";
+import {
+  canSpawn,
+  findOffScreenSpawnPoint,
+  offScreenSpawnRadius,
+  V02_SPAWN_LIMITS,
+  type ViewRect,
+} from "../systems/spawning";
+import { createDeathSpawns } from "../systems/spawning";
+import {
+  crossedUnlocks,
+  enemiesInWave,
+  resolveDirectorPlan,
+  runProgress,
+  selectRole,
+  resolveEliteChance,
+  type DirectorPlan,
+} from "../systems/director/spawn-director";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
@@ -60,7 +75,9 @@ import { applyWorldChoice, selectWorldModifiers } from "../systems/chaos/world-m
 import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
 import { shouldSpawnElite } from "../systems/elites/elites";
 
-export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
+// Large enough that a full off-screen spawn ring exists anywhere in the arena,
+// and large enough that shrine placement is a real traversal decision.
+export const ARENA_SIZE = Object.freeze({ width: 3600, height: 2400 });
 const GRID_SIZE = 64;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 /** Pacing telemetry bucket, matched to the balance simulator's reporting window. */
@@ -158,6 +175,11 @@ export class RunScene extends Phaser.Scene {
   private enemyRandom = createSeededRandom(0xe11e_0002);
   private nextSpawnAtMs = 0;
   private spawnIntervalMs = 0;
+  private lastDirectorProgress = 0;
+  private milestoneWaves = 0;
+  private waveSpawned = 0;
+  /** Ambient spawns that landed inside the visible view. Must stay at zero. */
+  private spawnsInsideView = 0;
   private levelTimestampsMs: number[] = [];
   private xpByBucketMs: number[] = [];
   private xpEarnedTotal = 0;
@@ -278,7 +300,7 @@ export class RunScene extends Phaser.Scene {
       durationMs: testRunDurationMs(),
       xpCurve: activeTheme.tuning.progression.xpCurve,
     });
-    this.spawnIntervalMs = activeTheme.tuning.director.spawnIntervalMs;
+    this.spawnIntervalMs = activeTheme.tuning.director.baseIntervalMs;
     const testCritChance = testCombatNumber("critChance");
     const testPierce = testCombatNumber("pierce");
     const testAttackSpeedBonus = testCombatNumber("attackSpeedBonus");
@@ -422,7 +444,10 @@ export class RunScene extends Phaser.Scene {
       this.processTestLoadHarness();
       this.processCausalEvents();
       this.updateBloodlust();
-      if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) this.spawnIfReady();
+      if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) {
+        this.releaseMilestoneWaves();
+        this.spawnIfReady();
+      }
       this.fireIfReady();
       this.updateLoadHighWaterMarks();
       if (this.runState.elapsedMs >= this.invulnerableUntilMs) this.player.setAlpha(1);
@@ -466,6 +491,10 @@ export class RunScene extends Phaser.Scene {
     this.enemyRandom = createSeededRandom(0xe11e_0002);
     this.nextSpawnAtMs = 0;
     this.spawnIntervalMs = 0;
+    this.lastDirectorProgress = 0;
+    this.milestoneWaves = 0;
+    this.waveSpawned = 0;
+    this.spawnsInsideView = 0;
     this.levelTimestampsMs = [];
     this.xpByBucketMs = [];
     this.xpEarnedTotal = 0;
@@ -551,14 +580,12 @@ export class RunScene extends Phaser.Scene {
       const definition = representative
         ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
         : this.enemyDefinition;
+      const closeAngle = sequence * GOLDEN_ANGLE;
       const requestedPoint = representative && testSkillEnabled("closeLoad") && this.player && definition
-        ? pointOnSpawnRing(
-            this.player,
-            100,
-            sequence * GOLDEN_ANGLE,
-            ARENA_SIZE,
-            definition.radius,
-          )
+        ? {
+            x: Math.min(ARENA_SIZE.width - definition.radius, Math.max(definition.radius, this.player.x + Math.cos(closeAngle) * 100)),
+            y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * 100)),
+          }
         : undefined;
       if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
         this.loadHarnessSpawned += 1;
@@ -583,7 +610,7 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" | "fracture" | "duplication" = "offspring",
+    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
     elite?: boolean,
   ): void {
@@ -620,8 +647,20 @@ export class RunScene extends Phaser.Scene {
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
         if (payload.reason === "duplication") this.duplicatedEnemiesSpawned += 1;
+        if (payload.reason === "wave") this.waveSpawned += 1;
       }
     });
+  }
+
+  /** The world-space rectangle currently visible, used to keep spawns off screen. */
+  private viewRect(): ViewRect {
+    const camera = this.cameras.main;
+    return {
+      centreX: camera.worldView.centerX,
+      centreY: camera.worldView.centerY,
+      width: camera.worldView.width || this.scale.width,
+      height: camera.worldView.height || this.scale.height,
+    };
   }
 
   private updateLoadHighWaterMarks(): void {
@@ -793,27 +832,91 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
+  /** Resolve every director output for the current moment. */
+  private currentDirectorPlan(): DirectorPlan | undefined {
+    if (!this.runState) return undefined;
+    const world = selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty);
+    return resolveDirectorPlan(
+      activeTheme.tuning.director,
+      runProgress(this.runState.elapsedMs, this.runState.durationMs),
+      world,
+    );
+  }
+
+  /**
+   * Announce and release a wave when run progress crosses a role's unlock.
+   *
+   * The player should know the game just got harder, and why. Fired from the
+   * director's own thresholds so no milestone is tracked by hand.
+   */
+  private releaseMilestoneWaves(): void {
+    if (!this.runState || testSkillEnabled("noAmbient")) return;
+    const progress = runProgress(this.runState.elapsedMs, this.runState.durationMs);
+    const crossed = crossedUnlocks(activeTheme.tuning.director, this.lastDirectorProgress, progress);
+    this.lastDirectorProgress = progress;
+    if (crossed.length === 0) return;
+
+    const burst = enemiesInWave(activeTheme.tuning.director, progress);
+    for (const role of crossed) {
+      this.milestoneWaves += 1;
+      for (let index = 0; index < burst; index += 1) {
+        this.enqueueSpawnRequest(role.enemyId, "ambient", 1, undefined, undefined, "wave");
+      }
+      this.announceWave(activeTheme.copy.content[role.enemyId]?.name ?? role.enemyId);
+    }
+  }
+
+  private announceWave(roleName: string): void {
+    this.emitFeedback("elite", this.player?.x ?? 0, this.player?.y ?? 0, roleName);
+    const banner = this.add.text(this.scale.width / 2, 140, roleName, {
+      color: activeTheme.tokens.palette.accent,
+      fontFamily: "Georgia, serif",
+      fontSize: "30px",
+      fontStyle: "bold",
+      stroke: activeTheme.tokens.palette.background,
+      strokeThickness: 6,
+    }).setOrigin(0.5).setScrollFactor(0).setDepth(950);
+    this.feedbackObjects.add(banner);
+    this.tweens.add({
+      targets: banner,
+      alpha: 0,
+      y: 110,
+      duration: 1100,
+      onComplete: () => {
+        this.feedbackObjects.delete(banner);
+        banner.destroy();
+      },
+    });
+  }
+
   private spawnIfReady(): void {
     if (testSkillEnabled("noAmbient")) return;
     if (
       !this.player ||
       !this.runState ||
-      !this.enemyDefinition ||
       this.runState.elapsedMs < this.nextSpawnAtMs ||
       !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
     ) {
       return;
     }
 
-    const definition = selectEnemyDefinition(
-      this.enemyDefinitions,
-      this.runState.elapsedMs,
-      this.enemyRandom,
-    );
-    if (!definition) return;
-    this.spawnEnemy("ambient", 1, definition);
-    this.spawnIntervalMs = activeTheme.tuning.director.spawnIntervalMs /
-      selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).enemySpawnMultiplier;
+    const plan = this.currentDirectorPlan();
+    if (!plan) return;
+
+    // A batch shares one ring arc so it reads as a wave rather than a trickle.
+    const arc = this.spawnSequence * GOLDEN_ANGLE;
+    for (let index = 0; index < plan.batchSize; index += 1) {
+      if (!canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)) break;
+      const enemyId = selectRole(plan.weights, this.enemyRandom);
+      const definition = this.enemyDefinitions.find((candidate) => candidate.id === enemyId);
+      if (!definition) continue;
+      const spread = plan.batchSize === 1
+        ? 0
+        : (index / (plan.batchSize - 1) - 0.5) * activeTheme.tuning.director.batchSpreadRadians;
+      this.spawnEnemy("ambient", 1, definition, undefined, undefined, arc + spread);
+    }
+
+    this.spawnIntervalMs = plan.intervalMs;
     this.nextSpawnAtMs = this.runState.elapsedMs + this.spawnIntervalMs;
   }
 
@@ -823,6 +926,7 @@ export class RunScene extends Phaser.Scene {
     definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
     requestedPoint?: Readonly<{ x: number; y: number }>,
     eliteOverride?: boolean,
+    angleRadians?: number,
   ): boolean {
     if (
       !this.player ||
@@ -833,22 +937,41 @@ export class RunScene extends Phaser.Scene {
     ) {
       return false;
     }
-    const point = requestedPoint ?? pointOnSpawnRing(
-      this.player,
-      activeTheme.tuning.director.spawnRadius,
-      this.spawnSequence * GOLDEN_ANGLE,
-      ARENA_SIZE,
-      definition.radius,
-    );
+    const view = this.viewRect();
+    const point = requestedPoint ?? findOffScreenSpawnPoint({
+      origin: this.player,
+      radius: offScreenSpawnRadius(view, activeTheme.tuning.director.spawnMargin),
+      angleRadians: angleRadians ?? this.spawnSequence * GOLDEN_ANGLE,
+      arena: ARENA_SIZE,
+      view,
+      margin: definition.radius,
+    });
+    if (
+      !requestedPoint &&
+      Math.abs(point.x - view.centreX) <= view.width / 2 &&
+      Math.abs(point.y - view.centreY) <= view.height / 2
+    ) {
+      this.spawnsInsideView += 1;
+    }
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty);
     const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
+    const directorEliteChance = resolveEliteChance(
+      activeTheme.tuning.director,
+      runProgress(this.runState.elapsedMs, this.runState.durationMs),
+      worldModifiers.eliteChance,
+    );
     const elite = eliteDefinition && shouldSpawnElite(
-      testSkillEnabled("forceElite") ? 1 : worldModifiers.eliteChance,
+      testSkillEnabled("forceElite") ? 1 : directorEliteChance,
       this.eliteRandom,
       eliteOverride,
     ) ? eliteDefinition : undefined;
+    // Tougher spawns are worth more. The share applies to the world health
+    // multiplier only: elite reward is already an explicit multiplier, so
+    // folding elite health in here would pay for the same thing twice.
+    const toughnessReward = 1 +
+      (worldModifiers.enemyHealthMultiplier - 1) * activeTheme.tuning.progression.toughnessRewardShare;
     const enemy = new EnemyActor(
       this,
       `enemy-${this.enemySequence}`,
@@ -857,7 +980,7 @@ export class RunScene extends Phaser.Scene {
       definition,
       activeTheme.tokens,
       spawnSource,
-      rewardMultiplier * (elite?.rewardMultiplier ?? 1),
+      rewardMultiplier * (elite?.rewardMultiplier ?? 1) * toughnessReward,
       {
         healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
         damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
@@ -1453,7 +1576,10 @@ export class RunScene extends Phaser.Scene {
     const audio = this.audioFeedback.snapshot();
     const loadMetrics = this.terminalLoadMetrics ?? this.loadEventQueue.snapshot();
     const eventMetrics = this.terminalEventMetrics ?? this.eventQueue.snapshot();
-    const summary = this.runState ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary) : undefined;
+    const directorPlan = this.currentDirectorPlan();
+    const summary = this.runState
+      ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
+      : undefined;
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -1581,14 +1707,27 @@ export class RunScene extends Phaser.Scene {
         damageBreakdown: this.runState.statistics.damageBreakdown,
         summaryMetrics: summary.metrics,
         summaryDamage: summary.damage,
+        upgradeCounts: { ...this.runState.statistics.upgradeCounts },
+        summaryUpgrades: summary.upgrades,
       } : undefined,
+      view: {
+        logicalWidth: this.scale.width,
+        logicalHeight: this.scale.height,
+        displayWidth: Math.round(this.scale.displaySize.width),
+        displayHeight: Math.round(this.scale.displaySize.height),
+        worldWidth: Math.round(this.viewRect().width),
+        worldHeight: Math.round(this.viewRect().height),
+        spawnRadius: Math.round(
+          offScreenSpawnRadius(this.viewRect(), activeTheme.tuning.director.spawnMargin),
+        ),
+      },
       pacing: this.runState
         ? {
             progress: this.runState.durationMs === 0
               ? 0
               : Math.min(1, this.runState.elapsedMs / this.runState.durationMs),
             spawnIntervalMs: this.spawnIntervalMs,
-            baseSpawnIntervalMs: activeTheme.tuning.director.spawnIntervalMs,
+            baseSpawnIntervalMs: activeTheme.tuning.director.baseIntervalMs,
             liveByRole: Object.fromEntries(
               this.enemyDefinitions.map((definition) => [
                 definition.id,
@@ -1599,6 +1738,14 @@ export class RunScene extends Phaser.Scene {
             xpByBucket: [...this.xpByBucketMs],
             bucketMs: PACING_BUCKET_MS,
             levelTimestampsMs: [...this.levelTimestampsMs],
+            batchSize: directorPlan?.batchSize ?? 0,
+            eliteChance: directorPlan?.eliteChance ?? 0,
+            roleWeights: Object.fromEntries(
+              (directorPlan?.weights ?? []).map((entry) => [entry.enemyId, entry.weight]),
+            ),
+            milestoneWaves: this.milestoneWaves,
+            waveSpawned: this.waveSpawned,
+            spawnsInsideView: this.spawnsInsideView,
           }
         : undefined,
       load: {
