@@ -8,7 +8,7 @@ const toughnessReward = (healthMultiplier: number): number =>
   1 + (healthMultiplier - 1) * toughnessShare;
 
 async function waitForRun(page: Page, path: string): Promise<void> {
-  await page.goto(path);
+  await page.goto(`${path}${path.includes("?") ? "&" : "?"}spawnRadius=320`);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");

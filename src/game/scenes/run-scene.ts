@@ -121,6 +121,21 @@ function testSkillEnabled(name: string): boolean {
   return import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has(name);
 }
 
+/**
+ * Test-only override for the ambient spawn ring.
+ *
+ * Since the ring is derived from the visible view it sits ~958 units out, so a
+ * stationary player waits ~7s for the first enemy and far longer to accumulate
+ * kills. Paths whose subject is combat, progression, or feedback use this to
+ * restore close-quarters timing; the path that actually verifies off-screen
+ * spawning deliberately does not. Mirrors `closeLoad` for the harness.
+ */
+function testSpawnRadius(): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const value = Number(new URLSearchParams(window.location.search).get("spawnRadius"));
+  return Number.isFinite(value) && value > 0 ? value : undefined;
+}
+
 function testWorldScenario(): string | null {
   if (import.meta.env.MODE !== "test") return null;
   return new URLSearchParams(window.location.search).get("worldScenario");
@@ -968,9 +983,10 @@ export class RunScene extends Phaser.Scene {
       return false;
     }
     const view = this.viewRect();
+    const radiusOverride = testSpawnRadius();
     const point = requestedPoint ?? findOffScreenSpawnPoint({
       origin: this.player,
-      radius: offScreenSpawnRadius(view, activeTheme.tuning.director.spawnMargin),
+      radius: radiusOverride ?? offScreenSpawnRadius(view, activeTheme.tuning.director.spawnMargin),
       angleRadians: angleRadians ?? this.spawnSequence * GOLDEN_ANGLE,
       arena: ARENA_SIZE,
       view,
@@ -978,6 +994,7 @@ export class RunScene extends Phaser.Scene {
     });
     if (
       !requestedPoint &&
+      radiusOverride === undefined &&
       Math.abs(point.x - view.centreX) <= view.width / 2 &&
       Math.abs(point.y - view.centreY) <= view.height / 2
     ) {

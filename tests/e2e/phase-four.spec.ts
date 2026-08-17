@@ -4,7 +4,7 @@ async function waitForLevelUp(page: Page): Promise<void> {
   // `noContact` keeps this path about the level-up overlay rather than about
   // surviving long enough to reach it; contact damage and death are covered by
   // phase-three. See REC-047 for the early-game observation behind this.
-  await page.goto("/?noContact");
+  await page.goto("/?noContact&spawnRadius=320");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
       timeout: 35_000,

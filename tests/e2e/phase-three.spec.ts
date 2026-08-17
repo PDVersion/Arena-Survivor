@@ -1,7 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
 
 async function waitForCombat(page: Page): Promise<void> {
-  await page.goto("/");
+  // `spawnRadius` restores close-quarters timing. Since Phase 4 the ambient ring
+  // sits ~958 units out, so a stationary player waits seconds for the first
+  // enemy and far longer to accumulate kills. This path is about combat, not
+  // about where enemies appear -- phase-four-v03 covers that. See REC-049.
+  await page.goto("/?spawnRadius=320");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.enemyId))
     .toBe("enemy.swarm_basic");
