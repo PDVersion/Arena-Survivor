@@ -23,6 +23,13 @@ describe("theme import boundary", () => {
 
   it("selects the production theme in exactly one source file", () => {
     const facade = readFileSync(resolve("src/game/content/active-theme.ts"), "utf8");
-    expect(facade).toContain("./themes/knight-magic");
+    expect(facade).toContain("./themes/eco-guardian");
+  });
+
+  it("keeps the theme registry out of the runtime selection path", () => {
+    // The registry imports every pack for tooling and validation. If the facade
+    // reached for it, the production bundle would carry themes it never renders.
+    const facade = readFileSync(resolve("src/game/content/active-theme.ts"), "utf8");
+    expect(facade).not.toContain("theme-registry");
   });
 });

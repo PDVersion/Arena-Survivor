@@ -95,6 +95,19 @@ export interface ArenaTestSnapshot {
     summaryMetrics: readonly string[];
     summaryDamage: readonly string[];
   }>;
+  readonly pacing?: Readonly<{
+    /** Run progress in `[0, 1]`, the input the V0.3 director curves resolve from. */
+    progress: number;
+    /** Ambient spawn cadence currently in effect, after world multipliers. */
+    spawnIntervalMs: number;
+    /** Ambient cadence before world multipliers, straight from theme tuning. */
+    baseSpawnIntervalMs: number;
+    liveByRole: Readonly<Record<string, number>>;
+    xpEarned: number;
+    xpByBucket: readonly number[];
+    bucketMs: number;
+    levelTimestampsMs: readonly number[];
+  }>;
   readonly load?: Readonly<{
     enabled: boolean;
     requested: number;

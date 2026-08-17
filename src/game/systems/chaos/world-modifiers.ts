@@ -1,5 +1,19 @@
 import type { ShrineId } from "../../core/archetypes/ids";
+import type { DifficultyTuning } from "../../core/archetypes/tuning";
 import { resolveModifiers } from "../modifiers/resolve-modifiers";
+
+/** The V0.2 coefficients recorded in REC-035, used when no theme tuning is supplied. */
+export const DEFAULT_DIFFICULTY_TUNING: DifficultyTuning = Object.freeze({
+  chaos: Object.freeze({
+    spawnPerPoint: 0.25,
+    enemyHealthPerPoint: 0.2,
+    enemyDamagePerPoint: 0.15,
+    xpPerPoint: 0.25,
+    eliteChancePerPoint: 0.04,
+    eliteChanceCap: 0.4,
+    shrineRewardPerPoint: 0.2,
+  }),
+});
 
 export interface WorldState {
   readonly chaos: number;
@@ -37,25 +51,29 @@ export function applyWorldChoice(
   });
 }
 
-export function selectWorldModifiers(state: WorldState): WorldModifierSelection {
+export function selectWorldModifiers(
+  state: WorldState,
+  tuning: DifficultyTuning = DEFAULT_DIFFICULTY_TUNING,
+): WorldModifierSelection {
   const pressure = Math.max(0, state.chaos - 1);
+  const chaos = tuning.chaos;
   return Object.freeze({
     chaos: state.chaos,
     enemySpawnMultiplier: resolveModifiers(1, [
-      { layer: "world", sourceId: "chaos.spawn", multiplicative: 1 + pressure * 0.25 },
+      { layer: "world", sourceId: "chaos.spawn", multiplicative: 1 + pressure * chaos.spawnPerPoint },
       { layer: "world", sourceId: "shrine.spawn", multiplicative: state.enemySpawnMultiplier },
     ]).value,
     enemyHealthMultiplier: resolveModifiers(1, [
-      { layer: "enemy", sourceId: "chaos.health", multiplicative: 1 + pressure * 0.2 },
+      { layer: "enemy", sourceId: "chaos.health", multiplicative: 1 + pressure * chaos.enemyHealthPerPoint },
     ]).value,
     enemyDamageMultiplier: resolveModifiers(1, [
-      { layer: "enemy", sourceId: "chaos.damage", multiplicative: 1 + pressure * 0.15 },
+      { layer: "enemy", sourceId: "chaos.damage", multiplicative: 1 + pressure * chaos.enemyDamagePerPoint },
     ]).value,
     xpMultiplier: resolveModifiers(1, [
-      { layer: "world", sourceId: "chaos.xp", multiplicative: 1 + pressure * 0.25 },
+      { layer: "world", sourceId: "chaos.xp", multiplicative: 1 + pressure * chaos.xpPerPoint },
       { layer: "reward", sourceId: "shrine.xp", multiplicative: state.xpMultiplier },
     ]).value,
-    eliteChance: Math.min(0.4, pressure * 0.04),
-    shrineRewardMultiplier: 1 + pressure * 0.2,
+    eliteChance: Math.min(chaos.eliteChanceCap, pressure * chaos.eliteChancePerPoint),
+    shrineRewardMultiplier: 1 + pressure * chaos.shrineRewardPerPoint,
   });
 }

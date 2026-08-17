@@ -1,11 +1,11 @@
 # Reconciliation Log
 
-Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V0.2.md`, before beginning any work. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. The completed V0.1 plan is preserved as `build/BUILD_PLAN_V0.1.md`.
+Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V0.3.md`, before beginning any work. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. Completed plans are preserved as `build/BUILD_PLAN_V0.1.md` and `build/BUILD_PLAN_V0.2.md`.
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
-- Current milestone: **V0.2**
-- Active phase: **Phase 7 complete — V0.2 awaiting milestone review**
+- Current milestone: **V0.3**
+- Active phase: **Phase 2 complete — Phase 3 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1025,6 +1025,62 @@ Future guardrail:
 
 Revisit when:
 A third coding agent is used, a milestone is genuinely co-built and the single-prefix rule becomes misleading, or branch protection rules start depending on the prefix.
+
+### REC-045 — Balance values are theme tuning packs and pacing is answered headlessly
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 all phases; theme contracts, XP, world modifiers, spawning, telemetry
+- Blocks: None
+
+Context / observation:
+Every V0.3 phase is a numbers change, and the only way to evaluate one was to play a five-minute run. Balance literals were also scattered across systems and scenes — `SPAWN_INTERVAL_MS` and `SPAWN_RADIUS` in `run-scene.ts`, the linear curve inside `xp.ts`, and seven Chaos coefficients inside `world-modifiers.ts` — so a tuning change was a code change in three places rather than a theme-data edit.
+
+Decision / solution:
+Add a `TuningPack` to `ThemeManifest` covering progression, director, and difficulty, validated like every other manifest section. Systems take tuning as a parameter defaulting to the V0.2 values, so Phase 1 is behaviour-neutral and all 83 V0.2 tests pass untouched. `RunState` carries the theme's `XpCurve` so a run is self-describing and stays serializable. Add `systems/simulation/pacing-simulator.ts`, a deterministic Phaser-free model consuming the same tuning and pure selectors, plus `npm run balance` via `vite-node` (promoted from a vitest transitive dependency to an explicit devDependency).
+
+Two deviations from the plan's Phase 1 list, both deliberate: `bodies.ts` and `hazards.ts` are not created, because no current values exist to preserve and empty files with no consumers are noise — they arrive with Phases 5 and 6. The `difficulty.ts` pack holds only the Chaos block for the same reason; Phase 6 adds the time block.
+
+Why:
+Tuning as validated theme data makes the Phase 2 theme swap a content operation rather than a code migration, and it is what lets two production themes hold different balance. The simulator turns a five-minute experiment into a sub-millisecond test, which is the difference between tuning ten times and tuning once.
+
+Future guardrail:
+`xpRequiredForLevel(level)` deliberately takes no optional curve parameter — it is passed to `Array.prototype.map` in existing code, which would supply the element index as a curve and reach the banded branch with a number. Curve-aware callers use `xpRequiredForLevelOn(curve, level)`; a regression test asserts the map case. The simulator models pacing only — not movement, positioning, damage taken, pickup travel, or build choice — so its output is a band, and a phase must not treat it as a substitute for the browser paths.
+
+First measurement:
+The knight-magic five-minute `damage-rush` run reaches level 28 with levels arriving every 10–11 seconds from level 3 onward, and 587 kills against 751 spawns with live enemies peaking at 171. That is the flat pacing and the DPS-versus-health divergence V0.3 Phases 3 and 6 exist to fix, now measurable before any change.
+
+Revisit when:
+Phase 4 replaces the director tuning shape with progress-driven curves, Phase 6 adds the time block, or the simulator's kill model needs positioning to answer a question.
+
+### REC-046 — Environment is the production theme; enemy health is log-scaled persistence
+
+- Status: Provisional
+- Date: 2026-08-17
+- Affects: V0.3 Phases 3–10; theme packs, enemy tuning, balance, education pivot
+- Blocks: None
+
+Context / observation:
+The environment/nature fiction became the primary theme for both the pure-fun and any later education stream. Because every V0.3 balance value is theme-owned data, swapping after the tuning phases would have derived every number twice — the same "tune it twice" cost that motivated re-sequencing V0.3 ahead of V0.4 in REC-043. The swap therefore lands before any tuning phase.
+
+Decision / solution:
+Add `content/themes/eco-guardian/` as a complete production pack and select it in `active-theme.ts`. Retain `knight-magic` as a second complete production theme rather than deleting it: it is production-shaped content that must keep satisfying every contract, which is a stronger boundary regression target than the synthetic fixture alone. Add `theme-registry.ts` listing both packs for validation and tooling, deliberately excluded from the runtime path so the bundle never carries an unrendered theme.
+
+Enemy health is derived from real persistence, log-scaled and normalized so the plastic bottle is the baseline: `health = 20 * 1.6 ^ (log10(years) - log10(450))`. Literal persistence is unplayable — glass outlasts food waste by roughly twenty million times — so the log scale preserves ordering and intuition inside a playable band. Resulting values: plastic bag 11 (~20 y), plastic bottle 20 (~450 y), bagged waste 24 (~1,000 y), glass bottle 96 (effectively permanent).
+
+Health and harm are decoupled deliberately. Glass has the roster's highest health and the lowest contact damage of any large enemy, because it is effectively permanent and chemically inert. Phase 2 changes identity, health, and contact damage only; rewards, spawn weights, and unlock timing stay at V0.2 values because Phase 3 owns rewards and Phase 4 owns the director.
+
+Why:
+Deriving stats from data rather than inventing them and attaching a fact afterwards is the mechanics-as-lesson principle in `build/EDUCATION_PIVOT.md`, and it costs nothing extra in a theme that needed numbers regardless. It also produces better enemy design: separating persistence from harm creates a wall that does not hurt and a fast fragile item that does.
+
+Consequence to watch:
+The log band is narrow by construction, so the death-spawner role sits at 24 rather than V0.2's invented 50. Role identity for that enemy now comes from its brood, radius, and contact damage rather than durability. The simulator shows the pack is marginally harder than knight-magic overall — level 27 versus 28, peak live 201 versus 171 — driven by glass at 96 versus 80. Both are within tolerance and both are now visible instantly rather than after a five-minute run.
+
+Future guardrail:
+`theme.test.ts` asserts the modelled health formula directly, so changing a persistence figure without changing the model fails. Both production packs are iterated by content and tuning validation. The browser boot path resolves the expected theme id from the facade instead of a literal, which was the single test that hard-coded a theme name and the only e2e failure the swap produced. Any composite item that does not fit one material is a layered enemy, not a new stat fudge — see `EDUCATION_PIVOT.md`.
+
+Revisit when:
+Phase 3 retunes rewards, Phase 10's time-to-kill table evaluates the widened glass gap, real persistence sources are cited in a codex, or the type system arrives and enemy identity gains a material attribute.
 
 ## Open questions to reconcile during implementation
 

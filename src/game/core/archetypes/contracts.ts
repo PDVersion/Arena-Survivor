@@ -11,6 +11,7 @@ import type {
 import type { UpgradeEffect } from "./effects";
 import type { PlayerBaseStats } from "../stats/player-stats";
 import type { EliteId, FeedbackCategory } from "./categories";
+import type { TuningPack } from "./tuning";
 
 export interface ContentCopy {
   readonly name: string;
@@ -194,4 +195,5 @@ export interface ThemeManifest {
   readonly shrines: readonly ShrineDefinition[];
   readonly skills: readonly SkillDefinition[];
   readonly elites: readonly EliteDefinition[];
+  readonly tuning: TuningPack;
 }

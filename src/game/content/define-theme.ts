@@ -357,6 +357,74 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required elite: ${eliteIds.baseline}`);
   }
 
+  issues.push(...validateTuning(theme.tuning));
+
+  return issues;
+}
+
+function validateTuning(tuning: ThemeManifest["tuning"] | undefined): readonly string[] {
+  const issues: string[] = [];
+  if (!tuning) {
+    issues.push("tuning pack is required");
+    return issues;
+  }
+
+  const curve = tuning.progression?.xpCurve;
+  if (!curve) {
+    issues.push("tuning.progression.xpCurve is required");
+  } else if (!Number.isFinite(curve.baseXp) || curve.baseXp <= 0) {
+    issues.push("tuning.progression.xpCurve baseXp must be greater than zero");
+  } else if (curve.kind === "linear") {
+    if (!Number.isFinite(curve.step) || curve.step <= 0) {
+      issues.push("tuning.progression.xpCurve step must be greater than zero");
+    }
+  } else if (curve.kind === "banded") {
+    if (curve.bands.length === 0) {
+      issues.push("tuning.progression.xpCurve must declare at least one band");
+    }
+    if (curve.bands[0]?.fromLevel !== 1) {
+      issues.push("tuning.progression.xpCurve must declare a band starting at level 1");
+    }
+    let previousLevel = 0;
+    for (const band of curve.bands) {
+      if (!Number.isInteger(band.fromLevel) || band.fromLevel <= previousLevel) {
+        issues.push("tuning.progression.xpCurve bands must ascend by fromLevel");
+      }
+      previousLevel = band.fromLevel;
+      if (!Number.isFinite(band.growth) || band.growth < 1) {
+        issues.push("tuning.progression.xpCurve band growth cannot shrink a requirement");
+      }
+    }
+  } else {
+    issues.push(`tuning.progression.xpCurve has an unsupported kind: ${String((curve as { kind: unknown }).kind)}`);
+  }
+
+  const share = tuning.progression?.toughnessRewardShare;
+  if (!Number.isFinite(share) || (share as number) < 0) {
+    issues.push("tuning.progression.toughnessRewardShare cannot be negative");
+  }
+
+  if (!Number.isFinite(tuning.director?.spawnIntervalMs) || tuning.director.spawnIntervalMs <= 0) {
+    issues.push("tuning.director.spawnIntervalMs must be greater than zero");
+  }
+  if (!Number.isFinite(tuning.director?.spawnRadius) || tuning.director.spawnRadius <= 0) {
+    issues.push("tuning.director.spawnRadius must be greater than zero");
+  }
+
+  const chaos = tuning.difficulty?.chaos;
+  if (!chaos) {
+    issues.push("tuning.difficulty.chaos is required");
+    return issues;
+  }
+  for (const [key, value] of Object.entries(chaos)) {
+    if (!Number.isFinite(value) || value < 0) {
+      issues.push(`tuning.difficulty.chaos.${key} cannot be negative`);
+    }
+  }
+  if (chaos.eliteChanceCap > 1) {
+    issues.push("tuning.difficulty.chaos.eliteChanceCap cannot exceed one");
+  }
+
   return issues;
 }
 
