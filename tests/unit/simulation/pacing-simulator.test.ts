@@ -84,7 +84,8 @@ describe("pacing simulator", () => {
         ...knightMagicTheme.tuning,
         director: {
           ...knightMagicTheme.tuning.director,
-          spawnIntervalMs: knightMagicTheme.tuning.director.spawnIntervalMs * 2,
+          baseIntervalMs: knightMagicTheme.tuning.director.baseIntervalMs * 2,
+          minIntervalMs: knightMagicTheme.tuning.director.minIntervalMs * 2,
         },
       },
     };
@@ -104,8 +105,16 @@ describe("pacing simulator", () => {
   it("raises spawn pressure and rewards as Chaos rises", () => {
     const calm = run();
     const chaotic = run({ chaos: 4 });
+
+    // Pressure shows up as reward per kill and as how quickly the arena fills.
+    // It does NOT show up as total volume: past a certain Chaos the tougher
+    // enemies saturate the shared cap and fewer of them flow through in total.
+    const saturatesAt = (report: ReturnType<typeof run>): number =>
+      report.buckets.find((bucket) => bucket.liveEnemies >= 200)?.endMs ?? Number.POSITIVE_INFINITY;
+
     expect(chaotic.totalXp).toBeGreaterThan(calm.totalXp);
-    expect(chaotic.peakLiveEnemies).toBeGreaterThan(calm.peakLiveEnemies);
+    expect(saturatesAt(chaotic)).toBeLessThan(saturatesAt(calm));
+    expect(chaotic.peakLiveEnemies).toBeGreaterThanOrEqual(calm.peakLiveEnemies);
   });
 
   it("rejects a non-positive duration or step", () => {

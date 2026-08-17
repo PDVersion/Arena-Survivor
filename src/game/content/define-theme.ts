@@ -190,12 +190,6 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(enemy.xpReward) || enemy.xpReward < 0) {
       issues.push(`${enemy.id} xpReward cannot be negative`);
     }
-    if (!Number.isFinite(enemy.spawnWeight) || enemy.spawnWeight < 0) {
-      issues.push(`${enemy.id} spawnWeight cannot be negative`);
-    }
-    if (!Number.isFinite(enemy.unlockAtMs) || enemy.unlockAtMs < 0) {
-      issues.push(`${enemy.id} unlockAtMs cannot be negative`);
-    }
     if (!(["circle", "triangle", "square", "hexagon"] as const).includes(enemy.geometry)) {
       issues.push(`${enemy.id} geometry is unsupported: ${String(enemy.geometry)}`);
     }
@@ -358,12 +352,15 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required elite: ${eliteIds.baseline}`);
   }
 
-  issues.push(...validateTuning(theme.tuning));
+  issues.push(...validateTuning(theme.tuning, enemyIds));
 
   return issues;
 }
 
-function validateTuning(tuning: ThemeManifest["tuning"] | undefined): readonly string[] {
+function validateTuning(
+  tuning: ThemeManifest["tuning"] | undefined,
+  enemyIds: ReadonlySet<string>,
+): readonly string[] {
   const issues: string[] = [];
   if (!tuning) {
     issues.push("tuning pack is required");
@@ -405,11 +402,66 @@ function validateTuning(tuning: ThemeManifest["tuning"] | undefined): readonly s
     issues.push("tuning.progression.toughnessRewardShare cannot be negative");
   }
 
-  if (!Number.isFinite(tuning.director?.spawnIntervalMs) || tuning.director.spawnIntervalMs <= 0) {
-    issues.push("tuning.director.spawnIntervalMs must be greater than zero");
-  }
-  if (!Number.isFinite(tuning.director?.spawnRadius) || tuning.director.spawnRadius <= 0) {
-    issues.push("tuning.director.spawnRadius must be greater than zero");
+  const director = tuning.director;
+  if (!director) {
+    issues.push("tuning.director is required");
+  } else {
+    if (!Number.isFinite(director.baseIntervalMs) || director.baseIntervalMs <= 0) {
+      issues.push("tuning.director.baseIntervalMs must be greater than zero");
+    }
+    if (!Number.isFinite(director.minIntervalMs) || director.minIntervalMs <= 0) {
+      issues.push("tuning.director.minIntervalMs must be greater than zero");
+    }
+    if (director.minIntervalMs > director.baseIntervalMs) {
+      issues.push("tuning.director.minIntervalMs cannot exceed baseIntervalMs");
+    }
+    if (!Number.isFinite(director.intervalDecayK) || director.intervalDecayK < 0) {
+      issues.push("tuning.director.intervalDecayK cannot be negative");
+    }
+    if (!Number.isFinite(director.batchRamp) || director.batchRamp < 0) {
+      issues.push("tuning.director.batchRamp cannot be negative");
+    }
+    if (!Number.isFinite(director.spawnMargin) || director.spawnMargin < 0) {
+      issues.push("tuning.director.spawnMargin cannot be negative");
+    }
+    if (
+      !Number.isFinite(director.maxBaselineEliteChance) ||
+      director.maxBaselineEliteChance < 0 ||
+      director.maxBaselineEliteChance > 1
+    ) {
+      issues.push("tuning.director.maxBaselineEliteChance must be between zero and one");
+    }
+    if (!Number.isFinite(director.eliteUnlockAt) || director.eliteUnlockAt < 0 || director.eliteUnlockAt > 1) {
+      issues.push("tuning.director.eliteUnlockAt must be between zero and one");
+    }
+    if (!Array.isArray(director.roles) || director.roles.length === 0) {
+      issues.push("tuning.director.roles must declare at least one role");
+    } else {
+      const seenRoles = new Set<string>();
+      let hasOpeningRole = false;
+      for (const role of director.roles) {
+        if (seenRoles.has(role.enemyId)) issues.push(`duplicate director role: ${role.enemyId}`);
+        seenRoles.add(role.enemyId);
+        if (!enemyIds.has(role.enemyId)) {
+          issues.push(`tuning.director references missing enemy: ${role.enemyId}`);
+        }
+        if (!Number.isFinite(role.unlockAt) || role.unlockAt < 0 || role.unlockAt >= 1) {
+          issues.push(`${role.enemyId} director unlockAt must be within [0, 1)`);
+        }
+        if (role.unlockAt === 0) hasOpeningRole = true;
+        if (!Number.isFinite(role.baseWeight) || role.baseWeight <= 0) {
+          issues.push(`${role.enemyId} director baseWeight must be greater than zero`);
+        }
+        if (!Number.isFinite(role.weightGrowth) || role.weightGrowth <= -1) {
+          issues.push(`${role.enemyId} director weightGrowth cannot remove a role entirely`);
+        }
+        if (!Number.isFinite(role.chaosWeightBias) || role.chaosWeightBias < 0) {
+          issues.push(`${role.enemyId} director chaosWeightBias cannot be negative`);
+        }
+      }
+      // Without a role live at t=0 the run opens with nothing to shoot.
+      if (!hasOpeningRole) issues.push("tuning.director must declare a role unlocked at zero");
+    }
   }
 
   const chaos = tuning.difficulty?.chaos;

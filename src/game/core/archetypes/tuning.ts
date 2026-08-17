@@ -1,3 +1,5 @@
+import type { EnemyId } from "./ids";
+
 /**
  * Theme-owned tuning contracts.
  *
@@ -36,11 +38,51 @@ export interface ProgressionTuning {
   readonly toughnessRewardShare: number;
 }
 
+/**
+ * One role's participation in the spawn director, expressed against normalized
+ * run progress rather than wall-clock time.
+ */
+export interface DirectorRoleTuning {
+  readonly enemyId: EnemyId;
+  /** Progress at which the role starts spawning. `0.2` is one minute into a five-minute run. */
+  readonly unlockAt: number;
+  /** Selection weight at the moment of unlock. */
+  readonly baseWeight: number;
+  /** Fractional change in weight from unlock to the end of the run; may be negative. */
+  readonly weightGrowth: number;
+  /** Extra weight per point of Chaos pressure, so danger shifts composition, not just volume. */
+  readonly chaosWeightBias: number;
+}
+
+/**
+ * Spawn cadence, composition, and escalation as curves.
+ *
+ * Nothing here names a minute. Every output resolves from
+ * `t = elapsedMs / durationMs`, so a five-minute run, a ten-minute run, and an
+ * endless run (`t > 1`) all work from the same coefficients with no
+ * hand-authored milestones.
+ */
 export interface DirectorTuning {
-  /** Ambient spawn cadence before world multipliers. */
-  readonly spawnIntervalMs: number;
-  /** Distance from the player at which ambient enemies appear. */
-  readonly spawnRadius: number;
+  /** Cadence at `t = 0`, before world multipliers. */
+  readonly baseIntervalMs: number;
+  /** Floor the cadence decays toward. */
+  readonly minIntervalMs: number;
+  /** Exponential decay rate: `interval = max(min, base * e^(-k*t))`. */
+  readonly intervalDecayK: number;
+  /** Batch size ramp: `1 + floor(t * batchRamp)`. */
+  readonly batchRamp: number;
+  /** Angular spread of a batch on the spawn ring, in radians. */
+  readonly batchSpreadRadians: number;
+  /** Progress at which elites begin appearing without any shrine activation. */
+  readonly eliteUnlockAt: number;
+  /** Elite chance at `t = 1`, before Chaos. */
+  readonly maxBaselineEliteChance: number;
+  /** Enemies released by a milestone wave: `waveBurstBase + waveBurstGrowth * t`. */
+  readonly waveBurstBase: number;
+  readonly waveBurstGrowth: number;
+  /** Margin beyond the visible view's half-diagonal at which enemies appear. */
+  readonly spawnMargin: number;
+  readonly roles: readonly DirectorRoleTuning[];
 }
 
 /** Coefficients applied per point of Chaos pressure (`chaos - 1`). */

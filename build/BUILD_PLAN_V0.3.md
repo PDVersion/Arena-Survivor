@@ -52,7 +52,7 @@ The swap is deliberately bounded: it re-skins and re-tunes the existing four ene
 - [x] Phase 1 — Tuning seams, balance simulator, and plan re-pointing (REC-045)
 - [x] Phase 2 — Environment theme as the primary content pack (REC-046)
 - [x] Phase 3 — Progression curve, per-role rewards, and upgrade tallies (REC-047)
-- [ ] Phase 4 — Procedural spawn director, fixed view, and off-screen spawning
+- [x] Phase 4 — Procedural spawn director, fixed view, and off-screen spawning (REC-048)
 - [ ] Phase 5 — Physical presence, spatial index, and crowd separation
 - [ ] Phase 6 — Time and Chaos scaling, and arena hazards
 - [ ] Phase 7 — Skill levels, scaling Detonation, and upgrade pool repair

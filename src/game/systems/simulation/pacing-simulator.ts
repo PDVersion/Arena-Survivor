@@ -2,7 +2,8 @@ import type { EnemyDefinition, ThemeManifest } from "../../core/archetypes/contr
 import { archetypeIds } from "../../core/archetypes/ids";
 import { awardExperience, createProgressionState, type ProgressionState } from "../xp";
 import { createWorldState, selectWorldModifiers, type WorldState } from "../chaos/world-modifiers";
-import { selectEnemyDefinition, V02_SPAWN_LIMITS } from "../spawning";
+import { V02_SPAWN_LIMITS } from "../spawning";
+import { resolveDirectorPlan, runProgress, selectRole } from "../director/spawn-director";
 import { createSeededRandom } from "../upgrades";
 import type { BuildContext, BuildModel } from "./build-models";
 
@@ -138,26 +139,36 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   while (elapsedMs < options.durationMs) {
     elapsedMs = Math.min(options.durationMs, elapsedMs + stepMs);
 
-    // Spawning uses the same weighted selector and cadence data as the scene.
+    // Spawning runs through the same director the scene uses, so cadence,
+    // composition, and batching are modelled rather than approximated.
+    const plan = resolveDirectorPlan(
+      tuning.director,
+      runProgress(elapsedMs, options.durationMs),
+      modifiers,
+    );
     while (elapsedMs >= nextSpawnAtMs && liveCount() < V02_SPAWN_LIMITS.maxAlive) {
-      const definition = selectEnemyDefinition(theme.enemies, elapsedMs, random);
-      if (!definition) break;
-      const existing = live.get(definition.id);
-      if (existing) {
-        existing.count += 1;
-      } else {
-        live.set(definition.id, {
-          definition,
-          count: 1,
-          effectiveHealth: definition.maxHealth * modifiers.enemyHealthMultiplier,
-          effectiveReward:
-            definition.xpReward *
-            (1 +
-              (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare),
-        });
+      for (let batch = 0; batch < plan.batchSize; batch += 1) {
+        if (liveCount() >= V02_SPAWN_LIMITS.maxAlive) break;
+        const enemyId = selectRole(plan.weights, random);
+        const definition = theme.enemies.find((entry) => entry.id === enemyId);
+        if (!definition) continue;
+        const existing = live.get(definition.id);
+        if (existing) {
+          existing.count += 1;
+        } else {
+          live.set(definition.id, {
+            definition,
+            count: 1,
+            effectiveHealth: definition.maxHealth * modifiers.enemyHealthMultiplier,
+            effectiveReward:
+              definition.xpReward *
+              (1 +
+                (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare),
+          });
+        }
+        bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + 1;
       }
-      bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + 1;
-      nextSpawnAtMs += tuning.director.spawnIntervalMs / modifiers.enemySpawnMultiplier;
+      nextSpawnAtMs += plan.intervalMs;
     }
 
     const context: BuildContext = {

@@ -68,7 +68,9 @@ test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statisti
   expect(errors).toEqual([]);
 
   const firstGeneration = terminal?.lifecycle?.runGeneration ?? 0;
-  await page.locator("canvas").click({ position: { x: 640, y: 637 } });
+  // Keyboard rather than a canvas click: the fixed logical view is letterboxed,
+  // so a CSS coordinate no longer maps to a fixed point in the overlay.
+  await page.keyboard.press("KeyR");
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration,
   )).toBe(firstGeneration + 1);

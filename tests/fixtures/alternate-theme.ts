@@ -136,14 +136,12 @@ export const alternateTheme = defineTheme({
       contactCooldownMs: 1000,
       radius: 14,
       xpReward: 1,
-      spawnWeight: 56,
-      unlockAtMs: 0,
       geometry: "circle",
       presentationToken: "enemy",
     },
-    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 140, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, spawnWeight: 24, unlockAtMs: 8_000, geometry: "triangle", presentationToken: "enemyFast" },
-    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 45, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, spawnWeight: 14, unlockAtMs: 16_000, geometry: "square", presentationToken: "enemyTank" },
-    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 55, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, spawnWeight: 6, unlockAtMs: 24_000, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 140, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 45, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, geometry: "square", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 55, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
   ],
   pickups: [
     {
@@ -199,7 +197,24 @@ export const alternateTheme = defineTheme({
       xpCurve: { kind: "linear", baseXp: 2, step: 2 },
       toughnessRewardShare: 0,
     },
-    director: { spawnIntervalMs: 400, spawnRadius: 360 },
+    director: {
+      baseIntervalMs: 900,
+      minIntervalMs: 300,
+      intervalDecayK: 1,
+      batchRamp: 3,
+      batchSpreadRadians: 0.5,
+      eliteUnlockAt: 0.6,
+      maxBaselineEliteChance: 0.08,
+      waveBurstBase: 15,
+      waveBurstGrowth: 15,
+      spawnMargin: 100,
+      roles: [
+        { enemyId: archetypeIds.enemy.swarmBasic, unlockAt: 0, baseWeight: 100, weightGrowth: -0.65, chaosWeightBias: 0 },
+        { enemyId: archetypeIds.enemy.fastFragile, unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },
+        { enemyId: archetypeIds.enemy.slowDurable, unlockAt: 0.4, baseWeight: 12, weightGrowth: 0.9, chaosWeightBias: 0.35 },
+        { enemyId: archetypeIds.enemy.deathSpawner, unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
+      ],
+    },
     difficulty: {
       chaos: {
         spawnPerPoint: 0.25,

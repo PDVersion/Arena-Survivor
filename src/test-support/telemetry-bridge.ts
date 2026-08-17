@@ -97,6 +97,18 @@ export interface ArenaTestSnapshot {
     upgradeCounts: Readonly<Record<string, number>>;
     summaryUpgrades: readonly string[];
   }>;
+  readonly view?: Readonly<{
+    /** Constant logical world area, identical at every window size. */
+    logicalWidth: number;
+    logicalHeight: number;
+    /** CSS size the letterboxed canvas is drawn at. */
+    displayWidth: number;
+    displayHeight: number;
+    /** World-space rectangle currently visible. */
+    worldWidth: number;
+    worldHeight: number;
+    spawnRadius: number;
+  }>;
   readonly pacing?: Readonly<{
     /** Run progress in `[0, 1]`, the input the V0.3 director curves resolve from. */
     progress: number;
@@ -109,6 +121,13 @@ export interface ArenaTestSnapshot {
     xpByBucket: readonly number[];
     bucketMs: number;
     levelTimestampsMs: readonly number[];
+    batchSize: number;
+    eliteChance: number;
+    roleWeights: Readonly<Record<string, number>>;
+    milestoneWaves: number;
+    waveSpawned: number;
+    /** Ambient spawns that landed inside the visible view; the invariant is zero. */
+    spawnsInsideView: number;
   }>;
   readonly load?: Readonly<{
     enabled: boolean;

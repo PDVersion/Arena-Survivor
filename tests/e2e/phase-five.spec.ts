@@ -102,7 +102,11 @@ test("HUD and run remain coherent through focus loss and resize", async ({ page 
 
   await page.setViewportSize({ width: 900, height: 600 });
   const resized = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
-  expect(resized?.canvas).toEqual({ width: 900, height: 600 });
+  // Fixed logical view: the canvas keeps its world area and only the letterboxed
+  // display size follows the window.
+  expect(resized?.canvas).toEqual(paused?.canvas);
+  expect(resized?.view?.worldWidth).toBe(paused?.view?.worldWidth);
+  expect(resized?.view?.displayWidth).toBeLessThanOrEqual(900);
   expect(resized?.hud).toEqual(paused?.hud);
 
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));

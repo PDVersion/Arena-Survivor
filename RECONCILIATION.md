@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 3 complete — Phase 4 next**
+- Active phase: **Phase 4 complete — Phase 5 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1111,6 +1111,38 @@ Future guardrail:
 
 Revisit when:
 Phase 4 changes spawn cadence, Phase 6 activates the toughness share through time-based health scaling, Phase 7 adds skill scaling income, or Phase 10 re-tunes with every source live.
+
+### REC-048 — The director is curves, and the view is fixed
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 5-10; spawning, camera, arena, enemy contracts, browser expectations
+- Blocks: None
+
+Context / observation:
+V0.2 spawned on a fixed 400 ms cadence at a fixed 360-unit radius, with roster gating as absolute `unlockAtMs` values on each enemy definition. Three consequences: a 1920x1080 window showed +/-960 x +/-540 of world so every spawn was visible; `pointOnSpawnRing` clamped candidates into the arena, which dragged edge spawns further on screen exactly when the player stood against a wall; and the roster fully unlocked within 24 seconds. Window size also silently changed difficulty, since a larger monitor meant more warning and more targets in range.
+
+Decision / solution:
+Resolve every director output from normalized progress `t = elapsedMs / durationMs`, with no value in the data naming a minute. Cadence decays `max(min, base * e^(-k*t))`, batch size ramps `1 + floor(t * ramp)`, roles unlock at progress fractions and ramp their weights, and elite chance ramps from a progress threshold. Chaos multiplies cadence and biases composition through a per-role `chaosWeightBias`, so danger sends worse things rather than only more. Milestone waves fire from the director's own unlock thresholds, so no milestone is tracked by hand. `spawnWeight` and `unlockAtMs` are removed from `EnemyDefinition` rather than left as dead data.
+
+Elite chance is now `max(directorBaseline(t), chaosCurve)` rather than the Chaos curve alone, which fixes a V0.2 defect: a run without shrine activation never spawned a single elite.
+
+Render a fixed 1600x900 logical view via `Phaser.Scale.FIT`, letterboxed. Every window renders exactly the same world area. Spawn radius derives from that view's half-diagonal plus a margin (~1020 versus 360), and the ring rejects candidates that are outside the arena or inside the view rather than clamping them, falling back to the farthest valid in-arena point. The arena grows to 3600x2400 so a full off-screen ring exists everywhere.
+
+Why:
+Curves make run length a parameter rather than an authoring task: the same coefficients produce a sensible five-minute run and a sensible ten-minute run, and endless needs only an escalation index. Compressed browser runs traverse every milestone for free, which removed the need for the `durationScale` workaround an authored table would have required. A fixed view is what makes every other balance value in V0.3 meaningful rather than monitor-dependent.
+
+Measurement:
+At five minutes the curves produce the intended shape and reach level 26 with 636 kills. At ten minutes, with no new data, level 36 with 1,523 kills and the same role progression. Cadence tightens 900 ms to 331 ms; composition moves from 100% baseline role to 33/28/22/17.
+
+Future guardrail:
+`tests/unit/director` asserts cadence, batching, gating, composition shares, Chaos bias, elite ramp, wave crossing, and run-length independence. The scene counts ambient spawns that land inside the view at the authoritative moment the point is chosen, and a browser path sweeps the player into all four walls and all four corners asserting that counter stays zero. Restart rewinds director progress and wave counters.
+
+Pitfall for later phases:
+Browser tests that click canvas CSS coordinates are now scale-dependent, because a letterboxed view maps logical points through a zoom factor. The stress path's restart click broke this way and moved to the keyboard control. Prefer keyboard input or large hit areas over pixel coordinates.
+
+Revisit when:
+Phase 6 adds time-based scaling on top of the same progress input, endless mode needs the `t > 1` escalation index, or a resolution preset menu lands in Phase 8 settings.
 
 ## Open questions to reconcile during implementation
 

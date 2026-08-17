@@ -142,8 +142,6 @@ export interface EnemyDefinition {
   readonly contactCooldownMs: number;
   readonly radius: number;
   readonly xpReward: number;
-  readonly spawnWeight: number;
-  readonly unlockAtMs: number;
   readonly geometry: "circle" | "triangle" | "square" | "hexagon";
   readonly presentationToken: keyof Pick<
     ThemePalette,
