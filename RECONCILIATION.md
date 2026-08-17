@@ -1173,6 +1173,30 @@ Two browser paths were wall-clock dependent in ways local runs never showed. One
 Revisit when:
 The view size or camera zoom changes, weapon range becomes an upgrade, enemy speed scaling arrives in Phase 6, or a role is added whose speed approaches the player's.
 
+### REC-050 — A wave the player cannot outrun must not chase
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 4-10; director waves, enemy movement, theme validation
+- Blocks: None
+
+Context / observation:
+Play testing found the first milestone wave killed the player every time. The wave releases `15 + 15t` enemies at once, and at its 0.2 unlock that is 18 of the fast role. REC-049 had set that role's speed to 240 against a player speed of 200 precisely so it could not be outrun, which is correct for one ambient enemy and fatal for eighteen simultaneous ones. The wave also arrives before the player has any crowd clearing: the starter weapon fires a single projectile with no pierce, so it cannot thin a pack.
+
+Decision / solution:
+Give each director role a declared `waveMovement` of `chase` or `drift`. A drifting enemy aims once at the player's position when it first moves and then holds that heading, so the wave sweeps through as an obstacle to dodge rather than a pursuit that cannot be broken. The fast role's wave drifts; the slower, heavier roles keep chasing, because being encircled by things you can outrun is the interesting version of that pressure. Ambient spawns always chase regardless of role.
+
+Drifting enemies never turn back, so they are reclaimed once they pass the arena edge by a margin rather than piling up against a wall.
+
+Why:
+The wave is meant to be a spike the player reacts to, not a coin flip decided before it spawns. Aiming once at the player's position preserves the "they are running at us" read the design wants, while making position and timing the answer instead of raw speed. It also keeps REC-049's speed envelope intact, which the ambient game needs.
+
+Future guardrail:
+Theme validation rejects any role whose enemy is at least as fast as the player while declaring a chasing wave, so the combination cannot be reintroduced by a tuning edit. Unit tests assert it for both production packs and that the earliest wave is non-homing. A browser path crosses the first unlock and asserts drifting enemies are released, stay live, and are reclaimed after leaving.
+
+Revisit when:
+The starter weapon gains crowd clearing early, wave sizes change materially, or a role's speed crosses the player's.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

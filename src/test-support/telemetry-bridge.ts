@@ -126,6 +126,10 @@ export interface ArenaTestSnapshot {
     roleWeights: Readonly<Record<string, number>>;
     milestoneWaves: number;
     waveSpawned: number;
+    /** Wave enemies released on a fixed heading rather than chasing. */
+    driftSpawned: number;
+    driftReclaimed: number;
+    driftLive: number;
     /** Ambient spawns that landed inside the visible view; the invariant is zero. */
     spawnsInsideView: number;
   }>;

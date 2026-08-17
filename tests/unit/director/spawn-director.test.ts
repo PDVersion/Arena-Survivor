@@ -263,3 +263,45 @@ describe("engagement envelope", () => {
     expect(faster[0]!.id).toBe(archetypeIds.enemy.fastFragile);
   });
 });
+
+describe("wave movement", () => {
+  /**
+   * A milestone wave releases 15-30 enemies at once. If those enemies are
+   * faster than the player and home in, the wave cannot be survived with a
+   * single-projectile starter weapon -- so any role that outruns the player
+   * must sweep past on a fixed heading instead. See REC-050.
+   */
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("makes %s waves dodgeable when the role outruns the player", (_name, theme) => {
+    const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
+
+    for (const role of theme.tuning.director.roles) {
+      const enemy = theme.enemies.find((entry) => entry.id === role.enemyId)!;
+      if (enemy.moveSpeed >= playerSpeed) {
+        expect(role.waveMovement).toBe("drift");
+      }
+    }
+  });
+
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("keeps the first %s wave non-homing", (_name, theme) => {
+    const waves = theme.tuning.director.roles
+      .filter((role) => role.unlockAt > 0)
+      .sort((left, right) => left.unlockAt - right.unlockAt);
+
+    // The first wave arrives before the player has any crowd clearing.
+    expect(waves[0]?.waveMovement).toBe("drift");
+  });
+
+  it("still lets slower roles encircle the player", () => {
+    const chasing = ecoGuardianTheme.tuning.director.roles.filter(
+      (role) => role.waveMovement === "chase",
+    );
+    expect(chasing.length).toBeGreaterThan(0);
+    expect(chasing.map((role) => role.enemyId)).toContain(archetypeIds.enemy.slowDurable);
+  });
+});

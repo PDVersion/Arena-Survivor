@@ -209,10 +209,10 @@ export const alternateTheme = defineTheme({
       waveBurstGrowth: 15,
       spawnMargin: 40,
       roles: [
-        { enemyId: archetypeIds.enemy.swarmBasic, unlockAt: 0, baseWeight: 100, weightGrowth: -0.65, chaosWeightBias: 0 },
-        { enemyId: archetypeIds.enemy.fastFragile, unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },
-        { enemyId: archetypeIds.enemy.slowDurable, unlockAt: 0.4, baseWeight: 12, weightGrowth: 0.9, chaosWeightBias: 0.35 },
-        { enemyId: archetypeIds.enemy.deathSpawner, unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
+        { enemyId: archetypeIds.enemy.swarmBasic, waveMovement: "chase", unlockAt: 0, baseWeight: 100, weightGrowth: -0.65, chaosWeightBias: 0 },
+        { enemyId: archetypeIds.enemy.fastFragile, waveMovement: "drift", unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },
+        { enemyId: archetypeIds.enemy.slowDurable, waveMovement: "chase", unlockAt: 0.4, baseWeight: 12, weightGrowth: 0.9, chaosWeightBias: 0.35 },
+        { enemyId: archetypeIds.enemy.deathSpawner, waveMovement: "chase", unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
       ],
     },
     difficulty: {

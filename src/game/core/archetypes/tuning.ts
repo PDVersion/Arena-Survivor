@@ -39,11 +39,24 @@ export interface ProgressionTuning {
 }
 
 /**
+ * How a milestone wave's enemies move.
+ *
+ * `chase` re-aims at the player every frame. `drift` aims once at the player's
+ * position when it spawns and then holds that heading, so the wave sweeps
+ * through as an obstacle to dodge rather than an inescapable pursuit. A wave of
+ * enemies faster than the player must drift, or it cannot be survived with a
+ * single-projectile starter weapon.
+ */
+export type WaveMovement = "chase" | "drift";
+
+/**
  * One role's participation in the spawn director, expressed against normalized
  * run progress rather than wall-clock time.
  */
 export interface DirectorRoleTuning {
   readonly enemyId: EnemyId;
+  /** Movement used by this role's milestone wave. Ambient spawns always chase. */
+  readonly waveMovement: WaveMovement;
   /** Progress at which the role starts spawning. `0.2` is one minute into a five-minute run. */
   readonly unlockAt: number;
   /** Selection weight at the moment of unlock. */

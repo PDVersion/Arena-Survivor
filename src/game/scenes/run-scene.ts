@@ -50,6 +50,7 @@ import {
   resolveEliteChance,
   type DirectorPlan,
 } from "../systems/director/spawn-director";
+import type { WaveMovement } from "../core/archetypes/tuning";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
@@ -82,6 +83,8 @@ const GRID_SIZE = 64;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 /** Pacing telemetry bucket, matched to the balance simulator's reporting window. */
 const PACING_BUCKET_MS = 15_000;
+/** How far past the arena a drifting enemy travels before it is reclaimed. */
+const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
 let runGenerationSequence = 0;
 
@@ -178,6 +181,8 @@ export class RunScene extends Phaser.Scene {
   private lastDirectorProgress = 0;
   private milestoneWaves = 0;
   private waveSpawned = 0;
+  private driftSpawned = 0;
+  private driftReclaimed = 0;
   /** Ambient spawns that landed inside the visible view. Must stay at zero. */
   private spawnsInsideView = 0;
   private levelTimestampsMs: number[] = [];
@@ -494,6 +499,8 @@ export class RunScene extends Phaser.Scene {
     this.lastDirectorProgress = 0;
     this.milestoneWaves = 0;
     this.waveSpawned = 0;
+    this.driftSpawned = 0;
+    this.driftReclaimed = 0;
     this.spawnsInsideView = 0;
     this.levelTimestampsMs = [];
     this.xpByBucketMs = [];
@@ -613,6 +620,7 @@ export class RunScene extends Phaser.Scene {
     reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
     elite?: boolean,
+    movement: WaveMovement = "chase",
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
@@ -625,7 +633,7 @@ export class RunScene extends Phaser.Scene {
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement },
     });
   }
 
@@ -638,11 +646,11 @@ export class RunScene extends Phaser.Scene {
       }
       if (event.kind !== "spawn.requested") return;
       if (capacity <= 0) return false;
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean };
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean; movement?: WaveMovement };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -679,7 +687,14 @@ export class RunScene extends Phaser.Scene {
     if (!this.player) return;
     const target = new Phaser.Math.Vector2(this.player.x, this.player.y);
     for (const enemy of this.enemies) {
-      if (enemy.active && !enemy.defeated) enemy.chase(target);
+      if (!enemy.active || enemy.defeated) continue;
+      enemy.advance(target);
+      // Drifting enemies never turn back, so reclaim them once they are gone
+      // rather than letting a wave accumulate against the arena edge.
+      if (enemy.movement === "drift" && enemy.hasLeftArena(ARENA_SIZE, DRIFT_RECLAIM_MARGIN)) {
+        this.driftReclaimed += 1;
+        enemy.destroy();
+      }
     }
   }
 
@@ -860,7 +875,17 @@ export class RunScene extends Phaser.Scene {
     for (const role of crossed) {
       this.milestoneWaves += 1;
       for (let index = 0; index < burst; index += 1) {
-        this.enqueueSpawnRequest(role.enemyId, "ambient", 1, undefined, undefined, "wave");
+        this.enqueueSpawnRequest(
+          role.enemyId,
+          "ambient",
+          1,
+          undefined,
+          undefined,
+          "wave",
+          undefined,
+          undefined,
+          role.waveMovement,
+        );
       }
       this.announceWave(activeTheme.copy.content[role.enemyId]?.name ?? role.enemyId);
     }
@@ -927,6 +952,7 @@ export class RunScene extends Phaser.Scene {
     requestedPoint?: Readonly<{ x: number; y: number }>,
     eliteOverride?: boolean,
     angleRadians?: number,
+    movement: WaveMovement = "chase",
   ): boolean {
     if (
       !this.player ||
@@ -986,7 +1012,9 @@ export class RunScene extends Phaser.Scene {
         damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
       },
       elite,
+      movement,
     );
+    if (movement === "drift") this.driftSpawned += 1;
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
     if (elite) {
@@ -1745,6 +1773,9 @@ export class RunScene extends Phaser.Scene {
             ),
             milestoneWaves: this.milestoneWaves,
             waveSpawned: this.waveSpawned,
+            driftSpawned: this.driftSpawned,
+            driftReclaimed: this.driftReclaimed,
+            driftLive: [...this.enemies].filter((enemy) => enemy.movement === "drift").length,
             spawnsInsideView: this.spawnsInsideView,
           }
         : undefined,

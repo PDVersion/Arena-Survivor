@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { validateTheme } from "../../../src/game/content/define-theme";
 import { themeRegistry } from "../../../src/game/content/theme-registry";
@@ -108,6 +109,34 @@ describe("theme tuning packs", () => {
         "tuning.difficulty.chaos.xpPerPoint cannot be negative",
         "tuning.difficulty.chaos.eliteChanceCap cannot exceed one",
       ]),
+    );
+  });
+});
+
+describe("wave movement validation", () => {
+  it("rejects an unsupported movement", () => {
+    const roles = validDirector.roles.map((role, index) =>
+      index === 0 ? { ...role, waveMovement: "seek" } : role,
+    );
+    const issues = validateTheme(
+      withTuning({ ...alternateTheme.tuning, director: { ...validDirector, roles } }),
+    );
+    expect(issues.some((issue) => issue.includes("waveMovement must be chase or drift"))).toBe(true);
+  });
+
+  it("rejects a chasing wave the player cannot outrun", () => {
+    // The fast role outruns the player, so declaring its wave as a chase is a
+    // guaranteed death sentence with the starter weapon.
+    const roles = validDirector.roles.map((role) =>
+      role.enemyId === archetypeIds.enemy.fastFragile
+        ? { ...role, waveMovement: "chase" }
+        : role,
+    );
+    const issues = validateTheme(
+      withTuning({ ...alternateTheme.tuning, director: { ...validDirector, roles } }),
+    );
+    expect(issues).toContain(
+      `${archetypeIds.enemy.fastFragile} outruns the player, so its wave must drift`,
     );
   });
 });

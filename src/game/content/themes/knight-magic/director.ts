@@ -32,13 +32,18 @@ export const director = {
     // The baseline swarm, thinning as a share as heavier roles arrive.
     {
       enemyId: archetypeIds.enemy.swarmBasic,
+      waveMovement: "chase",
       unlockAt: 0,
       baseWeight: 100,
       weightGrowth: -0.65,
       chaosWeightBias: 0,
     },
+    // Faster than the player, so its wave sweeps past on a fixed heading rather
+    // than chasing. An 18-strong homing pack of these is unsurvivable with the
+    // single-projectile starter weapon. See REC-050.
     {
       enemyId: archetypeIds.enemy.fastFragile,
+      waveMovement: "drift",
       unlockAt: 0.2,
       baseWeight: 30,
       weightGrowth: 0,
@@ -46,6 +51,7 @@ export const director = {
     },
     {
       enemyId: archetypeIds.enemy.slowDurable,
+      waveMovement: "chase",
       unlockAt: 0.4,
       baseWeight: 12,
       weightGrowth: 0.9,
@@ -53,6 +59,7 @@ export const director = {
     },
     {
       enemyId: archetypeIds.enemy.deathSpawner,
+      waveMovement: "chase",
       unlockAt: 0.45,
       baseWeight: 5,
       weightGrowth: 2.6,

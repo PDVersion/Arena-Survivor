@@ -352,16 +352,18 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required elite: ${eliteIds.baseline}`);
   }
 
-  issues.push(...validateTuning(theme.tuning, enemyIds));
+  issues.push(...validateTuning(theme, enemyIds));
 
   return issues;
 }
 
 function validateTuning(
-  tuning: ThemeManifest["tuning"] | undefined,
+  theme: ThemeManifest,
   enemyIds: ReadonlySet<string>,
 ): readonly string[] {
   const issues: string[] = [];
+  const tuning = theme.tuning;
+  const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
   if (!tuning) {
     issues.push("tuning pack is required");
     return issues;
@@ -457,6 +459,22 @@ function validateTuning(
         }
         if (!Number.isFinite(role.chaosWeightBias) || role.chaosWeightBias < 0) {
           issues.push(`${role.enemyId} director chaosWeightBias cannot be negative`);
+        }
+        if (role.waveMovement !== "chase" && role.waveMovement !== "drift") {
+          issues.push(`${role.enemyId} director waveMovement must be chase or drift`);
+        }
+        // A wave of enemies the player cannot outrun has to be dodgeable.
+        const roleEnemy = enemies.find((enemy) => enemy.id === role.enemyId);
+        const playerSpeed = theme.characters.find(
+          (character) => character.id === archetypeIds.character.starter,
+        )?.baseStats.moveSpeed;
+        if (
+          role.waveMovement === "chase" &&
+          roleEnemy &&
+          playerSpeed !== undefined &&
+          roleEnemy.moveSpeed >= playerSpeed
+        ) {
+          issues.push(`${role.enemyId} outruns the player, so its wave must drift`);
         }
       }
       // Without a role live at t=0 the run opens with nothing to shoot.

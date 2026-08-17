@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
+import type { WaveMovement } from "../core/archetypes/tuning";
 
 export type EnemySpawnSource = "ambient" | ShrineId | ContentId;
 
@@ -14,8 +15,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly moveSpeed: number;
   readonly contactDamage: number;
   readonly elite?: EliteDefinition;
+  readonly movement: WaveMovement;
   defeated = false;
   private readonly baseColour: number;
+  private launched = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -31,6 +34,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       damageMultiplier: 1,
     },
     elite?: EliteDefinition,
+    movement: WaveMovement = "chase",
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -45,6 +49,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.elite = elite;
     this.spawnSource = spawnSource;
     this.rewardMultiplier = rewardMultiplier;
+    this.movement = movement;
     this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -63,6 +68,31 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
     return this.body as Phaser.Physics.Arcade.Body;
+  }
+
+  /**
+   * Advance one frame of movement.
+   *
+   * A chasing enemy re-aims every frame. A drifting one aims once at the
+   * player's position when it first moves and then holds that heading, so it
+   * sweeps past as an obstacle rather than pursuing.
+   */
+  advance(target: Phaser.Math.Vector2): void {
+    if (this.movement === "drift") {
+      if (this.launched) return;
+      this.launched = true;
+    }
+    this.chase(target);
+  }
+
+  /** True once a drifting enemy has left the arena and can be reclaimed. */
+  hasLeftArena(arena: Readonly<{ width: number; height: number }>, margin: number): boolean {
+    return (
+      this.x < -margin ||
+      this.y < -margin ||
+      this.x > arena.width + margin ||
+      this.y > arena.height + margin
+    );
   }
 
   chase(target: Phaser.Math.Vector2): void {
