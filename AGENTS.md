@@ -2,10 +2,12 @@
 
 Every work session in this repository starts by reading, in order:
 
-1. `build/BUILD_PLAN_V0.2.md` — current scope, phase order, architecture, tests, and commit boundaries.
+1. `build/BUILD_PLAN_V0.3.md` — current scope, phase order, architecture, tests, and commit boundaries.
 2. `RECONCILIATION.md` — decisions, discoveries, pitfalls, and constraints learned while building.
 
-Consult `build/PLAN.md` whenever product intent or game behaviour needs more detail. It is the product/design source; `build/BUILD_PLAN_V0.2.md` is the current implementation source. Consult `build/BUILD_PLAN_V0.1.md` only when V0.1 implementation history is relevant.
+Consult `build/PLAN.md` whenever product intent or game behaviour needs more detail. It is the product/design source; `build/BUILD_PLAN_V0.3.md` is the current implementation source. Consult `build/BUILD_PLAN_V0.2.md` and `build/BUILD_PLAN_V0.1.md` only when that milestone's implementation history is relevant.
+
+Consult `build/EDUCATION_PIVOT.md` before changing the environment theme's content, enemy identities, or any information/tooltip surface. It is exploratory except where a decision has been promoted into a build plan.
 
 Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, rendering, or wiring any character, weapon, enemy/monster, skill, upgrade, pickup, shrine, curse, or other themed content.
 
@@ -18,9 +20,11 @@ Before changing code:
 - Preserve the theme/archetype boundary: systems use stable IDs/contracts, while player-facing identity and themed definitions remain in the active theme pack.
 - Add or update a reconciliation entry when work reveals a reusable decision, pitfall, issue, workaround, performance limit, or invalid assumption.
 
+Balance values are theme-owned data. Never introduce a tuning literal into a system, scene, or entity — add it to the active theme's tuning pack and resolve it from there. Use `npm run balance` to answer a pacing question instead of playing a five-minute run.
+
 Before completing a phase:
 
-- Run that phase's short verification suite from `build/BUILD_PLAN_V0.2.md`.
+- Run that phase's short verification suite from `build/BUILD_PLAN_V0.3.md`.
 - Update the phase checklist and `RECONCILIATION.md` with material findings.
 - Keep the phase implementation, tests, plan status, and reconciliation updates in the same phase commit.
 - Do not mark a phase complete or begin the next phase until its verification passes.
@@ -40,10 +44,10 @@ A milestone built by more than one agent keeps the prefix of the agent that crea
 
 Everything else about a branch — one branch per milestone, one pull request into `main`, one reviewable commit per numbered phase — is unchanged by the prefix.
 
-## Git workflow for V0.2
+## Git workflow for V0.3
 
-- Branch: `codex/v0.2`
-- Delivery: one branch and one pull request into `main` for the complete V0.2 milestone, based on merged V0.1.
+- Branch: `claude/v0.3`
+- Delivery: one branch for the complete V0.3 milestone, based on merged V0.2.
 - Each numbered build phase is one reviewable commit using the subject listed in the build plan.
-- If a completed phase needs a later correction, use a focused `fix(v0.2): ...` commit and record the cause in `RECONCILIATION.md`; do not silently rewrite shared history.
-- Keep unrelated refactors and V0.3 ideas out of the V0.2 pull request.
+- If a completed phase needs a later correction, use a focused `fix(v0.3): ...` commit and record the cause in `RECONCILIATION.md`; do not silently rewrite shared history.
+- Keep unrelated refactors and V0.4 ideas out of the V0.3 pull requests.

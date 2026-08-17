@@ -10,8 +10,10 @@ import {
   awardExperience,
   consumePendingChoice,
   createProgressionState,
+  DEFAULT_XP_CURVE,
   type ProgressionState,
 } from "../systems/xp";
+import type { XpCurve } from "../core/archetypes/tuning";
 import { createWorldState, type WorldState } from "../systems/chaos/world-modifiers";
 import {
   createRunStatistics,
@@ -50,6 +52,11 @@ export interface RunState {
   readonly activeSkillIds: readonly SkillId[];
   readonly world: WorldState;
   readonly statistics: RunStatistics;
+  /**
+   * The theme's XP curve, copied in so a run is self-describing and stays
+   * serializable without reaching back into the active theme.
+   */
+  readonly xpCurve: XpCurve;
 }
 
 export interface CreateRunOptions {
@@ -57,6 +64,7 @@ export interface CreateRunOptions {
   readonly characterId: CharacterId;
   readonly baseStats: PlayerBaseStats;
   readonly durationMs?: number;
+  readonly xpCurve?: XpCurve;
 }
 
 function cloneStats(stats: PlayerBaseStats): PlayerBaseStats {
@@ -69,19 +77,21 @@ export function createRunState(options: CreateRunOptions): RunState {
     throw new Error("Run duration must be a finite number greater than zero");
   }
 
+  const xpCurve = options.xpCurve ?? DEFAULT_XP_CURVE;
   return {
     version: RUN_STATE_VERSION,
     themeId: options.themeId,
     status: "playing",
     elapsedMs: 0,
     durationMs,
+    xpCurve,
     player: {
       characterId: options.characterId,
       health: options.baseStats.maxHealth,
       baseStats: cloneStats(options.baseStats),
       stats: cloneStats(options.baseStats),
     },
-    progression: createProgressionState(),
+    progression: createProgressionState(xpCurve),
     weaponModifiers: createWeaponStatModifiers(),
     selectedUpgradeIds: [],
     activeSkillIds: [],
@@ -145,7 +155,12 @@ export function observeRunPierce(state: RunState, chain: number): RunState {
 
 export function awardRunExperience(state: RunState, amount: number): RunState {
   if (state.status !== "playing") return state;
-  const result = awardExperience(state.progression, amount, state.player.stats.xpMultiplier);
+  const result = awardExperience(
+    state.progression,
+    amount,
+    state.player.stats.xpMultiplier,
+    state.xpCurve,
+  );
   return {
     ...state,
     status: result.levelsGained > 0 ? "level_up" : state.status,
@@ -171,6 +186,7 @@ export function resetRunState(state: RunState): RunState {
     characterId: state.player.characterId,
     baseStats: state.player.baseStats,
     durationMs: state.durationMs,
+    xpCurve: state.xpCurve,
   });
 }
 

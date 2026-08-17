@@ -19,6 +19,7 @@
     "vitest.config.ts",
     "playwright.config.ts",
     "eslint.config.js",
+    "scripts",
     "tests",
     "src/vite-env.d.ts",
     "src/test-support/install-telemetry.ts"

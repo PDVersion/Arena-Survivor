@@ -193,4 +193,22 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.skill.chainReaction, effects: [{ kind: "chain_reaction" }] },
   ],
   elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2, radiusMultiplier: 1.3, presentationToken: "elite" }],
+  tuning: {
+    progression: {
+      xpCurve: { kind: "linear", baseXp: 2, step: 2 },
+      toughnessRewardShare: 0,
+    },
+    director: { spawnIntervalMs: 400, spawnRadius: 360 },
+    difficulty: {
+      chaos: {
+        spawnPerPoint: 0.25,
+        enemyHealthPerPoint: 0.2,
+        enemyDamagePerPoint: 0.15,
+        xpPerPoint: 0.25,
+        eliteChancePerPoint: 0.04,
+        eliteChanceCap: 0.4,
+        shrineRewardPerPoint: 0.2,
+      },
+    },
+  },
 });

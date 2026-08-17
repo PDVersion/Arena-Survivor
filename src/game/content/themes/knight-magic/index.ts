@@ -9,6 +9,9 @@ import { upgrades } from "./upgrades";
 import { shrines } from "./shrines";
 import { skills } from "./skills";
 import { elites } from "./elites";
+import { progression } from "./progression";
+import { director } from "./director";
+import { difficulty } from "./difficulty";
 
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
@@ -23,4 +26,5 @@ export const knightMagicTheme = defineTheme({
   shrines,
   skills,
   elites,
+  tuning: { progression, director, difficulty },
 });

@@ -62,9 +62,9 @@ import { shouldSpawnElite } from "../systems/elites/elites";
 
 export const ARENA_SIZE = Object.freeze({ width: 2400, height: 1600 });
 const GRID_SIZE = 64;
-const SPAWN_INTERVAL_MS = 400;
-const SPAWN_RADIUS = 360;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+/** Pacing telemetry bucket, matched to the balance simulator's reporting window. */
+const PACING_BUCKET_MS = 15_000;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
 let runGenerationSequence = 0;
 
@@ -157,6 +157,10 @@ export class RunScene extends Phaser.Scene {
   private upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
   private enemyRandom = createSeededRandom(0xe11e_0002);
   private nextSpawnAtMs = 0;
+  private spawnIntervalMs = 0;
+  private levelTimestampsMs: number[] = [];
+  private xpByBucketMs: number[] = [];
+  private xpEarnedTotal = 0;
   private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
   private invulnerableUntilMs = 0;
@@ -272,7 +276,9 @@ export class RunScene extends Phaser.Scene {
       characterId: selectedCharacter.id,
       baseStats: selectedCharacter.baseStats,
       durationMs: testRunDurationMs(),
+      xpCurve: activeTheme.tuning.progression.xpCurve,
     });
+    this.spawnIntervalMs = activeTheme.tuning.director.spawnIntervalMs;
     const testCritChance = testCombatNumber("critChance");
     const testPierce = testCombatNumber("pierce");
     const testAttackSpeedBonus = testCombatNumber("attackSpeedBonus");
@@ -459,6 +465,10 @@ export class RunScene extends Phaser.Scene {
     this.upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
     this.enemyRandom = createSeededRandom(0xe11e_0002);
     this.nextSpawnAtMs = 0;
+    this.spawnIntervalMs = 0;
+    this.levelTimestampsMs = [];
+    this.xpByBucketMs = [];
+    this.xpEarnedTotal = 0;
     this.nextFireAtMs = 0;
     this.lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
     this.invulnerableUntilMs = 0;
@@ -728,7 +738,7 @@ export class RunScene extends Phaser.Scene {
     };
     this.runState = observeRunChaos(this.runState);
     if (definition.effectKind === "duplicate_living") {
-      const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world).shrineRewardMultiplier;
+      const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).shrineRewardMultiplier;
       for (const enemy of livingSnapshot) {
         this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, Boolean(enemy.elite));
         this.duplicatedEnemiesQueued += 1;
@@ -778,7 +788,7 @@ export class RunScene extends Phaser.Scene {
       this.spawnEnemy(
         archetypeIds.shrine.spawnSurge,
         this.shrineDefinition.rewardMultiplier *
-          selectWorldModifiers(this.runState.world).shrineRewardMultiplier,
+          selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).shrineRewardMultiplier,
       );
     }
   }
@@ -802,8 +812,9 @@ export class RunScene extends Phaser.Scene {
     );
     if (!definition) return;
     this.spawnEnemy("ambient", 1, definition);
-    this.nextSpawnAtMs = this.runState.elapsedMs + SPAWN_INTERVAL_MS /
-      selectWorldModifiers(this.runState.world).enemySpawnMultiplier;
+    this.spawnIntervalMs = activeTheme.tuning.director.spawnIntervalMs /
+      selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).enemySpawnMultiplier;
+    this.nextSpawnAtMs = this.runState.elapsedMs + this.spawnIntervalMs;
   }
 
   private spawnEnemy(
@@ -824,14 +835,14 @@ export class RunScene extends Phaser.Scene {
     }
     const point = requestedPoint ?? pointOnSpawnRing(
       this.player,
-      SPAWN_RADIUS,
+      activeTheme.tuning.director.spawnRadius,
       this.spawnSequence * GOLDEN_ANGLE,
       ARENA_SIZE,
       definition.radius,
     );
     this.spawnSequence += 1;
     this.enemySequence += 1;
-    const worldModifiers = selectWorldModifiers(this.runState.world);
+    const worldModifiers = selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty);
     const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const elite = eliteDefinition && shouldSpawnElite(
       testSkillEnabled("forceElite") ? 1 : worldModifiers.eliteChance,
@@ -1216,8 +1227,10 @@ export class RunScene extends Phaser.Scene {
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
-    const awardedXp = claim.awardedXp * selectWorldModifiers(this.runState.world).xpMultiplier;
+    const awardedXp = claim.awardedXp * selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).xpMultiplier;
+    const levelBefore = this.runState.progression.level;
     this.runState = awardRunExperience(this.runState, awardedXp);
+    this.recordPacingXp(awardedXp, levelBefore);
     if (pickup.rewardSource === archetypeIds.shrine.spawnSurge) {
       this.shrineXpCollected += awardedXp;
     } else {
@@ -1227,6 +1240,18 @@ export class RunScene extends Phaser.Scene {
     pickup.playCollectCue();
     this.pickupCues += 1;
     if (this.runState.status === "level_up") this.beginLevelUpChoice();
+  }
+
+  /** Record pacing evidence so a live run can be compared against the simulator. */
+  private recordPacingXp(awardedXp: number, levelBefore: number): void {
+    if (!this.runState) return;
+    this.xpEarnedTotal += awardedXp;
+    const bucket = Math.floor(this.runState.elapsedMs / PACING_BUCKET_MS);
+    while (this.xpByBucketMs.length <= bucket) this.xpByBucketMs.push(0);
+    this.xpByBucketMs[bucket] = (this.xpByBucketMs[bucket] ?? 0) + awardedXp;
+    for (let level = levelBefore; level < this.runState.progression.level; level += 1) {
+      this.levelTimestampsMs.push(this.runState.elapsedMs);
+    }
   }
 
   private beginLevelUpChoice(): void {
@@ -1423,7 +1448,7 @@ export class RunScene extends Phaser.Scene {
       this.player && this.shrine
         ? Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shrine.x, this.shrine.y)
         : Number.POSITIVE_INFINITY;
-    const world = this.runState ? selectWorldModifiers(this.runState.world) : undefined;
+    const world = this.runState ? selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty) : undefined;
     const feedback = this.feedbackLimiter.snapshot();
     const audio = this.audioFeedback.snapshot();
     const loadMetrics = this.terminalLoadMetrics ?? this.loadEventQueue.snapshot();
@@ -1557,6 +1582,25 @@ export class RunScene extends Phaser.Scene {
         summaryMetrics: summary.metrics,
         summaryDamage: summary.damage,
       } : undefined,
+      pacing: this.runState
+        ? {
+            progress: this.runState.durationMs === 0
+              ? 0
+              : Math.min(1, this.runState.elapsedMs / this.runState.durationMs),
+            spawnIntervalMs: this.spawnIntervalMs,
+            baseSpawnIntervalMs: activeTheme.tuning.director.spawnIntervalMs,
+            liveByRole: Object.fromEntries(
+              this.enemyDefinitions.map((definition) => [
+                definition.id,
+                [...this.enemies].filter((enemy) => enemy.definition.id === definition.id).length,
+              ]),
+            ),
+            xpEarned: this.xpEarnedTotal,
+            xpByBucket: [...this.xpByBucketMs],
+            bucketMs: PACING_BUCKET_MS,
+            levelTimestampsMs: [...this.levelTimestampsMs],
+          }
+        : undefined,
       load: {
         enabled: this.loadHarnessRequested > 0,
         requested: this.loadHarnessRequested,

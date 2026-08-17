@@ -4,18 +4,22 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 ## Status
 
-V0.2 is implementation-complete and ready for milestone review. The game now includes the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
+V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
+
+**V0.3 is in progress** — a rebalancing, escalation, and readability milestone that tunes the loop before more content lands on it. It also swaps the production theme to environment/nature.
 
 ## Project documents
 
-- [V0.2 build plan](build/BUILD_PLAN_V0.2.md) — current scope, phase order, verification gates, and commit boundaries.
+- [V0.3 build plan](build/BUILD_PLAN_V0.3.md) — current scope, phase order, verification gates, and commit boundaries.
+- [Education pivot](build/EDUCATION_PIVOT.md) — exploratory design for the type system, real-data enemy stats, and the knowledge layer.
+- [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
 - [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
 - [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 
-Before beginning any work, read the current V0.2 build plan and then the reconciliation log. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
+Before beginning any work, read the current V0.3 build plan and then the reconciliation log. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
 ## Run locally
 
@@ -59,12 +63,20 @@ npm run test:e2e:stress
 npm audit --audit-level=high
 ```
 
-Focused Phase 7 checks:
+## Balance without playing
+
+A five-minute run takes five minutes to evaluate, so pacing questions go through the headless simulator instead:
 
 ```bash
-npm test -- --run tests/unit/statistics tests/unit/content tests/unit/architecture
-npm run test:e2e:stress
+npm run balance                                      # every build model, 5 minutes
+npm run balance -- --build crit --minutes 10         # one model, longer run
+npm run balance -- --build damage-rush --chaos 3     # under world pressure
+npm run balance -- --theme knight-magic              # a specific theme pack
 ```
+
+It reports spawns by role, live enemies, kills, experience, and level per 15-second bucket. It models pacing only — not movement, positioning, damage taken, or build choice — so read its output as a band, not a prediction.
+
+Balance values live in the active theme's tuning pack (`progression.ts`, `director.ts`, `difficulty.ts`), never as literals in systems or scenes.
 
 The normal Chromium regression suite runs on every pull request. The tagged 300-enemy stress path is a separate manual GitHub Actions workflow; run it before a release and after changes to spawning, combat/effect queues, statistics, feedback limits, or restart cleanup.
 
