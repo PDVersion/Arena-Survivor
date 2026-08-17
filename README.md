@@ -6,7 +6,7 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
-**V0.3 is in progress** — a rebalancing, escalation, and readability milestone that tunes the loop before more content lands on it. It also swaps the production theme to environment/nature.
+**V0.3 is implementation-complete.** A rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
 
 ## Project documents
 
@@ -76,7 +76,7 @@ Install Playwright's Chromium once on a new machine:
 npx playwright install chromium
 ```
 
-Run the complete V0.2 verification gate:
+Run the complete V0.3 verification gate:
 
 ```bash
 npm run typecheck
@@ -97,6 +97,7 @@ npm run balance                                      # every build model, 5 minu
 npm run balance -- --build crit --minutes 10         # one model, longer run
 npm run balance -- --build damage-rush --chaos 3     # under world pressure
 npm run balance -- --theme knight-magic              # a specific theme pack
+npm run balance -- --build spread --ttk              # time-to-kill table
 ```
 
 It reports spawns by role, live enemies, kills, experience, and level per 15-second bucket. It models pacing only — not movement, positioning, damage taken, or build choice — so read its output as a band, not a prediction.
@@ -110,6 +111,6 @@ For a manual smoke test, verify movement, combat, XP collection, upgrade choices
 ## Current limitations
 
 - Visuals and sounds are generated placeholders; audio uses theme-defined synthesized cues.
-- Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting.
-- Profile persistence, save export/import, additional weapons, bosses, and advanced elite variants remain later-milestone work.
+- Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting. `npm run balance -- --ttk` is the instrument for revisiting them.
+- Profile persistence, save export/import, weapon slots and melee delivery, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
 - The production bundle currently includes Phaser in the initial chunk, so Vite reports its large-chunk advisory during builds.

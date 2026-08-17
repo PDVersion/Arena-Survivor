@@ -43,6 +43,7 @@ const vocabularyKeys = [
   "chainedExplosionDamage",
   "remainderDamage",
   "upgradesTaken",
+  "deathCause",
 ] as const;
 
 export class ThemeValidationError extends Error {

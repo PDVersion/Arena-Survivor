@@ -60,6 +60,15 @@ export interface RunState {
    * serializable without reaching back into the active theme.
    */
   readonly xpCurve: XpCurve;
+  /** What killed the player, recorded at the lethal transition. */
+  readonly deathCause?: DeathCause;
+}
+
+export interface DeathCause {
+  /** Stable content id of the killer, or a hazard id. */
+  readonly sourceId: string;
+  readonly elite: boolean;
+  readonly atMs: number;
 }
 
 export interface CreateRunOptions {
@@ -122,14 +131,32 @@ export function setRunStatus(state: RunState, status: RunStatus): RunState {
   return { ...state, status };
 }
 
-export function damageRunPlayer(state: RunState, damage: number): RunState {
+export function damageRunPlayer(
+  state: RunState,
+  damage: number,
+  cause?: Omit<DeathCause, "atMs">,
+): RunState {
   if (state.status !== "playing" || damage <= 0) return state;
   const health = Math.max(0, state.player.health - damage);
+  const died = health === 0;
   return {
     ...state,
-    status: health === 0 ? "dead" : state.status,
+    status: died ? "dead" : state.status,
     player: { ...state.player, health },
+    deathCause: died && cause ? { ...cause, atMs: state.elapsedMs } : state.deathCause,
   };
+}
+
+/** Health per second on the simulation clock, so it pauses with the run. */
+export function regenerateRunPlayer(state: RunState, deltaMs: number): RunState {
+  if (state.status !== "playing") return state;
+  const perSecond = state.player.stats.regeneration;
+  if (perSecond <= 0 || state.player.health >= state.player.stats.maxHealth) return state;
+  const health = Math.min(
+    state.player.stats.maxHealth,
+    state.player.health + (perSecond * deltaMs) / 1000,
+  );
+  return { ...state, player: { ...state.player, health } };
 }
 
 export function setLiveEnemyCount(state: RunState, liveEnemies: number): RunState {

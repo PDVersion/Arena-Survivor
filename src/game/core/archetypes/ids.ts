@@ -48,6 +48,9 @@ export const archetypeIds = {
     chainReaction: "upgrade.chain_reaction",
     worldSurge: "upgrade.world_surge",
     worldBrittle: "upgrade.world_brittle",
+    armour: "upgrade.armour",
+    regeneration: "upgrade.regeneration",
+    luck: "upgrade.luck",
   },
 } as const;
 

@@ -42,6 +42,21 @@ export interface RunSummaryValues {
   readonly damage: readonly string[];
   readonly upgradesTitle: string;
   readonly upgrades: readonly string[];
+  /** Present only on a death, never on a completed run. */
+  readonly deathCause?: string;
+}
+
+/** "Overwhelmed by an elite Glass Bottle at 4:12" */
+export function selectDeathCause(
+  state: RunState,
+  vocabulary: ThemeVocabulary,
+  content: ThemeCopy["content"],
+): string | undefined {
+  const cause = state.deathCause;
+  if (!cause || state.status !== "dead") return undefined;
+  const name = content[cause.sourceId as keyof typeof content]?.name ?? cause.sourceId;
+  const elite = cause.elite ? "an elite " : "";
+  return `${vocabulary.deathCause} ${elite}${name} at ${formatRunTime(state.durationMs - cause.atMs)}`;
 }
 
 /**
@@ -79,6 +94,7 @@ export function selectRunSummaryValues(
   const statistics = state.statistics;
   const breakdown = statistics.damageBreakdown;
   return Object.freeze({
+    deathCause: selectDeathCause(state, vocabulary, content),
     upgradesTitle: vocabulary.upgradesTaken,
     upgrades: selectUpgradeTally(state, content),
     title: vocabulary.statisticsTitle,

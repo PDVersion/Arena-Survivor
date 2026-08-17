@@ -1,4 +1,4 @@
-import type { PacingReport } from "./pacing-simulator";
+import type { PacingReport, TimeToKillRow } from "./pacing-simulator";
 
 function pad(value: string, width: number): string {
   return value.length >= width ? value : value + " ".repeat(width - value.length);
@@ -82,4 +82,36 @@ export function formatPacingReport(report: PacingReport): string {
   }
 
   return lines.join("\n");
+}
+
+/** The time-to-kill table, which is how the balance pass is actually decided. */
+export function formatTimeToKill(
+  rows: readonly TimeToKillRow[],
+  roleIds: readonly string[],
+): string {
+  const shortName = (id: string): string => id.replace(/^enemy\./, "").slice(0, 9);
+  const lines: string[] = [];
+  lines.push(
+    [pad("at", 7), padLeft("lvl", 4), padLeft("dps", 8), ...roleIds.map((id) => padLeft(shortName(id), 10))].join(" "),
+  );
+  lines.push("-".repeat(29 + roleIds.length * 11));
+
+  // Every second bucket keeps the table readable without hiding a divergence.
+  for (const row of rows.filter((_, index) => index % 2 === 1)) {
+    lines.push(
+      [
+        pad(`${Math.round(row.progress * 100)}%`, 7),
+        padLeft(String(row.level), 4),
+        padLeft(compact(row.damagePerSecond), 8),
+        ...roleIds.map((id) => padLeft(`${round(row.seconds[id] ?? 0)}s`, 10)),
+      ].join(" "),
+    );
+  }
+  return lines.join("\n");
+}
+
+function round(value: number): string {
+  if (!Number.isFinite(value)) return "—";
+  if (value >= 100) return String(Math.round(value));
+  return value.toFixed(value < 1 ? 2 : 1);
 }

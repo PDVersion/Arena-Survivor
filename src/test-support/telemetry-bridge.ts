@@ -36,6 +36,8 @@ export interface ArenaTestSnapshot {
     pickups: number;
     pickupsDropped: number;
     pickupsCollected: number;
+    /** Orbs merged to hold the population under its cap. */
+    pickupsMerged: number;
     choiceIds: readonly string[];
     selectedUpgradeIds: readonly string[];
     skillLevels: Readonly<Record<string, number>>;
@@ -96,6 +98,17 @@ export interface ArenaTestSnapshot {
     summaryDamage: readonly string[];
     upgradeCounts: Readonly<Record<string, number>>;
     summaryUpgrades: readonly string[];
+  }>;
+  readonly impact?: Readonly<{
+    hitStopGranted: number;
+    hitStopDenied: number;
+    hitStopSpentMs: number;
+    /** Damage entering aggregation, and damage drawn. They must reconcile. */
+    damageAccumulated: number;
+    damageFlushed: number;
+    pendingNumbers: number;
+    killChainDetuneCents: number;
+    deathCause: Readonly<{ sourceId: string; elite: boolean; atMs: number }> | null;
   }>;
   readonly ui?: Readonly<{
     pauseOpen: boolean;

@@ -46,6 +46,18 @@ export function piercingMomentumDamage(baseDamage: number, chainIndex: number, d
   return baseDamage * (1 + Math.max(0, Math.floor(chainIndex)) * Math.max(0, damagePerUniqueHit));
 }
 
+/**
+ * Multiplicative damage reduction.
+ *
+ * `damage * 100 / (100 + armour)` never reaches immunity however high armour
+ * goes, and never trivialises late contact damage the way flat subtraction
+ * would. `armourPierce` ignores that share of the target's armour.
+ */
+export function reduceByArmour(damage: number, armour: number, armourPierce = 0): number {
+  const effective = Math.max(0, armour) * (1 - Math.min(1, Math.max(0, armourPierce)));
+  return Math.max(0, damage) * (100 / (100 + effective));
+}
+
 export function applyDamage(health: number, damage: number): HitResult {
   if (health <= 0 || damage <= 0) return { health: Math.max(0, health), killed: false, applied: false };
   const nextHealth = Math.max(0, health - damage);

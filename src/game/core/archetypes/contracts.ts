@@ -51,6 +51,8 @@ export interface ThemeVocabulary {
   readonly chainedExplosionDamage: string;
   readonly remainderDamage: string;
   readonly upgradesTaken: string;
+  /** Prefix for the cause-of-death line, e.g. "Overwhelmed by". */
+  readonly deathCause: string;
 }
 
 /** Stable keys for player-facing stat labels. */
@@ -251,6 +253,8 @@ export interface EnemyDefinition {
   readonly contactCooldownMs: number;
   readonly radius: number;
   readonly xpReward: number;
+  /** Multiplicative damage reduction; the durable role's defining trait. */
+  readonly armour: number;
   readonly geometry: "circle" | "triangle" | "square" | "hexagon";
   readonly presentationToken: keyof Pick<
     ThemePalette,

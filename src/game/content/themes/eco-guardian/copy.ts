@@ -39,6 +39,7 @@ export const copy = {
     explosionDamage: "Compaction",
     chainedExplosionDamage: "Cascade",
     remainderDamage: "Other / Remainder",
+    deathCause: "Overwhelmed by",
     upgradesTaken: "Equipment Requisitioned",
   },
   stats: {
@@ -204,6 +205,18 @@ export const copy = {
     [archetypeIds.upgrade.worldBrittle]: {
       name: "Brittle World",
       description: "Double your output, and let the site get much worse.",
+    },
+    [archetypeIds.upgrade.armour]: {
+      name: "Protective Kit",
+      description: "Reduce the harm waste does on contact.",
+    },
+    [archetypeIds.upgrade.regeneration]: {
+      name: "Field Medic",
+      description: "Recover health steadily while you work.",
+    },
+    [archetypeIds.upgrade.luck]: {
+      name: "Sharp Eye",
+      description: "Better equipment turns up more often.",
     },
   },
 } as const satisfies ThemeCopy;

@@ -39,6 +39,7 @@ export const copy = {
     explosionDamage: "Explosion",
     chainedExplosionDamage: "Chained Explosion",
     remainderDamage: "Other / Remainder",
+    deathCause: "Slain by",
     upgradesTaken: "Blessings Taken",
   },
   stats: {
@@ -165,6 +166,18 @@ export const copy = {
     [archetypeIds.upgrade.worldBrittle]: {
       name: "Glass World",
       description: "Double your power, and let the arena turn far deadlier.",
+    },
+    [archetypeIds.upgrade.armour]: {
+      name: "Plated Guard",
+      description: "Reduce the harm foes do on contact.",
+    },
+    [archetypeIds.upgrade.regeneration]: {
+      name: "Renewing Vow",
+      description: "Recover health steadily through the trial.",
+    },
+    [archetypeIds.upgrade.luck]: {
+      name: "Fortune's Favour",
+      description: "Rarer blessings turn up more often.",
     },
   },
 } as const satisfies ThemeCopy;

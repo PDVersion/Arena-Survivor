@@ -1,6 +1,8 @@
 export const upgradeStatTargets = [
+  "player.armour",
   "player.luck",
   "player.maxHealth",
+  "player.regeneration",
   "player.moveSpeed",
   "player.pickupRadius",
   "player.damageBonus",
