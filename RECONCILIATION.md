@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 5 complete — Phase 6 next**
+- Active phase: **Phase 6 complete — Phase 7 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1266,6 +1266,41 @@ Unit tests cover coincident separation, determinism, mass ratios, the frame clam
 
 Revisit when:
 Phase 6 obstacles need the same solid resolution, the frame budget tightens, or a role's speed changes enough to invalidate the displacement ceiling.
+
+### REC-053 — Time escalates the run, and hazards are world content
+
+- Status: Provisional
+- Date: 2026-08-17
+- Affects: V0.3 Phases 7-10; world modifiers, enemies, hazards, statistics
+- Blocks: None
+
+Context / observation:
+V0.2 escalated only through Chaos, so a player who never touched a shrine faced an identical world at 4:30 and 0:30. Separately, the arena had no content other than enemies, so positioning only ever meant enemy avoidance.
+
+Decision / solution:
+Add an elapsed-time block to `difficulty.ts` resolved through the same `selectWorldModifiers` selector, so Chaos and time compose multiplicatively and there is still exactly one place world pressure is decided. Coefficients are the fractional increase at the end of a run: health `+0.50`, contact damage `+0.20`, move speed `+0.10`. Escalation advances in ten discrete steps rather than continuously, because a smooth ramp is imperceptible while a step is felt and gives the HUD a legible threat level. Every multiplier is snapshotted at spawn, so an enemy never heals or accelerates mid-life. The scene resolves world pressure through one helper, so Chaos and time can never be read at different progress values within a frame. The pacing simulator resolves it per step too, or its band would drift from the game.
+
+Add three arena hazards as a discriminated union — a damage zone with a slow, a destructible obstacle, and a periodic burst. Unlike the weapon delivery split parked in REC-051, the shapes are known now, so declaring the union costs nothing. Hazards are world content: they never count toward the enemy cap, never award kills, and never enter the damage ledger. Damage they deal to the player is recorded separately, so the ledger keeps meaning "damage the player dealt" and still reconciles exactly. Obstacles reuse Phase 5's solid resolution for the player and block projectiles; enemies get one tangential steering adjustment with no pathfinding.
+
+Everything telegraphs before it can hurt, enforced by validation rather than convention: an untelegraphed hazard inside a dense swarm is indistinguishable from a bug.
+
+Measurements:
+Pacing cost of the difficulty ramp is about one level: damage-rush 26 to 25, crit 24, explosion 30, all inside the declared 24-34 band. Frame cost at 300 live enemies with six hazards active, same machine as REC-052:
+
+  V0.2 baseline           average 20.35 ms   worst 26.67 ms
+  after separation        average 22.55 ms   worst 27.50 ms
+  after hazards           average 23.70 ms   worst 29.17 ms
+
+The obstacle stall the plan flagged as this phase's risk did not appear: the same load committed 1,782 kills with six hazards active and zero coincident pairs, so the swarm keeps flowing around them.
+
+Two defects found while building:
+A hazard was placed on the first frame of every run, because the next-placement clock started at zero. A run now opens clean and waits one interval. And `HazardActor` could not name its own state `state`, because Phaser reserves that property on `GameObject`; it is `hazardState`.
+
+Future guardrail:
+Validation requires a positive telegraph on every hazard, kind-appropriate fields, a placement distance clearing the largest hazard radius, and weights totalling more than zero. Unit tests cover cadence decay, Chaos bias, deterministic selection, phase transitions, tick and burst cadence, containment with target radius, and steering. A browser path proves escalation reaches its end state with Chaos pinned at 1.0, that steps are integral and few, that hazards never touch enemy accounting, and that restart clears every hazard and rewinds escalation. Test seams `noHazards` and `hazardIntervalMs` keep unrelated paths isolated.
+
+Revisit when:
+Phase 10's time-to-kill table evaluates whether the conservative coefficients should rise, the HUD surfaces the threat step in Phase 8, or a fourth hazard is proposed.
 
 ## Open questions to reconcile during implementation
 

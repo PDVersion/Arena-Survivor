@@ -13,6 +13,12 @@ export const DEFAULT_DIFFICULTY_TUNING: DifficultyTuning = Object.freeze({
     eliteChanceCap: 0.4,
     shrineRewardPerPoint: 0.2,
   }),
+  time: Object.freeze({
+    steps: 10,
+    enemyHealthAtEnd: 0,
+    enemyDamageAtEnd: 0,
+    enemyMoveSpeedAtEnd: 0,
+  }),
 });
 
 export interface WorldState {
@@ -30,6 +36,9 @@ export interface WorldModifierSelection {
   readonly xpMultiplier: number;
   readonly eliteChance: number;
   readonly shrineRewardMultiplier: number;
+  readonly enemyMoveSpeedMultiplier: number;
+  /** Which discrete escalation step the run is in, `0` to `steps`. */
+  readonly threatStep: number;
 }
 
 export function createWorldState(): WorldState {
@@ -51,12 +60,26 @@ export function applyWorldChoice(
   });
 }
 
+/**
+ * World pressure at a moment in the run.
+ *
+ * `progress` is normalized run progress. Elapsed-time escalation advances in
+ * discrete steps rather than continuously, so it is perceptible and can be shown
+ * as a threat level. Chaos and time compose multiplicatively, and every consumer
+ * resolves from this one selector.
+ */
 export function selectWorldModifiers(
   state: WorldState,
   tuning: DifficultyTuning = DEFAULT_DIFFICULTY_TUNING,
+  progress = 0,
 ): WorldModifierSelection {
   const pressure = Math.max(0, state.chaos - 1);
   const chaos = tuning.chaos;
+  const time = tuning.time;
+  const steps = Math.max(1, Math.floor(time.steps));
+  const threatStep = Math.max(0, Math.floor(Math.max(0, progress) * steps));
+  // Stepped rather than smooth, and never beyond the end of the run.
+  const elapsed = Math.min(1, threatStep / steps);
   return Object.freeze({
     chaos: state.chaos,
     enemySpawnMultiplier: resolveModifiers(1, [
@@ -65,10 +88,16 @@ export function selectWorldModifiers(
     ]).value,
     enemyHealthMultiplier: resolveModifiers(1, [
       { layer: "enemy", sourceId: "chaos.health", multiplicative: 1 + pressure * chaos.enemyHealthPerPoint },
+      { layer: "enemy", sourceId: "time.health", multiplicative: 1 + elapsed * time.enemyHealthAtEnd },
     ]).value,
     enemyDamageMultiplier: resolveModifiers(1, [
       { layer: "enemy", sourceId: "chaos.damage", multiplicative: 1 + pressure * chaos.enemyDamagePerPoint },
+      { layer: "enemy", sourceId: "time.damage", multiplicative: 1 + elapsed * time.enemyDamageAtEnd },
     ]).value,
+    enemyMoveSpeedMultiplier: resolveModifiers(1, [
+      { layer: "enemy", sourceId: "time.speed", multiplicative: 1 + elapsed * time.enemyMoveSpeedAtEnd },
+    ]).value,
+    threatStep,
     xpMultiplier: resolveModifiers(1, [
       { layer: "world", sourceId: "chaos.xp", multiplicative: 1 + pressure * chaos.xpPerPoint },
       { layer: "reward", sourceId: "shrine.xp", multiplicative: state.xpMultiplier },

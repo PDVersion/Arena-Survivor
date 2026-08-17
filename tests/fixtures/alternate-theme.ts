@@ -194,6 +194,11 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.skill.bloodlust, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01 }] },
     { id: archetypeIds.skill.chainReaction, effects: [{ kind: "chain_reaction" }] },
   ],
+  hazards: [
+    { id: archetypeIds.hazard.damageZone, kind: "damage_zone", radius: 110, telegraphMs: 900, lifetimeMs: 9_000, damage: 4, tickMs: 500, slowMultiplier: 0.6, presentationToken: "explosion" },
+    { id: archetypeIds.hazard.obstacle, kind: "obstacle", radius: 46, telegraphMs: 600, health: 120, presentationToken: "grid" },
+    { id: archetypeIds.hazard.periodicBurst, kind: "periodic_burst", radius: 96, telegraphMs: 800, lifetimeMs: 14_000, damage: 14, cycleMs: 2_400, presentationToken: "shrine" },
+  ],
   elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2.5, radiusMultiplier: 1.3, presentationToken: "elite" }],
   tuning: {
     progression: {
@@ -216,6 +221,19 @@ export const alternateTheme = defineTheme({
         { enemyId: archetypeIds.enemy.fastFragile, waveMovement: "drift", unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },
         { enemyId: archetypeIds.enemy.slowDurable, waveMovement: "chase", unlockAt: 0.4, baseWeight: 12, weightGrowth: 0.9, chaosWeightBias: 0.35 },
         { enemyId: archetypeIds.enemy.deathSpawner, waveMovement: "chase", unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
+      ],
+    },
+    hazards: {
+      maxActive: 6,
+      baseIntervalMs: 22_000,
+      minIntervalMs: 7_000,
+      intervalDecayK: 0.9,
+      chaosIntervalBias: 0.25,
+      minDistanceFromPlayer: 320,
+      weights: [
+        { hazardId: archetypeIds.hazard.damageZone, weight: 45 },
+        { hazardId: archetypeIds.hazard.obstacle, weight: 35 },
+        { hazardId: archetypeIds.hazard.periodicBurst, weight: 20 },
       ],
     },
     bodies: {
@@ -241,6 +259,7 @@ export const alternateTheme = defineTheme({
         eliteChanceCap: 0.4,
         shrineRewardPerPoint: 0.2,
       },
+      time: { steps: 10, enemyHealthAtEnd: 0.5, enemyDamageAtEnd: 0.2, enemyMoveSpeedAtEnd: 0.1 },
     },
   },
 });

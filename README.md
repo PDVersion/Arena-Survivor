@@ -57,6 +57,8 @@ The spawn director escalates from run progress rather than a clock, so the shape
 | 45% | Bagged Waste joins | ~570 ms | 2 |
 | 60%+ | Elites begin appearing without any shrine | — | 3–4 |
 
+Enemies also get tougher on the clock alone, in ten discrete steps, so a cautious run still escalates — under V0.2 a player who never touched a shrine faced an identical world at 4:30 and 0:30. Arena hazards appear as the run progresses: a contamination spill that damages and slows, a debris pile that blocks movement and shots until cleared, and a methane vent that flares on a cycle. Everything telegraphs before it can hurt you.
+
 Each milestone is announced before it arrives. The first wave sweeps past on a fixed heading rather than chasing, because that role is faster than you and a homing pack of them is unsurvivable with the starter weapon; later waves do home in.
 
 The game renders a fixed 1600×900 view scaled to fit the window and letterboxed, so every window shows exactly the same amount of world. Enemies always appear outside it.

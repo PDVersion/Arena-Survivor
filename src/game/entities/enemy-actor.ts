@@ -12,6 +12,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly spawnSource: EnemySpawnSource;
   readonly rewardMultiplier: number;
   health: number;
+  /** Max health at spawn, after world and elite multipliers. */
+  readonly maxHealth: number;
   readonly moveSpeed: number;
   readonly contactDamage: number;
   readonly elite?: EliteDefinition;
@@ -33,7 +35,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     tokens: ThemeTokens,
     spawnSource: EnemySpawnSource = "ambient",
     rewardMultiplier = 1,
-    modifiers: Readonly<{ healthMultiplier: number; damageMultiplier: number }> = {
+    modifiers: Readonly<{
+      healthMultiplier: number;
+      damageMultiplier: number;
+      moveSpeedMultiplier?: number;
+    }> = {
       healthMultiplier: 1,
       damageMultiplier: 1,
     },
@@ -49,7 +55,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.targetId = targetId;
     this.definition = definition;
     this.health = definition.maxHealth * modifiers.healthMultiplier;
-    this.moveSpeed = definition.moveSpeed;
+    this.maxHealth = this.health;
+    // Snapshotted at spawn: an enemy never accelerates mid-life, which would be
+    // both confusing to read and a statistics hazard.
+    this.moveSpeed = definition.moveSpeed * (modifiers.moveSpeedMultiplier ?? 1);
     this.contactDamage = definition.contactDamage * modifiers.damageMultiplier;
     this.elite = elite;
     this.spawnSource = spawnSource;

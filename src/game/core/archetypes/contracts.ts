@@ -2,6 +2,7 @@ import type {
   CharacterId,
   ContentId,
   EnemyId,
+  HazardId,
   PickupId,
   ShrineId,
   SkillId,
@@ -225,5 +226,57 @@ export interface ThemeManifest {
   readonly shrines: readonly ShrineDefinition[];
   readonly skills: readonly SkillDefinition[];
   readonly elites: readonly EliteDefinition[];
+  readonly hazards: readonly HazardDefinition[];
   readonly tuning: TuningPack;
 }
+
+/**
+ * Arena hazards: world content, not enemies.
+ *
+ * They never count toward the enemy cap, never award kills, and never enter the
+ * damage ledger as enemy damage. They exist so positioning matters for reasons
+ * beyond enemy avoidance.
+ *
+ * Unlike `WeaponDefinition`, the kinds are a discriminated union: there are
+ * exactly three and their shapes are known now, so nothing is guessed by
+ * declaring them.
+ */
+export type HazardDefinition =
+  | Readonly<{
+      id: HazardId;
+      kind: "damage_zone";
+      radius: number;
+      /** Warning time before it can hurt anything. */
+      telegraphMs: number;
+      lifetimeMs: number;
+      damage: number;
+      tickMs: number;
+      /** Movement multiplier applied inside, `1` for no slow. */
+      slowMultiplier: number;
+      presentationToken: HazardPresentationToken;
+    }>
+  | Readonly<{
+      id: HazardId;
+      kind: "obstacle";
+      radius: number;
+      telegraphMs: number;
+      /** Destructible; clearing it is the reward. */
+      health: number;
+      presentationToken: HazardPresentationToken;
+    }>
+  | Readonly<{
+      id: HazardId;
+      kind: "periodic_burst";
+      radius: number;
+      telegraphMs: number;
+      lifetimeMs: number;
+      damage: number;
+      /** Time between bursts, each preceded by its own telegraph. */
+      cycleMs: number;
+      presentationToken: HazardPresentationToken;
+    }>;
+
+export type HazardPresentationToken = keyof Pick<
+  ThemePalette,
+  "explosion" | "shrine" | "grid" | "enemyTank"
+>;

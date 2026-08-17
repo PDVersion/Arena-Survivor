@@ -27,6 +27,11 @@ export const archetypeIds = {
     bloodlust: "skill.bloodlust",
     chainReaction: "skill.chain_reaction",
   },
+  hazard: {
+    damageZone: "hazard.damage_zone",
+    obstacle: "hazard.obstacle",
+    periodicBurst: "hazard.periodic_burst",
+  },
   upgrade: {
     damage: "upgrade.damage",
     attackSpeed: "upgrade.attack_speed",
@@ -53,6 +58,7 @@ export type PickupId = Values<typeof archetypeIds.pickup>;
 export type UpgradeId = Values<typeof archetypeIds.upgrade>;
 export type ShrineId = Values<typeof archetypeIds.shrine>;
 export type SkillId = Values<typeof archetypeIds.skill>;
+export type HazardId = Values<typeof archetypeIds.hazard>;
 export type ContentId =
   | Values<typeof archetypeIds.character>
   | Values<typeof archetypeIds.weapon>
@@ -60,6 +66,7 @@ export type ContentId =
   | Values<typeof archetypeIds.pickup>
   | Values<typeof archetypeIds.shrine>
   | Values<typeof archetypeIds.skill>
+  | Values<typeof archetypeIds.hazard>
   | Values<typeof archetypeIds.upgrade>;
 
 export const v01ContentIds = [

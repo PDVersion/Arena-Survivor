@@ -82,6 +82,18 @@ export const copy = {
     [archetypeIds.skill.fracture]: { name: "Fracture", description: "Some defeated foes split into smaller enemies." },
     [archetypeIds.skill.bloodlust]: { name: "Bloodlust", description: "Recent kills quicken your attacks." },
     [archetypeIds.skill.chainReaction]: { name: "Chain Reaction", description: "Explosion kills may detonate in turn." },
+    [archetypeIds.hazard.damageZone]: {
+      name: "Cursed Mire",
+      description: "A lingering blight that burns and drags at anything wading through it.",
+    },
+    [archetypeIds.hazard.obstacle]: {
+      name: "Rubble Barricade",
+      description: "Fallen stone that blocks movement and shots until it is cleared.",
+    },
+    [archetypeIds.hazard.periodicBurst]: {
+      name: "Ember Geyser",
+      description: "A vent that erupts on a cycle. The warning is the only warning.",
+    },
     [archetypeIds.upgrade.damage]: {
       name: "Tempered Power",
       description: "Increase damage dealt.",

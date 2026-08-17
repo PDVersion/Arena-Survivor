@@ -54,7 +54,7 @@ The swap is deliberately bounded: it re-skins and re-tunes the existing four ene
 - [x] Phase 3 — Progression curve, per-role rewards, and upgrade tallies (REC-047)
 - [x] Phase 4 — Procedural spawn director, fixed view, and off-screen spawning (REC-048)
 - [x] Phase 5 — Physical presence, spatial index, and crowd separation (REC-052)
-- [ ] Phase 6 — Time and Chaos scaling, and arena hazards
+- [x] Phase 6 — Time and Chaos scaling, and arena hazards (REC-053)
 - [ ] Phase 7 — Skill levels, scaling Detonation, and upgrade pool repair
 - [ ] Phase 8 — Informative upgrade cards, pause menu, and HUD
 - [ ] Phase 9 — Impact feedback and terminal polish

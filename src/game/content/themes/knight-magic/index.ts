@@ -13,6 +13,7 @@ import { progression } from "./progression";
 import { director } from "./director";
 import { difficulty } from "./difficulty";
 import { bodies } from "./bodies";
+import { hazards, hazardTuning } from "./hazards";
 
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
@@ -27,5 +28,6 @@ export const knightMagicTheme = defineTheme({
   shrines,
   skills,
   elites,
-  tuning: { progression, director, difficulty, bodies },
+  hazards,
+  tuning: { progression, director, difficulty, bodies, hazards: hazardTuning },
 });

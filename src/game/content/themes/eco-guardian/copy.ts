@@ -106,6 +106,18 @@ export const copy = {
       name: "Cascade",
       description: "A compaction burst can set off the next one.",
     },
+    [archetypeIds.hazard.damageZone]: {
+      name: "Contamination Spill",
+      description: "A lingering spill that burns and drags at anything wading through it.",
+    },
+    [archetypeIds.hazard.obstacle]: {
+      name: "Debris Pile",
+      description: "Heaped waste that blocks movement and shots until it is cleared.",
+    },
+    [archetypeIds.hazard.periodicBurst]: {
+      name: "Methane Vent",
+      description: "A vent that flares on a cycle. The warning is the only warning.",
+    },
     [archetypeIds.upgrade.damage]: {
       name: "Reinforced Tools",
       description: "Process more waste with every charge.",

@@ -1,4 +1,4 @@
-import type { EnemyId } from "./ids";
+import type { EnemyId, HazardId } from "./ids";
 
 /**
  * Theme-owned tuning contracts.
@@ -109,8 +109,25 @@ export interface ChaosTuning {
   readonly shrineRewardPerPoint: number;
 }
 
+/**
+ * Escalation from elapsed run progress, independent of Chaos.
+ *
+ * Coefficients are the fractional increase at the end of a run, so
+ * `enemyHealthAtEnd: 0.5` means enemies spawn with 1.5x health at `t = 1`.
+ * Applied in discrete steps rather than continuously: a smooth ramp is
+ * imperceptible, while a step is felt and gives the HUD a legible threat level.
+ */
+export interface TimeTuning {
+  /** Steps across the run. `10` is a 30-second step at five minutes. */
+  readonly steps: number;
+  readonly enemyHealthAtEnd: number;
+  readonly enemyDamageAtEnd: number;
+  readonly enemyMoveSpeedAtEnd: number;
+}
+
 export interface DifficultyTuning {
   readonly chaos: ChaosTuning;
+  readonly time: TimeTuning;
 }
 
 /** One role's physical presence in the crowd. */
@@ -142,9 +159,24 @@ export interface BodiesTuning {
   readonly roles: readonly BodyRoleTuning[];
 }
 
+/** How often hazards appear and which ones. */
+export interface HazardsTuning {
+  readonly maxActive: number;
+  readonly baseIntervalMs: number;
+  readonly minIntervalMs: number;
+  /** Cadence tightens with run progress: `base * e^(-k*t)`. */
+  readonly intervalDecayK: number;
+  /** Extra frequency per point of Chaos pressure. */
+  readonly chaosIntervalBias: number;
+  /** Hazards never appear on top of the player. */
+  readonly minDistanceFromPlayer: number;
+  readonly weights: readonly Readonly<{ hazardId: HazardId; weight: number }>[];
+}
+
 export interface TuningPack {
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
   readonly difficulty: DifficultyTuning;
   readonly bodies: BodiesTuning;
+  readonly hazards: HazardsTuning;
 }

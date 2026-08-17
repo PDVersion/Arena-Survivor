@@ -86,7 +86,6 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   if (!weapon || !character) throw new Error("The theme is missing required simulation content");
 
   const world = chaosWorldState(chaos);
-  const modifiers = selectWorldModifiers(world, tuning.difficulty);
   const random = createSeededRandom(options.seed ?? SIMULATION_SEED);
 
   let progression: ProgressionState = createProgressionState(tuning.progression.xpCurve);
@@ -139,13 +138,11 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   while (elapsedMs < options.durationMs) {
     elapsedMs = Math.min(options.durationMs, elapsedMs + stepMs);
 
-    // Spawning runs through the same director the scene uses, so cadence,
-    // composition, and batching are modelled rather than approximated.
-    const plan = resolveDirectorPlan(
-      tuning.director,
-      runProgress(elapsedMs, options.durationMs),
-      modifiers,
-    );
+    // World pressure is resolved per step, so elapsed-time escalation is
+    // modelled exactly as the scene resolves it.
+    const progress = runProgress(elapsedMs, options.durationMs);
+    const modifiers = selectWorldModifiers(world, tuning.difficulty, progress);
+    const plan = resolveDirectorPlan(tuning.director, progress, modifiers);
     while (elapsedMs >= nextSpawnAtMs && liveCount() < V02_SPAWN_LIMITS.maxAlive) {
       for (let batch = 0; batch < plan.batchSize; batch += 1) {
         if (liveCount() >= V02_SPAWN_LIMITS.maxAlive) break;

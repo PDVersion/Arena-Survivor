@@ -374,7 +374,45 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required elite: ${eliteIds.baseline}`);
   }
 
-  issues.push(...validateTuning(theme, enemyIds));
+  const hazardIds = new Set<string>();
+  const hazards = Array.isArray(theme.hazards) ? theme.hazards : [];
+  if (!Array.isArray(theme.hazards)) issues.push("hazards registry is required");
+  for (const hazard of hazards) {
+    if (hazardIds.has(hazard.id)) issues.push(`duplicate hazard id: ${hazard.id}`);
+    hazardIds.add(hazard.id);
+    if (!Number.isFinite(hazard.radius) || hazard.radius <= 0) {
+      issues.push(`${hazard.id} radius must be greater than zero`);
+    }
+    // Everything must warn before it can hurt anything: an untelegraphed hazard
+    // inside a dense swarm is indistinguishable from a bug.
+    if (!Number.isFinite(hazard.telegraphMs) || hazard.telegraphMs <= 0) {
+      issues.push(`${hazard.id} telegraphMs must be greater than zero`);
+    }
+    if (!(hazard.presentationToken in theme.tokens.palette)) {
+      issues.push(`${hazard.id} references missing presentation token: ${hazard.presentationToken}`);
+    }
+    if (hazard.kind === "damage_zone") {
+      if (!Number.isFinite(hazard.damage) || hazard.damage <= 0) issues.push(`${hazard.id} damage must be greater than zero`);
+      if (!Number.isFinite(hazard.tickMs) || hazard.tickMs <= 0) issues.push(`${hazard.id} tickMs must be greater than zero`);
+      if (!Number.isFinite(hazard.lifetimeMs) || hazard.lifetimeMs <= 0) issues.push(`${hazard.id} lifetimeMs must be greater than zero`);
+      if (!Number.isFinite(hazard.slowMultiplier) || hazard.slowMultiplier <= 0 || hazard.slowMultiplier > 1) {
+        issues.push(`${hazard.id} slowMultiplier must be within (0, 1]`);
+      }
+    } else if (hazard.kind === "obstacle") {
+      if (!Number.isFinite(hazard.health) || hazard.health <= 0) issues.push(`${hazard.id} health must be greater than zero`);
+    } else if (hazard.kind === "periodic_burst") {
+      if (!Number.isFinite(hazard.damage) || hazard.damage <= 0) issues.push(`${hazard.id} damage must be greater than zero`);
+      if (!Number.isFinite(hazard.cycleMs) || hazard.cycleMs <= 0) issues.push(`${hazard.id} cycleMs must be greater than zero`);
+      if (!Number.isFinite(hazard.lifetimeMs) || hazard.lifetimeMs <= 0) issues.push(`${hazard.id} lifetimeMs must be greater than zero`);
+    } else {
+      issues.push(`${(hazard as { id: string }).id} has an unsupported hazard kind`);
+    }
+  }
+  for (const requiredId of Object.values(archetypeIds.hazard)) {
+    if (!hazardIds.has(requiredId)) issues.push(`missing required hazard: ${requiredId}`);
+  }
+
+  issues.push(...validateTuning(theme, enemyIds, hazardIds));
 
   return issues;
 }
@@ -382,6 +420,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
 function validateTuning(
   theme: ThemeManifest,
   enemyIds: ReadonlySet<string>,
+  hazardIds: ReadonlySet<string>,
 ): readonly string[] {
   const issues: string[] = [];
   const tuning = theme.tuning;
@@ -549,6 +588,53 @@ function validateTuning(
     // pairs fall in non-adjacent cells and never be resolved.
     if (Number.isFinite(bodies.cellSize) && bodies.cellSize < largestSeparation * 2) {
       issues.push("tuning.bodies.cellSize must exceed twice the largest separation radius");
+    }
+  }
+
+  const hazardTuning = tuning.hazards;
+  if (!hazardTuning) {
+    issues.push("tuning.hazards is required");
+  } else {
+    if (!Number.isInteger(hazardTuning.maxActive) || hazardTuning.maxActive < 1) {
+      issues.push("tuning.hazards.maxActive must be a positive integer");
+    }
+    if (!Number.isFinite(hazardTuning.baseIntervalMs) || hazardTuning.baseIntervalMs <= 0) {
+      issues.push("tuning.hazards.baseIntervalMs must be greater than zero");
+    }
+    if (!Number.isFinite(hazardTuning.minIntervalMs) || hazardTuning.minIntervalMs <= 0) {
+      issues.push("tuning.hazards.minIntervalMs must be greater than zero");
+    }
+    if (hazardTuning.minIntervalMs > hazardTuning.baseIntervalMs) {
+      issues.push("tuning.hazards.minIntervalMs cannot exceed baseIntervalMs");
+    }
+    if (!Number.isFinite(hazardTuning.minDistanceFromPlayer) || hazardTuning.minDistanceFromPlayer <= 0) {
+      issues.push("tuning.hazards.minDistanceFromPlayer must be greater than zero");
+    }
+    for (const entry of hazardTuning.weights ?? []) {
+      if (!hazardIds.has(entry.hazardId)) {
+        issues.push(`tuning.hazards references missing hazard: ${entry.hazardId}`);
+      }
+      if (!Number.isFinite(entry.weight) || entry.weight < 0) {
+        issues.push(`${entry.hazardId} hazard weight cannot be negative`);
+      }
+    }
+    if ((hazardTuning.weights ?? []).reduce((sum, entry) => sum + Math.max(0, entry.weight), 0) <= 0) {
+      issues.push("tuning.hazards.weights must total more than zero");
+    }
+  }
+
+  const time = tuning.difficulty?.time;
+  if (!time) {
+    issues.push("tuning.difficulty.time is required");
+  } else {
+    if (!Number.isInteger(time.steps) || time.steps < 1) {
+      issues.push("tuning.difficulty.time.steps must be a positive integer");
+    }
+    for (const [key, value] of Object.entries(time)) {
+      if (key === "steps") continue;
+      if (!Number.isFinite(value) || value < 0) {
+        issues.push(`tuning.difficulty.time.${key} cannot be negative`);
+      }
     }
   }
 

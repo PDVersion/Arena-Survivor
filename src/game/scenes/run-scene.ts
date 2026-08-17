@@ -52,6 +52,16 @@ import {
 } from "../systems/director/spawn-director";
 import type { WaveMovement } from "../core/archetypes/tuning";
 import { SpatialHash } from "../systems/spatial/spatial-hash";
+import { HazardActor } from "../entities/hazard-actor";
+import {
+  avoidObstacle,
+  hazardIntervalMs,
+  hazardPhase,
+  isInsideHazard,
+  resolveHazardEffect,
+  selectHazard,
+  type HazardState,
+} from "../systems/hazards/hazards";
 import {
   knockbackDisplacement,
   resolvePlayerAgainstSolids,
@@ -77,7 +87,7 @@ import {
   shouldExplodeOnKill,
   shouldFracture,
 } from "../systems/effects/on-kill-effects";
-import { applyWorldChoice, selectWorldModifiers } from "../systems/chaos/world-modifiers";
+import { applyWorldChoice, createWorldState, selectWorldModifiers } from "../systems/chaos/world-modifiers";
 import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
 import { shouldSpawnElite } from "../systems/elites/elites";
 
@@ -138,6 +148,13 @@ function testSkillEnabled(name: string): boolean {
 function testSpawnRadius(): number | undefined {
   if (import.meta.env.MODE !== "test") return undefined;
   const value = Number(new URLSearchParams(window.location.search).get("spawnRadius"));
+  return Number.isFinite(value) && value > 0 ? value : undefined;
+}
+
+/** Test-only override for hazard cadence, so a path need not wait a full interval. */
+function testHazardIntervalMs(): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const value = Number(new URLSearchParams(window.location.search).get("hazardIntervalMs"));
   return Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
@@ -211,6 +228,15 @@ export class RunScene extends Phaser.Scene {
   private solidResolutions = 0;
   private contactShoves = 0;
   private weaponShoves = 0;
+  private hazards = new Set<HazardActor>();
+  private hazardRandom = createSeededRandom(0x4a20_0007);
+  private nextHazardAtMs = 0;
+  private hazardSequence = 0;
+  private hazardsPlaced = 0;
+  private hazardsCleared = 0;
+  private hazardDamageDealt = 0;
+  private hazardSlowActive = false;
+  private hazardSlow = 1;
   /** Ambient spawns that landed inside the visible view. Must stay at zero. */
   private spawnsInsideView = 0;
   private levelTimestampsMs: number[] = [];
@@ -467,10 +493,14 @@ export class RunScene extends Phaser.Scene {
         this.frameTotalMs += delta;
         this.maxFrameMs = Math.max(this.maxFrameMs, delta);
       }
-      this.player.move(this.readMovementInput(), this.runState.player.stats.moveSpeed);
+      this.player.move(
+        this.readMovementInput(),
+        this.runState.player.stats.moveSpeed * this.hazardSlow,
+      );
       this.updateEnemies();
       this.rebuildEnemyIndex();
       this.resolveCrowd();
+      this.updateHazards();
       this.updateProjectiles();
       this.updatePickups();
       this.updateShrine();
@@ -538,6 +568,16 @@ export class RunScene extends Phaser.Scene {
     this.solidResolutions = 0;
     this.contactShoves = 0;
     this.weaponShoves = 0;
+    for (const hazard of this.hazards) hazard.destroy();
+    this.hazards = new Set();
+    this.hazardRandom = createSeededRandom(0x4a20_0007);
+    this.nextHazardAtMs = testHazardIntervalMs() ?? activeTheme.tuning.hazards.baseIntervalMs;
+    this.hazardSequence = 0;
+    this.hazardsPlaced = 0;
+    this.hazardsCleared = 0;
+    this.hazardDamageDealt = 0;
+    this.hazardSlowActive = false;
+    this.hazardSlow = 1;
     this.spawnsInsideView = 0;
     this.levelTimestampsMs = [];
     this.xpByBucketMs = [];
@@ -735,6 +775,128 @@ export class RunScene extends Phaser.Scene {
       ARENA_SIZE,
       maxSolidRadius,
     );
+
+    // Obstacles are solid for the player using the same resolution.
+    for (const obstacle of this.activeObstacles()) {
+      if (!isInsideHazard(obstacle.hazardState, this.player, this.player.definition.radius)) continue;
+      const dx = this.player.x - obstacle.hazardState.x;
+      const dy = this.player.y - obstacle.hazardState.y;
+      const distance = Math.hypot(dx, dy);
+      const minDistance = obstacle.hazardState.radius + this.player.definition.radius;
+      const normalX = distance > 0 ? dx / distance : 1;
+      const normalY = distance > 0 ? dy / distance : 0;
+      const overlap = minDistance - distance;
+      this.player.x = Phaser.Math.Clamp(
+        this.player.x + normalX * overlap,
+        this.player.definition.radius,
+        ARENA_SIZE.width - this.player.definition.radius,
+      );
+      this.player.y = Phaser.Math.Clamp(
+        this.player.y + normalY * overlap,
+        this.player.definition.radius,
+        ARENA_SIZE.height - this.player.definition.radius,
+      );
+      this.solidResolutions += 1;
+    }
+  }
+
+  /**
+   * Place, age, and apply hazards.
+   *
+   * Hazards are world content: they never touch the enemy cap, kill count, or
+   * damage ledger. Damage to the player is recorded separately so the ledger
+   * keeps meaning "damage the player dealt".
+   */
+  private updateHazards(): void {
+    if (!this.runState || !this.player) return;
+    if (testSkillEnabled("noHazards")) return;
+    const nowMs = this.runState.elapsedMs;
+    const tuning = activeTheme.tuning.hazards;
+    const progress = runProgress(nowMs, this.runState.durationMs);
+
+    if (nowMs >= this.nextHazardAtMs && this.hazards.size < tuning.maxActive) {
+      this.placeHazard(nowMs);
+      this.nextHazardAtMs = nowMs + (testHazardIntervalMs() ?? hazardIntervalMs(
+        tuning,
+        progress,
+        Math.max(0, this.runState.world.chaos - 1),
+      ));
+    }
+
+    let slowed = 1;
+    for (const hazard of [...this.hazards]) {
+      if (hazard.refresh(nowMs)) {
+        this.hazards.delete(hazard);
+        hazard.destroy();
+        continue;
+      }
+
+      const effect = resolveHazardEffect(hazard.definition, hazard.hazardState, {
+        x: this.player.x,
+        y: this.player.y,
+        radius: this.player.definition.radius,
+      }, nowMs);
+      if (effect.damage > 0) {
+        this.runState = damageRunPlayer(this.runState, effect.damage);
+        this.hazardDamageDealt += effect.damage;
+        this.player.flashDamage(activeTheme.tokens.palette.critical);
+        this.emitFeedback("explosion", this.player.x, this.player.y, "!");
+        if (this.runState.status === "dead") {
+          this.enterTerminalState();
+          return;
+        }
+      }
+      slowed = Math.min(slowed, effect.moveMultiplier);
+    }
+    this.hazardSlowActive = slowed < 1;
+    this.hazardSlow = slowed;
+  }
+
+  private placeHazard(nowMs: number): void {
+    if (!this.player || !this.runState) return;
+    const tuning = activeTheme.tuning.hazards;
+    const hazardId = selectHazard(tuning, this.hazardRandom);
+    const definition = activeTheme.hazards.find((candidate) => candidate.id === hazardId);
+    if (!definition) return;
+
+    // Never on top of the player, and always inside the arena.
+    const angle = this.hazardSequence * GOLDEN_ANGLE;
+    const distance = tuning.minDistanceFromPlayer +
+      this.hazardRandom() * tuning.minDistanceFromPlayer;
+    const margin = definition.radius + 20;
+    const state: HazardState = {
+      id: `hazard-${++this.hazardSequence}`,
+      definitionId: definition.id,
+      x: Phaser.Math.Clamp(
+        this.player.x + Math.cos(angle) * distance,
+        margin,
+        ARENA_SIZE.width - margin,
+      ),
+      y: Phaser.Math.Clamp(
+        this.player.y + Math.sin(angle) * distance,
+        margin,
+        ARENA_SIZE.height - margin,
+      ),
+      radius: definition.radius,
+      spawnedAtMs: nowMs,
+      health: definition.kind === "obstacle" ? definition.health : 0,
+      nextTickAtMs: nowMs + definition.telegraphMs,
+    };
+
+    const hazard = new HazardActor(this, definition, state, activeTheme.tokens);
+    this.hazards.add(hazard);
+    this.hazardsPlaced += 1;
+  }
+
+  /** Solid, active obstacles, used for player blocking and enemy steering. */
+  private activeObstacles(): readonly HazardActor[] {
+    if (!this.runState) return [];
+    const nowMs = this.runState.elapsedMs;
+    return [...this.hazards].filter(
+      (hazard) =>
+        hazard.definition.kind === "obstacle" &&
+        hazardPhase(hazard.definition, hazard.hazardState, nowMs) === "active",
+    );
   }
 
   /** The world-space rectangle currently visible, used to keep spawns off screen. */
@@ -763,9 +925,20 @@ export class RunScene extends Phaser.Scene {
   private updateEnemies(): void {
     if (!this.player) return;
     const target = new Phaser.Math.Vector2(this.player.x, this.player.y);
+    const obstacles = this.activeObstacles();
     for (const enemy of this.enemies) {
       if (!enemy.active || enemy.defeated) continue;
       enemy.advance(target);
+      // One tangential steer, no pathfinding: enough to stop a crowd stalling
+      // permanently against an obstacle without paying for navigation.
+      if (obstacles.length > 0 && enemy.movement === "chase") {
+        const body = enemy.arcadeBody;
+        let velocity = { x: body.velocity.x, y: body.velocity.y };
+        for (const obstacle of obstacles) {
+          velocity = avoidObstacle(enemy, velocity, obstacle.hazardState, enemy.separationRadius);
+        }
+        body.setVelocity(velocity.x, velocity.y);
+      }
       // Drifting enemies never turn back, so reclaim them once they are gone
       // rather than letting a wave accumulate against the arena edge.
       if (enemy.movement === "drift" && enemy.hasLeftArena(ARENA_SIZE, DRIFT_RECLAIM_MARGIN)) {
@@ -869,7 +1042,7 @@ export class RunScene extends Phaser.Scene {
     };
     this.runState = observeRunChaos(this.runState);
     if (definition.effectKind === "duplicate_living") {
-      const rewardMultiplier = definition.rewardMultiplier * selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).shrineRewardMultiplier;
+      const rewardMultiplier = definition.rewardMultiplier * this.worldModifiers().shrineRewardMultiplier;
       for (const enemy of livingSnapshot) {
         this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, Boolean(enemy.elite));
         this.duplicatedEnemiesQueued += 1;
@@ -919,15 +1092,33 @@ export class RunScene extends Phaser.Scene {
       this.spawnEnemy(
         archetypeIds.shrine.spawnSurge,
         this.shrineDefinition.rewardMultiplier *
-          selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).shrineRewardMultiplier,
+          this.worldModifiers().shrineRewardMultiplier,
       );
     }
+  }
+
+  /**
+   * World pressure at this instant, including elapsed-time escalation.
+   *
+   * Every consumer goes through here so Chaos and time can never be resolved at
+   * different progress values in the same frame.
+   */
+  private worldModifiers() {
+    const runState = this.runState;
+    if (!runState) {
+      return selectWorldModifiers(createWorldState(), activeTheme.tuning.difficulty, 0);
+    }
+    return selectWorldModifiers(
+      runState.world,
+      activeTheme.tuning.difficulty,
+      runProgress(runState.elapsedMs, runState.durationMs),
+    );
   }
 
   /** Resolve every director output for the current moment. */
   private currentDirectorPlan(): DirectorPlan | undefined {
     if (!this.runState) return undefined;
-    const world = selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty);
+    const world = this.worldModifiers();
     return resolveDirectorPlan(
       activeTheme.tuning.director,
       runProgress(this.runState.elapsedMs, this.runState.durationMs),
@@ -1060,7 +1251,7 @@ export class RunScene extends Phaser.Scene {
     }
     this.spawnSequence += 1;
     this.enemySequence += 1;
-    const worldModifiers = selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty);
+    const worldModifiers = this.worldModifiers();
     const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
       activeTheme.tuning.director,
@@ -1089,6 +1280,7 @@ export class RunScene extends Phaser.Scene {
       {
         healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
         damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
+        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier,
       },
       elite,
       movement,
@@ -1192,8 +1384,23 @@ export class RunScene extends Phaser.Scene {
     this.nextFireAtMs = this.runState.elapsedMs + this.weaponDefinition.cooldownMs / attackSpeedMultiplier;
   }
 
+  /** Projectiles clear destructible obstacles; clearing one is the reward. */
+  private damageObstacles(projectile: ProjectileActor): boolean {
+    for (const obstacle of this.activeObstacles()) {
+      if (!isInsideHazard(obstacle.hazardState, projectile, projectile.displayWidth / 2)) continue;
+      if (obstacle.damage(projectile.damage)) {
+        this.hazardsCleared += 1;
+        this.emitFeedback("explosion", obstacle.x, obstacle.y, "CLEARED");
+      }
+      projectile.destroy();
+      return true;
+    }
+    return false;
+  }
+
   private handleProjectileEnemyOverlap(projectile: ProjectileActor, enemy: EnemyActor): void {
     if (!this.runState || !projectile.canHit(enemy.targetId) || enemy.defeated) return;
+    if (this.damageObstacles(projectile)) return;
     const category: FeedbackCategory = projectile.critTier > 1
       ? "overcritical"
       : projectile.critTier === 1 ? "critical" : "damage";
@@ -1499,7 +1706,7 @@ export class RunScene extends Phaser.Scene {
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
-    const awardedXp = claim.awardedXp * selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty).xpMultiplier;
+    const awardedXp = claim.awardedXp * this.worldModifiers().xpMultiplier;
     const levelBefore = this.runState.progression.level;
     this.runState = awardRunExperience(this.runState, awardedXp);
     this.recordPacingXp(awardedXp, levelBefore);
@@ -1741,7 +1948,7 @@ export class RunScene extends Phaser.Scene {
       this.player && this.shrine
         ? Phaser.Math.Distance.Between(this.player.x, this.player.y, this.shrine.x, this.shrine.y)
         : Number.POSITIVE_INFINITY;
-    const world = this.runState ? selectWorldModifiers(this.runState.world, activeTheme.tuning.difficulty) : undefined;
+    const world = this.runState ? this.worldModifiers() : undefined;
     const feedback = this.feedbackLimiter.snapshot();
     const audio = this.audioFeedback.snapshot();
     const loadMetrics = this.terminalLoadMetrics ?? this.loadEventQueue.snapshot();
@@ -1889,6 +2096,19 @@ export class RunScene extends Phaser.Scene {
         contactShoves: this.contactShoves,
         weaponShoves: this.weaponShoves,
         coincidentPairs: this.countCoincidentPairs(),
+      },
+      hazards: {
+        active: this.hazards.size,
+        placed: this.hazardsPlaced,
+        cleared: this.hazardsCleared,
+        damageDealt: this.hazardDamageDealt,
+        slowActive: this.hazardSlowActive,
+        byKind: Object.fromEntries(
+          activeTheme.hazards.map((definition) => [
+            definition.id,
+            [...this.hazards].filter((hazard) => hazard.definition.id === definition.id).length,
+          ]),
+        ),
       },
       view: {
         logicalWidth: this.scale.width,

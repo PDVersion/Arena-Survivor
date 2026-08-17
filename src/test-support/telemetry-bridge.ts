@@ -109,6 +109,15 @@ export interface ArenaTestSnapshot {
     /** Enemy pairs sharing a position; separation exists to keep this at zero. */
     coincidentPairs: number;
   }>;
+  readonly hazards?: Readonly<{
+    active: number;
+    placed: number;
+    cleared: number;
+    /** Damage hazards dealt to the player; never part of the damage ledger. */
+    damageDealt: number;
+    slowActive: boolean;
+    byKind: Readonly<Record<string, number>>;
+  }>;
   readonly view?: Readonly<{
     /** Constant logical world area, identical at every window size. */
     logicalWidth: number;
@@ -204,6 +213,9 @@ export interface ArenaTestSnapshot {
     xpMultiplier: number;
     eliteChance: number;
     shrineRewardMultiplier: number;
+    enemyMoveSpeedMultiplier: number;
+    /** Discrete elapsed-time escalation step, shown as a threat level. */
+    threatStep: number;
     activations: Readonly<Record<string, number>>;
     duplicatedEnemiesQueued: number;
     duplicatedEnemiesSpawned: number;
