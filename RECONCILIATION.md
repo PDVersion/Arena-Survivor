@@ -982,6 +982,50 @@ Do not remove earlier unit or focused browser regressions when moving a hardware
 Revisit when:
 The browser harness gains deterministic simulation stepping, the stress path becomes reliably bounded on hosted runners, or GitHub Actions provides a stable performance runner.
 
+### REC-043 — V0.3 becomes the rebalancing milestone and prior V0.3 content moves to V0.4
+
+- Status: Accepted
+- Date: 2026-08-15
+- Affects: planning workflow, `PLAN.md` scope sections, V0.3 and V0.4 milestone boundaries, `SAVE_DATA.md` timing
+- Blocks: None
+
+Context / observation:
+V0.2 completed every named mechanic, but play testing showed the loop reads as flat: `xpRequiredForLevel` is linear (`src/game/systems/xp.ts:20`) while XP income is not; enemies share a physics group with no collider (`src/game/scenes/run-scene.ts:334`); `SPAWN_RADIUS` is 360 against a viewport half-extent of roughly 960, so spawns are visible; the roster fully unlocks within 24 seconds; enemy strength scales with Chaos but not elapsed time; upgrade cards state no values; and Detonation is one fixed 96/15 blast forever. Three defects surfaced alongside those: `eliteChance` is `min(0.4, 0.04p)` so a shrine-free run sees no elites; `selectUpgradeChoices` can re-offer an already-enabled skill, wasting a level-up; and `armour`, `regeneration`, and `luck` are declared and validated but read by no system. The prior `PLAN.md` V0.3 section listed content growth — weapons, bosses, unlocks, persistence, endless mode — none of which addresses these.
+
+Decision / solution:
+Re-sequence rather than expand. `PLAN.md` V0.3 now describes a rebalancing, escalation, and readability milestone; the previous V0.3 content list moves verbatim to a new V0.4 section, gaining weapon evolution. `build/BUILD_PLAN_V0.3.md` is the implementation plan for the new V0.3 in eight phases. `SAVE_DATA.md` moves its export/import UI expectation to V0.4 and records that V0.3 adds only a serializable settings slice behind a marked adapter seam. Completed milestone plans stay immutable except for forward-looking factual errata, so `BUILD_PLAN_V0.2.md` gains one corrected milestone reference and nothing else.
+
+Why:
+Every V0.4 item inherits whatever curve exists when it lands. Tuning four enemy roles, one weapon, and five skills is materially cheaper than tuning them after adding more weapons, bosses, and unlockable pools on top, and a wrong curve would be re-tuned twice. The three defects above are also cheapest to fix before content multiplies the surface they affect.
+
+Future guardrail:
+`PLAN.md` remains the authoritative scope source and one milestone plan is current at a time, as REC-024 requires. `AGENTS.md` and `README.md` must be repointed from V0.2 to V0.3 in the V0.3 Phase 1 commit, not before, so no session begins milestone work against an unapproved plan. Every balance value introduced by V0.3 lives in theme-owned tuning data and is asserted by the pacing simulator, so a later re-sequencing does not require another literal hunt through systems and scenes.
+
+Revisit when:
+V0.3 completes, `PLAN.md` scope is intentionally changed again, or the education pivot in `build/EDUCATION_PIVOT.md` is scheduled into a milestone.
+
+### REC-044 — Milestone branches carry an agent prefix
+
+- Status: Accepted
+- Date: 2026-08-15
+- Affects: git workflow, milestone branch naming, pull request creation
+- Blocks: None
+
+Context / observation:
+V0.1 and V0.2 were built with ChatGPT Codex on `codex/v0.1` and `codex/v0.2`, and the `codex/` prefix was treated as a fixed part of the branch convention rather than as a record of which agent produced the work. V0.3 is being built with Claude Code, so the prefix no longer described reality. The V0.3 planning branch was opened as `codex/v0.3` and had to be renamed after its pull request already existed.
+
+Decision / solution:
+Name milestone branches `<agent>/<milestone>`, where the prefix records the coding agent doing the work: `codex/` for ChatGPT Codex, `claude/` for Claude Code. Decide the prefix when the branch is created. A milestone built by more than one agent keeps the prefix of the agent that created the branch and notes the split in the pull request description. The prefix is provenance only; it grants and withholds nothing, and any agent may read, review, or continue any branch. One branch per milestone, one pull request into `main`, and one reviewable commit per numbered phase are all unchanged.
+
+Why:
+Branch history is the cheapest available record of which tool produced which milestone, which matters when reviewing style differences, tracing an unfamiliar decision back to its author, or comparing how the two agents handle the same repository conventions. Encoding it in the branch name costs nothing and needs no separate log.
+
+Future guardrail:
+`AGENTS.md` carries the convention as a milestone-independent section, so it does not go stale when the current milestone plan is repointed. Renaming a branch on GitHub **closes** any pull request that used it as the head — the rename API retargets pull requests whose *base* was renamed, not their head — so the prefix must be chosen before the pull request is opened. V0.3 planning pull request #13 was closed this way and reopened as a new pull request from `claude/v0.3` with the same commit.
+
+Revisit when:
+A third coding agent is used, a milestone is genuinely co-built and the single-prefix rule becomes misleading, or branch protection rules start depending on the prefix.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

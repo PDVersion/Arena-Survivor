@@ -46,7 +46,7 @@ Resolved V0.2 limits:
 - The existing Horde shrine remains supported. Add Greed, Multiplicity, and Duplication as the minimum additional shrine set described by the product plan.
 - Blood Altar is deferred because its Legendary reward depends on rarity work not named in V0.2 scope.
 - Fracture enters as a reusable on-kill skill/upgrade mechanic. A general curse acquisition and reward system remains deferred.
-- V0.2 adds one theme-owned baseline elite treatment. Distinct elite modifiers remain V0.3 scope.
+- V0.2 adds one theme-owned baseline elite treatment. Distinct elite modifiers remain a later-milestone scope; they are V0.4 after the V0.3 re-sequencing recorded in REC-043.
 - V0.2 continues to deepen the starter weapon rather than adding weapons.
 - Exact balance values not specified by the product plan are provisional, theme-owned, tested as data, and recorded in reconciliation when selected.
 
