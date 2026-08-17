@@ -27,7 +27,7 @@ export const director = {
   maxBaselineEliteChance: 0.08,
   waveBurstBase: 15,
   waveBurstGrowth: 15,
-  spawnMargin: 100,
+  spawnMargin: 40,
   roles: [
     // The baseline swarm, thinning as a share as heavier roles arrive.
     {

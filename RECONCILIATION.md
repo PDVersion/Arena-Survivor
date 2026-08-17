@@ -1144,6 +1144,35 @@ Browser tests that click canvas CSS coordinates are now scale-dependent, because
 Revisit when:
 Phase 6 adds time-based scaling on top of the same progress input, endless mode needs the `t > 1` escalation index, or a resolution preset menu lands in Phase 8 settings.
 
+### REC-049 — Spawn radius, enemy speed, and projectile range are one coupled envelope
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 4-10; enemy tuning, weapon range, browser test design
+- Blocks: None
+
+Context / observation:
+Phase 4 derived the spawn ring from the visible view, taking it from a fixed 360 units to roughly 1,018. Enemy move speeds and weapon projectile lifetime had both been tuned against the old 360 ring and were left unchanged, which broke two things at once. Weapon range is `projectileSpeed * projectileLifetimeMs / 1000` = 960 units, so a shot fired the instant an enemy appeared **could not reach it at all**. Approach time for the opening role went from 5.1 s to 14.5 s, so kills happened far from the player and the experience they dropped was unreachable for anyone standing still.
+
+Locally every browser path still passed, slowly. On a hosted runner six failed: the level-up paths never reached level 2 because no experience was collectible, and the contact-damage, piercing, and feedback paths never accumulated enough combat inside their windows. The suite took 1.2 minutes.
+
+Decision / solution:
+Treat spawn radius, enemy move speed, and weapon range as one envelope that must be re-derived together whenever any of them moves. Tighten `spawnMargin` from 100 to 40 (radius 958), rescale move speeds for the real ring (140 / 240 / 90 / 110 against a player speed of 200), and raise `projectileLifetimeMs` from 2,400 to 3,200 so weapon range is 1,280 with headroom over the ring. Exactly one role remains faster than the player, because that role exists to force movement; if everything outran the player, kiting would stop being a strategy.
+
+Health and contact damage keep their product baselines. Only speed changed, and only because it is measured against a distance that changed.
+
+Why:
+The failure was not a slow runner, it was a real gameplay regression that a slow runner exposed. A player standing in an arena where enemies take fifteen seconds to arrive and die out of reach has no game to play. Fixing the envelope also cut the browser suite from 1.2 minutes to 55 seconds, because combat now starts when it should.
+
+Future guardrail:
+`tests/unit/director` asserts the envelope directly for both production themes: weapon range must exceed the spawn ring by at least 20 percent, every role must reach the player within 12 seconds, the opening role within 8, and exactly one role may outrun the player. A tuning edit that breaks the coupling now fails in milliseconds instead of on a hosted runner.
+
+Test-design pitfalls found alongside:
+Two browser paths were wall-clock dependent in ways local runs never showed. One polled a progress threshold on a fixed 30-second timeout, which fails whenever simulation advances slower than real time — the case REC-041 already warned about. The other stalled indefinitely because the run entered `level_up` and waited for a choice the test never made; simulation time stops there, so no wall-clock timeout can ever help. Director paths now use the `noXp` seam to stay out of progression entirely, following the REC-042 precedent of isolating the path under test.
+
+Revisit when:
+The view size or camera zoom changes, weapon range becomes an upgrade, enemy speed scaling arrives in Phase 6, or a role is added whose speed approaches the player's.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

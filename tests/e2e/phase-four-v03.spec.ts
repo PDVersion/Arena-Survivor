@@ -51,10 +51,14 @@ test("ambient enemies never appear inside the visible view", async ({ page }) =>
 });
 
 test("the director gates the roster on run progress and announces each milestone", async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   // A compressed run traverses every unlock for free: the director resolves from
   // normalized progress, so nothing needed rescaling for this test.
-  await waitForPlaying(page, "/?runDurationMs=20000&noContact");
+  //
+  // `noXp` keeps the run out of `level_up`, which otherwise pauses simulation
+  // indefinitely waiting for a choice this test never makes. The director is
+  // what is under test here, not progression.
+  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp");
 
   const opening = await snapshot(page);
   expect(Object.keys(opening?.pacing?.roleWeights ?? {})).toEqual([
@@ -63,14 +67,17 @@ test("the director gates the roster on run progress and announces each milestone
   expect(opening?.pacing?.batchSize).toBe(1);
   expect(opening?.pacing?.eliteChance).toBe(0);
 
+  // Wait on a simulation boundary, not wall time. A slow runner advances
+  // simulation at a fraction of real time, so polling a progress threshold
+  // against a fixed timeout is a CI flake waiting to happen (REC-041).
   await expect
-    .poll(
-      () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.progress ?? 0),
-      { timeout: 30_000 },
-    )
-    .toBeGreaterThan(0.85);
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
+      timeout: 90_000,
+    })
+    .toBe("complete");
 
   const late = await snapshot(page);
+  expect(late?.pacing?.progress).toBe(1);
   // Every declared role is live, the batch has grown, and elites appear without
   // any shrine activation — which a V0.2 run never did.
   expect(Object.keys(late?.pacing?.roleWeights ?? {}).sort()).toEqual(
@@ -91,7 +98,7 @@ test("the director gates the roster on run progress and announces each milestone
 
 test("a restarted run rewinds the director to its opening state", async ({ page }) => {
   test.setTimeout(60_000);
-  await waitForPlaying(page, "/?runDurationMs=8000&noContact");
+  await waitForPlaying(page, "/?runDurationMs=8000&noContact&noXp");
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {

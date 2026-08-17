@@ -28,7 +28,7 @@ export const enemies = [
     // material in real litter counts.
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,
-    moveSpeed: 70,
+    moveSpeed: 140,
     contactDamage: 10,
     contactCooldownMs: 1000,
     radius: 14,
@@ -40,7 +40,7 @@ export const enemies = [
     // Plastic bag — ~20 years. Light, wind-blown, and fragile.
     id: archetypeIds.enemy.fastFragile,
     maxHealth: 11,
-    moveSpeed: 140,
+    moveSpeed: 240,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
@@ -54,7 +54,7 @@ export const enemies = [
     // contact harm of any large enemy.
     id: archetypeIds.enemy.slowDurable,
     maxHealth: 96,
-    moveSpeed: 45,
+    moveSpeed: 90,
     contactDamage: 9,
     contactCooldownMs: 1000,
     radius: 22,
@@ -68,7 +68,7 @@ export const enemies = [
     // itself. Its threat is what it releases, not its own durability.
     id: archetypeIds.enemy.deathSpawner,
     maxHealth: 24,
-    moveSpeed: 55,
+    moveSpeed: 110,
     contactDamage: 12,
     contactCooldownMs: 1000,
     radius: 25,

@@ -120,7 +120,7 @@ export const alternateTheme = defineTheme({
       damage: 10,
       cooldownMs: 1000,
       projectileSpeed: 400,
-      projectileLifetimeMs: 2400,
+      projectileLifetimeMs: 3200,
       projectileRadius: 6,
       projectileCount: 1,
       pierce: 0,
@@ -131,7 +131,7 @@ export const alternateTheme = defineTheme({
     {
       id: archetypeIds.enemy.swarmBasic,
       maxHealth: 20,
-      moveSpeed: 70,
+      moveSpeed: 140,
       contactDamage: 10,
       contactCooldownMs: 1000,
       radius: 14,
@@ -139,9 +139,9 @@ export const alternateTheme = defineTheme({
       geometry: "circle",
       presentationToken: "enemy",
     },
-    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 140, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, geometry: "triangle", presentationToken: "enemyFast" },
-    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 45, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, geometry: "square", presentationToken: "enemyTank" },
-    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 55, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 240, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 90, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, geometry: "square", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 110, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
   ],
   pickups: [
     {
@@ -207,7 +207,7 @@ export const alternateTheme = defineTheme({
       maxBaselineEliteChance: 0.08,
       waveBurstBase: 15,
       waveBurstGrowth: 15,
-      spawnMargin: 100,
+      spawnMargin: 40,
       roles: [
         { enemyId: archetypeIds.enemy.swarmBasic, unlockAt: 0, baseWeight: 100, weightGrowth: -0.65, chaosWeightBias: 0 },
         { enemyId: archetypeIds.enemy.fastFragile, unlockAt: 0.2, baseWeight: 30, weightGrowth: 0, chaosWeightBias: 0.1 },

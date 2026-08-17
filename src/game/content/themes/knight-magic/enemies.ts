@@ -5,7 +5,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,
-    moveSpeed: 70,
+    moveSpeed: 140,
     contactDamage: 10,
     contactCooldownMs: 1000,
     radius: 14,
@@ -16,7 +16,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.fastFragile,
     maxHealth: 10,
-    moveSpeed: 140,
+    moveSpeed: 240,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
@@ -27,7 +27,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.slowDurable,
     maxHealth: 80,
-    moveSpeed: 45,
+    moveSpeed: 90,
     contactDamage: 20,
     contactCooldownMs: 1000,
     radius: 22,
@@ -38,7 +38,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.deathSpawner,
     maxHealth: 50,
-    moveSpeed: 55,
+    moveSpeed: 110,
     contactDamage: 12,
     contactCooldownMs: 1000,
     radius: 25,

@@ -208,3 +208,58 @@ describe("both production themes", () => {
     }
   });
 });
+
+describe("engagement envelope", () => {
+  /**
+   * These three numbers are coupled and were all originally tuned against a
+   * 360-unit spawn ring. When Phase 4 derived the ring from the visible view
+   * instead, the weapon could no longer reach a fresh spawn and enemies took
+   * roughly three times as long to arrive. See REC-049.
+   */
+  const LOGICAL_VIEW = { width: 1600, height: 900 };
+
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("keeps %s able to shoot what it spawns", (_name, theme) => {
+    const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
+      theme.tuning.director.spawnMargin;
+    const weapon = theme.weapons[0]!;
+    const projectileRange = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
+
+    // A shot fired the instant an enemy appears must be able to cross the ring,
+    // with headroom rather than landing exactly on the boundary.
+    expect(projectileRange).toBeGreaterThan(radius * 1.2);
+  });
+
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("keeps %s enemies able to reach the player in a playable time", (_name, theme) => {
+    const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
+      theme.tuning.director.spawnMargin;
+
+    for (const enemy of theme.enemies) {
+      const approachSeconds = radius / enemy.moveSpeed;
+      expect(approachSeconds).toBeLessThan(12);
+    }
+
+    // The opening role must arrive promptly or the run starts with nothing to do.
+    const opening = theme.tuning.director.roles.find((role) => role.unlockAt === 0)!;
+    const openingEnemy = theme.enemies.find((enemy) => enemy.id === opening.enemyId)!;
+    expect(radius / openingEnemy.moveSpeed).toBeLessThan(8);
+  });
+
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("keeps %s player able to outrun all but the fast role", (_name, theme) => {
+    const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
+    const faster = theme.enemies.filter((enemy) => enemy.moveSpeed >= playerSpeed);
+
+    // Exactly one role exists to force movement; if everything outran the
+    // player, kiting would stop being a strategy.
+    expect(faster).toHaveLength(1);
+    expect(faster[0]!.id).toBe(archetypeIds.enemy.fastFragile);
+  });
+});
