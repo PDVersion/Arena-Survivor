@@ -40,11 +40,24 @@ test("hit-stop stays inside its budget under load", async ({ page }) => {
     .toBe("complete");
 
   const terminal = await snapshot(page);
-  // Emphasis must never become a stall: the budget refuses requests, and the
-  // run still completes its full simulated duration.
+  // Emphasis must never become a stall. These are product invariants: the
+  // budget is never exceeded, and the run still performs its full simulated
+  // duration however long that took in wall time.
   expect(terminal?.impact?.hitStopSpentMs).toBeLessThanOrEqual(180);
   expect(terminal?.run?.elapsedMs).toBe(terminal?.run?.durationMs);
-  expect(terminal?.load?.maxFrameMs ?? 0).toBeLessThan(120);
+
+  // Deliberately no frame-time threshold here. Hosted-runner throughput is not
+  // a product invariant (REC-042), and asserting one put a hardware
+  // measurement into the required suite. The rule that actually matters is
+  // conditional and hardware-independent: when frames did go slow, hit-stop
+  // must have refused rather than piling on.
+  if ((terminal?.load?.maxFrameMs ?? 0) > 34) {
+    expect(terminal?.impact?.hitStopDenied ?? 0).toBeGreaterThan(0);
+  }
+  // Granted freezes can never account for more than the budget allows.
+  expect(terminal?.impact?.hitStopSpentMs ?? 0).toBeLessThanOrEqual(
+    (terminal?.impact?.hitStopGranted ?? 0) * 90,
+  );
 });
 
 test("a death records what killed the player", async ({ page }) => {

@@ -37,25 +37,33 @@ test("world pressure escalates on the timer without any shrine", async ({ page }
 });
 
 test("escalation advances in legible steps, not continuously", async ({ page }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(150_000);
   await page.goto("/?runDurationMs=20000&noContact=1&noXp=1&noHazards=1&spawnRadius=320");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
 
   const seen = new Set<number>();
-  for (let sample = 0; sample < 40; sample += 1) {
-    const state = await snapshot(page);
-    if (state?.run?.status !== "playing") break;
-    const step = state?.world?.threatStep ?? -1;
-    // A smooth ramp would produce a new value on nearly every sample; a stepped
+  const record = async (): Promise<number> => {
+    const step = await page.evaluate(
+      () => window.__ARENA_TEST__?.getSnapshot().world?.threatStep ?? -1,
+    );
+    // A smooth ramp would produce a new value on nearly every read; a stepped
     // one produces a small set of integers.
     expect(Number.isInteger(step)).toBe(true);
     expect(step).toBeGreaterThanOrEqual(0);
     expect(step).toBeLessThanOrEqual(time.steps);
     seen.add(step);
-    await page.waitForTimeout(120);
-  }
+    return step;
+  };
+
+  // Wait on the simulation crossing steps rather than on a fixed number of
+  // wall-clock samples: a loaded runner advances simulation slower than real
+  // time, and a sampling window can then miss every boundary (REC-041).
+  await record();
+  await expect
+    .poll(async () => record(), { timeout: 90_000, intervals: [150] })
+    .toBeGreaterThanOrEqual(3);
 
   expect(seen.size).toBeGreaterThan(1);
   expect(seen.size).toBeLessThanOrEqual(time.steps + 1);

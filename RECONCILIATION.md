@@ -1414,6 +1414,9 @@ A budget you cannot evaluate is not a budget. Recording the miss as a modelling 
 Future guardrail:
 `tests/unit/simulation` asserts the DPS budget on the spread build, monotonically improving time to kill, no unkillable role in any build at any point, that a strong build out-levels an average one, and that a ten-minute run still works from five-minute coefficients.
 
+Repeat of a recorded lesson:
+The Phase 9 hit-stop path shipped with `maxFrameMs < 120` in the required suite and failed on a hosted runner at 146-150 ms while every actual invariant passed. REC-042 already established that hosted-runner throughput is not a product invariant and must not gate pull requests; this put a hardware measurement back into the required path. The threshold is removed. Frame time is now only an *input* to a conditional rule — when frames did go slow, hit-stop must have refused rather than piling on — which tests the behaviour instead of the machine. An audit of the remaining suite found no other threshold; the surviving frame assertions are `> 0` liveness checks inside the stress path. Any future frame-time budget belongs in the manual stress workflow, never in required CI.
+
 Revisit when:
 Weapon slots change how damage stacks, a boss needs its own time-to-kill target, or armour appears on more roles.
 
