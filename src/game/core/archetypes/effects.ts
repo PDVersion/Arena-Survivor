@@ -1,4 +1,5 @@
 export const upgradeStatTargets = [
+  "player.luck",
   "player.maxHealth",
   "player.moveSpeed",
   "player.pickupRadius",
@@ -17,10 +18,22 @@ export interface AddStatEffect {
   readonly value: number;
 }
 
-export interface EnableSkillEffect {
-  readonly kind: "skill.enable";
+/** Raises a skill by one level, capped by the skill's `maxLevel`. */
+export interface LevelSkillEffect {
+  readonly kind: "skill.level";
   readonly skillId: SkillId;
 }
 
-export type UpgradeEffect = AddStatEffect | EnableSkillEffect;
+/**
+ * A deliberately dangerous choice: raises world pressure in exchange for
+ * reward. The clearest expression of "difficulty should be player-controlled".
+ */
+export interface WorldModifyEffect {
+  readonly kind: "world.modify";
+  readonly chaosIncrease?: number;
+  readonly enemySpawnMultiplier?: number;
+  readonly xpMultiplier?: number;
+}
+
+export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect;
 import type { SkillId } from "./ids";

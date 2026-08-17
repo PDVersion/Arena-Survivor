@@ -45,14 +45,26 @@ export function createWorldState(): WorldState {
   return Object.freeze({ chaos: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, shrineActivations: Object.freeze({}) });
 }
 
+/** World pressure from any source. Shrines and dangerous upgrades share it. */
+export function applyWorldModifier(
+  state: WorldState,
+  choice: Readonly<{ chaosIncrease: number; enemySpawnMultiplier: number; xpMultiplier: number }>,
+): WorldState {
+  return Object.freeze({
+    ...state,
+    chaos: state.chaos + choice.chaosIncrease,
+    enemySpawnMultiplier: state.enemySpawnMultiplier * choice.enemySpawnMultiplier,
+    xpMultiplier: state.xpMultiplier * choice.xpMultiplier,
+  });
+}
+
 export function applyWorldChoice(
   state: WorldState,
   choice: Readonly<{ shrineId: ShrineId; chaosIncrease: number; enemySpawnMultiplier: number; xpMultiplier: number }>,
 ): WorldState {
+  const next = applyWorldModifier(state, choice);
   return Object.freeze({
-    chaos: state.chaos + choice.chaosIncrease,
-    enemySpawnMultiplier: state.enemySpawnMultiplier * choice.enemySpawnMultiplier,
-    xpMultiplier: state.xpMultiplier * choice.xpMultiplier,
+    ...next,
     shrineActivations: Object.freeze({
       ...state.shrineActivations,
       [choice.shrineId]: (state.shrineActivations[choice.shrineId] ?? 0) + 1,

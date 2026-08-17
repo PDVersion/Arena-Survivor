@@ -46,6 +46,8 @@ export const archetypeIds = {
     fracture: "upgrade.fracture",
     bloodlust: "upgrade.bloodlust",
     chainReaction: "upgrade.chain_reaction",
+    worldSurge: "upgrade.world_surge",
+    worldBrittle: "upgrade.world_brittle",
   },
 } as const;
 

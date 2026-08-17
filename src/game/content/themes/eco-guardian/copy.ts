@@ -170,5 +170,13 @@ export const copy = {
       name: "Cascade",
       description: "Compaction clearances can trigger further compaction.",
     },
+    [archetypeIds.upgrade.worldSurge]: {
+      name: "Single-Use Surge",
+      description: "Far more waste arrives, and clearing it is worth far more.",
+    },
+    [archetypeIds.upgrade.worldBrittle]: {
+      name: "Brittle World",
+      description: "Double your output, and let the site get much worse.",
+    },
   },
 } as const satisfies ThemeCopy;

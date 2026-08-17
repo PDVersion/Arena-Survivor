@@ -90,6 +90,18 @@ import {
 import { applyWorldChoice, createWorldState, selectWorldModifiers } from "../systems/chaos/world-modifiers";
 import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
 import { shouldSpawnElite } from "../systems/elites/elites";
+import {
+  chainScaleAtDepth,
+  explosionDamage,
+  findSkillEffect,
+  resolveBloodlust,
+  resolveChain,
+  resolveExplosion,
+  resolveFractureChance,
+  resolveMomentum,
+  skillLevel,
+  skillMaxLevel,
+} from "../systems/skills/resolve-skill";
 
 // Large enough that a full off-screen spawn ring exists anywhere in the arena,
 // and large enough that shrine placement is a real traversal decision.
@@ -378,24 +390,24 @@ export class RunScene extends Phaser.Scene {
           ...this.runState.weaponModifiers,
           pierce: testPierce,
         },
-        activeSkillIds: testSkillEnabled("compoundBuild")
-          ? [
-              archetypeIds.skill.piercingMomentum,
-              archetypeIds.skill.onKillExplosion,
-              archetypeIds.skill.fracture,
-              archetypeIds.skill.bloodlust,
-              archetypeIds.skill.chainReaction,
-            ]
+        skillLevels: testSkillEnabled("compoundBuild")
+          ? {
+              [archetypeIds.skill.piercingMomentum]: 3,
+              [archetypeIds.skill.onKillExplosion]: 3,
+              [archetypeIds.skill.fracture]: 2,
+              [archetypeIds.skill.bloodlust]: 2,
+              [archetypeIds.skill.chainReaction]: 2,
+            }
           : testSkillEnabled("interactions")
-          ? [
-              archetypeIds.skill.onKillExplosion,
-              archetypeIds.skill.fracture,
-              archetypeIds.skill.bloodlust,
-              archetypeIds.skill.chainReaction,
-            ]
+          ? {
+              [archetypeIds.skill.onKillExplosion]: 2,
+              [archetypeIds.skill.fracture]: 2,
+              [archetypeIds.skill.bloodlust]: 2,
+              [archetypeIds.skill.chainReaction]: 2,
+            }
           : testSkillEnabled("piercingMomentum")
-          ? [archetypeIds.skill.piercingMomentum]
-          : this.runState.activeSkillIds,
+          ? { [archetypeIds.skill.piercingMomentum]: 1 }
+          : this.runState.skillLevels,
       };
     }
     this.runState = observeRunCrit(this.runState);
@@ -1339,11 +1351,14 @@ export class RunScene extends Phaser.Scene {
       critDamage: this.weaponDefinition.critDamage ?? this.runState.player.stats.critDamage,
       random: Math.random,
     });
-    const momentum = activeTheme.skills
-      .find((skill) => skill.id === archetypeIds.skill.piercingMomentum)
-      ?.effects?.find((effect) => effect.kind === "piercing_momentum");
-    const momentumPerHit = this.runState.activeSkillIds.includes(archetypeIds.skill.piercingMomentum)
-      ? momentum?.damagePerUniqueHit ?? 0
+    const momentumEffect = findSkillEffect(
+      activeTheme.skills,
+      archetypeIds.skill.piercingMomentum,
+      "piercing_momentum",
+    );
+    const momentumLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.piercingMomentum);
+    const momentumPerHit = momentumEffect && momentumLevel > 0
+      ? resolveMomentum(momentumEffect, momentumLevel)
       : 0;
     const projectileCount = Math.max(
       1,
@@ -1522,18 +1537,34 @@ export class RunScene extends Phaser.Scene {
     damageSource: DamageSource,
   ): void {
     if (!this.runState) return;
-    const explosion = activeTheme.skills
-      .find((skill) => skill.id === archetypeIds.skill.onKillExplosion)
-      ?.effects?.find((effect) => effect.kind === "on_kill_explosion");
-    const explosionEnabled = this.runState.activeSkillIds.includes(archetypeIds.skill.onKillExplosion);
-    const chainEnabled = this.runState.activeSkillIds.includes(archetypeIds.skill.chainReaction);
+    const explosionEffect = findSkillEffect(
+      activeTheme.skills,
+      archetypeIds.skill.onKillExplosion,
+      "on_kill_explosion",
+    );
+    const explosionLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.onKillExplosion);
+    const chainEffect = findSkillEffect(
+      activeTheme.skills,
+      archetypeIds.skill.chainReaction,
+      "chain_reaction",
+    );
+    const chainLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.chainReaction);
+    const chain = chainEffect && chainLevel > 0 ? resolveChain(chainEffect, chainLevel) : undefined;
+    const depth = damageSource === "direct" ? 0 : damageSource === "explosion" ? 1 : 2;
+
     if (
-      explosion &&
-      shouldExplodeOnKill(damageSource, explosionEnabled, chainEnabled) &&
+      explosionEffect &&
+      explosionLevel > 0 &&
+      shouldExplodeOnKill(damageSource, true, chain !== undefined) &&
+      // An explicit depth limit keeps a 300-enemy chain finite and measurable.
+      (depth === 0 || (chain !== undefined && depth <= chain.maxDepth)) &&
       this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.onKillExplosion)
     ) {
+      const resolved = resolveExplosion(explosionEffect, explosionLevel);
+      const scale = chain ? chainScaleAtDepth(chain, depth) : { damage: 1, radius: 1 };
+      // Blast damage scales from what died, so target choice becomes the play.
+      const damage = explosionDamage(resolved, enemy.maxHealth) * scale.damage;
       this.eventSequence += 1;
-      const depth = damageSource === "direct" ? 0 : damageSource === "explosion" ? 1 : 2;
       this.eventQueue.enqueue({
         eventId: `explosion-${this.eventSequence}`,
         kind: "effect.explosion",
@@ -1544,17 +1575,22 @@ export class RunScene extends Phaser.Scene {
           parentEventId: deathEventId,
           effectId: archetypeIds.skill.onKillExplosion,
         },
-        payload: { x: enemy.x, y: enemy.y, radius: explosion.radius, damage: explosion.damage, depth },
+        payload: {
+          x: enemy.x,
+          y: enemy.y,
+          radius: resolved.radius * scale.radius,
+          damage,
+          depth,
+        },
       });
     }
 
-    const fracture = activeTheme.skills
-      .find((skill) => skill.id === archetypeIds.skill.fracture)
-      ?.effects?.find((effect) => effect.kind === "fracture");
+    const fracture = findSkillEffect(activeTheme.skills, archetypeIds.skill.fracture, "fracture");
+    const fractureLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.fracture);
     if (
       fracture &&
-      this.runState.activeSkillIds.includes(archetypeIds.skill.fracture) &&
-      shouldFracture(fracture.chance, this.effectRandom) &&
+      fractureLevel > 0 &&
+      shouldFracture(resolveFractureChance(fracture, fractureLevel), this.effectRandom) &&
       this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.fracture)
     ) {
       for (let index = 0; index < fracture.childCount; index += 1) {
@@ -1663,14 +1699,17 @@ export class RunScene extends Phaser.Scene {
 
   private updateBloodlust(): void {
     if (!this.runState) return;
-    const bloodlust = activeTheme.skills
-      .find((skill) => skill.id === archetypeIds.skill.bloodlust)
-      ?.effects?.find((effect) => effect.kind === "bloodlust");
-    if (!bloodlust || !this.runState.activeSkillIds.includes(archetypeIds.skill.bloodlust)) {
+    const bloodlust = findSkillEffect(activeTheme.skills, archetypeIds.skill.bloodlust, "bloodlust");
+    const level = skillLevel(this.runState.skillLevels, archetypeIds.skill.bloodlust);
+    if (!bloodlust || level === 0) {
       this.bloodlustAttackSpeedBonus = 0;
       return;
     }
-    const selected = selectBloodlust(this.runState.statistics.recentKillTimesMs, this.runState.elapsedMs, bloodlust);
+    const selected = selectBloodlust(
+      this.runState.statistics.recentKillTimesMs,
+      this.runState.elapsedMs,
+      resolveBloodlust(bloodlust, level),
+    );
     this.bloodlustAttackSpeedBonus = selected.attackSpeedBonus;
   }
 
@@ -1737,7 +1776,10 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || !this.levelUpUi || this.runState.progression.pendingChoices < 1) return;
     this.player?.stop();
     this.physics.world.pause();
-    this.currentChoices = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom);
+    this.currentChoices = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom, {
+      selectedUpgradeIds: this.runState.selectedUpgradeIds,
+      luck: this.runState.player.stats.luck,
+    });
     this.levelUpUi.show(this.currentChoices, (choice) => this.chooseUpgrade(choice));
   }
 
@@ -1754,7 +1796,10 @@ export class RunScene extends Phaser.Scene {
 
   private chooseUpgrade(choice: UpgradeDefinition): void {
     if (!this.runState || this.runState.status !== "level_up") return;
-    this.runState = applyRunUpgrade(this.runState, choice);
+    this.runState = applyRunUpgrade(this.runState, choice, (skillId) =>
+      skillMaxLevel(activeTheme.skills, skillId),
+    );
+    this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {
       this.beginLevelUpChoice();
     } else {
@@ -2039,7 +2084,7 @@ export class RunScene extends Phaser.Scene {
         pickupsCollected: this.pickupsCollected,
         choiceIds: this.currentChoices.map((choice) => choice.id),
         selectedUpgradeIds: this.runState?.selectedUpgradeIds ?? [],
-        activeSkillIds: this.runState?.activeSkillIds ?? [],
+        skillLevels: { ...(this.runState?.skillLevels ?? {}) },
         pierceBonus: this.runState?.weaponModifiers.pierce ?? 0,
         projectileCountBonus: this.runState?.weaponModifiers.projectileCount ?? 0,
       },

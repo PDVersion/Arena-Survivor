@@ -97,15 +97,56 @@ export interface ThemeTokens {
 
 export interface SkillDefinition {
   readonly id: SkillId;
+  /** Taking the upgrade again raises the level until this cap. */
+  readonly maxLevel: number;
   readonly effects?: readonly SkillEffectDefinition[];
 }
 
+/**
+ * Skill effects scale with level.
+ *
+ * Every `*PerLevel` field is the increment applied for each level past the
+ * first, so level 1 always reads as the base value. Before V0.3 Phase 7 a skill
+ * was a boolean and re-picking it was a completely wasted level-up.
+ */
 export type SkillEffectDefinition =
-  | Readonly<{ kind: "piercing_momentum"; damagePerUniqueHit: number }>
-  | Readonly<{ kind: "on_kill_explosion"; radius: number; damage: number }>
-  | Readonly<{ kind: "fracture"; chance: number; childEnemyId: EnemyId; childCount: number; rewardMultiplier: number }>
-  | Readonly<{ kind: "bloodlust"; windowMs: number; killsPerStep: number; attackSpeedPerStep: number }>
-  | Readonly<{ kind: "chain_reaction" }>;
+  | Readonly<{ kind: "piercing_momentum"; damagePerUniqueHit: number; perLevel: number }>
+  | Readonly<{
+      kind: "on_kill_explosion";
+      baseRadius: number;
+      radiusPerLevel: number;
+      flatDamage: number;
+      flatPerLevel: number;
+      /** Share of the victim's effective max health added to the blast. */
+      victimHealthShare: number;
+      sharePerLevel: number;
+      maxShare: number;
+    }>
+  | Readonly<{
+      kind: "fracture";
+      chance: number;
+      chancePerLevel: number;
+      childEnemyId: EnemyId;
+      childCount: number;
+      rewardMultiplier: number;
+    }>
+  | Readonly<{
+      kind: "bloodlust";
+      windowMs: number;
+      killsPerStep: number;
+      attackSpeedPerStep: number;
+      attackSpeedPerLevel: number;
+    }>
+  | Readonly<{
+      kind: "chain_reaction";
+      /** Explicit depth limit, so a 300-enemy chain stays finite and measurable. */
+      baseDepth: number;
+      depthPerLevel: number;
+      damageFalloff: number;
+      falloffPerLevel: number;
+      radiusFalloff: number;
+      radiusFalloffPerLevel: number;
+    }>;
 
 export interface EliteDefinition {
   readonly id: EliteId;
@@ -193,10 +234,29 @@ export interface PickupDefinition {
   readonly presentationToken: keyof Pick<ThemePalette, "pickup">;
 }
 
+export const upgradeRarities = ["common", "rare", "epic"] as const;
+export type UpgradeRarity = (typeof upgradeRarities)[number];
+
+/** Used to keep one draw from being three of the same thing. */
+export const upgradeCategories = [
+  "offense",
+  "critical",
+  "projectile",
+  "survival",
+  "utility",
+  "skill",
+  "world",
+] as const;
+export type UpgradeCategory = (typeof upgradeCategories)[number];
+
 export interface UpgradeDefinition {
   readonly id: UpgradeId;
   readonly effects: readonly UpgradeEffect[];
-  readonly presentationToken: keyof Pick<ThemePalette, "accent">;
+  /** A maxed upgrade leaves the pool, so it can never be offered as a no-op. */
+  readonly maxLevel: number;
+  readonly rarity: UpgradeRarity;
+  readonly category: UpgradeCategory;
+  readonly presentationToken: keyof Pick<ThemePalette, "accent" | "critical" | "overcritical" | "shrine">;
 }
 
 export interface ShrineDefinition {

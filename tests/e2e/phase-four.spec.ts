@@ -80,10 +80,23 @@ test("choosing an upgrade applies its stable effect and resumes safely", async (
     case "upgrade.on_kill_explosion":
     case "upgrade.fracture":
     case "upgrade.bloodlust":
-    case "upgrade.chain_reaction":
-      expect(after?.progression?.activeSkillIds.length).toBeGreaterThan(
-        before?.progression?.activeSkillIds.length ?? 0,
+    case "upgrade.chain_reaction": {
+      // Skills level rather than toggling, so the total must rise every time.
+      const total = (levels: Readonly<Record<string, number>> | undefined): number =>
+        Object.values(levels ?? {}).reduce((sum, value) => sum + value, 0);
+      expect(total(after?.progression?.skillLevels)).toBeGreaterThan(
+        total(before?.progression?.skillLevels),
       );
+      break;
+    }
+    case "upgrade.world_surge":
+    case "upgrade.world_brittle":
+      // A dangerous choice must actually raise world pressure.
+      expect(
+        (after?.world?.enemySpawnMultiplier ?? 0) > (before?.world?.enemySpawnMultiplier ?? 0) ||
+          (after?.world?.chaos ?? 0) > (before?.world?.chaos ?? 0) ||
+          (after?.player?.damageBonus ?? 0) > (before?.player?.damageBonus ?? 0),
+      ).toBe(true);
       break;
     default:
       throw new Error(`Unexpected upgrade choice: ${chosenId}`);

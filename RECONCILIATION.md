@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 6 complete — Phase 7 next**
+- Active phase: **Phase 7 complete — Phase 8 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1301,6 +1301,35 @@ Validation requires a positive telegraph on every hazard, kind-appropriate field
 
 Revisit when:
 Phase 10's time-to-kill table evaluates whether the conservative coefficients should rise, the HUD surfaces the threat step in Phase 8, or a fourth hazard is proposed.
+
+### REC-054 — Skills level, and no upgrade offer can be a no-op
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 8-10; skills, upgrades, world model, run state
+- Blocks: None
+
+Context / observation:
+A skill was a boolean. `selectUpgradeChoices` drew uniformly from the whole pool with no filtering, so re-picking an already-enabled skill consumed a level-up and did nothing — the single most frustrating thing in the V0.2 build. On-kill detonation was one fixed 96-unit, 15-damage blast forever, and chains were bounded only by exact-once claims rather than a declared depth.
+
+Decision / solution:
+`skill.enable` becomes `skill.level`, and `RunState` carries `skillLevels` instead of an id list. Every skill declares `maxLevel` and every effect declares per-level increments, resolved by pure functions that clamp their own level so a caller can pass a stored value without checking it. Level 1 always returns the base values, which keeps theme data readable as "what this does when taken".
+
+Detonation damage becomes `flat + victimEffectiveMaxHealth * share`, so clearing a durable target is worth far more than popping a light one and Phase 6's health scaling feeds the effect automatically. Level 1 is deliberately weaker than the V0.2 fixed blast — 44 units against 96 — reaching 128 at the cap. Chains gain an explicit depth limit with damage and radius falloff, which keeps a 300-enemy chain finite, readable, and measurable.
+
+The pool gains `maxLevel`, `rarity`, and `category`. A maxed upgrade leaves the pool, selection is weighted by rarity with `luck` raising only the rarer tiers, and a draw avoids three of one category so the player always has a real decision. Two dangerous choices land as ordinary upgrades through a new `world.modify` effect, sharing the shrine world model: one buys spawn pressure and reward, the other buys damage with Chaos.
+
+Why:
+Levels turn every repeat pick into progress, which removes the wasted-pick defect by construction rather than by filtering it out afterwards. Scaling detonation from the victim makes target choice the play, which is the interaction the design asked for.
+
+Defect found by the new validation:
+Requiring an upgrade's `maxLevel` to stay within the cap of the skill it raises immediately caught the alternate fixture declaring caps above two skills' limits. Without the rule those last levels would have silently done nothing — the wasted-pick defect in a new shape.
+
+Future guardrail:
+Validation rejects an upgrade whose cap exceeds its skill's, a world effect that changes nothing, an unsupported rarity or category, and chain falloff at or above one, which would make chains infinite. Unit tests assert the published detonation and chain tables exactly, that a maxed upgrade never appears in 60 draws, that no draw is three of one category, that luck shifts rarity without excluding commons, and that level 1 returns base values for every scaled effect.
+
+Revisit when:
+Phase 8 surfaces levels on cards, Phase 10 wires `luck` into elite and fracture rolls, or weapon slots in V0.4 make skills per-weapon.
 
 ## Open questions to reconcile during implementation
 

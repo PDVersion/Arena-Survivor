@@ -1,6 +1,8 @@
-import type { CharacterId, SkillId, UpgradeId } from "../core/archetypes/ids";
+import type { CharacterId, UpgradeId } from "../core/archetypes/ids";
+import type { SkillLevels } from "../systems/skills/resolve-skill";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 import type { UpgradeDefinition } from "../core/archetypes/contracts";
+import type { SkillId } from "../core/archetypes/ids";
 import {
   applyUpgrade,
   createWeaponStatModifiers,
@@ -50,7 +52,7 @@ export interface RunState {
   readonly progression: ProgressionState;
   readonly weaponModifiers: WeaponStatModifiers;
   readonly selectedUpgradeIds: readonly UpgradeId[];
-  readonly activeSkillIds: readonly SkillId[];
+  readonly skillLevels: SkillLevels;
   readonly world: WorldState;
   readonly statistics: RunStatistics;
   /**
@@ -95,7 +97,7 @@ export function createRunState(options: CreateRunOptions): RunState {
     progression: createProgressionState(xpCurve),
     weaponModifiers: createWeaponStatModifiers(),
     selectedUpgradeIds: [],
-    activeSkillIds: [],
+    skillLevels: Object.freeze({}),
     world: createWorldState(),
     statistics: createRunStatistics(options.baseStats.critChance),
   };
@@ -169,9 +171,13 @@ export function awardRunExperience(state: RunState, amount: number): RunState {
   };
 }
 
-export function applyRunUpgrade(state: RunState, upgrade: UpgradeDefinition): RunState {
+export function applyRunUpgrade(
+  state: RunState,
+  upgrade: UpgradeDefinition,
+  skillMaxLevel?: (skillId: SkillId) => number,
+): RunState {
   if (state.status !== "level_up" || state.progression.pendingChoices < 1) return state;
-  const upgraded = applyUpgrade(state, upgrade);
+  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel);
   const progression = consumePendingChoice(upgraded.progression);
   const next: RunState = {
     ...upgraded,

@@ -131,5 +131,13 @@ export const copy = {
     [archetypeIds.upgrade.fracture]: { name: "Fracture", description: "Some defeated foes split into two fragile enemies." },
     [archetypeIds.upgrade.bloodlust]: { name: "Bloodlust", description: "Recent kills increase attack speed." },
     [archetypeIds.upgrade.chainReaction]: { name: "Chain Reaction", description: "Explosion kills can create further explosions." },
+    [archetypeIds.upgrade.worldSurge]: {
+      name: "Swarming",
+      description: "Far more foes arrive, and defeating them is worth far more.",
+    },
+    [archetypeIds.upgrade.worldBrittle]: {
+      name: "Glass World",
+      description: "Double your power, and let the arena turn far deadlier.",
+    },
   },
 } as const satisfies ThemeCopy;

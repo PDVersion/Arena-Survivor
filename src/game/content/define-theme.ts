@@ -1,6 +1,6 @@
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
-import type { ThemeManifest } from "../core/archetypes/contracts";
+import { upgradeCategories, upgradeRarities, type ThemeManifest } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
 
@@ -269,9 +269,24 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
-        if (effect.kind === "skill.enable") {
+        if (effect.kind === "skill.level") {
           if (!Object.values(archetypeIds.skill).includes(effect.skillId)) {
             issues.push(`${upgrade.id} references unsupported skill: ${String(effect.skillId)}`);
+          }
+          continue;
+        }
+        if (effect.kind === "world.modify") {
+          // A world upgrade that changes nothing is a wasted level-up.
+          const changesSomething =
+            (effect.chaosIncrease ?? 0) > 0 ||
+            (effect.enemySpawnMultiplier ?? 1) !== 1 ||
+            (effect.xpMultiplier ?? 1) !== 1;
+          if (!changesSomething) issues.push(`${upgrade.id} world effect changes nothing`);
+          for (const [key, value] of Object.entries(effect)) {
+            if (key === "kind") continue;
+            if (!Number.isFinite(value as number) || (value as number) < 0) {
+              issues.push(`${upgrade.id} world ${key} cannot be negative`);
+            }
           }
           continue;
         }
@@ -289,6 +304,15 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (!(upgrade.presentationToken in theme.tokens.palette)) {
       issues.push(`${upgrade.id} references missing presentation token: ${upgrade.presentationToken}`);
+    }
+    if (!Number.isInteger(upgrade.maxLevel) || upgrade.maxLevel < 1) {
+      issues.push(`${upgrade.id} maxLevel must be a positive integer`);
+    }
+    if (!upgradeRarities.includes(upgrade.rarity)) {
+      issues.push(`${upgrade.id} has an unsupported rarity: ${String(upgrade.rarity)}`);
+    }
+    if (!upgradeCategories.includes(upgrade.category)) {
+      issues.push(`${upgrade.id} has an unsupported category: ${String(upgrade.category)}`);
     }
   }
   for (const requiredId of Object.values(archetypeIds.upgrade)) {
@@ -330,16 +354,35 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const skill of skills) {
     if (skillIds.has(skill.id)) issues.push(`duplicate skill id: ${skill.id}`);
     skillIds.add(skill.id);
+    if (!Number.isInteger(skill.maxLevel) || skill.maxLevel < 1) {
+      issues.push(`${skill.id} maxLevel must be a positive integer`);
+    }
     for (const effect of skill.effects ?? []) {
-      if (effect.kind === "piercing_momentum" && (!Number.isFinite(effect.damagePerUniqueHit) || effect.damagePerUniqueHit <= 0)) {
-        issues.push(`${skill.id} damagePerUniqueHit must be greater than zero`);
+      if (effect.kind === "piercing_momentum") {
+        if (!Number.isFinite(effect.damagePerUniqueHit) || effect.damagePerUniqueHit <= 0) {
+          issues.push(`${skill.id} damagePerUniqueHit must be greater than zero`);
+        }
+        if (!Number.isFinite(effect.perLevel) || effect.perLevel < 0) {
+          issues.push(`${skill.id} momentum perLevel cannot be negative`);
+        }
       }
-      if (effect.kind === "on_kill_explosion" &&
-        (!Number.isFinite(effect.radius) || effect.radius <= 0 || !Number.isFinite(effect.damage) || effect.damage <= 0)) {
-        issues.push(`${skill.id} explosion radius and damage must be greater than zero`);
+      if (effect.kind === "on_kill_explosion") {
+        if (!Number.isFinite(effect.baseRadius) || effect.baseRadius <= 0) {
+          issues.push(`${skill.id} explosion baseRadius must be greater than zero`);
+        }
+        if (!Number.isFinite(effect.radiusPerLevel) || effect.radiusPerLevel < 0) {
+          issues.push(`${skill.id} explosion radiusPerLevel cannot be negative`);
+        }
+        if (!Number.isFinite(effect.victimHealthShare) || effect.victimHealthShare < 0) {
+          issues.push(`${skill.id} explosion victimHealthShare cannot be negative`);
+        }
+        if (!Number.isFinite(effect.maxShare) || effect.maxShare < effect.victimHealthShare) {
+          issues.push(`${skill.id} explosion maxShare cannot be below its base share`);
+        }
       }
       if (effect.kind === "fracture") {
         if (!Number.isFinite(effect.chance) || effect.chance < 0 || effect.chance > 1) issues.push(`${skill.id} fracture chance must be between zero and one`);
+        if (!Number.isFinite(effect.chancePerLevel) || effect.chancePerLevel < 0) issues.push(`${skill.id} fracture chancePerLevel cannot be negative`);
         if (!Number.isInteger(effect.childCount) || effect.childCount < 1) issues.push(`${skill.id} fracture childCount must be a positive integer`);
         if (!enemyIds.has(effect.childEnemyId)) issues.push(`${skill.id} references missing fracture enemy: ${effect.childEnemyId}`);
         if (!Number.isFinite(effect.rewardMultiplier) || effect.rewardMultiplier < 0) issues.push(`${skill.id} fracture rewardMultiplier cannot be negative`);
@@ -348,10 +391,32 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         (!Number.isFinite(effect.windowMs) || effect.windowMs <= 0 || !Number.isInteger(effect.killsPerStep) || effect.killsPerStep < 1 || !Number.isFinite(effect.attackSpeedPerStep) || effect.attackSpeedPerStep <= 0)) {
         issues.push(`${skill.id} Bloodlust values must be positive`);
       }
+      if (effect.kind === "chain_reaction") {
+        if (!Number.isInteger(effect.baseDepth) || effect.baseDepth < 1) {
+          issues.push(`${skill.id} chain baseDepth must be a positive integer`);
+        }
+        for (const [key, value] of [["damageFalloff", effect.damageFalloff], ["radiusFalloff", effect.radiusFalloff]] as const) {
+          if (!Number.isFinite(value) || value <= 0 || value > 1) {
+            issues.push(`${skill.id} chain ${key} must be within (0, 1]`);
+          }
+        }
+      }
     }
   }
   for (const requiredId of Object.values(archetypeIds.skill)) {
     if (!skillIds.has(requiredId)) issues.push(`missing required skill: ${requiredId}`);
+  }
+
+  // A skill upgrade must not out-run the skill it raises, or its last levels
+  // would silently do nothing — the same wasted-pick defect in a new shape.
+  for (const upgrade of upgrades) {
+    for (const effect of upgrade.effects) {
+      if (effect.kind !== "skill.level") continue;
+      const skill = skills.find((candidate) => candidate.id === effect.skillId);
+      if (skill && upgrade.maxLevel > skill.maxLevel) {
+        issues.push(`${upgrade.id} maxLevel exceeds the cap of ${effect.skillId}`);
+      }
+    }
   }
 
   const eliteIdsFound = new Set<string>();

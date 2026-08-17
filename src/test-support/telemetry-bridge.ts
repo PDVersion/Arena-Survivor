@@ -38,7 +38,7 @@ export interface ArenaTestSnapshot {
     pickupsCollected: number;
     choiceIds: readonly string[];
     selectedUpgradeIds: readonly string[];
-    activeSkillIds: readonly string[];
+    skillLevels: Readonly<Record<string, number>>;
     pierceBonus: number;
     projectileCountBonus: number;
   }>;
