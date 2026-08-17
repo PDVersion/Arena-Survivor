@@ -504,6 +504,54 @@ function validateTuning(
     }
   }
 
+  const bodies = tuning.bodies;
+  if (!bodies) {
+    issues.push("tuning.bodies is required");
+  } else {
+    if (!Number.isFinite(bodies.cellSize) || bodies.cellSize <= 0) {
+      issues.push("tuning.bodies.cellSize must be greater than zero");
+    }
+    if (!Number.isInteger(bodies.maxNeighbours) || bodies.maxNeighbours < 1) {
+      issues.push("tuning.bodies.maxNeighbours must be a positive integer");
+    }
+    if (!Number.isFinite(bodies.maxDisplacement) || bodies.maxDisplacement <= 0) {
+      issues.push("tuning.bodies.maxDisplacement must be greater than zero");
+    }
+    if (!Number.isFinite(bodies.eliteMassMultiplier) || bodies.eliteMassMultiplier < 1) {
+      issues.push("tuning.bodies.eliteMassMultiplier must be at least one");
+    }
+    if (!Number.isFinite(bodies.contactKnockback) || bodies.contactKnockback < 0) {
+      issues.push("tuning.bodies.contactKnockback cannot be negative");
+    }
+    const seenBodies = new Set<string>();
+    let largestSeparation = 0;
+    for (const role of bodies.roles ?? []) {
+      if (seenBodies.has(role.enemyId)) issues.push(`duplicate body role: ${role.enemyId}`);
+      seenBodies.add(role.enemyId);
+      if (!enemyIds.has(role.enemyId)) {
+        issues.push(`tuning.bodies references missing enemy: ${role.enemyId}`);
+      }
+      if (!Number.isFinite(role.separationScale) || role.separationScale <= 0 || role.separationScale > 1) {
+        issues.push(`${role.enemyId} separationScale must be within (0, 1]`);
+      }
+      if (!Number.isFinite(role.mass) || role.mass <= 0) {
+        issues.push(`${role.enemyId} mass must be greater than zero`);
+      }
+      const definition = enemies.find((enemy) => enemy.id === role.enemyId);
+      if (definition && Number.isFinite(role.separationScale)) {
+        largestSeparation = Math.max(largestSeparation, definition.radius * role.separationScale);
+      }
+    }
+    for (const enemy of enemies) {
+      if (!seenBodies.has(enemy.id)) issues.push(`${enemy.id} is missing body tuning`);
+    }
+    // A cell smaller than the largest body's diameter would let overlapping
+    // pairs fall in non-adjacent cells and never be resolved.
+    if (Number.isFinite(bodies.cellSize) && bodies.cellSize < largestSeparation * 2) {
+      issues.push("tuning.bodies.cellSize must exceed twice the largest separation radius");
+    }
+  }
+
   const chaos = tuning.difficulty?.chaos;
   if (!chaos) {
     issues.push("tuning.difficulty.chaos is required");

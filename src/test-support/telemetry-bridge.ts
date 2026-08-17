@@ -97,6 +97,18 @@ export interface ArenaTestSnapshot {
     upgradeCounts: Readonly<Record<string, number>>;
     summaryUpgrades: readonly string[];
   }>;
+  readonly crowd?: Readonly<{
+    indexed: number;
+    pairChecks: number;
+    /** Peak per-frame candidate visits; the cost signal for the 300-enemy gate. */
+    pairChecksHighWater: number;
+    adjustments: number;
+    solidResolutions: number;
+    contactShoves: number;
+    weaponShoves: number;
+    /** Enemy pairs sharing a position; separation exists to keep this at zero. */
+    coincidentPairs: number;
+  }>;
   readonly view?: Readonly<{
     /** Constant logical world area, identical at every window size. */
     logicalWidth: number;

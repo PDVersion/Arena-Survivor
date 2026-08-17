@@ -51,6 +51,12 @@ import {
   type DirectorPlan,
 } from "../systems/director/spawn-director";
 import type { WaveMovement } from "../core/archetypes/tuning";
+import { SpatialHash } from "../systems/spatial/spatial-hash";
+import {
+  knockbackDisplacement,
+  resolvePlayerAgainstSolids,
+  separateCrowd,
+} from "../systems/separation/crowd-separation";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
@@ -70,7 +76,6 @@ import {
   selectBloodlust,
   shouldExplodeOnKill,
   shouldFracture,
-  targetsWithinRadius,
 } from "../systems/effects/on-kill-effects";
 import { applyWorldChoice, selectWorldModifiers } from "../systems/chaos/world-modifiers";
 import { AudioFeedbackService, FeedbackLimiter } from "../systems/feedback/feedback-service";
@@ -198,6 +203,14 @@ export class RunScene extends Phaser.Scene {
   private waveSpawned = 0;
   private driftSpawned = 0;
   private driftReclaimed = 0;
+  /** Rebuilt once per frame and shared by separation, targeting, and explosions. */
+  private enemyHash = new SpatialHash<EnemyActor>(64);
+  private separationPairChecks = 0;
+  private separationPairChecksHighWater = 0;
+  private separationAdjustments = 0;
+  private solidResolutions = 0;
+  private contactShoves = 0;
+  private weaponShoves = 0;
   /** Ambient spawns that landed inside the visible view. Must stay at zero. */
   private spawnsInsideView = 0;
   private levelTimestampsMs: number[] = [];
@@ -456,6 +469,8 @@ export class RunScene extends Phaser.Scene {
       }
       this.player.move(this.readMovementInput(), this.runState.player.stats.moveSpeed);
       this.updateEnemies();
+      this.rebuildEnemyIndex();
+      this.resolveCrowd();
       this.updateProjectiles();
       this.updatePickups();
       this.updateShrine();
@@ -516,6 +531,13 @@ export class RunScene extends Phaser.Scene {
     this.waveSpawned = 0;
     this.driftSpawned = 0;
     this.driftReclaimed = 0;
+    this.enemyHash = new SpatialHash<EnemyActor>(activeTheme.tuning.bodies.cellSize);
+    this.separationPairChecks = 0;
+    this.separationPairChecksHighWater = 0;
+    this.separationAdjustments = 0;
+    this.solidResolutions = 0;
+    this.contactShoves = 0;
+    this.weaponShoves = 0;
     this.spawnsInsideView = 0;
     this.levelTimestampsMs = [];
     this.xpByBucketMs = [];
@@ -677,6 +699,42 @@ export class RunScene extends Phaser.Scene {
         if (payload.reason === "wave") this.waveSpawned += 1;
       }
     });
+  }
+
+  /**
+   * Rebuild the shared spatial index from targetable enemies.
+   *
+   * Defeated-but-not-yet-destroyed enemies are excluded, so every consumer of
+   * the index gets a pre-filtered view and none of them needs to allocate a
+   * snapshot array of the whole swarm.
+   */
+  private rebuildEnemyIndex(): void {
+    this.enemyHash.clear();
+    for (const enemy of this.enemies) {
+      if (enemy.active && !enemy.defeated) this.enemyHash.insert(enemy);
+    }
+  }
+
+  private resolveCrowd(): void {
+    if (!this.player) return;
+    const bodies = activeTheme.tuning.bodies;
+    const stats = separateCrowd(this.enemies, this.enemyHash, {
+      maxNeighbours: bodies.maxNeighbours,
+      maxDisplacement: bodies.maxDisplacement,
+    });
+    this.separationPairChecks = stats.pairChecks;
+    this.separationPairChecksHighWater = Math.max(this.separationPairChecksHighWater, stats.pairChecks);
+    this.separationAdjustments += stats.adjustments;
+
+    const maxSolidRadius = Math.max(
+      ...this.enemyDefinitions.map((definition) => definition.radius),
+    ) * 1.3;
+    this.solidResolutions += resolvePlayerAgainstSolids(
+      this.player,
+      this.enemyHash,
+      ARENA_SIZE,
+      maxSolidRadius,
+    );
   }
 
   /** The world-space rectangle currently visible, used to keep spawns off screen. */
@@ -1034,6 +1092,11 @@ export class RunScene extends Phaser.Scene {
       },
       elite,
       movement,
+      {
+        role: activeTheme.tuning.bodies.roles.find((role) => role.enemyId === definition.id) ??
+          { enemyId: definition.id, separationScale: 1, mass: 1, solid: false },
+        eliteMassMultiplier: activeTheme.tuning.bodies.eliteMassMultiplier,
+      },
     );
     if (movement === "drift") this.driftSpawned += 1;
     this.enemies.add(enemy);
@@ -1069,16 +1132,9 @@ export class RunScene extends Phaser.Scene {
       return;
     }
 
-    const target = findNearestTarget(
-      this.player,
-      [...this.enemies].map((enemy) => ({
-        id: enemy.targetId,
-        x: enemy.x,
-        y: enemy.y,
-        active: enemy.active && !enemy.defeated,
-        enemy,
-      })),
-    );
+    // The index is pre-filtered to targetable enemies, so the actors go straight
+    // in. V0.2 allocated a snapshot of the whole swarm on every shot.
+    const target = findNearestTarget(this.player, this.enemies);
     if (!target) return;
 
     const baseAngle = Phaser.Math.Angle.Between(this.player.x, this.player.y, target.x, target.y);
@@ -1148,8 +1204,44 @@ export class RunScene extends Phaser.Scene {
       criticalBonus: projectile.criticalBonusDamage,
       piercingMomentum: projectile.damage - projectile.baseDamage,
     });
+    this.applyWeaponKnockback(enemy);
     projectile.registerHit(enemy.targetId);
     this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
+  }
+
+  /** A solid enemy shoves the player on contact, selling the mass difference. */
+  private shovePlayer(enemy: EnemyActor): void {
+    if (!this.player) return;
+    const push = knockbackDisplacement(
+      enemy,
+      this.player,
+      activeTheme.tuning.bodies.contactKnockback,
+      1,
+    );
+    this.player.x = Phaser.Math.Clamp(
+      this.player.x + push.x,
+      this.player.definition.radius,
+      ARENA_SIZE.width - this.player.definition.radius,
+    );
+    this.player.y = Phaser.Math.Clamp(
+      this.player.y + push.y,
+      this.player.definition.radius,
+      ARENA_SIZE.height - this.player.definition.radius,
+    );
+    this.contactShoves += 1;
+  }
+
+  /**
+   * Weapon knockback, scaled by the target's mass so heavy roles shrug it off.
+   * Both production weapons declare `0`, so this is inert until a weapon uses it.
+   */
+  private applyWeaponKnockback(enemy: EnemyActor): void {
+    const strength = this.weaponDefinition?.knockback ?? 0;
+    if (strength <= 0 || !this.player) return;
+    const push = knockbackDisplacement(this.player, enemy, strength, enemy.mass);
+    enemy.x += push.x;
+    enemy.y += push.y;
+    this.weaponShoves += 1;
   }
 
   private commitEnemyDamage(
@@ -1278,12 +1370,18 @@ export class RunScene extends Phaser.Scene {
     const source: DamageSource = payload.depth === 0 ? "explosion" : "chained_explosion";
     if (payload.depth === 0) this.explosionsCommitted += 1;
     else this.chainExplosionsCommitted += 1;
-    const targets = targetsWithinRadius(
-      [...this.enemies].map((enemy) => ({ id: enemy.targetId, x: enemy.x, y: enemy.y, active: enemy.active && !enemy.defeated, enemy })),
-      payload,
-      payload.radius,
-    );
-    for (const target of targets) this.commitEnemyDamage(target.enemy, payload.damage, source, eventId);
+    // Explosions are local, so the shared index answers them without scanning or
+    // allocating a snapshot of every live enemy per blast -- which mattered most
+    // exactly when chains made blasts frequent.
+    const radiusSquared = payload.radius * payload.radius;
+    const caught: EnemyActor[] = [];
+    this.enemyHash.forEachWithin(payload.x, payload.y, payload.radius, (enemy) => {
+      if (!enemy.active || enemy.defeated) return;
+      const dx = enemy.x - payload.x;
+      const dy = enemy.y - payload.y;
+      if (dx * dx + dy * dy <= radiusSquared) caught.push(enemy);
+    });
+    for (const target of caught) this.commitEnemyDamage(target, payload.damage, source, eventId);
     this.emitFeedback("explosion", payload.x, payload.y, "BOOM");
     this.renderExplosionCue(payload);
   }
@@ -1476,6 +1574,7 @@ export class RunScene extends Phaser.Scene {
     this.lastContactDamageAtMs = this.runState.elapsedMs;
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
+    if (enemy.solid) this.shovePlayer(enemy);
     this.player.setAlpha(0.35);
     this.player.flashDamage(activeTheme.tokens.palette.critical);
     this.hitFlashes += 1;
@@ -1612,6 +1711,26 @@ export class RunScene extends Phaser.Scene {
       this.runEndOverlay?.resize(() => this.restartRun());
     }
     this.publishTelemetry();
+  }
+
+  /**
+   * Enemy pairs sharing effectively the same position.
+   *
+   * The invariant separation exists to hold: nothing should stay perfectly
+   * stacked. Test-build only, and quadratic, so it is skipped in production.
+   */
+  private countCoincidentPairs(): number {
+    if (import.meta.env.MODE !== "test") return 0;
+    const live = [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated);
+    let pairs = 0;
+    for (let index = 0; index < live.length; index += 1) {
+      for (let other = index + 1; other < live.length; other += 1) {
+        const first = live[index]!;
+        const second = live[other]!;
+        if (Math.hypot(first.x - second.x, first.y - second.y) < 0.5) pairs += 1;
+      }
+    }
+    return pairs;
   }
 
   private publishTelemetry(): void {
@@ -1761,6 +1880,16 @@ export class RunScene extends Phaser.Scene {
         upgradeCounts: { ...this.runState.statistics.upgradeCounts },
         summaryUpgrades: summary.upgrades,
       } : undefined,
+      crowd: {
+        indexed: this.enemyHash.size,
+        pairChecks: this.separationPairChecks,
+        pairChecksHighWater: this.separationPairChecksHighWater,
+        adjustments: this.separationAdjustments,
+        solidResolutions: this.solidResolutions,
+        contactShoves: this.contactShoves,
+        weaponShoves: this.weaponShoves,
+        coincidentPairs: this.countCoincidentPairs(),
+      },
       view: {
         logicalWidth: this.scale.width,
         logicalHeight: this.scale.height,

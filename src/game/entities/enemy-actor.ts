@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
-import type { WaveMovement } from "../core/archetypes/tuning";
+import type { BodyRoleTuning, WaveMovement } from "../core/archetypes/tuning";
 
 export type EnemySpawnSource = "ambient" | ShrineId | ContentId;
 
@@ -16,6 +16,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly contactDamage: number;
   readonly elite?: EliteDefinition;
   readonly movement: WaveMovement;
+  /** Personal space in the crowd, deliberately smaller than the drawn radius. */
+  readonly separationRadius: number;
+  readonly mass: number;
+  readonly solid: boolean;
   defeated = false;
   private readonly baseColour: number;
   private launched = false;
@@ -35,6 +39,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     },
     elite?: EliteDefinition,
     movement: WaveMovement = "chase",
+    body?: Readonly<{ role: BodyRoleTuning; eliteMassMultiplier: number }>,
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -50,6 +55,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.spawnSource = spawnSource;
     this.rewardMultiplier = rewardMultiplier;
     this.movement = movement;
+    this.separationRadius = radius * (body?.role.separationScale ?? 1);
+    this.mass = (body?.role.mass ?? 1) * (elite ? (body?.eliteMassMultiplier ?? 1) : 1);
+    // Elites hold their ground regardless of the role's own solidity.
+    this.solid = (body?.role.solid ?? false) || Boolean(elite);
     this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -64,6 +73,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       this.setStrokeStyle(5, eliteColour, 1).setDepth(25);
     }
     if (!elite) this.setDepth(20);
+  }
+
+  /** Stable identity for the shared spatial index and targeting. */
+  get id(): string {
+    return this.targetId;
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {

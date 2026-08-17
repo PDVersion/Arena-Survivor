@@ -218,6 +218,19 @@ export const alternateTheme = defineTheme({
         { enemyId: archetypeIds.enemy.deathSpawner, waveMovement: "chase", unlockAt: 0.45, baseWeight: 5, weightGrowth: 2.6, chaosWeightBias: 0.5 },
       ],
     },
+    bodies: {
+      cellSize: 64,
+      maxNeighbours: 8,
+      maxDisplacement: 6,
+      eliteMassMultiplier: 2,
+      contactKnockback: 26,
+      roles: [
+        { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6, solid: false },
+        { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1, solid: false },
+        { enemyId: archetypeIds.enemy.slowDurable, separationScale: 1, mass: 4, solid: true },
+        { enemyId: archetypeIds.enemy.deathSpawner, separationScale: 0.95, mass: 3, solid: true },
+      ],
+    },
     difficulty: {
       chaos: {
         spawnPerPoint: 0.25,

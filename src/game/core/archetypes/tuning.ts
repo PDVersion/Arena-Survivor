@@ -113,8 +113,38 @@ export interface DifficultyTuning {
   readonly chaos: ChaosTuning;
 }
 
+/** One role's physical presence in the crowd. */
+export interface BodyRoleTuning {
+  readonly enemyId: EnemyId;
+  /**
+   * Personal space as a fraction of the drawn radius. Below `1` the role bunches
+   * and overlaps a little, which is what makes a swarm of small things read as a
+   * crowd rather than a grid.
+   */
+  readonly separationScale: number;
+  /** Heavier bodies are displaced less by their neighbours. */
+  readonly mass: number;
+  /** Solid roles block the player instead of being walked through. */
+  readonly solid: boolean;
+}
+
+export interface BodiesTuning {
+  /** Spatial hash cell size; should exceed twice the largest separation radius. */
+  readonly cellSize: number;
+  /** Neighbour resolutions per body per frame, bounding worst-case cost. */
+  readonly maxNeighbours: number;
+  /** Ceiling on a single frame's displacement, so a dense pile cannot explode. */
+  readonly maxDisplacement: number;
+  /** Elite mass multiplier; elites are solid regardless of their role. */
+  readonly eliteMassMultiplier: number;
+  /** How far a solid enemy shoves the player when it damages them. */
+  readonly contactKnockback: number;
+  readonly roles: readonly BodyRoleTuning[];
+}
+
 export interface TuningPack {
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
   readonly difficulty: DifficultyTuning;
+  readonly bodies: BodiesTuning;
 }

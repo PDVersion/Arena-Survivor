@@ -12,6 +12,7 @@ import { elites } from "./elites";
 import { progression } from "./progression";
 import { director } from "./director";
 import { difficulty } from "./difficulty";
+import { bodies } from "./bodies";
 
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
@@ -26,5 +27,5 @@ export const knightMagicTheme = defineTheme({
   shrines,
   skills,
   elites,
-  tuning: { progression, director, difficulty },
+  tuning: { progression, director, difficulty, bodies },
 });

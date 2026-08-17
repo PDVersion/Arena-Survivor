@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 4 complete — Phase 5 next**
+- Active phase: **Phase 5 complete — Phase 6 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1228,6 +1228,44 @@ Theme validation rejects a weapon whose delivery cannot cover its declared range
 
 Revisit when:
 Weapon slots land, a melee or area weapon is designed, splash needs a boundary against the on-kill detonation skill, or armour makes `armourPierce` meaningful.
+
+### REC-052 — Crowd separation is soft, position-based, and clamped per frame
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 6-10; enemies, targeting, explosions, performance budget
+- Blocks: None
+
+Context / observation:
+Enemies shared a physics group with no collider, so a swarm rendered as one blob rather than a crowd. Full Arcade collider resolution between 300 bodies was rejected: it fights the chase step, which overwrites velocity every frame, and its cost is unbounded in a dense pile.
+
+Decision / solution:
+Add one shared spatial index, rebuilt per frame from targetable enemies, consumed by separation, targeting, and explosion queries. Separation nudges positions and never touches velocity, so chasing is unaffected. Separation radius is theme data and deliberately smaller than the drawn radius, so light roles bunch and overlap while heavy roles hold their ground; solid roles additionally push the player out, and elites are solid regardless of role. Contact knockback and the weapon `knockback` stat share one impulse helper.
+
+Two measurements decided the tuning. Clamping displacement **per neighbour** rather than per frame let a body in a dense pile move `maxDisplacement` times its neighbour count in a single frame — roughly 2,900 units per second against enemy speeds of 140 — which flung crowds apart and pulled targets out from under fired shots. The clamp now applies to the frame's accumulated displacement. Separately, lowering the ceiling to 2 units per frame made separation too weak: chase covers about 2.3 units per frame, so a crowd converging on the player out-pulls separation and the pile never resolves. The ceiling must exceed per-frame chase movement; 6 gives 2.5x headroom.
+
+Performance evidence (same machine, 300 live enemies, 8-second representative load):
+
+  before   average 20.35 ms   worst 26.67 ms
+  after    average 22.55 ms   worst 27.50 ms
+  cost     +2.20 ms average (+11%), +0.83 ms worst (+3%)
+
+  peak candidate visits   11,237 per frame  (~37 per enemy, versus 90,000 all-pairs)
+  coincident pairs        0 at terminal
+
+Migrating explosions and targeting to the index removed a per-call allocation of a snapshot array of every live enemy — on every shot and every blast — which partly pays for separation.
+
+Why:
+A soft positional constraint gives the crowd presence without fighting the movement system or risking an unbounded solver. Bounding neighbour resolutions per body keeps worst-case cost linear in swarm size rather than quadratic.
+
+Measured non-effect worth recording:
+Separation does not change kill throughput. At 30 shots into a 100-enemy pile, kills were identical with and without it, while coincident pairs fell from 359 to 30. An early 6-shot sample suggested otherwise and was noise. What does change is which enemy is nearest from shot to shot: in a dense churning crowd a single-target weapon spreads damage across many enemies and finishes none. That is pre-existing behaviour, identical with separation disabled, and it is what pierce and area effects exist to solve.
+
+Future guardrail:
+Unit tests cover coincident separation, determinism, mass ratios, the frame clamp, bounded work, and convergence of a dense stack. Theme validation requires body tuning for every role and a cell size above twice the largest separation radius, because a smaller cell would let an overlapping pair fall in non-adjacent cells and never resolve. A browser path asserts a 200-enemy pile resolves to zero coincident pairs, that solids displace the player without pushing them out of the arena, and that the damage ledger still reconciles exactly.
+
+Revisit when:
+Phase 6 obstacles need the same solid resolution, the frame budget tightens, or a role's speed changes enough to invalidate the displacement ceiling.
 
 ## Open questions to reconcile during implementation
 
