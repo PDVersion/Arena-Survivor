@@ -1,6 +1,12 @@
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
-import { upgradeCategories, upgradeRarities, type ThemeManifest } from "../core/archetypes/contracts";
+import {
+  statKeys,
+  upgradeCategories,
+  upgradeRarities,
+  worldKeys,
+  type ThemeManifest,
+} from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
 
@@ -65,6 +71,13 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     for (const key of vocabularyKeys) {
       if (!theme.copy.vocabulary[key]?.trim()) issues.push(`vocabulary.${key} is required`);
     }
+  }
+
+  for (const key of statKeys) {
+    if (!theme.copy.stats?.[key]?.trim()) issues.push(`stats.${key} label is required`);
+  }
+  for (const key of worldKeys) {
+    if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
   }
 
   for (const id of v02ContentIds) {

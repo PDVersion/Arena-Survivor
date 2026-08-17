@@ -70,6 +70,18 @@ import {
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
+import { PauseMenuUi } from "../ui/pause-menu-ui";
+import {
+  describeUpgrade,
+  selectPlayerStats,
+  selectWorldLines,
+} from "../systems/upgrades/describe-upgrade";
+import {
+  getSessionSettings,
+  toggleSetting,
+  updateSessionSettings,
+  type SettingKey,
+} from "../state/settings-state";
 import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
@@ -203,6 +215,7 @@ export class RunScene extends Phaser.Scene {
   private wasd?: MovementKeys;
   private pauseKey?: Phaser.Input.Keyboard.Key;
   private muteKey?: Phaser.Input.Keyboard.Key;
+  private tabKey?: Phaser.Input.Keyboard.Key;
   private interactKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private choiceKeys: readonly Phaser.Input.Keyboard.Key[] = [];
   private enemyGroup?: Phaser.Physics.Arcade.Group;
@@ -220,6 +233,7 @@ export class RunScene extends Phaser.Scene {
   private shrineActors: ShrineActor[] = [];
   private surgeState: ShrineSurgeState = createShrineSurgeState();
   private levelUpUi?: LevelUpChoiceUi;
+  private pauseMenu?: PauseMenuUi;
   private hud?: Hud;
   private runEndOverlay?: RunEndOverlay;
   private currentChoices: readonly UpgradeDefinition[] = [];
@@ -451,6 +465,7 @@ export class RunScene extends Phaser.Scene {
     }) as MovementKeys;
     this.pauseKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.muteKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+    this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
     this.interactKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
@@ -463,6 +478,7 @@ export class RunScene extends Phaser.Scene {
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
     ];
     this.levelUpUi = new LevelUpChoiceUi(this, activeTheme);
+    this.pauseMenu = new PauseMenuUi(this, activeTheme);
     this.hud = new Hud(this, activeTheme);
     this.runEndOverlay = new RunEndOverlay(this, activeTheme);
 
@@ -477,10 +493,11 @@ export class RunScene extends Phaser.Scene {
       this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
       this.hud?.destroy();
       this.levelUpUi?.hide();
+      this.pauseMenu?.hide();
       this.runEndOverlay?.hide();
       this.audioFeedback.destroy();
     });
-    this.hud.update(this.runState);
+    this.hud.update(this.runState, this.hudExtras());
     this.prepareTestLoadHarness();
     this.prepareTestRosterHarness();
     this.publishTelemetry();
@@ -490,7 +507,12 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !this.pauseKey) return;
 
     if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) this.togglePause();
-    if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.audioFeedback.toggleMuted();
+    if (this.runState.status === "paused" && this.pauseMenu?.isOpen) {
+      if (this.tabKey && Phaser.Input.Keyboard.JustDown(this.tabKey)) this.pauseMenu.cycleTab(1);
+      if (this.cursors?.right && Phaser.Input.Keyboard.JustDown(this.cursors.right)) this.pauseMenu.cycleTab(1);
+      if (this.cursors?.left && Phaser.Input.Keyboard.JustDown(this.cursors.left)) this.pauseMenu.cycleTab(-1);
+    }
+    if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.applySetting("muted");
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
 
     const preparingRepresentativeLoad =
@@ -533,7 +555,7 @@ export class RunScene extends Phaser.Scene {
       if (this.runState.status === "complete") this.physics.world.pause();
     }
 
-    this.hud?.update(this.runState);
+    this.hud?.update(this.runState, this.hudExtras());
     this.publishTelemetry();
   }
 
@@ -544,6 +566,7 @@ export class RunScene extends Phaser.Scene {
     this.wasd = undefined;
     this.pauseKey = undefined;
     this.muteKey = undefined;
+    this.tabKey = undefined;
     this.interactKeys = [];
     this.choiceKeys = [];
     this.enemyGroup = undefined;
@@ -561,6 +584,7 @@ export class RunScene extends Phaser.Scene {
     this.shrineActors = [];
     this.surgeState = createShrineSurgeState();
     this.levelUpUi = undefined;
+    this.pauseMenu = undefined;
     this.hud = undefined;
     this.runEndOverlay = undefined;
     this.currentChoices = [];
@@ -651,7 +675,7 @@ export class RunScene extends Phaser.Scene {
     this.eliteSpawnedByRole = {};
     this.feedbackLimiter = new FeedbackLimiter();
     this.audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
-    this.reducedMotion = prefersReducedMotion();
+    this.reducedMotion = prefersReducedMotion() || getSessionSettings().reducedMotion;
     this.feedbackObjects = new Set();
   }
 
@@ -1780,7 +1804,63 @@ export class RunScene extends Phaser.Scene {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
       luck: this.runState.player.stats.luck,
     });
-    this.levelUpUi.show(this.currentChoices, (choice) => this.chooseUpgrade(choice));
+    this.levelUpUi.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
+  }
+
+  private hudExtras() {
+    const runState = this.runState;
+    const progression = runState?.progression;
+    const required = progression?.xpToNextLevel ?? 1;
+    return {
+      threatStep: runState
+        ? selectWorldModifiers(
+            runState.world,
+            activeTheme.tuning.difficulty,
+            runProgress(runState.elapsedMs, runState.durationMs),
+          ).threatStep
+        : 0,
+      killChain: runState?.statistics.recentKillTimesMs.length ?? 0,
+      levelProgress: required > 0 ? (progression?.xp ?? 0) / required : 0,
+    };
+  }
+
+  /** Card content, derived from the same code that applies the upgrade. */
+  private levelUpView() {
+    const runState = this.runState;
+    return {
+      descriptions: runState
+        ? this.currentChoices.map((choice) => describeUpgrade(runState, choice, activeTheme))
+        : [],
+      pendingAfterThis: Math.max(0, (runState?.progression.pendingChoices ?? 1) - 1),
+      showDetail: getSessionSettings().detailedUpgradeCards,
+    };
+  }
+
+  private pauseMenuView() {
+    const runState = this.runState;
+    const summary = runState
+      ? selectRunSummaryValues(runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
+      : undefined;
+    return {
+      stats: runState ? selectPlayerStats(runState, activeTheme) : [],
+      world: runState
+        ? selectWorldLines(
+            runState.world,
+            activeTheme,
+            runProgress(runState.elapsedMs, runState.durationMs),
+          )
+        : [],
+      upgrades: summary?.upgrades ?? [],
+      settings: getSessionSettings(),
+    };
+  }
+
+  private applySetting(key: SettingKey): void {
+    const next = updateSessionSettings(toggleSetting(getSessionSettings(), key));
+    this.reducedMotion = prefersReducedMotion() || next.reducedMotion;
+    this.audioFeedback.setMuted(next.muted);
+    this.pauseMenu?.refresh(this.pauseMenuView());
+    this.publishTelemetry();
   }
 
   private readUpgradeChoiceInput(): void {
@@ -1881,7 +1961,7 @@ export class RunScene extends Phaser.Scene {
     this.physics.world.pause();
     this.focusPaused = true;
     this.audioFeedback.setFocused(false);
-    this.hud?.update(this.runState);
+    this.hud?.update(this.runState, this.hudExtras());
     this.publishTelemetry();
   }
 
@@ -1891,7 +1971,7 @@ export class RunScene extends Phaser.Scene {
     this.audioFeedback.setFocused(true);
     this.runState = setRunStatus(this.runState, "playing");
     this.physics.world.resume();
-    this.hud?.update(this.runState);
+    this.hud?.update(this.runState, this.hudExtras());
     this.publishTelemetry();
   }
 
@@ -1947,7 +2027,9 @@ export class RunScene extends Phaser.Scene {
       this.runState = setRunStatus(this.runState, "paused");
       this.player.stop();
       this.physics.world.pause();
+      this.pauseMenu?.show(this.pauseMenuView(), (key) => this.applySetting(key));
     } else if (this.runState.status === "paused") {
+      this.pauseMenu?.hide();
       this.runState = setRunStatus(this.runState, "playing");
       this.physics.world.resume();
     }
@@ -1957,7 +2039,10 @@ export class RunScene extends Phaser.Scene {
     this.cameras.resize(gameSize.width, gameSize.height);
     this.hud?.resize();
     if (this.runState?.status === "level_up" && this.currentChoices.length === 3) {
-      this.levelUpUi?.show(this.currentChoices, (choice) => this.chooseUpgrade(choice));
+      this.levelUpUi?.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
+    }
+    if (this.runState?.status === "paused" && this.pauseMenu?.isOpen) {
+      this.pauseMenu.refresh(this.pauseMenuView());
     }
     if (this.runState?.status === "dead" || this.runState?.status === "complete") {
       this.runEndOverlay?.resize(() => this.restartRun());
@@ -2132,6 +2217,34 @@ export class RunScene extends Phaser.Scene {
         upgradeCounts: { ...this.runState.statistics.upgradeCounts },
         summaryUpgrades: summary.upgrades,
       } : undefined,
+      ui: {
+        pauseOpen: Boolean(this.pauseMenu?.isOpen),
+        pauseTab: this.pauseMenu?.activeTab ?? null,
+        settings: { ...getSessionSettings() },
+        cardDescriptions: this.runState
+          ? this.currentChoices.map((choice) => {
+              const description = describeUpgrade(this.runState!, choice, activeTheme);
+              return {
+                id: description.id,
+                level: description.level,
+                nextLevel: description.nextLevel,
+                isNew: description.isNew,
+                rarity: description.rarity,
+                lines: description.lines.map((line) => ({
+                  label: line.label,
+                  from: line.from ?? null,
+                  to: line.to,
+                })),
+              };
+            })
+          : [],
+        statLines: this.runState
+          ? selectPlayerStats(this.runState, activeTheme).map((line) => ({
+              key: line.key,
+              display: line.display,
+            }))
+          : [],
+      },
       crowd: {
         indexed: this.enemyHash.size,
         pairChecks: this.separationPairChecks,

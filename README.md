@@ -41,7 +41,10 @@ E / Space         = Activate a shrine while in range
 1 / 2 / 3         = Choose a level-up upgrade
 R / Enter         = Restart after death or completion
 M                 = Mute or unmute session audio
+Tab / arrows      = Switch pause-menu tabs while paused
 ```
+
+Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, and live world pressure.
 
 ### What a run looks like
 

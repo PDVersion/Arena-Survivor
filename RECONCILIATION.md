@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 7 complete — Phase 8 next**
+- Active phase: **Phase 8 complete — Phase 9 next**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1330,6 +1330,34 @@ Validation rejects an upgrade whose cap exceeds its skill's, a world effect that
 
 Revisit when:
 Phase 8 surfaces levels on cards, Phase 10 wires `luck` into elite and fracture rolls, or weapon slots in V0.4 make skills per-weapon.
+
+### REC-055 — Card numbers are diffed from the real upgrade, never written twice
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 9-10; upgrade cards, pause menu, HUD, settings
+- Blocks: None
+
+Context / observation:
+Level-up cards rendered a name and a static description and never said by how much, from what, to what. The obvious implementation is a second table of display strings beside the effect data, which drifts the first time an effect is retuned and nobody notices until a player is misled.
+
+Decision / solution:
+Derive descriptions by **applying the upgrade to a copy of the state and diffing**, through the same `applyUpgrade` the game uses. A card cannot claim something the upgrade does not do, and retuning an effect changes its card automatically with no second edit. One `selectPlayerStats` produces the resolved stat set — weapon damage after the bonus, shots per second after attack speed — and the upgrade cards, the pause menu, and the terminal tally all read it, so the three surfaces cannot disagree about a number.
+
+Stat and world labels become theme-owned records keyed by stable keys rather than a dozen more vocabulary entries, and validation requires every key.
+
+Badges are identity and always render: `NEW`, or `Lv 3→4`. The numeric before/after lines are what the `Detailed upgrade cards` setting hides, defaulting to on. Rarity is a border colour. A queue indicator shows how many choices remain when several levels land at once.
+
+The pause overlay replaces a status string with four tabs — stats, upgrades, world, settings — reachable by pointer, Tab, or arrows. Mute moves into settings so the keyboard shortcut and the menu can never disagree, and reduced motion joins it. Settings live at module scope so they survive a restart, which is what "session" means to a player, shaped for the `SAVE_DATA.md` adapter deferred to V0.4.
+
+Why:
+Two sources of truth for a number is the defect this phase exists to avoid; diffing removes the possibility rather than testing for it afterwards. The same reasoning drives one stat selector shared by three surfaces.
+
+Future guardrail:
+A unit test asserts that for every upgrade in both packs, every stat the upgrade actually changes appears in its description, and that no description is empty — a silent card is a wasted pick with no warning. Browser paths assert badges match level, that a repeat card always shows a from value, that a card's claimed result is reproducible from live state after taking it, that the overlay freezes simulation and never resumes by accident, and that both overlays survive a resize.
+
+Revisit when:
+Phase 10 adds armour, regeneration, and luck upgrades that need stat lines, or V0.4 weapon slots make the stat selector per-slot.
 
 ## Open questions to reconcile during implementation
 

@@ -53,6 +53,39 @@ export interface ThemeVocabulary {
   readonly upgradesTaken: string;
 }
 
+/** Stable keys for player-facing stat labels. */
+export const statKeys = [
+  "health",
+  "damage",
+  "attackRate",
+  "critChance",
+  "critDamage",
+  "projectiles",
+  "pierce",
+  "range",
+  "knockback",
+  "armourPierce",
+  "moveSpeed",
+  "pickupRadius",
+  "armour",
+  "regeneration",
+  "luck",
+  "xpMultiplier",
+] as const;
+export type StatKey = (typeof statKeys)[number];
+
+/** Stable keys for world-pressure labels. */
+export const worldKeys = [
+  "chaos",
+  "enemySpawn",
+  "enemyHealth",
+  "enemyDamage",
+  "xpGain",
+  "eliteChance",
+  "threat",
+] as const;
+export type WorldKey = (typeof worldKeys)[number];
+
 export interface ThemeCopy {
   readonly gameTitle: string;
   readonly arenaName: string;
@@ -61,6 +94,9 @@ export interface ThemeCopy {
   readonly movementHint: string;
   readonly levelUpTitle: string;
   readonly vocabulary: ThemeVocabulary;
+  /** Labels for the pause menu and upgrade cards. */
+  readonly stats: Readonly<Record<StatKey, string>>;
+  readonly world: Readonly<Record<WorldKey, string>>;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
 }
 

@@ -97,6 +97,21 @@ export interface ArenaTestSnapshot {
     upgradeCounts: Readonly<Record<string, number>>;
     summaryUpgrades: readonly string[];
   }>;
+  readonly ui?: Readonly<{
+    pauseOpen: boolean;
+    pauseTab: string | null;
+    settings: Readonly<Record<string, boolean>>;
+    /** What each offered card claims, derived from the real upgrade application. */
+    cardDescriptions: readonly Readonly<{
+      id: string;
+      level: number;
+      nextLevel: number;
+      isNew: boolean;
+      rarity: string;
+      lines: readonly Readonly<{ label: string; from: string | null; to: string }>[];
+    }>[];
+    statLines: readonly Readonly<{ key: string; display: string }>[];
+  }>;
   readonly crowd?: Readonly<{
     indexed: number;
     pairChecks: number;

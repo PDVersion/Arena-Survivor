@@ -1,5 +1,5 @@
 import { archetypeIds } from "../../src/game/core/archetypes/ids";
-import type { ThemeCopy } from "../../src/game/core/archetypes/contracts";
+import { statKeys, worldKeys, type ThemeCopy } from "../../src/game/core/archetypes/contracts";
 import { defineTheme } from "../../src/game/content/define-theme";
 import { eliteIds } from "../../src/game/core/archetypes/categories";
 
@@ -52,6 +52,8 @@ export const alternateTheme = defineTheme({
       remainderDamage: "Test remainder damage",
       upgradesTaken: "Test upgrades taken",
     },
+    stats: Object.fromEntries(statKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["stats"],
+    world: Object.fromEntries(worldKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["world"],
     content,
   },
   tokens: {
