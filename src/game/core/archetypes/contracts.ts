@@ -122,15 +122,46 @@ export interface CharacterDefinition {
   readonly baseStats: PlayerBaseStats;
 }
 
+/**
+ * A weapon's stats.
+ *
+ * The block above `presentationToken` is generic to any weapon and is the
+ * surface later weapons are expected to share. The `projectile*` and `pierce`
+ * fields below it describe how *this* weapon delivers its damage, and belong to
+ * a projectile delivery specifically.
+ *
+ * Splitting delivery into a discriminated union — so a melee weapon can declare
+ * an arc and target cap instead of a projectile speed — is deliberately parked
+ * for V0.4, where weapon slots decide the shape. Until then every weapon is a
+ * projectile and the fields sit flat.
+ */
 export interface WeaponDefinition {
   readonly id: WeaponId;
   readonly damage: number;
   readonly cooldownMs: number;
+  /**
+   * How far this weapon can engage, as design intent rather than a derived
+   * number. Delivery must be able to cover it: for a projectile,
+   * `projectileSpeed * projectileLifetimeMs / 1000` has to reach at least this
+   * far. Keeping range implicit is what hid the REC-049 envelope break.
+   */
+  readonly range: number;
+  /** Impulse applied to what it hits. `0` is no knockback. */
+  readonly knockback: number;
+  /** Portion of enemy armour ignored, `0` to `1`. Inert until armour exists. */
+  readonly armourPierce: number;
+  /** Overrides the player's crit chance for this weapon only. */
+  readonly critChance?: number;
+  /** Overrides the player's crit damage for this weapon only. */
+  readonly critDamage?: number;
+
+  // Projectile delivery.
   readonly projectileSpeed: number;
   readonly projectileLifetimeMs: number;
   readonly projectileRadius: number;
   readonly projectileCount: number;
   readonly pierce: number;
+
   readonly presentationToken: keyof Pick<ThemePalette, "projectile" | "critical" | "overcritical">;
 }
 

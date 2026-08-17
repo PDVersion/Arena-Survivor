@@ -1085,8 +1085,10 @@ export class RunScene extends Phaser.Scene {
     const damage = rollDamage({
       baseDamage: this.weaponDefinition.damage,
       damageBonus: this.runState.player.stats.damageBonus,
-      critChance: this.runState.player.stats.critChance,
-      critDamage: this.runState.player.stats.critDamage,
+      // A weapon may override the player's crit stats; both production weapons
+      // leave them undefined and inherit.
+      critChance: this.weaponDefinition.critChance ?? this.runState.player.stats.critChance,
+      critDamage: this.weaponDefinition.critDamage ?? this.runState.player.stats.critDamage,
       random: Math.random,
     });
     const momentum = activeTheme.skills

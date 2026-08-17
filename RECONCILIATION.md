@@ -1201,6 +1201,34 @@ Theme validation rejects any role whose enemy is at least as fast as the player 
 Revisit when:
 The starter weapon gains crowd clearing early, wave sizes change materially, or a role's speed crosses the player's.
 
+### REC-051 — Weapons carry a generic stat surface; delivery kinds wait for slots
+
+- Status: Accepted
+- Date: 2026-08-17
+- Affects: V0.3 Phases 5, 8, 10; V0.4 weapon slots; weapon contract, theme validation
+- Blocks: None
+
+Context / observation:
+`WeaponDefinition` had eight fields, five of them projectile-specific and all of them required to be positive by validation. A melee weapon could not be expressed at all: it would have to supply a meaningless projectile speed, lifetime, and radius. Range was not a field — it was implicit in `projectileSpeed * projectileLifetimeMs`, which is exactly why the REC-049 envelope break was invisible until a hosted runner surfaced it. Crit lived only on the player, so a weapon could not have its own.
+
+Decision / solution:
+Add the generic stat surface now and park the delivery split. `range` becomes design intent rather than a derived number, with validation requiring delivery to cover it. `knockback` and `armourPierce` are declared and validated but sit at `0`, and optional `critChance` and `critDamage` override the player's stats when set. Both production weapons leave the overrides unset and the new stats at zero, so play is unchanged.
+
+Consumers are folded into phases that already touch the relevant system rather than added as dead data: Phase 5 wires `knockback` through the impulse resolution it builds for contact knockback, Phase 8 surfaces the generic stats in cards and the pause menu, and Phase 10 wires `armourPierce` alongside armour itself.
+
+Splitting delivery into a discriminated union — projectile with speed, lifetime, count, and pierce; melee with an arc, sweep, and target cap — is parked for V0.4 alongside weapon slots.
+
+Why:
+The generic half of the surface is stable regardless of how many slots exist or what delivery kinds appear, so declaring it now costs nothing and gives Phase 8's description path one shape to read. The delivery union is not stable: whether a weapon is one of four simultaneous slots changes what belongs on it, and designing that before slots decide is guessing. Making `range` explicit has value immediately and independently, because it converts a derived number nobody could inspect into a validated invariant.
+
+The Phase 1 principle still holds — no field ships without a consumer or a scheduled one. `range` is consumed by validation and the envelope guard today; the other three have named phases.
+
+Future guardrail:
+Theme validation rejects a weapon whose delivery cannot cover its declared range, which is REC-049's failure promoted from a test into the contract. The director envelope test now asserts the declared `range` against the spawn ring rather than recomputing flight distance. Tests assert both production packs leave crit overrides unset, so an accidental override is visible.
+
+Revisit when:
+Weapon slots land, a melee or area weapon is designed, splash needs a boundary against the on-kill detonation skill, or armour makes `armourPierce` meaningful.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

@@ -225,11 +225,14 @@ describe("engagement envelope", () => {
     const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
       theme.tuning.director.spawnMargin;
     const weapon = theme.weapons[0]!;
-    const projectileRange = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
 
-    // A shot fired the instant an enemy appears must be able to cross the ring,
-    // with headroom rather than landing exactly on the boundary.
-    expect(projectileRange).toBeGreaterThan(radius * 1.2);
+    // A shot fired the instant an enemy appears must be able to cross the ring.
+    // Asserted against the declared range, with delivery covering that range
+    // guaranteed separately by theme validation.
+    expect(weapon.range).toBeGreaterThan(radius);
+    expect((weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000).toBeGreaterThan(
+      radius * 1.2,
+    );
   });
 
   it.each([

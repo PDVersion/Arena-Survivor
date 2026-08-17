@@ -440,6 +440,8 @@ Bags overlap heavily and read as wind-blown drift; bottles bunch with visible ga
 
 Also add **contact knockback**: a solid enemy that damages the player shoves them, which sells the mass difference and gives a moment of recovery.
 
+The same impulse resolution serves the weapon's `knockback` stat, which V0.3 declares as generic weapon data but leaves at `0`. Wire it here so a weapon that declares knockback shoves what it hits, scaled by the enemy's mass so heavy roles shrug it off. Both production weapons keep `0`, so this phase changes no behaviour for them.
+
 ### Performance gate
 
 This phase must not be merged on impression. Required evidence, recorded in reconciliation:
@@ -653,6 +655,8 @@ Everything on this screen comes from the same selectors as the cards and the run
 - Add live kill-chain counter and threat step indicator.
 - Milestone and wave banners from Phase 4 render here.
 
+The Stats tab and the upgrade cards read the weapon's generic stats — damage, attack rate, range, knockback, armour pierce, and any per-weapon crit override — rather than only the player's. That keeps one description path when a second weapon arrives in V0.4.
+
 Short verification:
 
 ```text
@@ -716,7 +720,7 @@ Exit gate: simulation results are bit-identical with all four features enabled, 
 
 `armour`, `regeneration`, and `luck` are declared, validated, and unread. Implement all three, because a rebalancing milestone that only adds offense produces a game where the answer to every problem is more damage:
 
-- **Armour:** multiplicative reduction `damage × 100 / (100 + armour)`, which never reaches immunity and never trivialises late contact damage. Also becomes an **enemy** stat — the Glass Bottle's defining trait.
+- **Armour:** multiplicative reduction `damage × 100 / (100 + armour)`, which never reaches immunity and never trivialises late contact damage. Also becomes an **enemy** stat — the Glass Bottle's defining trait. The weapon's `armourPierce` stat, declared in V0.3 and inert until now, ignores that share of the target's armour; both production weapons keep `0`.
 - **Regeneration:** health per second, applied on the simulation clock, paused with the run.
 - **Luck:** weights rare/epic upgrade offers and nudges the fragmentation and elite rolls.
 
@@ -799,7 +803,9 @@ Where each recommendation from the original review ended up.
 
 ### V0.4 candidates
 
-1. **Weapon and equipment slots.** Rather than one deepening weapon, move to a small number of auto-firing weapon slots plus passive equipment slots. This is the natural home for the type system described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md), and it is where weapon level caps and evolution belong.
+1. **Weapon and equipment slots, and delivery kinds.** Rather than one deepening weapon, move to a small number of auto-firing weapon slots plus passive equipment slots. This is the natural home for the type system described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md), and it is where weapon level caps and evolution belong.
+
+   It is also where `WeaponDefinition` splits delivery into a discriminated union, so a melee weapon can declare an arc and a target cap instead of a projectile speed and lifetime. V0.3 deliberately stops at the generic stat surface — `range`, `knockback`, `armourPierce`, and optional per-weapon crit — because the union's shape depends on decisions slots have not made yet. Splash also belongs here, and needs an explicit boundary against the existing on-kill detonation skill: splash triggers on hit, detonation on kill, and the damage ledger has to keep them apart.
 2. **Type and effectiveness system.** Enemy and tool attributes with a small effectiveness matrix. Designed in `EDUCATION_PIVOT.md`; it needs the slot system first.
 3. **Endless mode.** The director already supports `t > 1`; endless needs only the escalation index and a terminal condition.
 4. **Mini-boss at the final milestone.** The run currently ends when the timer expires; a telegraphed climax is a better ending.

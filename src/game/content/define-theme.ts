@@ -158,6 +158,28 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isInteger(weapon.pierce) || weapon.pierce < 0) {
       issues.push(`${weapon.id} pierce must be a non-negative integer`);
     }
+    if (!Number.isFinite(weapon.range) || weapon.range <= 0) {
+      issues.push(`${weapon.id} range must be greater than zero`);
+    }
+    if (!Number.isFinite(weapon.knockback) || weapon.knockback < 0) {
+      issues.push(`${weapon.id} knockback cannot be negative`);
+    }
+    if (!Number.isFinite(weapon.armourPierce) || weapon.armourPierce < 0 || weapon.armourPierce > 1) {
+      issues.push(`${weapon.id} armourPierce must be between zero and one`);
+    }
+    if (weapon.critChance !== undefined && (!Number.isFinite(weapon.critChance) || weapon.critChance < 0)) {
+      issues.push(`${weapon.id} critChance cannot be negative`);
+    }
+    if (weapon.critDamage !== undefined && (!Number.isFinite(weapon.critDamage) || weapon.critDamage < 1)) {
+      issues.push(`${weapon.id} critDamage must be at least one`);
+    }
+    // Delivery has to be able to cover the declared range. Leaving range
+    // implicit in speed and lifetime is what let the REC-049 envelope break go
+    // unnoticed until a hosted runner surfaced it.
+    const projectileReach = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
+    if (Number.isFinite(projectileReach) && Number.isFinite(weapon.range) && projectileReach < weapon.range) {
+      issues.push(`${weapon.id} projectile flight cannot reach its declared range`);
+    }
     if (!(weapon.presentationToken in theme.tokens.palette)) {
       issues.push(`${weapon.id} references missing presentation token: ${weapon.presentationToken}`);
     }
