@@ -105,3 +105,65 @@ test("the codex states what every shrine does", async ({ page }) => {
   const surge = entries.find((entry) => entry.id === "shrine.spawn_surge");
   expect(surge?.effects.map((effect) => effect.display)).toContain("100 over 20s");
 });
+
+test("the Field Guide catalogues the upgrade pool and the session so far", async ({ page }) => {
+  test.setTimeout(60_000);
+  // `closeLoad` puts enemies beside the player so this path spends its budget on
+  // the Field Guide rather than on waiting for the first level-up. See REC-049.
+  await page.goto("/?noContact&closeLoad=1&loadHarness=60&critChance=0.6&pierce=4");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
+
+  // Take one upgrade, so the catalogue has something real to count.
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
+      timeout: 40_000,
+    })
+    .toBe("level_up");
+  const takenId = (await snapshot(page))?.progression?.choiceIds?.[0];
+  await page.keyboard.press("Digit1");
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
+    .toBe("playing");
+
+  await page.keyboard.press("Escape");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
+  for (let press = 0; press < 6; press += 1) {
+    if ((await snapshot(page))?.ui?.pauseTab === "codex") break;
+    await page.keyboard.press("Tab");
+  }
+  expect((await snapshot(page))?.ui?.pauseTab).toBe("codex");
+  expect((await snapshot(page))?.ui?.codexSection).toBe("shrines");
+
+  // Down moves within the Field Guide; Tab and left/right still move tabs.
+  await page.keyboard.press("ArrowDown");
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.codexSection))
+    .toBe("equipment");
+  expect((await snapshot(page))?.ui?.pauseTab).toBe("codex");
+
+  const upgrades = (await snapshot(page))?.ui?.codexUpgrades ?? [];
+  expect(upgrades.length).toBe(activeTheme.upgrades.length);
+  for (const upgrade of activeTheme.upgrades) {
+    const entry = upgrades.find((candidate) => candidate.id === upgrade.id);
+    // Every entry is listed whether or not it has been taken, and its per-run
+    // cap comes from the definition rather than being written twice.
+    expect(entry?.maxPerRun).toBe(upgrade.maxLevel);
+  }
+  const taken = upgrades.find((entry) => entry.id === takenId);
+  expect(taken?.sessionTotal).toBeGreaterThan(0);
+  expect(taken?.bestInRun).toBeGreaterThan(0);
+
+  await page.keyboard.press("ArrowDown");
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.codexSection))
+    .toBe("session");
+  const session = (await snapshot(page))?.ui?.codexSession ?? [];
+  expect(session.length).toBeGreaterThan(0);
+  for (const line of session) {
+    expect(line.label.trim()).not.toBe("");
+    expect(line.display.trim()).not.toBe("");
+  }
+  // Total damage is a session figure, and the run has been dealing damage.
+  const damage = session.find((line) => line.label === activeTheme.copy.vocabulary.totalDamage);
+  expect(Number(damage?.display)).toBeGreaterThan(0);
+});

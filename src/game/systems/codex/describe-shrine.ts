@@ -1,5 +1,6 @@
 import type { ShrineDefinition, ThemeCopy, ThemeManifest } from "../../core/archetypes/contracts";
-import type { ShrineId } from "../../core/archetypes/ids";
+import type { ShrineId, UpgradeId } from "../../core/archetypes/ids";
+import type { SessionStatistics } from "../../state/session-statistics";
 
 /**
  * What a shrine does, in the player's words and the game's numbers.
@@ -82,4 +83,71 @@ export function selectShrineCodex(
       }),
     ),
   );
+}
+
+export interface CodexUpgradeEntry {
+  readonly id: UpgradeId;
+  readonly name: string;
+  readonly description: string;
+  readonly rarity: string;
+  /** Times taken across every run this session. */
+  readonly sessionTotal: number;
+  /** The most this upgrade was taken within one run. */
+  readonly bestInRun: number;
+  /** Times it can be taken in a single run, from the definition's cap. */
+  readonly maxPerRun: number;
+}
+
+/**
+ * Every upgrade the pool can offer, with what the player has done with it.
+ *
+ * The whole pool is listed, not only what has been taken — an entry the player
+ * has never seen at zero is the useful part, because it says the upgrade exists
+ * and how far it can be pushed. `maxPerRun` comes from the definition's cap, so
+ * it is the real ceiling rather than a number written twice.
+ */
+export function selectUpgradeCodex(
+  theme: Pick<ThemeManifest, "upgrades" | "copy">,
+  session: SessionStatistics,
+): readonly CodexUpgradeEntry[] {
+  return Object.freeze(
+    theme.upgrades.map((upgrade) => {
+      const record = session.upgrades[upgrade.id];
+      return Object.freeze({
+        id: upgrade.id,
+        name: theme.copy.content[upgrade.id]?.name ?? upgrade.id,
+        description: theme.copy.content[upgrade.id]?.description ?? "",
+        rarity: upgrade.rarity,
+        sessionTotal: record?.total ?? 0,
+        bestInRun: record?.bestInRun ?? 0,
+        maxPerRun: upgrade.maxLevel,
+      });
+    }),
+  );
+}
+
+export interface CodexSessionLine {
+  readonly label: string;
+  readonly display: string;
+}
+
+function statistic(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+}
+
+/** The session totals shown alongside the catalogue. */
+export function selectSessionCodex(
+  theme: Pick<ThemeManifest, "copy">,
+  session: SessionStatistics,
+): readonly CodexSessionLine[] {
+  const codex = theme.copy.codex;
+  const vocabulary = theme.copy.vocabulary;
+  return Object.freeze([
+    { label: codex.runsPlayed, display: String(session.runsPlayed) },
+    { label: vocabulary.kills, display: statistic(session.totalKills) },
+    { label: vocabulary.totalDamage, display: statistic(session.totalDamage) },
+    { label: `${codex.best} ${vocabulary.level}`, display: String(session.bestLevel) },
+    { label: `${codex.best} ${vocabulary.kills}`, display: statistic(session.bestKills) },
+    { label: `${codex.best} ${vocabulary.totalDamage}`, display: statistic(session.bestDamage) },
+  ].map((line) => Object.freeze(line)));
 }

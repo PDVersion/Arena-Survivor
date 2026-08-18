@@ -242,15 +242,19 @@ describe("engagement envelope", () => {
     const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
       theme.tuning.director.spawnMargin;
 
+    // Re-derived in REC-061 when the roster was deliberately slowed a second
+    // time. The heavy roles are walls the player navigates around, so a long
+    // crossing is their identity rather than dead time.
     for (const enemy of theme.enemies) {
       const approachSeconds = radius / enemy.moveSpeed;
-      expect(approachSeconds).toBeLessThan(12);
+      expect(approachSeconds).toBeLessThan(13);
     }
 
-    // The opening role must arrive promptly or the run starts with nothing to do.
+    // The opening role is the one that matters: it is the entire roster for the
+    // first minute, so its arrival time is how long a run has nothing in it.
     const opening = theme.tuning.director.roles.find((role) => role.unlockAt === 0)!;
     const openingEnemy = theme.enemies.find((enemy) => enemy.id === opening.enemyId)!;
-    expect(radius / openingEnemy.moveSpeed).toBeLessThan(8);
+    expect(radius / openingEnemy.moveSpeed).toBeLessThan(9);
   });
 
   it.each([

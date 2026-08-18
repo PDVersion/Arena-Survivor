@@ -16,6 +16,7 @@ export const tokens = {
     critical: "#fbbf24",
     overcritical: "#ffffff",
     pickup: "#6ee7b7",
+    health: "#ef4444",
     shrine: "#fb7185",
     explosion: "#f97316",
     elite: "#fde047",

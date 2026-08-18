@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { BootScene } from "./scenes/boot-scene";
+import { MenuScene } from "./scenes/menu-scene";
 import { RunScene } from "./scenes/run-scene";
 
 /**
@@ -17,7 +18,7 @@ export function createGameConfig(parent: string): Phaser.Types.Core.GameConfig {
     type: Phaser.AUTO,
     parent,
     backgroundColor: "#0a0f1b",
-    scene: [BootScene, RunScene],
+    scene: [BootScene, MenuScene, RunScene],
     physics: {
       default: "arcade",
       arcade: {

@@ -22,6 +22,8 @@ export const copy = {
     completeTitle: "The Trial Is Complete",
     completeMessage: "You endured the arena's full assault.",
     restartAction: "Begin Again",
+    startAction: "Begin Run",
+    startHint: "Press Enter or Space, or click to begin",
     shrinePrompt: "Press E or Space to invoke",
     shrineArrived: "A shrine has risen",
     surgeActive: "The horde answers",
@@ -77,6 +79,13 @@ export const copy = {
     released: "Horde released",
     duplicates: "Duplicates",
     duplicatesValue: "Every monster present",
+    upgrades: "Relics",
+    session: "Session",
+    sessionTotal: "This session",
+    bestInRun: "Best run",
+    maxPerRun: "Per run",
+    runsPlayed: "Runs played",
+    best: "Best",
   },
   content: {
     [archetypeIds.character.starter]: {

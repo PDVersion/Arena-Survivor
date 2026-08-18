@@ -130,6 +130,16 @@ export interface ArenaTestSnapshot {
       name: string;
       effects: readonly Readonly<{ label: string; display: string }>[];
     }>[];
+    codexSection: string | null;
+    /** The whole upgrade pool with what the session has taken from it. */
+    codexUpgrades: readonly Readonly<{
+      id: string;
+      name: string;
+      sessionTotal: number;
+      bestInRun: number;
+      maxPerRun: number;
+    }>[];
+    codexSession: readonly Readonly<{ label: string; display: string }>[];
   }>;
   readonly crowd?: Readonly<{
     indexed: number;
@@ -285,6 +295,12 @@ export interface ArenaTestSnapshot {
     rosterHighWater: Readonly<Record<string, number>>;
     offspringQueued: number;
     offspringSpawned: number;
+  }>;
+  readonly menu?: Readonly<{
+    title: string;
+    startAction: string;
+    runsPlayed: number;
+    bestLevel: number;
   }>;
   readonly error?: string;
 }

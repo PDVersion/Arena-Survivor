@@ -1494,6 +1494,84 @@ No automated check: text metrics need a real browser, and pinning them would pin
 Revisit when:
 An overlay needs scrolling, a theme ships a materially different font stack, or a card needs more than three detail rows.
 
+### REC-061 — The ring-crossing floor is derived from the roster, not fixed
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; enemy tuning, difficulty ramp, the REC-049 envelope
+- Blocks: None
+
+Context / observation:
+The REC-058 cut was not enough in play; the roster still closed faster than it could be read. The remaining headroom was gone: REC-049's twelve-second ring-crossing floor already bound the glass role at 11.4 s, and REC-058 had noted that a further cut would need the envelope revisited rather than the value nudged.
+
+Two things were also hiding a share of the problem. The base cut was partly handed back by `time.enemyMoveSpeedAtEnd`, which multiplied the whole roster by 1.1 by the end of a run — a 0.9x roster at 1.1x is 0.99x, so the late run, where "too fast" was felt hardest, had barely changed. And the plastic bag exists specifically to outrun the player, so it can only ever be trimmed to just above the player's 200, however far the rest of the roster comes down.
+
+Decision / solution:
+Cut again to 112 / 204 / 76 / 88 (V0.3 shipped 140 / 240 / 90 / 110), and halve the end-of-run speed ramp to 0.05 so the late run keeps most of the cut. Re-derive the floor rather than treat it as a constant: twelve seconds becomes thirteen, and the opening role's eight becomes nine.
+
+The two floors are not equally important, and the re-derivation says so. The opening role is the entire roster for the first minute, so its crossing time is literally how long a run has nothing in it — it is held tightest, at 8.6 s against a 9 s limit. The heavy roles are walls the player navigates around; a long crossing is their identity, not dead time. REC-049's floors were set from one measurement of one failure and were never claimed to be derived; treating them as fixed would have made a play-test finding unactionable.
+
+Why:
+`npm run balance` cannot answer this. The simulator models spawn cadence, damage, and reward income, but not movement, so a roster-wide speed change moves no number in any report — final levels and time-to-kill are identical before and after. Closing speed is only observable in play, which is why the declared band is the instrument and why the band has to be honest about which end is load-bearing.
+
+Future guardrail:
+`tests/unit/director` asserts both ends for both production packs: 13 s for any role, 9 s for the opening role, and REC-058's 1.1x closing-speed ceiling.
+
+Revisit when:
+Player speed becomes a character choice, the view size changes, or a further cut is wanted — at which point the opening role, not the tank, is the number that has run out of room.
+
+### REC-062 — Session statistics are a separate slice, merged on read
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; statistics, the Field Guide, V0.4 persistence
+- Blocks: None
+
+Context / observation:
+The Field Guide needed to say how many of each upgrade the player has collected this session and the most they have taken in one run, alongside session totals such as damage. Nothing outlived a run: `RunStatistics` is created fresh per run and `ProfileState` carries identity and unlocks, not history.
+
+Decision / solution:
+Add a `SessionStatistics` slice at module scope, following the settings slice: it survives a restart, which is what "session" means to a player who just pressed R, and it is shaped for the "lifetime and best-run statistics" field in `SAVE_DATA.md` so the V0.4 persistence adapter can store it unchanged. No persistence, codec, or migration is implemented here.
+
+Only *finished* runs are stored. The run in progress is merged on read. Storing it live would either double-count it when it ends or lag a run behind, and both are worse than a merge. `runsPlayed` is the one field the live run does not contribute to, because a run being played has not been played yet; every other field is either additive — which is what "collected this session" means mid-run — or a `Math.max`, which makes merging the same live run on every read idempotent. A unit test asserts that idempotence directly, because it is the property the whole design rests on.
+
+An intermediate version excluded the live run from the best-run records too. A test caught the consequence: a player standing at level 30 saw a best of 12. Records that refuse to move until you die look broken, and the maxima were already safe to merge.
+
+Why:
+Per-upgrade counts are the part the player cannot reconstruct. The pool is eighteen entries with per-run caps between 3 and 15, and "how much of this have I actually used, and how hard have I ever pushed it" is exactly the question a reference surface should answer.
+
+Future guardrail:
+`tests/unit/statistics/session-statistics` covers accumulation, best-versus-total separation, live-run merging, idempotence, and that reading never mutates the store. A browser path takes an upgrade and asserts it appears in the catalogue with a session total and a best-run figure.
+
+Revisit when:
+Persistence lands and this slice needs a codec and migrations, or lifetime statistics need to outlive the page.
+
+### REC-063 — The game opens on a title screen, and test mode skips it
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; boot flow, browser test design, V0.4 menu surfaces
+- Blocks: None
+
+Context / observation:
+`BootScene` started the run directly, so the player arrived already under attack, with no statement of what the game is and nowhere to return to. It also left no home for the character select, mode select, and save export/import surfaces that V0.4 needs.
+
+Decision / solution:
+Add a `MenuScene` between boot and the run: title, arena name, a start action, the control hint, and the session's best figures once a run has been played. It owns no simulation and reads only theme copy and the session statistics slice, so it cannot disagree with the run it starts.
+
+Test mode goes straight to the run unless a path passes `menu`. Roughly forty browser paths open with `page.goto` and poll for a playing run; making every one of them dismiss a title screen would add a step to each and test nothing, and the `spawnRadius` / `closeLoad` / `shrineLayout` precedent already covers "the subject of this path is not the thing in the way".
+
+The cost is stated rather than hidden: the menu is bypassed by every path except `tests/e2e/menu`, so a regression in the boot-to-run transition surfaces in exactly one file. That file therefore covers the transition three ways — that the menu appears and nothing is simulating behind it, that Enter reaches a run whose clock actually advances, and that the button click does the same — rather than only asserting the menu renders.
+
+Why:
+An always-on menu tested by everything would be better, but not at the price of a mandatory dismissal step in forty specs. Bypassing it while testing the transition properly is the trade that keeps both the production behaviour and the suite honest.
+
+Future guardrail:
+`tests/e2e/menu` is the only coverage and is deliberately transition-focused. Anything added to the menu that affects a run — character select, mode select, an imported save — needs its own assertion there, because no other path will see it.
+
+Revisit when:
+The menu gains state that changes how a run starts, or a run can return to it rather than restarting in place.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

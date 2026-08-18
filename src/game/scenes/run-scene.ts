@@ -93,7 +93,16 @@ import {
   updateShrineSurge,
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
-import { selectShrineCodex } from "../systems/codex/describe-shrine";
+import {
+  selectSessionCodex,
+  selectShrineCodex,
+  selectUpgradeCodex,
+} from "../systems/codex/describe-shrine";
+import {
+  getSessionStatistics,
+  recordFinishedRun,
+  type RunContribution,
+} from "../state/session-statistics";
 import {
   placeShrine,
   scheduleShrineArrivals,
@@ -576,6 +585,9 @@ export class RunScene extends Phaser.Scene {
       if (this.tabKey && Phaser.Input.Keyboard.JustDown(this.tabKey)) this.pauseMenu.cycleTab(1);
       if (this.cursors?.right && Phaser.Input.Keyboard.JustDown(this.cursors.right)) this.pauseMenu.cycleTab(1);
       if (this.cursors?.left && Phaser.Input.Keyboard.JustDown(this.cursors.left)) this.pauseMenu.cycleTab(-1);
+      // Up/down move within a tab; only the Field Guide has anywhere to move.
+      if (this.cursors?.down && Phaser.Input.Keyboard.JustDown(this.cursors.down)) this.pauseMenu.cycleCodexSection(1);
+      if (this.cursors?.up && Phaser.Input.Keyboard.JustDown(this.cursors.up)) this.pauseMenu.cycleCodexSection(-1);
     }
     if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.applySetting("muted");
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
@@ -2139,6 +2151,7 @@ export class RunScene extends Phaser.Scene {
 
   private pauseMenuView() {
     const runState = this.runState;
+    const session = getSessionStatistics(this.liveRunContribution());
     const summary = runState
       ? selectRunSummaryValues(runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
       : undefined;
@@ -2153,8 +2166,23 @@ export class RunScene extends Phaser.Scene {
         : [],
       upgrades: summary?.upgrades ?? [],
       codex: selectShrineCodex(activeTheme),
+      codexUpgrades: selectUpgradeCodex(activeTheme, session),
+      codexSession: selectSessionCodex(activeTheme, session),
       settings: getSessionSettings(),
     };
+  }
+
+  /**
+   * What the live run contributes to the session totals.
+   *
+   * Only while it is still being played. Once it reaches a terminal state it
+   * has been folded into the session for real, and counting it here as well
+   * would double it.
+   */
+  private liveRunContribution(): RunContribution | undefined {
+    const runState = this.runState;
+    if (!runState || runState.status === "dead" || runState.status === "complete") return undefined;
+    return { level: runState.progression.level, statistics: runState.statistics };
   }
 
   private applySetting(key: SettingKey): void {
@@ -2253,6 +2281,10 @@ export class RunScene extends Phaser.Scene {
     this.activeExplosionCues = 0;
     this.audioFeedback.destroy();
     this.physics.world.pause();
+    recordFinishedRun({
+      level: this.runState.progression.level,
+      statistics: this.runState.statistics,
+    });
     this.runEndOverlay?.show(this.runState, () => this.restartRun());
   }
 
@@ -2577,6 +2609,21 @@ export class RunScene extends Phaser.Scene {
           name: entry.name,
           effects: entry.effects.map((effect) => ({ label: effect.label, display: effect.display })),
         })),
+        codexSection: this.pauseMenu?.activeCodexSection ?? null,
+        codexUpgrades: selectUpgradeCodex(
+          activeTheme,
+          getSessionStatistics(this.liveRunContribution()),
+        ).map((entry) => ({
+          id: entry.id,
+          name: entry.name,
+          sessionTotal: entry.sessionTotal,
+          bestInRun: entry.bestInRun,
+          maxPerRun: entry.maxPerRun,
+        })),
+        codexSession: selectSessionCodex(
+          activeTheme,
+          getSessionStatistics(this.liveRunContribution()),
+        ).map((line) => ({ label: line.label, display: line.display })),
         statLines: this.runState
           ? selectPlayerStats(this.runState, activeTheme).map((line) => ({
               key: line.key,

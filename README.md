@@ -6,7 +6,7 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
-**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~10% slower, shrines arrive across the run at scattered positions, and overlay text is measured rather than placed at fixed offsets (REC-058 to REC-060).
+**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~20% slower than V0.3, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, and the Field Guide catalogues shrines, the upgrade pool, and the session's totals (REC-058 to REC-063).
 
 V0.3 in full — a rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
 
@@ -32,21 +32,25 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). Runs last five minutes, combat fires automatically, and risk/reward shrines permanently raise world pressure. Shrines arrive one at a time across the run at scattered positions rather than all at the start; while one is off screen, a named marker on the edge of the view points the way.
+Open the URL printed by Vite (normally `http://localhost:5173`). The game opens on a title screen; press Enter, Space, or click to begin. Runs last five minutes, combat fires automatically, and risk/reward shrines permanently raise world pressure. Shrines arrive one at a time across the run at scattered positions rather than all at the start; while one is off screen, a named marker on the edge of the view points the way.
 
 Controls:
 
 ```text
 WASD / Arrow keys = Move
+Enter / Space     = Begin a run from the title screen
 Escape            = Pause or resume
 E / Space         = Activate a shrine while in range
 1 / 2 / 3         = Choose a level-up upgrade
 R / Enter         = Restart after death or completion
 M                 = Mute or unmute session audio
-Tab / arrows      = Switch pause-menu tabs while paused
+Tab / left/right  = Switch pause-menu tabs while paused
+Up / down         = Switch Field Guide sections
 ```
 
-Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, live world pressure, and a Field Guide stating what each shrine costs and gives before you walk to it.
+Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, and live world pressure.
+
+The Field Guide tab has three sections, switched with the up and down arrows or by clicking: what each shrine costs and gives before you walk to it; the whole upgrade pool with how many you have taken this session, the most you have taken in one run, and the per-run cap; and the session's totals, including total damage and your best run. Session figures survive a restart but not a page reload — persistence lands in V0.4.
 
 ### What a run looks like
 

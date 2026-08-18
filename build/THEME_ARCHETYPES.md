@@ -116,9 +116,13 @@ defineTheme({
 
 Player-facing reference copy lives in `copy.codex` alongside the rest of `copy`.
 The Field Guide never authors a number of its own: an entry's identity comes
-from `copy.content`, and everything it says a shrine does is read from the
-definition the run actually resolves. See REC-060 and the `copy.stats` /
-`copy.world` labels it reuses.
+from `copy.content`, everything it says a shrine does is read from the shrine
+definition, and an upgrade's per-run cap is read from `maxLevel` on the upgrade
+definition. See REC-060, REC-062, and the `copy.stats` / `copy.world` labels the
+guide reuses.
+
+The palette carries a `health` token distinct from `pickup`, so the HUD's health
+and level bars are never the same colour by accident.
 
 Content definitions may compose reusable core effects such as projectile, contact damage, stat modifier, spawn burst, or reward multiplier. Adding a theme must not require adding theme-specific conditionals to those effects.
 

@@ -33,6 +33,10 @@ export interface ThemeVocabulary {
   readonly completeTitle: string;
   readonly completeMessage: string;
   readonly restartAction: string;
+  /** Title-screen action, e.g. "Begin Shift". */
+  readonly startAction: string;
+  /** How to trigger it, e.g. "Press Enter or click to begin". */
+  readonly startHint: string;
   readonly shrinePrompt: string;
   /** Banner shown when a scheduled shrine arrives somewhere in the arena. */
   readonly shrineArrived: string;
@@ -126,6 +130,20 @@ export interface ThemeCodexCopy {
   readonly duplicates: string;
   /** Value used by `duplicates`, e.g. "Every enemy present". */
   readonly duplicatesValue: string;
+  /** Section heading for the upgrade catalogue. */
+  readonly upgrades: string;
+  /** Section heading for the session totals. */
+  readonly session: string;
+  /** Column heading for times taken across the session. */
+  readonly sessionTotal: string;
+  /** Column heading for the most taken within one run. */
+  readonly bestInRun: string;
+  /** Column heading for the per-run cap. */
+  readonly maxPerRun: string;
+  /** Label for how many runs have been played this session. */
+  readonly runsPlayed: string;
+  /** Prefix for a best-run record, e.g. "Best". */
+  readonly best: string;
 }
 
 export interface ThemePalette {
@@ -143,6 +161,8 @@ export interface ThemePalette {
   readonly critical: string;
   readonly overcritical: string;
   readonly pickup: string;
+  /** The health bar's fill. Distinct from `pickup`, which fills the level bar. */
+  readonly health: string;
   readonly shrine: string;
   readonly explosion: string;
   readonly elite: string;

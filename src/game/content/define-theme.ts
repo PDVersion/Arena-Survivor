@@ -25,6 +25,8 @@ const vocabularyKeys = [
   "completeTitle",
   "completeMessage",
   "restartAction",
+  "startAction",
+  "startHint",
   "shrinePrompt",
   "shrineArrived",
   "surgeActive",
@@ -54,6 +56,13 @@ const codexCopyKeys = [
   "released",
   "duplicates",
   "duplicatesValue",
+  "upgrades",
+  "session",
+  "sessionTotal",
+  "bestInRun",
+  "maxPerRun",
+  "runsPlayed",
+  "best",
 ] as const;
 
 export class ThemeValidationError extends Error {

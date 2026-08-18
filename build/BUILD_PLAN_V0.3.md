@@ -875,11 +875,19 @@ scope, and each is recorded in full in [`../RECONCILIATION.md`](../RECONCILIATIO
 | Enemies closed too fast to read | Move speed cut ~10% across both packs; the REC-049 envelope gains a ceiling to match its floor | REC-058 |
 | Every shrine was decided in the opening seconds | Shrines arrive on a schedule in run progress, placed around the player when they arrive, with an edge marker so they stay findable | REC-059 |
 | Upgrade card text ran outside its box | Overlay text is measured and then placed; cards size to their content and the panel sizes to the cards | REC-060 |
+| Enemies were still too fast | A second ~10% cut, the end-of-run speed ramp halved, and the ring-crossing floor re-derived rather than treated as fixed | REC-061 |
+| Nothing outlived a run | A session statistics slice, shaped for `SAVE_DATA.md` and merged with the live run on read, feeding an upgrade catalogue and session totals in the Field Guide | REC-062 |
+| The game dropped straight into a run | A title screen between boot and the run; test mode skips it and one path covers the transition | REC-063 |
 
-The shrine change adds `tuning.shrines` to the theme tuning contract and a Field
-Guide tab to the pause menu, which is a **reference surface only** — encounter
-tracking, unlock gating, and the enemy and fact entries described in
-[`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md) remain V0.4 scope.
+Two smaller additions came with those. The HUD gained a health bar beside the
+existing level bar, keeping the exact numbers in the text block, which needed a
+theme-owned `health` palette token. The Field Guide gained sections, because a
+catalogue covering the eighteen-entry upgrade pool no longer fits one page.
+
+The Field Guide remains a **reference surface only** — encounter tracking,
+unlock gating, and the enemy and fact entries described in
+[`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md) remain V0.4 scope, as does any
+persistence for the session statistics slice.
 
 ---
 

@@ -2,23 +2,23 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { EnemyDefinition } from "../../../core/archetypes/contracts";
 
 /**
- * Move speed was cut roughly 10% across the roster after V0.3 play testing, in
- * step with the production pack: this theme shares the roster shape, the player
- * speed, and REC-049's spawn envelope, so the closing-speed ceiling binds it
- * identically. Health, contact harm, and rewards are unchanged — only speed
- * moved, and only because the crowd closed faster than it could be read.
+ * Move speed was cut twice after V0.3 play testing, in step with the production
+ * pack: this theme shares the roster shape, the player speed, and REC-049's
+ * spawn envelope, so the same band binds it identically. Health, contact harm,
+ * and rewards are unchanged — only speed moved, and only because the crowd
+ * closed faster than it could be read. See REC-058 and REC-061.
  *
- *   role         was    now    ring crossing    vs player 200
- *   Grunt        140    124          7.7 s      0.62x
- *   Runner       240    210          4.6 s      1.05x
- *   Tank          90     84         11.4 s      0.42x
- *   Broodmother  110     98          9.8 s      0.49x
+ *   role         V0.3    now    ring crossing    vs player 200
+ *   Grunt         140    112          8.6 s      0.56x
+ *   Runner        240    204          4.7 s      1.02x
+ *   Tank           90     76         12.6 s      0.38x
+ *   Broodmother   110     88         10.9 s      0.44x
  */
 export const enemies = [
   {
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,
-    moveSpeed: 124,
+    moveSpeed: 112,
     contactDamage: 10,
     contactCooldownMs: 1000,
     radius: 14,
@@ -30,7 +30,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.fastFragile,
     maxHealth: 10,
-    moveSpeed: 210,
+    moveSpeed: 204,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
@@ -42,7 +42,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.slowDurable,
     maxHealth: 80,
-    moveSpeed: 84,
+    moveSpeed: 76,
     contactDamage: 20,
     contactCooldownMs: 1000,
     radius: 22,
@@ -54,7 +54,7 @@ export const enemies = [
   {
     id: archetypeIds.enemy.deathSpawner,
     maxHealth: 50,
-    moveSpeed: 98,
+    moveSpeed: 88,
     contactDamage: 12,
     contactCooldownMs: 1000,
     radius: 25,

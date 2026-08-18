@@ -22,6 +22,8 @@ export const copy = {
     completeTitle: "Shift Complete",
     completeMessage: "You held the site for the full shift.",
     restartAction: "New Shift",
+    startAction: "Begin Shift",
+    startHint: "Press Enter or Space, or click to begin",
     shrinePrompt: "Press E or Space to authorise",
     shrineArrived: "A site event has opened",
     surgeActive: "The landfill gives way",
@@ -77,6 +79,13 @@ export const copy = {
     released: "Waste released",
     duplicates: "Duplicates",
     duplicatesValue: "Everything on site",
+    upgrades: "Equipment",
+    session: "Session",
+    sessionTotal: "This session",
+    bestInRun: "Best shift",
+    maxPerRun: "Per shift",
+    runsPlayed: "Shifts worked",
+    best: "Best",
   },
   content: {
     [archetypeIds.character.starter]: {
