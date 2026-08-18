@@ -26,6 +26,7 @@ const vocabularyKeys = [
   "completeMessage",
   "restartAction",
   "shrinePrompt",
+  "shrineArrived",
   "surgeActive",
   "statisticsTitle",
   "peakEnemiesAlive",
@@ -44,6 +45,15 @@ const vocabularyKeys = [
   "remainderDamage",
   "upgradesTaken",
   "deathCause",
+] as const;
+
+const codexCopyKeys = [
+  "title",
+  "shrines",
+  "reward",
+  "released",
+  "duplicates",
+  "duplicatesValue",
 ] as const;
 
 export class ThemeValidationError extends Error {
@@ -79,6 +89,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   for (const key of worldKeys) {
     if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
+  }
+  for (const key of codexCopyKeys) {
+    if (!theme.copy.codex?.[key]?.trim()) issues.push(`codex.${key} label is required`);
   }
 
   for (const id of v02ContentIds) {
@@ -491,7 +504,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!hazardIds.has(requiredId)) issues.push(`missing required hazard: ${requiredId}`);
   }
 
-  issues.push(...validateTuning(theme, enemyIds, hazardIds));
+  issues.push(...validateTuning(theme, enemyIds, hazardIds, shrineIds));
 
   return issues;
 }
@@ -500,6 +513,7 @@ function validateTuning(
   theme: ThemeManifest,
   enemyIds: ReadonlySet<string>,
   hazardIds: ReadonlySet<string>,
+  shrineIds: ReadonlySet<string>,
 ): readonly string[] {
   const issues: string[] = [];
   const tuning = theme.tuning;
@@ -699,6 +713,43 @@ function validateTuning(
     }
     if ((hazardTuning.weights ?? []).reduce((sum, entry) => sum + Math.max(0, entry.weight), 0) <= 0) {
       issues.push("tuning.hazards.weights must total more than zero");
+    }
+  }
+
+  const shrineTuning = tuning.shrines;
+  if (!shrineTuning) {
+    issues.push("tuning.shrines is required");
+  } else {
+    if (!Number.isFinite(shrineTuning.edgeMargin) || shrineTuning.edgeMargin < 0) {
+      issues.push("tuning.shrines.edgeMargin cannot be negative");
+    }
+    if (!Number.isFinite(shrineTuning.minSeparation) || shrineTuning.minSeparation < 0) {
+      issues.push("tuning.shrines.minSeparation cannot be negative");
+    }
+    if (
+      !Number.isFinite(shrineTuning.minDistanceFromPlayer) ||
+      shrineTuning.minDistanceFromPlayer <= 0
+    ) {
+      issues.push("tuning.shrines.minDistanceFromPlayer must be greater than zero");
+    }
+    // A shrine the player can never find is worse than no shrine at all.
+    if (shrineTuning.maxDistanceFromPlayer < shrineTuning.minDistanceFromPlayer) {
+      issues.push("tuning.shrines.maxDistanceFromPlayer cannot be below minDistanceFromPlayer");
+    }
+    if (!Number.isInteger(shrineTuning.placementAttempts) || shrineTuning.placementAttempts < 1) {
+      issues.push("tuning.shrines.placementAttempts must be a positive integer");
+    }
+    if (!Array.isArray(shrineTuning.arrivals) || shrineTuning.arrivals.length === 0) {
+      issues.push("tuning.shrines.arrivals must schedule at least one shrine");
+    } else {
+      for (const arrival of shrineTuning.arrivals) {
+        if (!shrineIds.has(arrival.shrineId)) {
+          issues.push(`tuning.shrines references missing shrine: ${arrival.shrineId}`);
+        }
+        if (!Number.isFinite(arrival.appearAt) || arrival.appearAt < 0 || arrival.appearAt >= 1) {
+          issues.push(`${arrival.shrineId} shrine appearAt must be within [0, 1)`);
+        }
+      }
     }
   }
 

@@ -44,6 +44,13 @@ A milestone built by more than one agent keeps the prefix of the agent that crea
 
 Everything else about a branch — one branch per milestone, one pull request into `main`, one reviewable commit per numbered phase — is unchanged by the prefix.
 
+## Git workflow for V0.3.1
+
+- Branch: `claude/v0.3.1`
+- Delivery: one branch of play-test corrections to the merged V0.3 milestone. It
+  adds no new milestone scope; each change fixes something V0.3 shipped wrong.
+  See REC-058, REC-059, and REC-060.
+
 ## Git workflow for V0.3
 
 - Branch: `claude/v0.3`

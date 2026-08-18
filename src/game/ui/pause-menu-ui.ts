@@ -2,8 +2,9 @@ import Phaser from "phaser";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { StatLine, WorldLine } from "../systems/upgrades/describe-upgrade";
 import type { RunSettings, SettingKey } from "../state/settings-state";
+import type { CodexEntry } from "../systems/codex/describe-shrine";
 
-export const pauseTabs = ["stats", "upgrades", "world", "settings"] as const;
+export const pauseTabs = ["stats", "upgrades", "world", "codex", "settings"] as const;
 export type PauseTab = (typeof pauseTabs)[number];
 
 export interface PauseMenuView {
@@ -11,6 +12,8 @@ export interface PauseMenuView {
   readonly world: readonly WorldLine[];
   /** Upgrades taken, already formatted by the shared run-summary selector. */
   readonly upgrades: readonly string[];
+  /** Reference entries, currently the shrine roster. */
+  readonly codex: readonly CodexEntry[];
   readonly settings: RunSettings;
 }
 
@@ -94,31 +97,40 @@ export class PauseMenuUi {
 
     this.tabBounds = [];
     const tabWidth = (panelWidth - 48) / pauseTabs.length;
+    // Labels are theme copy of unknown length, and the tab strip narrows every
+    // time a tab is added, so each label wraps inside its own tab and is scaled
+    // down if a single word still will not fit.
+    const labelWidth = tabWidth - 20;
+    const tabHeight = 44;
     pauseTabs.forEach((tab, index) => {
       const x = left + 24 + tabWidth * index + tabWidth / 2;
-      const y = top + 68;
+      const y = top + 72;
       const active = tab === this.tab;
+      const label = this.scene.add
+        .text(x, y, this.tabLabel(tab), {
+          align: "center",
+          color: active ? palette.background : palette.text,
+          fontFamily: "Georgia, serif",
+          fontSize: "15px",
+          fontStyle: "bold",
+          wordWrap: { width: labelWidth },
+        })
+        .setOrigin(0.5);
+      if (label.width > labelWidth) label.setScale(labelWidth / label.width);
       children.push(
         this.scene.add
-          .rectangle(x, y, tabWidth - 8, 34, active ? accent : floor, active ? 0.85 : 1)
+          .rectangle(x, y, tabWidth - 8, tabHeight, active ? accent : floor, active ? 0.85 : 1)
           .setStrokeStyle(2, accent),
-        this.scene.add
-          .text(x, y, this.tabLabel(tab), {
-            color: active ? palette.background : palette.text,
-            fontFamily: "Georgia, serif",
-            fontSize: "16px",
-            fontStyle: "bold",
-          })
-          .setOrigin(0.5),
+        label,
       );
       this.tabBounds.push({
         tab,
-        bounds: new Phaser.Geom.Rectangle(x - tabWidth / 2, y - 17, tabWidth, 34),
+        bounds: new Phaser.Geom.Rectangle(x - tabWidth / 2, y - tabHeight / 2, tabWidth, tabHeight),
       });
     });
 
     this.settingBounds = [];
-    const bodyTop = top + 104;
+    const bodyTop = top + 116;
     const rowStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: palette.text,
       fontFamily: "Georgia, serif",
@@ -130,6 +142,8 @@ export class PauseMenuUi {
       children.push(...this.renderRows(view.stats, left, bodyTop, panelWidth, rowStyle));
     } else if (this.tab === "world") {
       children.push(...this.renderRows(view.world, left, bodyTop, panelWidth, rowStyle));
+    } else if (this.tab === "codex") {
+      children.push(...this.renderCodex(view.codex, left, bodyTop, panelWidth, rowStyle));
     } else if (this.tab === "upgrades") {
       const text = view.upgrades.length > 0 ? view.upgrades.join("\n") : "—";
       children.push(this.scene.add.text(left + 32, bodyTop, text, rowStyle));
@@ -201,10 +215,67 @@ export class PauseMenuUi {
     });
   }
 
+  /**
+   * The reference tab.
+   *
+   * Each entry is a name, what it costs and gives, and one line of identity.
+   * Effects are read from the live definitions, so a page cannot claim a number
+   * the run does not use.
+   */
+  private renderCodex(
+    entries: readonly CodexEntry[],
+    left: number,
+    top: number,
+    panelWidth: number,
+    style: Phaser.Types.GameObjects.Text.TextStyle,
+  ): Phaser.GameObjects.GameObject[] {
+    const palette = this.theme.tokens.palette;
+    const width = panelWidth - 64;
+    const children: Phaser.GameObjects.GameObject[] = [
+      this.scene.add
+        .text(left + 32, top, this.theme.copy.codex.shrines.toUpperCase(), {
+          ...style,
+          color: palette.text,
+          fontSize: "14px",
+        })
+        .setAlpha(0.6),
+    ];
+
+    let y = top + 26;
+    for (const entry of entries) {
+      const name = this.scene.add.text(left + 32, y, entry.name, {
+        ...style,
+        color: palette.accent,
+        fontStyle: "bold",
+      });
+      const effects = this.scene.add
+        .text(left + 32 + width, y, entry.effects.map((effect) => `${effect.label} ${effect.display}`).join("   ·   "), {
+          ...style,
+          color: palette.pickup,
+          fontSize: "15px",
+          align: "right",
+        })
+        .setOrigin(1, 0);
+      const description = this.scene.add
+        .text(left + 32, y + Math.max(name.height, effects.height) + 2, entry.description, {
+          ...style,
+          fontSize: "15px",
+          wordWrap: { width },
+        })
+        .setAlpha(0.75);
+      children.push(name, effects, description);
+      // Measured rather than assumed, so a long description cannot run into the
+      // next entry the way the V0.3 upgrade cards ran out of their own box.
+      y = description.y + description.height + 16;
+    }
+    return children;
+  }
+
   private tabLabel(tab: PauseTab): string {
     if (tab === "stats") return "STATS";
     if (tab === "upgrades") return this.theme.copy.vocabulary.upgradesTaken.toUpperCase();
     if (tab === "world") return this.theme.copy.vocabulary.chaos.toUpperCase();
+    if (tab === "codex") return this.theme.copy.codex.title.toUpperCase();
     return "SETTINGS";
   }
 

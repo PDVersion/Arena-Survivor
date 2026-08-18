@@ -256,6 +256,19 @@ describe("engagement envelope", () => {
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
+  ])("keeps the %s roster inside the closing-speed ceiling", (_name, theme) => {
+    // The envelope had a floor but no ceiling, so nothing stopped the roster
+    // drifting fast enough that the crowd closed before it could be read. The
+    // one role that outruns the player must only just outrun them.
+    const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
+    for (const enemy of theme.enemies) {
+      expect(enemy.moveSpeed).toBeLessThanOrEqual(playerSpeed * 1.1);
+    }
+  });
+
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
   ])("keeps %s player able to outrun all but the fast role", (_name, theme) => {
     const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
     const faster = theme.enemies.filter((enemy) => enemy.moveSpeed >= playerSpeed);

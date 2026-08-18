@@ -93,6 +93,13 @@ import {
   updateShrineSurge,
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
+import { selectShrineCodex } from "../systems/codex/describe-shrine";
+import {
+  placeShrine,
+  scheduleShrineArrivals,
+  shrineMarker,
+  type ScheduledShrine,
+} from "../systems/shrines/shrine-placement";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 import { CausalEventQueue, type EventQueueSnapshot } from "../systems/events/causal-events";
 import {
@@ -142,6 +149,9 @@ const PICKUP_CAP = 250;
 /** How far past the arena a drifting enemy travels before it is reclaimed. */
 const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
+const SHRINE_PLACEMENT_SEED = 0x5471_0008;
+/** How far outside the view a shrine marker is pinned, so it never hides a wall. */
+const SHRINE_MARKER_INSET = 44;
 let runGenerationSequence = 0;
 
 function testRunDurationMs(): number | undefined {
@@ -199,6 +209,19 @@ function testHazardIntervalMs(): number | undefined {
   return Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
+/**
+ * Test-only override that restores the V0.3 shrine layout.
+ *
+ * Shrines now arrive across the run at randomized positions, so a path whose
+ * subject is shrine *effects* rather than shrine discovery would otherwise
+ * spend its budget walking. `adjacent` places every instance beside the player
+ * and reveals them all at once, which is exactly what the V0.3 layout did.
+ */
+function testShrineLayout(): string | null {
+  if (import.meta.env.MODE !== "test") return null;
+  return new URLSearchParams(window.location.search).get("shrineLayout");
+}
+
 function testWorldScenario(): string | null {
   if (import.meta.env.MODE !== "test") return null;
   return new URLSearchParams(window.location.search).get("worldScenario");
@@ -248,6 +271,13 @@ export class RunScene extends Phaser.Scene {
   private shrineDefinition?: ShrineDefinition;
   private shrine?: ShrineActor;
   private shrineActors: ShrineActor[] = [];
+  private shrineArrivals: readonly ScheduledShrine[] = [];
+  private shrinesRevealed = 0;
+  private shrineRandom = createSeededRandom(SHRINE_PLACEMENT_SEED);
+  private shrineMarkers = new Map<
+    ShrineActor,
+    Readonly<{ arrow: Phaser.GameObjects.Triangle; label: Phaser.GameObjects.Text }>
+  >();
   private surgeState: ShrineSurgeState = createShrineSurgeState();
   private levelUpUi?: LevelUpChoiceUi;
   private pauseMenu?: PauseMenuUi;
@@ -461,7 +491,7 @@ export class RunScene extends Phaser.Scene {
       selectedCharacter,
       activeTheme.tokens,
     );
-    this.createShrineActors();
+    this.planShrineArrivals();
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
@@ -619,6 +649,14 @@ export class RunScene extends Phaser.Scene {
     this.shrineDefinition = undefined;
     this.shrine = undefined;
     this.shrineActors = [];
+    this.shrineArrivals = [];
+    this.shrinesRevealed = 0;
+    this.shrineRandom = createSeededRandom(SHRINE_PLACEMENT_SEED);
+    for (const marker of this.shrineMarkers.values()) {
+      marker.arrow.destroy();
+      marker.label.destroy();
+    }
+    this.shrineMarkers = new Map();
     this.surgeState = createShrineSurgeState();
     this.levelUpUi = undefined;
     this.pauseMenu = undefined;
@@ -1058,39 +1096,179 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
-  private createShrineActors(): void {
-    const centreX = ARENA_SIZE.width / 2;
-    const centreY = ARENA_SIZE.height / 2;
-    const placements: readonly [ShrineDefinition["id"], number, number][] = [
-      [archetypeIds.shrine.spawnSurge, centreX + 96, centreY],
-      [archetypeIds.shrine.greed, centreX - 210, centreY],
-      [archetypeIds.shrine.multiplicity, centreX, centreY - 210],
-      [archetypeIds.shrine.multiplicity, centreX, centreY + 210],
-      [archetypeIds.shrine.duplication, centreX + 310, centreY],
-    ];
-    this.shrineActors = placements.flatMap(([id, x, y]) => {
-      const definition = activeTheme.shrines.find((candidate) => candidate.id === id);
-      if (!definition) return [];
-      return [new ShrineActor(
-        this, x, y, definition, activeTheme.tokens,
-        activeTheme.copy.content[id].name,
-        activeTheme.copy.vocabulary.shrinePrompt,
-      )];
-    });
-    this.shrine = this.shrineActors.find((actor) => actor.definition.id === archetypeIds.shrine.spawnSurge);
+  /**
+   * Schedule the run's shrine arrivals.
+   *
+   * No actor exists yet: a shrine is created at the moment it arrives, at a
+   * position resolved against wherever the player is then. V0.3 laid all five
+   * out around the arena centre at run start, which collapsed every risk/reward
+   * decision into the opening seconds.
+   */
+  private planShrineArrivals(): void {
+    this.shrineArrivals = scheduleShrineArrivals(
+      activeTheme.tuning.shrines,
+      this.runState?.durationMs ?? 1,
+    );
+    this.shrinesRevealed = 0;
+    if (testShrineLayout() === "adjacent") this.revealAllShrines();
   }
 
+  /**
+   * Create every scheduled shrine beside the player, immediately.
+   *
+   * Test-only, and used by the paths whose subject is what a shrine does rather
+   * than how it is found. Also used by the world scenarios, which activate all
+   * five directly and so need all five to exist.
+   */
+  private revealAllShrines(): void {
+    const player = this.player;
+    if (!player) return;
+    // The V0.3 offsets: one adjacent, the rest on a ring the player can reach in
+    // a step. Reproduced exactly so the paths that used them still measure what
+    // they measured before.
+    const offsets: readonly (readonly [number, number])[] = [
+      [96, 0], [-210, 0], [0, -210], [0, 210], [310, 0],
+    ];
+    while (this.shrinesRevealed < this.shrineArrivals.length) {
+      const index = this.shrinesRevealed;
+      const [dx, dy] = offsets[index % offsets.length]!;
+      this.revealShrine(this.shrineArrivals[index]!, {
+        x: Phaser.Math.Clamp(player.x + dx, 96, ARENA_SIZE.width - 96),
+        y: Phaser.Math.Clamp(player.y + dy, 96, ARENA_SIZE.height - 96),
+      }, false);
+    }
+  }
+
+  /** Bring one scheduled shrine into the world and announce it. */
+  private revealShrine(
+    arrival: ScheduledShrine,
+    at: Readonly<{ x: number; y: number }>,
+    announce: boolean,
+  ): void {
+    this.shrinesRevealed += 1;
+    const definition = activeTheme.shrines.find((candidate) => candidate.id === arrival.shrineId);
+    if (!definition) return;
+    const actor = new ShrineActor(
+      this,
+      at.x,
+      at.y,
+      definition,
+      activeTheme.tokens,
+      activeTheme.copy.content[definition.id].name,
+      activeTheme.copy.vocabulary.shrinePrompt,
+    );
+    this.shrineActors.push(actor);
+    this.shrine ??= definition.id === archetypeIds.shrine.spawnSurge ? actor : undefined;
+    if (announce) {
+      this.announceShrine(activeTheme.copy.vocabulary.shrineArrived);
+      this.emitFeedback("shrine", at.x, at.y, activeTheme.copy.content[definition.id].name);
+    }
+  }
+
+  /**
+   * Reveal due shrines, keep their off-screen markers current, and read intent.
+   *
+   * A shrine placed anywhere in a 3600x2400 arena is invisible from most of it,
+   * so every revealed, unactivated shrine carries a marker pinned to the edge of
+   * the view pointing at it. Without one, random placement would just make the
+   * shrines undiscoverable.
+   */
   private updateShrine(): void {
     if (!this.player || !this.runState) return;
+    while (
+      this.shrinesRevealed < this.shrineArrivals.length &&
+      this.runState.elapsedMs >= this.shrineArrivals[this.shrinesRevealed]!.appearAtMs
+    ) {
+      this.revealShrine(
+        this.shrineArrivals[this.shrinesRevealed]!,
+        placeShrine(
+          activeTheme.tuning.shrines,
+          ARENA_SIZE,
+          this.player,
+          this.shrineActors,
+          this.shrineRandom,
+        ),
+        true,
+      );
+    }
+
     const interact = this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key));
+    let activated: ShrineActor | undefined;
     for (const shrine of this.shrineActors) {
       const inRange = Phaser.Math.Distance.Between(this.player.x, this.player.y, shrine.x, shrine.y) <= shrine.definition.interactionRadius;
       shrine.setInRange(inRange);
-      if (interact && inRange && !shrine.activated) {
-        this.activateShrine(shrine);
-        return;
-      }
+      if (interact && inRange && !shrine.activated && !activated) activated = shrine;
     }
+    this.updateShrineMarkers();
+    if (activated) this.activateShrine(activated);
+  }
+
+  /** One edge-pinned, named pointer per revealed, unactivated, off-screen shrine. */
+  private updateShrineMarkers(): void {
+    const camera = this.cameras.main;
+    const centreX = this.scale.width / 2;
+    const centreY = this.scale.height / 2;
+    for (const shrine of this.shrineActors) {
+      const marker = this.shrineMarkers.get(shrine);
+      if (shrine.activated || camera.worldView.contains(shrine.x, shrine.y)) {
+        marker?.arrow.destroy();
+        marker?.label.destroy();
+        this.shrineMarkers.delete(shrine);
+        continue;
+      }
+      const offset = shrineMarker(
+        { x: shrine.x - camera.worldView.centerX, y: shrine.y - camera.worldView.centerY },
+        centreX - SHRINE_MARKER_INSET,
+        centreY - SHRINE_MARKER_INSET,
+      );
+      const x = centreX + offset.x;
+      const y = centreY + offset.y;
+      // The triangle's apex points up at rotation zero, so the heading turns by
+      // a quarter turn to aim it.
+      const rotation = offset.angle + Math.PI / 2;
+      if (marker) {
+        marker.arrow.setPosition(x, y).setRotation(rotation);
+        marker.label.setPosition(x, y + 22);
+        continue;
+      }
+      this.shrineMarkers.set(shrine, {
+        arrow: this.add
+          .triangle(x, y, 0, 22, 11, 0, 22, 22, Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.shrine).color)
+          .setRotation(rotation)
+          .setScrollFactor(0)
+          .setDepth(940),
+        label: this.add
+          .text(x, y + 22, activeTheme.copy.content[shrine.definition.id].name, {
+            color: activeTheme.tokens.palette.shrine,
+            fontFamily: "Georgia, serif",
+            fontSize: "14px",
+            stroke: activeTheme.tokens.palette.background,
+            strokeThickness: 4,
+          })
+          .setOrigin(0.5)
+          .setScrollFactor(0)
+          .setDepth(940),
+      });
+    }
+  }
+
+  /** The banner used by both shrine arrival and shrine activation. */
+  private announceShrine(text: string): void {
+    const message = this.add.text(this.scale.width / 2, 105, text, {
+      color: activeTheme.tokens.palette.shrine,
+      fontFamily: "Georgia, serif",
+      fontSize: "28px",
+      fontStyle: "bold",
+      stroke: activeTheme.tokens.palette.background,
+      strokeThickness: 6,
+    }).setOrigin(0.5).setScrollFactor(0).setDepth(950);
+    this.tweens.add({
+      targets: message,
+      alpha: 0,
+      y: 80,
+      duration: 900,
+      onComplete: () => message.destroy(),
+    });
   }
 
   private updateTestWorldScenario(): void {
@@ -1098,6 +1276,8 @@ export class RunScene extends Phaser.Scene {
     if (testSkillEnabled("representativeLoad") && this.loadHarnessSpawned < this.loadHarnessRequested) return;
     if (this.testWorldScenarioApplied || scenario === null || this.enemies.size === 0 || this.runGeneration > 1) return;
     this.testWorldScenarioApplied = true;
+    // Scenarios activate shrines directly, so every instance must exist first.
+    this.revealAllShrines();
     const targets = scenario === "multiplicity2"
       ? this.shrineActors.filter((actor) => actor.definition.id === archetypeIds.shrine.multiplicity)
       : this.shrineActors;
@@ -1131,34 +1311,21 @@ export class RunScene extends Phaser.Scene {
       }
     }
     shrine.activate();
+    const marker = this.shrineMarkers.get(shrine);
+    marker?.arrow.destroy();
+    marker?.label.destroy();
+    this.shrineMarkers.delete(shrine);
     this.shrineFeedback += 1;
     this.emitFeedback("shrine", shrine.x, shrine.y, "+Chaos");
     if (!this.reducedMotion) {
       this.cameras.main.flash(240, 251, 113, 133, false);
       this.cameras.main.shake(220, 0.006);
     }
-    const message = this.add.text(
-      this.scale.width / 2,
-      105,
+    this.announceShrine(
       definition.effectKind === "spawn_surge"
         ? activeTheme.copy.vocabulary.surgeActive
         : activeTheme.copy.content[definition.id].name,
-      {
-        color: activeTheme.tokens.palette.shrine,
-        fontFamily: "Georgia, serif",
-        fontSize: "28px",
-        fontStyle: "bold",
-        stroke: activeTheme.tokens.palette.background,
-        strokeThickness: 6,
-      },
-    ).setOrigin(0.5).setScrollFactor(0).setDepth(950);
-    this.tweens.add({
-      targets: message,
-      alpha: 0,
-      y: 80,
-      duration: 900,
-      onComplete: () => message.destroy(),
-    });
+    );
   }
 
   private updateSurge(): void {
@@ -1985,6 +2152,7 @@ export class RunScene extends Phaser.Scene {
           )
         : [],
       upgrades: summary?.upgrades ?? [],
+      codex: selectShrineCodex(activeTheme),
       settings: getSessionSettings(),
     };
   }
@@ -2404,6 +2572,11 @@ export class RunScene extends Phaser.Scene {
               };
             })
           : [],
+        codexEntries: selectShrineCodex(activeTheme).map((entry) => ({
+          id: entry.id,
+          name: entry.name,
+          effects: entry.effects.map((effect) => ({ label: effect.label, display: effect.display })),
+        })),
         statLines: this.runState
           ? selectPlayerStats(this.runState, activeTheme).map((line) => ({
               key: line.key,
@@ -2529,7 +2702,15 @@ export class RunScene extends Phaser.Scene {
         shrineXpCollected: this.shrineXpCollected,
         ambientXpCollected: this.ambientXpCollected,
         feedbackCount: this.shrineFeedback,
-        instances: this.shrineActors.map((actor) => ({ id: actor.definition.id, activated: actor.activated })),
+        instances: this.shrineActors.map((actor) => ({
+          id: actor.definition.id,
+          activated: actor.activated,
+          x: actor.x,
+          y: actor.y,
+        })),
+        plannedCount: this.shrineArrivals.length,
+        revealedCount: this.shrineActors.length,
+        nextAppearAtMs: this.shrineArrivals[this.shrinesRevealed]?.appearAtMs ?? null,
       },
       world: world && this.runState ? {
         ...world,

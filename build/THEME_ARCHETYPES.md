@@ -110,8 +110,15 @@ defineTheme({
   upgrades: { /* level-up offers and modifiers */ },
   pickups: { /* collectible definitions */ },
   shrines: { /* risk/reward definitions */ },
+  tuning: { /* balance values, including where and when shrines arrive */ },
 });
 ```
+
+Player-facing reference copy lives in `copy.codex` alongside the rest of `copy`.
+The Field Guide never authors a number of its own: an entry's identity comes
+from `copy.content`, and everything it says a shrine does is read from the
+definition the run actually resolves. See REC-060 and the `copy.stats` /
+`copy.world` labels it reuses.
 
 Content definitions may compose reusable core effects such as projectile, contact damage, stat modifier, spawn burst, or reward multiplier. Adding a theme must not require adding theme-specific conditionals to those effects.
 

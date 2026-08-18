@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 10 complete — V0.3 awaiting milestone review**
+- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1419,6 +1419,80 @@ The Phase 9 hit-stop path shipped with `maxFrameMs < 120` in the required suite 
 
 Revisit when:
 Weapon slots change how damage stacks, a boss needs its own time-to-kill target, or armour appears on more roles.
+
+### REC-058 — Closing speed has a ceiling as well as a floor
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; enemy tuning, the REC-049 envelope, director tests
+- Blocks: None
+
+Context / observation:
+Play testing the finished V0.3 build reported the whole roster as slightly too fast: the crowd closed before it could be read, and kiting stopped being a decision the player got to make. REC-049 had rescaled speed for the 958-unit spawn ring and installed guards for the failure it had just fixed — every role must cross the ring within twelve seconds, the opening role within eight, and exactly one role may outrun the player. All three are *floors*. Nothing in the envelope stopped speed drifting upward, which is the direction it had drifted.
+
+Decision / solution:
+Cut move speed roughly 10% across both production packs — 140/240/90/110 becomes 124/210/84/98 against an unchanged player speed of 200 — and add the missing ceiling: no role may exceed 1.1x the player's speed. The cut is deliberately not uniform, because the twelve-second floor binds the slow end: the glass/tank role takes the smallest cut (11.4 s of ring crossing, against a 12 s limit) while the two fastest roles take the largest. Health, contact harm, armour, and rewards are untouched.
+
+Both packs move together. They share the roster shape, the player speed, and the spawn envelope, so a ceiling that only one pack satisfies is not a guard — it is a comment. `tests/unit/enemies` had pinned the legacy pack's speeds as "product baselines"; speed is removed from that assertion, because pinning a value in two places is how a rebalance ends up half-applied. Health and contact damage remain pinned there.
+
+Why:
+The simulator is silent on this: it models spawn cadence, damage, and reward income but not movement, so a speed change does not move a single number in `npm run balance`. That is precisely why the guard had to be a test rather than a report — the only automated instrument that can catch closing speed drifting is a declared band on the value itself.
+
+Future guardrail:
+`tests/unit/director` now asserts the envelope from both directions for both production packs: a floor on ring-crossing time, and a ceiling of 1.1x player speed on every role.
+
+Revisit when:
+Player speed becomes a character choice rather than a constant, the view size changes, or a role is added whose identity depends on outrunning the player by more than a margin.
+
+### REC-059 — Shrines arrive across the run, at positions found rather than given
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; shrines, theme tuning, run scene, browser test design
+- Blocks: None
+
+Context / observation:
+All five shrine instances were created in `create()` at fixed offsets around the arena centre, so every risk/reward decision in the run was visible, reachable, and settled inside the opening seconds. The remaining four minutes contained none. `PLAN.md` asks for shrines "around the arena"; REC-036 anticipated this under "revisit when placement becomes procedural".
+
+Decision / solution:
+Add `tuning.shrines` as theme-owned data: an arrival schedule in normalized run progress, plus a placement band (edge margin, minimum separation, and a near/far distance from the player). A shrine is created at the moment it arrives, at a position sampled around wherever the player is *then* — not laid out at run start — so distance is a real cost rather than a fixed offset. Placement is rejection sampling with a best-candidate fallback, so a cornered player still gets a shrine instead of a silently dropped one. The fixed offset list left the scene entirely, which also removes a tuning literal the working agreement forbade.
+
+Random placement is only viable with a way to find the shrine. The arena is 2.25x the view horizontally and 2.7x vertically, so a placed shrine is invisible from most of the map. Every revealed, unactivated, off-screen shrine carries a named pointer pinned to the edge of the view, projected onto the view *rectangle* so it sits on the line between player and shrine rather than sliding toward a corner.
+
+Two browser paths broke on the change, both because their subject is what a shrine *does*: the surge path needed the Horde shrine in range at frame one, and the world scenarios activate all five directly. `shrineLayout=adjacent` restores the V0.3 layout for those paths, following the `spawnRadius` and `closeLoad` precedent from REC-049; the scenario path reveals every instance itself, so it needs no flag.
+
+Why:
+Five spaced decisions are five decisions. Five simultaneous ones are one. Scheduling in progress rather than minutes means a ten-minute or endless run restretches the same five arrivals with no second schedule, matching how the director already works.
+
+Future guardrail:
+Theme validation requires a shrine schedule whose entries name real shrines and land within `[0, 1)`. `tests/unit/shrine` asserts determinism from a seed, the separation and distance bands, corner fallback, and the marker projection. A browser path asserts arrivals accumulate rather than landing together, that placements respect the separation band, and that a restart reschedules from the opening.
+
+Revisit when:
+Shrine instances need save identity, arrivals become reactive to player state rather than scheduled, or the arena or view size changes the findability band.
+
+### REC-060 — Overlay text is measured, never assumed
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; level-up cards, pause menu, any future overlay
+- Blocks: None
+
+Context / observation:
+Play testing reported upgrade card text clipped outside its box. The cards were a fixed 128 px tall with every element at a fixed offset from the top: the heading at 12, the summary at 44, the detail block at 74. A three-row detail block is around 60 px tall, so it ended near 134 — past the bottom border. The heading had no wrap and no width bound, so a long name ran under the level badge. Nothing was broken by an edge case; the geometry simply never accounted for its own content.
+
+The same defect appeared immediately in a second place. Adding a fifth pause tab narrowed the tab strip below the width of the longest themed label, and "EQUIPMENT REQUISITIONED" ran straight out of its tab. That is the same mistake in a different file — a fixed box, and text assumed to fit.
+
+Decision / solution:
+Overlay text is built first, measured, and only then positioned and boxed. A level-up card lays each element out from the previous element's measured height, sizes itself to its own content subject to a minimum, and the panel is then sized to the cards rather than the cards to the panel. Every text that can grow declares a wrap width. Tab labels wrap inside their own tab and scale down if a single word still will not fit. The pause codex advances each entry by its predecessor's measured height.
+
+Why:
+A fixed offset is a claim about how tall text will render, made before the text exists, in a font the theme owns and a language the theme chooses. That claim cannot be checked and will eventually be wrong. Measuring costs one layout pass in an overlay that appears while the simulation is paused.
+
+Future guardrail:
+No automated check: text metrics need a real browser, and pinning them would pin the font. The card minimum height keeps the panel roughly the same size whether or not the detail toggle is on, which is what keeps the existing fixed-coordinate browser clicks landing on the intended card. Any new overlay should follow the measure-then-place shape rather than adding offsets.
+
+Revisit when:
+An overlay needs scrolling, a theme ships a materially different font stack, or a card needs more than three detail rows.
 
 ## Open questions to reconcile during implementation
 

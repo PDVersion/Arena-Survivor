@@ -34,6 +34,7 @@ export const alternateTheme = defineTheme({
       completeMessage: "Test victory message",
       restartAction: "Test restart",
       shrinePrompt: "Use test interact",
+      shrineArrived: "Test shrine arrived",
       surgeActive: "Test surge active",
       statisticsTitle: "Test statistics",
       peakEnemiesAlive: "Test peak enemies",
@@ -55,6 +56,14 @@ export const alternateTheme = defineTheme({
     },
     stats: Object.fromEntries(statKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["stats"],
     world: Object.fromEntries(worldKeys.map((key) => [key, `Test ${key}`])) as ThemeCopy["world"],
+    codex: {
+      title: "Test codex",
+      shrines: "Test shrines",
+      reward: "Test reward",
+      released: "Test released",
+      duplicates: "Test duplicates",
+      duplicatesValue: "Test duplicates value",
+    },
     content,
   },
   tokens: {
@@ -137,7 +146,7 @@ export const alternateTheme = defineTheme({
     {
       id: archetypeIds.enemy.swarmBasic,
       maxHealth: 20,
-      moveSpeed: 140,
+      moveSpeed: 124,
       contactDamage: 10,
       contactCooldownMs: 1000,
       radius: 14,
@@ -146,9 +155,9 @@ export const alternateTheme = defineTheme({
       geometry: "circle",
       presentationToken: "enemy",
     },
-    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 240, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, armour: 0, geometry: "triangle", presentationToken: "enemyFast" },
-    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 90, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank" },
-    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 110, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 210, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, armour: 0, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 84, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 98, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
   ],
   pickups: [
     {
@@ -243,6 +252,20 @@ export const alternateTheme = defineTheme({
         { hazardId: archetypeIds.hazard.damageZone, weight: 45 },
         { hazardId: archetypeIds.hazard.obstacle, weight: 35 },
         { hazardId: archetypeIds.hazard.periodicBurst, weight: 20 },
+      ],
+    },
+    shrines: {
+      edgeMargin: 160,
+      minSeparation: 620,
+      minDistanceFromPlayer: 560,
+      maxDistanceFromPlayer: 1_320,
+      placementAttempts: 24,
+      arrivals: [
+        { shrineId: archetypeIds.shrine.spawnSurge, appearAt: 0.04 },
+        { shrineId: archetypeIds.shrine.greed, appearAt: 0.18 },
+        { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.34 },
+        { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.52 },
+        { shrineId: archetypeIds.shrine.duplication, appearAt: 0.72 },
       ],
     },
     bodies: {

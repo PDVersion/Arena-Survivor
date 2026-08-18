@@ -1,4 +1,4 @@
-import type { EnemyId, HazardId } from "./ids";
+import type { EnemyId, HazardId, ShrineId } from "./ids";
 
 /**
  * Theme-owned tuning contracts.
@@ -173,10 +173,45 @@ export interface HazardsTuning {
   readonly weights: readonly Readonly<{ hazardId: HazardId; weight: number }>[];
 }
 
+/** One shrine instance's arrival in a run. */
+export interface ShrineArrivalTuning {
+  readonly shrineId: ShrineId;
+  /**
+   * Normalized run progress at which this instance appears.
+   *
+   * Progress rather than a minute, for the same reason the director uses it: a
+   * run of any length restretches the schedule without new authoring.
+   */
+  readonly appearAt: number;
+}
+
+/**
+ * Where shrines appear and when.
+ *
+ * Placement is resolved at arrival against the player's live position, not laid
+ * out once at run start, so a shrine is always a real walk away from wherever
+ * the player actually is.
+ */
+export interface ShrinesTuning {
+  /** Kept clear of the arena edge, so a shrine is never half off the map. */
+  readonly edgeMargin: number;
+  /** Minimum distance between two shrines. */
+  readonly minSeparation: number;
+  /** Closest a new shrine may appear to the player. */
+  readonly minDistanceFromPlayer: number;
+  /** Farthest a new shrine may appear from the player, so it stays findable. */
+  readonly maxDistanceFromPlayer: number;
+  /** Rejection-sampling attempts before the best candidate so far is accepted. */
+  readonly placementAttempts: number;
+  /** One entry per shrine instance in the run, in arrival order. */
+  readonly arrivals: readonly ShrineArrivalTuning[];
+}
+
 export interface TuningPack {
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
   readonly difficulty: DifficultyTuning;
   readonly bodies: BodiesTuning;
   readonly hazards: HazardsTuning;
+  readonly shrines: ShrinesTuning;
 }

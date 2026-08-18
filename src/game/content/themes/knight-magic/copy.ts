@@ -23,6 +23,7 @@ export const copy = {
     completeMessage: "You endured the arena's full assault.",
     restartAction: "Begin Again",
     shrinePrompt: "Press E or Space to invoke",
+    shrineArrived: "A shrine has risen",
     surgeActive: "The horde answers",
     statisticsTitle: "Trial Record",
     peakEnemiesAlive: "Peak Foes",
@@ -68,6 +69,14 @@ export const copy = {
     xpGain: "Power gain",
     eliteChance: "Elite chance",
     threat: "Threat level",
+  },
+  codex: {
+    title: "Grimoire",
+    shrines: "Shrines",
+    reward: "Bounty",
+    released: "Horde released",
+    duplicates: "Duplicates",
+    duplicatesValue: "Every monster present",
   },
   content: {
     [archetypeIds.character.starter]: {

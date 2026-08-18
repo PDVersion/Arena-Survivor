@@ -23,6 +23,7 @@ export const copy = {
     completeMessage: "You held the site for the full shift.",
     restartAction: "New Shift",
     shrinePrompt: "Press E or Space to authorise",
+    shrineArrived: "A site event has opened",
     surgeActive: "The landfill gives way",
     statisticsTitle: "Shift Report",
     peakEnemiesAlive: "Peak Waste On Site",
@@ -68,6 +69,14 @@ export const copy = {
     xpGain: "Impact gain",
     eliteChance: "Illegal dumping",
     threat: "Threat level",
+  },
+  codex: {
+    title: "Field Guide",
+    shrines: "Site Events",
+    reward: "Return",
+    released: "Waste released",
+    duplicates: "Duplicates",
+    duplicatesValue: "Everything on site",
   },
   content: {
     [archetypeIds.character.starter]: {

@@ -34,7 +34,10 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   // selection churns in a dense crowd, so a one-shot-per-second weapon spreads
   // damage across many enemies and finishes none. The subject here is reward
   // provenance, not weapon DPS.
-  await waitForRun(page, "/?surgeDurationMs=1000&noAmbient=1&attackSpeedBonus=5");
+  // `shrineLayout=adjacent` restores the V0.3 layout: shrines now arrive across
+  // the run at randomized positions, and this path's subject is what the Horde
+  // shrine does once activated, not how the player finds it.
+  await waitForRun(page, "/?surgeDurationMs=1000&noAmbient=1&attackSpeedBonus=5&shrineLayout=adjacent");
   const ready = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(ready?.shrine).toMatchObject({
     id: "shrine.spawn_surge",
@@ -90,7 +93,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
 
 test("restart during an active surge clears its scheduler and tagged enemies", async ({ page }) => {
   test.setTimeout(45_000);
-  await waitForRun(page, "/?runDurationMs=900&surgeDurationMs=20000");
+  await waitForRun(page, "/?runDurationMs=900&surgeDurationMs=20000&shrineLayout=adjacent");
   const generation = await page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration,
   );

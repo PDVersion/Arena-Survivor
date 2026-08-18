@@ -34,6 +34,8 @@ export interface ThemeVocabulary {
   readonly completeMessage: string;
   readonly restartAction: string;
   readonly shrinePrompt: string;
+  /** Banner shown when a scheduled shrine arrives somewhere in the arena. */
+  readonly shrineArrived: string;
   readonly surgeActive: string;
   readonly statisticsTitle: string;
   readonly peakEnemiesAlive: string;
@@ -99,7 +101,31 @@ export interface ThemeCopy {
   /** Labels for the pause menu and upgrade cards. */
   readonly stats: Readonly<Record<StatKey, string>>;
   readonly world: Readonly<Record<WorldKey, string>>;
+  readonly codex: ThemeCodexCopy;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
+}
+
+/**
+ * Labels for the in-game reference surface.
+ *
+ * Entries themselves are not authored here: an entry's name and description
+ * come from `content`, and every number on it is read from the definition the
+ * game actually runs, so a codex page cannot claim something the game does not
+ * do. This block is only the surrounding vocabulary.
+ */
+export interface ThemeCodexCopy {
+  /** Tab title, e.g. "Field Guide". */
+  readonly title: string;
+  /** Section heading for shrine entries. */
+  readonly shrines: string;
+  /** Label for a shrine's reward multiplier. */
+  readonly reward: string;
+  /** Label for the count and duration a surge shrine releases. */
+  readonly released: string;
+  /** Label for a shrine that copies everything currently alive. */
+  readonly duplicates: string;
+  /** Value used by `duplicates`, e.g. "Every enemy present". */
+  readonly duplicatesValue: string;
 }
 
 export interface ThemePalette {

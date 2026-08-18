@@ -864,6 +864,25 @@ Where each recommendation from the original review ended up.
 
 ---
 
+# Post-milestone corrections (V0.3.1)
+
+Three things V0.3 shipped were wrong in play and were corrected on
+`claude/v0.3.1` after the milestone merged. They change values and layout, not
+scope, and each is recorded in full in [`../RECONCILIATION.md`](../RECONCILIATION.md):
+
+| Correction | What changed | Entry |
+| --- | --- | --- |
+| Enemies closed too fast to read | Move speed cut ~10% across both packs; the REC-049 envelope gains a ceiling to match its floor | REC-058 |
+| Every shrine was decided in the opening seconds | Shrines arrive on a schedule in run progress, placed around the player when they arrive, with an edge marker so they stay findable | REC-059 |
+| Upgrade card text ran outside its box | Overlay text is measured and then placed; cards size to their content and the panel sizes to the cards | REC-060 |
+
+The shrine change adds `tuning.shrines` to the theme tuning contract and a Field
+Guide tab to the pause menu, which is a **reference surface only** — encounter
+tracking, unlock gating, and the enemy and fact entries described in
+[`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md) remain V0.4 scope.
+
+---
+
 # Explicitly deferred beyond V0.3
 
 Weapon and equipment slots; the type/effectiveness system; layered composite enemies; weapon evolution; mini-bosses and bosses; unlockable content pools and meta-progression; browser-local persistence and portable save export/import; endless mode; final art and audio production; and every education-layer feature described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md).

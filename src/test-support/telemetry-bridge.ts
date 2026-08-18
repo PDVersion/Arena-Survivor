@@ -124,6 +124,12 @@ export interface ArenaTestSnapshot {
       lines: readonly Readonly<{ label: string; from: string | null; to: string }>[];
     }>[];
     statLines: readonly Readonly<{ key: string; display: string }>[];
+    /** Reference entries and the effects each one claims. */
+    codexEntries: readonly Readonly<{
+      id: string;
+      name: string;
+      effects: readonly Readonly<{ label: string; display: string }>[];
+    }>[];
   }>;
   readonly crowd?: Readonly<{
     indexed: number;
@@ -231,7 +237,13 @@ export interface ArenaTestSnapshot {
     shrineXpCollected: number;
     ambientXpCollected: number;
     feedbackCount: number;
-    instances: readonly Readonly<{ id: string; activated: boolean }>[];
+    instances: readonly Readonly<{ id: string; activated: boolean; x: number; y: number }>[];
+    /** Shrine instances scheduled for the whole run. */
+    plannedCount: number;
+    /** Instances that have arrived so far; below `plannedCount` until the end. */
+    revealedCount: number;
+    /** Simulation time the next instance arrives, or `null` once all have. */
+    nextAppearAtMs: number | null;
   }>;
   readonly world?: Readonly<{
     chaos: number;

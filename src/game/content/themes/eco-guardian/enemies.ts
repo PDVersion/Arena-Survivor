@@ -19,6 +19,20 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  * comes from speed, harm, radius, and behaviour — the health band is narrow on
  * purpose.
  *
+ * Move speed was cut roughly 10% across the roster after V0.3 play testing:
+ * the whole crowd closed too fast to read, and kiting stopped being a decision.
+ * The cut is not uniform, because REC-049's envelope binds the slow end — a
+ * role must still cross the 958-unit spawn ring within twelve seconds, and the
+ * opening role within eight — so the glass bottle takes the smallest cut and
+ * the two fastest roles take the largest. Exactly one role still outruns the
+ * player, which is the property REC-050 depends on.
+ *
+ *   role            was    now    ring crossing    vs player 200
+ *   Plastic Bottle  140    124          7.7 s      0.62x
+ *   Plastic Bag     240    210          4.6 s      1.05x
+ *   Glass Bottle     90     84         11.4 s      0.42x
+ *   Bagged Waste    110     98          9.8 s      0.49x
+ *
  * Rewards, spawn weights, and unlock timing are unchanged from V0.2 here.
  * Phase 3 owns reward scaling and Phase 4 owns the spawn director.
  */
@@ -28,7 +42,7 @@ export const enemies = [
     // material in real litter counts.
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,
-    moveSpeed: 140,
+    moveSpeed: 124,
     contactDamage: 10,
     contactCooldownMs: 1000,
     radius: 14,
@@ -41,7 +55,7 @@ export const enemies = [
     // Plastic bag — ~20 years. Light, wind-blown, and fragile.
     id: archetypeIds.enemy.fastFragile,
     maxHealth: 11,
-    moveSpeed: 240,
+    moveSpeed: 210,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
@@ -56,7 +70,7 @@ export const enemies = [
     // contact harm of any large enemy.
     id: archetypeIds.enemy.slowDurable,
     maxHealth: 96,
-    moveSpeed: 90,
+    moveSpeed: 84,
     contactDamage: 9,
     contactCooldownMs: 1000,
     radius: 22,
@@ -71,7 +85,7 @@ export const enemies = [
     // itself. Its threat is what it releases, not its own durability.
     id: archetypeIds.enemy.deathSpawner,
     maxHealth: 24,
-    moveSpeed: 110,
+    moveSpeed: 98,
     contactDamage: 12,
     contactCooldownMs: 1000,
     radius: 25,
