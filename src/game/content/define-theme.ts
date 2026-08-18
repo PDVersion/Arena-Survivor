@@ -9,6 +9,7 @@ import {
 } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
+import { upgradeTiers } from "../core/archetypes/tiers";
 
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
 const vocabularyKeys = [
@@ -47,6 +48,13 @@ const vocabularyKeys = [
   "remainderDamage",
   "upgradesTaken",
   "deathCause",
+  "timeUpTitle",
+  "timeUpMessage",
+  "timeUpHint",
+  "continueEndless",
+  "continueEndlessHint",
+  "clearTheField",
+  "clearTheFieldHint",
 ] as const;
 
 const codexCopyKeys = [
@@ -722,6 +730,45 @@ function validateTuning(
     }
     if ((hazardTuning.weights ?? []).reduce((sum, entry) => sum + Math.max(0, entry.weight), 0) <= 0) {
       issues.push("tuning.hazards.weights must total more than zero");
+    }
+  }
+
+  const tierTuning = tuning.upgradeTiers;
+  if (!tierTuning) {
+    issues.push("tuning.upgradeTiers is required");
+  } else {
+    if (!Number.isFinite(tierTuning.luckWeightBias) || tierTuning.luckWeightBias < 0) {
+      issues.push("tuning.upgradeTiers.luckWeightBias cannot be negative");
+    }
+    const declared = (tierTuning.tiers ?? []).map((entry) => entry.tier);
+    // The ladder must be complete and in order, because a card's colour is read
+    // as its position on it: a gap would make the ordering a lie.
+    if (declared.join("|") !== upgradeTiers.join("|")) {
+      issues.push(`tuning.upgradeTiers.tiers must declare every tier in order: ${upgradeTiers.join(", ")}`);
+    }
+    let previousMultiplier = 0;
+    for (const entry of tierTuning.tiers ?? []) {
+      if (!Number.isFinite(entry.weight) || entry.weight <= 0) {
+        issues.push(`${entry.tier} tier weight must be greater than zero`);
+      }
+      if (!Number.isFinite(entry.multiplier) || entry.multiplier < 1) {
+        issues.push(`${entry.tier} tier multiplier cannot be below one`);
+      }
+      // A higher tier that gave less would make the colour actively misleading.
+      if (entry.multiplier < previousMultiplier) {
+        issues.push(`${entry.tier} tier multiplier cannot fall below the tier beneath it`);
+      }
+      previousMultiplier = entry.multiplier;
+    }
+    if (tierTuning.tiers?.[0]?.multiplier !== 1) {
+      issues.push("the first upgrade tier must be the authored value, multiplier one");
+    }
+    for (const tier of upgradeTiers) {
+      if (!theme.tokens.tiers?.[tier]?.trim()) issues.push(`tiers.${tier} colour is required`);
+      else if (!HEX_COLOUR.test(theme.tokens.tiers[tier])) {
+        issues.push(`tiers.${tier} must be a six-digit hex colour`);
+      }
+      if (!theme.copy.tiers?.[tier]?.trim()) issues.push(`copy.tiers.${tier} label is required`);
     }
   }
 

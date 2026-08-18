@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("Chaos resolves two Multiplicity shrines through one world model", async ({ page }) => {
-  await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&noXp=1");
+  await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.activations["shrine.multiplicity"])).toBe(2);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.world).toMatchObject({
@@ -13,7 +13,7 @@ test("Chaos resolves two Multiplicity shrines through one world model", async ({
 });
 
 test("all shrine roles activate exactly once and Duplication retains every copy", async ({ page }) => {
-  await page.goto("/?shrineLayout=adjacent&worldScenario=all&enemyRoster=all&noXp=1");
+  await page.goto("/?shrineLayout=adjacent&worldScenario=all&enemyRoster=all&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.duplicatedEnemiesSpawned), { timeout: 15_000 }).toBe(4);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.world?.activations).toMatchObject({
@@ -28,7 +28,7 @@ test("all shrine roles activate exactly once and Duplication retains every copy"
 });
 
 test("world multipliers restart to a clean 1.0x state", async ({ page }) => {
-  await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&runDurationMs=900&noXp=1");
+  await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&runDurationMs=900&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.chaos)).toBe(2.4);
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 15_000 }).toBe("complete");
   await page.keyboard.press("r");

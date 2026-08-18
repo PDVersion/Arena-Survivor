@@ -4,7 +4,7 @@ import { activeTheme } from "../../src/game/content/active-theme";
 // Resolved from the active theme: a rule test must never assert themed copy.
 const vocabulary = activeTheme.copy.vocabulary;
 
-const compoundPath = "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&critChance=3.4&pierce=12&attackSpeedBonus=9&worldScenario=all&runDurationMs=1500&noXp=1&noContact=1";
+const compoundPath = "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&critChance=3.4&pierce=12&attackSpeedBonus=9&worldScenario=all&runDurationMs=1500&noXp=1&noContact=1&atTimeUp=complete";
 
 test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statistics, and restarts repeatedly", async ({ page }) => {
   test.setTimeout(180_000);

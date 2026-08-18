@@ -6,7 +6,9 @@ export interface ArenaTestSnapshot {
   readonly arena?: Readonly<{ width: number; height: number }>;
   readonly camera?: Readonly<{ scrollX: number; scrollY: number }>;
   readonly run?: Readonly<{
-    status: "playing" | "paused" | "level_up" | "dead" | "complete";
+    status: "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
+    /** How the clock is being treated: `timed`, `endless`, or `clearing`. */
+    mode: "timed" | "endless" | "clearing";
     elapsedMs: number;
     durationMs: number;
     kills: number;
@@ -121,6 +123,9 @@ export interface ArenaTestSnapshot {
       nextLevel: number;
       isNew: boolean;
       rarity: string;
+      /** The offer's rolled tier and what it multiplies the gain by. */
+      tier: string;
+      tierMultiplier: number;
       lines: readonly Readonly<{ label: string; from: string | null; to: string }>[];
     }>[];
     statLines: readonly Readonly<{ key: string; display: string }>[];

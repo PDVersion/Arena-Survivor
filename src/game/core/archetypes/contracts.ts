@@ -13,6 +13,7 @@ import type { UpgradeEffect } from "./effects";
 import type { PlayerBaseStats } from "../stats/player-stats";
 import type { EliteId, FeedbackCategory } from "./categories";
 import type { TuningPack } from "./tuning";
+import type { UpgradeTier } from "./tiers";
 
 export interface ContentCopy {
   readonly name: string;
@@ -59,6 +60,15 @@ export interface ThemeVocabulary {
   readonly upgradesTaken: string;
   /** Prefix for the cause-of-death line, e.g. "Overwhelmed by". */
   readonly deathCause: string;
+  /** The decision shown when the authored duration runs out. */
+  readonly timeUpTitle: string;
+  readonly timeUpMessage: string;
+  readonly timeUpHint: string;
+  readonly continueEndless: string;
+  readonly continueEndlessHint: string;
+  readonly clearTheField: string;
+  /** Prefix for the count of enemies still standing, e.g. "Still on site". */
+  readonly clearTheFieldHint: string;
 }
 
 /** Stable keys for player-facing stat labels. */
@@ -106,6 +116,8 @@ export interface ThemeCopy {
   readonly stats: Readonly<Record<StatKey, string>>;
   readonly world: Readonly<Record<WorldKey, string>>;
   readonly codex: ThemeCodexCopy;
+  /** Player-facing name for each roll tier, e.g. "Legendary". */
+  readonly tiers: Readonly<Record<UpgradeTier, string>>;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
 }
 
@@ -170,6 +182,14 @@ export interface ThemePalette {
 
 export interface ThemeTokens {
   readonly palette: ThemePalette;
+  /**
+   * Card border colour per roll tier.
+   *
+   * Separate from the palette because these are a ladder read by position —
+   * white, green, blue, purple, yellow, red — and must stay distinguishable
+   * from each other rather than fitting the theme's own colour story.
+   */
+  readonly tiers: Readonly<Record<UpgradeTier, string>>;
   readonly playerShape: "circle" | "diamond" | "square";
   readonly feedback: Readonly<Record<FeedbackCategory, string>>;
   readonly sounds: Readonly<Record<FeedbackCategory, Readonly<{

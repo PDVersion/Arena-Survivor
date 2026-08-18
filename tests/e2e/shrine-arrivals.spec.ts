@@ -11,7 +11,7 @@ test("shrines arrive across the run rather than all at the start", async ({ page
   test.setTimeout(60_000);
   // A short run compresses the whole arrival schedule into the path's budget
   // without changing it: arrivals are normalized progress, not minutes.
-  await page.goto("/?runDurationMs=12000&noContact&noXp=1");
+  await page.goto("/?runDurationMs=12000&noContact&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
 
   const opening = await snapshot(page);
@@ -54,7 +54,7 @@ test("shrines arrive across the run rather than all at the start", async ({ page
 
 test("a restarted run reschedules its shrines from the opening", async ({ page }) => {
   test.setTimeout(60_000);
-  await page.goto("/?runDurationMs=3000&noContact&noXp=1");
+  await page.goto("/?runDurationMs=3000&noContact&noXp=1&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.revealedCount), {
       timeout: 20_000,
@@ -79,7 +79,7 @@ test("a restarted run reschedules its shrines from the opening", async ({ page }
 });
 
 test("the codex states what every shrine does", async ({ page }) => {
-  await page.goto("/?noContact&noXp=1&spawnRadius=320");
+  await page.goto("/?noContact&noXp=1&spawnRadius=320&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
 
   await page.keyboard.press("Escape");
@@ -110,7 +110,7 @@ test("the Field Guide catalogues the upgrade pool and the session so far", async
   test.setTimeout(60_000);
   // `closeLoad` puts enemies beside the player so this path spends its budget on
   // the Field Guide rather than on waiting for the first level-up. See REC-049.
-  await page.goto("/?noContact&closeLoad=1&loadHarness=60&critChance=0.6&pierce=4");
+  await page.goto("/?noContact&closeLoad=1&loadHarness=60&critChance=0.6&pierce=4&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
 
   // Take one upgrade, so the catalogue has something real to count.

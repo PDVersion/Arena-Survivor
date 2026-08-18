@@ -43,6 +43,13 @@ export const copy = {
     chainedExplosionDamage: "Chained Explosion",
     remainderDamage: "Other / Remainder",
     deathCause: "Slain by",
+    timeUpTitle: "The Hour Is Up",
+    timeUpMessage: "The appointed hour has passed, but the arena has not emptied. Decide how this one ends.",
+    timeUpHint: "Press 1 or 2, or click",
+    continueEndless: "Fight On",
+    continueEndlessHint: "No end time. The horde keeps coming until you fall.",
+    clearTheField: "Clear The Arena",
+    clearTheFieldHint: "No new monsters. Finish what remains · still standing",
     upgradesTaken: "Blessings Taken",
   },
   stats: {
@@ -86,6 +93,14 @@ export const copy = {
     maxPerRun: "Per run",
     runsPlayed: "Runs played",
     best: "Best",
+  },
+  tiers: {
+    common: "Common",
+    uncommon: "Uncommon",
+    rare: "Rare",
+    epic: "Epic",
+    legendary: "Legendary",
+    unique: "Unique",
   },
   content: {
     [archetypeIds.character.starter]: {

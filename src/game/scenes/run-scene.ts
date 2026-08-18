@@ -19,6 +19,8 @@ import { createInitialProfile } from "../state/profile-state";
 import {
   advanceRunState,
   applyRunUpgrade,
+  chooseRunMode,
+  completeRun,
   awardRunExperience,
   createRunState,
   damageRunPlayer,
@@ -70,6 +72,11 @@ import {
 } from "../systems/separation/crowd-separation";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
+import {
+  rollOfferTiers,
+  tierMultiplier,
+  type UpgradeOffer,
+} from "../systems/upgrades/upgrade-tiers";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
 import { PauseMenuUi } from "../ui/pause-menu-ui";
 import {
@@ -86,6 +93,7 @@ import {
 import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
+import { OvertimeChoiceUi, type OvertimeChoice } from "../ui/overtime-choice-ui";
 import { selectHudValues, selectRunSummaryValues } from "../state/statistics";
 import {
   activateShrineSurge,
@@ -231,6 +239,23 @@ function testShrineLayout(): string | null {
   return new URLSearchParams(window.location.search).get("shrineLayout");
 }
 
+/**
+ * Test-only override for the end-of-timer decision.
+ *
+ * Seventeen browser assertions poll for a `complete` run once the duration
+ * expires; their subject is restart, world reset, or terminal accounting, not
+ * the decision itself. `complete` ends the run on the last tick, which is
+ * exactly what V0.3 did, so those paths keep measuring what they measured.
+ * `endless` and `clearing` answer the decision instead, for the path whose
+ * subject *is* the decision.
+ */
+function testOvertimeChoice(): OvertimeChoice | "complete" | null {
+  if (import.meta.env.MODE !== "test") return null;
+  const value = new URLSearchParams(window.location.search).get("atTimeUp");
+  if (value === "endless" || value === "clearing" || value === "complete") return value;
+  return null;
+}
+
 function testWorldScenario(): string | null {
   if (import.meta.env.MODE !== "test") return null;
   return new URLSearchParams(window.location.search).get("worldScenario");
@@ -292,7 +317,11 @@ export class RunScene extends Phaser.Scene {
   private pauseMenu?: PauseMenuUi;
   private hud?: Hud;
   private runEndOverlay?: RunEndOverlay;
+  private overtimeUi?: OvertimeChoiceUi;
+  private overtimeChoicesMade = 0;
   private currentChoices: readonly UpgradeDefinition[] = [];
+  /** The same draw, carrying each card's rolled tier. */
+  private currentOffers: readonly UpgradeOffer[] = [];
   private upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
   private enemyRandom = createSeededRandom(0xe11e_0002);
   private nextSpawnAtMs = 0;
@@ -543,6 +572,7 @@ export class RunScene extends Phaser.Scene {
     this.pauseMenu = new PauseMenuUi(this, activeTheme);
     this.hud = new Hud(this, activeTheme);
     this.runEndOverlay = new RunEndOverlay(this, activeTheme);
+    this.overtimeUi = new OvertimeChoiceUi(this, activeTheme);
 
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.game.events.on(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
@@ -557,6 +587,7 @@ export class RunScene extends Phaser.Scene {
       this.levelUpUi?.hide();
       this.pauseMenu?.hide();
       this.runEndOverlay?.hide();
+    this.overtimeUi?.hide();
       this.audioFeedback.destroy();
     });
     this.hud.update(this.runState, this.hudExtras());
@@ -591,12 +622,14 @@ export class RunScene extends Phaser.Scene {
     }
     if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.applySetting("muted");
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
+    if (this.runState.status === "time_up") this.readOvertimeChoiceInput();
 
     const preparingRepresentativeLoad =
       testSkillEnabled("representativeLoad") &&
       testSkillEnabled("closeLoad") &&
       this.loadHarnessSpawned < this.loadHarnessRequested;
     if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
+    if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
       if (testSkillEnabled("representativeLoad")) {
@@ -622,9 +655,20 @@ export class RunScene extends Phaser.Scene {
       this.updateBloodlust();
       this.flushDamageNumbers();
       this.runState = regenerateRunPlayer(this.runState, delta);
-      if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) {
+      // Clearing keeps every other system running — projectiles, pickups,
+      // hazards, on-kill effects — and only stops the arrivals, so the field
+      // empties by being fought rather than by being deleted.
+      if (
+        this.runState.mode !== "clearing" &&
+        this.loadHarnessRequested === 0 &&
+        testRosterHarnessSelection() === null
+      ) {
         this.releaseMilestoneWaves();
         this.spawnIfReady();
+      }
+      if (this.runState.mode === "clearing" && this.isFieldClear()) {
+        this.runState = completeRun(this.runState);
+        this.enterTerminalState();
       }
       this.fireIfReady();
       this.updateLoadHighWaterMarks();
@@ -674,7 +718,10 @@ export class RunScene extends Phaser.Scene {
     this.pauseMenu = undefined;
     this.hud = undefined;
     this.runEndOverlay = undefined;
+    this.overtimeUi = undefined;
+    this.overtimeChoicesMade = 0;
     this.currentChoices = [];
+    this.currentOffers = [];
     this.upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
     this.enemyRandom = createSeededRandom(0xe11e_0002);
     this.nextSpawnAtMs = 0;
@@ -1238,9 +1285,12 @@ export class RunScene extends Phaser.Scene {
       // The triangle's apex points up at rotation zero, so the heading turns by
       // a quarter turn to aim it.
       const rotation = offset.angle + Math.PI / 2;
+      // Below the arrow, except near the bottom edge where that would put the
+      // label off the screen.
+      const labelY = y > centreY ? y - 24 : y + 22;
       if (marker) {
         marker.arrow.setPosition(x, y).setRotation(rotation);
-        marker.label.setPosition(x, y + 22);
+        marker.label.setPosition(x, labelY);
         continue;
       }
       this.shrineMarkers.set(shrine, {
@@ -1250,7 +1300,7 @@ export class RunScene extends Phaser.Scene {
           .setScrollFactor(0)
           .setDepth(940),
         label: this.add
-          .text(x, y + 22, activeTheme.copy.content[shrine.definition.id].name, {
+          .text(x, labelY, activeTheme.copy.content[shrine.definition.id].name, {
             color: activeTheme.tokens.palette.shrine,
             fontFamily: "Georgia, serif",
             fontSize: "14px",
@@ -2107,10 +2157,15 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || !this.levelUpUi || this.runState.progression.pendingChoices < 1) return;
     this.player?.stop();
     this.physics.world.pause();
-    this.currentChoices = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom, {
+    const luck = this.runState.player.stats.luck;
+    const drawn = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
-      luck: this.runState.player.stats.luck,
+      luck,
     });
+    // Which upgrades appeared, then how good each one rolled. Luck feeds both,
+    // but only the second makes a card actually stronger.
+    this.currentOffers = rollOfferTiers(drawn, activeTheme.tuning.upgradeTiers, this.upgradeRandom, luck);
+    this.currentChoices = this.currentOffers.map((offer) => offer.definition);
     this.levelUpUi.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
   }
 
@@ -2142,7 +2197,9 @@ export class RunScene extends Phaser.Scene {
     const runState = this.runState;
     return {
       descriptions: runState
-        ? this.currentChoices.map((choice) => describeUpgrade(runState, choice, activeTheme))
+        ? this.currentOffers.map((offer) =>
+            describeUpgrade(runState, offer.definition, activeTheme, offer.tier),
+          )
         : [],
       pendingAfterThis: Math.max(0, (runState?.progression.pendingChoices ?? 1) - 1),
       showDetail: getSessionSettings().detailedUpgradeCards,
@@ -2193,6 +2250,13 @@ export class RunScene extends Phaser.Scene {
     this.publishTelemetry();
   }
 
+  private readOvertimeChoiceInput(): void {
+    if (!this.overtimeUi?.isOpen) return;
+    const [first, second] = this.choiceKeys;
+    if (first && Phaser.Input.Keyboard.JustDown(first)) this.resolveOvertimeChoice("endless");
+    else if (second && Phaser.Input.Keyboard.JustDown(second)) this.resolveOvertimeChoice("clearing");
+  }
+
   private readUpgradeChoiceInput(): void {
     for (let index = 0; index < this.choiceKeys.length; index += 1) {
       const key = this.choiceKeys[index];
@@ -2206,14 +2270,19 @@ export class RunScene extends Phaser.Scene {
 
   private chooseUpgrade(choice: UpgradeDefinition): void {
     if (!this.runState || this.runState.status !== "level_up") return;
-    this.runState = applyRunUpgrade(this.runState, choice, (skillId) =>
-      skillMaxLevel(activeTheme.skills, skillId),
+    const offer = this.currentOffers.find((candidate) => candidate.definition.id === choice.id);
+    this.runState = applyRunUpgrade(
+      this.runState,
+      choice,
+      (skillId) => skillMaxLevel(activeTheme.skills, skillId),
+      tierMultiplier(activeTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
     );
     this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {
       this.beginLevelUpChoice();
     } else {
       this.currentChoices = [];
+      this.currentOffers = [];
       this.levelUpUi?.hide();
       this.physics.world.resume();
     }
@@ -2258,6 +2327,50 @@ export class RunScene extends Phaser.Scene {
   private requestImpactFreeze(durationMs: number): void {
     if (this.reducedMotion) return;
     this.hitStop = requestHitStop(this.hitStop, this.time.now, durationMs, this.lastFrameMs);
+  }
+
+  /**
+   * Whether a clearing run has anything left to do.
+   *
+   * Queued spawn work counts: a death-spawner that has just died still owes its
+   * offspring, and ending the run before they appear would drop enemies the
+   * player was told they had to clear.
+   */
+  private isFieldClear(): boolean {
+    return this.enemies.size === 0 && this.eventQueue.snapshot().backlog === 0;
+  }
+
+  /** The end-of-timer decision. Simulation is frozen until it is answered. */
+  private showOvertimeChoice(): void {
+    if (!this.runState || this.overtimeUi?.isOpen) return;
+    this.player?.stop();
+    this.physics.world.pause();
+    const forced = testOvertimeChoice();
+    if (forced === "complete") {
+      this.runState = completeRun(this.runState);
+      this.enterTerminalState();
+      return;
+    }
+    if (forced) {
+      this.resolveOvertimeChoice(forced);
+      return;
+    }
+    this.overtimeUi?.show(this.enemies.size, (choice) => this.resolveOvertimeChoice(choice));
+  }
+
+  private resolveOvertimeChoice(choice: OvertimeChoice): void {
+    if (!this.runState || this.runState.status !== "time_up") return;
+    this.overtimeUi?.hide();
+    this.overtimeChoicesMade += 1;
+    this.runState = chooseRunMode(this.runState, choice);
+    this.physics.world.resume();
+    // Clearing an already-empty field would otherwise wait a frame for the
+    // update loop, showing a live run for no reason.
+    if (choice === "clearing" && this.isFieldClear()) {
+      this.runState = completeRun(this.runState);
+      this.enterTerminalState();
+    }
+    this.publishTelemetry();
   }
 
   private enterTerminalState(): void {
@@ -2453,6 +2566,7 @@ export class RunScene extends Phaser.Scene {
       run: this.runState
         ? {
             status: this.runState.status,
+            mode: this.runState.mode,
             elapsedMs: this.runState.elapsedMs,
             durationMs: this.runState.durationMs,
             kills: this.runState.statistics.kills,
@@ -2589,13 +2703,23 @@ export class RunScene extends Phaser.Scene {
         settings: { ...getSessionSettings() },
         cardDescriptions: this.runState
           ? this.currentChoices.map((choice) => {
-              const description = describeUpgrade(this.runState!, choice, activeTheme);
+              const offer = this.currentOffers.find(
+                (candidate) => candidate.definition.id === choice.id,
+              );
+              const description = describeUpgrade(
+                this.runState!,
+                choice,
+                activeTheme,
+                offer?.tier ?? "common",
+              );
               return {
                 id: description.id,
                 level: description.level,
                 nextLevel: description.nextLevel,
                 isNew: description.isNew,
                 rarity: description.rarity,
+                tier: description.tier,
+                tierMultiplier: description.tierMultiplier,
                 lines: description.lines.map((line) => ({
                   label: line.label,
                   from: line.from ?? null,

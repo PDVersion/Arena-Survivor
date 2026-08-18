@@ -7,7 +7,7 @@ async function snapshot(page: Page) {
 test("damage numbers aggregate without losing or double-counting damage", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto(
-    "/?representativeLoad=1&closeLoad=1&loadHarness=200&compoundBuild=1&critChance=3&pierce=10&attackSpeedBonus=8&runDurationMs=6000&noXp=1&noContact=1",
+    "/?representativeLoad=1&closeLoad=1&loadHarness=200&compoundBuild=1&critChance=3&pierce=10&attackSpeedBonus=8&runDurationMs=6000&noXp=1&noContact=1&atTimeUp=complete",
   );
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
@@ -31,7 +31,7 @@ test("damage numbers aggregate without losing or double-counting damage", async 
 test("hit-stop stays inside its budget under load", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto(
-    "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&forceElite=1&critChance=3.4&pierce=12&attackSpeedBonus=9&runDurationMs=6000&noXp=1&noContact=1",
+    "/?representativeLoad=1&closeLoad=1&loadHarness=300&compoundBuild=1&forceElite=1&critChance=3.4&pierce=12&attackSpeedBonus=9&runDurationMs=6000&noXp=1&noContact=1&atTimeUp=complete",
   );
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
@@ -62,7 +62,7 @@ test("hit-stop stays inside its budget under load", async ({ page }) => {
 
 test("a death records what killed the player", async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto("/?spawnRadius=260&noXp=1");
+  await page.goto("/?spawnRadius=260&noXp=1&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
       timeout: 90_000,
@@ -80,7 +80,7 @@ test("a death records what killed the player", async ({ page }) => {
 test("reduced motion disables the freeze without changing the run", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto(
-    "/?reducedMotion=1&representativeLoad=1&closeLoad=1&loadHarness=150&compoundBuild=1&forceElite=1&critChance=3&attackSpeedBonus=8&runDurationMs=5000&noXp=1&noContact=1",
+    "/?reducedMotion=1&representativeLoad=1&closeLoad=1&loadHarness=150&compoundBuild=1&forceElite=1&critChance=3&attackSpeedBonus=8&runDurationMs=5000&noXp=1&noContact=1&atTimeUp=complete",
   );
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {

@@ -10,7 +10,7 @@ async function snapshot(page: Page) {
 test("world pressure escalates on the timer without any shrine", async ({ page }) => {
   test.setTimeout(120_000);
   // Chaos stays at 1.0 throughout: this is the escalation V0.2 could not do.
-  await page.goto("/?runDurationMs=20000&noContact=1&noXp=1&noHazards=1&spawnRadius=320");
+  await page.goto("/?runDurationMs=20000&noContact=1&noXp=1&noHazards=1&spawnRadius=320&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
@@ -38,7 +38,7 @@ test("world pressure escalates on the timer without any shrine", async ({ page }
 
 test("escalation advances in legible steps, not continuously", async ({ page }) => {
   test.setTimeout(150_000);
-  await page.goto("/?runDurationMs=20000&noContact=1&noXp=1&noHazards=1&spawnRadius=320");
+  await page.goto("/?runDurationMs=20000&noContact=1&noXp=1&noHazards=1&spawnRadius=320&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
@@ -73,7 +73,7 @@ test("hazards telegraph, damage, and clean up without touching enemy accounting"
   page,
 }) => {
   test.setTimeout(120_000);
-  await page.goto("/?runDurationMs=12000&noXp=1&noAmbient=1&hazardIntervalMs=900");
+  await page.goto("/?runDurationMs=12000&noXp=1&noAmbient=1&hazardIntervalMs=900&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().hazards?.placed ?? 0), {
       timeout: 60_000,
@@ -104,7 +104,7 @@ test("hazards telegraph, damage, and clean up without touching enemy accounting"
 
 test("a restarted run clears every hazard and rewinds escalation", async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto("/?runDurationMs=6000&noXp=1&noAmbient=1&hazardIntervalMs=900");
+  await page.goto("/?runDurationMs=6000&noXp=1&noAmbient=1&hazardIntervalMs=900&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
       timeout: 60_000,

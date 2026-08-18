@@ -26,7 +26,11 @@ export function selectHudValues(state: RunState): HudValues {
     health: `${Math.ceil(state.player.health)} / ${Math.ceil(state.player.stats.maxHealth)}`,
     experience: `${formatXp(state.progression.xp)} / ${formatXp(state.progression.xpToNextLevel)}`,
     level: String(state.progression.level),
-    time: formatRunTime(state.durationMs - state.elapsedMs),
+    time: state.mode === "timed"
+      ? formatRunTime(state.durationMs - state.elapsedMs)
+      // Past the limit the clock counts up, because a negative countdown reads
+      // as a bug and overtime is the thing worth showing.
+      : `+${formatRunTime(state.elapsedMs - state.durationMs)}`,
     kills: String(state.statistics.kills),
     enemies: String(state.statistics.liveEnemies),
   };

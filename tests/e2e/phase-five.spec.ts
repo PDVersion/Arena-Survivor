@@ -8,7 +8,7 @@ const firstLevelRequirement = xpRequiredForLevelOn(
   1,
 );
 
-async function waitForReady(page: Page, path = "/"): Promise<void> {
+async function waitForReady(page: Page, path = "/?atTimeUp=complete"): Promise<void> {
   await page.goto(path);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
@@ -16,7 +16,7 @@ async function waitForReady(page: Page, path = "/"): Promise<void> {
 }
 
 test("HUD shows health, XP, level, timer, kills, and live enemies", async ({ page }) => {
-  await waitForReady(page, "/?runDurationMs=60000");
+  await waitForReady(page, "/?runDurationMs=60000&atTimeUp=complete");
   const initial = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(initial?.hud).toMatchObject({
     health: "100 / 100",
@@ -39,7 +39,7 @@ test("complete overlay freezes at zero and restart resets without navigation", a
   test.setTimeout(90_000);
   const pageErrors: string[] = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
-  await waitForReady(page, "/?runDurationMs=700");
+  await waitForReady(page, "/?runDurationMs=700&atTimeUp=complete");
   const navigationCount = await page.evaluate(() => performance.getEntriesByType("navigation").length);
 
   for (let expectedGeneration = 1; expectedGeneration <= 3; expectedGeneration += 1) {
@@ -88,7 +88,7 @@ test("complete overlay freezes at zero and restart resets without navigation", a
 });
 
 test("HUD and run remain coherent through focus loss and resize", async ({ page }) => {
-  await waitForReady(page, "/?runDurationMs=60000");
+  await waitForReady(page, "/?runDurationMs=60000&atTimeUp=complete");
   await page.evaluate(() => window.dispatchEvent(new Event("blur")));
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.focusPaused))

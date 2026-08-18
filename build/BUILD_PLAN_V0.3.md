@@ -878,11 +878,20 @@ scope, and each is recorded in full in [`../RECONCILIATION.md`](../RECONCILIATIO
 | Enemies were still too fast | A second ~10% cut, the end-of-run speed ramp halved, and the ring-crossing floor re-derived rather than treated as fixed | REC-061 |
 | Nothing outlived a run | A session statistics slice, shaped for `SAVE_DATA.md` and merged with the live run on read, feeding an upgrade catalogue and session totals in the Field Guide | REC-062 |
 | The game dropped straight into a run | A title screen between boot and the run; test mode skips it and one path covers the transition | REC-063 |
+| The timer ended the run mid-fight | The limit becomes a decision: continue endlessly, or stop arrivals and clear the field | REC-064 |
+| Build-defining picks arrived too late, and luck never made anything stronger | Appearance rate and roll quality split apart; a six-rung tier ladder scales what each offer gives, and luck biases the roll | REC-065 |
 
-Two smaller additions came with those. The HUD gained a health bar beside the
-existing level bar, keeping the exact numbers in the text block, which needed a
-theme-owned `health` palette token. The Field Guide gained sections, because a
-catalogue covering the eighteen-entry upgrade pool no longer fits one page.
+Smaller additions came with those. The HUD gained a health bar beside the
+existing level bar — both now sit to the left of their numbers, one row each —
+which needed a theme-owned `health` palette token. The Field Guide gained
+sections, because a catalogue covering the eighteen-entry upgrade pool no longer
+fits one page.
+
+Two questions were answered from the code rather than changed on suspicion.
+Upgrades have never been gated on elapsed time or Pollution; the only filter is
+an upgrade's own per-run cap. Luck did work, but only on which upgrades appeared
+and on the elite and fracture rolls — it never made an upgrade stronger. Both
+findings are recorded in REC-065, which is what the tier split fixes.
 
 The Field Guide remains a **reference surface only** — encounter tracking,
 unlock gating, and the enemy and fact entries described in

@@ -21,6 +21,14 @@ export const tokens = {
     explosion: "#f97316",
     elite: "#fde047",
   },
+  tiers: {
+    common: "#e2e8f0",
+    uncommon: "#4ade80",
+    rare: "#60a5fa",
+    epic: "#c084fc",
+    legendary: "#fbbf24",
+    unique: "#fb7185",
+  },
   playerShape: "diamond",
   feedback: {
     damage: "feedback.damage",

@@ -17,7 +17,7 @@ async function waitForPlaying(page: Page, query: string): Promise<void> {
 
 test("ambient enemies never appear inside the visible view", async ({ page }) => {
   test.setTimeout(60_000);
-  await waitForPlaying(page, "/?noContact");
+  await waitForPlaying(page, "/?noContact&atTimeUp=complete");
 
   // Sweep the player into every wall and corner. V0.2 clamped spawn candidates
   // into the arena, which dragged them on screen precisely when the player was
@@ -58,7 +58,7 @@ test("the director gates the roster on run progress and announces each milestone
   // `noXp` keeps the run out of `level_up`, which otherwise pauses simulation
   // indefinitely waiting for a choice this test never makes. The director is
   // what is under test here, not progression.
-  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp");
+  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp&atTimeUp=complete");
 
   const opening = await snapshot(page);
   expect(Object.keys(opening?.pacing?.roleWeights ?? {})).toEqual([
@@ -98,7 +98,7 @@ test("the director gates the roster on run progress and announces each milestone
 
 test("a restarted run rewinds the director to its opening state", async ({ page }) => {
   test.setTimeout(60_000);
-  await waitForPlaying(page, "/?runDurationMs=8000&noContact&noXp");
+  await waitForPlaying(page, "/?runDurationMs=8000&noContact&noXp&atTimeUp=complete");
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
@@ -125,7 +125,7 @@ test("a restarted run rewinds the director to its opening state", async ({ page 
 
 test("the first milestone wave sweeps past instead of homing in", async ({ page }) => {
   test.setTimeout(120_000);
-  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp");
+  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp&atTimeUp=complete");
 
   // Cross the first unlock, which releases the fast role's wave.
   await expect

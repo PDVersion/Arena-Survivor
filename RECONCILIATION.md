@@ -1572,6 +1572,71 @@ Future guardrail:
 Revisit when:
 The menu gains state that changes how a run starts, or a run can return to it rather than restarting in place.
 
+### REC-064 — A run out of time is a decision, not an ending
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; run state, director, browser test design
+- Blocks: None
+
+Context / observation:
+`advanceRunState` set `complete` on the tick the authored duration expired, and the summary appeared immediately. That cut the run off at exactly the point a build had finished assembling itself, and it ended fights mid-swing: the arena could hold three hundred enemies at 4:59 and show a tally at 5:00 with all of them still standing.
+
+Decision / solution:
+The limit now produces a new `time_up` status that holds the simulation and asks. `endless` lifts the limit entirely and plays until the player actually dies. `clearing` stops new arrivals and keeps every other system running — projectiles, pickups, hazards, on-kill effects — so the run ends on an empty field rather than a freeze-frame. `RunState` carries the mode, so the clock, the HUD, and the director all resolve from one field.
+
+Endless needs nothing from the director: it already resolves from `t = elapsed / duration` with no clamp, and `BUILD_PLAN_V0.3.md` listed `t > 1` as supported. Time-based escalation plateaus at the end of the authored duration rather than growing without bound, which is the right shape — Chaos and the player's own world upgrades are what push an endless run further.
+
+Clearing waits on the causal event backlog as well as the live enemy count. A death-spawner that dies on the last tick still owes its offspring, and ending on an empty set while spawn work was queued would drop enemies the player had just been told they had to clear.
+
+Why:
+Both options are the player choosing how the run resolves, which is the same principle as the shrines: difficulty and length are things the player opts into rather than things the timer imposes.
+
+Future guardrail:
+`tests/unit/run-state` covers the hold, both resumptions, overtime accumulating past the duration, and that the decision can only be answered while it is being asked. `tests/e2e/overtime` covers the held run, endless, and clearing through to an empty field.
+
+Test-mode cost, stated:
+Seventeen browser assertions poll for `complete` once the duration expires, and their subject is restart, world reset, or terminal accounting rather than the ending. They pass `atTimeUp=complete`, which ends the run on the last tick exactly as V0.3 did. The production decision is therefore exercised by one file, the same trade as REC-063.
+
+Revisit when:
+Endless needs its own escalation curve past `t = 1`, or a run can be abandoned from the decision rather than only resolved.
+
+### REC-065 — Rarity said two things at once; the roll is now separate
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; upgrades, luck, level-up cards, theme tuning
+- Blocks: None
+
+Context / observation:
+Play testing asked why pierce and the extra projectile arrived so late, and whether upgrades were gated on time or Pollution. They are not, and never were: `selectUpgradeChoices` filters only on an upgrade's own cap. The lateness came from `rarity` weights of 100 / 38 / 12, where both projectile picks sat at `rare`. A specific rare occupied roughly 3.6% of a card slot, so a build-defining pick appeared about once every ten level-ups — often after the run it was supposed to shape.
+
+The same question exposed why: `rarity` was doing two jobs. It set how often an upgrade appeared *and* it coloured the card, so the only way to make an upgrade feel special was to make it scarce. Scarce and exciting are not the same property.
+
+Luck had a related problem. It shifted rare and epic selection weights and nudged the elite and fracture rolls, but it never made any upgrade *stronger*, which is what a player reading the word expects.
+
+Decision / solution:
+Split the two. `rarity` keeps only the appearance job, with the gap narrowed to 100 / 60 / 25 and pierce moved to `common` — a build-defining pick should be reachable. Measured across 30,000 level-ups, pierce now appears in 22.4% of them against roughly 10% before, and the extra projectile in 13.8%.
+
+Quality becomes a per-offer `UpgradeTier` roll: common, uncommon, rare, epic, legendary, unique at 1.0x, 1.2x, 1.4x, 1.6x, 2.0x, 2.0x, with the ladder and its weights as theme tuning. Weights are tuned against what a five-minute run actually reaches — about thirty level-ups, ninety cards — giving 3.3 legendaries and 1.0 unique per run at zero luck, rising to 7.2 and 2.5 at the maximum reachable luck of 230. Luck biases the tier roll proportionally to the rung, so it now visibly makes offers better while never biasing common downward.
+
+Legendary and unique share a multiplier, as specified. Unique is the rarer colour on the same top rung, so the best possible roll still reads as an event.
+
+Three details the ladder forced:
+Integer targets — pierce and projectile count — round rather than scale, and are floored at the authored value so a better roll can never round to something worse. With the shipped ladder that means epic and above give `+2`. Skill cards round the same way, so the top half of the ladder is worth two levels, still capped by the skill's own maximum. World modifiers never roll at all: scaling one half of "more pressure for more reward" changes the deal the player agreed to and scaling both changes nothing, so those cards are always common. That exclusion is derived from the effects rather than authored, so a new world upgrade cannot forget to opt out.
+
+Why:
+Separating them means an upgrade's appearance rate can be set by how central it is to a build, and its excitement can come from the roll. Neither number has to compromise for the other any more.
+
+Future guardrail:
+Theme validation requires the full ladder in order, starting at multiplier one and never falling. `tests/unit/upgrades/upgrade-tiers` asserts the distribution over a run's worth of offers, luck's direction, integer rounding, the skill cap, that no tier is ever worse than common for any upgrade in the pool, and that world bargains stay unscaled.
+
+Known gap:
+`npm run balance` does not model tiers — its build models apply authored values — so it now understates a real build by the average tier multiplier, about 1.20x at zero luck and more with luck invested. The reported DPS band and level range are therefore a floor rather than a prediction. Teaching the simulator to sample tiers is the obvious next step if the band is used for a real balance decision.
+
+Revisit when:
+The simulator needs tier-aware build models, unique gains a property beyond its colour, or weapon slots change what an upgrade offer is.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

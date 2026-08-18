@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-import type { ThemeManifest, UpgradeDefinition, UpgradeRarity } from "../core/archetypes/contracts";
+import type { ThemeManifest, UpgradeDefinition } from "../core/archetypes/contracts";
+import type { UpgradeTier } from "../core/archetypes/tiers";
 import type { UpgradeDescription } from "../systems/upgrades/describe-upgrade";
 
 export interface LevelUpView {
@@ -38,12 +39,14 @@ export class LevelUpChoiceUi {
     this.theme = theme;
   }
 
-  private rarityColour(rarity: UpgradeRarity): number {
-    const palette = this.theme.tokens.palette;
-    const hex = rarity === "epic"
-      ? palette.overcritical
-      : rarity === "rare" ? palette.critical : palette.grid;
-    return Phaser.Display.Color.HexStringToColor(hex).color;
+  /**
+   * A card's border is its roll, not the upgrade's identity.
+   *
+   * The same upgrade can come up white or yellow, and the colour is the whole
+   * point of the roll: it has to be readable before any of the text is.
+   */
+  private tierColour(tier: UpgradeTier): number {
+    return Phaser.Display.Color.HexStringToColor(this.theme.tokens.tiers[tier]).color;
   }
 
   /**
@@ -61,7 +64,14 @@ export class LevelUpChoiceUi {
     description: UpgradeDescription | undefined,
     view: LevelUpView,
     cardWidth: number,
-  ): Readonly<{ texts: Phaser.GameObjects.Text[]; height: number; contentHeight: number }> {
+  ): Readonly<{
+    texts: Phaser.GameObjects.Text[];
+    tierNote?: Phaser.GameObjects.Text;
+    detailText?: Phaser.GameObjects.Text;
+    tier: UpgradeTier;
+    height: number;
+    contentHeight: number;
+  }> {
     const palette = this.theme.tokens.palette;
     const innerWidth = cardWidth - CARD_PADDING * 2;
 
@@ -76,14 +86,26 @@ export class LevelUpChoiceUi {
       fontStyle: "bold",
     }).setOrigin(1, 0);
 
+    const tier = description?.tier ?? "common";
     const heading = this.scene.add.text(0, 0, `${index + 1}. ${description?.name ?? choice.id}`, {
-      color: palette.accent,
+      color: this.theme.tokens.tiers[tier],
       fontFamily: "Georgia, serif",
       fontSize: "21px",
       fontStyle: "bold",
       // The badge owns the right end of this row, so the name wraps before it.
       wordWrap: { width: Math.max(80, innerWidth - badgeText.width - 16) },
     });
+
+    // Only worth saying when the roll actually changed the numbers; a common
+    // card would just be reading the baseline back to the player.
+    const tierNote = description && description.tierMultiplier > 1
+      ? this.scene.add.text(0, 0, `${description.tierLabel}  ×${description.tierMultiplier}`, {
+          color: this.theme.tokens.tiers[tier],
+          fontFamily: "Georgia, serif",
+          fontSize: "14px",
+          fontStyle: "bold",
+        }).setOrigin(1, 0)
+      : undefined;
 
     const summary = this.scene.add.text(0, 0, description?.summary ?? "", {
       color: palette.text,
@@ -93,9 +115,11 @@ export class LevelUpChoiceUi {
     }).setAlpha(0.85);
 
     const texts = [heading, badgeText, summary];
+    if (tierNote) texts.push(tierNote);
     let height = CARD_PADDING + Math.max(heading.height, badgeText.height) + CARD_ROW_GAP +
       summary.height;
 
+    let detailText: Phaser.GameObjects.Text | undefined;
     if (view.showDetail && description && description.lines.length > 0) {
       const detail = description.lines
         .slice(0, MAX_DETAIL_LINES)
@@ -104,7 +128,7 @@ export class LevelUpChoiceUi {
           return `${line.label}   ${change}${line.delta ? `   (${line.delta})` : ""}`;
         })
         .join("\n");
-      const detailText = this.scene.add.text(0, 0, detail, {
+      detailText = this.scene.add.text(0, 0, detail, {
         color: palette.pickup,
         fontFamily: "Georgia, serif",
         fontSize: "15px",
@@ -116,7 +140,14 @@ export class LevelUpChoiceUi {
     }
 
     const contentHeight = height + CARD_PADDING;
-    return { texts, contentHeight, height: Math.max(MIN_CARD_HEIGHT, contentHeight) };
+    return {
+      texts,
+      tierNote,
+      detailText,
+      tier,
+      contentHeight,
+      height: Math.max(MIN_CARD_HEIGHT, contentHeight),
+    };
   }
 
   show(
@@ -180,24 +211,27 @@ export class LevelUpChoiceUi {
     let cardTop = top + headerHeight;
 
     cards.forEach((card, index) => {
-      const choice = choices[index]!;
       const cardHeight = card.height;
       // Created after measuring, but pushed first, so the border sits behind its
       // own text rather than over it.
       children.push(
         this.scene.add
           .rectangle(width / 2, cardTop + cardHeight / 2, cardWidth, cardHeight, floorColour, 1)
-          .setStrokeStyle(3, this.rarityColour(choice.rarity))
+          .setStrokeStyle(3, this.tierColour(cards[index]!.tier))
           .setInteractive({ useHandCursor: true }),
       );
 
-      const [heading, badgeText, summary, detailText] = card.texts;
+      const [heading, badgeText, summary] = card.texts;
+      const tierNote = card.texts.find((text) => text === card.tierNote);
+      const detailText = card.texts.find((text) => text === card.detailText);
       // Content is centred in a card that came out shorter than the minimum.
       let y = cardTop + (cardHeight - card.contentHeight) / 2 + CARD_PADDING;
       heading!.setPosition(left + CARD_PADDING, y);
       badgeText!.setPosition(left + cardWidth - CARD_PADDING, y);
       y += Math.max(heading!.height, badgeText!.height) + CARD_ROW_GAP;
       summary!.setPosition(left + CARD_PADDING, y);
+      // Bottom-right of the card, clear of the summary text's wrap width.
+      tierNote?.setPosition(left + cardWidth - CARD_PADDING, y);
       y += summary!.height + CARD_ROW_GAP;
       detailText?.setPosition(left + CARD_PADDING, y);
       children.push(...card.texts);

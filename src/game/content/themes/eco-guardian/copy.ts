@@ -43,6 +43,13 @@ export const copy = {
     chainedExplosionDamage: "Cascade",
     remainderDamage: "Other / Remainder",
     deathCause: "Overwhelmed by",
+    timeUpTitle: "The Shift Is Over",
+    timeUpMessage: "The scheduled shift has ended, but the site has not. Decide how this one finishes.",
+    timeUpHint: "Press 1 or 2, or click",
+    continueEndless: "Work On",
+    continueEndlessHint: "No end time. Waste keeps arriving until you fall.",
+    clearTheField: "Clear The Site",
+    clearTheFieldHint: "No new waste. Finish what is left · still on site",
     upgradesTaken: "Equipment Requisitioned",
   },
   stats: {
@@ -86,6 +93,14 @@ export const copy = {
     maxPerRun: "Per shift",
     runsPlayed: "Shifts worked",
     best: "Best",
+  },
+  tiers: {
+    common: "Common",
+    uncommon: "Uncommon",
+    rare: "Rare",
+    epic: "Epic",
+    legendary: "Legendary",
+    unique: "Unique",
   },
   content: {
     [archetypeIds.character.starter]: {

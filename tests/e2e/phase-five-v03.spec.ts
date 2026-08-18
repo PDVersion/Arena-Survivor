@@ -5,7 +5,7 @@ async function snapshot(page: Page) {
 }
 
 const densePath =
-  "/?representativeLoad=1&closeLoad=1&loadHarness=200&runDurationMs=6000&noXp=1&noContact=1";
+  "/?representativeLoad=1&closeLoad=1&loadHarness=200&runDurationMs=6000&noXp=1&noContact=1&atTimeUp=complete";
 
 test("a dense crowd never stays perfectly stacked", async ({ page }) => {
   test.setTimeout(120_000);
@@ -42,7 +42,7 @@ test("a dense crowd never stays perfectly stacked", async ({ page }) => {
 test("solid enemies block the player and soft ones do not", async ({ page }) => {
   test.setTimeout(120_000);
   // Only the durable role, which is solid, spawned right on the player.
-  await page.goto("/?enemyRoster=all&noXp=1&noContact=1&spawnRadius=90&runDurationMs=20000");
+  await page.goto("/?enemyRoster=all&noXp=1&noContact=1&spawnRadius=90&runDurationMs=20000&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
@@ -66,7 +66,7 @@ test("solid enemies block the player and soft ones do not", async ({ page }) => 
 test("separation never alters damage, rewards, or statistics", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto(
-    "/?representativeLoad=1&closeLoad=1&loadHarness=120&compoundBuild=1&critChance=3&pierce=8&attackSpeedBonus=6&runDurationMs=5000&noContact=1&noXp=1",
+    "/?representativeLoad=1&closeLoad=1&loadHarness=120&compoundBuild=1&critChance=3&pierce=8&attackSpeedBonus=6&runDurationMs=5000&noContact=1&noXp=1&atTimeUp=complete",
   );
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {

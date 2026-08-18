@@ -5,7 +5,7 @@ import { copy } from "./copy";
 import { tokens } from "./tokens";
 import { weapons } from "./weapons";
 import { pickups } from "./pickups";
-import { upgrades } from "./upgrades";
+import { upgrades, upgradeTierTuning } from "./upgrades";
 import { shrines, shrineTuning } from "./shrines";
 import { skills } from "./skills";
 import { elites } from "./elites";
@@ -45,5 +45,6 @@ export const ecoGuardianTheme = defineTheme({
     bodies,
     hazards: hazardTuning,
     shrines: shrineTuning,
+    upgradeTiers: upgradeTierTuning,
   },
 });

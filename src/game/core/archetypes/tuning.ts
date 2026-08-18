@@ -1,4 +1,5 @@
 import type { EnemyId, HazardId, ShrineId } from "./ids";
+import type { UpgradeTier } from "./tiers";
 
 /**
  * Theme-owned tuning contracts.
@@ -207,6 +208,41 @@ export interface ShrinesTuning {
   readonly arrivals: readonly ShrineArrivalTuning[];
 }
 
+/** One rung of the upgrade roll ladder. */
+export interface UpgradeTierTuning {
+  readonly tier: UpgradeTier;
+  /** Selection weight for the per-offer roll, before luck. */
+  readonly weight: number;
+  /**
+   * Multiplier applied to the offer's stat gains. `1` is the authored value, so
+   * a common card is exactly what the definition says and every higher tier is
+   * a bonus rather than the baseline being secretly nerfed.
+   */
+  readonly multiplier: number;
+}
+
+/**
+ * How good an upgrade offer rolls.
+ *
+ * Weights are chosen against the level count a five-minute run actually
+ * reaches, not against an endless one: roughly thirty level-ups, three cards
+ * each, so a tier at weight `w` out of total `T` is seen about `90w/T` times a
+ * run. That is the arithmetic the numbers are tuned to, and it is why they are
+ * theme data rather than constants — a longer default run wants a different
+ * ladder.
+ */
+export interface UpgradeTiersTuning {
+  readonly tiers: readonly UpgradeTierTuning[];
+  /**
+   * How strongly luck pushes the roll up the ladder.
+   *
+   * A tier's weight is multiplied by `1 + luck * bias * rank`, so common is
+   * untouched and each rung above it gains proportionally more. Luck therefore
+   * makes offers *better*, which is what a player expects the stat to mean.
+   */
+  readonly luckWeightBias: number;
+}
+
 export interface TuningPack {
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
@@ -214,4 +250,5 @@ export interface TuningPack {
   readonly bodies: BodiesTuning;
   readonly hazards: HazardsTuning;
   readonly shrines: ShrinesTuning;
+  readonly upgradeTiers: UpgradeTiersTuning;
 }

@@ -6,6 +6,8 @@ import type {
   WorldKey,
 } from "../../core/archetypes/contracts";
 import type { UpgradeId } from "../../core/archetypes/ids";
+import type { UpgradeTier } from "../../core/archetypes/tiers";
+import { isTiered, tierMultiplier } from "./upgrade-tiers";
 import { selectWorldModifiers } from "../chaos/world-modifiers";
 import {
   findSkillEffect,
@@ -142,6 +144,12 @@ export interface UpgradeDescription {
   readonly name: string;
   readonly summary: string;
   readonly rarity: UpgradeRarity;
+  /** This offer's roll, which decides its colour and how much it gives. */
+  readonly tier: UpgradeTier;
+  /** Themed name for the tier, e.g. "Legendary". */
+  readonly tierLabel: string;
+  /** Gain over the authored value, `1` on a common roll. */
+  readonly tierMultiplier: number;
   /** Times already taken. */
   readonly level: number;
   readonly nextLevel: number;
@@ -161,9 +169,19 @@ export function describeUpgrade(
   state: UpgradeableState,
   upgrade: UpgradeDefinition,
   theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning">,
+  tier: UpgradeTier = "common",
 ): UpgradeDescription {
   const level = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
-  const after = applyUpgrade(state, upgrade, (skillId) => skillMaxLevel(theme.skills, skillId));
+  // An untiered upgrade is described at its authored value however it rolled,
+  // so the card can never promise a bonus the application will not deliver.
+  const resolvedTier = isTiered(upgrade) ? tier : "common";
+  const multiplier = tierMultiplier(theme.tuning.upgradeTiers, resolvedTier);
+  const after = applyUpgrade(
+    state,
+    upgrade,
+    (skillId) => skillMaxLevel(theme.skills, skillId),
+    multiplier,
+  );
 
   const beforeStats = selectPlayerStats(state, theme);
   const afterStats = selectPlayerStats(after, theme);
@@ -193,6 +211,9 @@ export function describeUpgrade(
     name: theme.copy.content[upgrade.id]?.name ?? upgrade.id,
     summary: theme.copy.content[upgrade.id]?.description ?? "",
     rarity: upgrade.rarity,
+    tier: resolvedTier,
+    tierLabel: theme.copy.tiers[resolvedTier],
+    tierMultiplier: multiplier,
     level,
     nextLevel: level + 1,
     maxLevel: upgrade.maxLevel,
