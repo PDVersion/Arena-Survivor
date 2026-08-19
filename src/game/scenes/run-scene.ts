@@ -167,6 +167,13 @@ const PICKUP_CAP = 250;
 const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
 const SHRINE_PLACEMENT_SEED = 0x5471_0008;
+/** An ordinary spawn: itself, at full size. */
+const NO_FRAGMENT: FragmentShape = Object.freeze({
+  speedMultiplier: 1,
+  healthMultiplier: 1,
+  radiusMultiplier: 1,
+  damageMultiplier: 1,
+});
 /** How far outside the view a shrine marker is pinned, so it never hides a wall. */
 const SHRINE_MARKER_INSET = 44;
 let runGenerationSequence = 0;
@@ -274,6 +281,12 @@ interface MovementKeys {
 }
 
 type DamageSource = "direct" | "explosion" | "chained_explosion";
+type FragmentShape = Readonly<{
+  speedMultiplier: number;
+  healthMultiplier: number;
+  radiusMultiplier: number;
+  damageMultiplier: number;
+}>;
 interface ExplosionEventPayload {
   readonly x: number;
   readonly y: number;
@@ -907,7 +920,7 @@ export class RunScene extends Phaser.Scene {
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement, payload.reason === "fracture")) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1532,6 +1545,7 @@ export class RunScene extends Phaser.Scene {
     eliteOverride?: boolean,
     angleRadians?: number,
     movement: WaveMovement = "chase",
+    fragment = false,
   ): boolean {
     if (
       !this.player ||
@@ -1563,6 +1577,7 @@ export class RunScene extends Phaser.Scene {
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = this.worldModifiers();
+    const fragmentShape = fragment ? this.fragmentShape() : NO_FRAGMENT;
     const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
       activeTheme.tuning.director,
@@ -1589,9 +1604,12 @@ export class RunScene extends Phaser.Scene {
       spawnSource,
       rewardMultiplier * (elite?.rewardMultiplier ?? 1) * toughnessReward,
       {
-        healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
-        damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
-        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier,
+        healthMultiplier: worldModifiers.enemyHealthMultiplier *
+          (elite?.healthMultiplier ?? 1) * fragmentShape.healthMultiplier,
+        damageMultiplier: worldModifiers.enemyDamageMultiplier *
+          (elite?.damageMultiplier ?? 1) * fragmentShape.damageMultiplier,
+        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier * fragmentShape.speedMultiplier,
+        radiusMultiplier: fragmentShape.radiusMultiplier,
       },
       elite,
       movement,
@@ -1921,8 +1939,10 @@ export class RunScene extends Phaser.Scene {
       this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.fracture)
     ) {
       for (let index = 0; index < fracture.childCount; index += 1) {
+        // The parent's own id: a fragment is a smaller, quicker piece of what
+        // broke, not a spawn of the fast role.
         this.enqueueSpawnRequest(
-          fracture.childEnemyId,
+          enemy.definition.id,
           archetypeIds.skill.fracture,
           fracture.rewardMultiplier,
           enemy.targetId,
@@ -1934,6 +1954,17 @@ export class RunScene extends Phaser.Scene {
         this.fractureQueued += 1;
       }
     }
+  }
+
+  /**
+   * How a fragment differs from what it broke off.
+   *
+   * Theme data, read from the fracture skill itself, so the shape of a fragment
+   * cannot drift from the skill that produces it.
+   */
+  private fragmentShape(): FragmentShape {
+    const fracture = findSkillEffect(activeTheme.skills, archetypeIds.skill.fracture, "fracture");
+    return fracture?.fragment ?? NO_FRAGMENT;
   }
 
   private processExplosionEvent(payload: ExplosionEventPayload, eventId: string): void {

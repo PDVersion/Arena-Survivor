@@ -106,7 +106,7 @@ test("a level-up card states the tier it rolled and gives what it states", async
     expect(tierNames).toContain(card.tier);
     // The ladder never goes below the authored value.
     expect(card.tierMultiplier).toBeGreaterThanOrEqual(1);
-    expect(card.tierMultiplier).toBeLessThanOrEqual(2);
+    expect(card.tierMultiplier).toBeLessThanOrEqual(2.5);
   }
 
   // What the card claims is what the run applies: taking it must move a stat by

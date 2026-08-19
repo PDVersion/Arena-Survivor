@@ -230,9 +230,24 @@ export type SkillEffectDefinition =
       kind: "fracture";
       chance: number;
       chancePerLevel: number;
-      childEnemyId: EnemyId;
       childCount: number;
       rewardMultiplier: number;
+      /**
+       * What a fragment is, relative to whatever it broke off.
+       *
+       * Fragments used to be spawned as a fixed enemy id — the fast role — so
+       * breaking a glass bottle produced plastic bags, and every fracture in
+       * the run added more of the one enemy that was already the most
+       * pressuring. A fragment is now a smaller, quicker piece of its own
+       * parent, so what you broke still determines what you are fighting.
+       */
+      fragment: Readonly<{
+        /** Slightly above `1`: a fragment outpaces what it came from. */
+        speedMultiplier: number;
+        healthMultiplier: number;
+        radiusMultiplier: number;
+        damageMultiplier: number;
+      }>;
     }>
   | Readonly<{
       kind: "bloodlust";

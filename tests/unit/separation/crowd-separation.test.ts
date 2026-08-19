@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
+import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { SpatialHash } from "../../../src/game/systems/spatial/spatial-hash";
 import {
   knockbackDisplacement,
@@ -179,5 +181,44 @@ describe("knockback", () => {
   it("still produces a direction for coincident points", () => {
     const push = knockbackDisplacement({ x: 5, y: 5 }, { x: 5, y: 5 }, 20, 1);
     expect(Math.hypot(push.x, push.y)).toBeGreaterThan(0);
+  });
+});
+
+describe("crowd density", () => {
+  const themes = [
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ] as const;
+
+  it.each(themes)("keeps every %s role bunching rather than spacing out", (_name, theme) => {
+    // At or below the drawn radius, so bodies still touch and a swarm reads as
+    // a crowd. Above it they would stand off from each other in a grid.
+    for (const role of theme.tuning.bodies.roles) {
+      expect(role.separationScale).toBeGreaterThan(0);
+      expect(role.separationScale).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it.each(themes)("keeps %s bodies from sitting inside each other", (_name, theme) => {
+    // Raised after play testing: a detonation clearing a pocket let the retained
+    // spawn backlog refill it at once, and the light roles overlapped so heavily
+    // that the arrivals read as a single blob. See REC-067.
+    for (const role of theme.tuning.bodies.roles) {
+      expect(role.separationScale).toBeGreaterThanOrEqual(0.7);
+    }
+  });
+
+  it.each(themes)("sizes the %s hash cell for the largest body it can hold", (_name, theme) => {
+    const largest = Math.max(
+      ...theme.tuning.bodies.roles.map((role) => {
+        const enemy = theme.enemies.find((entry) => entry.id === role.enemyId)!;
+        return enemy.radius * role.separationScale;
+      }),
+    );
+    const elite = theme.elites[0]!.radiusMultiplier;
+
+    // Elites included: a cell smaller than the largest body's diameter lets an
+    // overlapping pair fall in non-adjacent cells and never be resolved.
+    expect(theme.tuning.bodies.cellSize).toBeGreaterThanOrEqual(largest * elite * 2);
   });
 });

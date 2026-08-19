@@ -179,7 +179,7 @@ export const alternateTheme = defineTheme({
     {
       id: archetypeIds.enemy.swarmBasic,
       maxHealth: 20,
-      moveSpeed: 112,
+      moveSpeed: 104,
       contactDamage: 10,
       contactCooldownMs: 1000,
       radius: 14,
@@ -188,9 +188,9 @@ export const alternateTheme = defineTheme({
       geometry: "circle",
       presentationToken: "enemy",
     },
-    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 204, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, armour: 0, geometry: "triangle", presentationToken: "enemyFast" },
-    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 76, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank" },
-    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 88, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 190, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, armour: 0, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 70, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 80, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
   ],
   pickups: [
     {
@@ -241,7 +241,7 @@ export const alternateTheme = defineTheme({
   skills: [
     { id: archetypeIds.skill.piercingMomentum, maxLevel: 6, effects: [{ kind: "piercing_momentum", damagePerUniqueHit: 0.1, perLevel: 0.1 }] },
     { id: archetypeIds.skill.onKillExplosion, maxLevel: 8, effects: [{ kind: "on_kill_explosion", baseRadius: 44, radiusPerLevel: 12, flatDamage: 3, flatPerLevel: 2, victimHealthShare: 0.3, sharePerLevel: 0.08, maxShare: 0.9 }] },
-    { id: archetypeIds.skill.fracture, maxLevel: 5, effects: [{ kind: "fracture", chance: 0.15, chancePerLevel: 0.05, childEnemyId: archetypeIds.enemy.fastFragile, childCount: 2, rewardMultiplier: 0 }] },
+    { id: archetypeIds.skill.fracture, maxLevel: 5, effects: [{ kind: "fracture", chance: 0.15, chancePerLevel: 0.05, childCount: 2, rewardMultiplier: 0, fragment: { speedMultiplier: 1.15, healthMultiplier: 0.35, radiusMultiplier: 0.62, damageMultiplier: 0.6 } }] },
     { id: archetypeIds.skill.bloodlust, maxLevel: 6, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01, attackSpeedPerLevel: 0.005 }] },
     { id: archetypeIds.skill.chainReaction, maxLevel: 5, effects: [{ kind: "chain_reaction", baseDepth: 2, depthPerLevel: 1, damageFalloff: 0.7, falloffPerLevel: 0.04, radiusFalloff: 0.85, radiusFalloffPerLevel: 0.02 }] },
   ],
@@ -295,7 +295,7 @@ export const alternateTheme = defineTheme({
         { tier: "rare", weight: 30, multiplier: 1.4 },
         { tier: "epic", weight: 14, multiplier: 1.6 },
         { tier: "legendary", weight: 8, multiplier: 2 },
-        { tier: "unique", weight: 2.4, multiplier: 2 },
+        { tier: "unique", weight: 1.5, multiplier: 2.5 },
       ],
     },
     shrines: {

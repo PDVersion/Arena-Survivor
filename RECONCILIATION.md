@@ -1637,6 +1637,69 @@ Known gap:
 Revisit when:
 The simulator needs tier-aware build models, unique gains a property beyond its colour, or weapon slots change what an upgrade offer is.
 
+### REC-066 — The engagement floor is per role, and nothing outruns the player
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.3.1 and later; enemy tuning, the REC-049 envelope, REC-050's wave rule
+- Blocks: None
+
+Context / observation:
+A third play-test pass still read as too fast, and the flat ring-crossing floor had run out of room for the third time: REC-058 raised it implicitly, REC-061 raised it from twelve to thirteen seconds, and another cut needed fourteen. Raising a guard every time it is inconvenient is not a guard.
+
+The same pass changed what the fast role is for. REC-049 had put it just above the player specifically so it could not be outrun. Play testing found that reads as being chased down rather than as pressure — there is no answer to it, only a delay.
+
+Decision / solution:
+Two separate changes, both about shape rather than magnitude.
+
+The floor is now per role rather than one number. The opening role is the entire roster for the first minute, so its crossing time is literally how long a run has nothing in it, and it is held at nine seconds against an actual 9.2. Every other role gets a loose sixteen-second sanity bound, because the heavy roles unlock at 40% and 45% of the run — by which point the field already holds dozens of enemies — so their crossing time is never dead time. That is a guard shaped like the thing it protects, and it does not need raising again the next time the roster slows.
+
+The fast role moves from just above the player to just below: 190 against 200. Standing still loses ground immediately; moving keeps you ahead. The guard is now a band — no role may reach player speed, and the fast role must sit between 0.9 and 1.0 of it and remain the fastest thing on the field. The rest of the roster came down with it: 104 / 190 / 70 / 80 against V0.3's 140 / 240 / 90 / 110.
+
+REC-050's rule — a role at least as fast as the player must not chase in a wave — no longer fires against any production data, because nothing reaches player speed. It is kept as a safety net and its test now builds a theme that violates it deliberately, so the rule stays exercised rather than passing vacuously. The fast role's wave is separately asserted to drift, since eighteen of them homing in at 0.95x is still unsurvivable with the starter weapon.
+
+Why:
+A guard derived from one measurement of one failure is a snapshot, not a principle. Expressing it per role says what each role is for, which is what makes it hold under a change nobody predicted.
+
+Future guardrail:
+`tests/unit/director` asserts the per-role floor, the ceiling, the fast role's band, and that the fast role stays the quickest. `tests/unit/content/tuning` exercises the drift rule against a constructed violation and asserts no production role reaches player speed.
+
+Revisit when:
+Player speed becomes a character choice, the view size changes, or the opening role needs to slow further — that is the number with the least room left.
+
+### REC-067 — A fragment is a piece of its parent, and the crowd holds its shape
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.3.1 and later; the fracture skill, crowd separation, theme contracts
+- Blocks: None
+
+Context / observation:
+Two findings from the same play session, both about how a crowd reads.
+
+Fracture spawned a fixed `childEnemyId`, and both production packs pointed it at the fast role. Breaking a glass bottle produced plastic bags. Every fracture in the run therefore added more of the one enemy that was already applying the most pressure, and the mechanic had no relationship to what was actually broken.
+
+Separately, a detonation clearing a large pocket was followed by a wall of arrivals. The cause is not the director, which spawns on a cadence: it is the retained causal backlog. Fracture children and death-spawn offspring are held rather than dropped when the enemy cap is reached (REC-023), so a chain that kills a hundred enemies queues a hundred spawn requests and releases them the instant capacity frees. That retention is deliberate and correct — the alternative is silently losing enemies the player earned. What was wrong was how the released group read: at the old separation scales the light roles overlapped so heavily that a hundred arrivals looked like one object.
+
+Decision / solution:
+A fragment is now defined against whatever broke. The fracture effect drops `childEnemyId` and declares a `fragment` shape instead — speed 1.15x, health 0.35x, radius 0.62x, damage 0.6x of its parent — and the spawn carries the parent's own id. What you break determines what you fight, and a fragment is quicker than its parent without being the fast role.
+
+Crowd separation rises across the light roles: the bag from 0.55 to 0.72 of its drawn radius and the bottle from 0.70 to 0.88, with the heavy roles at 1.0. Every scale stays at or below the drawn radius, so bodies still touch and a swarm still reads as a crowd rather than a formation. The per-frame displacement clamp goes from 6 to 8, because in a deep pile it — not the separation radius — is what actually binds: separation can only correct so far per frame while every body pushes inward. `maxNeighbours` is deliberately untouched, since it is the per-frame cost driver the 300-entity budget in REC-040 was measured against. The hash cell grows from 64 to 72 to stay above the largest elite body's diameter.
+
+A fragment needs no separation tuning of its own: it carries its parent's scale against a smaller drawn radius, so it bunches more tightly than what it broke off automatically.
+
+Why:
+The fragment change is the difference between a mechanic that expresses the fiction — plastics break into smaller pieces — and one that just adds fast enemies. The separation change is deliberately small: the goal is a crowd that reads as many things, not a crowd that stands apart.
+
+Future guardrail:
+Theme validation requires a fragment shape whose speed exceeds one and whose radius is below one, so a pack cannot declare a fragment that is slower or larger than its parent. `tests/unit/skills` asserts the shape stays modest and worth no reward; `tests/unit/separation` asserts every role still bunches, none sits inside another, and the hash cell covers the largest elite body.
+
+Known consequence, stated:
+A fragment of the fast role lands at 218 against a player at 200, so it is the one thing in the game that can outpace you. That follows directly from both instructions — fragments are quicker than their parent, and the fast role sits just below the player — and it is left in as a fair consequence of choosing to fracture. The multiplier is theme data, so pulling it back is a one-line change.
+
+Revisit when:
+Fragments need their own role identity rather than inheriting one, the enemy cap changes how much backlog can accumulate, or the crowd budget is re-measured on other hardware.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

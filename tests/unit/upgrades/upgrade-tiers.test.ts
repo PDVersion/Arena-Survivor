@@ -64,7 +64,7 @@ describe("upgrade tier ladder", () => {
   });
 
   it("ships the requested ladder", () => {
-    expect(tuning.tiers.map((entry) => entry.multiplier)).toEqual([1, 1.2, 1.4, 1.6, 2, 2]);
+    expect(tuning.tiers.map((entry) => entry.multiplier)).toEqual([1, 1.2, 1.4, 1.6, 2, 2.5]);
   });
 });
 

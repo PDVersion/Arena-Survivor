@@ -125,19 +125,41 @@ describe("wave movement validation", () => {
   });
 
   it("rejects a chasing wave the player cannot outrun", () => {
-    // The fast role outruns the player, so declaring its wave as a chase is a
-    // guaranteed death sentence with the starter weapon.
+    // No production role outruns the player any more (REC-066), so the theme is
+    // deliberately pushed back into the state the rule exists to catch: a role
+    // raised above the player while still declaring a chasing wave, which with
+    // the starter weapon is a guaranteed death sentence.
+    const playerSpeed = alternateTheme.characters[0]!.baseStats.moveSpeed;
+    const enemies = alternateTheme.enemies.map((enemy) =>
+      enemy.id === archetypeIds.enemy.fastFragile
+        ? { ...enemy, moveSpeed: playerSpeed + 40 }
+        : enemy,
+    );
     const roles = validDirector.roles.map((role) =>
       role.enemyId === archetypeIds.enemy.fastFragile
         ? { ...role, waveMovement: "chase" }
         : role,
     );
-    const issues = validateTheme(
-      withTuning({ ...alternateTheme.tuning, director: { ...validDirector, roles } }),
-    );
+    const issues = validateTheme({
+      ...alternateTheme,
+      enemies,
+      tuning: { ...alternateTheme.tuning, director: { ...validDirector, roles } },
+    } as unknown as ThemeManifest);
+
     expect(issues).toContain(
       `${archetypeIds.enemy.fastFragile} outruns the player, so its wave must drift`,
     );
+  });
+
+  it("accepts the shipped fast role, which stays just below the player", () => {
+    // The rule is a safety net now rather than a live constraint: nothing in
+    // either production pack triggers it.
+    for (const entry of themeRegistry) {
+      const playerSpeed = entry.theme.characters[0]!.baseStats.moveSpeed;
+      for (const enemy of entry.theme.enemies) {
+        expect(enemy.moveSpeed).toBeLessThan(playerSpeed);
+      }
+    }
   });
 });
 

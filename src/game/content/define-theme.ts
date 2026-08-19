@@ -428,8 +428,27 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         if (!Number.isFinite(effect.chance) || effect.chance < 0 || effect.chance > 1) issues.push(`${skill.id} fracture chance must be between zero and one`);
         if (!Number.isFinite(effect.chancePerLevel) || effect.chancePerLevel < 0) issues.push(`${skill.id} fracture chancePerLevel cannot be negative`);
         if (!Number.isInteger(effect.childCount) || effect.childCount < 1) issues.push(`${skill.id} fracture childCount must be a positive integer`);
-        if (!enemyIds.has(effect.childEnemyId)) issues.push(`${skill.id} references missing fracture enemy: ${effect.childEnemyId}`);
         if (!Number.isFinite(effect.rewardMultiplier) || effect.rewardMultiplier < 0) issues.push(`${skill.id} fracture rewardMultiplier cannot be negative`);
+        const fragment = effect.fragment;
+        if (!fragment) {
+          issues.push(`${skill.id} fracture must declare a fragment shape`);
+        } else {
+          // A fragment is defined against whatever broke, so every multiplier
+          // has to be a real positive ratio rather than an absolute value.
+          for (const [key, value] of Object.entries(fragment) as [string, number][]) {
+            if (!Number.isFinite(value) || value <= 0) {
+              issues.push(`${skill.id} fracture fragment.${key} must be greater than zero`);
+            }
+          }
+          // The whole point of the change: a fragment outpaces what it came
+          // from, and is smaller than it.
+          if (fragment.speedMultiplier <= 1) {
+            issues.push(`${skill.id} fracture fragment.speedMultiplier must exceed one`);
+          }
+          if (fragment.radiusMultiplier >= 1) {
+            issues.push(`${skill.id} fracture fragment.radiusMultiplier must be below one`);
+          }
+        }
       }
       if (effect.kind === "bloodlust" &&
         (!Number.isFinite(effect.windowMs) || effect.windowMs <= 0 || !Number.isInteger(effect.killsPerStep) || effect.killsPerStep < 1 || !Number.isFinite(effect.attackSpeedPerStep) || effect.attackSpeedPerStep <= 0)) {

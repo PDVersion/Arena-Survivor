@@ -880,6 +880,8 @@ scope, and each is recorded in full in [`../RECONCILIATION.md`](../RECONCILIATIO
 | The game dropped straight into a run | A title screen between boot and the run; test mode skips it and one path covers the transition | REC-063 |
 | The timer ended the run mid-fight | The limit becomes a decision: continue endlessly, or stop arrivals and clear the field | REC-064 |
 | Build-defining picks arrived too late, and luck never made anything stronger | Appearance rate and roll quality split apart; a six-rung tier ladder scales what each offer gives, and luck biases the roll | REC-065 |
+| The roster was still too fast, and the fast role could not be escaped | A third cut, and the engagement floor reshaped per role; nothing reaches player speed, and the fast role sits just below it | REC-066 |
+| Fragments were the fast role, and a cleared pocket refilled as one blob | A fragment is a smaller, quicker piece of whatever broke; light roles overlap less without standing apart | REC-067 |
 
 Smaller additions came with those. The HUD gained a health bar beside the
 existing level bar — both now sit to the left of their numbers, one row each —

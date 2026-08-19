@@ -6,7 +6,7 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
-**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~20% slower than V0.3, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-065).
+**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-067).
 
 V0.3 in full — a rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
 
@@ -51,7 +51,7 @@ Up / down         = Switch Field Guide sections
 
 Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, and live world pressure.
 
-Every upgrade offer rolls a tier — common, uncommon, rare, epic, legendary, or unique — which colours the card and multiplies what it gives, from 1× at common to 2× at the top. A tier is rolled per card, so the same upgrade can come up white or yellow. `Luck` biases that roll upward; it does not bias common downward, so ordinary cards always remain in the mix. Integer gains like pierce and extra charges round, so epic and above are worth `+2`. World-pressure cards never roll: scaling one half of a stated bargain would change the deal.
+Every upgrade offer rolls a tier — common, uncommon, rare, epic, legendary, or unique — which colours the card and multiplies what it gives, from 1× at common through 2× at legendary to 2.5× at unique. A tier is rolled per card, so the same upgrade can come up white or yellow. `Luck` biases that roll upward; it does not bias common downward, so ordinary cards always remain in the mix. Integer gains like pierce and extra charges round, so epic and above are worth `+2`. World-pressure cards never roll: scaling one half of a stated bargain would change the deal.
 
 At five minutes the run does not simply stop. It asks whether to work on with no end time, or to stop new arrivals and finish clearing what is already on the field.
 

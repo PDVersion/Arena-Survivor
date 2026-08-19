@@ -124,20 +124,20 @@ export const upgrades = [
  * cards each, so ninety cards seen — computed from these weights:
  *
  *   tier        weight   share    seen/run   gain
- *   common         100   47.1%      42.4     1.00x
- *   uncommon        58   27.3%      24.6     1.20x
- *   rare            30   14.1%      12.7     1.40x
- *   epic            14    6.6%       5.9     1.60x
+ *   common         100   47.3%      42.6     1.00x
+ *   uncommon        58   27.4%      24.7     1.20x
+ *   rare            30   14.2%      12.8     1.40x
+ *   epic            14    6.6%       6.0     1.60x
  *   legendary        8    3.8%       3.4     2.00x
- *   unique         2.4    1.1%       1.0     2.00x
+ *   unique         1.5    0.7%       0.6     2.50x
  *
- * That puts three or four legendaries and about one unique in a five-minute
- * run, which is often enough to be worth hoping for and rare enough to matter.
- * A ten-minute run doubles both, which is the intended shape rather than a
- * miss: a longer run should hand out more standout moments.
+ * That puts three or four legendaries in a five-minute run and a unique in
+ * roughly every second one, which is often enough to be worth hoping for and
+ * rare enough to matter. A ten-minute run doubles both, which is the intended
+ * shape rather than a miss: a longer run should hand out more standout moments.
  *
- * Legendary and unique share a multiplier by design. Unique is the rarer
- * colour on the same top rung, so the best possible roll reads as an event.
+ * Unique sits above legendary rather than beside it, so the rarest colour is
+ * also the strongest roll and there is no rung that is purely cosmetic.
  */
 export const upgradeTierTuning = {
   luckWeightBias: 0.0025,
@@ -147,6 +147,6 @@ export const upgradeTierTuning = {
     { tier: "rare", weight: 30, multiplier: 1.4 },
     { tier: "epic", weight: 14, multiplier: 1.6 },
     { tier: "legendary", weight: 8, multiplier: 2 },
-    { tier: "unique", weight: 2.4, multiplier: 2 },
+    { tier: "unique", weight: 1.5, multiplier: 2.5 },
   ],
 } as const satisfies UpgradeTiersTuning;
