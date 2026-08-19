@@ -13,7 +13,9 @@ Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, ren
 
 Consult `build/SAVE_DATA.md` before changing profile state, progression, unlocks, statistics, persistent settings, stable saved IDs, persistence adapters, migrations, or save import/export.
 
-Consult `build/SPRITE_STYLE_GUIDE.md` before generating, editing, or accepting any sprite, and `build/SPRITE_PLAN_V0.4.md` before changing how sprites are loaded, packed, or resolved. Track individual sprites in `build/sprites/MANIFEST.md`. Never hand-edit a generated sprite to match a style the prompt does not produce — fix the prompt and regenerate, or the roster stops being reproducible.
+Consult `build/BUILD_PLAN_V0.4.md` before starting any V0.4 work. V0.4 is two streams built in parallel — sprites (V0.4.1) and content (V0.4.2) — and that file owns the shared seam, the file-ownership table, and the reconciliation id ranges that keep them from colliding. Do not edit a file outside your stream's ownership block.
+
+Consult `build/SPRITE_STYLE_GUIDE.md` before generating, editing, or accepting any sprite, and `build/SPRITE_PLAN_V0.4.1.md` before changing how sprites are loaded, packed, or resolved. Track individual sprites in `build/sprites/MANIFEST.md`, and claim a sprite there before generating it. Never hand-edit a generated sprite to match a style the prompt does not produce — fix the prompt and regenerate, or the roster stops being reproducible.
 
 Before changing code:
 
@@ -38,7 +40,12 @@ Milestone branches are named `<agent>/<milestone>`, where the prefix records whi
 | Prefix | Built with | Example |
 | --- | --- | --- |
 | `codex/` | ChatGPT Codex | `codex/v0.1`, `codex/v0.2` |
-| `claude/` | Claude Code | `claude/v0.3` |
+| `claude/` | Claude Code | `claude/v0.3`, `claude/v0.3.1` |
+
+V0.4 splits into three branches because two of them are built concurrently:
+`*/v0.4.0` (the shared seam, merged first), then `*/v0.4.1` (sprites) and
+`*/v0.4.2` (content) in parallel. Either agent may take either parallel stream;
+the prefix records whichever one actually does.
 
 Use the prefix for the agent that is actually doing the work, decided when the branch is created. The prefix is a provenance record, not a permission boundary — any agent may read, review, or continue any branch.
 

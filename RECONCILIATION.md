@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`; V0.4 sprite work planned, not started**
+- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`; V0.4 planned as two parallel streams (REC-070), not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1771,6 +1771,46 @@ One-line trap recorded early:
 
 Revisit when:
 Phase S1 measures frame time with 300 textured sprites, the style lock is tuned after the first batch, or weapon slots change how many weapon sprites the roster needs.
+
+### REC-070 — V0.4 is two parallel streams over one pre-landed seam
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.4 planning; branch strategy, file ownership, reconciliation ids
+- Blocks: None
+
+Context / observation:
+V0.4 holds two bodies of work that share only a version number. `PLAN.md` §V0.4 asks for content growth — weapons, evolution, bosses, curses, unlockables, persistence — and REC-069 plans the sprite roster. They touch almost nothing in common: sprites are presentation, content is simulation.
+
+They also fail differently. Sprite work stalls on generation quality, which is iterative and unpredictable; content work stalls on design decisions. Under one milestone either can block the other, and the request was explicitly to be able to run both at once, potentially with two agents.
+
+Decision / solution:
+Split V0.4 into `V0.4.0` (a shared seam), `V0.4.1` (sprites), and `V0.4.2` (content), with the two numbered streams built concurrently on separate branches. [`build/BUILD_PLAN_V0.4.md`](build/BUILD_PLAN_V0.4.md) is the contract.
+
+Three mechanisms make concurrency safe, and all three are cheap only if they land before either stream starts:
+
+**The seam ships first and ships empty.** V0.4.0 makes every edit both streams would otherwise contend for — the sprite contract, the entity render branch, `pixelArt: true`, the per-theme `sprites.ts` file — and adds no sprites and no content. Every change in it is inert, so it is reviewable as "nothing changed visually" and verified by the existing suite passing unmodified.
+
+**A file-ownership table, enforced by convention.** The one genuinely shared file is `src/game/entities/*.ts`, which is exactly why V0.4.0 writes the sprite branch into every actor up front; after that, adding a sprite is a data edit in a file only V0.4.1 owns. Sprite entries deliberately do *not* live in `tokens.ts` — that file is edited by both streams for unrelated reasons, and it would have been the busiest conflict in the plan.
+
+**Reconciliation gets append anchors and reserved id ranges.** Two branches appending to the end of this file conflict every single time. Each stream now appends inside its own heading, and reserves an id range — V0.4.1 takes REC-071 to REC-089, V0.4.2 takes REC-090 onward. The ranges matter as much as the anchors: two agents both taking "the next number" produce two REC-071s, which git merges silently and is worse than a conflict.
+
+Why:
+Every one of these is far cheaper to design in than to retrofit. Discovering mid-milestone that both branches edit `tokens.ts` on every commit means either rewriting history or serialising the work, which is the thing the split exists to avoid.
+
+Future guardrail:
+The definition of done for V0.4 includes checking that the ownership table was not violated in either branch's history. If it was, the split was drawn in the wrong place, and that is worth knowing before planning the next parallel milestone rather than after.
+
+Revisit when:
+A third stream is wanted, a stream needs to edit outside its block, or the seam turns out to need something V0.4.0 did not anticipate.
+
+## V0.4.1 entries — sprites
+
+<!-- V0.4.1 appends here. Reserved ids: REC-071 to REC-089. -->
+
+## V0.4.2 entries — content
+
+<!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
 
 ## Open questions to reconcile during implementation
 

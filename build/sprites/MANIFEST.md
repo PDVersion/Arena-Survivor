@@ -8,7 +8,8 @@ did I paste in last time", and "what still needs doing", which are the only thre
 questions that come up during an art pass.
 
 - The prompt and the rules: [`../SPRITE_STYLE_GUIDE.md`](../SPRITE_STYLE_GUIDE.md)
-- The milestone plan: [`../SPRITE_PLAN_V0.4.md`](../SPRITE_PLAN_V0.4.md)
+- The milestone plan: [`../SPRITE_PLAN_V0.4.1.md`](../SPRITE_PLAN_V0.4.1.md)
+- The parallel-stream contract: [`../BUILD_PLAN_V0.4.md`](../BUILD_PLAN_V0.4.md)
 
 **Style version: `1`.** Every accepted sprite records the style version it was
 generated under. Bumping the style lock bumps this, and every sprite below the
@@ -16,50 +17,105 @@ current version is `stale` and needs regenerating — see style guide §8.
 
 ---
 
-## How to use this file
+## Working across sessions
 
-**To generate a sprite:**
+**This file is the source of truth for what exists.** It is designed to be picked
+up cold — by a later session, or by a second agent working at the same time — and
+answer "what is done, what is being worked on, what is next" without reading
+anything else.
 
-1. Find its row. Copy the **style lock** from the style guide (§6.1), substituting
+### Claim before you generate
+
+Two agents generating the same sprite is wasted work, and two agents *accepting*
+different versions of the same sprite is worse. The protocol is one commit:
+
+1. Pick the highest-priority row whose Status is `todo`.
+2. Set its Status to `generating`, put your name or session id in **Claimed by**,
+   and commit **that line alone** with the message `sprites: claim {id}`.
+3. Generate, accept, and build.
+4. Set Status to `accepted`, fill in Attempts, Seed, and Style ver, and commit the
+   sprite files with it.
+
+A claim commit is a few bytes and takes seconds. It is the entire mechanism that
+lets this run in parallel, and skipping it is how two agents spend an hour on the
+same bottle.
+
+**A claim older than a day with no follow-up commit is stale** — take it, and note
+the takeover in the generation log.
+
+### One sprite, one commit
+
+Never batch several accepted sprites into one commit. One sprite per commit keeps
+the manifest line, the raw file, the accepted file, and the built output together,
+so any sprite can be reverted on its own when it turns out to be the odd one out.
+
+### Filenames
+
+`{id}` is the content id with dots replaced by underscores.
+
+| Stage | Path |
+| --- | --- |
+| Raw | `build/sprites/raw/{id}.a{attempt}.png` |
+| Accepted | `build/sprites/accepted/{id}.png` |
+| Built | `public/sprites/{theme}/{id}.png` |
+| Variants | `public/sprites/{theme}/{id}.c2.png`, `{id}.c3.png` |
+
+Raw files are attempt-numbered and never overwritten, so a rejected generation
+stays as evidence of what the prompt produced.
+
+## How to generate one
+
+1. Find the row. Copy the **style lock** from the style guide (§6.1), substituting
    `{CANVAS}` from the Canvas column.
 2. Append the row's **Subject block** verbatim.
 3. Append the **sheet slot** (§6.3) with the row's Frames and Frame list.
-4. Generate. Save to `build/sprites/raw/{id}.png`. Record the seed.
-5. Run the acceptance checklist (§7). If it passes, move to
+4. Generate. Save to `build/sprites/raw/{id}.a{attempt}.png`. Record the seed.
+5. Run the acceptance checklist (style guide §7). If it passes, copy to
    `build/sprites/accepted/{id}.png` and set Status to `accepted`.
-6. `npm run sprites -- check` then `npm run sprites -- build`.
+6. `npm run sprites -- check`, then `npm run sprites -- build`.
 
-**To regenerate:** bump the row's Attempt count, keep the previous raw file as
-`{id}.a{n}.png`. Never edit a sprite by hand to fix it — fix the subject block, or
-the style lock if it is a roster-wide problem.
+**To regenerate:** increment Attempts and save as `.a{n+1}.png`. Never edit a
+sprite by hand to fix it — fix the subject block, or the style lock if it is a
+roster-wide problem (style guide §8).
 
 **Status values:** `todo` · `generating` · `review` · `accepted` · `stale`
 
 ---
 
+## Progress
+
+**0 of 19 accepted.** Update this line with every acceptance — it is what a cold
+session reads first.
+
+```
+todo        ████████████████████  19
+generating  ░░░░░░░░░░░░░░░░░░░░   0
+accepted    ░░░░░░░░░░░░░░░░░░░░   0
+```
+
 ## Status
 
-| # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | — | 0 | — | `todo` |
-| 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | `todo` |
-| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | `todo` |
-| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | `todo` |
-| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | `todo` |
-| 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | `todo` |
-| 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | `todo` |
-| 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | `todo` |
-| 9 | `fragment.fast_fragile` | Bag scrap | 24×24 | 4 | low | — | 0 | — | `todo` |
-| 10 | `fragment.slow_durable` | Glass shard | 24×24 | 4 | low | — | 0 | — | `todo` |
-| 11 | `shrine.spawn_surge` | Landfill Breach | 64×64 | 4 | high | — | 0 | — | `todo` |
-| 12 | `shrine.greed` | Fast Fashion Boom | 64×64 | 4 | high | — | 0 | — | `todo` |
-| 13 | `shrine.multiplicity` | Single-Use Boom | 64×64 | 4 | high | — | 0 | — | `todo` |
-| 14 | `shrine.duplication` | Overproduction Order | 64×64 | 4 | high | — | 0 | — | `todo` |
-| 15 | `hazard.damage_zone` | Contamination Spill | 64×64 | 4 | medium | — | 0 | — | `todo` |
-| 16 | `hazard.obstacle` | Debris Pile | 64×64 | 4 | medium | — | 0 | — | `todo` |
-| 17 | `hazard.periodic_burst` | Methane Vent | 64×64 | 4 | medium | — | 0 | — | `todo` |
-| 18 | `overlay.elite` | Elite outline | per class | 1 | low | — | 0 | — | `todo` |
-| 19 | `weapon.starter_icon` | Sorting Pulse emitter | 16×16 | 3 | high | — | 0 | — | `todo` |
+| # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Claimed by | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | — | 0 | — | — | `todo` |
+| 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | — | `todo` |
+| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
+| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
+| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | — | `todo` |
+| 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |
+| 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
+| 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
+| 9 | `fragment.fast_fragile` | Bag scrap | 24×24 | 4 | low | — | 0 | — | — | `todo` |
+| 10 | `fragment.slow_durable` | Glass shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
+| 11 | `shrine.spawn_surge` | Landfill Breach | 64×64 | 4 | high | — | 0 | — | — | `todo` |
+| 12 | `shrine.greed` | Fast Fashion Boom | 64×64 | 4 | high | — | 0 | — | — | `todo` |
+| 13 | `shrine.multiplicity` | Single-Use Boom | 64×64 | 4 | high | — | 0 | — | — | `todo` |
+| 14 | `shrine.duplication` | Overproduction Order | 64×64 | 4 | high | — | 0 | — | — | `todo` |
+| 15 | `hazard.damage_zone` | Contamination Spill | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
+| 16 | `hazard.obstacle` | Debris Pile | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
+| 17 | `hazard.periodic_burst` | Methane Vent | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
+| 18 | `overlay.elite` | Elite outline | per class | 1 | low | — | 0 | — | — | `todo` |
+| 19 | `weapon.starter_icon` | Sorting Pulse emitter | 16×16 | 3 | high | — | 0 | — | — | `todo` |
 
 Colour variants (`c2`, `c3`) are **not listed**: they are produced by hue rotation
 in `npm run sprites -- build` and never generated. See style guide §3.

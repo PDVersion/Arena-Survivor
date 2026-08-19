@@ -7,8 +7,8 @@ Two things make that work, and they are the whole document: a **style lock** tha
 never changes between prompts, and a **subject slot** that is the only thing that
 does. Everything else here is scaffolding around those two ideas.
 
-Read this alongside [`SPRITE_PLAN_V0.4.md`](./SPRITE_PLAN_V0.4.md), which owns the
-inventory, the pipeline, and the integration work. This file owns the look.
+Read this alongside [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md), which owns
+the inventory, the pipeline, and the integration work. This file owns the look.
 
 > **On the reference.** The target was given as "HoloCure-like, somewhat 2-bit but
 > still detailed enough", with an ArtStation link. The specification below is

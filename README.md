@@ -17,9 +17,11 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
 - [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
 - [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
-- [Sprite plan (V0.4)](build/SPRITE_PLAN_V0.4.md) — replacing primitives with sprites: inventory, pipeline, phases, and risks.
+- [V0.4 parallel streams](build/BUILD_PLAN_V0.4.md) — how sprites and content are built at the same time without colliding.
+- [V0.4.1 sprite plan](build/SPRITE_PLAN_V0.4.1.md) — replacing primitives with sprites: inventory, pipeline, phases, and risks.
+- [V0.4.2 content plan](build/BUILD_PLAN_V0.4.2.md) — weapons, evolution, bosses, curses, unlocks, and persistence.
 - [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) — the art bible and the reusable image-generation prompt.
-- [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, status, and the generation log.
+- [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, claim protocol, status, and the generation log.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
