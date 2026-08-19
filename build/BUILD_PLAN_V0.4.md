@@ -44,14 +44,33 @@ and no content: it makes the space for both.
 
 | File | Change |
 | --- | --- |
-| `src/game/core/archetypes/contracts.ts` | Add `SpriteDefinition`, `SpriteState`, and `ThemeTokens.sprites?` |
+| `src/game/core/archetypes/contracts.ts` | Add `SpriteDefinition`, `SpriteState`, `ThemeSprites`, and `ThemeTokens.sprites?` |
 | `src/game/content/define-theme.ts` | Validate sprite entries when present; absent is valid |
 | `src/game/content/themes/*/sprites.ts` | **New file per theme**, exporting `sprites = {}` |
 | `src/game/content/themes/*/index.ts` | Import and wire `sprites` into `tokens` |
-| `src/game/config.ts` | `antialias: true` → `pixelArt: true` |
+| `src/game/systems/sprites/resolve-sprite.ts` | **New.** Pure lookup, unit-testable without Phaser |
+| `src/game/systems/sprites/sprite-view.ts` | **New.** The presentation branch — see REC-072 |
+| `src/game/systems/sprites/load-sprites.ts` | **New.** Queues sheets and sets nearest-neighbour filtering per texture |
+| `src/game/scenes/boot-scene.ts` | A `preload` that loads the active theme's sheets |
 | `src/game/entities/*.ts` | One branch per actor: use the sprite if the theme has one, else the current primitive |
 | `scripts/sprites.ts` | Skeleton with `check`, `build`, `status` — all three no-ops over an empty manifest |
 | `package.json` | `"sprites": "vite-node scripts/sprites.ts"` |
+
+Two entries are not what the first draft of this plan expected, and both are
+recorded rather than quietly changed:
+
+- **The loader had to be here.** Nothing in the original table loaded a texture,
+  and `src/game/scenes/**` belongs to V0.4.2 from the moment this merges — so
+  V0.4.1 could not have added preloading without reaching outside its block. The
+  seam has to open that door.
+- **`config.ts` is not changed.** `antialias: true` → `pixelArt: true` was the
+  original instruction; Phaser expands `pixelArt` to `antialias: false` plus
+  `roundPixels: true` for the whole renderer, which hardens every primitive in
+  the game — and the primitives outlive the sprite roster. Nearest-neighbour is
+  applied per texture in the loader instead. **REC-073.**
+
+All six actors take the branch, not the five listed in `SPRITE_PLAN_V0.4.1.md`
+§3: its own inventory in §1 includes the projectile.
 
 ### Why a separate `sprites.ts` per theme
 
@@ -81,9 +100,9 @@ both merge, or in V0.4.0 before both start.
 | --- | --- |
 | `build/SPRITE_*.md`, `build/sprites/**` | **V0.4.1** |
 | `public/sprites/**` | **V0.4.1** |
-| `scripts/sprites.ts` | **V0.4.1** |
 | `src/game/content/themes/*/sprites.ts` | **V0.4.1** |
-| `src/game/systems/sprites/**` | **V0.4.1** |
+| `scripts/sprites.ts` | **V0.4.0, then V0.4.1** |
+| `src/game/systems/sprites/**` | **V0.4.0, then V0.4.1** |
 | `tests/unit/sprites/**`, `tests/e2e/sprites.spec.ts` | **V0.4.1** |
 | `build/BUILD_PLAN_V0.4.2.md` | **V0.4.2** |
 | `src/game/content/themes/*/` — everything except `sprites.ts` | **V0.4.2** |
@@ -91,6 +110,7 @@ both merge, or in V0.4.0 before both start.
 | `src/game/state/**`, `src/game/scenes/**`, `src/game/ui/**` | **V0.4.2** |
 | `tests/**` except the sprite paths above | **V0.4.2** |
 | `src/game/core/**`, `src/game/config.ts`, `define-theme.ts` | **V0.4.0, then V0.4.2** |
+| `src/game/scenes/boot-scene.ts` | **V0.4.0, then V0.4.2** |
 | `src/game/entities/*.ts` | **V0.4.0, then V0.4.2** |
 | `README.md`, `AGENTS.md` | **V0.4.2** — V0.4.1 documents itself inside `build/` |
 
@@ -109,23 +129,29 @@ is the single most likely thing to make this plan annoying in practice.
 own. Different regions merge cleanly.
 
 ```markdown
+## V0.4.0 entries — the seam
+<!-- V0.4.0 is merged. Reserved ids: REC-071 to REC-073. -->
+
 ## V0.4.1 entries — sprites
-<!-- V0.4.1 appends here. Reserved ids: REC-071 to REC-089. -->
+<!-- V0.4.1 appends here. Reserved ids: REC-074 to REC-089. -->
 
 ## V0.4.2 entries — content
 <!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
 ```
 
-Both anchors already exist in `RECONCILIATION.md` — REC-070 added them, so V0.4.0
-does not need to.
+REC-070 added the two stream anchors but reserved nothing for the seam, whose
+first entry would therefore have been REC-071 — a silent collision with V0.4.1's
+first id, which is the exact failure the reservation exists to prevent. V0.4.0
+took REC-071 to REC-073 and moved V0.4.1's range up. **REC-071.**
 
 Reserved id ranges matter as much as the anchors: two agents both reaching for
-"the next number" produces two REC-071s, which is worse than a conflict because
-git merges it silently.
+"the next number" produces two entries with the same id, which is worse than a
+conflict because git merges it silently.
 
 ## 5. Working protocol for two agents
 
 1. **V0.4.0 merges to `main` first.** Neither stream starts before it does.
+   Built on `claude/v0.4.0`; read REC-071 to REC-073 before starting either stream.
 2. Each stream branches from `main` after that merge.
 3. **Merge `main` into your branch whenever the other stream lands**, rather than
    at the end. Both streams are long-lived; a single merge at the end is where the

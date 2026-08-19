@@ -13,7 +13,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ci": "playwright test --grep-invert @stress",
     "test:e2e:stress": "playwright test --grep @stress --retries=0",
-    "balance": "vite-node scripts/balance.ts"
+    "balance": "vite-node scripts/balance.ts",
+    "sprites": "vite-node scripts/sprites.ts"
   },
   "dependencies": {
     "phaser": "3.90.0"

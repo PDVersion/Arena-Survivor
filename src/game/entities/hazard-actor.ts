@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import type { HazardDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import type { HazardState } from "../systems/hazards/hazards";
 import { hazardPhase } from "../systems/hazards/hazards";
+import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
 /**
  * A generic hazard actor, configured by definition.
@@ -15,6 +16,8 @@ export class HazardActor extends Phaser.GameObjects.Arc {
   readonly definition: HazardDefinition;
   /** Named `hazardState` because Phaser reserves `state` on GameObject. */
   readonly hazardState: HazardState;
+  /** Present only when this pack has a sprite for the hazard. */
+  readonly view?: SpriteView;
   private lastPhase: string | null = null;
   private readonly baseColour: number;
 
@@ -36,6 +39,9 @@ export class HazardActor extends Phaser.GameObjects.Arc {
     // Under the enemies, so a crowd standing in a hazard stays readable.
     this.setDepth(10);
     scene.add.existing(this);
+    // Sized from the hazard's live radius, which is the same number the
+    // overlap tests use.
+    this.view = createSpriteView(this, tokens, definition.id, { diameter: state.radius * 2 });
   }
 
   /** Returns true once the hazard has expired and should be reclaimed. */
@@ -50,6 +56,11 @@ export class HazardActor extends Phaser.GameObjects.Arc {
         this.setFillStyle(this.baseColour, 0.2);
         this.setStrokeStyle(4, this.baseColour, 1);
       }
+      // A fill alpha is invisible on a texture, so the sprite path carries the
+      // same "warning" versus "live" read on the actor's own alpha, which the
+      // view mirrors. The telegraph must stay unmistakable either way — it is
+      // the property REC-053 cares about.
+      if (this.view) this.setAlpha(phase === "telegraphing" ? 0.55 : 1);
     }
 
     if (phase === "telegraphing") {

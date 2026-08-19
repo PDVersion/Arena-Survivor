@@ -3,6 +3,7 @@ import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/arch
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
 import type { BodyRoleTuning, WaveMovement } from "../core/archetypes/tuning";
+import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
 export type EnemySpawnSource = "ambient" | ShrineId | ContentId;
 
@@ -23,6 +24,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly mass: number;
   readonly solid: boolean;
   defeated = false;
+  /** Present only when this pack has a sprite for the role. */
+  readonly view?: SpriteView;
   private readonly baseColour: number;
   private launched = false;
 
@@ -85,6 +88,9 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       this.setStrokeStyle(5, eliteColour, 1).setDepth(25);
     }
     if (!elite) this.setDepth(20);
+    // The sprite is sized from the radius the simulation already resolved, so
+    // separation, the body, and the crowd tuning are untouched by art.
+    this.view = createSpriteView(this, tokens, definition.id, { diameter: radius * 2 });
   }
 
   /** Stable identity for the shared spatial index and targeting. */
@@ -137,10 +143,15 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.health = result.health;
     if (result.killed) this.defeated = true;
     if (result.applied && !result.killed) {
-      this.setFillStyle(0xffffff);
-      this.scene.time.delayedCall(70, () => {
-        if (this.active) this.setFillStyle(this.baseColour);
-      });
+      // A fill colour does nothing to a texture, so a sprite tints instead.
+      if (this.view) {
+        this.view.flash(0xffffff, 70);
+      } else {
+        this.setFillStyle(0xffffff);
+        this.scene.time.delayedCall(70, () => {
+          if (this.active) this.setFillStyle(this.baseColour);
+        });
+      }
     }
     return result;
   }

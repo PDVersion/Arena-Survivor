@@ -1,9 +1,12 @@
 import Phaser from "phaser";
 import type { ShrineDefinition, ThemeTokens } from "../core/archetypes/contracts";
+import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
 export class ShrineActor extends Phaser.GameObjects.Star {
   readonly definition: ShrineDefinition;
   activated = false;
+  /** Present only when this pack has a sprite for the shrine. */
+  readonly view?: SpriteView;
   private readonly prompt: Phaser.GameObjects.Text;
 
   constructor(
@@ -37,6 +40,7 @@ export class ShrineActor extends Phaser.GameObjects.Star {
       stroke: tokens.palette.background,
       strokeThickness: 4,
     }).setOrigin(0.5).setDepth(16).setVisible(false);
+    this.view = createSpriteView(this, tokens, definition.id, { diameter: definition.radius * 2 });
   }
 
   setInRange(inRange: boolean): void {
@@ -47,7 +51,10 @@ export class ShrineActor extends Phaser.GameObjects.Star {
     if (this.activated) return;
     this.activated = true;
     this.prompt.setVisible(false);
-    this.setFillStyle(0xffffff);
+    // The white fill is the primitive's "spent" cue. A sprite keeps its art
+    // and reads the same event from the spin below, which the view mirrors
+    // because it copies the whole transform rather than only the position.
+    if (!this.view) this.setFillStyle(0xffffff);
     this.scene.tweens.add({
       targets: this,
       angle: 180,
