@@ -1,11 +1,14 @@
 import Phaser from "phaser";
 import type { PickupDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import type { EnemySpawnSource } from "./enemy-actor";
+import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
 export class PickupActor extends Phaser.GameObjects.Arc {
   readonly pickupId: string;
   readonly definition: PickupDefinition;
   readonly rewardSource: EnemySpawnSource;
+  /** Present only when this pack has a sprite for the pickup. */
+  readonly view?: SpriteView;
   /** Mutable so two pickups can merge into one worth the sum. */
   private value: number;
   private collected = false;
@@ -33,6 +36,9 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.radius);
     this.setDepth(10);
+    // Built after `applyTier`, so it starts at whatever size this drop is
+    // worth; later merges resize it through `setDiameter`.
+    this.view = createSpriteView(this, tokens, definition.id, { diameter: this.radius * 2 });
   }
 
   get xpValue(): number {
@@ -56,6 +62,9 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     const radius = this.definition.radius * (1 + tier * 0.45);
     this.setRadius(radius);
     this.arcadeBody?.setCircle(radius);
+    // Undefined on the constructor's own call, which is why the view is built
+    // afterwards rather than before.
+    this.view?.setDiameter(radius * 2);
     if (tier > 0) this.setStrokeStyle(2 + tier, 0xffffff, 0.55);
   }
 

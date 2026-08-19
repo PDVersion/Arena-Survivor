@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { activeTheme } from "../content/active-theme";
+import { loadThemeSprites } from "../systems/sprites/load-sprites";
 
 /**
  * Test-only seam that keeps the title screen up.
@@ -17,6 +19,18 @@ function testShowsMenu(): boolean {
 export class BootScene extends Phaser.Scene {
   constructor() {
     super("boot");
+  }
+
+  /**
+   * Queue the active theme's sprite sheets.
+   *
+   * Loading lives here rather than in the sprite work itself because
+   * `src/game/scenes/` is closed to that stream by the ownership table in
+   * `build/BUILD_PLAN_V0.4.md` §3 — so the seam has to open the door. With no
+   * sprites declared this queues nothing and boot is unchanged.
+   */
+  preload(): void {
+    loadThemeSprites(this, activeTheme);
   }
 
   create(): void {

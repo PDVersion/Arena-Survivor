@@ -3,6 +3,7 @@ import { characters } from "./characters";
 import { enemies } from "./enemies";
 import { copy } from "./copy";
 import { tokens } from "./tokens";
+import { sprites } from "./sprites";
 import { weapons } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades, upgradeTierTuning } from "./upgrades";
@@ -28,7 +29,9 @@ export const ecoGuardianTheme = defineTheme({
   id: "eco_guardian",
   schemaVersion: 1,
   copy,
-  tokens,
+  // Sprites are merged in here rather than authored in `tokens.ts`, so the
+  // sprite roster and the palette stay in separate files.
+  tokens: { ...tokens, sprites },
   characters,
   weapons,
   enemies,

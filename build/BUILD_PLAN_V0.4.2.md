@@ -43,8 +43,14 @@ Splash lands here too, and needs an explicit boundary against the existing
 on-kill detonation: **splash triggers on hit, detonation on kill**, and the
 damage ledger has to keep them apart or the Processing Ledger stops reconciling.
 
+Slots also decide what an upgrade offer is. Weapon-owned upgrades enter the pool
+only when their weapon is equipped, which is the one change to upgrade selection
+this phase makes — see "Decisions settled before C1" below.
+
 *Verification:* two weapons fire independently; the ledger reconciles to the
-same total it did with one; the pacing simulator's build models cover both.
+same total it did with one; a weapon's own upgrades are absent from the draw
+until it is equipped and present afterwards; the pacing simulator's build models
+cover both.
 
 ### C2 — Weapon evolution
 An evolved weapon is a new definition unlocked by a condition, not a mutated one.
@@ -62,10 +68,9 @@ happens when an elite duplicates or fractures, and this must not break them.
 
 ### C5 — Mini-boss and final boss
 A boss is an enemy with a health bar, a telegraphed pattern, and a director
-milestone that spawns exactly one. The final boss replaces the timer as the
-run's climax, which interacts directly with the end-of-timer decision from
-REC-064 — that decision may need a third option, or may be replaced entirely for
-a boss run.
+milestone that spawns exactly one. The final boss replaces the end-of-timer
+prompt: it spawns where the decision used to appear, and REC-064's choice moves
+to after the kill rather than being removed. See "Decisions settled before C1".
 
 ### C6 — Persistence, unlocks, and advanced statistics
 The first real slice of `SAVE_DATA.md`. The session statistics slice from REC-062
@@ -79,14 +84,69 @@ Encoded text export, import with validation, preview, backup, and migration.
 ## What this stream must not do
 
 - Edit anything in V0.4.1's ownership block (`BUILD_PLAN_V0.4.md` §3)
-- Read a sprite in a system, or size a hitbox from one
+- Read a sprite in a system, or size a hitbox from one. The seam gives new
+  content this for free: an actor with no sheet renders its primitive, so
+  nothing added here needs art to ship
 - Assume every content id has a sprite — most will not, for a while
-- Take reconciliation ids below REC-090 — that range belongs to V0.4.1
+- Take reconciliation ids below REC-090 — REC-071 to REC-073 belong to the seam
+  and REC-074 to REC-089 to V0.4.1
 
-## Open questions to settle before C1
+## Decisions settled before C1
 
-- Does a weapon slot have its own upgrade pool, or does the shared pool offer
-  slot-specific entries? This decides how much the upgrade selection changes.
-- Does evolution consume a slot or replace the weapon in it?
-- Does the final boss end the run, or drop into the existing endless/clear
-  decision?
+These were the open questions. They are answered, so C1 can start without
+reopening them.
+
+### A weapon has both global upgrades and its own
+
+Stat modifiers stay **global**: `WeaponStatModifiers` keeps its current shape and
+its gains apply to every equipped weapon, so `upgrade.pierce` and
+`upgrade.projectile_count` do not have to be re-authored per slot and do not
+become dead cards when a slot is empty.
+
+A weapon is **acquired from the normal level-up draw** — a weapon card fills an
+empty slot — rather than through a separate selection step. The level-up UI is
+unchanged.
+
+On top of that, **each weapon carries its own upgrade entries**, which affect
+only that weapon. They may raise its stats or change its mechanic slightly, and
+they enter the pool **only once that weapon is equipped**, so the draw never
+offers an upgrade for a weapon the player does not have. This is the part that
+makes a second weapon a build decision rather than a second damage number: the
+two weapons diverge through their own cards, not only through what they started
+with.
+
+Consequences for C1:
+
+- `isUpgradeAvailable` gains an equipped-weapon condition alongside its existing
+  cap check. That is the only change to `selectUpgradeChoices`' contract, and
+  the category-spread rule keeps working unchanged.
+- A weapon-owned upgrade needs somewhere to live in the theme. It belongs beside
+  the weapon in `weapons.ts`, not in the general `upgrades.ts` pool, so a weapon
+  and everything that improves it are read in one place.
+- Weapon-owned mechanical changes are the seam that later makes evolution
+  (C2) authorable, since an evolved weapon is a definition that a condition
+  unlocks rather than a mutated one.
+- The tier roll from REC-065 applies to weapon-owned upgrades exactly as it does
+  to the shared pool. Integer targets still round and still floor at the
+  authored value.
+
+### Evolution replaces the weapon in its slot
+
+An evolved weapon takes the place of the one it grew from. It does not consume a
+second slot, and the slot count is unchanged by evolving.
+
+### The final boss replaces the end-of-timer prompt
+
+At the authored duration the final boss spawns **instead of** the `time_up`
+decision. Defeating it ends the run as cleared.
+
+The decision from REC-064 is not removed — it is **moved to after the kill**.
+The player still chooses how the run resolves; they simply make that choice
+having beaten the boss rather than instead of meeting one. Both options keep
+their current meaning: `endless` lifts the limit and plays until death,
+`clearing` stops new arrivals and ends on an empty field.
+
+This preserves REC-064's principle, which is that the run's length and its
+difficulty are things the player opts into. It also means `RunState` needs a
+status for "the boss is up" that is distinct from `time_up`, since the timer
+expiring no longer holds the simulation — the boss fight is live play.

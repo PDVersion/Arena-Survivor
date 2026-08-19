@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`; V0.4 planned as two parallel streams (REC-070), not started**
+- Active phase: **V0.3 and V0.3.1 complete; V0.4.0 (the shared seam) built on `claude/v0.4.0`; V0.4.1 (sprites) and V0.4.2 (content) not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1795,6 +1795,8 @@ Three mechanisms make concurrency safe, and all three are cheap only if they lan
 
 **Reconciliation gets append anchors and reserved id ranges.** Two branches appending to the end of this file conflict every single time. Each stream now appends inside its own heading, and reserves an id range — V0.4.1 takes REC-071 to REC-089, V0.4.2 takes REC-090 onward. The ranges matter as much as the anchors: two agents both taking "the next number" produce two REC-071s, which git merges silently and is worse than a conflict.
 
+*Amended by REC-071: the seam itself was given no range. V0.4.0 takes REC-071 to REC-073 and V0.4.1 now begins at REC-074.*
+
 Why:
 Every one of these is far cheaper to design in than to retrofit. Discovering mid-milestone that both branches edit `tokens.ts` on every commit means either rewriting history or serialising the work, which is the thing the split exists to avoid.
 
@@ -1804,9 +1806,87 @@ The definition of done for V0.4 includes checking that the ownership table was n
 Revisit when:
 A third stream is wanted, a stream needs to edit outside its block, or the seam turns out to need something V0.4.0 did not anticipate.
 
+## V0.4.0 entries — the seam
+
+<!-- V0.4.0 is merged. Reserved ids: REC-071 to REC-073. -->
+
+### REC-071 — The seam needs its own reconciliation range
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.4.0, V0.4.1; reconciliation ids
+- Blocks: None
+
+Context / observation:
+REC-070 reserved REC-071 to REC-089 for V0.4.1 and REC-090 onward for V0.4.2, and gave V0.4.0 nothing. The seam produces decisions of its own — it is where the sprite contract, the presentation branch, and the render-filter question are settled — so its first entry would have been REC-071, colliding with V0.4.1's first id. That is precisely the failure REC-070 exists to prevent, in the one stream REC-070 forgot to count.
+
+Decision / solution:
+V0.4.0 takes **REC-071 to REC-073**. V0.4.1 now begins at **REC-074** and still ends at REC-089. V0.4.2 is unchanged at REC-090 onward. REC-070's body is left intact with an amendment pointer, per the maintenance rule about preserving history rather than rewriting it.
+
+Why:
+Correcting the allocation costs three edits while nothing is in flight — `codex/v0.4.1` exists but carries no commits, and V0.4.2 has not started. Discovering it after both branches had appended entries would mean renumbering published ids in two histories.
+
+Future guardrail:
+A stream with no reserved range is a stream that will collide. When a milestone is split, every piece that can write to this file gets a range, including the one that only lands a seam.
+
+Revisit when:
+V0.4.0 needs a fourth entry, or a later milestone is split into parallel streams.
+
+### REC-072 — A sprite follows its actor; it does not become it
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.4.0, V0.4.1; entities, presentation, crowd tuning
+- Blocks: None
+
+Context / observation:
+`BUILD_PLAN_V0.4.md` §2 asks each entity for "one branch per actor: use the sprite if the theme has one, else the current primitive". Every actor extends a concrete Phaser shape — `EnemyActor` and `HazardActor` are `Arc`, `ShrineActor` is `Star`, `PlayerActor` is `Rectangle` — and a shape cannot take a texture. The obvious readings of that instruction are therefore both structural: re-base every actor on `Phaser.GameObjects.Sprite` with generated placeholder textures, or wrap each in a `Container` holding one child or the other.
+
+Both break the seam's own acceptance criterion. `run-scene.ts` calls shape-specific methods on actors throughout — `setFillStyle`, `setRadius`, `setStrokeStyle`, `setIterations`, and `displayWidth` — so either re-base rewrites a 2,900-line scene, and the PR stops being reviewable as "nothing changed visually".
+
+Decision / solution:
+The actor keeps its shape class. When the pack has a sprite, `createSpriteView` builds a `Phaser.GameObjects.Sprite`, hides the primitive with `setVisible(false)` — the body and every measurement stay live — and registers the view with a per-scene set synced once per frame on `POST_UPDATE`.
+
+The view copies the actor's **whole transform**, not only its position: `x`, `y`, `rotation`, `scaleX`, `scaleY`, `alpha`, and `depth`. That is the detail that makes the seam cheap. Every existing tween keeps working untouched, because it animates the actor and the sprite follows — the shrine's activation spin, the pickup's collect cue, the hazard's telegraph pulse, the projectile's crit swell, and the player's invulnerability fade all needed no branch at all. Only colour effects did, because a fill colour does nothing to a texture; those tint instead.
+
+The scene needed no wiring either. The first view created in a scene installs the sync handler and its own shutdown teardown, so a scene with no sprites carries no handler.
+
+Why:
+The rule this protects is the one the whole parallel split depends on: a sprite may change nothing a system reads. Radius, separation radius, mass, and the physics body still come from the definition and the `bodies` tuning, which is what the crowd measurements in REC-052 and REC-067 were taken against. A follower can only ever read the actor, so the dependency cannot run backwards even by accident. `SpriteView.setDiameter` — used by experience pickups, which grow with what they are worth — takes a diameter the caller derived from the definition, never one derived from the sheet.
+
+Future guardrail:
+`createSpriteView` takes a `diameter` and returns a view; it has no path to a radius, a body, or a hitbox. If a later phase wants a sprite to change a measurement, it has to add that path deliberately rather than find it already open.
+
+Revisit when:
+Frame time with 300 textured followers is measured in V0.4.1 Phase S1 against the primitive baseline, or an actor needs presentation state the transform does not carry.
+
+### REC-073 — Nearest-neighbour belongs on the textures, not on the game
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.4.0, V0.4.1; render config, primitives
+- Blocks: None
+
+Context / observation:
+`BUILD_PLAN_V0.4.md` §2 and `SPRITE_PLAN_V0.4.1.md` §7 both specify `config.ts: antialias: true` becomes `pixelArt: true`, on the correct observation that the current setting would blur every sprite. But `pixelArt: true` is not a filtering switch — Phaser expands it to `antialias: false` plus `roundPixels: true` for the entire renderer, which hardens the edge of every `Arc`, `Star`, `Triangle`, and `Rectangle` in the game and snaps all movement to whole pixels.
+
+That is a visible change, in the one PR whose stated acceptance criterion is that a run looks identical. It is also not a transitional cost: `knight-magic` gets no sprite roster at all by design (`SPRITE_PLAN_V0.4.1.md` §1), the floor grid stays procedural (§Scope), and every enemy, shrine, curse, and boss V0.4.2 adds renders as a primitive until someone draws it.
+
+Decision / solution:
+`config.ts` is left alone. `loadThemeSprites` applies `Phaser.Textures.FilterMode.NEAREST` per texture on load complete, so nearest-neighbour lands exactly where pixel art exists and nowhere else.
+
+Why:
+The two settings inside `pixelArt` solve different problems. Filtering is what stops a sprite blurring, and it is per texture. Antialiasing is what keeps a circle's edge smooth, and it is global. Bundling them means paying for one with the other, permanently, for a roster that will never cover every actor.
+
+Future guardrail:
+If sprites shimmer on fractional coordinates in Phase S1, the fix is `roundPixels: true` **alone**, which does not disable antialiasing. Reach for `pixelArt: true` only if the whole game becomes pixel art, at which point the primitives it degrades will be gone.
+
+Revisit when:
+Phase S1 measures the first sprite against the crowd, or the primitive fallback is retired.
+
 ## V0.4.1 entries — sprites
 
-<!-- V0.4.1 appends here. Reserved ids: REC-071 to REC-089. -->
+<!-- V0.4.1 appends here. Reserved ids: REC-074 to REC-089. REC-070's range was amended by REC-071. -->
 
 ## V0.4.2 entries — content
 

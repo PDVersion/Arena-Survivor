@@ -6,6 +6,14 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
+**V0.4.0 — the shared seam — is built.** Sprites are now optional theme content:
+a pack may declare a sheet per content id, and an actor with no sheet renders the
+primitive it always did, which is a complete state rather than a missing one. The
+seam ships no sprites and no content of its own, so the game looks and plays
+exactly as it did — it exists so the sprite roster (V0.4.1) and the content growth
+(V0.4.2) can be built at the same time without touching the same files. See
+[the V0.4 parallel-stream contract](build/BUILD_PLAN_V0.4.md) and REC-071 to REC-073.
+
 **V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-069).
 
 V0.3 in full — a rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
@@ -26,7 +34,7 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 
-Before beginning any work, read the current V0.3 build plan and then the reconciliation log. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
+Before beginning any work, read [the V0.4 parallel-stream contract](build/BUILD_PLAN_V0.4.md) — it owns the file-ownership table that keeps the two streams apart — then the reconciliation log. `build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
 ## Run locally
 

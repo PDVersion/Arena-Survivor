@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import type { ThemeTokens, WeaponDefinition } from "../core/archetypes/contracts";
 import { consumePierce, createPierceState, piercingMomentumDamage, type PierceState } from "../systems/combat";
+import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
 export class ProjectileActor extends Phaser.GameObjects.Arc {
   readonly projectileId: string;
@@ -10,6 +11,8 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
   readonly critical: boolean;
   readonly critTier: number;
   readonly momentumPerHit: number;
+  /** Present only when this pack has a sprite for the weapon. */
+  readonly view?: SpriteView;
   private chainIndex = 0;
   private pierceState: PierceState;
   private expiresAtMs: number;
@@ -50,6 +53,11 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(definition.projectileRadius);
     this.setDepth(40);
+    this.view = createSpriteView(this, tokens, definition.id, {
+      diameter: definition.projectileRadius * 2,
+    });
+    // Applied after the view exists, so the crit swell scales the sprite too:
+    // the view multiplies its own base scale by the actor's.
     if (critical) this.setScale(1 + Math.min(0.8, critTier * 0.18));
   }
 

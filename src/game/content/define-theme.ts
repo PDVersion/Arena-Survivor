@@ -1,6 +1,7 @@
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
 import {
+  spriteStates,
   statKeys,
   upgradeCategories,
   upgradeRarities,
@@ -542,7 +543,88 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!hazardIds.has(requiredId)) issues.push(`missing required hazard: ${requiredId}`);
   }
 
+  // Every id this pack actually defines. A sprite for content that does not
+  // exist is dead art, and the only way to notice is to check it here.
+  const definedContentIds = new Set<string>([
+    ...characterIds,
+    ...weaponIds,
+    ...enemyIds,
+    ...pickupIds,
+    ...upgradeIds,
+    ...shrineIds,
+    ...skillIds,
+    ...hazardIds,
+  ]);
+  issues.push(...validateSprites(theme, definedContentIds));
+
   issues.push(...validateTuning(theme, enemyIds, hazardIds, shrineIds));
+
+  return issues;
+}
+
+/**
+ * Sprites, when a pack declares them.
+ *
+ * Absent is valid and produces no issues: a pack without sprites renders the
+ * primitives, which is what keeps a second production pack viable without a
+ * second art roster. Everything below therefore only runs against entries that
+ * are actually present.
+ *
+ * Nothing here validates what a sheet looks like — canvas size, alpha binarity,
+ * and tonal steps are `npm run sprites -- check`'s job, because they need the
+ * file rather than the manifest.
+ */
+function validateSprites(
+  theme: ThemeManifest,
+  definedContentIds: ReadonlySet<string>,
+): readonly string[] {
+  const issues: string[] = [];
+  const sprites = theme.tokens.sprites;
+  if (!sprites) return issues;
+
+  const textureKeys = new Set<string>();
+  for (const [contentId, sprite] of Object.entries(sprites)) {
+    if (!sprite) continue;
+    if (!definedContentIds.has(contentId)) {
+      issues.push(`sprites.${contentId} has no definition in this theme`);
+    }
+    if (!sprite.key?.trim()) {
+      issues.push(`sprites.${contentId} texture key is required`);
+    } else if (textureKeys.has(sprite.key)) {
+      // Two entries sharing a key means the second load silently wins.
+      issues.push(`duplicate sprite texture key: ${sprite.key}`);
+    } else {
+      textureKeys.add(sprite.key);
+    }
+    // Relative to `public/`, so the loader can resolve it and the bundler never
+    // has to be involved.
+    if (!sprite.path?.trim() || sprite.path.startsWith("/")) {
+      issues.push(`sprites.${contentId} path must be relative to public/`);
+    } else if (!sprite.path.endsWith(".png")) {
+      issues.push(`sprites.${contentId} path must be a .png sheet`);
+    }
+    for (const [key, value] of [
+      ["frameWidth", sprite.frameWidth],
+      ["frameHeight", sprite.frameHeight],
+      ["frames", sprite.frames],
+    ] as const) {
+      if (!Number.isInteger(value) || value < 1) {
+        issues.push(`sprites.${contentId} ${key} must be a positive integer`);
+      }
+    }
+    for (const state of spriteStates) {
+      const frame = sprite.states?.[state];
+      if (frame === undefined) {
+        issues.push(`sprites.${contentId} is missing the ${state} frame`);
+        continue;
+      }
+      // A state pointing past the end of the sheet renders as a blank quad,
+      // which reads as a missing entity rather than as a broken index.
+      if (!Number.isInteger(frame) || frame < 0 || frame >= sprite.frames) {
+        issues.push(`sprites.${contentId} ${state} frame must be within [0, ${sprite.frames})`);
+      }
+    }
+  }
 
   return issues;
 }

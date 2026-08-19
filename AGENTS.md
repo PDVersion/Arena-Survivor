@@ -2,8 +2,9 @@
 
 Every work session in this repository starts by reading, in order:
 
-1. `build/BUILD_PLAN_V0.3.md` — current scope, phase order, architecture, tests, and commit boundaries.
+1. `build/BUILD_PLAN_V0.4.md` — the current milestone: how V0.4's two streams are split, which files each owns, and which reconciliation ids each may take.
 2. `RECONCILIATION.md` — decisions, discoveries, pitfalls, and constraints learned while building.
+3. `build/BUILD_PLAN_V0.3.md` — the implementation record for the milestone underneath, and the source for phase order, architecture, and verification conventions.
 
 Consult `build/PLAN.md` whenever product intent or game behaviour needs more detail. It is the product/design source; `build/BUILD_PLAN_V0.3.md` is the current implementation source. Consult `build/BUILD_PLAN_V0.2.md` and `build/BUILD_PLAN_V0.1.md` only when that milestone's implementation history is relevant.
 
@@ -14,6 +15,8 @@ Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, ren
 Consult `build/SAVE_DATA.md` before changing profile state, progression, unlocks, statistics, persistent settings, stable saved IDs, persistence adapters, migrations, or save import/export.
 
 Consult `build/BUILD_PLAN_V0.4.md` before starting any V0.4 work. V0.4 is two streams built in parallel — sprites (V0.4.1) and content (V0.4.2) — and that file owns the shared seam, the file-ownership table, and the reconciliation id ranges that keep them from colliding. Do not edit a file outside your stream's ownership block.
+
+The seam itself (V0.4.0) is built and merged. Read REC-071 to REC-073 before either stream starts: they settle the reconciliation ranges, how an actor chooses between a sprite and its primitive, and why the renderer's `pixelArt` flag was not used. A sprite is presentation and nothing else — never read one from a system, and never derive a radius, hitbox, mass, or separation value from one.
 
 Consult `build/SPRITE_STYLE_GUIDE.md` before generating, editing, or accepting any sprite, and `build/SPRITE_PLAN_V0.4.1.md` before changing how sprites are loaded, packed, or resolved. Track individual sprites in `build/sprites/MANIFEST.md`, and claim a sprite there before generating it. Never hand-edit a generated sprite to match a style the prompt does not produce — fix the prompt and regenerate, or the roster stops being reproducible.
 
@@ -52,6 +55,14 @@ Use the prefix for the agent that is actually doing the work, decided when the b
 A milestone built by more than one agent keeps the prefix of the agent that created the branch; note the split in the pull request description rather than renaming. Renaming a branch on GitHub **closes** any pull request that used it as the head, so pick the prefix before opening the pull request.
 
 Everything else about a branch — one branch per milestone, one pull request into `main`, one reviewable commit per numbered phase — is unchanged by the prefix.
+
+## Git workflow for V0.4.0
+
+- Branch: `claude/v0.4.0`
+- Delivery: one branch for the shared seam, based on merged V0.3.1. It adds no
+  sprites and no content — every change is inert over an empty sprite manifest,
+  and it is verified by the existing unit and browser suites passing with no test
+  edited. It merges to `main` before either parallel stream branches.
 
 ## Git workflow for V0.3.1
 

@@ -183,6 +183,43 @@ export interface ThemePalette {
   readonly elite: string;
 }
 
+/**
+ * Frame roles a sprite sheet declares.
+ *
+ * Named rather than numbered so no system ever hard-codes a frame index: an
+ * actor asks for `hit` and the definition says which frame that is.
+ */
+export const spriteStates = ["idle", "move", "hit", "death"] as const;
+export type SpriteState = (typeof spriteStates)[number];
+
+/** Where a sprite sheet lives and how it is cut. Optional per theme. */
+export interface SpriteDefinition {
+  /** Stable texture key, e.g. `enemy.swarm_basic`. */
+  readonly key: string;
+  /** Path relative to `public/`, e.g. `sprites/eco-guardian/enemy_swarm_basic.png`. */
+  readonly path: string;
+  readonly frameWidth: number;
+  readonly frameHeight: number;
+  readonly frames: number;
+  /** Frame index per named state, so systems never hard-code numbers. */
+  readonly states: Readonly<Record<SpriteState, number>>;
+}
+
+/**
+ * Sprites by content id.
+ *
+ * Optional, and optional deliberately: a pack without them renders the
+ * primitives, which is what keeps a second production pack viable without a
+ * second art roster.
+ *
+ * A sprite is presentation and nothing else. No system may read one, and no
+ * radius, hitbox, mass, or separation value may be derived from one — those
+ * come from the definition and the `bodies` tuning, which is what the crowd
+ * measurements in REC-052 and REC-067 were taken against. A sprite that looks
+ * bigger than its hitbox is a problem to fix in the art.
+ */
+export type ThemeSprites = Readonly<Partial<Record<ContentId, SpriteDefinition>>>;
+
 export interface ThemeTokens {
   readonly palette: ThemePalette;
   /**
@@ -193,6 +230,13 @@ export interface ThemeTokens {
    * from each other rather than fitting the theme's own colour story.
    */
   readonly tiers: Readonly<Record<UpgradeTier, string>>;
+  /**
+   * Sprites for this pack, by content id.
+   *
+   * Absent means every actor renders its primitive, which is a complete and
+   * supported state rather than a missing feature.
+   */
+  readonly sprites?: ThemeSprites;
   readonly playerShape: "circle" | "diamond" | "square";
   readonly feedback: Readonly<Record<FeedbackCategory, string>>;
   readonly sounds: Readonly<Record<FeedbackCategory, Readonly<{

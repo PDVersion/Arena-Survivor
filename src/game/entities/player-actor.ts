@@ -1,9 +1,12 @@
 import Phaser from "phaser";
 import type { CharacterDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { resolveMovement, type DirectionalInput } from "../systems/player-movement";
+import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
 export class PlayerActor extends Phaser.GameObjects.Rectangle {
   readonly definition: CharacterDefinition;
+  /** Present only when this pack has a sprite for the character. */
+  readonly view?: SpriteView;
   private readonly baseColour: number;
 
   constructor(
@@ -27,6 +30,7 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
 
     this.arcadeBody.setCollideWorldBounds(true);
     this.setDepth(30);
+    this.view = createSpriteView(this, tokens, definition.id, { diameter });
   }
 
   get arcadeBody(): Phaser.Physics.Arcade.Body {
@@ -43,7 +47,12 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
   }
 
   flashDamage(colour: string): void {
-    this.setFillStyle(Phaser.Display.Color.HexStringToColor(colour).color);
+    const flash = Phaser.Display.Color.HexStringToColor(colour).color;
+    if (this.view) {
+      this.view.flash(flash, 90);
+      return;
+    }
+    this.setFillStyle(flash);
     this.scene.time.delayedCall(90, () => {
       if (this.active) this.setFillStyle(this.baseColour);
     });
