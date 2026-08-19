@@ -9,6 +9,7 @@ import {
 } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
+import { upgradeTiers } from "../core/archetypes/tiers";
 
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
 const vocabularyKeys = [
@@ -24,8 +25,13 @@ const vocabularyKeys = [
   "deathMessage",
   "completeTitle",
   "completeMessage",
+  "clearedTitle",
+  "clearedMessage",
   "restartAction",
+  "startAction",
+  "startHint",
   "shrinePrompt",
+  "shrineArrived",
   "surgeActive",
   "statisticsTitle",
   "peakEnemiesAlive",
@@ -44,6 +50,29 @@ const vocabularyKeys = [
   "remainderDamage",
   "upgradesTaken",
   "deathCause",
+  "timeUpTitle",
+  "timeUpMessage",
+  "timeUpHint",
+  "continueEndless",
+  "continueEndlessHint",
+  "clearTheField",
+  "clearTheFieldHint",
+] as const;
+
+const codexCopyKeys = [
+  "title",
+  "shrines",
+  "reward",
+  "released",
+  "duplicates",
+  "duplicatesValue",
+  "upgrades",
+  "session",
+  "sessionTotal",
+  "bestInRun",
+  "maxPerRun",
+  "runsPlayed",
+  "best",
 ] as const;
 
 export class ThemeValidationError extends Error {
@@ -79,6 +108,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   for (const key of worldKeys) {
     if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
+  }
+  for (const key of codexCopyKeys) {
+    if (!theme.copy.codex?.[key]?.trim()) issues.push(`codex.${key} label is required`);
   }
 
   for (const id of v02ContentIds) {
@@ -398,8 +430,27 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         if (!Number.isFinite(effect.chance) || effect.chance < 0 || effect.chance > 1) issues.push(`${skill.id} fracture chance must be between zero and one`);
         if (!Number.isFinite(effect.chancePerLevel) || effect.chancePerLevel < 0) issues.push(`${skill.id} fracture chancePerLevel cannot be negative`);
         if (!Number.isInteger(effect.childCount) || effect.childCount < 1) issues.push(`${skill.id} fracture childCount must be a positive integer`);
-        if (!enemyIds.has(effect.childEnemyId)) issues.push(`${skill.id} references missing fracture enemy: ${effect.childEnemyId}`);
         if (!Number.isFinite(effect.rewardMultiplier) || effect.rewardMultiplier < 0) issues.push(`${skill.id} fracture rewardMultiplier cannot be negative`);
+        const fragment = effect.fragment;
+        if (!fragment) {
+          issues.push(`${skill.id} fracture must declare a fragment shape`);
+        } else {
+          // A fragment is defined against whatever broke, so every multiplier
+          // has to be a real positive ratio rather than an absolute value.
+          for (const [key, value] of Object.entries(fragment) as [string, number][]) {
+            if (!Number.isFinite(value) || value <= 0) {
+              issues.push(`${skill.id} fracture fragment.${key} must be greater than zero`);
+            }
+          }
+          // The whole point of the change: a fragment outpaces what it came
+          // from, and is smaller than it.
+          if (fragment.speedMultiplier <= 1) {
+            issues.push(`${skill.id} fracture fragment.speedMultiplier must exceed one`);
+          }
+          if (fragment.radiusMultiplier >= 1) {
+            issues.push(`${skill.id} fracture fragment.radiusMultiplier must be below one`);
+          }
+        }
       }
       if (effect.kind === "bloodlust" &&
         (!Number.isFinite(effect.windowMs) || effect.windowMs <= 0 || !Number.isInteger(effect.killsPerStep) || effect.killsPerStep < 1 || !Number.isFinite(effect.attackSpeedPerStep) || effect.attackSpeedPerStep <= 0)) {
@@ -491,7 +542,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!hazardIds.has(requiredId)) issues.push(`missing required hazard: ${requiredId}`);
   }
 
-  issues.push(...validateTuning(theme, enemyIds, hazardIds));
+  issues.push(...validateTuning(theme, enemyIds, hazardIds, shrineIds));
 
   return issues;
 }
@@ -500,6 +551,7 @@ function validateTuning(
   theme: ThemeManifest,
   enemyIds: ReadonlySet<string>,
   hazardIds: ReadonlySet<string>,
+  shrineIds: ReadonlySet<string>,
 ): readonly string[] {
   const issues: string[] = [];
   const tuning = theme.tuning;
@@ -702,6 +754,82 @@ function validateTuning(
     }
   }
 
+  const tierTuning = tuning.upgradeTiers;
+  if (!tierTuning) {
+    issues.push("tuning.upgradeTiers is required");
+  } else {
+    if (!Number.isFinite(tierTuning.luckWeightBias) || tierTuning.luckWeightBias < 0) {
+      issues.push("tuning.upgradeTiers.luckWeightBias cannot be negative");
+    }
+    const declared = (tierTuning.tiers ?? []).map((entry) => entry.tier);
+    // The ladder must be complete and in order, because a card's colour is read
+    // as its position on it: a gap would make the ordering a lie.
+    if (declared.join("|") !== upgradeTiers.join("|")) {
+      issues.push(`tuning.upgradeTiers.tiers must declare every tier in order: ${upgradeTiers.join(", ")}`);
+    }
+    let previousMultiplier = 0;
+    for (const entry of tierTuning.tiers ?? []) {
+      if (!Number.isFinite(entry.weight) || entry.weight <= 0) {
+        issues.push(`${entry.tier} tier weight must be greater than zero`);
+      }
+      if (!Number.isFinite(entry.multiplier) || entry.multiplier < 1) {
+        issues.push(`${entry.tier} tier multiplier cannot be below one`);
+      }
+      // A higher tier that gave less would make the colour actively misleading.
+      if (entry.multiplier < previousMultiplier) {
+        issues.push(`${entry.tier} tier multiplier cannot fall below the tier beneath it`);
+      }
+      previousMultiplier = entry.multiplier;
+    }
+    if (tierTuning.tiers?.[0]?.multiplier !== 1) {
+      issues.push("the first upgrade tier must be the authored value, multiplier one");
+    }
+    for (const tier of upgradeTiers) {
+      if (!theme.tokens.tiers?.[tier]?.trim()) issues.push(`tiers.${tier} colour is required`);
+      else if (!HEX_COLOUR.test(theme.tokens.tiers[tier])) {
+        issues.push(`tiers.${tier} must be a six-digit hex colour`);
+      }
+      if (!theme.copy.tiers?.[tier]?.trim()) issues.push(`copy.tiers.${tier} label is required`);
+    }
+  }
+
+  const shrineTuning = tuning.shrines;
+  if (!shrineTuning) {
+    issues.push("tuning.shrines is required");
+  } else {
+    if (!Number.isFinite(shrineTuning.edgeMargin) || shrineTuning.edgeMargin < 0) {
+      issues.push("tuning.shrines.edgeMargin cannot be negative");
+    }
+    if (!Number.isFinite(shrineTuning.minSeparation) || shrineTuning.minSeparation < 0) {
+      issues.push("tuning.shrines.minSeparation cannot be negative");
+    }
+    if (
+      !Number.isFinite(shrineTuning.minDistanceFromPlayer) ||
+      shrineTuning.minDistanceFromPlayer <= 0
+    ) {
+      issues.push("tuning.shrines.minDistanceFromPlayer must be greater than zero");
+    }
+    // A shrine the player can never find is worse than no shrine at all.
+    if (shrineTuning.maxDistanceFromPlayer < shrineTuning.minDistanceFromPlayer) {
+      issues.push("tuning.shrines.maxDistanceFromPlayer cannot be below minDistanceFromPlayer");
+    }
+    if (!Number.isInteger(shrineTuning.placementAttempts) || shrineTuning.placementAttempts < 1) {
+      issues.push("tuning.shrines.placementAttempts must be a positive integer");
+    }
+    if (!Array.isArray(shrineTuning.arrivals) || shrineTuning.arrivals.length === 0) {
+      issues.push("tuning.shrines.arrivals must schedule at least one shrine");
+    } else {
+      for (const arrival of shrineTuning.arrivals) {
+        if (!shrineIds.has(arrival.shrineId)) {
+          issues.push(`tuning.shrines references missing shrine: ${arrival.shrineId}`);
+        }
+        if (!Number.isFinite(arrival.appearAt) || arrival.appearAt < 0 || arrival.appearAt >= 1) {
+          issues.push(`${arrival.shrineId} shrine appearAt must be within [0, 1)`);
+        }
+      }
+    }
+  }
+
   const time = tuning.difficulty?.time;
   if (!time) {
     issues.push("tuning.difficulty.time is required");
@@ -710,9 +838,22 @@ function validateTuning(
       issues.push("tuning.difficulty.time.steps must be a positive integer");
     }
     for (const [key, value] of Object.entries(time)) {
-      if (key === "steps") continue;
-      if (!Number.isFinite(value) || value < 0) {
+      if (key === "steps" || key === "endless") continue;
+      if (!Number.isFinite(value) || (value as number) < 0) {
         issues.push(`tuning.difficulty.time.${key} cannot be negative`);
+      }
+    }
+    if (!time.endless) {
+      issues.push("tuning.difficulty.time.endless is required");
+    } else {
+      for (const [key, value] of Object.entries(time.endless) as [string, number][]) {
+        if (!Number.isFinite(value) || value < 0) {
+          issues.push(`tuning.difficulty.time.endless.${key} cannot be negative`);
+        }
+      }
+      // Overtime that does not compound is overtime a good build never loses.
+      if (time.endless.enemyHealthGrowthPerStep <= 0) {
+        issues.push("tuning.difficulty.time.endless.enemyHealthGrowthPerStep must exceed zero");
       }
     }
   }

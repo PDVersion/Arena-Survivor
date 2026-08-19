@@ -1,4 +1,5 @@
-import type { EnemyId, HazardId } from "./ids";
+import type { EnemyId, HazardId, ShrineId } from "./ids";
+import type { UpgradeTier } from "./tiers";
 
 /**
  * Theme-owned tuning contracts.
@@ -123,6 +124,38 @@ export interface TimeTuning {
   readonly enemyHealthAtEnd: number;
   readonly enemyDamageAtEnd: number;
   readonly enemyMoveSpeedAtEnd: number;
+  readonly endless: EndlessTuning;
+}
+
+/**
+ * Escalation past the authored duration.
+ *
+ * The timed curve plateaus at its end, which is right for a run with a finish
+ * line and wrong for one without: a build that survives the timer only gets
+ * stronger, so a flat ceiling turns endless into farming. These coefficients
+ * compound per step instead of approaching a limit, so the run always ends.
+ *
+ * Applied only in `endless`. A clearing run also runs past the duration, but it
+ * has no new arrivals and is meant to be finishable — escalating it would
+ * punish the player for choosing to tidy up.
+ */
+export interface EndlessTuning {
+  /**
+   * Fractional health growth per escalation step, compounded.
+   *
+   * Compounding is the point. Player damage scales multiplicatively across
+   * several axes, so anything that grows linearly gets outpaced by a good build
+   * within a minute or two.
+   */
+  readonly enemyHealthGrowthPerStep: number;
+  /**
+   * Damage growth per step, deliberately far gentler.
+   *
+   * Health alone would make overtime a grind that the player slowly loses on
+   * attrition; a little damage growth makes the ending decisive instead. Kept
+   * small so the ramp never one-shots a build that was surviving comfortably.
+   */
+  readonly enemyDamageGrowthPerStep: number;
 }
 
 export interface DifficultyTuning {
@@ -173,10 +206,81 @@ export interface HazardsTuning {
   readonly weights: readonly Readonly<{ hazardId: HazardId; weight: number }>[];
 }
 
+/** One shrine instance's arrival in a run. */
+export interface ShrineArrivalTuning {
+  readonly shrineId: ShrineId;
+  /**
+   * Normalized run progress at which this instance appears.
+   *
+   * Progress rather than a minute, for the same reason the director uses it: a
+   * run of any length restretches the schedule without new authoring.
+   */
+  readonly appearAt: number;
+}
+
+/**
+ * Where shrines appear and when.
+ *
+ * Placement is resolved at arrival against the player's live position, not laid
+ * out once at run start, so a shrine is always a real walk away from wherever
+ * the player actually is.
+ */
+export interface ShrinesTuning {
+  /** Kept clear of the arena edge, so a shrine is never half off the map. */
+  readonly edgeMargin: number;
+  /** Minimum distance between two shrines. */
+  readonly minSeparation: number;
+  /** Closest a new shrine may appear to the player. */
+  readonly minDistanceFromPlayer: number;
+  /** Farthest a new shrine may appear from the player, so it stays findable. */
+  readonly maxDistanceFromPlayer: number;
+  /** Rejection-sampling attempts before the best candidate so far is accepted. */
+  readonly placementAttempts: number;
+  /** One entry per shrine instance in the run, in arrival order. */
+  readonly arrivals: readonly ShrineArrivalTuning[];
+}
+
+/** One rung of the upgrade roll ladder. */
+export interface UpgradeTierTuning {
+  readonly tier: UpgradeTier;
+  /** Selection weight for the per-offer roll, before luck. */
+  readonly weight: number;
+  /**
+   * Multiplier applied to the offer's stat gains. `1` is the authored value, so
+   * a common card is exactly what the definition says and every higher tier is
+   * a bonus rather than the baseline being secretly nerfed.
+   */
+  readonly multiplier: number;
+}
+
+/**
+ * How good an upgrade offer rolls.
+ *
+ * Weights are chosen against the level count a five-minute run actually
+ * reaches, not against an endless one: roughly thirty level-ups, three cards
+ * each, so a tier at weight `w` out of total `T` is seen about `90w/T` times a
+ * run. That is the arithmetic the numbers are tuned to, and it is why they are
+ * theme data rather than constants — a longer default run wants a different
+ * ladder.
+ */
+export interface UpgradeTiersTuning {
+  readonly tiers: readonly UpgradeTierTuning[];
+  /**
+   * How strongly luck pushes the roll up the ladder.
+   *
+   * A tier's weight is multiplied by `1 + luck * bias * rank`, so common is
+   * untouched and each rung above it gains proportionally more. Luck therefore
+   * makes offers *better*, which is what a player expects the stat to mean.
+   */
+  readonly luckWeightBias: number;
+}
+
 export interface TuningPack {
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
   readonly difficulty: DifficultyTuning;
   readonly bodies: BodiesTuning;
   readonly hazards: HazardsTuning;
+  readonly shrines: ShrinesTuning;
+  readonly upgradeTiers: UpgradeTiersTuning;
 }

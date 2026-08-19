@@ -6,13 +6,14 @@ import { createDeathSpawns } from "../../../src/game/systems/spawning";
 
 describe("expanded enemy roster", () => {
   // Health and contact damage remain the product baselines. Rewards were
-  // separated by role in V0.3 Phase 3, and move speeds were rescaled in Phase 4
-  // for the off-screen spawn envelope -- the old values were tuned against a
-  // 360-unit ring and left enemies unable to reach the player. See REC-049.
+  // separated by role in V0.3 Phase 3. Move speed is deliberately absent here:
+  // it belongs to REC-049's spawn envelope, which `tests/unit/director` asserts
+  // as a band for both production packs, and pinning it in two places is how a
+  // rebalance ends up half-applied.
   it("uses the product baselines for Runner and Tank", () => {
     const byId = new Map(knightMagicTheme.enemies.map((enemy) => [enemy.id, enemy]));
-    expect(byId.get(archetypeIds.enemy.fastFragile)).toMatchObject({ maxHealth: 10, moveSpeed: 240, contactDamage: 8, xpReward: 2 });
-    expect(byId.get(archetypeIds.enemy.slowDurable)).toMatchObject({ maxHealth: 80, moveSpeed: 90, contactDamage: 20, xpReward: 7 });
+    expect(byId.get(archetypeIds.enemy.fastFragile)).toMatchObject({ maxHealth: 10, contactDamage: 8, xpReward: 2 });
+    expect(byId.get(archetypeIds.enemy.slowDurable)).toMatchObject({ maxHealth: 80, contactDamage: 20, xpReward: 7 });
   });
 
   it("claims one Broodmother death-spawn effect and retains all five children", () => {

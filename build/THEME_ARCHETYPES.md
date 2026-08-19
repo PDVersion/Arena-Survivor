@@ -110,8 +110,27 @@ defineTheme({
   upgrades: { /* level-up offers and modifiers */ },
   pickups: { /* collectible definitions */ },
   shrines: { /* risk/reward definitions */ },
+  tuning: { /* balance values, including where and when shrines arrive */ },
 });
 ```
+
+Player-facing reference copy lives in `copy.codex` alongside the rest of `copy`.
+The Field Guide never authors a number of its own: an entry's identity comes
+from `copy.content`, everything it says a shrine does is read from the shrine
+definition, and an upgrade's per-run cap is read from `maxLevel` on the upgrade
+definition. See REC-060, REC-062, and the `copy.stats` / `copy.world` labels the
+guide reuses.
+
+The palette carries a `health` token distinct from `pickup`, so the HUD's health
+and level bars are never the same colour by accident.
+
+`tokens.tiers` and `copy.tiers` carry the six-rung upgrade roll ladder — common,
+uncommon, rare, epic, legendary, unique. These are read by position rather than
+by theme feel, so a pack should keep them recognisably white, green, blue,
+purple, yellow, and red however far its own palette travels. The ladder's
+weights and multipliers are `tuning.upgradeTiers`. Note the deliberate split in
+REC-065: an upgrade's `rarity` is how often it *appears*, while its tier is how
+good a particular offer of it *is*.
 
 Content definitions may compose reusable core effects such as projectile, contact damage, stat modifier, spawn burst, or reward multiplier. Adding a theme must not require adding theme-specific conditionals to those effects.
 

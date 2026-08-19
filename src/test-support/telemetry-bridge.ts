@@ -6,7 +6,9 @@ export interface ArenaTestSnapshot {
   readonly arena?: Readonly<{ width: number; height: number }>;
   readonly camera?: Readonly<{ scrollX: number; scrollY: number }>;
   readonly run?: Readonly<{
-    status: "playing" | "paused" | "level_up" | "dead" | "complete";
+    status: "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
+    /** How the clock is being treated: `timed`, `endless`, or `clearing`. */
+    mode: "timed" | "endless" | "clearing";
     elapsedMs: number;
     durationMs: number;
     kills: number;
@@ -112,6 +114,10 @@ export interface ArenaTestSnapshot {
   }>;
   readonly ui?: Readonly<{
     pauseOpen: boolean;
+    /** Whether the end-of-timer decision is on screen. */
+    overtimeOpen: boolean;
+    /** Heading the terminal summary is showing, or null when it is not up. */
+    terminalTitle: string | null;
     pauseTab: string | null;
     settings: Readonly<Record<string, boolean>>;
     /** What each offered card claims, derived from the real upgrade application. */
@@ -121,9 +127,28 @@ export interface ArenaTestSnapshot {
       nextLevel: number;
       isNew: boolean;
       rarity: string;
+      /** The offer's rolled tier and what it multiplies the gain by. */
+      tier: string;
+      tierMultiplier: number;
       lines: readonly Readonly<{ label: string; from: string | null; to: string }>[];
     }>[];
     statLines: readonly Readonly<{ key: string; display: string }>[];
+    /** Reference entries and the effects each one claims. */
+    codexEntries: readonly Readonly<{
+      id: string;
+      name: string;
+      effects: readonly Readonly<{ label: string; display: string }>[];
+    }>[];
+    codexSection: string | null;
+    /** The whole upgrade pool with what the session has taken from it. */
+    codexUpgrades: readonly Readonly<{
+      id: string;
+      name: string;
+      sessionTotal: number;
+      bestInRun: number;
+      maxPerRun: number;
+    }>[];
+    codexSession: readonly Readonly<{ label: string; display: string }>[];
   }>;
   readonly crowd?: Readonly<{
     indexed: number;
@@ -231,7 +256,13 @@ export interface ArenaTestSnapshot {
     shrineXpCollected: number;
     ambientXpCollected: number;
     feedbackCount: number;
-    instances: readonly Readonly<{ id: string; activated: boolean }>[];
+    instances: readonly Readonly<{ id: string; activated: boolean; x: number; y: number }>[];
+    /** Shrine instances scheduled for the whole run. */
+    plannedCount: number;
+    /** Instances that have arrived so far; below `plannedCount` until the end. */
+    revealedCount: number;
+    /** Simulation time the next instance arrives, or `null` once all have. */
+    nextAppearAtMs: number | null;
   }>;
   readonly world?: Readonly<{
     chaos: number;
@@ -273,6 +304,12 @@ export interface ArenaTestSnapshot {
     rosterHighWater: Readonly<Record<string, number>>;
     offspringQueued: number;
     offspringSpawned: number;
+  }>;
+  readonly menu?: Readonly<{
+    title: string;
+    startAction: string;
+    runsPlayed: number;
+    bestLevel: number;
   }>;
   readonly error?: string;
 }

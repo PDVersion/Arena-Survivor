@@ -3,6 +3,7 @@ import type { SkillId, UpgradeId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 import { applyWorldModifier, type WorldState } from "./chaos/world-modifiers";
 import { raiseSkillLevel, type SkillLevels } from "./skills/resolve-skill";
+import { scaleSkillLevels, scaleStatValue } from "./upgrades/upgrade-tiers";
 
 export type RandomSource = () => number;
 
@@ -52,10 +53,21 @@ export function isUpgradeAvailable(
   return upgradeLevel(selectedUpgradeIds, upgrade.id) < upgrade.maxLevel;
 }
 
+/**
+ * How often each rarity class appears in a draw.
+ *
+ * This is about *which* upgrade shows up, not how good the card is — that is
+ * the per-offer tier roll in `upgrades/upgrade-tiers`. The gap was narrowed
+ * from 100/38/12 once tiers existed: rarity had been carrying both jobs, so the
+ * only way to make an upgrade feel special was to make it scarce, and pierce
+ * and the extra projectile — two picks that define a build — were scarce enough
+ * to arrive after the run they were supposed to shape. Excitement now comes
+ * from the tier, so appearance rates can be closer to even.
+ */
 const RARITY_WEIGHT: Readonly<Record<UpgradeRarity, number>> = Object.freeze({
   common: 100,
-  rare: 38,
-  epic: 12,
+  rare: 60,
+  epic: 25,
 });
 
 /** Luck shifts the draw toward rarer entries without ever excluding commons. */
@@ -131,10 +143,17 @@ export function selectUpgradeChoices(
   return chosen;
 }
 
+/**
+ * Apply an upgrade at a rolled multiplier.
+ *
+ * `multiplier` is the offer's tier gain, `1` for a common roll and for every
+ * caller that does not deal in tiers. World modifiers ignore it: see `isTiered`.
+ */
 export function applyUpgrade<T extends UpgradeableState>(
   state: T,
   upgrade: UpgradeDefinition,
   skillMaxLevel: (skillId: SkillId) => number = () => 1,
+  multiplier = 1,
 ): T {
   const stats = { ...state.player.stats };
   let health = state.player.health;
@@ -144,7 +163,10 @@ export function applyUpgrade<T extends UpgradeableState>(
 
   for (const effect of upgrade.effects) {
     if (effect.kind === "skill.level") {
-      skillLevels = raiseSkillLevel(skillLevels, effect.skillId, skillMaxLevel(effect.skillId));
+      const steps = scaleSkillLevels(multiplier);
+      for (let step = 0; step < steps; step += 1) {
+        skillLevels = raiseSkillLevel(skillLevels, effect.skillId, skillMaxLevel(effect.skillId));
+      }
       continue;
     }
     if (effect.kind === "world.modify") {
@@ -155,40 +177,41 @@ export function applyUpgrade<T extends UpgradeableState>(
       });
       continue;
     }
+    const value = scaleStatValue(effect.target, effect.value, multiplier);
     switch (effect.target) {
       case "player.maxHealth":
-        stats.maxHealth += effect.value;
-        health += effect.value;
+        stats.maxHealth += value;
+        health += value;
         break;
       case "player.moveSpeed":
-        stats.moveSpeed += effect.value;
+        stats.moveSpeed += value;
         break;
       case "player.pickupRadius":
-        stats.pickupRadius += effect.value;
+        stats.pickupRadius += value;
         break;
       case "player.damageBonus":
-        stats.damageBonus += effect.value;
+        stats.damageBonus += value;
         break;
       case "player.attackSpeedBonus":
-        stats.attackSpeedBonus += effect.value;
+        stats.attackSpeedBonus += value;
         break;
       case "player.critChance":
-        stats.critChance += effect.value;
+        stats.critChance += value;
         break;
       case "player.luck":
-        stats.luck += effect.value;
+        stats.luck += value;
         break;
       case "player.armour":
-        stats.armour += effect.value;
+        stats.armour += value;
         break;
       case "player.regeneration":
-        stats.regeneration += effect.value;
+        stats.regeneration += value;
         break;
       case "weapon.pierce":
-        weaponModifiers.pierce += effect.value;
+        weaponModifiers.pierce += value;
         break;
       case "weapon.projectileCount":
-        weaponModifiers.projectileCount += effect.value;
+        weaponModifiers.projectileCount += value;
         break;
     }
   }

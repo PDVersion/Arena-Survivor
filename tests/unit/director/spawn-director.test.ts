@@ -242,28 +242,53 @@ describe("engagement envelope", () => {
     const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
       theme.tuning.director.spawnMargin;
 
+    // Shaped by role rather than one flat number, after three deliberate
+    // slowdowns kept running the flat version out of room. See REC-066.
+    //
+    // A loose sanity bound on everything: a role slower than this would be
+    // decorative, never reaching the fight it was spawned for.
     for (const enemy of theme.enemies) {
       const approachSeconds = radius / enemy.moveSpeed;
-      expect(approachSeconds).toBeLessThan(12);
+      expect(approachSeconds).toBeLessThan(16);
     }
 
-    // The opening role must arrive promptly or the run starts with nothing to do.
+    // The opening role is held far tighter, because it is the entire roster for
+    // the first minute: its crossing time is how long a run has nothing in it.
+    // The heavy roles unlock deep into a run, when the field already holds
+    // dozens of enemies, so their crossing time is never dead time.
     const opening = theme.tuning.director.roles.find((role) => role.unlockAt === 0)!;
     const openingEnemy = theme.enemies.find((enemy) => enemy.id === opening.enemyId)!;
-    expect(radius / openingEnemy.moveSpeed).toBeLessThan(8);
+    expect(radius / openingEnemy.moveSpeed).toBeLessThan(10);
   });
 
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
-  ])("keeps %s player able to outrun all but the fast role", (_name, theme) => {
+  ])("never lets a %s role outrun the player", (_name, theme) => {
+    // Nothing may overrun a moving player. Under REC-049 exactly one role sat
+    // above the player so it could not be escaped at all; play testing found
+    // that reads as being chased down rather than as pressure. See REC-066.
     const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
-    const faster = theme.enemies.filter((enemy) => enemy.moveSpeed >= playerSpeed);
+    for (const enemy of theme.enemies) {
+      expect(enemy.moveSpeed).toBeLessThan(playerSpeed);
+    }
+  });
 
-    // Exactly one role exists to force movement; if everything outran the
-    // player, kiting would stop being a strategy.
-    expect(faster).toHaveLength(1);
-    expect(faster[0]!.id).toBe(archetypeIds.enemy.fastFragile);
+  it.each([
+    ["eco-guardian", ecoGuardianTheme],
+    ["knight-magic", knightMagicTheme],
+  ])("keeps the %s fast role close enough behind to force movement", (_name, theme) => {
+    const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
+    const fast = theme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.fastFragile)!;
+
+    // The band is the whole design of the role: far enough below the player to
+    // be escapable, close enough that standing still loses ground immediately.
+    expect(fast.moveSpeed / playerSpeed).toBeGreaterThanOrEqual(0.9);
+    expect(fast.moveSpeed / playerSpeed).toBeLessThan(1);
+    // And it must still be the fastest thing on the field.
+    for (const enemy of theme.enemies) {
+      if (enemy.id !== fast.id) expect(enemy.moveSpeed).toBeLessThan(fast.moveSpeed);
+    }
   });
 });
 
@@ -277,9 +302,20 @@ describe("wave movement", () => {
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
-  ])("makes %s waves dodgeable when the role outruns the player", (_name, theme) => {
+  ])("makes the %s fast role's wave dodgeable", (_name, theme) => {
     const playerSpeed = theme.characters[0]!.baseStats.moveSpeed;
 
+    // Asserted on the role rather than derived from its speed. REC-050's
+    // condition — faster than the player — no longer holds now that nothing
+    // outruns the player, but eighteen of the fast role homing in at 0.95x is
+    // still unsurvivable with a single-projectile starter weapon.
+    const fast = theme.tuning.director.roles.find(
+      (role) => role.enemyId === archetypeIds.enemy.fastFragile,
+    )!;
+    expect(fast.waveMovement).toBe("drift");
+
+    // Kept as a safety net: if a role is ever raised above the player again, it
+    // must not also chase.
     for (const role of theme.tuning.director.roles) {
       const enemy = theme.enemies.find((entry) => entry.id === role.enemyId)!;
       if (enemy.moveSpeed >= playerSpeed) {

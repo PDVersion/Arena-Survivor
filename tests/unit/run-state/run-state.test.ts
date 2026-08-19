@@ -4,6 +4,8 @@ import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic"
 import { createInitialProfile } from "../../../src/game/state/profile-state";
 import {
   advanceRunState,
+  chooseRunMode,
+  completeRun,
   createRunState,
   damageRunPlayer,
   isRunStateSerializable,
@@ -36,18 +38,56 @@ describe("run state", () => {
     expect(isRunStateSerializable(run)).toBe(true);
   });
 
-  it("completes exactly at the duration and never overflows", () => {
+  it("stops at the duration for a decision rather than ending outright", () => {
     const run = createRunState({
       themeId: knightMagicTheme.id,
       characterId,
       baseStats: character.baseStats,
       durationMs: 1000,
     });
-    const complete = advanceRunState(advanceRunState(run, 750), 500);
+    const timeUp = advanceRunState(advanceRunState(run, 750), 500);
 
-    expect(complete.status).toBe("complete");
-    expect(complete.elapsedMs).toBe(1000);
-    expect(advanceRunState(complete, 100)).toBe(complete);
+    // A timed run reaching its limit is a question, not an ending: the player
+    // chooses whether it goes endless or plays out the enemies still alive.
+    expect(timeUp.status).toBe("time_up");
+    expect(timeUp.elapsedMs).toBe(1000);
+    expect(advanceRunState(timeUp, 100)).toBe(timeUp);
+  });
+
+  it("keeps the clock running once the limit is lifted", () => {
+    const run = createRunState({
+      themeId: knightMagicTheme.id,
+      characterId,
+      baseStats: character.baseStats,
+      durationMs: 1000,
+    });
+    const timeUp = advanceRunState(run, 1000);
+
+    for (const mode of ["endless", "clearing"] as const) {
+      const resumed = chooseRunMode(timeUp, mode);
+      expect(resumed.status).toBe("playing");
+      expect(resumed.mode).toBe(mode);
+
+      // Overtime is measurable, and the director keeps escalating from t > 1.
+      const overtime = advanceRunState(resumed, 2500);
+      expect(overtime.elapsedMs).toBe(3500);
+      expect(overtime.status).toBe("playing");
+    }
+  });
+
+  it("only answers the decision while it is being asked", () => {
+    const run = createRunState({
+      themeId: knightMagicTheme.id,
+      characterId,
+      baseStats: character.baseStats,
+      durationMs: 1000,
+    });
+
+    expect(chooseRunMode(run, "endless")).toBe(run);
+    expect(completeRun(advanceRunState(run, 1000)).status).toBe("complete");
+    // A death already ended the run; clearing the field cannot undo it.
+    const dead = setRunStatus(run, "dead");
+    expect(completeRun(dead)).toBe(dead);
   });
 
   it("does not advance while paused or after an end state", () => {

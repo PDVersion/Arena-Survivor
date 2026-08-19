@@ -13,6 +13,7 @@ import type { UpgradeEffect } from "./effects";
 import type { PlayerBaseStats } from "../stats/player-stats";
 import type { EliteId, FeedbackCategory } from "./categories";
 import type { TuningPack } from "./tuning";
+import type { UpgradeTier } from "./tiers";
 
 export interface ContentCopy {
   readonly name: string;
@@ -32,8 +33,17 @@ export interface ThemeVocabulary {
   readonly deathMessage: string;
   readonly completeTitle: string;
   readonly completeMessage: string;
+  /** Shown when a run ends by emptying the field after the timer, not on it. */
+  readonly clearedTitle: string;
+  readonly clearedMessage: string;
   readonly restartAction: string;
+  /** Title-screen action, e.g. "Begin Shift". */
+  readonly startAction: string;
+  /** How to trigger it, e.g. "Press Enter or click to begin". */
+  readonly startHint: string;
   readonly shrinePrompt: string;
+  /** Banner shown when a scheduled shrine arrives somewhere in the arena. */
+  readonly shrineArrived: string;
   readonly surgeActive: string;
   readonly statisticsTitle: string;
   readonly peakEnemiesAlive: string;
@@ -53,6 +63,15 @@ export interface ThemeVocabulary {
   readonly upgradesTaken: string;
   /** Prefix for the cause-of-death line, e.g. "Overwhelmed by". */
   readonly deathCause: string;
+  /** The decision shown when the authored duration runs out. */
+  readonly timeUpTitle: string;
+  readonly timeUpMessage: string;
+  readonly timeUpHint: string;
+  readonly continueEndless: string;
+  readonly continueEndlessHint: string;
+  readonly clearTheField: string;
+  /** Prefix for the count of enemies still standing, e.g. "Still on site". */
+  readonly clearTheFieldHint: string;
 }
 
 /** Stable keys for player-facing stat labels. */
@@ -99,7 +118,47 @@ export interface ThemeCopy {
   /** Labels for the pause menu and upgrade cards. */
   readonly stats: Readonly<Record<StatKey, string>>;
   readonly world: Readonly<Record<WorldKey, string>>;
+  readonly codex: ThemeCodexCopy;
+  /** Player-facing name for each roll tier, e.g. "Legendary". */
+  readonly tiers: Readonly<Record<UpgradeTier, string>>;
   readonly content: Readonly<Record<ContentId, ContentCopy>>;
+}
+
+/**
+ * Labels for the in-game reference surface.
+ *
+ * Entries themselves are not authored here: an entry's name and description
+ * come from `content`, and every number on it is read from the definition the
+ * game actually runs, so a codex page cannot claim something the game does not
+ * do. This block is only the surrounding vocabulary.
+ */
+export interface ThemeCodexCopy {
+  /** Tab title, e.g. "Field Guide". */
+  readonly title: string;
+  /** Section heading for shrine entries. */
+  readonly shrines: string;
+  /** Label for a shrine's reward multiplier. */
+  readonly reward: string;
+  /** Label for the count and duration a surge shrine releases. */
+  readonly released: string;
+  /** Label for a shrine that copies everything currently alive. */
+  readonly duplicates: string;
+  /** Value used by `duplicates`, e.g. "Every enemy present". */
+  readonly duplicatesValue: string;
+  /** Section heading for the upgrade catalogue. */
+  readonly upgrades: string;
+  /** Section heading for the session totals. */
+  readonly session: string;
+  /** Column heading for times taken across the session. */
+  readonly sessionTotal: string;
+  /** Column heading for the most taken within one run. */
+  readonly bestInRun: string;
+  /** Column heading for the per-run cap. */
+  readonly maxPerRun: string;
+  /** Label for how many runs have been played this session. */
+  readonly runsPlayed: string;
+  /** Prefix for a best-run record, e.g. "Best". */
+  readonly best: string;
 }
 
 export interface ThemePalette {
@@ -117,6 +176,8 @@ export interface ThemePalette {
   readonly critical: string;
   readonly overcritical: string;
   readonly pickup: string;
+  /** The health bar's fill. Distinct from `pickup`, which fills the level bar. */
+  readonly health: string;
   readonly shrine: string;
   readonly explosion: string;
   readonly elite: string;
@@ -124,6 +185,14 @@ export interface ThemePalette {
 
 export interface ThemeTokens {
   readonly palette: ThemePalette;
+  /**
+   * Card border colour per roll tier.
+   *
+   * Separate from the palette because these are a ladder read by position —
+   * white, green, blue, purple, yellow, red — and must stay distinguishable
+   * from each other rather than fitting the theme's own colour story.
+   */
+  readonly tiers: Readonly<Record<UpgradeTier, string>>;
   readonly playerShape: "circle" | "diamond" | "square";
   readonly feedback: Readonly<Record<FeedbackCategory, string>>;
   readonly sounds: Readonly<Record<FeedbackCategory, Readonly<{
@@ -164,9 +233,24 @@ export type SkillEffectDefinition =
       kind: "fracture";
       chance: number;
       chancePerLevel: number;
-      childEnemyId: EnemyId;
       childCount: number;
       rewardMultiplier: number;
+      /**
+       * What a fragment is, relative to whatever it broke off.
+       *
+       * Fragments used to be spawned as a fixed enemy id — the fast role — so
+       * breaking a glass bottle produced plastic bags, and every fracture in
+       * the run added more of the one enemy that was already the most
+       * pressuring. A fragment is now a smaller, quicker piece of its own
+       * parent, so what you broke still determines what you are fighting.
+       */
+      fragment: Readonly<{
+        /** Slightly above `1`: a fragment outpaces what it came from. */
+        speedMultiplier: number;
+        healthMultiplier: number;
+        radiusMultiplier: number;
+        damageMultiplier: number;
+      }>;
     }>
   | Readonly<{
       kind: "bloodlust";

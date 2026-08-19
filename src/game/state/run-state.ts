@@ -33,7 +33,17 @@ import {
 export const RUN_STATE_VERSION = 1 as const;
 export const DEFAULT_RUN_DURATION_MS = 5 * 60 * 1000;
 
-export type RunStatus = "playing" | "paused" | "level_up" | "dead" | "complete";
+export type RunStatus = "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
+
+/**
+ * What the clock means for this run.
+ *
+ * `timed` is the authored duration. When it expires the run does not simply
+ * end: it stops at `time_up` and the player decides how it finishes. `endless`
+ * removes the limit entirely; `clearing` keeps the world running with no new
+ * arrivals, so a run ends on an empty field rather than mid-fight.
+ */
+export type RunMode = "timed" | "endless" | "clearing";
 
 export interface RunPlayerState {
   readonly characterId: CharacterId;
@@ -48,6 +58,7 @@ export interface RunState {
   readonly status: RunStatus;
   readonly elapsedMs: number;
   readonly durationMs: number;
+  readonly mode: RunMode;
   readonly player: RunPlayerState;
   readonly progression: ProgressionState;
   readonly weaponModifiers: WeaponStatModifiers;
@@ -96,6 +107,7 @@ export function createRunState(options: CreateRunOptions): RunState {
     status: "playing",
     elapsedMs: 0,
     durationMs,
+    mode: "timed",
     xpCurve,
     player: {
       characterId: options.characterId,
@@ -116,12 +128,36 @@ export function advanceRunState(state: RunState, deltaMs: number): RunState {
   if (state.status !== "playing" || deltaMs <= 0) return state;
   if (!Number.isFinite(deltaMs)) throw new Error("Run delta must be finite");
 
+  // Past the limit the clock keeps running rather than freezing, so overtime is
+  // measurable and the director keeps escalating from `t > 1`.
+  if (state.mode !== "timed") {
+    return { ...state, elapsedMs: state.elapsedMs + deltaMs };
+  }
+
   const elapsedMs = Math.min(state.durationMs, state.elapsedMs + deltaMs);
   return {
     ...state,
     elapsedMs,
-    status: elapsedMs >= state.durationMs ? "complete" : "playing",
+    status: elapsedMs >= state.durationMs ? "time_up" : "playing",
   };
+}
+
+/**
+ * Resolve the time-up decision.
+ *
+ * The run resumes in the chosen mode. `clearing` does not end the run here —
+ * the scene owns whether the field is actually empty, and ends it through
+ * `completeRun` when it is.
+ */
+export function chooseRunMode(state: RunState, mode: Exclude<RunMode, "timed">): RunState {
+  if (state.status !== "time_up") return state;
+  return { ...state, mode, status: "playing" };
+}
+
+/** End a run that has run out of things to do rather than out of time. */
+export function completeRun(state: RunState): RunState {
+  if (state.status === "dead" || state.status === "complete") return state;
+  return { ...state, status: "complete" };
 }
 
 export function setRunStatus(state: RunState, status: RunStatus): RunState {
@@ -202,9 +238,11 @@ export function applyRunUpgrade(
   state: RunState,
   upgrade: UpgradeDefinition,
   skillMaxLevel?: (skillId: SkillId) => number,
+  /** The offer's rolled tier gain; `1` is a common roll. */
+  tierMultiplier = 1,
 ): RunState {
   if (state.status !== "level_up" || state.progression.pendingChoices < 1) return state;
-  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel);
+  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel, tierMultiplier);
   const progression = consumePendingChoice(upgraded.progression);
   const next: RunState = {
     ...upgraded,

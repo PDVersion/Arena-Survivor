@@ -19,6 +19,8 @@ import { createInitialProfile } from "../state/profile-state";
 import {
   advanceRunState,
   applyRunUpgrade,
+  chooseRunMode,
+  completeRun,
   awardRunExperience,
   createRunState,
   damageRunPlayer,
@@ -70,6 +72,11 @@ import {
 } from "../systems/separation/crowd-separation";
 import { findNearestTarget } from "../systems/targeting";
 import { createSeededRandom, selectUpgradeChoices } from "../systems/upgrades";
+import {
+  rollOfferTiers,
+  tierMultiplier,
+  type UpgradeOffer,
+} from "../systems/upgrades/upgrade-tiers";
 import { LevelUpChoiceUi } from "../ui/level-up-choice-ui";
 import { PauseMenuUi } from "../ui/pause-menu-ui";
 import {
@@ -86,6 +93,7 @@ import {
 import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
+import { OvertimeChoiceUi, type OvertimeChoice } from "../ui/overtime-choice-ui";
 import { selectHudValues, selectRunSummaryValues } from "../state/statistics";
 import {
   activateShrineSurge,
@@ -93,6 +101,22 @@ import {
   updateShrineSurge,
   type ShrineSurgeState,
 } from "../systems/shrine-surge";
+import {
+  selectSessionCodex,
+  selectShrineCodex,
+  selectUpgradeCodex,
+} from "../systems/codex/describe-shrine";
+import {
+  getSessionStatistics,
+  recordFinishedRun,
+  type RunContribution,
+} from "../state/session-statistics";
+import {
+  placeShrine,
+  scheduleShrineArrivals,
+  shrineMarker,
+  type ScheduledShrine,
+} from "../systems/shrines/shrine-placement";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 import { CausalEventQueue, type EventQueueSnapshot } from "../systems/events/causal-events";
 import {
@@ -142,6 +166,16 @@ const PICKUP_CAP = 250;
 /** How far past the arena a drifting enemy travels before it is reclaimed. */
 const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
+const SHRINE_PLACEMENT_SEED = 0x5471_0008;
+/** An ordinary spawn: itself, at full size. */
+const NO_FRAGMENT: FragmentShape = Object.freeze({
+  speedMultiplier: 1,
+  healthMultiplier: 1,
+  radiusMultiplier: 1,
+  damageMultiplier: 1,
+});
+/** How far outside the view a shrine marker is pinned, so it never hides a wall. */
+const SHRINE_MARKER_INSET = 44;
 let runGenerationSequence = 0;
 
 function testRunDurationMs(): number | undefined {
@@ -199,6 +233,36 @@ function testHazardIntervalMs(): number | undefined {
   return Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
+/**
+ * Test-only override that restores the V0.3 shrine layout.
+ *
+ * Shrines now arrive across the run at randomized positions, so a path whose
+ * subject is shrine *effects* rather than shrine discovery would otherwise
+ * spend its budget walking. `adjacent` places every instance beside the player
+ * and reveals them all at once, which is exactly what the V0.3 layout did.
+ */
+function testShrineLayout(): string | null {
+  if (import.meta.env.MODE !== "test") return null;
+  return new URLSearchParams(window.location.search).get("shrineLayout");
+}
+
+/**
+ * Test-only override for the end-of-timer decision.
+ *
+ * Seventeen browser assertions poll for a `complete` run once the duration
+ * expires; their subject is restart, world reset, or terminal accounting, not
+ * the decision itself. `complete` ends the run on the last tick, which is
+ * exactly what V0.3 did, so those paths keep measuring what they measured.
+ * `endless` and `clearing` answer the decision instead, for the path whose
+ * subject *is* the decision.
+ */
+function testOvertimeChoice(): OvertimeChoice | "complete" | null {
+  if (import.meta.env.MODE !== "test") return null;
+  const value = new URLSearchParams(window.location.search).get("atTimeUp");
+  if (value === "endless" || value === "clearing" || value === "complete") return value;
+  return null;
+}
+
 function testWorldScenario(): string | null {
   if (import.meta.env.MODE !== "test") return null;
   return new URLSearchParams(window.location.search).get("worldScenario");
@@ -217,6 +281,12 @@ interface MovementKeys {
 }
 
 type DamageSource = "direct" | "explosion" | "chained_explosion";
+type FragmentShape = Readonly<{
+  speedMultiplier: number;
+  healthMultiplier: number;
+  radiusMultiplier: number;
+  damageMultiplier: number;
+}>;
 interface ExplosionEventPayload {
   readonly x: number;
   readonly y: number;
@@ -248,12 +318,23 @@ export class RunScene extends Phaser.Scene {
   private shrineDefinition?: ShrineDefinition;
   private shrine?: ShrineActor;
   private shrineActors: ShrineActor[] = [];
+  private shrineArrivals: readonly ScheduledShrine[] = [];
+  private shrinesRevealed = 0;
+  private shrineRandom = createSeededRandom(SHRINE_PLACEMENT_SEED);
+  private shrineMarkers = new Map<
+    ShrineActor,
+    Readonly<{ arrow: Phaser.GameObjects.Triangle; label: Phaser.GameObjects.Text }>
+  >();
   private surgeState: ShrineSurgeState = createShrineSurgeState();
   private levelUpUi?: LevelUpChoiceUi;
   private pauseMenu?: PauseMenuUi;
   private hud?: Hud;
   private runEndOverlay?: RunEndOverlay;
+  private overtimeUi?: OvertimeChoiceUi;
+  private overtimeChoicesMade = 0;
   private currentChoices: readonly UpgradeDefinition[] = [];
+  /** The same draw, carrying each card's rolled tier. */
+  private currentOffers: readonly UpgradeOffer[] = [];
   private upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
   private enemyRandom = createSeededRandom(0xe11e_0002);
   private nextSpawnAtMs = 0;
@@ -461,7 +542,7 @@ export class RunScene extends Phaser.Scene {
       selectedCharacter,
       activeTheme.tokens,
     );
-    this.createShrineActors();
+    this.planShrineArrivals();
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
@@ -504,6 +585,7 @@ export class RunScene extends Phaser.Scene {
     this.pauseMenu = new PauseMenuUi(this, activeTheme);
     this.hud = new Hud(this, activeTheme);
     this.runEndOverlay = new RunEndOverlay(this, activeTheme);
+    this.overtimeUi = new OvertimeChoiceUi(this, activeTheme);
 
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.game.events.on(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
@@ -518,6 +600,7 @@ export class RunScene extends Phaser.Scene {
       this.levelUpUi?.hide();
       this.pauseMenu?.hide();
       this.runEndOverlay?.hide();
+    this.overtimeUi?.hide();
       this.audioFeedback.destroy();
     });
     this.hud.update(this.runState, this.hudExtras());
@@ -546,15 +629,20 @@ export class RunScene extends Phaser.Scene {
       if (this.tabKey && Phaser.Input.Keyboard.JustDown(this.tabKey)) this.pauseMenu.cycleTab(1);
       if (this.cursors?.right && Phaser.Input.Keyboard.JustDown(this.cursors.right)) this.pauseMenu.cycleTab(1);
       if (this.cursors?.left && Phaser.Input.Keyboard.JustDown(this.cursors.left)) this.pauseMenu.cycleTab(-1);
+      // Up/down move within a tab; only the Field Guide has anywhere to move.
+      if (this.cursors?.down && Phaser.Input.Keyboard.JustDown(this.cursors.down)) this.pauseMenu.cycleCodexSection(1);
+      if (this.cursors?.up && Phaser.Input.Keyboard.JustDown(this.cursors.up)) this.pauseMenu.cycleCodexSection(-1);
     }
     if (this.muteKey && Phaser.Input.Keyboard.JustDown(this.muteKey)) this.applySetting("muted");
     if (this.runState.status === "level_up") this.readUpgradeChoiceInput();
+    if (this.runState.status === "time_up") this.readOvertimeChoiceInput();
 
     const preparingRepresentativeLoad =
       testSkillEnabled("representativeLoad") &&
       testSkillEnabled("closeLoad") &&
       this.loadHarnessSpawned < this.loadHarnessRequested;
     if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
+    if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
       if (testSkillEnabled("representativeLoad")) {
@@ -580,9 +668,20 @@ export class RunScene extends Phaser.Scene {
       this.updateBloodlust();
       this.flushDamageNumbers();
       this.runState = regenerateRunPlayer(this.runState, delta);
-      if (this.loadHarnessRequested === 0 && testRosterHarnessSelection() === null) {
+      // Clearing keeps every other system running — projectiles, pickups,
+      // hazards, on-kill effects — and only stops the arrivals, so the field
+      // empties by being fought rather than by being deleted.
+      if (
+        this.runState.mode !== "clearing" &&
+        this.loadHarnessRequested === 0 &&
+        testRosterHarnessSelection() === null
+      ) {
         this.releaseMilestoneWaves();
         this.spawnIfReady();
+      }
+      if (this.runState.mode === "clearing" && this.isFieldClear()) {
+        this.runState = completeRun(this.runState);
+        this.enterTerminalState();
       }
       this.fireIfReady();
       this.updateLoadHighWaterMarks();
@@ -619,12 +718,23 @@ export class RunScene extends Phaser.Scene {
     this.shrineDefinition = undefined;
     this.shrine = undefined;
     this.shrineActors = [];
+    this.shrineArrivals = [];
+    this.shrinesRevealed = 0;
+    this.shrineRandom = createSeededRandom(SHRINE_PLACEMENT_SEED);
+    for (const marker of this.shrineMarkers.values()) {
+      marker.arrow.destroy();
+      marker.label.destroy();
+    }
+    this.shrineMarkers = new Map();
     this.surgeState = createShrineSurgeState();
     this.levelUpUi = undefined;
     this.pauseMenu = undefined;
     this.hud = undefined;
     this.runEndOverlay = undefined;
+    this.overtimeUi = undefined;
+    this.overtimeChoicesMade = 0;
     this.currentChoices = [];
+    this.currentOffers = [];
     this.upgradeRandom = createSeededRandom(DEFAULT_UPGRADE_SEED);
     this.enemyRandom = createSeededRandom(0xe11e_0002);
     this.nextSpawnAtMs = 0;
@@ -810,7 +920,7 @@ export class RunScene extends Phaser.Scene {
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement, payload.reason === "fracture")) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1058,39 +1168,182 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
-  private createShrineActors(): void {
-    const centreX = ARENA_SIZE.width / 2;
-    const centreY = ARENA_SIZE.height / 2;
-    const placements: readonly [ShrineDefinition["id"], number, number][] = [
-      [archetypeIds.shrine.spawnSurge, centreX + 96, centreY],
-      [archetypeIds.shrine.greed, centreX - 210, centreY],
-      [archetypeIds.shrine.multiplicity, centreX, centreY - 210],
-      [archetypeIds.shrine.multiplicity, centreX, centreY + 210],
-      [archetypeIds.shrine.duplication, centreX + 310, centreY],
-    ];
-    this.shrineActors = placements.flatMap(([id, x, y]) => {
-      const definition = activeTheme.shrines.find((candidate) => candidate.id === id);
-      if (!definition) return [];
-      return [new ShrineActor(
-        this, x, y, definition, activeTheme.tokens,
-        activeTheme.copy.content[id].name,
-        activeTheme.copy.vocabulary.shrinePrompt,
-      )];
-    });
-    this.shrine = this.shrineActors.find((actor) => actor.definition.id === archetypeIds.shrine.spawnSurge);
+  /**
+   * Schedule the run's shrine arrivals.
+   *
+   * No actor exists yet: a shrine is created at the moment it arrives, at a
+   * position resolved against wherever the player is then. V0.3 laid all five
+   * out around the arena centre at run start, which collapsed every risk/reward
+   * decision into the opening seconds.
+   */
+  private planShrineArrivals(): void {
+    this.shrineArrivals = scheduleShrineArrivals(
+      activeTheme.tuning.shrines,
+      this.runState?.durationMs ?? 1,
+    );
+    this.shrinesRevealed = 0;
+    if (testShrineLayout() === "adjacent") this.revealAllShrines();
   }
 
+  /**
+   * Create every scheduled shrine beside the player, immediately.
+   *
+   * Test-only, and used by the paths whose subject is what a shrine does rather
+   * than how it is found. Also used by the world scenarios, which activate all
+   * five directly and so need all five to exist.
+   */
+  private revealAllShrines(): void {
+    const player = this.player;
+    if (!player) return;
+    // The V0.3 offsets: one adjacent, the rest on a ring the player can reach in
+    // a step. Reproduced exactly so the paths that used them still measure what
+    // they measured before.
+    const offsets: readonly (readonly [number, number])[] = [
+      [96, 0], [-210, 0], [0, -210], [0, 210], [310, 0],
+    ];
+    while (this.shrinesRevealed < this.shrineArrivals.length) {
+      const index = this.shrinesRevealed;
+      const [dx, dy] = offsets[index % offsets.length]!;
+      this.revealShrine(this.shrineArrivals[index]!, {
+        x: Phaser.Math.Clamp(player.x + dx, 96, ARENA_SIZE.width - 96),
+        y: Phaser.Math.Clamp(player.y + dy, 96, ARENA_SIZE.height - 96),
+      }, false);
+    }
+  }
+
+  /** Bring one scheduled shrine into the world and announce it. */
+  private revealShrine(
+    arrival: ScheduledShrine,
+    at: Readonly<{ x: number; y: number }>,
+    announce: boolean,
+  ): void {
+    this.shrinesRevealed += 1;
+    const definition = activeTheme.shrines.find((candidate) => candidate.id === arrival.shrineId);
+    if (!definition) return;
+    const actor = new ShrineActor(
+      this,
+      at.x,
+      at.y,
+      definition,
+      activeTheme.tokens,
+      activeTheme.copy.content[definition.id].name,
+      activeTheme.copy.vocabulary.shrinePrompt,
+    );
+    this.shrineActors.push(actor);
+    this.shrine ??= definition.id === archetypeIds.shrine.spawnSurge ? actor : undefined;
+    if (announce) {
+      this.announceShrine(activeTheme.copy.vocabulary.shrineArrived);
+      this.emitFeedback("shrine", at.x, at.y, activeTheme.copy.content[definition.id].name);
+    }
+  }
+
+  /**
+   * Reveal due shrines, keep their off-screen markers current, and read intent.
+   *
+   * A shrine placed anywhere in a 3600x2400 arena is invisible from most of it,
+   * so every revealed, unactivated shrine carries a marker pinned to the edge of
+   * the view pointing at it. Without one, random placement would just make the
+   * shrines undiscoverable.
+   */
   private updateShrine(): void {
     if (!this.player || !this.runState) return;
+    while (
+      this.shrinesRevealed < this.shrineArrivals.length &&
+      this.runState.elapsedMs >= this.shrineArrivals[this.shrinesRevealed]!.appearAtMs
+    ) {
+      this.revealShrine(
+        this.shrineArrivals[this.shrinesRevealed]!,
+        placeShrine(
+          activeTheme.tuning.shrines,
+          ARENA_SIZE,
+          this.player,
+          this.shrineActors,
+          this.shrineRandom,
+        ),
+        true,
+      );
+    }
+
     const interact = this.interactKeys.some((key) => Phaser.Input.Keyboard.JustDown(key));
+    let activated: ShrineActor | undefined;
     for (const shrine of this.shrineActors) {
       const inRange = Phaser.Math.Distance.Between(this.player.x, this.player.y, shrine.x, shrine.y) <= shrine.definition.interactionRadius;
       shrine.setInRange(inRange);
-      if (interact && inRange && !shrine.activated) {
-        this.activateShrine(shrine);
-        return;
-      }
+      if (interact && inRange && !shrine.activated && !activated) activated = shrine;
     }
+    this.updateShrineMarkers();
+    if (activated) this.activateShrine(activated);
+  }
+
+  /** One edge-pinned, named pointer per revealed, unactivated, off-screen shrine. */
+  private updateShrineMarkers(): void {
+    const camera = this.cameras.main;
+    const centreX = this.scale.width / 2;
+    const centreY = this.scale.height / 2;
+    for (const shrine of this.shrineActors) {
+      const marker = this.shrineMarkers.get(shrine);
+      if (shrine.activated || camera.worldView.contains(shrine.x, shrine.y)) {
+        marker?.arrow.destroy();
+        marker?.label.destroy();
+        this.shrineMarkers.delete(shrine);
+        continue;
+      }
+      const offset = shrineMarker(
+        { x: shrine.x - camera.worldView.centerX, y: shrine.y - camera.worldView.centerY },
+        centreX - SHRINE_MARKER_INSET,
+        centreY - SHRINE_MARKER_INSET,
+      );
+      const x = centreX + offset.x;
+      const y = centreY + offset.y;
+      // The triangle's apex points up at rotation zero, so the heading turns by
+      // a quarter turn to aim it.
+      const rotation = offset.angle + Math.PI / 2;
+      // Below the arrow, except near the bottom edge where that would put the
+      // label off the screen.
+      const labelY = y > centreY ? y - 24 : y + 22;
+      if (marker) {
+        marker.arrow.setPosition(x, y).setRotation(rotation);
+        marker.label.setPosition(x, labelY);
+        continue;
+      }
+      this.shrineMarkers.set(shrine, {
+        arrow: this.add
+          .triangle(x, y, 0, 22, 11, 0, 22, 22, Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.shrine).color)
+          .setRotation(rotation)
+          .setScrollFactor(0)
+          .setDepth(940),
+        label: this.add
+          .text(x, labelY, activeTheme.copy.content[shrine.definition.id].name, {
+            color: activeTheme.tokens.palette.shrine,
+            fontFamily: "Georgia, serif",
+            fontSize: "14px",
+            stroke: activeTheme.tokens.palette.background,
+            strokeThickness: 4,
+          })
+          .setOrigin(0.5)
+          .setScrollFactor(0)
+          .setDepth(940),
+      });
+    }
+  }
+
+  /** The banner used by both shrine arrival and shrine activation. */
+  private announceShrine(text: string): void {
+    const message = this.add.text(this.scale.width / 2, 105, text, {
+      color: activeTheme.tokens.palette.shrine,
+      fontFamily: "Georgia, serif",
+      fontSize: "28px",
+      fontStyle: "bold",
+      stroke: activeTheme.tokens.palette.background,
+      strokeThickness: 6,
+    }).setOrigin(0.5).setScrollFactor(0).setDepth(950);
+    this.tweens.add({
+      targets: message,
+      alpha: 0,
+      y: 80,
+      duration: 900,
+      onComplete: () => message.destroy(),
+    });
   }
 
   private updateTestWorldScenario(): void {
@@ -1098,6 +1351,8 @@ export class RunScene extends Phaser.Scene {
     if (testSkillEnabled("representativeLoad") && this.loadHarnessSpawned < this.loadHarnessRequested) return;
     if (this.testWorldScenarioApplied || scenario === null || this.enemies.size === 0 || this.runGeneration > 1) return;
     this.testWorldScenarioApplied = true;
+    // Scenarios activate shrines directly, so every instance must exist first.
+    this.revealAllShrines();
     const targets = scenario === "multiplicity2"
       ? this.shrineActors.filter((actor) => actor.definition.id === archetypeIds.shrine.multiplicity)
       : this.shrineActors;
@@ -1131,34 +1386,21 @@ export class RunScene extends Phaser.Scene {
       }
     }
     shrine.activate();
+    const marker = this.shrineMarkers.get(shrine);
+    marker?.arrow.destroy();
+    marker?.label.destroy();
+    this.shrineMarkers.delete(shrine);
     this.shrineFeedback += 1;
     this.emitFeedback("shrine", shrine.x, shrine.y, "+Chaos");
     if (!this.reducedMotion) {
       this.cameras.main.flash(240, 251, 113, 133, false);
       this.cameras.main.shake(220, 0.006);
     }
-    const message = this.add.text(
-      this.scale.width / 2,
-      105,
+    this.announceShrine(
       definition.effectKind === "spawn_surge"
         ? activeTheme.copy.vocabulary.surgeActive
         : activeTheme.copy.content[definition.id].name,
-      {
-        color: activeTheme.tokens.palette.shrine,
-        fontFamily: "Georgia, serif",
-        fontSize: "28px",
-        fontStyle: "bold",
-        stroke: activeTheme.tokens.palette.background,
-        strokeThickness: 6,
-      },
-    ).setOrigin(0.5).setScrollFactor(0).setDepth(950);
-    this.tweens.add({
-      targets: message,
-      alpha: 0,
-      y: 80,
-      duration: 900,
-      onComplete: () => message.destroy(),
-    });
+    );
   }
 
   private updateSurge(): void {
@@ -1190,10 +1432,14 @@ export class RunScene extends Phaser.Scene {
     if (!runState) {
       return selectWorldModifiers(createWorldState(), activeTheme.tuning.difficulty, 0);
     }
+    // Only an endless run is allowed past `1`. A clearing run also outlives the
+    // duration, but it has no arrivals and is meant to be finishable, so
+    // escalating it would punish the player for choosing to tidy up.
+    const progress = runProgress(runState.elapsedMs, runState.durationMs);
     return selectWorldModifiers(
       runState.world,
       activeTheme.tuning.difficulty,
-      runProgress(runState.elapsedMs, runState.durationMs),
+      runState.mode === "endless" ? progress : Math.min(1, progress),
     );
   }
 
@@ -1303,6 +1549,7 @@ export class RunScene extends Phaser.Scene {
     eliteOverride?: boolean,
     angleRadians?: number,
     movement: WaveMovement = "chase",
+    fragment = false,
   ): boolean {
     if (
       !this.player ||
@@ -1334,6 +1581,7 @@ export class RunScene extends Phaser.Scene {
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = this.worldModifiers();
+    const fragmentShape = fragment ? this.fragmentShape() : NO_FRAGMENT;
     const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
       activeTheme.tuning.director,
@@ -1360,9 +1608,12 @@ export class RunScene extends Phaser.Scene {
       spawnSource,
       rewardMultiplier * (elite?.rewardMultiplier ?? 1) * toughnessReward,
       {
-        healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
-        damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
-        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier,
+        healthMultiplier: worldModifiers.enemyHealthMultiplier *
+          (elite?.healthMultiplier ?? 1) * fragmentShape.healthMultiplier,
+        damageMultiplier: worldModifiers.enemyDamageMultiplier *
+          (elite?.damageMultiplier ?? 1) * fragmentShape.damageMultiplier,
+        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier * fragmentShape.speedMultiplier,
+        radiusMultiplier: fragmentShape.radiusMultiplier,
       },
       elite,
       movement,
@@ -1692,8 +1943,10 @@ export class RunScene extends Phaser.Scene {
       this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.fracture)
     ) {
       for (let index = 0; index < fracture.childCount; index += 1) {
+        // The parent's own id: a fragment is a smaller, quicker piece of what
+        // broke, not a spawn of the fast role.
         this.enqueueSpawnRequest(
-          fracture.childEnemyId,
+          enemy.definition.id,
           archetypeIds.skill.fracture,
           fracture.rewardMultiplier,
           enemy.targetId,
@@ -1705,6 +1958,17 @@ export class RunScene extends Phaser.Scene {
         this.fractureQueued += 1;
       }
     }
+  }
+
+  /**
+   * How a fragment differs from what it broke off.
+   *
+   * Theme data, read from the fracture skill itself, so the shape of a fragment
+   * cannot drift from the skill that produces it.
+   */
+  private fragmentShape(): FragmentShape {
+    const fracture = findSkillEffect(activeTheme.skills, archetypeIds.skill.fracture, "fracture");
+    return fracture?.fragment ?? NO_FRAGMENT;
   }
 
   private processExplosionEvent(payload: ExplosionEventPayload, eventId: string): void {
@@ -1928,10 +2192,15 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || !this.levelUpUi || this.runState.progression.pendingChoices < 1) return;
     this.player?.stop();
     this.physics.world.pause();
-    this.currentChoices = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom, {
+    const luck = this.runState.player.stats.luck;
+    const drawn = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
-      luck: this.runState.player.stats.luck,
+      luck,
     });
+    // Which upgrades appeared, then how good each one rolled. Luck feeds both,
+    // but only the second makes a card actually stronger.
+    this.currentOffers = rollOfferTiers(drawn, activeTheme.tuning.upgradeTiers, this.upgradeRandom, luck);
+    this.currentChoices = this.currentOffers.map((offer) => offer.definition);
     this.levelUpUi.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
   }
 
@@ -1963,7 +2232,9 @@ export class RunScene extends Phaser.Scene {
     const runState = this.runState;
     return {
       descriptions: runState
-        ? this.currentChoices.map((choice) => describeUpgrade(runState, choice, activeTheme))
+        ? this.currentOffers.map((offer) =>
+            describeUpgrade(runState, offer.definition, activeTheme, offer.tier),
+          )
         : [],
       pendingAfterThis: Math.max(0, (runState?.progression.pendingChoices ?? 1) - 1),
       showDetail: getSessionSettings().detailedUpgradeCards,
@@ -1972,6 +2243,7 @@ export class RunScene extends Phaser.Scene {
 
   private pauseMenuView() {
     const runState = this.runState;
+    const session = getSessionStatistics(this.liveRunContribution());
     const summary = runState
       ? selectRunSummaryValues(runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
       : undefined;
@@ -1985,8 +2257,24 @@ export class RunScene extends Phaser.Scene {
           )
         : [],
       upgrades: summary?.upgrades ?? [],
+      codex: selectShrineCodex(activeTheme),
+      codexUpgrades: selectUpgradeCodex(activeTheme, session),
+      codexSession: selectSessionCodex(activeTheme, session),
       settings: getSessionSettings(),
     };
+  }
+
+  /**
+   * What the live run contributes to the session totals.
+   *
+   * Only while it is still being played. Once it reaches a terminal state it
+   * has been folded into the session for real, and counting it here as well
+   * would double it.
+   */
+  private liveRunContribution(): RunContribution | undefined {
+    const runState = this.runState;
+    if (!runState || runState.status === "dead" || runState.status === "complete") return undefined;
+    return { level: runState.progression.level, statistics: runState.statistics };
   }
 
   private applySetting(key: SettingKey): void {
@@ -1995,6 +2283,13 @@ export class RunScene extends Phaser.Scene {
     this.audioFeedback.setMuted(next.muted);
     this.pauseMenu?.refresh(this.pauseMenuView());
     this.publishTelemetry();
+  }
+
+  private readOvertimeChoiceInput(): void {
+    if (!this.overtimeUi?.isOpen) return;
+    const [first, second] = this.choiceKeys;
+    if (first && Phaser.Input.Keyboard.JustDown(first)) this.resolveOvertimeChoice("endless");
+    else if (second && Phaser.Input.Keyboard.JustDown(second)) this.resolveOvertimeChoice("clearing");
   }
 
   private readUpgradeChoiceInput(): void {
@@ -2010,14 +2305,19 @@ export class RunScene extends Phaser.Scene {
 
   private chooseUpgrade(choice: UpgradeDefinition): void {
     if (!this.runState || this.runState.status !== "level_up") return;
-    this.runState = applyRunUpgrade(this.runState, choice, (skillId) =>
-      skillMaxLevel(activeTheme.skills, skillId),
+    const offer = this.currentOffers.find((candidate) => candidate.definition.id === choice.id);
+    this.runState = applyRunUpgrade(
+      this.runState,
+      choice,
+      (skillId) => skillMaxLevel(activeTheme.skills, skillId),
+      tierMultiplier(activeTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
     );
     this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {
       this.beginLevelUpChoice();
     } else {
       this.currentChoices = [];
+      this.currentOffers = [];
       this.levelUpUi?.hide();
       this.physics.world.resume();
     }
@@ -2064,6 +2364,50 @@ export class RunScene extends Phaser.Scene {
     this.hitStop = requestHitStop(this.hitStop, this.time.now, durationMs, this.lastFrameMs);
   }
 
+  /**
+   * Whether a clearing run has anything left to do.
+   *
+   * Queued spawn work counts: a death-spawner that has just died still owes its
+   * offspring, and ending the run before they appear would drop enemies the
+   * player was told they had to clear.
+   */
+  private isFieldClear(): boolean {
+    return this.enemies.size === 0 && this.eventQueue.snapshot().backlog === 0;
+  }
+
+  /** The end-of-timer decision. Simulation is frozen until it is answered. */
+  private showOvertimeChoice(): void {
+    if (!this.runState || this.overtimeUi?.isOpen) return;
+    this.player?.stop();
+    this.physics.world.pause();
+    const forced = testOvertimeChoice();
+    if (forced === "complete") {
+      this.runState = completeRun(this.runState);
+      this.enterTerminalState();
+      return;
+    }
+    if (forced) {
+      this.resolveOvertimeChoice(forced);
+      return;
+    }
+    this.overtimeUi?.show(this.enemies.size, (choice) => this.resolveOvertimeChoice(choice));
+  }
+
+  private resolveOvertimeChoice(choice: OvertimeChoice): void {
+    if (!this.runState || this.runState.status !== "time_up") return;
+    this.overtimeUi?.hide();
+    this.overtimeChoicesMade += 1;
+    this.runState = chooseRunMode(this.runState, choice);
+    this.physics.world.resume();
+    // Clearing an already-empty field would otherwise wait a frame for the
+    // update loop, showing a live run for no reason.
+    if (choice === "clearing" && this.isFieldClear()) {
+      this.runState = completeRun(this.runState);
+      this.enterTerminalState();
+    }
+    this.publishTelemetry();
+  }
+
   private enterTerminalState(): void {
     if (!this.runState || this.terminalShown) return;
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
@@ -2085,6 +2429,10 @@ export class RunScene extends Phaser.Scene {
     this.activeExplosionCues = 0;
     this.audioFeedback.destroy();
     this.physics.world.pause();
+    recordFinishedRun({
+      level: this.runState.progression.level,
+      statistics: this.runState.statistics,
+    });
     this.runEndOverlay?.show(this.runState, () => this.restartRun());
   }
 
@@ -2253,6 +2601,7 @@ export class RunScene extends Phaser.Scene {
       run: this.runState
         ? {
             status: this.runState.status,
+            mode: this.runState.mode,
             elapsedMs: this.runState.elapsedMs,
             durationMs: this.runState.durationMs,
             kills: this.runState.statistics.kills,
@@ -2385,17 +2734,29 @@ export class RunScene extends Phaser.Scene {
       },
       ui: {
         pauseOpen: Boolean(this.pauseMenu?.isOpen),
+        overtimeOpen: Boolean(this.overtimeUi?.isOpen),
+        terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
         settings: { ...getSessionSettings() },
         cardDescriptions: this.runState
           ? this.currentChoices.map((choice) => {
-              const description = describeUpgrade(this.runState!, choice, activeTheme);
+              const offer = this.currentOffers.find(
+                (candidate) => candidate.definition.id === choice.id,
+              );
+              const description = describeUpgrade(
+                this.runState!,
+                choice,
+                activeTheme,
+                offer?.tier ?? "common",
+              );
               return {
                 id: description.id,
                 level: description.level,
                 nextLevel: description.nextLevel,
                 isNew: description.isNew,
                 rarity: description.rarity,
+                tier: description.tier,
+                tierMultiplier: description.tierMultiplier,
                 lines: description.lines.map((line) => ({
                   label: line.label,
                   from: line.from ?? null,
@@ -2404,6 +2765,26 @@ export class RunScene extends Phaser.Scene {
               };
             })
           : [],
+        codexEntries: selectShrineCodex(activeTheme).map((entry) => ({
+          id: entry.id,
+          name: entry.name,
+          effects: entry.effects.map((effect) => ({ label: effect.label, display: effect.display })),
+        })),
+        codexSection: this.pauseMenu?.activeCodexSection ?? null,
+        codexUpgrades: selectUpgradeCodex(
+          activeTheme,
+          getSessionStatistics(this.liveRunContribution()),
+        ).map((entry) => ({
+          id: entry.id,
+          name: entry.name,
+          sessionTotal: entry.sessionTotal,
+          bestInRun: entry.bestInRun,
+          maxPerRun: entry.maxPerRun,
+        })),
+        codexSession: selectSessionCodex(
+          activeTheme,
+          getSessionStatistics(this.liveRunContribution()),
+        ).map((line) => ({ label: line.label, display: line.display })),
         statLines: this.runState
           ? selectPlayerStats(this.runState, activeTheme).map((line) => ({
               key: line.key,
@@ -2529,7 +2910,15 @@ export class RunScene extends Phaser.Scene {
         shrineXpCollected: this.shrineXpCollected,
         ambientXpCollected: this.ambientXpCollected,
         feedbackCount: this.shrineFeedback,
-        instances: this.shrineActors.map((actor) => ({ id: actor.definition.id, activated: actor.activated })),
+        instances: this.shrineActors.map((actor) => ({
+          id: actor.definition.id,
+          activated: actor.activated,
+          x: actor.x,
+          y: actor.y,
+        })),
+        plannedCount: this.shrineArrivals.length,
+        revealedCount: this.shrineActors.length,
+        nextAppearAtMs: this.shrineArrivals[this.shrinesRevealed]?.appearAtMs ?? null,
       },
       world: world && this.runState ? {
         ...world,

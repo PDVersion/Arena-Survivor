@@ -25,5 +25,11 @@ export const difficulty = {
     enemyHealthAtEnd: 0.5,
     enemyDamageAtEnd: 0.2,
     enemyMoveSpeedAtEnd: 0.1,
+    // Compounding overtime, so endless ends rather than being farmed. See the
+    // production pack for the derived table; this pack tracks it.
+    endless: {
+      enemyHealthGrowthPerStep: 0.3,
+      enemyDamageGrowthPerStep: 0.08,
+    },
   },
 } as const satisfies DifficultyTuning;

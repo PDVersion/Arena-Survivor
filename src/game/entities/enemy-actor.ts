@@ -39,6 +39,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       healthMultiplier: number;
       damageMultiplier: number;
       moveSpeedMultiplier?: number;
+      /** Shrinks a fragment; separation and the body follow it automatically. */
+      radiusMultiplier?: number;
     }> = {
       healthMultiplier: 1,
       damageMultiplier: 1,
@@ -50,7 +52,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
     ).color;
-    const radius = definition.radius * (elite?.radiusMultiplier ?? 1);
+    const radius =
+      definition.radius * (elite?.radiusMultiplier ?? 1) * (modifiers.radiusMultiplier ?? 1);
     super(scene, x, y, radius, 0, 360, false, colour);
     this.targetId = targetId;
     this.definition = definition;

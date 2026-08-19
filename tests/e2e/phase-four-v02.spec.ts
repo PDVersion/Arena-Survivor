@@ -4,7 +4,7 @@ test("explosion, Fracture, Bloodlust, and chain reaction compose iteratively", a
   test.setTimeout(50_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/?interactions=all&critChance=3&attackSpeedBonus=9&loadHarness=80&noXp=1");
+  await page.goto("/?interactions=all&critChance=3&attackSpeedBonus=9&loadHarness=80&noXp=1&atTimeUp=complete");
 
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().effects?.chainExplosionsCommitted), { timeout: 35_000 }).toBeGreaterThan(0);
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().effects?.fractureQueued)).toBeGreaterThan(0);
@@ -25,7 +25,7 @@ test("explosion, Fracture, Bloodlust, and chain reaction compose iteratively", a
 });
 
 test("terminal restart clears interaction queues and rolling Bloodlust", async ({ page }) => {
-  await page.goto("/?interactions=all&runDurationMs=700&attackSpeedBonus=9&loadHarness=40&noXp=1");
+  await page.goto("/?interactions=all&runDurationMs=700&attackSpeedBonus=9&loadHarness=40&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 15_000 }).toBe("complete");
   await page.keyboard.press("r");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration)).toBeGreaterThan(1);

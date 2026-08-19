@@ -15,14 +15,23 @@ export interface HudExtras {
 export class Hud {
   private readonly scene: Phaser.Scene;
   private readonly theme: ThemeManifest;
-  private readonly left: Phaser.GameObjects.Text;
+  private readonly healthLabel: Phaser.GameObjects.Text;
+  private readonly experienceLabel: Phaser.GameObjects.Text;
   private readonly right: Phaser.GameObjects.Text;
   private readonly status: Phaser.GameObjects.Text;
+  private readonly healthTrack: Phaser.GameObjects.Rectangle;
+  private readonly healthFill: Phaser.GameObjects.Rectangle;
   private readonly xpTrack: Phaser.GameObjects.Rectangle;
   private readonly xpFill: Phaser.GameObjects.Rectangle;
   private readonly levelLabel: Phaser.GameObjects.Text;
 
-  private static readonly BAR_WIDTH = 220;
+  private static readonly BAR_WIDTH = 200;
+  private static readonly BAR_HEIGHT = 14;
+  private static readonly BAR_LEFT = 20;
+  private static readonly HEALTH_BAR_Y = 30;
+  private static readonly XP_BAR_Y = 60;
+  /** Text sits clear of the bar it belongs to, on the same line. */
+  private static readonly LABEL_LEFT = Hud.BAR_LEFT + Hud.BAR_WIDTH + 16;
 
   constructor(scene: Phaser.Scene, theme: ThemeManifest) {
     this.scene = scene;
@@ -36,7 +45,18 @@ export class Hud {
       strokeThickness: 5,
       lineSpacing: 6,
     };
-    this.left = scene.add.text(20, 18, "", style).setScrollFactor(0).setDepth(900);
+    // Bar first, number beside it: the bar is the glance and the number is the
+    // detail, so they read left to right in that order on one line each.
+    this.healthLabel = scene.add
+      .text(Hud.LABEL_LEFT, Hud.HEALTH_BAR_Y, "", style)
+      .setOrigin(0, 0.5)
+      .setScrollFactor(0)
+      .setDepth(901);
+    this.experienceLabel = scene.add
+      .text(Hud.LABEL_LEFT, Hud.XP_BAR_Y, "", style)
+      .setOrigin(0, 0.5)
+      .setScrollFactor(0)
+      .setDepth(901);
     this.right = scene.add.text(0, 18, "", { ...style, align: "right" })
       .setOrigin(1, 0)
       .setScrollFactor(0)
@@ -48,28 +68,49 @@ export class Hud {
       fontSize: "20px",
     }).setOrigin(0.5, 0).setScrollFactor(0).setDepth(900);
 
-    // A real bar rather than a fraction: level progress is glanceable.
+    // Real bars rather than fractions: both are glanceable mid-fight, while the
+    // exact numbers stay in the text above for when they are actually needed.
     const trackColour = Phaser.Display.Color.HexStringToColor(palette.grid).color;
-    const fillColour = Phaser.Display.Color.HexStringToColor(palette.pickup).color;
-    this.xpTrack = scene.add.rectangle(20, 92, Hud.BAR_WIDTH, 12, trackColour, 0.85)
-      .setOrigin(0, 0.5).setScrollFactor(0).setDepth(900);
-    this.xpFill = scene.add.rectangle(20, 92, 0, 12, fillColour, 1)
-      .setOrigin(0, 0.5).setScrollFactor(0).setDepth(901);
-    this.levelLabel = scene.add.text(20 + Hud.BAR_WIDTH + 12, 92, "", {
+    this.healthTrack = this.addTrack(Hud.HEALTH_BAR_Y, trackColour);
+    this.healthFill = this.addFill(
+      Hud.HEALTH_BAR_Y,
+      Phaser.Display.Color.HexStringToColor(palette.health).color,
+    );
+    this.xpTrack = this.addTrack(Hud.XP_BAR_Y, trackColour);
+    this.xpFill = this.addFill(
+      Hud.XP_BAR_Y,
+      Phaser.Display.Color.HexStringToColor(palette.pickup).color,
+    );
+    this.levelLabel = scene.add.text(Hud.BAR_LEFT, Hud.XP_BAR_Y + 22, "", {
       ...style,
+      fontSize: "16px",
       fontStyle: "bold",
     }).setOrigin(0, 0.5).setScrollFactor(0).setDepth(901);
 
     this.resize();
   }
 
+  private addTrack(y: number, colour: number): Phaser.GameObjects.Rectangle {
+    return this.scene.add
+      .rectangle(Hud.BAR_LEFT, y, Hud.BAR_WIDTH, Hud.BAR_HEIGHT, colour, 0.85)
+      .setOrigin(0, 0.5)
+      .setScrollFactor(0)
+      .setDepth(900);
+  }
+
+  private addFill(y: number, colour: number): Phaser.GameObjects.Rectangle {
+    return this.scene.add
+      .rectangle(Hud.BAR_LEFT, y, 0, Hud.BAR_HEIGHT, colour, 1)
+      .setOrigin(0, 0.5)
+      .setScrollFactor(0)
+      .setDepth(901);
+  }
+
   update(state: RunState, extras: HudExtras): void {
     const values = selectHudValues(state);
     const vocabulary = this.theme.copy.vocabulary;
-    this.left.setText([
-      `${vocabulary.health}: ${values.health}`,
-      `${vocabulary.experience}: ${values.experience}`,
-    ]);
+    this.healthLabel.setText(`${vocabulary.health}: ${values.health}`);
+    this.experienceLabel.setText(`${vocabulary.experience}: ${values.experience}`);
 
     const right = [
       `${vocabulary.time}: ${values.time}`,
@@ -84,6 +125,9 @@ export class Hud {
     }
     this.right.setText(right);
 
+    const maxHealth = state.player.stats.maxHealth;
+    const healthProgress = maxHealth > 0 ? state.player.health / maxHealth : 0;
+    this.healthFill.width = Hud.BAR_WIDTH * Math.min(1, Math.max(0, healthProgress));
     this.xpFill.width = Hud.BAR_WIDTH * Math.min(1, Math.max(0, extras.levelProgress));
     this.levelLabel.setText(`${vocabulary.level} ${values.level}`);
     this.status.setText(state.status === "paused" ? vocabulary.paused : "");
@@ -95,9 +139,12 @@ export class Hud {
   }
 
   destroy(): void {
-    this.left.destroy();
+    this.healthLabel.destroy();
+    this.experienceLabel.destroy();
     this.right.destroy();
     this.status.destroy();
+    this.healthTrack.destroy();
+    this.healthFill.destroy();
     this.xpTrack.destroy();
     this.xpFill.destroy();
     this.levelLabel.destroy();

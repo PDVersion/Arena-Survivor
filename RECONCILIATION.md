@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **Phase 10 complete — V0.3 awaiting milestone review**
+- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`; V0.4 planned as two parallel streams (REC-070), not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1419,6 +1419,398 @@ The Phase 9 hit-stop path shipped with `maxFrameMs < 120` in the required suite 
 
 Revisit when:
 Weapon slots change how damage stacks, a boss needs its own time-to-kill target, or armour appears on more roles.
+
+### REC-058 — Closing speed has a ceiling as well as a floor
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; enemy tuning, the REC-049 envelope, director tests
+- Blocks: None
+
+Context / observation:
+Play testing the finished V0.3 build reported the whole roster as slightly too fast: the crowd closed before it could be read, and kiting stopped being a decision the player got to make. REC-049 had rescaled speed for the 958-unit spawn ring and installed guards for the failure it had just fixed — every role must cross the ring within twelve seconds, the opening role within eight, and exactly one role may outrun the player. All three are *floors*. Nothing in the envelope stopped speed drifting upward, which is the direction it had drifted.
+
+Decision / solution:
+Cut move speed roughly 10% across both production packs — 140/240/90/110 becomes 124/210/84/98 against an unchanged player speed of 200 — and add the missing ceiling: no role may exceed 1.1x the player's speed. The cut is deliberately not uniform, because the twelve-second floor binds the slow end: the glass/tank role takes the smallest cut (11.4 s of ring crossing, against a 12 s limit) while the two fastest roles take the largest. Health, contact harm, armour, and rewards are untouched.
+
+Both packs move together. They share the roster shape, the player speed, and the spawn envelope, so a ceiling that only one pack satisfies is not a guard — it is a comment. `tests/unit/enemies` had pinned the legacy pack's speeds as "product baselines"; speed is removed from that assertion, because pinning a value in two places is how a rebalance ends up half-applied. Health and contact damage remain pinned there.
+
+Why:
+The simulator is silent on this: it models spawn cadence, damage, and reward income but not movement, so a speed change does not move a single number in `npm run balance`. That is precisely why the guard had to be a test rather than a report — the only automated instrument that can catch closing speed drifting is a declared band on the value itself.
+
+Future guardrail:
+`tests/unit/director` now asserts the envelope from both directions for both production packs: a floor on ring-crossing time, and a ceiling of 1.1x player speed on every role.
+
+Revisit when:
+Player speed becomes a character choice rather than a constant, the view size changes, or a role is added whose identity depends on outrunning the player by more than a margin.
+
+### REC-059 — Shrines arrive across the run, at positions found rather than given
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; shrines, theme tuning, run scene, browser test design
+- Blocks: None
+
+Context / observation:
+All five shrine instances were created in `create()` at fixed offsets around the arena centre, so every risk/reward decision in the run was visible, reachable, and settled inside the opening seconds. The remaining four minutes contained none. `PLAN.md` asks for shrines "around the arena"; REC-036 anticipated this under "revisit when placement becomes procedural".
+
+Decision / solution:
+Add `tuning.shrines` as theme-owned data: an arrival schedule in normalized run progress, plus a placement band (edge margin, minimum separation, and a near/far distance from the player). A shrine is created at the moment it arrives, at a position sampled around wherever the player is *then* — not laid out at run start — so distance is a real cost rather than a fixed offset. Placement is rejection sampling with a best-candidate fallback, so a cornered player still gets a shrine instead of a silently dropped one. The fixed offset list left the scene entirely, which also removes a tuning literal the working agreement forbade.
+
+Random placement is only viable with a way to find the shrine. The arena is 2.25x the view horizontally and 2.7x vertically, so a placed shrine is invisible from most of the map. Every revealed, unactivated, off-screen shrine carries a named pointer pinned to the edge of the view, projected onto the view *rectangle* so it sits on the line between player and shrine rather than sliding toward a corner.
+
+Two browser paths broke on the change, both because their subject is what a shrine *does*: the surge path needed the Horde shrine in range at frame one, and the world scenarios activate all five directly. `shrineLayout=adjacent` restores the V0.3 layout for those paths, following the `spawnRadius` and `closeLoad` precedent from REC-049; the scenario path reveals every instance itself, so it needs no flag.
+
+Why:
+Five spaced decisions are five decisions. Five simultaneous ones are one. Scheduling in progress rather than minutes means a ten-minute or endless run restretches the same five arrivals with no second schedule, matching how the director already works.
+
+Future guardrail:
+Theme validation requires a shrine schedule whose entries name real shrines and land within `[0, 1)`. `tests/unit/shrine` asserts determinism from a seed, the separation and distance bands, corner fallback, and the marker projection. A browser path asserts arrivals accumulate rather than landing together, that placements respect the separation band, and that a restart reschedules from the opening.
+
+Revisit when:
+Shrine instances need save identity, arrivals become reactive to player state rather than scheduled, or the arena or view size changes the findability band.
+
+### REC-060 — Overlay text is measured, never assumed
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; level-up cards, pause menu, any future overlay
+- Blocks: None
+
+Context / observation:
+Play testing reported upgrade card text clipped outside its box. The cards were a fixed 128 px tall with every element at a fixed offset from the top: the heading at 12, the summary at 44, the detail block at 74. A three-row detail block is around 60 px tall, so it ended near 134 — past the bottom border. The heading had no wrap and no width bound, so a long name ran under the level badge. Nothing was broken by an edge case; the geometry simply never accounted for its own content.
+
+The same defect appeared immediately in a second place. Adding a fifth pause tab narrowed the tab strip below the width of the longest themed label, and "EQUIPMENT REQUISITIONED" ran straight out of its tab. That is the same mistake in a different file — a fixed box, and text assumed to fit.
+
+Decision / solution:
+Overlay text is built first, measured, and only then positioned and boxed. A level-up card lays each element out from the previous element's measured height, sizes itself to its own content subject to a minimum, and the panel is then sized to the cards rather than the cards to the panel. Every text that can grow declares a wrap width. Tab labels wrap inside their own tab and scale down if a single word still will not fit. The pause codex advances each entry by its predecessor's measured height.
+
+Why:
+A fixed offset is a claim about how tall text will render, made before the text exists, in a font the theme owns and a language the theme chooses. That claim cannot be checked and will eventually be wrong. Measuring costs one layout pass in an overlay that appears while the simulation is paused.
+
+Future guardrail:
+No automated check: text metrics need a real browser, and pinning them would pin the font. The card minimum height keeps the panel roughly the same size whether or not the detail toggle is on, which is what keeps the existing fixed-coordinate browser clicks landing on the intended card. Any new overlay should follow the measure-then-place shape rather than adding offsets.
+
+Revisit when:
+An overlay needs scrolling, a theme ships a materially different font stack, or a card needs more than three detail rows.
+
+### REC-061 — The ring-crossing floor is derived from the roster, not fixed
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; enemy tuning, difficulty ramp, the REC-049 envelope
+- Blocks: None
+
+Context / observation:
+The REC-058 cut was not enough in play; the roster still closed faster than it could be read. The remaining headroom was gone: REC-049's twelve-second ring-crossing floor already bound the glass role at 11.4 s, and REC-058 had noted that a further cut would need the envelope revisited rather than the value nudged.
+
+Two things were also hiding a share of the problem. The base cut was partly handed back by `time.enemyMoveSpeedAtEnd`, which multiplied the whole roster by 1.1 by the end of a run — a 0.9x roster at 1.1x is 0.99x, so the late run, where "too fast" was felt hardest, had barely changed. And the plastic bag exists specifically to outrun the player, so it can only ever be trimmed to just above the player's 200, however far the rest of the roster comes down.
+
+Decision / solution:
+Cut again to 112 / 204 / 76 / 88 (V0.3 shipped 140 / 240 / 90 / 110), and halve the end-of-run speed ramp to 0.05 so the late run keeps most of the cut. Re-derive the floor rather than treat it as a constant: twelve seconds becomes thirteen, and the opening role's eight becomes nine.
+
+The two floors are not equally important, and the re-derivation says so. The opening role is the entire roster for the first minute, so its crossing time is literally how long a run has nothing in it — it is held tightest, at 8.6 s against a 9 s limit. The heavy roles are walls the player navigates around; a long crossing is their identity, not dead time. REC-049's floors were set from one measurement of one failure and were never claimed to be derived; treating them as fixed would have made a play-test finding unactionable.
+
+Why:
+`npm run balance` cannot answer this. The simulator models spawn cadence, damage, and reward income, but not movement, so a roster-wide speed change moves no number in any report — final levels and time-to-kill are identical before and after. Closing speed is only observable in play, which is why the declared band is the instrument and why the band has to be honest about which end is load-bearing.
+
+Future guardrail:
+`tests/unit/director` asserts both ends for both production packs: 13 s for any role, 9 s for the opening role, and REC-058's 1.1x closing-speed ceiling.
+
+Revisit when:
+Player speed becomes a character choice, the view size changes, or a further cut is wanted — at which point the opening role, not the tank, is the number that has run out of room.
+
+### REC-062 — Session statistics are a separate slice, merged on read
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; statistics, the Field Guide, V0.4 persistence
+- Blocks: None
+
+Context / observation:
+The Field Guide needed to say how many of each upgrade the player has collected this session and the most they have taken in one run, alongside session totals such as damage. Nothing outlived a run: `RunStatistics` is created fresh per run and `ProfileState` carries identity and unlocks, not history.
+
+Decision / solution:
+Add a `SessionStatistics` slice at module scope, following the settings slice: it survives a restart, which is what "session" means to a player who just pressed R, and it is shaped for the "lifetime and best-run statistics" field in `SAVE_DATA.md` so the V0.4 persistence adapter can store it unchanged. No persistence, codec, or migration is implemented here.
+
+Only *finished* runs are stored. The run in progress is merged on read. Storing it live would either double-count it when it ends or lag a run behind, and both are worse than a merge. `runsPlayed` is the one field the live run does not contribute to, because a run being played has not been played yet; every other field is either additive — which is what "collected this session" means mid-run — or a `Math.max`, which makes merging the same live run on every read idempotent. A unit test asserts that idempotence directly, because it is the property the whole design rests on.
+
+An intermediate version excluded the live run from the best-run records too. A test caught the consequence: a player standing at level 30 saw a best of 12. Records that refuse to move until you die look broken, and the maxima were already safe to merge.
+
+Why:
+Per-upgrade counts are the part the player cannot reconstruct. The pool is eighteen entries with per-run caps between 3 and 15, and "how much of this have I actually used, and how hard have I ever pushed it" is exactly the question a reference surface should answer.
+
+Future guardrail:
+`tests/unit/statistics/session-statistics` covers accumulation, best-versus-total separation, live-run merging, idempotence, and that reading never mutates the store. A browser path takes an upgrade and asserts it appears in the catalogue with a session total and a best-run figure.
+
+Revisit when:
+Persistence lands and this slice needs a codec and migrations, or lifetime statistics need to outlive the page.
+
+### REC-063 — The game opens on a title screen, and test mode skips it
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; boot flow, browser test design, V0.4 menu surfaces
+- Blocks: None
+
+Context / observation:
+`BootScene` started the run directly, so the player arrived already under attack, with no statement of what the game is and nowhere to return to. It also left no home for the character select, mode select, and save export/import surfaces that V0.4 needs.
+
+Decision / solution:
+Add a `MenuScene` between boot and the run: title, arena name, a start action, the control hint, and the session's best figures once a run has been played. It owns no simulation and reads only theme copy and the session statistics slice, so it cannot disagree with the run it starts.
+
+Test mode goes straight to the run unless a path passes `menu`. Roughly forty browser paths open with `page.goto` and poll for a playing run; making every one of them dismiss a title screen would add a step to each and test nothing, and the `spawnRadius` / `closeLoad` / `shrineLayout` precedent already covers "the subject of this path is not the thing in the way".
+
+The cost is stated rather than hidden: the menu is bypassed by every path except `tests/e2e/menu`, so a regression in the boot-to-run transition surfaces in exactly one file. That file therefore covers the transition three ways — that the menu appears and nothing is simulating behind it, that Enter reaches a run whose clock actually advances, and that the button click does the same — rather than only asserting the menu renders.
+
+Why:
+An always-on menu tested by everything would be better, but not at the price of a mandatory dismissal step in forty specs. Bypassing it while testing the transition properly is the trade that keeps both the production behaviour and the suite honest.
+
+Future guardrail:
+`tests/e2e/menu` is the only coverage and is deliberately transition-focused. Anything added to the menu that affects a run — character select, mode select, an imported save — needs its own assertion there, because no other path will see it.
+
+Revisit when:
+The menu gains state that changes how a run starts, or a run can return to it rather than restarting in place.
+
+### REC-064 — A run out of time is a decision, not an ending
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; run state, director, browser test design
+- Blocks: None
+
+Context / observation:
+`advanceRunState` set `complete` on the tick the authored duration expired, and the summary appeared immediately. That cut the run off at exactly the point a build had finished assembling itself, and it ended fights mid-swing: the arena could hold three hundred enemies at 4:59 and show a tally at 5:00 with all of them still standing.
+
+Decision / solution:
+The limit now produces a new `time_up` status that holds the simulation and asks. `endless` lifts the limit entirely and plays until the player actually dies. `clearing` stops new arrivals and keeps every other system running — projectiles, pickups, hazards, on-kill effects — so the run ends on an empty field rather than a freeze-frame. `RunState` carries the mode, so the clock, the HUD, and the director all resolve from one field.
+
+Endless needs nothing from the director: it already resolves from `t = elapsed / duration` with no clamp, and `BUILD_PLAN_V0.3.md` listed `t > 1` as supported. Time-based escalation plateaus at the end of the authored duration rather than growing without bound, which is the right shape — Chaos and the player's own world upgrades are what push an endless run further.
+
+Clearing waits on the causal event backlog as well as the live enemy count. A death-spawner that dies on the last tick still owes its offspring, and ending on an empty set while spawn work was queued would drop enemies the player had just been told they had to clear.
+
+Why:
+Both options are the player choosing how the run resolves, which is the same principle as the shrines: difficulty and length are things the player opts into rather than things the timer imposes.
+
+Future guardrail:
+`tests/unit/run-state` covers the hold, both resumptions, overtime accumulating past the duration, and that the decision can only be answered while it is being asked. `tests/e2e/overtime` covers the held run, endless, and clearing through to an empty field.
+
+Test-mode cost, stated:
+Seventeen browser assertions poll for `complete` once the duration expires, and their subject is restart, world reset, or terminal accounting rather than the ending. They pass `atTimeUp=complete`, which ends the run on the last tick exactly as V0.3 did. The production decision is therefore exercised by one file, the same trade as REC-063.
+
+Revisit when:
+Endless needs its own escalation curve past `t = 1`, or a run can be abandoned from the decision rather than only resolved.
+
+### REC-065 — Rarity said two things at once; the roll is now separate
+
+- Status: Accepted
+- Date: 2026-08-18
+- Affects: V0.3.1 and later; upgrades, luck, level-up cards, theme tuning
+- Blocks: None
+
+Context / observation:
+Play testing asked why pierce and the extra projectile arrived so late, and whether upgrades were gated on time or Pollution. They are not, and never were: `selectUpgradeChoices` filters only on an upgrade's own cap. The lateness came from `rarity` weights of 100 / 38 / 12, where both projectile picks sat at `rare`. A specific rare occupied roughly 3.6% of a card slot, so a build-defining pick appeared about once every ten level-ups — often after the run it was supposed to shape.
+
+The same question exposed why: `rarity` was doing two jobs. It set how often an upgrade appeared *and* it coloured the card, so the only way to make an upgrade feel special was to make it scarce. Scarce and exciting are not the same property.
+
+Luck had a related problem. It shifted rare and epic selection weights and nudged the elite and fracture rolls, but it never made any upgrade *stronger*, which is what a player reading the word expects.
+
+Decision / solution:
+Split the two. `rarity` keeps only the appearance job, with the gap narrowed to 100 / 60 / 25 and pierce moved to `common` — a build-defining pick should be reachable. Measured across 30,000 level-ups, pierce now appears in 22.4% of them against roughly 10% before, and the extra projectile in 13.8%.
+
+Quality becomes a per-offer `UpgradeTier` roll: common, uncommon, rare, epic, legendary, unique at 1.0x, 1.2x, 1.4x, 1.6x, 2.0x, 2.0x, with the ladder and its weights as theme tuning. Weights are tuned against what a five-minute run actually reaches — about thirty level-ups, ninety cards — giving 3.3 legendaries and 1.0 unique per run at zero luck, rising to 7.2 and 2.5 at the maximum reachable luck of 230. Luck biases the tier roll proportionally to the rung, so it now visibly makes offers better while never biasing common downward.
+
+Legendary and unique share a multiplier, as specified. Unique is the rarer colour on the same top rung, so the best possible roll still reads as an event.
+
+Three details the ladder forced:
+Integer targets — pierce and projectile count — round rather than scale, and are floored at the authored value so a better roll can never round to something worse. With the shipped ladder that means epic and above give `+2`. Skill cards round the same way, so the top half of the ladder is worth two levels, still capped by the skill's own maximum. World modifiers never roll at all: scaling one half of "more pressure for more reward" changes the deal the player agreed to and scaling both changes nothing, so those cards are always common. That exclusion is derived from the effects rather than authored, so a new world upgrade cannot forget to opt out.
+
+Why:
+Separating them means an upgrade's appearance rate can be set by how central it is to a build, and its excitement can come from the roll. Neither number has to compromise for the other any more.
+
+Future guardrail:
+Theme validation requires the full ladder in order, starting at multiplier one and never falling. `tests/unit/upgrades/upgrade-tiers` asserts the distribution over a run's worth of offers, luck's direction, integer rounding, the skill cap, that no tier is ever worse than common for any upgrade in the pool, and that world bargains stay unscaled.
+
+Known gap:
+`npm run balance` does not model tiers — its build models apply authored values — so it now understates a real build by the average tier multiplier, about 1.20x at zero luck and more with luck invested. The reported DPS band and level range are therefore a floor rather than a prediction. Teaching the simulator to sample tiers is the obvious next step if the band is used for a real balance decision.
+
+Revisit when:
+The simulator needs tier-aware build models, unique gains a property beyond its colour, or weapon slots change what an upgrade offer is.
+
+### REC-066 — The engagement floor is per role, and nothing outruns the player
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.3.1 and later; enemy tuning, the REC-049 envelope, REC-050's wave rule
+- Blocks: None
+
+Context / observation:
+A third play-test pass still read as too fast, and the flat ring-crossing floor had run out of room for the third time: REC-058 raised it implicitly, REC-061 raised it from twelve to thirteen seconds, and another cut needed fourteen. Raising a guard every time it is inconvenient is not a guard.
+
+The same pass changed what the fast role is for. REC-049 had put it just above the player specifically so it could not be outrun. Play testing found that reads as being chased down rather than as pressure — there is no answer to it, only a delay.
+
+Decision / solution:
+Two separate changes, both about shape rather than magnitude.
+
+The floor is now per role rather than one number. The opening role is the entire roster for the first minute, so its crossing time is literally how long a run has nothing in it, and it is held at nine seconds against an actual 9.2. Every other role gets a loose sixteen-second sanity bound, because the heavy roles unlock at 40% and 45% of the run — by which point the field already holds dozens of enemies — so their crossing time is never dead time. That is a guard shaped like the thing it protects, and it does not need raising again the next time the roster slows.
+
+The fast role moves from just above the player to just below: 190 against 200. Standing still loses ground immediately; moving keeps you ahead. The guard is now a band — no role may reach player speed, and the fast role must sit between 0.9 and 1.0 of it and remain the fastest thing on the field. The rest of the roster came down with it: 104 / 190 / 70 / 80 against V0.3's 140 / 240 / 90 / 110.
+
+REC-050's rule — a role at least as fast as the player must not chase in a wave — no longer fires against any production data, because nothing reaches player speed. It is kept as a safety net and its test now builds a theme that violates it deliberately, so the rule stays exercised rather than passing vacuously. The fast role's wave is separately asserted to drift, since eighteen of them homing in at 0.95x is still unsurvivable with the starter weapon.
+
+Why:
+A guard derived from one measurement of one failure is a snapshot, not a principle. Expressing it per role says what each role is for, which is what makes it hold under a change nobody predicted.
+
+Future guardrail:
+`tests/unit/director` asserts the per-role floor, the ceiling, the fast role's band, and that the fast role stays the quickest. `tests/unit/content/tuning` exercises the drift rule against a constructed violation and asserts no production role reaches player speed.
+
+Revisit when:
+Player speed becomes a character choice, the view size changes, or the opening role needs to slow further — that is the number with the least room left.
+
+### REC-067 — A fragment is a piece of its parent, and the crowd holds its shape
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.3.1 and later; the fracture skill, crowd separation, theme contracts
+- Blocks: None
+
+Context / observation:
+Two findings from the same play session, both about how a crowd reads.
+
+Fracture spawned a fixed `childEnemyId`, and both production packs pointed it at the fast role. Breaking a glass bottle produced plastic bags. Every fracture in the run therefore added more of the one enemy that was already applying the most pressure, and the mechanic had no relationship to what was actually broken.
+
+Separately, a detonation clearing a large pocket was followed by a wall of arrivals. The cause is not the director, which spawns on a cadence: it is the retained causal backlog. Fracture children and death-spawn offspring are held rather than dropped when the enemy cap is reached (REC-023), so a chain that kills a hundred enemies queues a hundred spawn requests and releases them the instant capacity frees. That retention is deliberate and correct — the alternative is silently losing enemies the player earned. What was wrong was how the released group read: at the old separation scales the light roles overlapped so heavily that a hundred arrivals looked like one object.
+
+Decision / solution:
+A fragment is now defined against whatever broke. The fracture effect drops `childEnemyId` and declares a `fragment` shape instead — speed 1.15x, health 0.35x, radius 0.62x, damage 0.6x of its parent — and the spawn carries the parent's own id. What you break determines what you fight, and a fragment is quicker than its parent without being the fast role.
+
+Crowd separation rises across the light roles: the bag from 0.55 to 0.72 of its drawn radius and the bottle from 0.70 to 0.88, with the heavy roles at 1.0. Every scale stays at or below the drawn radius, so bodies still touch and a swarm still reads as a crowd rather than a formation. The per-frame displacement clamp goes from 6 to 8, because in a deep pile it — not the separation radius — is what actually binds: separation can only correct so far per frame while every body pushes inward. `maxNeighbours` is deliberately untouched, since it is the per-frame cost driver the 300-entity budget in REC-040 was measured against. The hash cell grows from 64 to 72 to stay above the largest elite body's diameter.
+
+A fragment needs no separation tuning of its own: it carries its parent's scale against a smaller drawn radius, so it bunches more tightly than what it broke off automatically.
+
+Why:
+The fragment change is the difference between a mechanic that expresses the fiction — plastics break into smaller pieces — and one that just adds fast enemies. The separation change is deliberately small: the goal is a crowd that reads as many things, not a crowd that stands apart.
+
+Future guardrail:
+Theme validation requires a fragment shape whose speed exceeds one and whose radius is below one, so a pack cannot declare a fragment that is slower or larger than its parent. `tests/unit/skills` asserts the shape stays modest and worth no reward; `tests/unit/separation` asserts every role still bunches, none sits inside another, and the hash cell covers the largest elite body.
+
+Known consequence, stated:
+A fragment of the fast role lands at 218 against a player at 200, so it is the one thing in the game that can outpace you. That follows directly from both instructions — fragments are quicker than their parent, and the fast role sits just below the player — and it is left in as a fair consequence of choosing to fracture. The multiplier is theme data, so pulling it back is a one-line change.
+
+Revisit when:
+Fragments need their own role identity rather than inheriting one, the enemy cap changes how much backlog can accumulate, or the crowd budget is re-measured on other hardware.
+
+### REC-068 — Endless compounds, clearing does not, and CI waits on simulated time
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.3.1 and later; endless mode, terminal copy, browser test design
+- Blocks: None
+
+Context / observation:
+Three things from one pass, all downstream of REC-064's end-of-timer decision.
+
+The timed escalation curve plateaus at `t = 1` by design — `elapsed` is clamped — which is right for a run with a finish line and wrong for one without. A build that survived the timer only gets stronger from there, so endless had no ending: it was a farm.
+
+The terminal summary said "You held the site for the full shift" after a run that outlived the shift and was ended by clearing the field. Two of the three ways a run can now finish were being described by copy written for the third.
+
+And all three `tests/e2e/overtime` paths failed on CI while passing locally. The cause is the one REC-041 and REC-049 both already record: they waited a fixed 20 s of wall time for 2.5 s of *simulated* time, on a runner that advances simulation at roughly a fifth of real time. The whole suite took 18 minutes for 57 paths, which is the same fact stated another way.
+
+Decision / solution:
+Overtime compounds rather than approaching a limit. `TimeTuning` gains an `endless` block whose coefficients apply per escalation step beyond the authored duration: health at 1.3x per 30-second step, damage at a far gentler 1.08x. Ten steps of overtime is 13.8x health on top of whatever the run had already reached. Compounding is the whole point — player damage scales multiplicatively across several axes, so anything linear is absorbed by a good build inside a minute.
+
+Health carries the ending and damage barely moves, deliberately. Health alone would make overtime an attrition grind; a little damage growth makes it decisive. Move speed is untouched, so overtime cannot quietly reintroduce enemies that outrun the player and undo REC-066.
+
+The ramp is gated on the mode, not on progress. A clearing run also outlives the duration, but it has no arrivals and is meant to be finishable — escalating it would punish the player for choosing to tidy up. The scene clamps `progress` to `1` for every mode except `endless`, so the selector needs no knowledge of modes.
+
+A cleared run gets its own title and message, so the summary describes what happened. The summary itself is unchanged: same statistics, one action, and the decision does not return.
+
+For the tests: every wait in that file is now sized against wall time on a hosted runner, and the assertions that used to sleep for a fixed wall interval now advance *simulated* time instead. A helper does it in one place so the next path added to the file cannot reintroduce the bug.
+
+Why:
+The escalation gate is on mode rather than progress because "past the duration" and "should get harder" are different questions that happened to have the same answer until clearing existed. Separating them costs one clamp at the call site and makes both modes say what they mean.
+
+Future guardrail:
+`tests/unit/chaos` asserts the plateau in a timed run, the compounding in overtime, that health outgrows anything linear, that damage stays far behind health, and that move speed never moves. A browser path asserts overtime health outruns the limit value and that a cleared run shows its own ending with no decision remaining.
+
+Repeat of a recorded lesson:
+This is the third time a browser path has been written against wall time and failed on CI — REC-041 recorded it, REC-049 recorded it again with two examples, and this file reproduced it exactly. The mitigation this time is a helper rather than a note, because two notes did not work.
+
+Revisit when:
+Endless needs a distinct spawn or composition curve rather than only a stat ramp, or a run can end a fourth way.
+
+### REC-069 — Sprites are optional theme content, and the prompt is the artefact
+
+- Status: Provisional
+- Date: 2026-08-19
+- Affects: V0.4; theme tokens, entity rendering, art pipeline
+- Blocks: None
+
+Context / observation:
+Every visible thing is still a Phaser primitive coloured from a palette token, which REC-004 chose deliberately and which has held up for three milestones. It is now the largest remaining gap between this build and a finished-looking game, and the environment theme's argument — that the mechanics teach something — depends on the player recognising what they are fighting.
+
+Generating a roster with an image tool raises a problem the tool does not solve: consistency across generations separated by weeks. It also raises a second one that is easy to miss — `knight-magic` is a complete production pack that theme validation requires to stay complete, so a naive implementation doubles the art bill for a pack nobody plays.
+
+Decision / solution (provisional until Phase S1 proves it):
+Three commitments, recorded now because they are all much cheaper to design in than to retrofit.
+
+**Sprites are optional theme content.** `ThemeTokens.sprites` is a partial record; a pack without an entry renders the V0.3 primitive. That keeps the second production pack valid at zero art cost and gives every phase a working fallback while the roster is half done.
+
+**A sprite may change nothing a system reads.** Radius, separation radius, mass, and the physics body keep coming from the definition and `bodies` tuning. The crowd tuning measured in REC-052 and REC-067 is against those radii, so a sprite that looks bigger than its hitbox is an art problem to fix in the art.
+
+**The prompt is the artefact, not the image.** A style lock that never changes between sprites, a subject slot that is the only thing that does, and a palette-snap step that quantises generated output onto the declared 4-step ramp. Colour variants are a hue rotation in the pipeline rather than a generation, so they cannot drift. Hand-editing a sprite to fix it is forbidden: the moment a file is lost, an unreproducible roster cannot be extended.
+
+Why:
+Consistency is the entire risk in generated art, and no current tool guarantees it. Everything above is a way of moving the guarantee out of the tool and into a pipeline that can be re-run.
+
+Future guardrail:
+`npm run sprites -- check` validates canvas size, strip width, alpha binarity, tonal step count, and outline closure — every part of the acceptance checklist a machine can decide. The rest is an eye against the baseline sprite, which is why Phase S1 generates exactly one.
+
+One-line trap recorded early:
+`config.ts` sets `antialias: true`. Every sprite will render blurred until that becomes `pixelArt: true`, and it will look like the art is wrong rather than the config.
+
+Revisit when:
+Phase S1 measures frame time with 300 textured sprites, the style lock is tuned after the first batch, or weapon slots change how many weapon sprites the roster needs.
+
+### REC-070 — V0.4 is two parallel streams over one pre-landed seam
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.4 planning; branch strategy, file ownership, reconciliation ids
+- Blocks: None
+
+Context / observation:
+V0.4 holds two bodies of work that share only a version number. `PLAN.md` §V0.4 asks for content growth — weapons, evolution, bosses, curses, unlockables, persistence — and REC-069 plans the sprite roster. They touch almost nothing in common: sprites are presentation, content is simulation.
+
+They also fail differently. Sprite work stalls on generation quality, which is iterative and unpredictable; content work stalls on design decisions. Under one milestone either can block the other, and the request was explicitly to be able to run both at once, potentially with two agents.
+
+Decision / solution:
+Split V0.4 into `V0.4.0` (a shared seam), `V0.4.1` (sprites), and `V0.4.2` (content), with the two numbered streams built concurrently on separate branches. [`build/BUILD_PLAN_V0.4.md`](build/BUILD_PLAN_V0.4.md) is the contract.
+
+Three mechanisms make concurrency safe, and all three are cheap only if they land before either stream starts:
+
+**The seam ships first and ships empty.** V0.4.0 makes every edit both streams would otherwise contend for — the sprite contract, the entity render branch, `pixelArt: true`, the per-theme `sprites.ts` file — and adds no sprites and no content. Every change in it is inert, so it is reviewable as "nothing changed visually" and verified by the existing suite passing unmodified.
+
+**A file-ownership table, enforced by convention.** The one genuinely shared file is `src/game/entities/*.ts`, which is exactly why V0.4.0 writes the sprite branch into every actor up front; after that, adding a sprite is a data edit in a file only V0.4.1 owns. Sprite entries deliberately do *not* live in `tokens.ts` — that file is edited by both streams for unrelated reasons, and it would have been the busiest conflict in the plan.
+
+**Reconciliation gets append anchors and reserved id ranges.** Two branches appending to the end of this file conflict every single time. Each stream now appends inside its own heading, and reserves an id range — V0.4.1 takes REC-071 to REC-089, V0.4.2 takes REC-090 onward. The ranges matter as much as the anchors: two agents both taking "the next number" produce two REC-071s, which git merges silently and is worse than a conflict.
+
+Why:
+Every one of these is far cheaper to design in than to retrofit. Discovering mid-milestone that both branches edit `tokens.ts` on every commit means either rewriting history or serialising the work, which is the thing the split exists to avoid.
+
+Future guardrail:
+The definition of done for V0.4 includes checking that the ownership table was not violated in either branch's history. If it was, the split was drawn in the wrong place, and that is worth knowing before planning the next parallel milestone rather than after.
+
+Revisit when:
+A third stream is wanted, a stream needs to edit outside its block, or the seam turns out to need something V0.4.0 did not anticipate.
+
+## V0.4.1 entries — sprites
+
+<!-- V0.4.1 appends here. Reserved ids: REC-071 to REC-089. -->
+
+## V0.4.2 entries — content
+
+<!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
 
 ## Open questions to reconcile during implementation
 

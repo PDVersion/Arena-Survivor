@@ -31,17 +31,26 @@ export const skills = [
       maxShare: 0.9,
     }],
   },
-  {
+    {
     id: archetypeIds.skill.fracture,
     maxLevel: 5,
-    effects: [{
-      kind: "fracture",
-      chance: 0.15,
-      chancePerLevel: 0.05,
-      childEnemyId: archetypeIds.enemy.fastFragile,
-      childCount: 2,
-      rewardMultiplier: 0,
-    }],
+    effects: [
+      {
+        kind: "fracture",
+        chance: 0.15,
+        chancePerLevel: 0.05,
+        childCount: 2,
+        rewardMultiplier: 0,
+        // Quicker and much smaller than the parent, and worth nothing, so
+        // fracturing is a crowd-control trade rather than an XP engine.
+        fragment: {
+          speedMultiplier: 1.15,
+          healthMultiplier: 0.35,
+          radiusMultiplier: 0.62,
+          damageMultiplier: 0.6,
+        },
+      },
+    ],
   },
   {
     id: archetypeIds.skill.bloodlust,

@@ -19,6 +19,25 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  * comes from speed, harm, radius, and behaviour — the health band is narrow on
  * purpose.
  *
+ * Move speed has come down three times since V0.3 shipped, and this pass also
+ * changed what the fast role is *for*. It used to sit just above the player so
+ * it could not be outrun; it now sits just below, so standing still loses
+ * ground while moving keeps you ahead. It forces movement without overrunning.
+ *
+ *   role            V0.3    now    ring crossing    vs player 200
+ *   Plastic Bottle   140    104          9.2 s      0.52x
+ *   Plastic Bag      240    190          5.0 s      0.95x
+ *   Glass Bottle      90     70         13.7 s      0.35x
+ *   Bagged Waste     110     80         12.0 s      0.40x
+ *
+ * Ring crossing is time to cross the 958-unit spawn ring from a standing start.
+ * The floor that governs it is now shaped by role rather than being one number:
+ * the opening role is the entire roster for the first minute, so its crossing
+ * time is literally how long a run has nothing in it and it is held tightest.
+ * The heavy roles unlock deep into the run, when the field already holds dozens
+ * of enemies, so a long crossing is their identity rather than dead time. See
+ * REC-066.
+ *
  * Rewards, spawn weights, and unlock timing are unchanged from V0.2 here.
  * Phase 3 owns reward scaling and Phase 4 owns the spawn director.
  */
@@ -28,7 +47,7 @@ export const enemies = [
     // material in real litter counts.
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,
-    moveSpeed: 140,
+    moveSpeed: 104,
     contactDamage: 10,
     contactCooldownMs: 1000,
     radius: 14,
@@ -41,7 +60,7 @@ export const enemies = [
     // Plastic bag — ~20 years. Light, wind-blown, and fragile.
     id: archetypeIds.enemy.fastFragile,
     maxHealth: 11,
-    moveSpeed: 240,
+    moveSpeed: 190,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
@@ -56,7 +75,7 @@ export const enemies = [
     // contact harm of any large enemy.
     id: archetypeIds.enemy.slowDurable,
     maxHealth: 96,
-    moveSpeed: 90,
+    moveSpeed: 70,
     contactDamage: 9,
     contactCooldownMs: 1000,
     radius: 22,
@@ -71,7 +90,7 @@ export const enemies = [
     // itself. Its threat is what it releases, not its own durability.
     id: archetypeIds.enemy.deathSpawner,
     maxHealth: 24,
-    moveSpeed: 110,
+    moveSpeed: 80,
     contactDamage: 12,
     contactCooldownMs: 1000,
     radius: 25,

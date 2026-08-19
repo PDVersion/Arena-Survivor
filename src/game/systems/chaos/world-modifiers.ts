@@ -18,6 +18,7 @@ export const DEFAULT_DIFFICULTY_TUNING: DifficultyTuning = Object.freeze({
     enemyHealthAtEnd: 0,
     enemyDamageAtEnd: 0,
     enemyMoveSpeedAtEnd: 0,
+    endless: Object.freeze({ enemyHealthGrowthPerStep: 0, enemyDamageGrowthPerStep: 0 }),
   }),
 });
 
@@ -92,6 +93,13 @@ export function selectWorldModifiers(
   const threatStep = Math.max(0, Math.floor(Math.max(0, progress) * steps));
   // Stepped rather than smooth, and never beyond the end of the run.
   const elapsed = Math.min(1, threatStep / steps);
+  // Steps past the authored duration. Callers clamp `progress` to `1` for any
+  // run that is not endless, so this is zero for a timed or clearing run and
+  // the compounding below never touches them.
+  const overtimeSteps = Math.max(0, threatStep - steps);
+  const endless = time.endless;
+  const endlessHealth = (1 + Math.max(0, endless?.enemyHealthGrowthPerStep ?? 0)) ** overtimeSteps;
+  const endlessDamage = (1 + Math.max(0, endless?.enemyDamageGrowthPerStep ?? 0)) ** overtimeSteps;
   return Object.freeze({
     chaos: state.chaos,
     enemySpawnMultiplier: resolveModifiers(1, [
@@ -101,10 +109,12 @@ export function selectWorldModifiers(
     enemyHealthMultiplier: resolveModifiers(1, [
       { layer: "enemy", sourceId: "chaos.health", multiplicative: 1 + pressure * chaos.enemyHealthPerPoint },
       { layer: "enemy", sourceId: "time.health", multiplicative: 1 + elapsed * time.enemyHealthAtEnd },
+      { layer: "enemy", sourceId: "endless.health", multiplicative: endlessHealth },
     ]).value,
     enemyDamageMultiplier: resolveModifiers(1, [
       { layer: "enemy", sourceId: "chaos.damage", multiplicative: 1 + pressure * chaos.enemyDamagePerPoint },
       { layer: "enemy", sourceId: "time.damage", multiplicative: 1 + elapsed * time.enemyDamageAtEnd },
+      { layer: "enemy", sourceId: "endless.damage", multiplicative: endlessDamage },
     ]).value,
     enemyMoveSpeedMultiplier: resolveModifiers(1, [
       { layer: "enemy", sourceId: "time.speed", multiplicative: 1 + elapsed * time.enemyMoveSpeedAtEnd },

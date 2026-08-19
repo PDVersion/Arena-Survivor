@@ -864,6 +864,45 @@ Where each recommendation from the original review ended up.
 
 ---
 
+# Post-milestone corrections (V0.3.1)
+
+Three things V0.3 shipped were wrong in play and were corrected on
+`claude/v0.3.1` after the milestone merged. They change values and layout, not
+scope, and each is recorded in full in [`../RECONCILIATION.md`](../RECONCILIATION.md):
+
+| Correction | What changed | Entry |
+| --- | --- | --- |
+| Enemies closed too fast to read | Move speed cut ~10% across both packs; the REC-049 envelope gains a ceiling to match its floor | REC-058 |
+| Every shrine was decided in the opening seconds | Shrines arrive on a schedule in run progress, placed around the player when they arrive, with an edge marker so they stay findable | REC-059 |
+| Upgrade card text ran outside its box | Overlay text is measured and then placed; cards size to their content and the panel sizes to the cards | REC-060 |
+| Enemies were still too fast | A second ~10% cut, the end-of-run speed ramp halved, and the ring-crossing floor re-derived rather than treated as fixed | REC-061 |
+| Nothing outlived a run | A session statistics slice, shaped for `SAVE_DATA.md` and merged with the live run on read, feeding an upgrade catalogue and session totals in the Field Guide | REC-062 |
+| The game dropped straight into a run | A title screen between boot and the run; test mode skips it and one path covers the transition | REC-063 |
+| The timer ended the run mid-fight | The limit becomes a decision: continue endlessly, or stop arrivals and clear the field | REC-064 |
+| Build-defining picks arrived too late, and luck never made anything stronger | Appearance rate and roll quality split apart; a six-rung tier ladder scales what each offer gives, and luck biases the roll | REC-065 |
+| The roster was still too fast, and the fast role could not be escaped | A third cut, and the engagement floor reshaped per role; nothing reaches player speed, and the fast role sits just below it | REC-066 |
+| Fragments were the fast role, and a cleared pocket refilled as one blob | A fragment is a smaller, quicker piece of whatever broke; light roles overlap less without standing apart | REC-067 |
+| Endless plateaued, so a surviving build could farm it | Overtime compounds enemy health per step instead of approaching a limit, and a cleared run gets its own ending copy | REC-068 |
+
+Smaller additions came with those. The HUD gained a health bar beside the
+existing level bar — both now sit to the left of their numbers, one row each —
+which needed a theme-owned `health` palette token. The Field Guide gained
+sections, because a catalogue covering the eighteen-entry upgrade pool no longer
+fits one page.
+
+Two questions were answered from the code rather than changed on suspicion.
+Upgrades have never been gated on elapsed time or Pollution; the only filter is
+an upgrade's own per-run cap. Luck did work, but only on which upgrades appeared
+and on the elite and fracture rolls — it never made an upgrade stronger. Both
+findings are recorded in REC-065, which is what the tier split fixes.
+
+The Field Guide remains a **reference surface only** — encounter tracking,
+unlock gating, and the enemy and fact entries described in
+[`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md) remain V0.4 scope, as does any
+persistence for the session statistics slice.
+
+---
+
 # Explicitly deferred beyond V0.3
 
 Weapon and equipment slots; the type/effectiveness system; layered composite enemies; weapon evolution; mini-bosses and bosses; unlockable content pools and meta-progression; browser-local persistence and portable save export/import; endless mode; final art and audio production; and every education-layer feature described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md).
