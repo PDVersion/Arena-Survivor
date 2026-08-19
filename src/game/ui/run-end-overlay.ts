@@ -10,6 +10,12 @@ export class RunEndOverlay {
   private endingState?: RunState;
   private restartCallback?: () => void;
   private restartBounds?: Phaser.Geom.Rectangle;
+  private shownTitle?: string;
+
+  /** The heading currently on screen, so a test can read which ending it is. */
+  get title(): string | undefined {
+    return this.shownTitle;
+  }
 
   constructor(scene: Phaser.Scene, theme: ThemeManifest) {
     this.scene = scene;
@@ -25,8 +31,15 @@ export class RunEndOverlay {
     const { width, height } = this.scene.scale;
     const palette = this.theme.tokens.palette;
     const vocabulary = this.theme.copy.vocabulary;
-    const title = status === "dead" ? vocabulary.deathTitle : vocabulary.completeTitle;
-    const message = status === "dead" ? vocabulary.deathMessage : vocabulary.completeMessage;
+    // A run can now end three ways, and the summary should say which. Clearing
+    // outlives the timer, so "held the site for the full shift" would be wrong.
+    const cleared = status === "complete" && state.mode === "clearing";
+    const title = status === "dead"
+      ? vocabulary.deathTitle
+      : cleared ? vocabulary.clearedTitle : vocabulary.completeTitle;
+    const message = status === "dead"
+      ? vocabulary.deathMessage
+      : cleared ? vocabulary.clearedMessage : vocabulary.completeMessage;
     const summary = selectRunSummaryValues(state, vocabulary, this.theme.copy.content);
     const background = Phaser.Display.Color.HexStringToColor(palette.background).color;
     const floor = Phaser.Display.Color.HexStringToColor(palette.floor).color;
@@ -35,6 +48,7 @@ export class RunEndOverlay {
     const panel = this.scene.add.rectangle(width / 2, height / 2, Math.min(900, width - 32), panelHeight, background, 1)
       .setStrokeStyle(4, accent);
     const top = height / 2 - panelHeight / 2;
+    this.shownTitle = title;
     const heading = this.scene.add.text(width / 2, top + 45, title, {
       color: palette.accent,
       fontFamily: "Georgia, serif",
@@ -127,6 +141,7 @@ export class RunEndOverlay {
     this.endingState = undefined;
     this.restartCallback = undefined;
     this.restartBounds = undefined;
+    this.shownTitle = undefined;
   }
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {

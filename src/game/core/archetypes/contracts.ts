@@ -33,6 +33,9 @@ export interface ThemeVocabulary {
   readonly deathMessage: string;
   readonly completeTitle: string;
   readonly completeMessage: string;
+  /** Shown when a run ends by emptying the field after the timer, not on it. */
+  readonly clearedTitle: string;
+  readonly clearedMessage: string;
   readonly restartAction: string;
   /** Title-screen action, e.g. "Begin Shift". */
   readonly startAction: string;

@@ -21,6 +21,8 @@ export const copy = {
     deathMessage: "The Ember Court claims another challenger.",
     completeTitle: "The Trial Is Complete",
     completeMessage: "You endured the arena's full assault.",
+    clearedTitle: "Arena Cleared",
+    clearedMessage: "You stayed past the hour and put down the last of them.",
     restartAction: "Begin Again",
     startAction: "Begin Run",
     startHint: "Press Enter or Space, or click to begin",

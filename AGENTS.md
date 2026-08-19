@@ -13,6 +13,8 @@ Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, ren
 
 Consult `build/SAVE_DATA.md` before changing profile state, progression, unlocks, statistics, persistent settings, stable saved IDs, persistence adapters, migrations, or save import/export.
 
+Consult `build/SPRITE_STYLE_GUIDE.md` before generating, editing, or accepting any sprite, and `build/SPRITE_PLAN_V0.4.md` before changing how sprites are loaded, packed, or resolved. Track individual sprites in `build/sprites/MANIFEST.md`. Never hand-edit a generated sprite to match a style the prompt does not produce — fix the prompt and regenerate, or the roster stops being reproducible.
+
 Before changing code:
 
 - Confirm the active phase and do not pull later-phase scope forward without recording why.

@@ -32,6 +32,8 @@ export const alternateTheme = defineTheme({
       deathMessage: "Test defeat message",
       completeTitle: "Test victory",
       completeMessage: "Test victory message",
+      clearedTitle: "Test cleared",
+      clearedMessage: "Test cleared message",
       restartAction: "Test restart",
       startAction: "Test start",
       startHint: "Test start hint",
@@ -335,7 +337,7 @@ export const alternateTheme = defineTheme({
         eliteChanceCap: 0.4,
         shrineRewardPerPoint: 0.2,
       },
-      time: { steps: 10, enemyHealthAtEnd: 0.5, enemyDamageAtEnd: 0.2, enemyMoveSpeedAtEnd: 0.1 },
+      time: { steps: 10, enemyHealthAtEnd: 0.5, enemyDamageAtEnd: 0.2, enemyMoveSpeedAtEnd: 0.1, endless: { enemyHealthGrowthPerStep: 0.3, enemyDamageGrowthPerStep: 0.08 } },
     },
   },
 });

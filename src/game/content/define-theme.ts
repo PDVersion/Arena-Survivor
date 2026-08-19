@@ -25,6 +25,8 @@ const vocabularyKeys = [
   "deathMessage",
   "completeTitle",
   "completeMessage",
+  "clearedTitle",
+  "clearedMessage",
   "restartAction",
   "startAction",
   "startHint",
@@ -836,9 +838,22 @@ function validateTuning(
       issues.push("tuning.difficulty.time.steps must be a positive integer");
     }
     for (const [key, value] of Object.entries(time)) {
-      if (key === "steps") continue;
-      if (!Number.isFinite(value) || value < 0) {
+      if (key === "steps" || key === "endless") continue;
+      if (!Number.isFinite(value) || (value as number) < 0) {
         issues.push(`tuning.difficulty.time.${key} cannot be negative`);
+      }
+    }
+    if (!time.endless) {
+      issues.push("tuning.difficulty.time.endless is required");
+    } else {
+      for (const [key, value] of Object.entries(time.endless) as [string, number][]) {
+        if (!Number.isFinite(value) || value < 0) {
+          issues.push(`tuning.difficulty.time.endless.${key} cannot be negative`);
+        }
+      }
+      // Overtime that does not compound is overtime a good build never loses.
+      if (time.endless.enemyHealthGrowthPerStep <= 0) {
+        issues.push("tuning.difficulty.time.endless.enemyHealthGrowthPerStep must exceed zero");
       }
     }
   }

@@ -1432,10 +1432,14 @@ export class RunScene extends Phaser.Scene {
     if (!runState) {
       return selectWorldModifiers(createWorldState(), activeTheme.tuning.difficulty, 0);
     }
+    // Only an endless run is allowed past `1`. A clearing run also outlives the
+    // duration, but it has no arrivals and is meant to be finishable, so
+    // escalating it would punish the player for choosing to tidy up.
+    const progress = runProgress(runState.elapsedMs, runState.durationMs);
     return selectWorldModifiers(
       runState.world,
       activeTheme.tuning.difficulty,
-      runProgress(runState.elapsedMs, runState.durationMs),
+      runState.mode === "endless" ? progress : Math.min(1, progress),
     );
   }
 
@@ -2730,6 +2734,8 @@ export class RunScene extends Phaser.Scene {
       },
       ui: {
         pauseOpen: Boolean(this.pauseMenu?.isOpen),
+        overtimeOpen: Boolean(this.overtimeUi?.isOpen),
+        terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
         settings: { ...getSessionSettings() },
         cardDescriptions: this.runState

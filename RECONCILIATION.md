@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.3**
-- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`**
+- Active phase: **V0.3 complete; V0.3.1 play-test corrections on `claude/v0.3.1`; V0.4 sprite work planned, not started**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1699,6 +1699,78 @@ A fragment of the fast role lands at 218 against a player at 200, so it is the o
 
 Revisit when:
 Fragments need their own role identity rather than inheriting one, the enemy cap changes how much backlog can accumulate, or the crowd budget is re-measured on other hardware.
+
+### REC-068 — Endless compounds, clearing does not, and CI waits on simulated time
+
+- Status: Accepted
+- Date: 2026-08-19
+- Affects: V0.3.1 and later; endless mode, terminal copy, browser test design
+- Blocks: None
+
+Context / observation:
+Three things from one pass, all downstream of REC-064's end-of-timer decision.
+
+The timed escalation curve plateaus at `t = 1` by design — `elapsed` is clamped — which is right for a run with a finish line and wrong for one without. A build that survived the timer only gets stronger from there, so endless had no ending: it was a farm.
+
+The terminal summary said "You held the site for the full shift" after a run that outlived the shift and was ended by clearing the field. Two of the three ways a run can now finish were being described by copy written for the third.
+
+And all three `tests/e2e/overtime` paths failed on CI while passing locally. The cause is the one REC-041 and REC-049 both already record: they waited a fixed 20 s of wall time for 2.5 s of *simulated* time, on a runner that advances simulation at roughly a fifth of real time. The whole suite took 18 minutes for 57 paths, which is the same fact stated another way.
+
+Decision / solution:
+Overtime compounds rather than approaching a limit. `TimeTuning` gains an `endless` block whose coefficients apply per escalation step beyond the authored duration: health at 1.3x per 30-second step, damage at a far gentler 1.08x. Ten steps of overtime is 13.8x health on top of whatever the run had already reached. Compounding is the whole point — player damage scales multiplicatively across several axes, so anything linear is absorbed by a good build inside a minute.
+
+Health carries the ending and damage barely moves, deliberately. Health alone would make overtime an attrition grind; a little damage growth makes it decisive. Move speed is untouched, so overtime cannot quietly reintroduce enemies that outrun the player and undo REC-066.
+
+The ramp is gated on the mode, not on progress. A clearing run also outlives the duration, but it has no arrivals and is meant to be finishable — escalating it would punish the player for choosing to tidy up. The scene clamps `progress` to `1` for every mode except `endless`, so the selector needs no knowledge of modes.
+
+A cleared run gets its own title and message, so the summary describes what happened. The summary itself is unchanged: same statistics, one action, and the decision does not return.
+
+For the tests: every wait in that file is now sized against wall time on a hosted runner, and the assertions that used to sleep for a fixed wall interval now advance *simulated* time instead. A helper does it in one place so the next path added to the file cannot reintroduce the bug.
+
+Why:
+The escalation gate is on mode rather than progress because "past the duration" and "should get harder" are different questions that happened to have the same answer until clearing existed. Separating them costs one clamp at the call site and makes both modes say what they mean.
+
+Future guardrail:
+`tests/unit/chaos` asserts the plateau in a timed run, the compounding in overtime, that health outgrows anything linear, that damage stays far behind health, and that move speed never moves. A browser path asserts overtime health outruns the limit value and that a cleared run shows its own ending with no decision remaining.
+
+Repeat of a recorded lesson:
+This is the third time a browser path has been written against wall time and failed on CI — REC-041 recorded it, REC-049 recorded it again with two examples, and this file reproduced it exactly. The mitigation this time is a helper rather than a note, because two notes did not work.
+
+Revisit when:
+Endless needs a distinct spawn or composition curve rather than only a stat ramp, or a run can end a fourth way.
+
+### REC-069 — Sprites are optional theme content, and the prompt is the artefact
+
+- Status: Provisional
+- Date: 2026-08-19
+- Affects: V0.4; theme tokens, entity rendering, art pipeline
+- Blocks: None
+
+Context / observation:
+Every visible thing is still a Phaser primitive coloured from a palette token, which REC-004 chose deliberately and which has held up for three milestones. It is now the largest remaining gap between this build and a finished-looking game, and the environment theme's argument — that the mechanics teach something — depends on the player recognising what they are fighting.
+
+Generating a roster with an image tool raises a problem the tool does not solve: consistency across generations separated by weeks. It also raises a second one that is easy to miss — `knight-magic` is a complete production pack that theme validation requires to stay complete, so a naive implementation doubles the art bill for a pack nobody plays.
+
+Decision / solution (provisional until Phase S1 proves it):
+Three commitments, recorded now because they are all much cheaper to design in than to retrofit.
+
+**Sprites are optional theme content.** `ThemeTokens.sprites` is a partial record; a pack without an entry renders the V0.3 primitive. That keeps the second production pack valid at zero art cost and gives every phase a working fallback while the roster is half done.
+
+**A sprite may change nothing a system reads.** Radius, separation radius, mass, and the physics body keep coming from the definition and `bodies` tuning. The crowd tuning measured in REC-052 and REC-067 is against those radii, so a sprite that looks bigger than its hitbox is an art problem to fix in the art.
+
+**The prompt is the artefact, not the image.** A style lock that never changes between sprites, a subject slot that is the only thing that does, and a palette-snap step that quantises generated output onto the declared 4-step ramp. Colour variants are a hue rotation in the pipeline rather than a generation, so they cannot drift. Hand-editing a sprite to fix it is forbidden: the moment a file is lost, an unreproducible roster cannot be extended.
+
+Why:
+Consistency is the entire risk in generated art, and no current tool guarantees it. Everything above is a way of moving the guarantee out of the tool and into a pipeline that can be re-run.
+
+Future guardrail:
+`npm run sprites -- check` validates canvas size, strip width, alpha binarity, tonal step count, and outline closure — every part of the acceptance checklist a machine can decide. The rest is an eye against the baseline sprite, which is why Phase S1 generates exactly one.
+
+One-line trap recorded early:
+`config.ts` sets `antialias: true`. Every sprite will render blurred until that becomes `pixelArt: true`, and it will look like the art is wrong rather than the config.
+
+Revisit when:
+Phase S1 measures frame time with 300 textured sprites, the style lock is tuned after the first batch, or weapon slots change how many weapon sprites the roster needs.
 
 ## Open questions to reconcile during implementation
 

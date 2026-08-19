@@ -7,6 +7,28 @@ function snapshot(page: Page) {
   return page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
 }
 
+/**
+ * Press a key until the UI reports the state it should move to.
+ *
+ * A single press is not reliable under a loaded runner: Phaser reads keys on its
+ * own frame, and a frame that never ran swallows the press. Pressing until the
+ * state actually changes tests the same behaviour without depending on when the
+ * next frame happens to land.
+ */
+async function pressUntil(
+  page: Page,
+  key: string,
+  reached: (snap: Awaited<ReturnType<typeof snapshot>>) => boolean,
+  presses = 8,
+): Promise<void> {
+  for (let press = 0; press < presses; press += 1) {
+    if (reached(await snapshot(page))) return;
+    await page.keyboard.press(key);
+    await page.waitForTimeout(120);
+  }
+  expect(reached(await snapshot(page))).toBe(true);
+}
+
 test("shrines arrive across the run rather than all at the start", async ({ page }) => {
   test.setTimeout(60_000);
   // A short run compresses the whole arrival schedule into the path's budget
@@ -86,12 +108,7 @@ test("the codex states what every shrine does", async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
 
   // The tab is reachable by keyboard alone, like every other pause tab.
-  for (let press = 0; press < 6; press += 1) {
-    const tab = (await snapshot(page))?.ui?.pauseTab;
-    if (tab === "codex") break;
-    await page.keyboard.press("Tab");
-  }
-  expect((await snapshot(page))?.ui?.pauseTab).toBe("codex");
+  await pressUntil(page, "Tab", (snap) => snap?.ui?.pauseTab === "codex");
 
   const entries = (await snapshot(page))?.ui?.codexEntries ?? [];
   expect(entries).toHaveLength(activeTheme.shrines.length);
@@ -107,38 +124,44 @@ test("the codex states what every shrine does", async ({ page }) => {
 });
 
 test("the Field Guide catalogues the upgrade pool and the session so far", async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(150_000);
   // `closeLoad` puts enemies beside the player so this path spends its budget on
   // the Field Guide rather than on waiting for the first level-up. See REC-049.
   await page.goto("/?noContact&closeLoad=1&loadHarness=60&critChance=0.6&pierce=4&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
 
-  // Take one upgrade, so the catalogue has something real to count.
+  // Take one upgrade, so the catalogue has something real to count. The budget
+  // is wall time against a runner that simulates at roughly a fifth of it, not
+  // against how long the level-up takes locally: this needed two CI retries at
+  // 40 s. See REC-041.
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
-      timeout: 40_000,
+      timeout: 90_000,
     })
     .toBe("level_up");
   const takenId = (await snapshot(page))?.progression?.choiceIds?.[0];
-  await page.keyboard.press("Digit1");
+
+  // Drain every queued choice rather than assuming one press returns the run to
+  // `playing`: at this XP income the next level-up is usually already waiting,
+  // and pausing needs a run that is actually running.
+  for (let press = 0; press < 12; press += 1) {
+    if ((await snapshot(page))?.run?.status !== "level_up") break;
+    await page.keyboard.press("Digit1");
+    await page.waitForTimeout(150);
+  }
   await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
+      timeout: 30_000,
+    })
     .toBe("playing");
 
   await page.keyboard.press("Escape");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
-  for (let press = 0; press < 6; press += 1) {
-    if ((await snapshot(page))?.ui?.pauseTab === "codex") break;
-    await page.keyboard.press("Tab");
-  }
-  expect((await snapshot(page))?.ui?.pauseTab).toBe("codex");
+  await pressUntil(page, "Tab", (snap) => snap?.ui?.pauseTab === "codex");
   expect((await snapshot(page))?.ui?.codexSection).toBe("shrines");
 
   // Down moves within the Field Guide; Tab and left/right still move tabs.
-  await page.keyboard.press("ArrowDown");
-  await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.codexSection))
-    .toBe("equipment");
+  await pressUntil(page, "ArrowDown", (snap) => snap?.ui?.codexSection === "equipment");
   expect((await snapshot(page))?.ui?.pauseTab).toBe("codex");
 
   const upgrades = (await snapshot(page))?.ui?.codexUpgrades ?? [];
@@ -153,10 +176,7 @@ test("the Field Guide catalogues the upgrade pool and the session so far", async
   expect(taken?.sessionTotal).toBeGreaterThan(0);
   expect(taken?.bestInRun).toBeGreaterThan(0);
 
-  await page.keyboard.press("ArrowDown");
-  await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.codexSection))
-    .toBe("session");
+  await pressUntil(page, "ArrowDown", (snap) => snap?.ui?.codexSection === "session");
   const session = (await snapshot(page))?.ui?.codexSession ?? [];
   expect(session.length).toBeGreaterThan(0);
   for (const line of session) {

@@ -114,6 +114,10 @@ export interface ArenaTestSnapshot {
   }>;
   readonly ui?: Readonly<{
     pauseOpen: boolean;
+    /** Whether the end-of-timer decision is on screen. */
+    overtimeOpen: boolean;
+    /** Heading the terminal summary is showing, or null when it is not up. */
+    terminalTitle: string | null;
     pauseTab: string | null;
     settings: Readonly<Record<string, boolean>>;
     /** What each offered card claims, derived from the real upgrade application. */

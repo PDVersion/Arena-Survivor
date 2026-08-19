@@ -6,7 +6,7 @@ A browser-first arena survival game built around player-controlled swarm escalat
 
 V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
-**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-067).
+**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-069).
 
 V0.3 in full — a rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
 
@@ -17,6 +17,9 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
 - [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
 - [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
+- [Sprite plan (V0.4)](build/SPRITE_PLAN_V0.4.md) — replacing primitives with sprites: inventory, pipeline, phases, and risks.
+- [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) — the art bible and the reusable image-generation prompt.
+- [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, status, and the generation log.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
@@ -53,7 +56,7 @@ Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Cha
 
 Every upgrade offer rolls a tier — common, uncommon, rare, epic, legendary, or unique — which colours the card and multiplies what it gives, from 1× at common through 2× at legendary to 2.5× at unique. A tier is rolled per card, so the same upgrade can come up white or yellow. `Luck` biases that roll upward; it does not bias common downward, so ordinary cards always remain in the mix. Integer gains like pierce and extra charges round, so epic and above are worth `+2`. World-pressure cards never roll: scaling one half of a stated bargain would change the deal.
 
-At five minutes the run does not simply stop. It asks whether to work on with no end time, or to stop new arrivals and finish clearing what is already on the field.
+At five minutes the run does not simply stop. It asks whether to work on with no end time, or to stop new arrivals and finish clearing what is already on the field. Clearing ends on an empty arena with the usual shift report; working on removes the limit, and enemy health then compounds by about 30% every thirty seconds, so a surviving build gets a couple of good minutes rather than an endless farm.
 
 The Field Guide tab has three sections, switched with the up and down arrows or by clicking: what each shrine costs and gives before you walk to it; the whole upgrade pool with how many you have taken this session, the most you have taken in one run, and the per-run cap; and the session's totals, including total damage and your best run. Session figures survive a restart but not a page reload — persistence lands in V0.4.
 

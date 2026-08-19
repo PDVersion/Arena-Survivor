@@ -124,6 +124,38 @@ export interface TimeTuning {
   readonly enemyHealthAtEnd: number;
   readonly enemyDamageAtEnd: number;
   readonly enemyMoveSpeedAtEnd: number;
+  readonly endless: EndlessTuning;
+}
+
+/**
+ * Escalation past the authored duration.
+ *
+ * The timed curve plateaus at its end, which is right for a run with a finish
+ * line and wrong for one without: a build that survives the timer only gets
+ * stronger, so a flat ceiling turns endless into farming. These coefficients
+ * compound per step instead of approaching a limit, so the run always ends.
+ *
+ * Applied only in `endless`. A clearing run also runs past the duration, but it
+ * has no new arrivals and is meant to be finishable — escalating it would
+ * punish the player for choosing to tidy up.
+ */
+export interface EndlessTuning {
+  /**
+   * Fractional health growth per escalation step, compounded.
+   *
+   * Compounding is the point. Player damage scales multiplicatively across
+   * several axes, so anything that grows linearly gets outpaced by a good build
+   * within a minute or two.
+   */
+  readonly enemyHealthGrowthPerStep: number;
+  /**
+   * Damage growth per step, deliberately far gentler.
+   *
+   * Health alone would make overtime a grind that the player slowly loses on
+   * attrition; a little damage growth makes the ending decisive instead. Kept
+   * small so the ramp never one-shots a build that was surviving comfortably.
+   */
+  readonly enemyDamageGrowthPerStep: number;
 }
 
 export interface DifficultyTuning {

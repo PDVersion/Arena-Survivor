@@ -882,6 +882,7 @@ scope, and each is recorded in full in [`../RECONCILIATION.md`](../RECONCILIATIO
 | Build-defining picks arrived too late, and luck never made anything stronger | Appearance rate and roll quality split apart; a six-rung tier ladder scales what each offer gives, and luck biases the roll | REC-065 |
 | The roster was still too fast, and the fast role could not be escaped | A third cut, and the engagement floor reshaped per role; nothing reaches player speed, and the fast role sits just below it | REC-066 |
 | Fragments were the fast role, and a cleared pocket refilled as one blob | A fragment is a smaller, quicker piece of whatever broke; light roles overlap less without standing apart | REC-067 |
+| Endless plateaued, so a surviving build could farm it | Overtime compounds enemy health per step instead of approaching a limit, and a cleared run gets its own ending copy | REC-068 |
 
 Smaller additions came with those. The HUD gained a health bar beside the
 existing level bar — both now sit to the left of their numbers, one row each —

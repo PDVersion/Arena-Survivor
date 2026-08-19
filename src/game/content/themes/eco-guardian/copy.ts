@@ -21,6 +21,8 @@ export const copy = {
     deathMessage: "The waste outpaced the response effort.",
     completeTitle: "Shift Complete",
     completeMessage: "You held the site for the full shift.",
+    clearedTitle: "Site Cleared",
+    clearedMessage: "You stayed past the shift and cleared every last piece of it.",
     restartAction: "New Shift",
     startAction: "Begin Shift",
     startHint: "Press Enter or Space, or click to begin",
