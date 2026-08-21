@@ -1888,6 +1888,30 @@ Phase S1 measures the first sprite against the crowd, or the primitive fallback 
 
 <!-- V0.4.1 appends here. Reserved ids: REC-074 to REC-089. REC-070's range was amended by REC-071. -->
 
+### REC-074 — Preserve generation evidence when the tool exposes no seed
+
+- Status: Accepted
+- Date: 2026-08-21
+- Affects: V0.4.1; sprite generation, manifest, deterministic build pipeline
+- Blocks: None
+
+Context / observation:
+The built-in image generator returned the Plastic Bottle baseline as a transparent 1402×1122 RGBA image with four separated subjects, rather than as the requested native 128×32 strip, and did not expose a generation seed. Inventing a seed or treating the transformed build as the original would make the roster less reproducible, not more.
+
+Decision / solution:
+The untouched generator output is preserved as `build/sprites/raw/enemy_swarm_basic.a1.png`, the manifest records `n/a (built-in)` for its seed, and the exact versioned prompt remains the authored reproduction input. The V0.4.1 build performs the mechanical conversion: detect the four horizontally separated alpha subjects, apply one common scale, nearest-neighbour downsample into 32×32 slots, force binary alpha, snap colours to the declared blue and neutral four-step material ramps, and close the outer silhouette in the darkest blue.
+
+The result remains `review`, not `accepted`, until it has been judged in motion. The first live browser check loaded it at the existing enemy diameter with nearest filtering, kept every other actor on its primitive fallback, and produced no browser warnings or errors.
+
+Why:
+Reproducibility means preserving what the generator actually produced plus every deterministic transformation after it. A fabricated seed cannot recreate the source; the raw attempt and prompt can be inspected, rejected, or rebuilt without hiding any manual art correction.
+
+Future guardrail:
+Never overwrite a raw attempt, and never record a seed the tool did not return. Normalization may make mechanical pixel-format changes only; if the subject, silhouette, pose, or style is wrong, change the prompt and generate a new numbered attempt.
+
+Revisit when:
+The Plastic Bottle style is accepted or remade, or a later generator exposes stable seed metadata.
+
 ## V0.4.2 entries — content
 
 <!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->

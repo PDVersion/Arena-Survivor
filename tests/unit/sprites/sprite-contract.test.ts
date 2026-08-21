@@ -36,10 +36,11 @@ describe("sprite contract", () => {
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
     ["alternate", alternateTheme],
-  ])("keeps the %s manifest valid with no sprites declared", (_name, theme) => {
+  ])("keeps the %s manifest valid with optional sprites", (_name, theme) => {
     // The property the whole split depends on: a pack without art is complete,
     // not incomplete. It is what lets knight-magic ship with no roster at all.
-    // The production packs declare an empty map; the fixture omits the key.
+    // Eco Guardian declares the review baseline, Knight Magic stays empty, and
+    // the fixture omits the key. All three are supported pack states.
     expect(validateTheme(theme)).toEqual([]);
   });
 

@@ -1,4 +1,5 @@
 import type { ThemeSprites } from "../../../core/archetypes/contracts";
+import { archetypeIds } from "../../../core/archetypes/ids";
 
 /**
  * Sprite sheets for this pack.
@@ -9,6 +10,15 @@ import type { ThemeSprites } from "../../../core/archetypes/contracts";
  * one file and removes what would otherwise be the busiest merge conflict in
  * V0.4 — see `build/BUILD_PLAN_V0.4.md` §2.
  *
- * Empty is a complete state: every actor falls back to its primitive.
+ * Entries are optional: every actor without one falls back to its primitive.
  */
-export const sprites = {} as const satisfies ThemeSprites;
+export const sprites = {
+  [archetypeIds.enemy.swarmBasic]: {
+    key: "eco_guardian.enemy.swarm_basic",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 32,
+    frameHeight: 32,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
+} as const satisfies ThemeSprites;

@@ -6,11 +6,9 @@
  *   npm run sprites -- build               # palette-snap, variants, atlas
  *   npm run sprites -- status --theme knight-magic
  *
- * This is the V0.4.0 skeleton: the commands exist, resolve the manifest, and
- * report honestly, but the roster is empty so all three have nothing to do. The
- * pipeline behind `check` and `build` — palette snapping, alpha cleaning, hue
- * variants, and atlas packing — is V0.4.1's, and is specified in
- * `build/SPRITE_PLAN_V0.4.1.md` §2 and §6.
+ * V0.4.1 grows this roster one reviewed sheet at a time. `check` validates the
+ * deterministic built output; `build` normalizes the preserved raw generation
+ * into the in-game sheet and single-sheet atlas used for review.
  *
  * Themes come from `theme-registry`, not `active-theme`: the roster is built
  * per pack, and a pack the game does not currently render still has sheets to
@@ -18,6 +16,11 @@
  */
 import { themeRegistry, type ThemeRegistryEntry } from "../src/game/content/theme-registry";
 import { spriteEntries } from "../src/game/systems/sprites/resolve-sprite";
+import {
+  buildSpriteSheet,
+  checkSpriteSheet,
+  type SpriteBuildDefinition,
+} from "../src/game/systems/sprites/sprite-pipeline";
 
 const commands = ["status", "check", "build"] as const;
 type Command = (typeof commands)[number];
@@ -26,6 +29,24 @@ interface Options {
   readonly command: Command;
   readonly theme: string | undefined;
 }
+
+interface ProjectSprite extends SpriteBuildDefinition {
+  readonly theme: string;
+}
+
+const projectSprites: readonly ProjectSprite[] = [
+  {
+    theme: "eco-guardian",
+    contentId: "enemy.swarm_basic",
+    source: "build/sprites/raw/enemy_swarm_basic.a1.png",
+    output: "public/sprites/eco-guardian/enemy_swarm_basic.png",
+    atlasOutput: "public/sprites/eco-guardian/atlas.png",
+    atlasJsonOutput: "public/sprites/eco-guardian/atlas.json",
+    frameWidth: 32,
+    frameHeight: 32,
+    frames: 4,
+  },
+];
 
 function parseArgs(argv: readonly string[]): Options {
   let command: Command = "status";
@@ -75,42 +96,39 @@ function status(entries: readonly ThemeRegistryEntry[]): void {
   }
 }
 
-function declaredCount(entries: readonly ThemeRegistryEntry[]): number {
-  return entries.reduce((total, entry) => total + spriteEntries(entry.theme.tokens).length, 0);
+function selectedProjectSprites(entries: readonly ThemeRegistryEntry[]): readonly ProjectSprite[] {
+  const selected = new Set(entries.map((entry) => entry.key));
+  return projectSprites.filter((entry) => selected.has(entry.theme));
 }
 
-function check(entries: readonly ThemeRegistryEntry[]): void {
-  const total = declaredCount(entries);
-  if (total === 0) {
+async function check(entries: readonly ThemeRegistryEntry[]): Promise<void> {
+  const sprites = selectedProjectSprites(entries);
+  if (sprites.length === 0) {
     process.stdout.write("check: no sheets declared, nothing to verify\n");
     return;
   }
-  // Canvas size, strip width, alpha binarity, tonal step count, and outline
-  // closure all need the file rather than the manifest, which is why they are
-  // not in `define-theme`'s validation.
-  throw new Error(
-    `check: ${total} sheet(s) declared but sheet verification is not implemented yet (V0.4.1 Phase S1)`,
-  );
+  const issues = (await Promise.all(sprites.map(checkSpriteSheet))).flat();
+  if (issues.length > 0) throw new Error(`check failed:\n${issues.map((issue) => `  - ${issue}`).join("\n")}`);
+  process.stdout.write(`check: ${sprites.length} sheet(s) valid\n`);
 }
 
-function build(entries: readonly ThemeRegistryEntry[]): void {
-  const total = declaredCount(entries);
-  if (total === 0) {
+async function build(entries: readonly ThemeRegistryEntry[]): Promise<void> {
+  const sprites = selectedProjectSprites(entries);
+  if (sprites.length === 0) {
     process.stdout.write("build: no sheets declared, nothing to build\n");
     return;
   }
-  throw new Error(
-    `build: ${total} sheet(s) declared but the pipeline is not implemented yet (V0.4.1 Phase S1)`,
-  );
+  for (const sprite of sprites) await buildSpriteSheet(sprite);
+  process.stdout.write(`build: wrote ${sprites.length} sheet(s)\n`);
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   const entries = selectThemes(options.theme);
   if (options.command === "status") status(entries);
-  if (options.command === "check") check(entries);
-  if (options.command === "build") build(entries);
+  if (options.command === "check") await check(entries);
+  if (options.command === "build") await build(entries);
   process.stdout.write("\n");
 }
 
-main();
+await main();

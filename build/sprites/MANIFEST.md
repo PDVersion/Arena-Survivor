@@ -88,8 +88,9 @@ roster-wide problem (style guide §8).
 session reads first.
 
 ```
-todo        ████████████████████  19
+todo        ███████████████████░  18
 generating  ░░░░░░░░░░░░░░░░░░░░   0
+review      █░░░░░░░░░░░░░░░░░░░  1
 accepted    ░░░░░░░░░░░░░░░░░░░░   0
 ```
 
@@ -97,7 +98,7 @@ accepted    ░░░░░░░░░░░░░░░░░░░░   0
 
 | # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Claimed by | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | — | 0 | — | Codex | `generating` |
+| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `review` |
 | 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | — | `todo` |
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
@@ -297,4 +298,4 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 
 | Date | ID | Attempt | Style ver | Seed | Outcome | Note |
 | --- | --- | --- | --- | --- | --- | --- |
-| — | — | — | — | — | — | *No generations yet — Phase S1 has not started* |
+| 2026-08-19 | `enemy.swarm_basic` | 1 | 1 | n/a (built-in) | review | First Plastic Bottle baseline; untouched 1402×1122 RGBA tool output built into an in-game review sheet on 2026-08-21. |
