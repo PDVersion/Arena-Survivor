@@ -90,7 +90,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     if (!elite) this.setDepth(20);
     // The sprite is sized from the radius the simulation already resolved, so
     // separation, the body, and the crowd tuning are untouched by art.
-    this.view = createSpriteView(this, tokens, definition.id, { diameter: radius * 2 });
+    this.view = createSpriteView(this, tokens, definition.id, {
+      diameter: radius * 2,
+      animateMovement: true,
+    });
   }
 
   /** Stable identity for the shared spatial index and targeting. */
@@ -154,5 +157,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       }
     }
     return result;
+  }
+
+  /** Keep the death frame visible without keeping this gameplay actor alive. */
+  releaseDeathView(): void {
+    this.view?.releaseDeath();
   }
 }

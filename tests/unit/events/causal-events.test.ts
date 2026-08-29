@@ -34,6 +34,27 @@ describe("causal event queue", () => {
     expect(queue.process(1, () => true)).toBe(1);
   });
 
+  it("processes an effect behind retained spawn work without reordering either lane", () => {
+    const queue = new CausalEventQueue();
+    for (const [eventId, kind] of [
+      ["spawn-1", "spawn.requested"],
+      ["effect-1", "effect.explosion"],
+      ["spawn-2", "spawn.requested"],
+      ["effect-2", "effect.explosion"],
+    ] as const) {
+      queue.enqueue({ eventId, kind, provenance: { sourceCategory: "skill" }, payload: {} });
+    }
+
+    const effects: string[] = [];
+    expect(queue.processMatching(2, (event) => event.kind !== "spawn.requested", (event) => effects.push(event.eventId))).toBe(2);
+    expect(effects).toEqual(["effect-1", "effect-2"]);
+    expect(queue.snapshot()).toMatchObject({ backlog: 2, processed: 2 });
+
+    const spawns: string[] = [];
+    queue.processMatching(2, (event) => event.kind === "spawn.requested", (event) => spawns.push(event.eventId));
+    expect(spawns).toEqual(["spawn-1", "spawn-2"]);
+  });
+
   it("processes a deterministic 300-event representative load without loss", () => {
     const result = runHeadlessLoadHarness(300, 17);
     expect(result).toMatchObject({ requested: 300, processed: 300, backlogHighWater: 300 });

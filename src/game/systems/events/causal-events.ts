@@ -72,6 +72,41 @@ export class CausalEventQueue {
     return processedNow;
   }
 
+  /**
+   * Process one causal lane while retaining every other lane in FIFO order.
+   *
+   * This lets capacity-bound spawn requests wait without becoming a global
+   * head-of-line lock for effects. Ordering remains deterministic within each
+   * lane, and events enqueued by the consumer stay behind all older retained
+   * work.
+   */
+  processMatching(
+    maximum: number,
+    matches: (event: CausalEvent) => boolean,
+    consumer: (event: CausalEvent) => unknown,
+  ): number {
+    const budget = Math.max(0, Math.floor(maximum));
+    if (budget === 0 || this.pending.length === 0) return 0;
+
+    const scanning = this.pending;
+    // New causal work produced by the consumer is appended here and is never
+    // reconsidered in the same pass.
+    this.pending = [];
+    const retained: CausalEvent[] = [];
+    let processedNow = 0;
+    for (const event of scanning) {
+      if (processedNow >= budget || !matches(event) || consumer(event) === false) {
+        retained.push(event);
+        continue;
+      }
+      this.processed += 1;
+      processedNow += 1;
+    }
+    this.pending = retained.concat(this.pending);
+    this.backlogHighWater = Math.max(this.backlogHighWater, this.pending.length);
+    return processedNow;
+  }
+
   claimLethal(entityId: RuntimeEntityId): boolean {
     if (this.lethalClaims.has(entityId)) return false;
     this.lethalClaims.add(entityId);

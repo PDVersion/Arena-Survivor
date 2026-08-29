@@ -1,6 +1,11 @@
 import Phaser from "phaser";
 import type { SpriteDefinition, SpriteState, ThemeTokens } from "../../core/archetypes/contracts";
 import type { ContentId } from "../../core/archetypes/ids";
+import {
+  resolveAnimatedSpriteState,
+  SPRITE_DEATH_FRAME_MS,
+  type SpriteAnimationState,
+} from "./sprite-animation";
 import { resolveSprite } from "./resolve-sprite";
 
 /**
@@ -41,15 +46,22 @@ export interface SpriteViewOptions {
   readonly diameter: number;
   /** Frame shown before any state is played. Defaults to `idle`. */
   readonly initialState?: SpriteState;
+  /** Alternate idle/move while the actor lives. Presentation only. */
+  readonly animateMovement?: boolean;
 }
 
 export class SpriteView {
   readonly image: Phaser.GameObjects.Sprite;
   private readonly source: SpriteViewSource;
+  private readonly definition: SpriteDefinition;
   private readonly frameWidth: number;
   private readonly frameHeight: number;
+  private readonly sourceDestroyHandler: () => void;
+  private readonly animation: { moving: boolean; phaseMs: number; transient?: SpriteAnimationState["transient"] };
   private baseScaleX: number;
   private baseScaleY: number;
+  private renderedState: SpriteState;
+  private detached = false;
 
   constructor(
     source: SpriteViewSource,
@@ -59,8 +71,16 @@ export class SpriteView {
     const scene = source.scene;
     const state = options.initialState ?? "idle";
     this.source = source;
+    this.definition = definition;
     this.frameWidth = definition.frameWidth;
     this.frameHeight = definition.frameHeight;
+    this.renderedState = state;
+    // Stable from the spawn position, but varied enough that a crowd does not
+    // tumble in one synchronized wall.
+    this.animation = {
+      moving: options.animateMovement ?? false,
+      phaseMs: Math.abs(Math.round(source.x * 31 + source.y * 17)) % 360,
+    };
     this.baseScaleX = options.diameter / definition.frameWidth;
     this.baseScaleY = options.diameter / definition.frameHeight;
     this.image = scene.add.sprite(source.x, source.y, definition.key, definition.states[state]);
@@ -68,7 +88,8 @@ export class SpriteView {
     source.setVisible(false);
     this.sync();
     register(scene, this);
-    source.once(Phaser.GameObjects.Events.DESTROY, () => this.destroy());
+    this.sourceDestroyHandler = () => this.destroy();
+    source.once(Phaser.GameObjects.Events.DESTROY, this.sourceDestroyHandler);
   }
 
   /**
@@ -85,8 +106,10 @@ export class SpriteView {
   }
 
   /** Show a named frame. Callers name a state; frame indices stay in the data. */
-  setState(definition: SpriteDefinition, state: SpriteState): void {
-    if (this.image.active) this.image.setFrame(definition.states[state]);
+  setState(state: SpriteState): void {
+    if (!this.image.active || this.renderedState === state) return;
+    this.renderedState = state;
+    this.image.setFrame(this.definition.states[state]);
   }
 
   /**
@@ -97,6 +120,11 @@ export class SpriteView {
    */
   flash(colour: number, durationMs: number): void {
     if (!this.image.active) return;
+    this.animation.transient = {
+      state: "hit",
+      untilMs: this.image.scene.time.now + durationMs,
+    };
+    this.setState("hit");
     this.image.setTintFill(colour);
     this.image.scene.time.delayedCall(durationMs, () => {
       if (this.image.active) this.image.clearTint();
@@ -105,17 +133,37 @@ export class SpriteView {
 
   /** Copy the actor's transform. Called once per frame while the view lives. */
   sync(): void {
+    if (this.detached || !this.image.active) return;
     const source = this.source;
     this.image.setPosition(source.x, source.y);
     this.image.setRotation(source.rotation);
     this.image.setScale(this.baseScaleX * source.scaleX, this.baseScaleY * source.scaleY);
     this.image.setAlpha(source.alpha);
     this.image.setDepth(source.depth);
+    this.setState(resolveAnimatedSpriteState(this.image.scene.time.now, this.animation));
+  }
+
+  /**
+   * Leave the broken frame behind briefly while gameplay destroys the actor.
+   * The view is unregistered first, so it no longer follows or occupies any
+   * simulation entity/capacity; Phaser owns only this short visual remnant.
+   */
+  releaseDeath(): void {
+    if (this.detached || !this.image.active) return;
+    this.sync();
+    this.detached = true;
+    this.source.off(Phaser.GameObjects.Events.DESTROY, this.sourceDestroyHandler);
+    unregister(this.image.scene, this);
+    this.setState("death");
+    this.image.scene.time.delayedCall(SPRITE_DEATH_FRAME_MS, () => {
+      if (this.image.active) this.image.destroy();
+    });
   }
 
   destroy(): void {
+    this.source.off(Phaser.GameObjects.Events.DESTROY, this.sourceDestroyHandler);
     unregister(this.image.scene, this);
-    this.image.destroy();
+    if (this.image.active) this.image.destroy();
   }
 }
 

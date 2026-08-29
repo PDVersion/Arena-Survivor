@@ -909,13 +909,14 @@ export class RunScene extends Phaser.Scene {
 
   private processCausalEvents(): void {
     let capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
-    this.eventQueue.process(24, (event) => {
+    let remaining = 24;
+    remaining -= this.eventQueue.processMatching(remaining, (event) => event.kind !== "spawn.requested", (event) => {
       if (event.kind === "effect.explosion") {
         this.processExplosionEvent(event.payload as unknown as ExplosionEventPayload, event.eventId);
-        return;
       }
-      if (event.kind !== "spawn.requested") return;
-      if (capacity <= 0) return false;
+    });
+    if (capacity <= 0 || remaining <= 0) return;
+    this.eventQueue.processMatching(remaining, (event) => event.kind === "spawn.requested", (event) => {
       const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean; movement?: WaveMovement };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
@@ -1874,6 +1875,7 @@ export class RunScene extends Phaser.Scene {
     } else {
       this.ambientXpDropped += xpReward;
     }
+    enemy.releaseDeathView();
     enemy.destroy();
   }
 

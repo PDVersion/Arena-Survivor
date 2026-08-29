@@ -1912,9 +1912,78 @@ Never overwrite a raw attempt, and never record a seed the tool did not return. 
 Revisit when:
 The Plastic Bottle style is accepted or remade, or a later generator exposes stable seed metadata.
 
+### REC-075 — Sprite states need a presentation lifecycle, not actor lifetime
+
+- Status: Accepted
+- Date: 2026-08-29
+- Affects: V0.4.1; sprite views, enemy presentation, four-frame sheets
+- Blocks: None
+
+Context / observation:
+The baseline sheet loaded correctly, but its view stayed on `idle` for its entire
+life. The named `move`, `hit`, and `death` frames existed in the theme contract
+without a runtime driver. Destruction also removed the view in the same call that
+removed the defeated actor, making a death frame impossible to observe.
+
+Decision / solution:
+Moving enemy views alternate `idle` and `move` at a presentation-only cadence,
+with a stable position-derived phase so a crowd does not animate in lockstep.
+Damage temporarily overrides that cycle with `hit`. On death, the view copies its
+last transform, unregisters from the actor, displays `death` for 220 ms, and then
+destroys itself; the gameplay actor is still destroyed immediately.
+
+Why:
+The four frames describe visual states, not four simulation states. Detaching the
+death remnant makes the broken pose readable without retaining a physics body,
+target, enemy-cap slot, or any state a system can query, preserving REC-072.
+
+Future guardrail:
+Animation time and frame choice remain presentation-only. Never delay actor
+destruction or derive gameplay timing, radius, collision, or capacity from a
+sprite frame.
+
+Revisit when:
+The player eight-frame cycle lands, or a subject needs more than the named-state
+contract can express.
+
 ## V0.4.2 entries — content
 
 <!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
+
+### REC-090 — Capacity-bound spawns cannot block causal effects
+
+- Status: Accepted
+- Date: 2026-08-29
+- Affects: V0.4.2; causal event queue, crowd-cap behaviour, on-kill effects
+- Blocks: None
+
+Context / observation:
+At the 300-enemy cap, a retained `spawn.requested` event at the head of the
+single causal FIFO stopped the processor for the frame. Explosions queued behind
+that spawn therefore remained at the dead enemy's recorded position until a slot
+became available, producing a delayed land-mine effect. Rendering capacity was
+not the cause; this was head-of-line blocking in application logic. REC-033
+explicitly left priority lanes as the revisit point for this failure mode.
+
+Decision / solution:
+The queue can now process a matching lane while retaining all non-matching work
+in its original order. The run scene spends its existing per-frame event budget
+on non-spawn causal work first, then on spawn requests when capacity exists.
+FIFO ordering and exact-once accounting are preserved within both lanes, while a
+capacity-bound spawn can no longer defer an explosion.
+
+Why:
+Spawns are allowed to wait for capacity; committed combat effects are not. This
+changes scheduling rather than balance and keeps the existing total event budget.
+
+Future guardrail:
+Any event that can be deferred by an external capacity must not be placed in
+front of time-sensitive committed effects in a globally blocking queue. Add a
+focused lane-order test whenever a new deferrable causal event kind is introduced.
+
+Revisit when:
+The retained spawn backlog itself becomes large enough that the lane scan affects
+the measured 300-enemy frame budget, or more than two scheduling classes exist.
 
 ## Open questions to reconcile during implementation
 
