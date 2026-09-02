@@ -100,7 +100,7 @@ accepted    ░░░░░░░░░░░░░░░░░░░░   0
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `review` |
 | 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | 1 | 2 | n/a (built-in) | Codex | `generating` |
-| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | Codex | `generating` |
+| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `generating` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | Codex | `generating` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | Codex | `generating` |
 | 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |
@@ -301,3 +301,5 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-08-19 | `enemy.swarm_basic` | 1 | 1 | n/a (built-in) | review | First Plastic Bottle baseline; untouched 1402×1122 RGBA tool output built into an in-game review sheet on 2026-08-21. |
 | 2026-09-02 | `enemy.fast_fragile` | 1 | 1 | n/a (built-in) | rejected | Plastic Bag poses and style read clearly, but the tool rendered its transparency checkerboard into an opaque RGB file. |
 | 2026-09-02 | `enemy.fast_fragile` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved the torn death pose but again returned an opaque RGB checkerboard. |
+| 2026-09-02 | `enemy.slow_durable` | 1 | 1 | n/a (built-in) | rejected | Glass Bottle silhouette and four poses match the brief, but the tool rendered an opaque RGB checkerboard. |
+| 2026-09-02 | `enemy.slow_durable` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry retained the stronger armoured silhouette but again returned opaque RGB. |
