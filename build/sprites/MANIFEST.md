@@ -101,7 +101,7 @@ accepted    ░░░░░░░░░░░░░░░░░░░░   0
 | 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `review` |
 | 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | Codex | `generating` |
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | Codex | `generating` |
-| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
+| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | Codex | `generating` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | — | `todo` |
 | 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
