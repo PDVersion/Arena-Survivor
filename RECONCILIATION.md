@@ -4,8 +4,8 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
-- Current milestone: **V0.3**
-- Active phase: **V0.3 and V0.3.1 complete; V0.4.0 (the shared seam) built on `claude/v0.4.0`; V0.4.1 (sprites) and V0.4.2 (content) not started**
+- Current milestone: **V0.4**
+- Active phase: **V0.4.1 sprite checkpoint complete on `codex/v0.4.1`: pipeline and sheets #1–5 delivered; rows #6–19 gated until the post-rebalance sprite phase (REC-078). V0.4.2 remains independently tracked by its own plan and branch.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2023,6 +2023,43 @@ runtime texture.
 
 Revisit when:
 A second player layout needs a different frame count or directional sheets.
+
+### REC-078 — Rebalance the roster before generating the rest of it
+
+- Status: Accepted
+- Date: 2026-09-02
+- Affects: V0.4.1; sprite milestone scope, manifest claims, future art inventory
+- Blocks: Sprite generation for manifest rows #6–19
+
+Context / observation:
+The first five sheets establish the style and cover the four original enemy
+roles plus the player. The next planned product work is a major game rebalance
+and design redirect. The remaining sprite inventory is dominated by content
+whose identity or presentation may change in that work: weapons, pickups,
+fragments, shrines, hazards, and elite treatment.
+
+Decision / solution:
+Close V0.4.1 as a first playable sprite checkpoint with rows #1–5 accepted and
+integrated. Keep rows #6–19 visible as `todo`, but gate all claims and generation
+until a post-rebalance sprite phase reconciles them against the revised content
+roster. That future phase owns the remaining S2–S5 scope and must confirm stable
+IDs, subjects, sizes, and frame roles before reactivating each row.
+
+Why:
+Art is presentation attached to stable content identity. Generating the old
+inventory before the redirect would either constrain the rebalance around sunk
+art cost or knowingly create throwaway sheets. The primitive fallback means the
+game remains complete and testable while the roster changes.
+
+Future guardrail:
+`todo` rows #6–19 are not claimable until the next sprite phase explicitly lifts
+this gate. Preserve accepted rows #1–5 as the style baseline unless the redirect
+changes the underlying content identity, in which case mark the affected sheet
+`stale` rather than silently reusing mismatched art.
+
+Revisit when:
+The major rebalance/design redirect has a committed content roster and the next
+sprite phase is planned.
 
 ## V0.4.2 entries — content
 

@@ -82,6 +82,20 @@ roster-wide problem (style guide §8).
 
 ---
 
+## Checkpoint and next phase
+
+The 2026-09-02 V0.4.1 checkpoint accepts rows #1–5 and stops generation there.
+Rows #6–19 are intentionally left `todo` for the **next sprite phase after the
+major game rebalance and design redirect**. `todo` does not currently mean
+"available to claim": the next phase must first compare every remaining row with
+the post-rebalance content roster and revise IDs, subjects, canvas sizes, and
+frame lists where the game design changed.
+
+Until that redirect is recorded, do not claim or generate rows #6–19. The five
+accepted sheets and their raw attempts remain the visual/style baseline.
+
+---
+
 ## Progress
 
 **5 of 19 accepted.** Update this line with every acceptance — it is what a cold

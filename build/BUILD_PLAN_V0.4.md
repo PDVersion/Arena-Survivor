@@ -5,7 +5,7 @@ V0.4 is two independent bodies of work that happen to share a version number:
 | Stream | What | Plan | Branch |
 | --- | --- | --- | --- |
 | **V0.4.0** | The shared seam both streams need. One small PR, merged first. | This file, §2 | `claude/v0.4.0` |
-| **V0.4.1** | Sprites: art pipeline, prompt system, and the full sprite roster | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | `*/v0.4.1` |
+| **V0.4.1** | Sprites checkpoint: production pipeline and the first five sheets; remaining roster deferred until after the major rebalance | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | `*/v0.4.1` |
 | **V0.4.2** | Content growth from [`PLAN.md`](./PLAN.md) §V0.4: weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | `*/v0.4.2` |
 
 **V0.4.1 and V0.4.2 are designed to be built at the same time by different
@@ -15,6 +15,19 @@ that makes that safe. Read it before starting either stream.
 Further increments (V0.4.3, V0.4.4) follow the same pattern: claim a file
 ownership block in §3, or the increment is not independent and should be
 sequenced instead.
+
+### V0.4.1 checkpoint — 2026-09-02
+
+V0.4.1 now delivers the reusable pipeline and accepted sheets #1–5: all four
+original enemy roles and the Environment Protector. They are palette-normalized,
+packed into one runtime atlas, and wired with enemy state animation plus the
+player walk cycle.
+
+The original full-roster target is intentionally paused here. Sheets #6–19 stay
+unclaimed until the planned major balance/design redirect settles which weapons,
+pickups, fragments, shrines, hazards, and elite treatment still belong in the
+game. That work is the **next sprite phase**, based on the post-rebalance roster;
+it is not unfinished work to pull into this PR. See REC-078.
 
 ---
 
