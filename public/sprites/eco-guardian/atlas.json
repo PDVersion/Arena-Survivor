@@ -1,6 +1,6 @@
 {
   "frames": {
-    "enemy.swarm_basic/idle": {
+    "eco_guardian.enemy.swarm_basic/0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -20,7 +20,7 @@
         "h": 32
       }
     },
-    "enemy.swarm_basic/move": {
+    "eco_guardian.enemy.swarm_basic/1": {
       "frame": {
         "x": 32,
         "y": 0,
@@ -40,7 +40,7 @@
         "h": 32
       }
     },
-    "enemy.swarm_basic/hit": {
+    "eco_guardian.enemy.swarm_basic/2": {
       "frame": {
         "x": 64,
         "y": 0,
@@ -60,7 +60,7 @@
         "h": 32
       }
     },
-    "enemy.swarm_basic/death": {
+    "eco_guardian.enemy.swarm_basic/3": {
       "frame": {
         "x": 96,
         "y": 0,
@@ -78,6 +78,86 @@
       "sourceSize": {
         "w": 32,
         "h": 32
+      }
+    },
+    "eco_guardian.enemy.fast_fragile/0": {
+      "frame": {
+        "x": 0,
+        "y": 32,
+        "w": 24,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 24
+      }
+    },
+    "eco_guardian.enemy.fast_fragile/1": {
+      "frame": {
+        "x": 24,
+        "y": 32,
+        "w": 24,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 24
+      }
+    },
+    "eco_guardian.enemy.fast_fragile/2": {
+      "frame": {
+        "x": 48,
+        "y": 32,
+        "w": 24,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 24
+      }
+    },
+    "eco_guardian.enemy.fast_fragile/3": {
+      "frame": {
+        "x": 72,
+        "y": 32,
+        "w": 24,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 24
       }
     }
   },

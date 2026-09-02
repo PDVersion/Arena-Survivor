@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import type { ThemeManifest } from "../../core/archetypes/contracts";
 import { spriteEntries } from "./resolve-sprite";
+import { atlasTextureKey, isAtlasSprite } from "./runtime-sprite";
 
 /**
  * Queue a theme's sprite sheets.
@@ -26,19 +27,28 @@ export function loadThemeSprites(
   const entries = spriteEntries(theme.tokens);
   if (entries.length === 0) return 0;
 
+  const textureKeys = new Set<string>();
   for (const [, definition] of entries) {
+    if (isAtlasSprite(definition)) {
+      const key = atlasTextureKey(definition.path);
+      if (textureKeys.has(key)) continue;
+      scene.load.atlas(key, definition.path, definition.path.replace(/\.png$/, ".json"));
+      textureKeys.add(key);
+      continue;
+    }
     scene.load.spritesheet(definition.key, definition.path, {
       frameWidth: definition.frameWidth,
       frameHeight: definition.frameHeight,
     });
+    textureKeys.add(definition.key);
   }
 
   scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-    for (const [, definition] of entries) {
+    for (const key of textureKeys) {
       // Filtering has to be set after load: the texture does not exist before.
-      scene.textures.get(definition.key).setFilter(Phaser.Textures.FilterMode.NEAREST);
+      scene.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST);
     }
   });
 
-  return entries.length;
+  return textureKeys.size;
 }

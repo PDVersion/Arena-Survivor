@@ -3,10 +3,12 @@ import type { SpriteDefinition, SpriteState, ThemeTokens } from "../../core/arch
 import type { ContentId } from "../../core/archetypes/ids";
 import {
   resolveAnimatedSpriteState,
+  resolvePlayerMovementFrame,
   SPRITE_DEATH_FRAME_MS,
   type SpriteAnimationState,
 } from "./sprite-animation";
 import { resolveSprite } from "./resolve-sprite";
+import { runtimeFrame, runtimeTextureKey } from "./runtime-sprite";
 
 /**
  * The one branch between a primitive and a sprite.
@@ -60,7 +62,10 @@ export class SpriteView {
   private readonly animation: { moving: boolean; phaseMs: number; transient?: SpriteAnimationState["transient"] };
   private baseScaleX: number;
   private baseScaleY: number;
-  private renderedState: SpriteState;
+  private renderedFrame: number;
+  private previousX: number;
+  private previousY: number;
+  private facingX = 1;
   private detached = false;
 
   constructor(
@@ -74,7 +79,9 @@ export class SpriteView {
     this.definition = definition;
     this.frameWidth = definition.frameWidth;
     this.frameHeight = definition.frameHeight;
-    this.renderedState = state;
+    this.renderedFrame = definition.states[state];
+    this.previousX = source.x;
+    this.previousY = source.y;
     // Stable from the spawn position, but varied enough that a crowd does not
     // tumble in one synchronized wall.
     this.animation = {
@@ -83,7 +90,12 @@ export class SpriteView {
     };
     this.baseScaleX = options.diameter / definition.frameWidth;
     this.baseScaleY = options.diameter / definition.frameHeight;
-    this.image = scene.add.sprite(source.x, source.y, definition.key, definition.states[state]);
+    this.image = scene.add.sprite(
+      source.x,
+      source.y,
+      runtimeTextureKey(definition),
+      runtimeFrame(definition, definition.states[state]),
+    );
     // The primitive stays alive and keeps its body; it simply stops drawing.
     source.setVisible(false);
     this.sync();
@@ -107,9 +119,7 @@ export class SpriteView {
 
   /** Show a named frame. Callers name a state; frame indices stay in the data. */
   setState(state: SpriteState): void {
-    if (!this.image.active || this.renderedState === state) return;
-    this.renderedState = state;
-    this.image.setFrame(this.definition.states[state]);
+    this.setFrame(this.definition.states[state]);
   }
 
   /**
@@ -135,12 +145,33 @@ export class SpriteView {
   sync(): void {
     if (this.detached || !this.image.active) return;
     const source = this.source;
+    const deltaX = source.x - this.previousX;
+    const deltaY = source.y - this.previousY;
+    const usesPlayerCycle = this.definition.frames >= 8;
+    const moving = Math.abs(deltaX) + Math.abs(deltaY) > 0.01;
+    if (usesPlayerCycle && Math.abs(deltaX) > 0.01) this.facingX = Math.sign(deltaX);
+    this.previousX = source.x;
+    this.previousY = source.y;
     this.image.setPosition(source.x, source.y);
     this.image.setRotation(source.rotation);
-    this.image.setScale(this.baseScaleX * source.scaleX, this.baseScaleY * source.scaleY);
+    this.image.setScale(
+      this.baseScaleX * source.scaleX * (usesPlayerCycle ? this.facingX : 1),
+      this.baseScaleY * source.scaleY,
+    );
     this.image.setAlpha(source.alpha);
     this.image.setDepth(source.depth);
-    this.setState(resolveAnimatedSpriteState(this.image.scene.time.now, this.animation));
+    const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
+    if (usesPlayerCycle && state === "idle") {
+      this.setFrame(resolvePlayerMovementFrame(this.image.scene.time.now, moving));
+    } else {
+      this.setState(state);
+    }
+  }
+
+  private setFrame(frame: number): void {
+    if (!this.image.active || this.renderedFrame === frame) return;
+    this.renderedFrame = frame;
+    this.image.setFrame(runtimeFrame(this.definition, frame));
   }
 
   /**

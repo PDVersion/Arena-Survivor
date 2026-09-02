@@ -5,9 +5,25 @@ import { deflateSync, inflateSync } from "node:zlib";
 export interface SpriteBuildDefinition {
   readonly source: string;
   readonly output: string;
+  /** Reviewed, normalized source retained alongside the untouched raw attempt. */
+  readonly acceptedOutput?: string;
   readonly atlasOutput?: string;
   readonly atlasJsonOutput?: string;
   readonly contentId: string;
+  readonly frameWidth: number;
+  readonly frameHeight: number;
+  readonly frames: number;
+  /** Generator backdrops that must be removed before frame extraction. */
+  readonly background?: "transparent" | "light-checker" | "black";
+  /** Exact four-step material ramps accepted for this sheet. */
+  readonly palette?: readonly (readonly string[])[];
+  /** Fully opaque colour used to close the outside silhouette. */
+  readonly outline?: string;
+}
+
+export interface SpriteAtlasEntry {
+  readonly textureKey: string;
+  readonly output: string;
   readonly frameWidth: number;
   readonly frameHeight: number;
   readonly frames: number;
@@ -29,13 +45,16 @@ const frameInset = 2;
 // exact enemy token; the neutral ramp is for the cap and label.
 const blueRamp = ["#173b73", "#356fae", "#60a5fa", "#9ac8fb"] as const;
 const neutralRamp = ["#4b5563", "#9ca3af", "#e2e8f0", "#f8fafc"] as const;
-const allowedPalette = [...blueRamp, ...neutralRamp] as const;
-const outline = hexToRgb(blueRamp[0]);
-const palette = allowedPalette.map(hexToRgb);
+const defaultRamps = [blueRamp, neutralRamp] as const;
 
 export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promise<void> {
-  const source = await readPng(definition.source);
-  const bounds = detectHorizontalFrames(source.data, source.width, source.height);
+  const source = removeGeneratedBackground(
+    await readPng(definition.source),
+    definition.background ?? "transparent",
+  );
+  const bounds = (definition.background ?? "transparent") === "transparent"
+    ? detectSeparatedFrames(source.data, source.width, source.height)
+    : detectFrameSlots(source.data, source.width, source.height, definition.frames);
   if (bounds.length !== definition.frames) {
     throw new Error(
       `${definition.contentId}: expected ${definition.frames} horizontal subjects, found ${bounds.length}`,
@@ -57,10 +76,22 @@ export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promi
     const top = Math.floor((definition.frameHeight - height) / 2);
     blitNearest(source, entry, composed, sheetWidth, left, top, width, height);
   }
-  const snapped = snapPaletteAndCloseOutline(composed, sheetWidth, definition.frameHeight);
+  const palette = spritePalette(definition);
+  const outline = hexToRgb(definition.outline ?? definition.palette?.[0]?.[0] ?? blueRamp[0]);
+  const snapped = snapPaletteAndCloseOutline(
+    composed,
+    sheetWidth,
+    definition.frameHeight,
+    palette,
+    outline,
+  );
 
   await mkdir(dirname(definition.output), { recursive: true });
   await writePng(definition.output, snapped, sheetWidth, definition.frameHeight);
+  if (definition.acceptedOutput) {
+    await mkdir(dirname(definition.acceptedOutput), { recursive: true });
+    await writePng(definition.acceptedOutput, snapped, sheetWidth, definition.frameHeight);
+  }
 
   if (definition.atlasOutput) {
     await mkdir(dirname(definition.atlasOutput), { recursive: true });
@@ -127,6 +158,8 @@ export async function checkSpriteSheet(
       seenColours.add(rgbKey(image.data[offset]!, image.data[offset + 1]!, image.data[offset + 2]!));
     }
   }
+  const palette = spritePalette(definition);
+  const outline = hexToRgb(definition.outline ?? definition.palette?.[0]?.[0] ?? blueRamp[0]);
   const allowed = new Set(palette.map(([r, g, b]) => rgbKey(r, g, b)));
   for (const colour of seenColours) {
     if (!allowed.has(colour)) issues.push(`${definition.contentId}: unexpected colour ${colour}`);
@@ -137,10 +170,61 @@ export async function checkSpriteSheet(
       issues.push(`${definition.contentId}: frame ${frame} is empty`);
     }
   }
-  if (!hasClosedOutline(image)) {
+  if (!hasClosedOutline(image, outline)) {
     issues.push(`${definition.contentId}: silhouette outline is not closed`);
   }
   return issues;
+}
+
+/** Pack normalized sheets into one texture, one row per subject. */
+export async function buildSpriteAtlas(
+  entries: readonly SpriteAtlasEntry[],
+  atlasOutput: string,
+  atlasJsonOutput: string,
+): Promise<void> {
+  const sheets = await Promise.all(entries.map(async (entry) => ({
+    entry,
+    image: await readPng(entry.output),
+  })));
+  const width = Math.max(...sheets.map(({ image }) => image.width));
+  const height = sheets.reduce((sum, { image }) => sum + image.height, 0);
+  const pixels = Buffer.alloc(width * height * 4);
+  const frames: Record<string, unknown> = {};
+  let top = 0;
+
+  for (const { entry, image } of sheets) {
+    for (let y = 0; y < image.height; y += 1) {
+      image.data.copy(
+        pixels,
+        ((top + y) * width) * 4,
+        y * image.width * 4,
+        (y + 1) * image.width * 4,
+      );
+    }
+    for (let frame = 0; frame < entry.frames; frame += 1) {
+      frames[`${entry.textureKey}/${frame}`] = {
+        frame: {
+          x: frame * entry.frameWidth,
+          y: top,
+          w: entry.frameWidth,
+          h: entry.frameHeight,
+        },
+        rotated: false,
+        trimmed: false,
+        spriteSourceSize: { x: 0, y: 0, w: entry.frameWidth, h: entry.frameHeight },
+        sourceSize: { w: entry.frameWidth, h: entry.frameHeight },
+      };
+    }
+    top += image.height;
+  }
+
+  await mkdir(dirname(atlasOutput), { recursive: true });
+  await writePng(atlasOutput, pixels, width, height);
+  await writeFile(
+    atlasJsonOutput,
+    `${JSON.stringify({ frames, meta: { image: "atlas.png", format: "RGBA8888" } }, null, 2)}\n`,
+    "utf8",
+  );
 }
 
 async function readRaw(path: string): Promise<{
@@ -172,17 +256,38 @@ function blitNearest(
   }
 }
 
-function detectHorizontalFrames(data: Buffer, width: number, height: number): Bounds[] {
-  const occupiedColumns: number[] = [];
-  for (let x = 0; x < width; x += 1) {
-    let occupied = false;
-    for (let y = 0; y < height; y += 1) {
-      if (data[(y * width + x) * 4 + 3]! > alphaDetectionThreshold) {
-        occupied = true;
-        break;
+function detectFrameSlots(
+  data: Buffer,
+  width: number,
+  height: number,
+  frames: number,
+): Bounds[] {
+  const bounds: Bounds[] = [];
+  for (let frame = 0; frame < frames; frame += 1) {
+    const slotLeft = Math.floor((frame * width) / frames);
+    const slotRight = Math.floor(((frame + 1) * width) / frames) - 1;
+    let left = slotRight + 1;
+    let right = slotLeft - 1;
+    for (let x = slotLeft; x <= slotRight; x += 1) {
+      for (let y = 0; y < height; y += 1) {
+        if (data[(y * width + x) * 4 + 3]! <= alphaDetectionThreshold) continue;
+        left = Math.min(left, x);
+        right = Math.max(right, x);
       }
     }
-    if (occupied) occupiedColumns.push(x);
+    if (right >= left) bounds.push(verticalBounds(data, width, height, left, right));
+  }
+  return bounds;
+}
+
+function detectSeparatedFrames(data: Buffer, width: number, height: number): Bounds[] {
+  const occupiedColumns: number[] = [];
+  for (let x = 0; x < width; x += 1) {
+    for (let y = 0; y < height; y += 1) {
+      if (data[(y * width + x) * 4 + 3]! <= alphaDetectionThreshold) continue;
+      occupiedColumns.push(x);
+      break;
+    }
   }
   if (occupiedColumns.length === 0) return [];
 
@@ -197,7 +302,6 @@ function detectHorizontalFrames(data: Buffer, width: number, height: number): Bo
     previous = x;
   }
   runs.push([start, previous]);
-
   return runs
     .filter(([left, right]) => right - left >= 2)
     .map(([left, right]) => verticalBounds(data, width, height, left, right));
@@ -223,11 +327,22 @@ function verticalBounds(
   return { left, top, width: right - left + 1, height: bottom - top + 1 };
 }
 
-function snapPaletteAndCloseOutline(data: Buffer, width: number, height: number): Buffer {
+function snapPaletteAndCloseOutline(
+  data: Buffer,
+  width: number,
+  height: number,
+  palette: readonly (readonly [number, number, number])[],
+  outline: readonly [number, number, number],
+): Buffer {
   const output = Buffer.alloc(data.length);
   for (let offset = 0; offset < data.length; offset += 4) {
     if (data[offset + 3]! < opaqueThreshold) continue;
-    const nearest = nearestPaletteColour(data[offset]!, data[offset + 1]!, data[offset + 2]!);
+    const nearest = nearestPaletteColour(
+      data[offset]!,
+      data[offset + 1]!,
+      data[offset + 2]!,
+      palette,
+    );
     output[offset] = nearest[0];
     output[offset + 1] = nearest[1];
     output[offset + 2] = nearest[2];
@@ -247,7 +362,12 @@ function snapPaletteAndCloseOutline(data: Buffer, width: number, height: number)
   return outlined;
 }
 
-function nearestPaletteColour(r: number, g: number, b: number): readonly [number, number, number] {
+function nearestPaletteColour(
+  r: number,
+  g: number,
+  b: number,
+  palette: readonly (readonly [number, number, number])[],
+): readonly [number, number, number] {
   let nearest = palette[0]!;
   let nearestDistance = Number.POSITIVE_INFINITY;
   for (const candidate of palette) {
@@ -299,7 +419,7 @@ function hasClosedOutline(image: {
   readonly data: Buffer;
   readonly width: number;
   readonly height: number;
-}): boolean {
+}, outline: readonly [number, number, number]): boolean {
   for (let y = 0; y < image.height; y += 1) {
     for (let x = 0; x < image.width; x += 1) {
       const offset = (y * image.width + x) * 4;
@@ -315,6 +435,65 @@ function hasClosedOutline(image: {
     }
   }
   return true;
+}
+
+function spritePalette(
+  definition: SpriteBuildDefinition,
+): readonly (readonly [number, number, number])[] {
+  return (definition.palette ?? defaultRamps).flat().map(hexToRgb);
+}
+
+/**
+ * Replace only an edge-connected generator backdrop with real alpha.
+ *
+ * The generated source remains untouched on disk. Flood filling from the image
+ * edge is important: near-white highlights and the black gaps inside a closed
+ * outline remain artwork rather than being erased by a global colour key.
+ */
+function removeGeneratedBackground(
+  image: { readonly data: Buffer; readonly width: number; readonly height: number },
+  mode: NonNullable<SpriteBuildDefinition["background"]>,
+): { readonly data: Buffer; readonly width: number; readonly height: number } {
+  if (mode === "transparent") return image;
+  const data = Buffer.from(image.data);
+  const visited = new Uint8Array(image.width * image.height);
+  const queue: number[] = [];
+  const candidate = (pixel: number): boolean => {
+    const offset = pixel * 4;
+    const r = data[offset]!;
+    const g = data[offset + 1]!;
+    const b = data[offset + 2]!;
+    if (data[offset + 3]! <= alphaDetectionThreshold) return true;
+    if (mode === "black") return Math.max(r, g, b) <= 24;
+    return Math.min(r, g, b) >= 225 && Math.max(r, g, b) - Math.min(r, g, b) <= 12;
+  };
+  const offer = (pixel: number): void => {
+    if (visited[pixel] || !candidate(pixel)) return;
+    visited[pixel] = 1;
+    queue.push(pixel);
+  };
+
+  for (let x = 0; x < image.width; x += 1) {
+    offer(x);
+    offer((image.height - 1) * image.width + x);
+  }
+  for (let y = 0; y < image.height; y += 1) {
+    offer(y * image.width);
+    offer(y * image.width + image.width - 1);
+  }
+
+  for (let head = 0; head < queue.length; head += 1) {
+    const pixel = queue[head]!;
+    const x = pixel % image.width;
+    const y = Math.floor(pixel / image.width);
+    if (x > 0) offer(pixel - 1);
+    if (x + 1 < image.width) offer(pixel + 1);
+    if (y > 0) offer(pixel - image.width);
+    if (y + 1 < image.height) offer(pixel + image.width);
+  }
+
+  for (const pixel of queue) data[pixel * 4 + 3] = 0;
+  return { ...image, data };
 }
 
 function hexToRgb(hex: string): readonly [number, number, number] {
@@ -337,6 +516,7 @@ async function readPng(path: string): Promise<{
 
   let width = 0;
   let height = 0;
+  let channels = 0;
   const compressed: Buffer[] = [];
   for (let offset = 8; offset < png.length; ) {
     const length = png.readUInt32BE(offset);
@@ -345,8 +525,10 @@ async function readPng(path: string): Promise<{
     if (type === "IHDR") {
       width = data.readUInt32BE(0);
       height = data.readUInt32BE(4);
-      if (data[8] !== 8 || data[9] !== 6 || data[12] !== 0) {
-        throw new Error(`${path}: expected a non-interlaced 8-bit RGBA PNG`);
+      const colourType = data[9];
+      channels = colourType === 6 ? 4 : colourType === 2 ? 3 : 0;
+      if (data[8] !== 8 || channels === 0 || data[12] !== 0) {
+        throw new Error(`${path}: expected a non-interlaced 8-bit RGB or RGBA PNG`);
       }
     }
     if (type === "IDAT") compressed.push(data);
@@ -358,20 +540,31 @@ async function readPng(path: string): Promise<{
   }
 
   const scanlines = inflateSync(Buffer.concat(compressed));
-  const stride = width * 4;
-  const output = Buffer.alloc(stride * height);
+  const sourceStride = width * channels;
+  const decoded = Buffer.alloc(sourceStride * height);
   let inputOffset = 0;
   for (let y = 0; y < height; y += 1) {
     const filter = scanlines[inputOffset]!;
     inputOffset += 1;
-    for (let x = 0; x < stride; x += 1) {
+    for (let x = 0; x < sourceStride; x += 1) {
       const raw = scanlines[inputOffset + x]!;
-      const left = x >= 4 ? output[y * stride + x - 4]! : 0;
-      const above = y > 0 ? output[(y - 1) * stride + x]! : 0;
-      const upperLeft = y > 0 && x >= 4 ? output[(y - 1) * stride + x - 4]! : 0;
-      output[y * stride + x] = unfilter(raw, filter, left, above, upperLeft);
+      const left = x >= channels ? decoded[y * sourceStride + x - channels]! : 0;
+      const above = y > 0 ? decoded[(y - 1) * sourceStride + x]! : 0;
+      const upperLeft = y > 0 && x >= channels
+        ? decoded[(y - 1) * sourceStride + x - channels]!
+        : 0;
+      decoded[y * sourceStride + x] = unfilter(raw, filter, left, above, upperLeft);
     }
-    inputOffset += stride;
+    inputOffset += sourceStride;
+  }
+
+  if (channels === 4) return { data: decoded, width, height };
+  const output = Buffer.alloc(width * height * 4);
+  for (let pixel = 0; pixel < width * height; pixel += 1) {
+    output[pixel * 4] = decoded[pixel * 3]!;
+    output[pixel * 4 + 1] = decoded[pixel * 3 + 1]!;
+    output[pixel * 4 + 2] = decoded[pixel * 3 + 2]!;
+    output[pixel * 4 + 3] = 255;
   }
   return { data: output, width, height };
 }

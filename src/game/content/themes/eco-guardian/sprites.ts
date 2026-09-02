@@ -21,4 +21,12 @@ export const sprites = {
     frames: 4,
     states: { idle: 0, move: 1, hit: 2, death: 3 },
   },
+  [archetypeIds.enemy.fastFragile]: {
+    key: "eco_guardian.enemy.fast_fragile",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 24,
+    frameHeight: 24,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
 } as const satisfies ThemeSprites;

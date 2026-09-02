@@ -1946,6 +1946,84 @@ Revisit when:
 The player eight-frame cycle lands, or a subject needs more than the named-state
 contract can express.
 
+### REC-076 — Opaque generator previews are sources, not failed sprites
+
+- Status: Accepted
+- Date: 2026-09-02
+- Affects: V0.4.1; sprite generation, RGB decoding, alpha cleanup
+- Blocks: None
+
+Context / observation:
+Attempts two for Plastic Bag, Glass Bottle, Bagged Waste, and Environment
+Protector had the approved subjects and poses, but the built-in generator saved
+them as RGB PNG previews: three had a painted checkerboard and the player had a
+black backdrop. The original pipeline accepted only RGBA input and therefore
+could not reach its own alpha-clean step.
+
+Decision / solution:
+The PNG decoder accepts non-interlaced 8-bit RGB as well as RGBA and synthesizes
+opaque alpha for RGB sources. A source-declared background mode then flood-fills
+only backdrop-coloured pixels connected to the outer image edge. Checkerboard
+holes remain removable while enclosed white highlights and dark interior pixels
+remain artwork. Raw attempts are untouched; normalized accepted sheets and
+public sheets are deterministic outputs of `npm run sprites -- build`.
+
+Why:
+Rejecting a correct subject because its preview encoded transparency visually
+instead of structurally wastes the authored attempt. A global colour key would
+be worse: it would erase the Plastic Bag's white body and the player's dark gear.
+Edge connectivity separates backdrop from enclosed artwork without repainting.
+
+Future guardrail:
+Background cleanup may remove only edge-connected pixels matching the declared
+backdrop class. Subject, pose, spacing, and silhouette changes still require a
+new numbered generation attempt.
+
+Revisit when:
+A generator returns a backdrop that cannot be described safely as transparent,
+light neutral checkerboard, or black.
+
+### REC-077 — An eight-frame player sheet owns a four-frame presentation cycle
+
+- Status: Accepted
+- Date: 2026-09-02
+- Affects: V0.4.1; player sprite animation, atlas runtime
+- Blocks: None
+
+Context / observation:
+The shared seam exposes the four named states needed by every actor, while the
+style guide reserves player frames 0–3 for a real walk cycle and frame 4 for
+idle. Merely mapping `move` to frame 0 would leave three approved walk poses
+unreachable and the player static between damage flashes.
+
+Decision / solution:
+`SpriteView` recognizes the documented eight-frame sheet layout, detects visual
+movement from the actor's frame-to-frame position, cycles frames 0–3 at a
+presentation-only cadence, returns to frame 4 when stationary, and mirrors the
+image when horizontal movement changes direction. Hit and other named transient
+states continue to override the cycle. No entity, control, physics, or system
+state reads the selected frame.
+
+The five accepted sheets are packed as rows in one generated atlas. Theme
+definitions keep their unique semantic keys but share `atlas.png`; the loader
+queues that texture and its JSON once, and the view resolves semantic frame
+indices to atlas frame names. This preserves the single-texture batching reason
+the atlas was moved into Phase S1.
+
+Why:
+The player is the one subject granted a real animation budget, and the atlas is
+the safeguard against texture-switch churn in a 300-enemy crowd. Both must be
+real runtime behavior rather than unused build artifacts.
+
+Future guardrail:
+The eight-frame layout remains the style guide's authored contract. Movement
+observation and frame selection stay presentation-only, and every accepted
+sheet for a theme must be added to the shared atlas rather than loaded as a new
+runtime texture.
+
+Revisit when:
+A second player layout needs a different frame count or directional sheets.
+
 ## V0.4.2 entries — content
 
 <!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
