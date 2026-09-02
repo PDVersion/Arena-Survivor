@@ -37,4 +37,12 @@ export const sprites = {
     frames: 4,
     states: { idle: 0, move: 1, hit: 2, death: 3 },
   },
+  [archetypeIds.enemy.deathSpawner]: {
+    key: "eco_guardian.enemy.death_spawner",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 48,
+    frameHeight: 48,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
 } as const satisfies ThemeSprites;

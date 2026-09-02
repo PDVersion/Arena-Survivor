@@ -89,6 +89,25 @@ const projectSprites: readonly ProjectSprite[] = [
     palette: [["#0f4f52", "#169b91", "#2dd4bf", "#82eadc"]],
     outline: "#0f4f52",
   },
+  {
+    theme: "eco-guardian",
+    textureKey: "eco_guardian.enemy.death_spawner",
+    contentId: "enemy.death_spawner",
+    source: "build/sprites/raw/enemy_death_spawner.a2.png",
+    output: "public/sprites/eco-guardian/enemy_death_spawner.png",
+    acceptedOutput: "build/sprites/accepted/enemy_death_spawner.png",
+    frameWidth: 48,
+    frameHeight: 48,
+    frames: 4,
+    background: "light-checker",
+    palette: [
+      ["#3b1762", "#8050bd", "#c084fc", "#dcb5fd"],
+      ["#374151", "#6b7280", "#d1d5db", "#f8fafc"],
+      ["#3f4b26", "#68753b", "#91a657", "#c0d187"],
+      ["#713f12", "#b7791f", "#fb923c", "#fdba74"],
+    ],
+    outline: "#3b1762",
+  },
 ];
 
 function parseArgs(argv: readonly string[]): Options {

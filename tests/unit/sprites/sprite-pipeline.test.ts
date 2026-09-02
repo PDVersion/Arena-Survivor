@@ -32,6 +32,21 @@ describe("sprite build output", () => {
         palette: [["#0f4f52", "#169b91", "#2dd4bf", "#82eadc"]],
         outline: "#0f4f52",
       },
+      {
+        contentId: "enemy.death_spawner",
+        source: "build/sprites/raw/enemy_death_spawner.a2.png",
+        output: "public/sprites/eco-guardian/enemy_death_spawner.png",
+        frameWidth: 48,
+        frameHeight: 48,
+        frames: 4,
+        palette: [
+          ["#3b1762", "#8050bd", "#c084fc", "#dcb5fd"],
+          ["#374151", "#6b7280", "#d1d5db", "#f8fafc"],
+          ["#3f4b26", "#68753b", "#91a657", "#c0d187"],
+          ["#713f12", "#b7791f", "#fb923c", "#fdba74"],
+        ],
+        outline: "#3b1762",
+      },
     ] as const;
 
     const issues = (await Promise.all(definitions.map(checkSpriteSheet))).flat();

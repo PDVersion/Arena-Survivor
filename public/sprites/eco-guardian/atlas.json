@@ -239,6 +239,86 @@
         "w": 48,
         "h": 48
       }
+    },
+    "eco_guardian.enemy.death_spawner/0": {
+      "frame": {
+        "x": 0,
+        "y": 104,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "eco_guardian.enemy.death_spawner/1": {
+      "frame": {
+        "x": 48,
+        "y": 104,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "eco_guardian.enemy.death_spawner/2": {
+      "frame": {
+        "x": 96,
+        "y": 104,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "eco_guardian.enemy.death_spawner/3": {
+      "frame": {
+        "x": 144,
+        "y": 104,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
     }
   },
   "meta": {
