@@ -99,7 +99,7 @@ accepted    ░░░░░░░░░░░░░░░░░░░░   0
 | # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Claimed by | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `review` |
-| 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | — | `todo` |
+| 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | Codex | `generating` |
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | — | `todo` |
