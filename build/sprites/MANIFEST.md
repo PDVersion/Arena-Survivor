@@ -88,8 +88,8 @@ roster-wide problem (style guide §8).
 session reads first.
 
 ```
-todo        ███████████████████░  18
-generating  ░░░░░░░░░░░░░░░░░░░░   0
+todo        ██████████████░░░░░░  14
+generating  ████░░░░░░░░░░░░░░░░   4
 review      █░░░░░░░░░░░░░░░░░░░  1
 accepted    ░░░░░░░░░░░░░░░░░░░░   0
 ```
@@ -102,7 +102,7 @@ accepted    ░░░░░░░░░░░░░░░░░░░░   0
 | 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | 1 | 2 | n/a (built-in) | Codex | `generating` |
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `generating` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `generating` |
-| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | Codex | `generating` |
+| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `generating` |
 | 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
@@ -305,3 +305,5 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-09-02 | `enemy.slow_durable` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry retained the stronger armoured silhouette but again returned opaque RGB. |
 | 2026-09-02 | `enemy.death_spawner` | 1 | 1 | n/a (built-in) | rejected | Bagged Waste is readable and its contents spill clearly, but the tool rendered an opaque RGB checkerboard. |
 | 2026-09-02 | `enemy.death_spawner` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose consistency but again returned opaque RGB. |
+| 2026-09-02 | `character.starter` | 1 | 1 | n/a (built-in) | rejected | The eight Environment Protector poses read clearly, but the tool rendered an opaque RGB checkerboard. |
+| 2026-09-02 | `character.starter` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose and equipment consistency but returned an opaque black RGB background. |
