@@ -47,6 +47,21 @@ describe("sprite build output", () => {
         ],
         outline: "#3b1762",
       },
+      {
+        contentId: "character.starter",
+        source: "build/sprites/raw/character_starter.a2.png",
+        output: "public/sprites/eco-guardian/character_starter.png",
+        frameWidth: 48,
+        frameHeight: 48,
+        frames: 8,
+        palette: [
+          ["#14532d", "#22a34e", "#4ade80", "#8df0ac"],
+          ["#111827", "#374151", "#6b7280", "#d1d5db"],
+          ["#713f12", "#b7791f", "#fde047", "#fef08a"],
+          ["#7c2d12", "#c65d1a", "#fb923c", "#fdba74"],
+        ],
+        outline: "#14532d",
+      },
     ] as const;
 
     const issues = (await Promise.all(definitions.map(checkSpriteSheet))).flat();

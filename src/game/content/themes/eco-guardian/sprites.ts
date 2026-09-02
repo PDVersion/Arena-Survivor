@@ -45,4 +45,12 @@ export const sprites = {
     frames: 4,
     states: { idle: 0, move: 1, hit: 2, death: 3 },
   },
+  [archetypeIds.character.starter]: {
+    key: "eco_guardian.character.starter",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 48,
+    frameHeight: 48,
+    frames: 8,
+    states: { idle: 4, move: 0, hit: 5, death: 7 },
+  },
 } as const satisfies ThemeSprites;
