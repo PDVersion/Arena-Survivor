@@ -84,14 +84,14 @@ roster-wide problem (style guide §8).
 
 ## Progress
 
-**2 of 19 accepted.** Update this line with every acceptance — it is what a cold
+**3 of 19 accepted.** Update this line with every acceptance — it is what a cold
 session reads first.
 
 ```
 todo        ██████████████░░░░░░  14
-generating  ███░░░░░░░░░░░░░░░░░   3
+generating  ██░░░░░░░░░░░░░░░░░░   2
 review      ░░░░░░░░░░░░░░░░░░░░   0
-accepted    ██░░░░░░░░░░░░░░░░░░  2
+accepted    ███░░░░░░░░░░░░░░░░░  3
 ```
 
 ## Status
@@ -100,7 +100,7 @@ accepted    ██░░░░░░░░░░░░░░░░░░  2
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `accepted` |
 | 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | 1 | 2 | n/a (built-in) | Codex | `accepted` |
-| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `generating` |
+| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `generating` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `generating` |
 | 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |

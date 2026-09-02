@@ -22,6 +22,16 @@ describe("sprite build output", () => {
         palette: [["#172d5f", "#94a3b8", "#e2e8f0", "#f8fafc"]],
         outline: "#172d5f",
       },
+      {
+        contentId: "enemy.slow_durable",
+        source: "build/sprites/raw/enemy_slow_durable.a2.png",
+        output: "public/sprites/eco-guardian/enemy_slow_durable.png",
+        frameWidth: 48,
+        frameHeight: 48,
+        frames: 4,
+        palette: [["#0f4f52", "#169b91", "#2dd4bf", "#82eadc"]],
+        outline: "#0f4f52",
+      },
     ] as const;
 
     const issues = (await Promise.all(definitions.map(checkSpriteSheet))).flat();
