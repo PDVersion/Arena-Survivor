@@ -1,4 +1,5 @@
 import type { ThemeSprites } from "../../../core/archetypes/contracts";
+import { archetypeIds } from "../../../core/archetypes/ids";
 
 /**
  * Sprite sheets for this pack.
@@ -9,6 +10,47 @@ import type { ThemeSprites } from "../../../core/archetypes/contracts";
  * one file and removes what would otherwise be the busiest merge conflict in
  * V0.4 — see `build/BUILD_PLAN_V0.4.md` §2.
  *
- * Empty is a complete state: every actor falls back to its primitive.
+ * Entries are optional: every actor without one falls back to its primitive.
  */
-export const sprites = {} as const satisfies ThemeSprites;
+export const sprites = {
+  [archetypeIds.enemy.swarmBasic]: {
+    key: "eco_guardian.enemy.swarm_basic",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 32,
+    frameHeight: 32,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
+  [archetypeIds.enemy.fastFragile]: {
+    key: "eco_guardian.enemy.fast_fragile",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 24,
+    frameHeight: 24,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
+  [archetypeIds.enemy.slowDurable]: {
+    key: "eco_guardian.enemy.slow_durable",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 48,
+    frameHeight: 48,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
+  [archetypeIds.enemy.deathSpawner]: {
+    key: "eco_guardian.enemy.death_spawner",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 48,
+    frameHeight: 48,
+    frames: 4,
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  },
+  [archetypeIds.character.starter]: {
+    key: "eco_guardian.character.starter",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 48,
+    frameHeight: 48,
+    frames: 8,
+    states: { idle: 4, move: 0, hit: 5, death: 7 },
+  },
+} as const satisfies ThemeSprites;

@@ -82,26 +82,41 @@ roster-wide problem (style guide §8).
 
 ---
 
+## Checkpoint and next phase
+
+The 2026-09-02 V0.4.1 checkpoint accepts rows #1–5 and stops generation there.
+Rows #6–19 are intentionally left `todo` for the **next sprite phase after the
+major game rebalance and design redirect**. `todo` does not currently mean
+"available to claim": the next phase must first compare every remaining row with
+the post-rebalance content roster and revise IDs, subjects, canvas sizes, and
+frame lists where the game design changed.
+
+Until that redirect is recorded, do not claim or generate rows #6–19. The five
+accepted sheets and their raw attempts remain the visual/style baseline.
+
+---
+
 ## Progress
 
-**0 of 19 accepted.** Update this line with every acceptance — it is what a cold
+**5 of 19 accepted.** Update this line with every acceptance — it is what a cold
 session reads first.
 
 ```
-todo        ████████████████████  19
+todo        ██████████████░░░░░░  14
 generating  ░░░░░░░░░░░░░░░░░░░░   0
-accepted    ░░░░░░░░░░░░░░░░░░░░   0
+review      ░░░░░░░░░░░░░░░░░░░░   0
+accepted    █████░░░░░░░░░░░░░░░  5
 ```
 
 ## Status
 
 | # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Claimed by | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | — | 0 | — | — | `todo` |
-| 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | — | 0 | — | — | `todo` |
-| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
-| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | — | 0 | — | — | `todo` |
-| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | — | 0 | — | — | `todo` |
+| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `accepted` |
+| 2 | `enemy.fast_fragile` | Plastic Bag | 24×24 | 4 | low | 1 | 2 | n/a (built-in) | Codex | `accepted` |
+| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
+| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
+| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
@@ -297,4 +312,12 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 
 | Date | ID | Attempt | Style ver | Seed | Outcome | Note |
 | --- | --- | --- | --- | --- | --- | --- |
-| — | — | — | — | — | — | *No generations yet — Phase S1 has not started* |
+| 2026-08-19 | `enemy.swarm_basic` | 1 | 1 | n/a (built-in) | review | First Plastic Bottle baseline; untouched 1402×1122 RGBA tool output built into an in-game review sheet on 2026-08-21. |
+| 2026-09-02 | `enemy.fast_fragile` | 1 | 1 | n/a (built-in) | rejected | Plastic Bag poses and style read clearly, but the tool rendered its transparency checkerboard into an opaque RGB file. |
+| 2026-09-02 | `enemy.fast_fragile` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved the torn death pose but again returned an opaque RGB checkerboard. |
+| 2026-09-02 | `enemy.slow_durable` | 1 | 1 | n/a (built-in) | rejected | Glass Bottle silhouette and four poses match the brief, but the tool rendered an opaque RGB checkerboard. |
+| 2026-09-02 | `enemy.slow_durable` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry retained the stronger armoured silhouette but again returned opaque RGB. |
+| 2026-09-02 | `enemy.death_spawner` | 1 | 1 | n/a (built-in) | rejected | Bagged Waste is readable and its contents spill clearly, but the tool rendered an opaque RGB checkerboard. |
+| 2026-09-02 | `enemy.death_spawner` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose consistency but again returned opaque RGB. |
+| 2026-09-02 | `character.starter` | 1 | 1 | n/a (built-in) | rejected | The eight Environment Protector poses read clearly, but the tool rendered an opaque RGB checkerboard. |
+| 2026-09-02 | `character.starter` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose and equipment consistency but returned an opaque black RGB background. |

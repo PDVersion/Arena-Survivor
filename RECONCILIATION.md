@@ -4,8 +4,8 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
-- Current milestone: **V0.3**
-- Active phase: **V0.3 and V0.3.1 complete; V0.4.0 (the shared seam) built on `claude/v0.4.0`; V0.4.1 (sprites) and V0.4.2 (content) not started**
+- Current milestone: **V0.4**
+- Active phase: **V0.4.1 sprite checkpoint complete on `codex/v0.4.1`: pipeline and sheets #1–5 delivered; rows #6–19 gated until the post-rebalance sprite phase (REC-078). V0.4.2 remains independently tracked by its own plan and branch.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -1888,9 +1888,217 @@ Phase S1 measures the first sprite against the crowd, or the primitive fallback 
 
 <!-- V0.4.1 appends here. Reserved ids: REC-074 to REC-089. REC-070's range was amended by REC-071. -->
 
+### REC-074 — Preserve generation evidence when the tool exposes no seed
+
+- Status: Accepted
+- Date: 2026-08-21
+- Affects: V0.4.1; sprite generation, manifest, deterministic build pipeline
+- Blocks: None
+
+Context / observation:
+The built-in image generator returned the Plastic Bottle baseline as a transparent 1402×1122 RGBA image with four separated subjects, rather than as the requested native 128×32 strip, and did not expose a generation seed. Inventing a seed or treating the transformed build as the original would make the roster less reproducible, not more.
+
+Decision / solution:
+The untouched generator output is preserved as `build/sprites/raw/enemy_swarm_basic.a1.png`, the manifest records `n/a (built-in)` for its seed, and the exact versioned prompt remains the authored reproduction input. The V0.4.1 build performs the mechanical conversion: detect the four horizontally separated alpha subjects, apply one common scale, nearest-neighbour downsample into 32×32 slots, force binary alpha, snap colours to the declared blue and neutral four-step material ramps, and close the outer silhouette in the darkest blue.
+
+The result remains `review`, not `accepted`, until it has been judged in motion. The first live browser check loaded it at the existing enemy diameter with nearest filtering, kept every other actor on its primitive fallback, and produced no browser warnings or errors.
+
+Why:
+Reproducibility means preserving what the generator actually produced plus every deterministic transformation after it. A fabricated seed cannot recreate the source; the raw attempt and prompt can be inspected, rejected, or rebuilt without hiding any manual art correction.
+
+Future guardrail:
+Never overwrite a raw attempt, and never record a seed the tool did not return. Normalization may make mechanical pixel-format changes only; if the subject, silhouette, pose, or style is wrong, change the prompt and generate a new numbered attempt.
+
+Revisit when:
+The Plastic Bottle style is accepted or remade, or a later generator exposes stable seed metadata.
+
+### REC-075 — Sprite states need a presentation lifecycle, not actor lifetime
+
+- Status: Accepted
+- Date: 2026-08-29
+- Affects: V0.4.1; sprite views, enemy presentation, four-frame sheets
+- Blocks: None
+
+Context / observation:
+The baseline sheet loaded correctly, but its view stayed on `idle` for its entire
+life. The named `move`, `hit`, and `death` frames existed in the theme contract
+without a runtime driver. Destruction also removed the view in the same call that
+removed the defeated actor, making a death frame impossible to observe.
+
+Decision / solution:
+Moving enemy views alternate `idle` and `move` at a presentation-only cadence,
+with a stable position-derived phase so a crowd does not animate in lockstep.
+Damage temporarily overrides that cycle with `hit`. On death, the view copies its
+last transform, unregisters from the actor, displays `death` for 220 ms, and then
+destroys itself; the gameplay actor is still destroyed immediately.
+
+Why:
+The four frames describe visual states, not four simulation states. Detaching the
+death remnant makes the broken pose readable without retaining a physics body,
+target, enemy-cap slot, or any state a system can query, preserving REC-072.
+
+Future guardrail:
+Animation time and frame choice remain presentation-only. Never delay actor
+destruction or derive gameplay timing, radius, collision, or capacity from a
+sprite frame.
+
+Revisit when:
+The player eight-frame cycle lands, or a subject needs more than the named-state
+contract can express.
+
+### REC-076 — Opaque generator previews are sources, not failed sprites
+
+- Status: Accepted
+- Date: 2026-09-02
+- Affects: V0.4.1; sprite generation, RGB decoding, alpha cleanup
+- Blocks: None
+
+Context / observation:
+Attempts two for Plastic Bag, Glass Bottle, Bagged Waste, and Environment
+Protector had the approved subjects and poses, but the built-in generator saved
+them as RGB PNG previews: three had a painted checkerboard and the player had a
+black backdrop. The original pipeline accepted only RGBA input and therefore
+could not reach its own alpha-clean step.
+
+Decision / solution:
+The PNG decoder accepts non-interlaced 8-bit RGB as well as RGBA and synthesizes
+opaque alpha for RGB sources. A source-declared background mode then flood-fills
+only backdrop-coloured pixels connected to the outer image edge. Checkerboard
+holes remain removable while enclosed white highlights and dark interior pixels
+remain artwork. Raw attempts are untouched; normalized accepted sheets and
+public sheets are deterministic outputs of `npm run sprites -- build`.
+
+Why:
+Rejecting a correct subject because its preview encoded transparency visually
+instead of structurally wastes the authored attempt. A global colour key would
+be worse: it would erase the Plastic Bag's white body and the player's dark gear.
+Edge connectivity separates backdrop from enclosed artwork without repainting.
+
+Future guardrail:
+Background cleanup may remove only edge-connected pixels matching the declared
+backdrop class. Subject, pose, spacing, and silhouette changes still require a
+new numbered generation attempt.
+
+Revisit when:
+A generator returns a backdrop that cannot be described safely as transparent,
+light neutral checkerboard, or black.
+
+### REC-077 — An eight-frame player sheet owns a four-frame presentation cycle
+
+- Status: Accepted
+- Date: 2026-09-02
+- Affects: V0.4.1; player sprite animation, atlas runtime
+- Blocks: None
+
+Context / observation:
+The shared seam exposes the four named states needed by every actor, while the
+style guide reserves player frames 0–3 for a real walk cycle and frame 4 for
+idle. Merely mapping `move` to frame 0 would leave three approved walk poses
+unreachable and the player static between damage flashes.
+
+Decision / solution:
+`SpriteView` recognizes the documented eight-frame sheet layout, detects visual
+movement from the actor's frame-to-frame position, cycles frames 0–3 at a
+presentation-only cadence, returns to frame 4 when stationary, and mirrors the
+image when horizontal movement changes direction. Hit and other named transient
+states continue to override the cycle. No entity, control, physics, or system
+state reads the selected frame.
+
+The five accepted sheets are packed as rows in one generated atlas. Theme
+definitions keep their unique semantic keys but share `atlas.png`; the loader
+queues that texture and its JSON once, and the view resolves semantic frame
+indices to atlas frame names. This preserves the single-texture batching reason
+the atlas was moved into Phase S1.
+
+Why:
+The player is the one subject granted a real animation budget, and the atlas is
+the safeguard against texture-switch churn in a 300-enemy crowd. Both must be
+real runtime behavior rather than unused build artifacts.
+
+Future guardrail:
+The eight-frame layout remains the style guide's authored contract. Movement
+observation and frame selection stay presentation-only, and every accepted
+sheet for a theme must be added to the shared atlas rather than loaded as a new
+runtime texture.
+
+Revisit when:
+A second player layout needs a different frame count or directional sheets.
+
+### REC-078 — Rebalance the roster before generating the rest of it
+
+- Status: Accepted
+- Date: 2026-09-02
+- Affects: V0.4.1; sprite milestone scope, manifest claims, future art inventory
+- Blocks: Sprite generation for manifest rows #6–19
+
+Context / observation:
+The first five sheets establish the style and cover the four original enemy
+roles plus the player. The next planned product work is a major game rebalance
+and design redirect. The remaining sprite inventory is dominated by content
+whose identity or presentation may change in that work: weapons, pickups,
+fragments, shrines, hazards, and elite treatment.
+
+Decision / solution:
+Close V0.4.1 as a first playable sprite checkpoint with rows #1–5 accepted and
+integrated. Keep rows #6–19 visible as `todo`, but gate all claims and generation
+until a post-rebalance sprite phase reconciles them against the revised content
+roster. That future phase owns the remaining S2–S5 scope and must confirm stable
+IDs, subjects, sizes, and frame roles before reactivating each row.
+
+Why:
+Art is presentation attached to stable content identity. Generating the old
+inventory before the redirect would either constrain the rebalance around sunk
+art cost or knowingly create throwaway sheets. The primitive fallback means the
+game remains complete and testable while the roster changes.
+
+Future guardrail:
+`todo` rows #6–19 are not claimable until the next sprite phase explicitly lifts
+this gate. Preserve accepted rows #1–5 as the style baseline unless the redirect
+changes the underlying content identity, in which case mark the affected sheet
+`stale` rather than silently reusing mismatched art.
+
+Revisit when:
+The major rebalance/design redirect has a committed content roster and the next
+sprite phase is planned.
+
 ## V0.4.2 entries — content
 
 <!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
+
+### REC-090 — Capacity-bound spawns cannot block causal effects
+
+- Status: Accepted
+- Date: 2026-08-29
+- Affects: V0.4.2; causal event queue, crowd-cap behaviour, on-kill effects
+- Blocks: None
+
+Context / observation:
+At the 300-enemy cap, a retained `spawn.requested` event at the head of the
+single causal FIFO stopped the processor for the frame. Explosions queued behind
+that spawn therefore remained at the dead enemy's recorded position until a slot
+became available, producing a delayed land-mine effect. Rendering capacity was
+not the cause; this was head-of-line blocking in application logic. REC-033
+explicitly left priority lanes as the revisit point for this failure mode.
+
+Decision / solution:
+The queue can now process a matching lane while retaining all non-matching work
+in its original order. The run scene spends its existing per-frame event budget
+on non-spawn causal work first, then on spawn requests when capacity exists.
+FIFO ordering and exact-once accounting are preserved within both lanes, while a
+capacity-bound spawn can no longer defer an explosion.
+
+Why:
+Spawns are allowed to wait for capacity; committed combat effects are not. This
+changes scheduling rather than balance and keeps the existing total event budget.
+
+Future guardrail:
+Any event that can be deferred by an external capacity must not be placed in
+front of time-sensitive committed effects in a globally blocking queue. Add a
+focused lane-order test whenever a new deferrable causal event kind is introduced.
+
+Revisit when:
+The retained spawn backlog itself becomes large enough that the lane scan affects
+the measured 300-enemy frame budget, or more than two scheduling classes exist.
 
 ## Open questions to reconcile during implementation
 

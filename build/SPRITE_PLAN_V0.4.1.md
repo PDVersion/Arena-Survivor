@@ -185,6 +185,27 @@ tuning in REC-052 and REC-067 was measured against those radii.
 
 Sized so each ends in something playable, per the milestone convention.
 
+### Checkpoint status — 2026-09-02
+
+This branch closes as a playable first sprite increment rather than completing
+the original twenty-generation inventory. The stop is deliberate: a major game
+rebalance and design redirect comes next, so generating art for content that may
+be renamed, replaced, resized, or removed would create avoidable rework.
+
+| Original phase | Delivered in this checkpoint | Moved to the next sprite phase |
+| --- | --- | --- |
+| S1 | Pipeline, RGB/RGBA normalization, transparent-background cleanup, shared atlas, Plastic Bottle | Final post-rebalance 300-enemy performance comparison |
+| S2 | Plastic Bag, Glass Bottle, Bagged Waste | Three fragment sheets and elite treatment |
+| S3 | Environment Protector with four-frame walk, idle, and hit presentation | Sorting Pulse projectile/icon and Impact Point pickup |
+| S4 | — | All four shrines and all three hazards |
+| S5 | One-atlas runtime and primitive fallback retained | Variants, full-roster polish, fallback proof, final frame-time measurement |
+
+The next sprite phase must begin by reconciling this inventory against the
+post-rebalance theme/content definitions. Do not claim or generate rows #6–19
+from the old list merely because they are `todo`; confirm that their stable IDs,
+sizes, frame roles, and subjects still exist first. Accepted rows #1–5 remain the
+style baseline unless the redirect explicitly changes their identities.
+
 ### Phase S1 — Pipeline, atlas, and the baseline sprite
 The loader, `scripts/sprites.ts` with all three commands, **atlas packing from
 day one** (see §6), and **one** sprite: the Plastic Bottle. Ends with bottles
@@ -342,3 +363,9 @@ the style lock plus one subject block into an image tool and running
 
 The last clause is the real deliverable. A finished roster that cannot be extended
 is worth less than a half-finished one that can.
+
+For the 2026-09-02 checkpoint, "done" is narrower: sheets #1–5 are accepted and
+live from one atlas, the build is reproducible from untouched raw attempts, and
+the remaining inventory is clearly handed to the post-rebalance sprite phase.
+The full-roster definition above remains the target for that future phase after
+its inventory is revalidated.
