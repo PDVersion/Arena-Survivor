@@ -2832,6 +2832,7 @@ export class RunScene extends Phaser.Scene {
         displayHeight: Math.round(this.scale.displaySize.height),
         worldWidth: Math.round(this.viewRect().width),
         worldHeight: Math.round(this.viewRect().height),
+        zoom: this.cameras.main.zoom,
         spawnRadius: Math.round(
           offScreenSpawnRadius(this.viewRect(), activeTheme.tuning.director.spawnMargin),
         ),

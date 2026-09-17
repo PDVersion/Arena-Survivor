@@ -115,7 +115,7 @@ the milestone branch and the only pull request into `main`.
 ## Phase tracker
 
 - [x] R0 — Neutral camera, pace, and weapon-orchestration seams
-- [ ] R1A — Tighter camera and cropped play area
+- [x] R1A — Tighter camera and cropped play area
 - [ ] R1B — Half-speed gameplay experiment
 - [ ] R1C — Cleanup Grabber melee starter
 - [ ] R2 — Combined integration, measurement, and play-test gate

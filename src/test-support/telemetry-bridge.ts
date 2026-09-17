@@ -181,6 +181,7 @@ export interface ArenaTestSnapshot {
     /** World-space rectangle currently visible. */
     worldWidth: number;
     worldHeight: number;
+    zoom: number;
     spawnRadius: number;
   }>;
   readonly pacing?: Readonly<{

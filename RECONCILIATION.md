@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.2 R0 complete on `codex/v0.4.2`: neutral camera, gameplay-rate, presentation-clock, and weapon timing seams preserve existing behaviour. R1A–R1C are next; content growth remains V0.4.3 and remaining sprites V0.4.4.**
+- Active phase: **V0.4.2 R1A complete on `codex/v0.4.2`: both production themes use a 2× camera while the fixed renderer, actor radii, bodies, and off-screen spawn invariant remain unchanged. R1B pace is next.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file

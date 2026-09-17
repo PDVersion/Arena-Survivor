@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
 
 async function snapshot(page: Page) {
   return page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
@@ -149,5 +150,5 @@ test("both overlays survive a resize", async ({ page }) => {
   expect(resized?.ui?.pauseOpen).toBe(true);
   expect(resized?.run?.status).toBe("paused");
   // The logical view is fixed, so the overlay reflows rather than rescaling.
-  expect(resized?.view?.worldWidth).toBe(1600);
+  expect(resized?.view?.worldWidth).toBe(1600 / activeTheme.tuning.view.zoom);
 });
