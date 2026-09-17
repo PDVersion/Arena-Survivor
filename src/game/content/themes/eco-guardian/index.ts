@@ -15,6 +15,8 @@ import { director } from "./director";
 import { difficulty } from "./difficulty";
 import { bodies } from "./bodies";
 import { hazards, hazardTuning } from "./hazards";
+import { view } from "./view";
+import { pace } from "./pace";
 
 /**
  * The production theme from V0.3 onward.
@@ -42,6 +44,8 @@ export const ecoGuardianTheme = defineTheme({
   elites,
   hazards,
   tuning: {
+    view,
+    pace,
     progression,
     director,
     difficulty,

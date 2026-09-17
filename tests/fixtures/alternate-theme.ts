@@ -254,6 +254,8 @@ export const alternateTheme = defineTheme({
   ],
   elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2.5, radiusMultiplier: 1.3, presentationToken: "elite" }],
   tuning: {
+    view: { zoom: 1 },
+    pace: { gameplayRate: 1 },
     progression: {
       xpCurve: { kind: "linear", baseXp: 2, step: 2 },
       toughnessRewardShare: 0,

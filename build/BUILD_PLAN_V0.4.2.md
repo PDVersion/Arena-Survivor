@@ -112,6 +112,14 @@ R2 merge, tune, play-test, and deliver codex/v0.4.2
 The feature branches are temporary implementation branches. `codex/v0.4.2` is
 the milestone branch and the only pull request into `main`.
 
+## Phase tracker
+
+- [x] R0 — Neutral camera, pace, and weapon-orchestration seams
+- [ ] R1A — Tighter camera and cropped play area
+- [ ] R1B — Half-speed gameplay experiment
+- [ ] R1C — Cleanup Grabber melee starter
+- [ ] R2 — Combined integration, measurement, and play-test gate
+
 ## Phase R0 — Land the three seams
 
 **Commit:** `build(v0.4.2): isolate view pace and weapon delivery seams`

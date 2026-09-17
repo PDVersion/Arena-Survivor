@@ -139,6 +139,9 @@ import {
   type HitStopState,
 } from "../systems/feedback/impact";
 import { shouldSpawnElite } from "../systems/elites/elites";
+import { configureRunCamera } from "../systems/view/configure-run-camera";
+import { resolveGameplayRate } from "../systems/time/gameplay-time";
+import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import {
   chainScaleAtDepth,
   explosionDamage,
@@ -532,7 +535,6 @@ export class RunScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
-    this.cameras.main.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.drawArena();
 
     this.player = new PlayerActor(
@@ -543,7 +545,9 @@ export class RunScene extends Phaser.Scene {
       activeTheme.tokens,
     );
     this.planShrineArrivals();
-    this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
+    configureRunCamera(this.cameras.main, ARENA_SIZE, this.player, activeTheme.tuning.view.zoom);
+    this.time.timeScale = activeTheme.tuning.pace.gameplayRate;
+    this.tweens.timeScale = activeTheme.tuning.pace.gameplayRate;
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
     this.projectileGroup = this.physics.add.group({ runChildUpdate: false });
@@ -618,7 +622,12 @@ export class RunScene extends Phaser.Scene {
     // the run still ends after its full simulated duration.
     const frozen = isHitStopActive(this.hitStop, time);
     const dying = time < this.deathSlowUntilMs;
-    const timeScale = this.reducedMotion ? 1 : frozen ? 0.08 : dying ? 0.35 : 1;
+    const timeScale = resolveGameplayRate({
+      baseRate: activeTheme.tuning.pace.gameplayRate,
+      reducedMotion: this.reducedMotion,
+      hitStopActive: frozen,
+      deathSlowActive: dying,
+    });
     if (this.physics.world.timeScale !== 1 / timeScale) {
       this.physics.world.timeScale = 1 / timeScale;
     }
@@ -1686,9 +1695,8 @@ export class RunScene extends Phaser.Scene {
       1,
       Math.floor(this.weaponDefinition.projectileCount + this.runState.weaponModifiers.projectileCount),
     );
-    for (let index = 0; index < projectileCount; index += 1) {
+    for (const angle of projectileSpreadAngles(baseAngle, projectileCount)) {
       if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) break;
-      const offset = (index - (projectileCount - 1) / 2) * 0.12;
       const projectile = new ProjectileActor(
         this,
         `projectile-${this.projectileSequence + 1}`,
@@ -1708,17 +1716,17 @@ export class RunScene extends Phaser.Scene {
       this.projectiles.add(projectile);
       this.projectileGroup.add(projectile);
       this.projectileSequence += 1;
-      projectile.launch(baseAngle + offset, this.weaponDefinition.projectileSpeed);
+      projectile.launch(angle, this.weaponDefinition.projectileSpeed);
       projectile.once(Phaser.GameObjects.Events.DESTROY, () => this.projectiles.delete(projectile));
       this.shotsFired += 1;
       if (damage.critical) this.criticalShots += 1;
       this.runState = observeRunCrit(this.runState, damage.tier);
     }
-    const attackSpeedMultiplier = Math.max(
-      0.01,
-      1 + this.runState.player.stats.attackSpeedBonus + this.bloodlustAttackSpeedBonus,
+    this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
+      this.weaponDefinition.cooldownMs,
+      this.runState.player.stats.attackSpeedBonus,
+      this.bloodlustAttackSpeedBonus,
     );
-    this.nextFireAtMs = this.runState.elapsedMs + this.weaponDefinition.cooldownMs / attackSpeedMultiplier;
   }
 
   /** Projectiles clear destructible obstacles; clearing one is the reward. */

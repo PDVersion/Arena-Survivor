@@ -643,6 +643,17 @@ function validateTuning(
     return issues;
   }
 
+  if (!Number.isFinite(tuning.view?.zoom) || tuning.view.zoom <= 0) {
+    issues.push("tuning.view.zoom must be greater than zero");
+  }
+  if (
+    !Number.isFinite(tuning.pace?.gameplayRate) ||
+    tuning.pace.gameplayRate <= 0 ||
+    tuning.pace.gameplayRate > 1
+  ) {
+    issues.push("tuning.pace.gameplayRate must be greater than zero and at most one");
+  }
+
   const curve = tuning.progression?.xpCurve;
   if (!curve) {
     issues.push("tuning.progression.xpCurve is required");

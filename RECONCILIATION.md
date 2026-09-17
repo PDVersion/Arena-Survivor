@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.2 planned, not started: land the neutral seam, then build the 2× cropped view, 0.5 gameplay rate, and Cleanup Grabber in three parallel feature branches before core integration. The old content-growth V0.4.2 is now V0.4.3; remaining sprites are V0.4.4.**
+- Active phase: **V0.4.2 R0 complete on `codex/v0.4.2`: neutral camera, gameplay-rate, presentation-clock, and weapon timing seams preserve existing behaviour. R1A–R1C are next; content growth remains V0.4.3 and remaining sprites V0.4.4.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
