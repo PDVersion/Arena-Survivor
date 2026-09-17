@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
+import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import type { UpgradeDefinition } from "../../../src/game/core/archetypes/contracts";
 import {
@@ -16,7 +17,9 @@ import { createWorldState } from "../../../src/game/systems/chaos/world-modifier
 import { skillLevel, skillMaxLevel } from "../../../src/game/systems/skills/resolve-skill";
 
 const character = ecoGuardianTheme.characters[0]!;
-const pool = ecoGuardianTheme.upgrades;
+// Generic upgrade mechanics use the complete projectile pack; eco deliberately
+// parks projectile and burst-chain offers while its grabber is active.
+const pool = knightMagicTheme.upgrades;
 
 function upgrade(id: string): UpgradeDefinition {
   const found = pool.find((entry) => entry.id === id);
@@ -35,7 +38,7 @@ function baseState(): UpgradeableState {
 }
 
 const maxLevelFor = (skillId: Parameters<typeof skillMaxLevel>[1]): number =>
-  skillMaxLevel(ecoGuardianTheme.skills, skillId);
+  skillMaxLevel(knightMagicTheme.skills, skillId);
 
 describe("upgrade application", () => {
   it("adds stat effects and heals when maximum health rises", () => {

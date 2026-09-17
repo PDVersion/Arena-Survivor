@@ -42,7 +42,9 @@ test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statisti
     totalDamage: expect.any(Number),
   });
   expect(terminal?.statistics?.highestCritTier).toBeGreaterThanOrEqual(3);
-  expect(terminal?.statistics?.longestPierceChain).toBeGreaterThan(0);
+  expect(terminal?.combat?.deliveryKind).toBe("melee");
+  expect(terminal?.combat?.meleeHits).toBeGreaterThan(0);
+  expect(terminal?.combat?.projectiles).toBe(0);
   expect(terminal?.statistics?.largestKillChain).toBeGreaterThan(0);
   const breakdown = terminal?.statistics?.damageBreakdown;
   const breakdownTotal = breakdown ? Object.values(breakdown).reduce((total, value) => total + value, 0) : 0;

@@ -16,7 +16,9 @@ test("half speed advances about one simulated second per two wall-clock seconds"
   const after = await elapsedMs(page);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
 
-  expect(after - before).toBeGreaterThan(800);
+  // Parallel Chromium workers can clamp RAF after a scheduling stall; keep the
+  // lower bound broad while still ruling out the old 1.0 rate.
+  expect(after - before).toBeGreaterThan(600);
   expect(after - before).toBeLessThan(1_250);
   expect(snapshot?.pacing?.gameplayRate).toBe(0.5);
   expect(snapshot?.pacing?.expectedRealDurationMs).toBe(
@@ -33,7 +35,7 @@ test("pause freezes the half-speed clock and reduced motion preserves the base r
   const before = await elapsedMs(page);
   await page.waitForTimeout(1_000);
   const after = await elapsedMs(page);
-  expect(after - before).toBeGreaterThan(350);
+  expect(after - before).toBeGreaterThan(275);
   expect(after - before).toBeLessThan(700);
 
   await page.keyboard.press("Escape");

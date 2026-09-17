@@ -84,6 +84,7 @@ test("separation never alters damage, rewards, or statistics", async ({ page }) 
   expect(terminal?.statistics?.kills).toBeGreaterThan(0);
   expect(terminal?.crowd?.adjustments).toBeGreaterThan(0);
   expect(terminal?.crowd?.coincidentPairs).toBe(0);
-  // Both production weapons declare zero knockback, so none is applied.
-  expect(terminal?.crowd?.weaponShoves).toBe(0);
+  // The grabber's small shove is presentation-independent and leaves the
+  // damage/reward ledger unchanged.
+  expect(terminal?.crowd?.weaponShoves).toBeGreaterThan(0);
 });

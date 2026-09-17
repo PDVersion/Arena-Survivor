@@ -163,7 +163,8 @@ export const alternateTheme = defineTheme({
   ],
   weapons: [
     {
-      id: archetypeIds.weapon.starterProjectile,
+      id: archetypeIds.weapon.starter,
+      deliveryKind: "projectile",
       damage: 10,
       cooldownMs: 1000,
       range: 1000,

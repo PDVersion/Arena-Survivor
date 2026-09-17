@@ -109,7 +109,7 @@ export const copy = {
       name: "Wandering Knight",
       description: "A lone champion entering the Ember Court.",
     },
-    [archetypeIds.weapon.starterProjectile]: {
+    [archetypeIds.weapon.starter]: {
       name: "Magic Needle",
       description: "A precise enchanted projectile that seeks the nearest foe.",
     },

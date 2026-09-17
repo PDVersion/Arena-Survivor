@@ -190,21 +190,6 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(weapon.cooldownMs) || weapon.cooldownMs <= 0) {
       issues.push(`${weapon.id} cooldownMs must be greater than zero`);
     }
-    if (!Number.isFinite(weapon.projectileSpeed) || weapon.projectileSpeed <= 0) {
-      issues.push(`${weapon.id} projectileSpeed must be greater than zero`);
-    }
-    if (!Number.isFinite(weapon.projectileLifetimeMs) || weapon.projectileLifetimeMs <= 0) {
-      issues.push(`${weapon.id} projectileLifetimeMs must be greater than zero`);
-    }
-    if (!Number.isFinite(weapon.projectileRadius) || weapon.projectileRadius <= 0) {
-      issues.push(`${weapon.id} projectileRadius must be greater than zero`);
-    }
-    if (!Number.isInteger(weapon.projectileCount) || weapon.projectileCount < 1) {
-      issues.push(`${weapon.id} projectileCount must be a positive integer`);
-    }
-    if (!Number.isInteger(weapon.pierce) || weapon.pierce < 0) {
-      issues.push(`${weapon.id} pierce must be a non-negative integer`);
-    }
     if (!Number.isFinite(weapon.range) || weapon.range <= 0) {
       issues.push(`${weapon.id} range must be greater than zero`);
     }
@@ -220,19 +205,52 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (weapon.critDamage !== undefined && (!Number.isFinite(weapon.critDamage) || weapon.critDamage < 1)) {
       issues.push(`${weapon.id} critDamage must be at least one`);
     }
-    // Delivery has to be able to cover the declared range. Leaving range
-    // implicit in speed and lifetime is what let the REC-049 envelope break go
-    // unnoticed until a hosted runner surfaced it.
-    const projectileReach = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
-    if (Number.isFinite(projectileReach) && Number.isFinite(weapon.range) && projectileReach < weapon.range) {
-      issues.push(`${weapon.id} projectile flight cannot reach its declared range`);
+    if (weapon.deliveryKind === "projectile") {
+      if (!Number.isFinite(weapon.projectileSpeed) || weapon.projectileSpeed <= 0) {
+        issues.push(`${weapon.id} projectileSpeed must be greater than zero`);
+      }
+      if (!Number.isFinite(weapon.projectileLifetimeMs) || weapon.projectileLifetimeMs <= 0) {
+        issues.push(`${weapon.id} projectileLifetimeMs must be greater than zero`);
+      }
+      if (!Number.isFinite(weapon.projectileRadius) || weapon.projectileRadius <= 0) {
+        issues.push(`${weapon.id} projectileRadius must be greater than zero`);
+      }
+      if (!Number.isInteger(weapon.projectileCount) || weapon.projectileCount < 1) {
+        issues.push(`${weapon.id} projectileCount must be a positive integer`);
+      }
+      if (!Number.isInteger(weapon.pierce) || weapon.pierce < 0) {
+        issues.push(`${weapon.id} pierce must be a non-negative integer`);
+      }
+      const projectileReach = (weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000;
+      if (Number.isFinite(projectileReach) && Number.isFinite(weapon.range) && projectileReach < weapon.range) {
+        issues.push(`${weapon.id} projectile flight cannot reach its declared range`);
+      }
+    } else {
+      if (!Number.isFinite(weapon.reach) || weapon.reach <= 0) {
+        issues.push(`${weapon.id} reach must be greater than zero`);
+      }
+      if (!Number.isFinite(weapon.width) || weapon.width <= 0) {
+        issues.push(`${weapon.id} width must be greater than zero`);
+      }
+      if (!Number.isInteger(weapon.targetCap) || weapon.targetCap < 1) {
+        issues.push(`${weapon.id} targetCap must be a positive integer`);
+      }
+      if (!Number.isFinite(weapon.extendMs) || weapon.extendMs <= 0) {
+        issues.push(`${weapon.id} extendMs must be greater than zero`);
+      }
+      if (!Number.isFinite(weapon.retractMs) || weapon.retractMs <= 0) {
+        issues.push(`${weapon.id} retractMs must be greater than zero`);
+      }
+      if (Number.isFinite(weapon.range) && Number.isFinite(weapon.reach) && weapon.reach < weapon.range) {
+        issues.push(`${weapon.id} melee reach cannot cover its declared range`);
+      }
     }
     if (!(weapon.presentationToken in theme.tokens.palette)) {
       issues.push(`${weapon.id} references missing presentation token: ${weapon.presentationToken}`);
     }
   }
-  if (!weaponIds.has(archetypeIds.weapon.starterProjectile)) {
-    issues.push(`missing required weapon: ${archetypeIds.weapon.starterProjectile}`);
+  if (!weaponIds.has(archetypeIds.weapon.starter)) {
+    issues.push(`missing required weapon: ${archetypeIds.weapon.starter}`);
   }
 
   const enemyIds = new Set<string>();
@@ -362,7 +380,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} has an unsupported category: ${String(upgrade.category)}`);
     }
   }
-  for (const requiredId of Object.values(archetypeIds.upgrade)) {
+  // Upgrade pools are theme-owned. Only the universal damage role is required;
+  // delivery-specific and build-defining offers may be parked per theme.
+  for (const requiredId of [archetypeIds.upgrade.damage]) {
     if (!upgradeIds.has(requiredId)) issues.push(`missing required upgrade: ${requiredId}`);
   }
 

@@ -286,9 +286,13 @@ export interface ArenaTestSnapshot {
   }>;
   readonly combat?: Readonly<{
     weaponId: string | null;
+    deliveryKind: "projectile" | "melee" | null;
     enemyId: string | null;
     projectiles: number;
     shotsFired: number;
+    meleeStrikes: number;
+    meleeHits: number;
+    grabberActive: number;
     criticalShots: number;
     highestCritTier: number;
     longestPierceChain: number;

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import type { ThemeTokens, WeaponDefinition } from "../core/archetypes/contracts";
+import type { ProjectileWeaponDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { consumePierce, createPierceState, piercingMomentumDamage, type PierceState } from "../systems/combat";
 import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
@@ -24,7 +24,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     projectileId: string,
     x: number,
     y: number,
-    definition: WeaponDefinition,
+    definition: ProjectileWeaponDefinition,
     tokens: ThemeTokens,
     damage: number,
     normalDamage: number,

@@ -3,7 +3,8 @@ import type { WeaponDefinition } from "../../../core/archetypes/contracts";
 
 export const weapons = [
   {
-    id: archetypeIds.weapon.starterProjectile,
+    id: archetypeIds.weapon.starter,
+    deliveryKind: "projectile",
     damage: 10,
     cooldownMs: 1000,
     // Comfortably beyond the ~958-unit off-screen spawn ring, so the player can

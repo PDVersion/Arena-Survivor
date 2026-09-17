@@ -81,7 +81,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
   const theme = options.theme;
   const tuning = theme.tuning;
-  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starterProjectile);
+  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter);
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter);
   if (!weapon || !character) throw new Error("The theme is missing required simulation content");
 
@@ -252,7 +252,7 @@ export interface TimeToKillRow {
  */
 export function timeToKillTable(report: PacingReport, options: PacingOptions): readonly TimeToKillRow[] {
   const theme = options.theme;
-  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starterProjectile)!;
+  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter)!;
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
   const world = chaosWorldState(options.chaos ?? 1);
 

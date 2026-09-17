@@ -3,7 +3,7 @@ export const archetypeIds = {
     starter: "character.starter",
   },
   weapon: {
-    starterProjectile: "weapon.starter_projectile",
+    starter: "weapon.starter",
   },
   enemy: {
     swarmBasic: "enemy.swarm_basic",

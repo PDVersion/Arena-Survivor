@@ -147,9 +147,9 @@ describe("theme manifests", () => {
 
     expect(validateTheme(invalid)).toEqual(
       expect.arrayContaining([
-        `duplicate weapon id: ${archetypeIds.weapon.starterProjectile}`,
-        `${archetypeIds.weapon.starterProjectile} damage must be greater than zero`,
-        `${archetypeIds.weapon.starterProjectile} pierce must be a non-negative integer`,
+        `duplicate weapon id: ${archetypeIds.weapon.starter}`,
+        `${archetypeIds.weapon.starter} damage must be greater than zero`,
+        `${archetypeIds.weapon.starter} pierce must be a non-negative integer`,
         `duplicate enemy id: ${archetypeIds.enemy.swarmBasic}`,
         `${archetypeIds.enemy.swarmBasic} maxHealth must be greater than zero`,
         `${archetypeIds.enemy.swarmBasic} radius must be greater than zero`,
@@ -170,7 +170,7 @@ describe("theme manifests", () => {
     expect(validateTheme(invalid)).toEqual(
       expect.arrayContaining([
         "weapons registry is required",
-        `missing required weapon: ${archetypeIds.weapon.starterProjectile}`,
+        `missing required weapon: ${archetypeIds.weapon.starter}`,
         "enemies registry is required",
         `missing required enemy: ${archetypeIds.enemy.swarmBasic}`,
         "pickups registry is required",

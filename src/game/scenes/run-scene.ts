@@ -13,6 +13,7 @@ import { EnemyActor } from "../entities/enemy-actor";
 import { PickupActor } from "../entities/pickup-actor";
 import { PlayerActor } from "../entities/player-actor";
 import { ProjectileActor } from "../entities/projectile-actor";
+import { GrabberActor } from "../entities/grabber-actor";
 import { ShrineActor } from "../entities/shrine-actor";
 import type { EnemySpawnSource } from "../entities/enemy-actor";
 import { createInitialProfile } from "../state/profile-state";
@@ -145,6 +146,7 @@ import {
   resolveGameplayRate,
 } from "../systems/time/gameplay-time";
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
+import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import {
   chainScaleAtDepth,
   explosionDamage,
@@ -379,6 +381,9 @@ export class RunScene extends Phaser.Scene {
   private enemySequence = 0;
   private projectileSequence = 0;
   private shotsFired = 0;
+  private meleeStrikes = 0;
+  private meleeHits = 0;
+  private activeGrabbers = 0;
   private criticalShots = 0;
   private contactHits = 0;
   private pickupSequence = 0;
@@ -468,7 +473,7 @@ export class RunScene extends Phaser.Scene {
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
     );
     this.weaponDefinition = activeTheme.weapons.find(
-      (weapon) => weapon.id === archetypeIds.weapon.starterProjectile,
+      (weapon) => weapon.id === archetypeIds.weapon.starter,
     );
     this.pickupDefinition = activeTheme.pickups.find(
       (pickup) => pickup.id === archetypeIds.pickup.experience,
@@ -784,6 +789,9 @@ export class RunScene extends Phaser.Scene {
     this.enemySequence = 0;
     this.projectileSequence = 0;
     this.shotsFired = 0;
+    this.meleeStrikes = 0;
+    this.meleeHits = 0;
+    this.activeGrabbers = 0;
     this.criticalShots = 0;
     this.contactHits = 0;
     this.pickupSequence = 0;
@@ -872,8 +880,8 @@ export class RunScene extends Phaser.Scene {
       // `representativeLoad`.
       const requestedPoint = testSkillEnabled("closeLoad") && this.player && definition
         ? {
-            x: Math.min(ARENA_SIZE.width - definition.radius, Math.max(definition.radius, this.player.x + Math.cos(closeAngle) * 100)),
-            y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * 100)),
+            x: Math.min(ARENA_SIZE.width - definition.radius, Math.max(definition.radius, this.player.x + Math.cos(closeAngle) * (this.weaponDefinition?.deliveryKind === "melee" ? this.weaponDefinition.reach * 0.75 : 100))),
+            y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * (this.weaponDefinition?.deliveryKind === "melee" ? this.weaponDefinition.reach * 0.75 : 100))),
           }
         : undefined;
       if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
@@ -1664,15 +1672,16 @@ export class RunScene extends Phaser.Scene {
       !this.runState ||
       !this.weaponDefinition ||
       !this.projectileGroup ||
-      this.runState.elapsedMs < this.nextFireAtMs ||
-      !canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)
+      this.runState.elapsedMs < this.nextFireAtMs
     ) {
       return;
     }
 
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const target = findNearestTarget(this.player, this.enemies);
+    const target = this.weaponDefinition.deliveryKind === "melee"
+      ? selectMeleeAim(this.player, this.enemies, this.weaponDefinition.reach)
+      : findNearestTarget(this.player, this.enemies);
     if (!target) return;
 
     const baseAngle = Phaser.Math.Angle.Between(this.player.x, this.player.y, target.x, target.y);
@@ -1685,6 +1694,52 @@ export class RunScene extends Phaser.Scene {
       critDamage: this.weaponDefinition.critDamage ?? this.runState.player.stats.critDamage,
       random: Math.random,
     });
+    if (this.weaponDefinition.deliveryKind === "melee") {
+      const hits = selectMeleeHits(
+        this.player,
+        baseAngle,
+        this.weaponDefinition,
+        this.enemies,
+      );
+      if (hits.length === 0) return;
+      this.activeGrabbers += 1;
+      new GrabberActor(
+        this,
+        this.player.x,
+        this.player.y,
+        baseAngle,
+        this.weaponDefinition,
+        activeTheme.tokens,
+        () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); },
+      );
+      this.meleeStrikes += 1;
+      this.shotsFired += 1;
+      if (damage.critical) this.criticalShots += 1;
+      this.runState = observeRunCrit(this.runState, damage.tier);
+      for (const enemy of hits) {
+        accumulateDamage(
+          this.damageNumbers,
+          { targetId: enemy.targetId, amount: damage.damage, tier: damage.tier, x: enemy.x, y: enemy.y },
+          this.runState.elapsedMs,
+          DAMAGE_NUMBER_WINDOW_MS,
+        );
+        this.commitEnemyDamage(enemy, damage.damage, "direct", undefined, {
+          directBase: damage.baseDamage,
+          criticalBonus: damage.bonusDamage,
+          piercingMomentum: 0,
+        });
+        this.applyWeaponKnockback(enemy);
+        this.meleeHits += 1;
+      }
+      this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
+        this.weaponDefinition.cooldownMs,
+        this.runState.player.stats.attackSpeedBonus,
+        this.bloodlustAttackSpeedBonus,
+      );
+      return;
+    }
+
+    if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) return;
     const momentumEffect = findSkillEffect(
       activeTheme.skills,
       archetypeIds.skill.piercingMomentum,
@@ -2647,9 +2702,13 @@ export class RunScene extends Phaser.Scene {
         : undefined,
       combat: {
         weaponId: this.weaponDefinition?.id ?? null,
+        deliveryKind: this.weaponDefinition?.deliveryKind ?? null,
         enemyId: this.enemyDefinition?.id ?? null,
         projectiles: this.projectiles.size,
         shotsFired: this.shotsFired,
+        meleeStrikes: this.meleeStrikes,
+        meleeHits: this.meleeHits,
+        grabberActive: this.activeGrabbers,
         criticalShots: this.criticalShots,
         highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
         longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,

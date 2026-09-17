@@ -2127,6 +2127,43 @@ wait is too long, or the grabber cannot stay engaging through the first two
 simulated minutes. Adjust the single view/rate tuning values or theme-owned
 grabber data before broadening scope.
 
+### REC-092 — Weapon roles are delivery-neutral and theme pools may differ
+
+- Status: Accepted
+- Date: 2026-09-17
+- Affects: V0.4.2 onward; weapon contracts, theme validation, upgrade pools, UI stats
+- Blocks: None
+
+Context / observation:
+The required `weapon.starter_projectile` role forced every theme to expose
+projectile fields and every pause surface to show projectile count and pierce.
+Keeping those assumptions while adding a grabber would either create inert
+offers or make systems infer delivery from a theme identity.
+
+Decision / solution:
+Rename the required role to `weapon.starter` before persistence ships and make
+`WeaponDefinition` a discriminated projectile/melee union. The eco definition
+uses a 78-unit, 18-unit-wide, one-target stab; knight-magic retains the existing
+projectile values. Theme validation checks only fields belonging to the selected
+delivery. Upgrade registries may differ by theme, with only the universal damage
+role required; eco parks pierce, projectile-count, piercing-momentum,
+on-kill-explosion, and chain-reaction offers while knight-magic keeps them.
+Resolved stat lines likewise omit projectile-only values for melee weapons.
+
+Why:
+Delivery is mechanical data, not theme identity. The union lets reusable systems
+remain generic while preventing impossible combinations at compile time. A
+theme-owned upgrade pool is necessary for every offered choice to do real work.
+
+Future guardrail:
+Systems branch only on `deliveryKind`, never on a theme or player-facing name.
+A melee attack does not instantiate `ProjectileActor` or consume projectile
+capacity. Presentation reads the authored reach but never defines it.
+
+Revisit when:
+A second melee shape needs an arc or area cap, weapon slots make more than one
+delivery active at once, or saved weapon IDs require a migration table.
+
 ## V0.4.3 entries — content growth
 
 <!-- REC-090 is preserved here as an early merged discovery. New V0.4.3 entries use REC-100 to REC-119. -->

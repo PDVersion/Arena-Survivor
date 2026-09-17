@@ -206,7 +206,7 @@ Deliver:
 Do not change any authored speed, health, damage, cooldown, director, or hazard
 coefficient in this branch.
 
-### R1C — Cleanup Grabber melee starter
+### R1C — Cleanup Grabber melee starter ✅
 
 **Branch:** `codex/v0.4.2-grabber`
 **Commit:** `feat(v0.4.2): replace the eco starter with a cleanup grabber`

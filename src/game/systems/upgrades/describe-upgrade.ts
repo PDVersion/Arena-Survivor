@@ -76,22 +76,19 @@ export function selectPlayerStats(
   const attackRate = weapon ? (1000 / weapon.cooldownMs) * (1 + stats.attackSpeedBonus) : 0;
   const damage = weapon ? weapon.damage * (1 + stats.damageBonus) : 0;
 
+  const deliveryLines: readonly (readonly [StatKey, number, string])[] = weapon?.deliveryKind === "projectile"
+    ? [
+        ["projectiles", weapon.projectileCount + state.weaponModifiers.projectileCount, number(weapon.projectileCount + state.weaponModifiers.projectileCount)],
+        ["pierce", weapon.pierce + state.weaponModifiers.pierce, number(weapon.pierce + state.weaponModifiers.pierce)],
+      ]
+    : [];
   const lines: readonly (readonly [StatKey, number, string])[] = [
     ["health", state.player.health, `${Math.ceil(state.player.health)} / ${Math.ceil(stats.maxHealth)}`],
     ["damage", damage, number(damage)],
     ["attackRate", attackRate, `${round(attackRate, 2)} /s`],
     ["critChance", stats.critChance, percent(stats.critChance)],
     ["critDamage", stats.critDamage, multiplier(stats.critDamage)],
-    [
-      "projectiles",
-      (weapon?.projectileCount ?? 0) + state.weaponModifiers.projectileCount,
-      number((weapon?.projectileCount ?? 0) + state.weaponModifiers.projectileCount),
-    ],
-    [
-      "pierce",
-      (weapon?.pierce ?? 0) + state.weaponModifiers.pierce,
-      number((weapon?.pierce ?? 0) + state.weaponModifiers.pierce),
-    ],
+    ...deliveryLines,
     ["range", weapon?.range ?? 0, number(weapon?.range ?? 0)],
     ["knockback", weapon?.knockback ?? 0, number(weapon?.knockback ?? 0)],
     ["armourPierce", weapon?.armourPierce ?? 0, percent(weapon?.armourPierce ?? 0)],
