@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.2 R1A and R1B complete on `codex/v0.4.2`: both production themes use a 2× camera and a 0.5 gameplay rate without changing authored balance values. R1C grabber delivery is next.**
+- Active phase: **V0.4.2 complete on `codex/v0.4.2`: 2× view, 0.5 gameplay rate, delivery-neutral starter contract, Cleanup Grabber, measurements, and play-test gate are recorded. V0.4.3 is next.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2163,6 +2163,50 @@ capacity. Presentation reads the authored reach but never defines it.
 Revisit when:
 A second melee shape needs an arc or area cap, weapon slots make more than one
 delivery active at once, or saved weapon IDs require a migration table.
+
+### REC-093 — The combined readable baseline passes its measured gate
+
+- Status: Accepted
+- Date: 2026-09-17
+- Affects: V0.4.2 onward; baseline pacing, visible occupancy, performance budget
+- Blocks: None
+
+Context / observation:
+Zoom, rate, and delivery each passed alone, but their combination could still
+have produced an empty opening, an unreadable tool, or a 300-enemy regression.
+The simulator also continued to print authored duration as though it were wall
+time, hiding the most important consequence of the 0.5 experiment.
+
+Measurement:
+One production-rate browser observation ran for 120 simulated seconds (about
+four real minutes), auto-resolving level cards and suppressing contact damage so
+the same run could be observed continuously. The first enemy entered the view at
+2,349 ms, the first grab landed at 4,844 ms, the first kill at 5,849 ms, and the
+first level at 12,890 ms. Visible occupancy was 22 at 30 seconds, 49 at 60, and
+144 at 120; peak visible occupancy was 144. A separate 300-enemy mixed-roster
+stress run at zoom 2 sampled 210 frames at 8.05 ms average and 11.67 ms maximum,
+with 290 enemies visible at peak. The technical cap therefore remains 300.
+
+Decision / solution:
+Keep zoom 2 and gameplay rate 0.5 for the next play-test baseline. The balance
+report now prints simulated and expected real duration together (5:00 authored
+is 10:00 wall time). The primitive grabber uses a high-contrast light shaft,
+green grip/jaws, and a contact ring; local visual inspection showed all four
+accepted enemy silhouettes together and the full grabber extension above them.
+The five play-test questions pass for this developer baseline: roles and tool
+motion are legible, interaction begins quickly, the cropped view fills far below
+the cap, and the single-target loop remained active through two simulated
+minutes without projectile, pierce, splash, or chain delivery.
+
+Future guardrail:
+Keep the long observation opt-in via `ARENA_LONG_MEASURE=1`; ordinary CI must not
+gain four minutes. Every future pacing pass records simulated time separately
+from wall time and repeats the 300-enemy frame sample after renderer changes.
+
+Revisit when:
+External play testing finds 0.5 tiring, the 120-second occupancy too dense, or
+the final grabber sprite makes extend/contact/retract less legible than the
+primitive fallback.
 
 ## V0.4.3 entries — content growth
 

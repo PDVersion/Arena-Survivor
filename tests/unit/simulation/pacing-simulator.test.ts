@@ -31,6 +31,13 @@ describe("pacing simulator", () => {
     expect(run()).toEqual(run());
   });
 
+  it("reports simulated and expected wall-clock duration together", () => {
+    const report = run();
+    expect(report.gameplayRate).toBe(0.5);
+    expect(report.expectedRealDurationMs).toBe(FIVE_MINUTES_MS * 2);
+    expect(formatPacingReport(report)).toContain("5:00 simulated / 10:00 real at 0.50x");
+  });
+
   it("covers the whole run in contiguous buckets", () => {
     const report = run();
     expect(report.buckets.length).toBeGreaterThan(0);

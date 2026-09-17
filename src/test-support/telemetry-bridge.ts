@@ -182,6 +182,8 @@ export interface ArenaTestSnapshot {
     worldWidth: number;
     worldHeight: number;
     zoom: number;
+    visibleEnemies: number;
+    peakVisibleEnemies: number;
     spawnRadius: number;
   }>;
   readonly pacing?: Readonly<{
@@ -293,6 +295,9 @@ export interface ArenaTestSnapshot {
     meleeStrikes: number;
     meleeHits: number;
     grabberActive: number;
+    firstMeleeHitAtMs: number | null;
+    firstKillAtMs: number | null;
+    firstContactAtMs: number | null;
     criticalShots: number;
     highestCritTier: number;
     longestPierceChain: number;

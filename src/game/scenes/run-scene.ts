@@ -384,6 +384,10 @@ export class RunScene extends Phaser.Scene {
   private meleeStrikes = 0;
   private meleeHits = 0;
   private activeGrabbers = 0;
+  private firstMeleeHitAtMs: number | null = null;
+  private firstKillAtMs: number | null = null;
+  private firstContactAtMs: number | null = null;
+  private peakVisibleEnemies = 0;
   private criticalShots = 0;
   private contactHits = 0;
   private pickupSequence = 0;
@@ -792,6 +796,10 @@ export class RunScene extends Phaser.Scene {
     this.meleeStrikes = 0;
     this.meleeHits = 0;
     this.activeGrabbers = 0;
+    this.firstMeleeHitAtMs = null;
+    this.firstKillAtMs = null;
+    this.firstContactAtMs = null;
+    this.peakVisibleEnemies = 0;
     this.criticalShots = 0;
     this.contactHits = 0;
     this.pickupSequence = 0;
@@ -1730,6 +1738,7 @@ export class RunScene extends Phaser.Scene {
         });
         this.applyWeaponKnockback(enemy);
         this.meleeHits += 1;
+        this.firstMeleeHitAtMs ??= this.runState.elapsedMs;
       }
       this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
         this.weaponDefinition.cooldownMs,
@@ -1886,6 +1895,7 @@ export class RunScene extends Phaser.Scene {
       ...direct,
     });
     if (!result.killed) return;
+    this.firstKillAtMs ??= this.runState.elapsedMs;
     if (!this.eventQueue.claimLethal(enemy.targetId)) return;
     this.eventSequence += 1;
     const deathEventId = `death-${this.eventSequence}`;
@@ -2412,6 +2422,7 @@ export class RunScene extends Phaser.Scene {
     this.lastContactDamageAtMs = this.runState.elapsedMs;
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
+    this.firstContactAtMs ??= this.runState.elapsedMs;
     if (enemy.solid) this.shovePlayer(enemy);
     this.player.setAlpha(0.35);
     this.player.flashDamage(activeTheme.tokens.palette.critical);
@@ -2656,6 +2667,13 @@ export class RunScene extends Phaser.Scene {
     const summary = this.runState
       ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
       : undefined;
+    const view = this.viewRect();
+    const visibleEnemies = [...this.enemies].filter(
+      (enemy) => enemy.active && !enemy.defeated &&
+        Math.abs(enemy.x - view.centreX) <= view.width / 2 + enemy.radius &&
+        Math.abs(enemy.y - view.centreY) <= view.height / 2 + enemy.radius,
+    ).length;
+    this.peakVisibleEnemies = Math.max(this.peakVisibleEnemies, visibleEnemies);
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -2709,6 +2727,9 @@ export class RunScene extends Phaser.Scene {
         meleeStrikes: this.meleeStrikes,
         meleeHits: this.meleeHits,
         grabberActive: this.activeGrabbers,
+        firstMeleeHitAtMs: this.firstMeleeHitAtMs,
+        firstKillAtMs: this.firstKillAtMs,
+        firstContactAtMs: this.firstContactAtMs,
         criticalShots: this.criticalShots,
         highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
         longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,
@@ -2895,6 +2916,8 @@ export class RunScene extends Phaser.Scene {
         worldWidth: Math.round(this.viewRect().width),
         worldHeight: Math.round(this.viewRect().height),
         zoom: this.cameras.main.zoom,
+        visibleEnemies,
+        peakVisibleEnemies: this.peakVisibleEnemies,
         spawnRadius: Math.round(
           offScreenSpawnRadius(this.viewRect(), activeTheme.tuning.director.spawnMargin),
         ),

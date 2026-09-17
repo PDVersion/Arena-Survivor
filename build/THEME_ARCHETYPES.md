@@ -70,7 +70,7 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 | Stable archetype ID | `eco-guardian` (production) | `knight-magic` (secondary) |
 | --- | --- | --- |
 | `character.starter` | Environment Protector | Wandering Knight |
-| `weapon.starter_projectile` | Sorting Pulse | Magic Needle |
+| `weapon.starter` | Cleanup Grabber | Magic Needle |
 | `enemy.swarm_basic` | Plastic Bottle | Grunt |
 | `enemy.fast_fragile` | Plastic Bag | Runner |
 | `enemy.slow_durable` | Glass Bottle | Tank |
@@ -94,10 +94,10 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 
 The table is an intent map, not a second runtime catalog. When source files exist, names are edited in `copy.ts`, and this table records the conceptual mapping only.
 
-### Planned V0.4.2 starter-role migration
+### V0.4.2 starter-role migration
 
 `weapon.starter_projectile` describes a delivery mechanism, not a semantic
-role. V0.4.2 replaces it with `weapon.starter` while persistence is still
+role. V0.4.2 replaced it with `weapon.starter` while persistence was still
 unshipped. The two production themes deliberately supply different delivery
 kinds under the same role:
 

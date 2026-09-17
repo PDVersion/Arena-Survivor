@@ -72,14 +72,14 @@ from the V0.4.2 prototype.
 | 3 | Glass Bottle | Large enemy | 48×48 | 4 | medium | 1 |
 | 4 | Bagged Waste | Large enemy | 48×48 | 4 | medium | 1 |
 | 5 | Environment Protector | Player | 48×48 | 8 | high | 1 |
-| 6 | ~~Sorting Pulse projectile~~ — parked knight-theme work | Projectile | 16×16 | 3 | low | — |
+| 6 | Cleanup Grabber — V0.4.4 target | Melee tool | 64×16 | 3 | medium | — |
 | 7 | Impact Point | Pickup | 16×16 | 3 | low | 1 |
 | 8–10 | Bottle / Bag / Glass fragments | Small enemy | 24×24 | 4 | low | 2 |
 | 11–14 | Four shrines | Shrine | 64×64 | 4 | high | 2 |
 | 15–17 | Three hazards | Hazard | 64×64 | 4 | medium | 2 |
 | 18 | Elite outline overlay | Overlay | per class | 1 | low | 2 |
 | 19–30 | Colour variants `c2`/`c3` for enemies 1–4 and fragments | — | — | — | — | **Free** — hue rotation |
-| 31 | ~~Sorting Pulse weapon icon~~ — parked knight-theme work | Weapon | 16×16 | 3 | high | — |
+| 31 | Cleanup Grabber icon — V0.4.4 target | Weapon | 32×32 | 3 | high | — |
 | 32 | Impact orb tiers (3 sizes) | Pickup | 16×16 | 3 | low | 3 |
 
 Twelve of the thirty-two are colour variants produced by hue rotation, so the

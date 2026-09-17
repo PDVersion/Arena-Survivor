@@ -64,6 +64,13 @@ test("@stress critical V0.2 path sustains 300 mixed enemies, reconciles statisti
   expect(terminal?.load?.frameSamples).toBeGreaterThan(0);
   expect(terminal?.load?.averageFrameMs).toBeGreaterThan(0);
   expect(terminal?.load?.maxFrameMs).toBeGreaterThan(0);
+  console.log("V0.4.2 300-enemy frame sample", JSON.stringify({
+    zoom: terminal?.view?.zoom,
+    averageFrameMs: terminal?.load?.averageFrameMs,
+    maxFrameMs: terminal?.load?.maxFrameMs,
+    samples: terminal?.load?.frameSamples,
+    peakVisibleEnemies: terminal?.view?.peakVisibleEnemies,
+  }));
   expect(terminal?.load?.eventBacklog).toBe(0);
   expect(terminal?.effects?.eventBacklog).toBe(0);
   expect(terminal?.combat?.projectiles).toBe(0);

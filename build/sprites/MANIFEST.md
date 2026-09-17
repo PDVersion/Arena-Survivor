@@ -91,11 +91,10 @@ currently mean "available to claim": V0.4.4 must first compare every remaining
 row with the shipped content roster and revise IDs, subjects, canvas sizes, and
 frame lists where the game design changed.
 
-The first known change is recorded now: rows #6 and #19 describe the parked
-Sorting Pulse and are no longer eco-theme generation targets. V0.4.4 replaces
-them with a `weapon.starter` Cleanup Grabber sheet/icon after V0.4.2 settles the
-extend/contact/retract frame roles. Do not generate either the old rows or their
-replacement yet.
+Rows #6 and #19 now describe the `weapon.starter` Cleanup Grabber. V0.4.2 settled
+its three presentation states as extend, contact, and retract. The old Sorting
+Pulse prompt remains below as parked knight-theme history. Do not claim or
+generate the replacement before V0.4.4 begins.
 
 Until that redirect is recorded, do not claim or generate rows #6–19. The five
 accepted sheets and their raw attempts remain the visual/style baseline.
@@ -123,7 +122,7 @@ accepted    █████░░░░░░░░░░░░░░░  5
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `accepted` |
-| 6 | `weapon.starter_projectile` | Sorting Pulse charge — parked knight-theme work | 16×16 | 3 | low | — | 0 | — | — | `todo` |
+| 6 | `weapon.starter` | Cleanup Grabber — extend/contact/retract | 64×16 | 3 | medium | — | 0 | — | — | `todo` |
 | 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
 | 9 | `fragment.fast_fragile` | Bag scrap | 24×24 | 4 | low | — | 0 | — | — | `todo` |
@@ -136,7 +135,7 @@ accepted    █████░░░░░░░░░░░░░░░  5
 | 16 | `hazard.obstacle` | Debris Pile | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
 | 17 | `hazard.periodic_burst` | Methane Vent | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
 | 18 | `overlay.elite` | Elite outline | per class | 1 | low | — | 0 | — | — | `todo` |
-| 19 | `weapon.starter_icon` | Sorting Pulse emitter — parked knight-theme work | 16×16 | 3 | high | — | 0 | — | — | `todo` |
+| 19 | `weapon.starter_icon` | Cleanup Grabber icon | 32×32 | 3 | high | — | 0 | — | — | `todo` |
 
 Colour variants (`c2`, `c3`) are **not listed**: they are produced by hue rotation
 in `npm run sprites -- build` and never generated. See style guide §3.
@@ -212,20 +211,19 @@ suggested by two dark eye pixels only, no detailed features.
 ```
 Frames (8): `walk contact; walk down; walk pass; walk up; idle standing; hit recoil; reserved dash; reserved hurt`
 
-### 6 · `weapon.starter_projectile` — Sorting Pulse charge (parked)
+### 6 · `weapon.starter` — Cleanup Grabber
 
-Historical prompt only. Do not claim for the eco roster; V0.4.4 replaces this
-with the Cleanup Grabber prompt after V0.4.2 fixes its animation contract.
+The primitive prototype settled the frame contract. V0.4.4 owns the final
+style-locked prompt; do not claim this row before that plan begins.
 
 ```text
-SUBJECT: a small guided energy charge, a compact bright core with a short trailing
-wake, reading as a clean technical pulse rather than a fireball.
-BASE COLOUR: #7dd3fc — build the 4-step ramp from this exact hue.
-SILHOUETTE: teardrop, blunt leading edge, tapering tail. Must read at speed, so
-the silhouette does all the work.
-DETAIL BUDGET: low — a bright core, one darker rim, nothing else.
+SUBJECT: a practical litter pickup grabber with a long shaft, hand grip, and two
+clearly separated jaws. A cleanup tool, never a sword or gun.
+BASE COLOUR: #7dd3fc for the shaft with #4ade80 jaw accents.
+SILHOUETTE: long and narrow with a visibly forked pickup end.
+DETAIL BUDGET: medium — grip, shaft, hinge, and jaws only.
 ```
-Frames: `travelling; impact flare; fading remnant`
+Frames: `extending; contact/closed jaws; retracting`
 
 ### 7 · `pickup.experience` — Impact Point
 
@@ -299,18 +297,16 @@ DETAIL BUDGET: low — weight and clarity only.
 ```
 Frames: `1 — static`
 
-### 19 · `weapon.starter_icon` — Sorting Pulse emitter
+### 19 · `weapon.starter_icon` — Cleanup Grabber icon
 
 ```text
-SUBJECT: a compact handheld sorting tool — a short emitter barrel, a grip, and a
-small charge indicator. Practical field equipment, not a weapon of war.
-BASE COLOUR: #7dd3fc — build the 4-step ramp from this exact hue for the emitter;
-the grip may use one neutral material ramp.
-SILHOUETTE: clearly a held tool, asymmetric so its facing is obvious.
-DETAIL BUDGET: high — appears in the Field Guide and on upgrade cards at rest,
-where it is looked at rather than glanced at.
+SUBJECT: a folded litter pickup grabber with a recognisable hand grip, hinge,
+shaft, and open jaws. Practical field equipment, not a weapon of war.
+BASE COLOUR: #7dd3fc with #4ade80 jaw accents; the grip may use one neutral ramp.
+SILHOUETTE: diagonal tool with forked jaws clearly separated from the grip.
+DETAIL BUDGET: high — appears in the Field Guide and on upgrade cards at rest.
 ```
-Frames: `ready; firing; recharging`
+Frames: `ready/open; gripping/closed; released`
 
 ---
 

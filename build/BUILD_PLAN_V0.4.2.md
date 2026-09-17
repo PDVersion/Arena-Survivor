@@ -116,9 +116,9 @@ the milestone branch and the only pull request into `main`.
 
 - [x] R0 — Neutral camera, pace, and weapon-orchestration seams
 - [x] R1A — Tighter camera and cropped play area
-- [ ] R1B — Half-speed gameplay experiment
-- [ ] R1C — Cleanup Grabber melee starter
-- [ ] R2 — Combined integration, measurement, and play-test gate
+- [x] R1B — Half-speed gameplay experiment
+- [x] R1C — Cleanup Grabber melee starter
+- [x] R2 — Combined integration, measurement, and play-test gate
 
 ## Phase R0 — Land the three seams
 
@@ -241,7 +241,7 @@ Deliver:
 
 Do not generate or claim a grabber sprite in this branch.
 
-## Phase R2 — Integrate and retune the combined game
+## Phase R2 — Integrate and retune the combined game ✅
 
 **Commit:** `fix(v0.4.2): reconcile the readable gameplay baseline`
 

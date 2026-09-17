@@ -13,12 +13,18 @@ export class GrabberActor extends Phaser.GameObjects.Container {
     onComplete: () => void,
   ) {
     super(scene, x, y);
-    const colour = Phaser.Display.Color.HexStringToColor(tokens.palette.projectile).color;
-    const shaft = scene.add.rectangle(definition.reach / 2, 0, definition.reach, 5, colour);
-    const handle = scene.add.rectangle(3, 0, 12, 11, colour, 0.85);
-    const upperJaw = scene.add.rectangle(definition.reach, -5, 15, 4, colour).setRotation(-0.45);
-    const lowerJaw = scene.add.rectangle(definition.reach, 5, 15, 4, colour).setRotation(0.45);
-    this.add([shaft, handle, upperJaw, lowerJaw]);
+    const shaftColour = Phaser.Display.Color.HexStringToColor(tokens.palette.text).color;
+    const accentColour = Phaser.Display.Color.HexStringToColor(tokens.palette.player).color;
+    const outlineColour = Phaser.Display.Color.HexStringToColor(tokens.palette.background).color;
+    const outline = scene.add.rectangle(definition.reach / 2, 0, definition.reach + 4, 11, outlineColour, 0.9);
+    const shaft = scene.add.rectangle(definition.reach / 2, 0, definition.reach, 7, shaftColour);
+    const handle = scene.add.rectangle(3, 0, 14, 13, accentColour, 0.95);
+    const contact = scene.add.circle(definition.reach, 0, definition.width / 2, accentColour, 0.18)
+      .setStrokeStyle(2, accentColour, 0.95)
+      .setAlpha(0);
+    const upperJaw = scene.add.rectangle(definition.reach, -6, 18, 5, accentColour).setRotation(-0.45);
+    const lowerJaw = scene.add.rectangle(definition.reach, 6, 18, 5, accentColour).setRotation(0.45);
+    this.add([outline, shaft, handle, contact, upperJaw, lowerJaw]);
     this.setRotation(angle).setDepth(45).setScale(0.08, 1);
     scene.add.existing(this);
 
@@ -28,6 +34,7 @@ export class GrabberActor extends Phaser.GameObjects.Container {
       duration: definition.extendMs,
       ease: "Quad.Out",
       onComplete: () => {
+        contact.setAlpha(1);
         scene.tweens.add({
           targets: this,
           scaleX: 0.08,
