@@ -185,6 +185,10 @@ export interface ArenaTestSnapshot {
     spawnRadius: number;
   }>;
   readonly pacing?: Readonly<{
+    /** Simulated seconds advanced per wall-clock second. */
+    gameplayRate: number;
+    /** Authored run duration after conversion to expected wall-clock time. */
+    expectedRealDurationMs: number;
     /** Run progress in `[0, 1]`, the input the V0.3 director curves resolve from. */
     progress: number;
     /** Ambient spawn cadence currently in effect, after world multipliers. */

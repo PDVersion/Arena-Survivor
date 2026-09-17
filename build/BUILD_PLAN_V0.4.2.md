@@ -178,7 +178,7 @@ Deliver:
 Do not retune speed, cadence, weapon range, hitboxes, actor scale, or sprite
 files in this branch.
 
-### R1B — Half-speed gameplay experiment
+### R1B — Half-speed gameplay experiment ✅
 
 **Branch:** `codex/v0.4.2-pace`
 **Commit:** `feat(v0.4.2): slow the playable simulation`

@@ -140,7 +140,10 @@ import {
 } from "../systems/feedback/impact";
 import { shouldSpawnElite } from "../systems/elites/elites";
 import { configureRunCamera } from "../systems/view/configure-run-camera";
-import { resolveGameplayRate } from "../systems/time/gameplay-time";
+import {
+  expectedRealDurationMs,
+  resolveGameplayRate,
+} from "../systems/time/gameplay-time";
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import {
   chainScaleAtDepth,
@@ -2839,6 +2842,11 @@ export class RunScene extends Phaser.Scene {
       },
       pacing: this.runState
         ? {
+            gameplayRate: activeTheme.tuning.pace.gameplayRate,
+            expectedRealDurationMs: expectedRealDurationMs(
+              this.runState.durationMs,
+              activeTheme.tuning.pace.gameplayRate,
+            ),
             progress: this.runState.durationMs === 0
               ? 0
               : Math.min(1, this.runState.elapsedMs / this.runState.durationMs),
