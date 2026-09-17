@@ -19,7 +19,7 @@ Basic mathematical stats and engine rules are theme-neutral. Characters, weapons
 | Concern | Owner | Example |
 | --- | --- | --- |
 | Primitive stats and rule contracts | Core | health, speed, crit chance, damage calculation |
-| Stable semantic role | Archetype contract | `enemy.swarm_basic`, `weapon.starter_projectile` |
+| Stable semantic role | Archetype contract | `enemy.swarm_basic`, `weapon.starter` |
 | Player-facing identity and text | Theme copy catalog | “Plastic Bottle”, “Sorting Pulse”, descriptions |
 | Tuning and mechanic composition | Theme category definition | enemy health/speed; projectile behaviour |
 | Balance curves and cadence | Theme tuning pack | XP curve, spawn cadence, Chaos coefficients |
@@ -93,6 +93,22 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 `skill.fracture` is worth noting: the mechanic shipped in V0.2 as a fantasy curse, and it models what plastic actually does — fragment rather than decompose. The stable ID needed no change.
 
 The table is an intent map, not a second runtime catalog. When source files exist, names are edited in `copy.ts`, and this table records the conceptual mapping only.
+
+### Planned V0.4.2 starter-role migration
+
+`weapon.starter_projectile` describes a delivery mechanism, not a semantic
+role. V0.4.2 replaces it with `weapon.starter` while persistence is still
+unshipped. The two production themes deliberately supply different delivery
+kinds under the same role:
+
+| Stable role after V0.4.2 | `eco-guardian` | `knight-magic` |
+| --- | --- | --- |
+| `weapon.starter` | Cleanup Grabber — short single-target melee stab | Magic Needle — the parked existing projectile |
+
+This is the boundary working as intended: the core requires a starter weapon,
+not a projectile. The theme owns whether that weapon delivers damage through a
+melee reach or a travelling body. The old projectile actor and effect path stay
+available; only the active eco definition stops using them.
 
 ## Theme manifest contract
 

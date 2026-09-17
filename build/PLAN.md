@@ -2,23 +2,39 @@
 
 ## Core Concept
 
-A browser-first arena survival game focused on:
+A browser-first environmental arena game focused on:
 
-- Large enemy swarms
+- Simple movement and automatic tools
+- Large, identifiable environmental objects
+- A slower pace in which individual actions can be read
+- Real-world tools and mechanically meaningful material identities
 - Player-controlled difficulty escalation
-- Highly satisfying build interactions
-- Multiplicative upgrades
-- Overcrit mechanics
-- Piercing and chain effects
 - Strong audiovisual feedback
-- Risk/reward shrines
-- Positive-feedback build explosions
+- Risk/reward site events
+- Optional educational depth that never blocks play
 
 The core design philosophy is:
 
-> **More enemies should often feel like a reward.**
+> **The player should understand what is on screen and what their tool just did.**
 
-The player should frequently choose to make the game more dangerous because doing so creates more XP, more targets, more build interactions, and more opportunities for satisfying chain reactions.
+Enemy count can still create pressure and reward, but density is no longer the
+product goal. The camera should make a modest population feel present, and a
+technical ceiling such as 300 enemies should remain available without requiring
+the design to fill it.
+
+## V0.4.2 direction correction
+
+The original plan was written around large swarms, projectile penetration,
+explosions, and multiplicative chain reactions. Those systems remain useful
+engine work and may fit the retained knight-magic theme, but they are no longer
+the default direction for the environment game.
+
+The new baseline is a 2× cropped camera view, an initial 0.5 gameplay rate, and
+a short-range Cleanup Grabber starter. Actors become larger on screen through
+camera zoom only: sprite files, world radii, hitboxes, mass, and separation are
+unchanged. The first active-theme weapon is a recognisable real-world tool with
+one readable stab, not an abstract orb projectile. See
+[`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
 
 ---
 
@@ -71,7 +87,7 @@ Later versions can increase this to 10 minutes or introduce endless mode.
 A run starts with:
 
 - Basic player
-- Basic auto-targeting projectile weapon
+- Basic auto-targeting cleanup grabber
 - Low enemy spawn rate
 - Chaos multiplier at `1.0x`
 - Several shrines placed around the arena
@@ -122,25 +138,30 @@ These stats should be data-driven so upgrades can modify them easily.
 
 # Starting Weapon
 
-## Needle / Magic Bolt
+## Cleanup Grabber
 
-Basic auto-targeting projectile.
+Basic short-range automatic melee tool for the `eco-guardian` theme. The
+retained `knight-magic` theme keeps the already-built Magic Needle projectile
+under the same neutral starter-weapon role.
 
 Example:
 
 ```text
-Damage:             10
-Attack Cooldown:    1 second
-Projectile Speed:   400
-Projectiles:        1
-Pierce:             0
-Crit Chance:        Uses player stat
-Crit Damage:        Uses player stat
+Damage:          10
+Attack Cooldown: 1 simulated second
+Reach:           ~72 world units (initial experiment)
+Targets:         1
+Motion:          narrow extend, contact, retract
+Crit Chance:     Uses player stat
+Crit Damage:     Uses player stat
 ```
 
-The weapon automatically targets the nearest enemy.
+The weapon automatically faces the nearest eligible enemy in reach, extends the
+grabber, damages at most that one target, and retracts. It does not spawn a
+projectile, pierce, splash, or sweep in its first form.
 
-The initial prototype should focus on making this one weapon highly modifiable before adding many separate weapons.
+The first priority is making this one action legible and satisfying before
+adding more weapons or restoring the parked projectile interaction families.
 
 ---
 
@@ -1145,7 +1166,14 @@ V0.3 is a rebalancing and readability milestone. It changes almost no mechanics;
 
 # V0.4 Scope
 
-After the loop feels good, grow the content:
+First correct the readable baseline in V0.4.2:
+
+- Zoom the camera to 2× and crop the visible play area without enlarging actors
+- Slow the coherent gameplay clock to 0.5 as an initial play-test value
+- Replace the eco starter projectile with the short-range Cleanup Grabber
+- Park projectile-only, pierce, splash, and chain offers outside the active eco pool
+
+Then, only after that play-test gate passes, grow the content in V0.4.3:
 
 - Additional weapons
 - Weapon evolution
@@ -1235,7 +1263,7 @@ Core systems should use stable semantic archetype IDs such as:
 
 ```text
 character.starter
-weapon.starter_projectile
+weapon.starter
 enemy.swarm_basic
 shrine.spawn_surge
 skill.on_kill_explosion
@@ -1251,11 +1279,11 @@ See [`THEME_ARCHETYPES.md`](./THEME_ARCHETYPES.md) for the required boundaries, 
 
 # Primary Design Principles
 
-## 1. More Enemies Can Be Good
+## 1. Readability Comes Before Density
 
-Enemy density creates opportunities.
-
-The player should frequently want more targets.
+Every enemy and tool action should be identifiable at play speed. Enemy density
+creates pressure, but a crowded screen is not proof of depth and the 300-enemy
+limit is a ceiling rather than a target.
 
 ---
 
@@ -1265,9 +1293,11 @@ The game becomes increasingly dangerous naturally, but the largest difficulty sp
 
 ---
 
-## 3. Builds Should Create Interactions
+## 3. Builds Should Create Understandable Interactions
 
-Prefer:
+For the environment theme, prefer interactions that can be explained by the
+tool or material on screen. The older projectile combination remains available
+to knight-magic and future themes:
 
 ```text
 Pierce
@@ -1289,11 +1319,11 @@ over simply stacking:
 
 ---
 
-## 4. Avoid Hard Caps Where Possible
+## 4. Keep Technical Caps Separate From Design Targets
 
-Systems such as crit, attack speed, enemy multiplier, and Chaos should be capable of reaching absurd levels.
-
-Technical limits can exist internally for stability.
+Technical limits can exist internally for stability. They should not force the
+game toward visual clutter, nor should a quieter design lower them without a
+performance or correctness reason.
 
 ---
 
@@ -1303,9 +1333,10 @@ Crits, overcrits, piercing, explosions, shrine activations, and chain reactions 
 
 ---
 
-## 6. Encourage Positive-Feedback Catastrophes
+## 6. Escalation Must Stay Legible
 
-The strongest builds should sometimes create loops such as:
+Positive-feedback loops may return where their cause and result remain readable,
+but they are no longer required of every build. The legacy form was:
 
 ```text
 More enemies
@@ -1321,7 +1352,9 @@ More kills
 More enemies
 ```
 
-The game should allow this to become temporarily ridiculous rather than immediately suppressing it.
+Treat that loop as parked design space, not the active eco baseline. A tool's
+motion, target, contact, and effect must remain understandable before spectacle
+is added.
 
 ---
 

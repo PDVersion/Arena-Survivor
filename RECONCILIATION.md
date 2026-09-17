@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.1 sprite checkpoint complete on `codex/v0.4.1`: pipeline and sheets #1–5 delivered; rows #6–19 gated until the post-rebalance sprite phase (REC-078). V0.4.2 remains independently tracked by its own plan and branch.**
+- Active phase: **V0.4.2 planned, not started: land the neutral seam, then build the 2× cropped view, 0.5 gameplay rate, and Cleanup Grabber in three parallel feature branches before core integration. The old content-growth V0.4.2 is now V0.4.3; remaining sprites are V0.4.4.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2061,15 +2061,81 @@ Revisit when:
 The major rebalance/design redirect has a committed content roster and the next
 sprite phase is planned.
 
-## V0.4.2 entries — content
+## V0.4.2 entries — readable baseline redirect
 
-<!-- V0.4.2 appends here. Reserved ids: REC-090 onward. -->
+<!-- V0.4.2 appends here. Reserved ids: REC-091 to REC-099. -->
+
+### REC-091 — Readability replaces density as the baseline
+
+- Status: Accepted
+- Date: 2026-09-17
+- Affects: V0.4.2–V0.4.4; camera, gameplay clock, starter weapon, sprite roster, content sequencing
+- Blocks: V0.4.3 and V0.4.4 until the V0.4.2 play-test gate passes
+
+Context / observation:
+The V0.4.1 checkpoint made the player and four original enemy roles recognisable,
+but the fixed wide view and current pace keep those sprites small and make
+individual attacks difficult to read. The original product direction treated
+large swarms, pierce, splash, and chain reactions as goals. That complexity does
+not automatically serve a simple environmental game or its educational goal.
+The active eco starter compounds the mismatch: Sorting Pulse is an abstract orb
+with no clear real-world cleanup action.
+
+The old content-growth V0.4.2 had not begun. REC-090 exists because its causal
+queue fix was discovered and merged early, not because the planned content
+phases C1–C7 were underway. The remaining sprite rows were already gated by
+REC-078 for exactly this kind of redirect.
+
+Decision / solution:
+Insert a new V0.4.2 before content growth. It begins with a 2× camera zoom that
+crops the visible world without changing actor art, world radii, bodies, or
+separation; a theme-owned 0.5 gameplay rate applied through one coherent clock;
+and an eco-theme Cleanup Grabber that auto-aims a short, narrow, single-target
+stab. The existing projectile delivery is retained under the knight-magic theme
+and reusable engine path rather than deleted.
+
+The required starter role becomes the delivery-neutral `weapon.starter` while
+persistence is still unshipped. Projectile-only and burst-chain offers are
+parked outside the active eco draw instead of being misleadingly renamed. A
+primitive extend/contact/retract presentation ships first; V0.4.4 generates the
+sprite only after the motion and frame roles survive play testing.
+
+V0.4.2 lands a small neutral seam, then builds view, pace, and grabber on three
+parallel feature branches with disjoint ownership, followed by one core
+integration and balance pass. The old V0.4.2 content plan becomes V0.4.3, and
+the remaining post-redirect sprite roster becomes V0.4.4.
+
+Why:
+Camera zoom makes every existing sprite and future weapon animation readable
+without corrupting the simulation/presentation boundary. A single gameplay-rate
+control makes the pace reversible and measurable, unlike separately retuning
+every speed and cooldown. A recognisable physical tool lets the mechanic carry
+the environmental fiction. Sequencing those corrections before content and art
+avoids tuning and drawing more of the wrong baseline.
+
+Future guardrail:
+Treat 300 enemies as a tested technical ceiling, never a required population.
+No zoom may alter actor scale or hitboxes. No pace experiment may be implemented
+as scattered timing multipliers. Every required weapon role is delivery-neutral,
+and the active eco upgrade pool may not offer mechanics its equipped weapon
+cannot use. V0.4.3 and V0.4.4 start only after the combined V0.4.2 play-test gate
+is recorded.
+
+Revisit when:
+The combined play test shows that 2× is too tight, 0.5 is too slow, the opening
+wait is too long, or the grabber cannot stay engaging through the first two
+simulated minutes. Adjust the single view/rate tuning values or theme-owned
+grabber data before broadening scope.
+
+## V0.4.3 entries — content growth
+
+<!-- REC-090 is preserved here as an early merged discovery. New V0.4.3 entries use REC-100 to REC-119. -->
 
 ### REC-090 — Capacity-bound spawns cannot block causal effects
 
 - Status: Accepted
 - Date: 2026-08-29
-- Affects: V0.4.2; causal event queue, crowd-cap behaviour, on-kill effects
+- Affects: V0.4.3; causal event queue, crowd-cap behaviour, on-kill effects
 - Blocks: None
 
 Context / observation:
@@ -2099,6 +2165,10 @@ focused lane-order test whenever a new deferrable causal event kind is introduce
 Revisit when:
 The retained spawn backlog itself becomes large enough that the lane scan affects
 the measured 300-enemy frame budget, or more than two scheduling classes exist.
+
+## V0.4.4 entries — reconciled sprite roster
+
+<!-- V0.4.4 appends here. Reserved ids: REC-120 onward. No row #6–19 claim before its plan lifts REC-078. -->
 
 ## Open questions to reconcile during implementation
 

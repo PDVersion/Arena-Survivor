@@ -1,18 +1,25 @@
 # Arena Survivor
 
-A browser-first arena survival game built around player-controlled swarm escalation and explosive build interactions.
+A browser-first environmental arena game moving toward slower, readable play,
+recognisable real-world tools, and optional educational depth.
 
 ## Status
 
 V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
 
-**V0.4.0 — the shared seam — is built.** Sprites are now optional theme content:
+**V0.4.2 is planned next.** It tightens the camera to a 2× cropped world view,
+starts a coherent half-speed gameplay experiment, and replaces the active eco
+theme's abstract Sorting Pulse with a short-range Cleanup Grabber. A small seam
+allows view, pace, and grabber to be built by three equivalent agents before one
+core integration and play-test pass. The old content-growth V0.4.2 is now V0.4.3,
+and the remaining sprite roster follows as V0.4.4.
+
+**V0.4.0 and V0.4.1 are built.** Sprites are optional theme content:
 a pack may declare a sheet per content id, and an actor with no sheet renders the
 primitive it always did, which is a complete state rather than a missing one. The
-seam ships no sprites and no content of its own, so the game looks and plays
-exactly as it did — it exists so the sprite roster (V0.4.1) and the content growth
-(V0.4.2) can be built at the same time without touching the same files. See
-[the V0.4 parallel-stream contract](build/BUILD_PLAN_V0.4.md) and REC-071 to REC-073.
+V0.4.1 checkpoint adds the Environment Protector and four enemy sheets from one
+reproducible atlas; the rest are deliberately gated until after the redirect.
+See [the V0.4 sequence](build/BUILD_PLAN_V0.4.md) and REC-071 to REC-078.
 
 **V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-069).
 
@@ -25,16 +32,20 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
 - [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
 - [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
-- [V0.4 parallel streams](build/BUILD_PLAN_V0.4.md) — how sprites and content are built at the same time without colliding.
-- [V0.4.1 sprite plan](build/SPRITE_PLAN_V0.4.1.md) — replacing primitives with sprites: inventory, pipeline, phases, and risks.
-- [V0.4.2 content plan](build/BUILD_PLAN_V0.4.2.md) — weapons, evolution, bosses, curses, unlocks, and persistence.
+- [V0.4 sequence](build/BUILD_PLAN_V0.4.md) — current increment order, gates, ownership, and reconciliation ranges.
+- [V0.4.1 sprite plan](build/SPRITE_PLAN_V0.4.1.md) — the completed pipeline and five-sheet checkpoint, plus the gated historical inventory.
+- [V0.4.2 readable-baseline plan](build/BUILD_PLAN_V0.4.2.md) — camera zoom, coherent slowdown, Cleanup Grabber, parallel delivery, and integration gate.
+- [V0.4.3 content plan](build/BUILD_PLAN_V0.4.3.md) — weapons, evolution, bosses, curses, unlocks, and persistence after the new baseline passes.
 - [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) — the art bible and the reusable image-generation prompt.
 - [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, claim protocol, status, and the generation log.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
 - [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 
-Before beginning any work, read [the V0.4 parallel-stream contract](build/BUILD_PLAN_V0.4.md) — it owns the file-ownership table that keeps the two streams apart — then the reconciliation log. `build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
+Before beginning any work, read [the V0.4 sequence](build/BUILD_PLAN_V0.4.md),
+then the reconciliation log and the active increment plan.
+`build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone
+underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
 ## Run locally
 

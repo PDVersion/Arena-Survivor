@@ -85,11 +85,17 @@ roster-wide problem (style guide §8).
 ## Checkpoint and next phase
 
 The 2026-09-02 V0.4.1 checkpoint accepts rows #1–5 and stops generation there.
-Rows #6–19 are intentionally left `todo` for the **next sprite phase after the
-major game rebalance and design redirect**. `todo` does not currently mean
-"available to claim": the next phase must first compare every remaining row with
-the post-rebalance content roster and revise IDs, subjects, canvas sizes, and
+Rows #6–19 are intentionally left `todo` for **V0.4.4**, after the V0.4.2
+readability/pace/grabber redirect and V0.4.3 content growth. `todo` does not
+currently mean "available to claim": V0.4.4 must first compare every remaining
+row with the shipped content roster and revise IDs, subjects, canvas sizes, and
 frame lists where the game design changed.
+
+The first known change is recorded now: rows #6 and #19 describe the parked
+Sorting Pulse and are no longer eco-theme generation targets. V0.4.4 replaces
+them with a `weapon.starter` Cleanup Grabber sheet/icon after V0.4.2 settles the
+extend/contact/retract frame roles. Do not generate either the old rows or their
+replacement yet.
 
 Until that redirect is recorded, do not claim or generate rows #6–19. The five
 accepted sheets and their raw attempts remain the visual/style baseline.
@@ -117,7 +123,7 @@ accepted    █████░░░░░░░░░░░░░░░  5
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `accepted` |
-| 6 | `weapon.starter_projectile` | Sorting Pulse charge | 16×16 | 3 | low | — | 0 | — | — | `todo` |
+| 6 | `weapon.starter_projectile` | Sorting Pulse charge — parked knight-theme work | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
 | 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
 | 9 | `fragment.fast_fragile` | Bag scrap | 24×24 | 4 | low | — | 0 | — | — | `todo` |
@@ -130,7 +136,7 @@ accepted    █████░░░░░░░░░░░░░░░  5
 | 16 | `hazard.obstacle` | Debris Pile | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
 | 17 | `hazard.periodic_burst` | Methane Vent | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
 | 18 | `overlay.elite` | Elite outline | per class | 1 | low | — | 0 | — | — | `todo` |
-| 19 | `weapon.starter_icon` | Sorting Pulse emitter | 16×16 | 3 | high | — | 0 | — | — | `todo` |
+| 19 | `weapon.starter_icon` | Sorting Pulse emitter — parked knight-theme work | 16×16 | 3 | high | — | 0 | — | — | `todo` |
 
 Colour variants (`c2`, `c3`) are **not listed**: they are produced by hue rotation
 in `npm run sprites -- build` and never generated. See style guide §3.
@@ -206,7 +212,10 @@ suggested by two dark eye pixels only, no detailed features.
 ```
 Frames (8): `walk contact; walk down; walk pass; walk up; idle standing; hit recoil; reserved dash; reserved hurt`
 
-### 6 · `weapon.starter_projectile` — Sorting Pulse charge
+### 6 · `weapon.starter_projectile` — Sorting Pulse charge (parked)
+
+Historical prompt only. Do not claim for the eco roster; V0.4.4 replaces this
+with the Cleanup Grabber prompt after V0.4.2 fixes its animation contract.
 
 ```text
 SUBJECT: a small guided energy charge, a compact bright core with a short trailing

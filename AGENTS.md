@@ -2,7 +2,7 @@
 
 Every work session in this repository starts by reading, in order:
 
-1. `build/BUILD_PLAN_V0.4.md` — the current milestone: how V0.4's two streams are split, which files each owns, and which reconciliation ids each may take.
+1. `build/BUILD_PLAN_V0.4.md` — the current milestone sequence, active increment, ownership boundaries, gates, and reconciliation ranges.
 2. `RECONCILIATION.md` — decisions, discoveries, pitfalls, and constraints learned while building.
 3. `build/BUILD_PLAN_V0.3.md` — the implementation record for the milestone underneath, and the source for phase order, architecture, and verification conventions.
 
@@ -14,7 +14,12 @@ Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, ren
 
 Consult `build/SAVE_DATA.md` before changing profile state, progression, unlocks, statistics, persistent settings, stable saved IDs, persistence adapters, migrations, or save import/export.
 
-Consult `build/BUILD_PLAN_V0.4.md` before starting any V0.4 work. V0.4 is two streams built in parallel — sprites (V0.4.1) and content (V0.4.2) — and that file owns the shared seam, the file-ownership table, and the reconciliation id ranges that keep them from colliding. Do not edit a file outside your stream's ownership block.
+Consult `build/BUILD_PLAN_V0.4.md` before starting any V0.4 work. V0.4.1 is a
+merged five-sheet sprite checkpoint. The active next increment is V0.4.2:
+readability, pace, and Cleanup Grabber, built as one seam, three parallel feature
+branches, and one core integration pass. Content growth is V0.4.3 and the
+reconciled sprite continuation is V0.4.4. Do not edit a file outside the active
+phase or feature branch's ownership block.
 
 The seam itself (V0.4.0) is built and merged. Read REC-071 to REC-073 before either stream starts: they settle the reconciliation ranges, how an actor chooses between a sprite and its primitive, and why the renderer's `pixelArt` flag was not used. A sprite is presentation and nothing else — never read one from a system, and never derive a radius, hitbox, mass, or separation value from one.
 
@@ -31,7 +36,8 @@ Balance values are theme-owned data. Never introduce a tuning literal into a sys
 
 Before completing a phase:
 
-- Run that phase's short verification suite from `build/BUILD_PLAN_V0.3.md`.
+- Run that phase's short verification suite from its active build plan;
+  `build/BUILD_PLAN_V0.3.md` remains the fallback verification convention.
 - Update the phase checklist and `RECONCILIATION.md` with material findings.
 - Keep the phase implementation, tests, plan status, and reconciliation updates in the same phase commit.
 - Do not mark a phase complete or begin the next phase until its verification passes.
@@ -45,10 +51,10 @@ Milestone branches are named `<agent>/<milestone>`, where the prefix records whi
 | `codex/` | ChatGPT Codex | `codex/v0.1`, `codex/v0.2` |
 | `claude/` | Claude Code | `claude/v0.3`, `claude/v0.3.1` |
 
-V0.4 splits into three branches because two of them are built concurrently:
-`*/v0.4.0` (the shared seam, merged first), then `*/v0.4.1` (sprites) and
-`*/v0.4.2` (content) in parallel. Either agent may take either parallel stream;
-the prefix records whichever one actually does.
+V0.4.0 and V0.4.1 are merged. V0.4.2 uses `codex/v0.4.2` as its milestone and
+integration branch, with temporary `codex/v0.4.2-view`,
+`codex/v0.4.2-pace`, and `codex/v0.4.2-grabber` feature branches created from
+the R0 seam commit. Only the integration branch opens a pull request to `main`.
 
 Use the prefix for the agent that is actually doing the work, decided when the branch is created. The prefix is a provenance record, not a permission boundary — any agent may read, review, or continue any branch.
 
@@ -63,6 +69,17 @@ Everything else about a branch — one branch per milestone, one pull request in
   sprites and no content — every change is inert over an empty sprite manifest,
   and it is verified by the existing unit and browser suites passing with no test
   edited. It merges to `main` before either parallel stream branches.
+
+## Git workflow for V0.4.2
+
+- Branch: `codex/v0.4.2`
+- Delivery: R0 lands first on the milestone branch. Three equivalent agents may
+  then build view, pace, and grabber concurrently on the feature branches named
+  above, staying inside the ownership blocks in `build/BUILD_PLAN_V0.4.2.md`.
+  A core agent merges them, performs R2 reconciliation and the combined
+  play-test gate, then opens one pull request into `main`.
+- V0.4.3 must not start until that gate passes. V0.4.4 must not claim remaining
+  sprite rows until both V0.4.2 and V0.4.3 settle the roster.
 
 ## Git workflow for V0.3.1
 

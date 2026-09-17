@@ -10,10 +10,11 @@ finished game. This plan replaces the primitives with sprites without giving up
 what the primitives bought — a hard theme boundary, a fixed logical view, and a
 crowd that stays readable at three hundred bodies.
 
-**This stream runs concurrently with V0.4.2.** Read
-[`BUILD_PLAN_V0.4.md`](./BUILD_PLAN_V0.4.md) first — it owns the file-ownership
-table, the shared seam, and the rules that keep the two streams from colliding.
-Nothing here may edit a file outside V0.4.1's ownership block.
+**This stream is complete.** It was originally designed to run concurrently
+with the old V0.4.2 content stream, but it closed at the five-sheet checkpoint
+before that work started. The readability/pace/grabber redirect now owns V0.4.2,
+content growth is V0.4.3, and the reconciled sprite continuation is V0.4.4.
+Read [`BUILD_PLAN_V0.4.md`](./BUILD_PLAN_V0.4.md) for the current sequence.
 
 - The parallel-stream contract: [`BUILD_PLAN_V0.4.md`](./BUILD_PLAN_V0.4.md)
 - Art direction and the reusable prompt: [`SPRITE_STYLE_GUIDE.md`](./SPRITE_STYLE_GUIDE.md)
@@ -38,7 +39,7 @@ Three reasons, in order of how much they matter:
 
 ## Scope
 
-**In:** every enemy role, the player, the starter weapon and its projectile, XP
+**Original full scope:** every enemy role, the player, the starter weapon and its projectile, XP
 pickups, all four shrines, all three hazards, and the elite treatment. Loading,
 atlas handling, a palette-snap step, and the swap from primitives to sprites in
 the entities.
@@ -51,17 +52,18 @@ grid stays procedural.
 **Explicitly not a rewrite.** Entities keep their contracts. A sprite is a new
 presentation token resolved through the theme, exactly like a palette colour.
 
-**Also out: the V0.4.2 content roster.** New weapons, shrines, bosses, and curses
-will land in parallel and will have no sprites. They render as primitives, which
-is the fallback working as designed. Sprite them in a later increment rather than
-reaching into V0.4.2's files.
+**Also out of the completed checkpoint:** all post-checkpoint mechanics and
+content. The V0.4.2 Cleanup Grabber and V0.4.3 additions render through primitive
+fallbacks until V0.4.4 reconciles and generates their sprites.
 
 ---
 
 ## 1. Inventory
 
-Thirty-two sheets. Counted rather than estimated, because "add sprites" is the
-kind of task that looks small until it is enumerated.
+This was the original thirty-two-sheet inventory. It is retained as planning
+history, not as the V0.4.4 claim list: Sorting Pulse is now parked for the
+knight-magic theme and the Cleanup Grabber's sheet size/frame roles must come
+from the V0.4.2 prototype.
 
 | # | Subject | Class | Canvas | Frames | Detail | Priority |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -70,14 +72,14 @@ kind of task that looks small until it is enumerated.
 | 3 | Glass Bottle | Large enemy | 48×48 | 4 | medium | 1 |
 | 4 | Bagged Waste | Large enemy | 48×48 | 4 | medium | 1 |
 | 5 | Environment Protector | Player | 48×48 | 8 | high | 1 |
-| 6 | Sorting Pulse projectile | Projectile | 16×16 | 3 | low | 1 |
+| 6 | ~~Sorting Pulse projectile~~ — parked knight-theme work | Projectile | 16×16 | 3 | low | — |
 | 7 | Impact Point | Pickup | 16×16 | 3 | low | 1 |
 | 8–10 | Bottle / Bag / Glass fragments | Small enemy | 24×24 | 4 | low | 2 |
 | 11–14 | Four shrines | Shrine | 64×64 | 4 | high | 2 |
 | 15–17 | Three hazards | Hazard | 64×64 | 4 | medium | 2 |
 | 18 | Elite outline overlay | Overlay | per class | 1 | low | 2 |
 | 19–30 | Colour variants `c2`/`c3` for enemies 1–4 and fragments | — | — | — | — | **Free** — hue rotation |
-| 31 | Sorting Pulse weapon icon | Weapon | 16×16 | 3 | high | 3 |
+| 31 | ~~Sorting Pulse weapon icon~~ — parked knight-theme work | Weapon | 16×16 | 3 | high | — |
 | 32 | Impact orb tiers (3 sizes) | Pickup | 16×16 | 3 | low | 3 |
 
 Twelve of the thirty-two are colour variants produced by hue rotation, so the
@@ -196,12 +198,12 @@ be renamed, replaced, resized, or removed would create avoidable rework.
 | --- | --- | --- |
 | S1 | Pipeline, RGB/RGBA normalization, transparent-background cleanup, shared atlas, Plastic Bottle | Final post-rebalance 300-enemy performance comparison |
 | S2 | Plastic Bag, Glass Bottle, Bagged Waste | Three fragment sheets and elite treatment |
-| S3 | Environment Protector with four-frame walk, idle, and hit presentation | Sorting Pulse projectile/icon and Impact Point pickup |
+| S3 | Environment Protector with four-frame walk, idle, and hit presentation | Cleanup Grabber presentation (replaces Sorting Pulse in eco) and Impact Point pickup |
 | S4 | — | All four shrines and all three hazards |
 | S5 | One-atlas runtime and primitive fallback retained | Variants, full-roster polish, fallback proof, final frame-time measurement |
 
-The next sprite phase must begin by reconciling this inventory against the
-post-rebalance theme/content definitions. Do not claim or generate rows #6–19
+V0.4.4 must begin by reconciling this inventory against the V0.4.2 and V0.4.3
+theme/content definitions. Do not claim or generate rows #6–19
 from the old list merely because they are `todo`; confirm that their stable IDs,
 sizes, frame roles, and subjects still exist first. Accepted rows #1–5 remain the
 style baseline unless the redirect explicitly changes their identities.
@@ -232,12 +234,14 @@ enemy sprited and the primitives unused for enemies.
 *Verification:* all four roles distinguishable in a 300-enemy crowd screenshot;
 fragments visibly derived from their parents; `check` passes for every sheet.
 
-### Phase S3 — Player, weapon, projectile, pickup
+### Phase S3 — Player, weapon, projectile, pickup (historical target)
 The high-detail work. The player is the only 8-frame sheet and the only real
 animation.
 
 *Verification:* the walk cycle reads at the player's actual move speed; the
-projectile is legible at its actual travel speed against a full crowd.
+equipped weapon's full action is legible at the active camera and gameplay rate.
+For the eco theme that now means the Cleanup Grabber's extend/contact/retract
+cycle, not a travelling projectile.
 
 ### Phase S4 — Shrines and hazards
 The static, high-ornament subjects. Hazards need a scaling decision — a 64×64

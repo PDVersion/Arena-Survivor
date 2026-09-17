@@ -4,7 +4,11 @@ This document explores how far the environment theme can be pushed toward genuin
 
 It is **not a scheduled milestone**. The primary work remains building a fun game. The education angle is a wider-audience and monetisation option layered on top of a game that must stand on its own first.
 
-One decision from this exploration has already been promoted into committed work: **the environment theme becomes the primary production theme**, landing in [`BUILD_PLAN_V0.3.md`](./BUILD_PLAN_V0.3.md) Phase 2. Everything else here remains exploratory.
+Two decisions from this exploration have now been promoted into committed work:
+the environment theme became the primary production theme in
+[`BUILD_PLAN_V0.3.md`](./BUILD_PLAN_V0.3.md), and V0.4.2 now makes readability
+the baseline through a cropped 2× view, a 0.5 gameplay rate, and a real-world
+Cleanup Grabber starter. Everything else here remains exploratory.
 
 Status: **Exploration.** Earliest realistic start for the layers below is V0.4.
 
@@ -28,7 +32,20 @@ Two examples of what that means concretely:
 >
 > A player learns waste streams because sorting correctly is how they survive minute four.
 
-Both examples are agreed. They are the spine of everything below.
+Persistence-derived enemy identity remains agreed. Correct-tool effectiveness
+is still promising, but slots and a six-type matrix are deferred until the
+simpler V0.4.2 baseline proves that one readable real-world tool is engaging.
+Complexity is not educational merely because it encodes a real taxonomy.
+
+### Readability is now part of the educational goal
+
+A player cannot learn from an object they cannot identify or an interaction
+they cannot see. The environment game therefore shows less world at once rather
+than enlarging its art or bodies, slows one coherent gameplay clock, and begins
+with a recognisable pickup grabber instead of an abstract energy orb. The
+300-enemy limit remains a stress ceiling; crowd size is no longer evidence that
+the lesson or the game is working. See
+[`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
 
 ---
 
@@ -426,15 +443,19 @@ Each stage is independently valuable and independently abandonable. That matters
 | Stage | What it delivers | Gate before continuing |
 | --- | --- | --- |
 | ~~**E1**~~ | ~~Environment theme as the primary production pack~~ | **Promoted into V0.3 Phase 2** |
-| **E2 — Slots and types** | Weapon and equipment slots, six types, the effectiveness matrix, wave and zone telegraphing, effectiveness feedback, targeting equipment | **Is the game more fun with types?** If no, stop here — everything below rests on this |
-| **E3 — Zones and layers** | Type zones in the arena; layered composite enemies with on-break effects | Do layered enemies read clearly in a 300-enemy crowd? |
+| **E1.5 — Readable baseline** | Cropped 2× view, 0.5 gameplay rate experiment, real-world Cleanup Grabber starter | **Promoted into V0.4.2. Can players identify objects and read one tool action?** |
+| **E2 — Slots and types** | Weapon and equipment slots, six types, the effectiveness matrix, wave and zone telegraphing, effectiveness feedback, targeting equipment | **Deferred until E1.5 passes. Is the game more fun with types?** If no, stop here |
+| **E3 — Zones and layers** | Type zones in the arena; layered composite enemies with on-break effects | Do layered enemies read clearly in the cropped view at representative density? |
 | **E4 — Knowledge system** | Entry contracts, codex UI in the pause menu, encounter tracking, mechanical hints for the fun stream | Do playtesters open the Field Guide voluntarily? |
 | **E5 — Collections and debrief** | Feats, cosmetic unlocks, personalised post-run debrief, fact schema and validation | Does the collection loop pull people back into runs? |
 | **E6 — Knowledge Shrines** | Opt-in question shrines drawing only from unlocked entries | Does it feel like a gamble rather than an exam? |
 | **E7 — Depth and reach** | Age and depth filtering, curriculum mapping, teacher sheets, learning summary | Would a teacher use it unaided? |
 | **E8 — Distribution** | Desktop build pipeline, store presence, pricing | — |
 
-E2 is the load-bearing stage. It is entirely a **fun-stream feature** — slots, types, and build variety are what the game wants regardless of whether a single fact is ever written. That is deliberate: the riskiest assumption in this document gets tested by work that is worth doing anyway.
+E1.5 is now the load-bearing stage. E2 remains a possible fun-stream feature,
+but it no longer gets to assume that more simultaneous weapons and type
+interactions are automatically better. The simplest tool has to be readable and
+engaging first.
 
 ### Architecture the pivot would add
 
@@ -470,7 +491,7 @@ Every one of those respects the existing boundary: stable IDs in core, display t
 | Risk | Severity | Mitigation |
 | --- | --- | --- |
 | **Chocolate-covered broccoli** — the education layer is skipped by every player | High | Layers 1 and 2 carry the load; interrupting layers pay the player; E4's gate is voluntary codex reads |
-| **Type system makes the auto-battler worse** | High | E2 is a fun-stream feature first and is gated on being more fun, independent of any facts |
+| **Type system makes the auto-battler worse** | High | E2 is deferred until the readable baseline passes, then gated on being more fun independent of any facts |
 | **Slots increase per-frame cost** | Medium | Four simultaneous weapons multiply projectile counts; the V0.3 projectile budget and stress gate must be re-measured in E2 |
 | **Accuracy maintenance burden** | Medium | Fact schema with review dates, a small curated set, ranges over point claims. Fifty good entries beat five hundred unchecked ones |
 | **Focus split kills the fun game** | High | One codebase, one theme, shared systems; the knowledge system doubles as the tooltip system so no work is education-only |
@@ -490,7 +511,7 @@ Every one of those respects the existing boundary: stable IDs in core, display t
 | 3 | Region? | **Australia only for now.** `region` field keeps expansion a content addition |
 | 4 | Two build targets or one? | **One codebase, one primary theme, knowledge layer depth as the difference.** Simpler than the original two-theme framing |
 | 5 | How far does the education layer go? | **Defer the serious layers.** Build the core game the fun stream needs first; E4 onward comes after the systems are proven |
-| 6 | Is the type system worth doing regardless? | **Yes** — E2 is a fun-stream feature and is scheduled as such, built directly on the environment theme |
+| 6 | Is the type system worth doing regardless? | **Unproven.** First prove one readable real-world tool in V0.4.2; only then test E2 as an independently abandonable fun-stream feature |
 | 7 | Commercial intent? | **Monetisable end state is the goal**, with the process paying for itself as end-to-end development learning. Steam premium is the leading candidate; ads and IAP are ruled out |
 
 ### Still open
@@ -504,4 +525,14 @@ Every one of those respects the existing boundary: stable IDs in core, display t
 
 ## 12. One-paragraph summary
 
-Build the environment theme as the game's real fiction, not a skin, and make its mechanics carry the lesson: health is log-scaled persistence, effectiveness is correct handling, and anything that is not one material is a layered enemy rather than a seventh type. Add slots and types as a fun-stream feature that has to justify itself on fun alone. Build the knowledge system as the tooltip system so it serves both audiences and no work is wasted. Deliver facts through a Field Guide the player chooses to open, a debrief tied to their own run, and opt-in Knowledge Shrines that reward knowing things without punishing not knowing them. Validate every fact like code, label commentary as commentary, stay accountless and trackerless and say so loudly, and aim at a finished small game on Steam rather than a large unfinished one anywhere.
+Build the environment theme as the game's real fiction, not a skin, and make
+the first lesson legible before making it complex: a cropped view, slower clock,
+recognisable waste, and one real cleanup tool. Keep persistence-derived health;
+test correct-handling types and layered enemies only after that baseline works.
+Build the knowledge system as the tooltip system so it serves both audiences
+and no work is wasted. Deliver facts through a Field Guide the player chooses
+to open, a debrief tied to their own run, and opt-in Knowledge Shrines that
+reward knowing things without punishing not knowing them. Validate every fact
+like code, label commentary as commentary, stay accountless and trackerless and
+say so loudly, and aim at a finished small game rather than a large unfinished
+one.
