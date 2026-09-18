@@ -9,7 +9,7 @@ better than the simpler educational game.
 | --- | --- | --- | --- |
 | **V0.4.0** | Optional-sprite seam | This file's historical contract; REC-071–073 | Merged from `claude/v0.4.0` |
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
-| **V0.4.2** | 2× cropped view, 0.5 gameplay rate, Cleanup Grabber starter | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | **Next**, on `codex/v0.4.2` |
+| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Built on `codex/v0.4.2` |
 | **V0.4.3** | Weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | Renumbered; not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 

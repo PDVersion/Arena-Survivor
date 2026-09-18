@@ -51,6 +51,7 @@ export const archetypeIds = {
     armour: "upgrade.armour",
     regeneration: "upgrade.regeneration",
     luck: "upgrade.luck",
+    weaponRange: "upgrade.weapon_range",
   },
 } as const;
 

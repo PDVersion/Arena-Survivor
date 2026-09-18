@@ -161,6 +161,10 @@ export const copy = {
       name: "Tempered Power",
       description: "Increase damage dealt.",
     },
+    [archetypeIds.upgrade.weaponRange]: {
+      name: "Far Reach",
+      description: "Extend the starter weapon's effective range.",
+    },
     [archetypeIds.upgrade.attackSpeed]: {
       name: "Quickened Weave",
       description: "Attack more frequently.",

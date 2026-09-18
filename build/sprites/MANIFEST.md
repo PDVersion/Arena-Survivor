@@ -326,3 +326,4 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-09-02 | `enemy.death_spawner` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose consistency but again returned opaque RGB. |
 | 2026-09-02 | `character.starter` | 1 | 1 | n/a (built-in) | rejected | The eight Environment Protector poses read clearly, but the tool rendered an opaque RGB checkerboard. |
 | 2026-09-02 | `character.starter` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose and equipment consistency but returned an opaque black RGB background. |
+| 2026-09-18 | `character.starter` | 2 | 1 | n/a (built-in) | accepted | Deterministic normalization now retains the largest connected subject per frame, removing detached generator marks without hand-editing the preserved raw attempt; runtime uses the clean 0→1→2→1 walk cycle. |

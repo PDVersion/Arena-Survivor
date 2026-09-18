@@ -123,6 +123,22 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
     .toBe(true);
   expect((await snapshot(page))?.feedback?.muted).toBe(true);
 
+  // The minimap is the fourth row on the shared Settings page. Its opacity is
+  // a real session setting, not a visual-only test hook.
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab))
+    .toBe("settings");
+  const canvas = page.locator("canvas");
+  const box = await canvas.boundingBox();
+  const scale = (box?.width ?? 1600) / 1600;
+  await canvas.click({ position: { x: 1230 * scale, y: 398 * scale } });
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.settings?.minimapOpacity))
+    .toBe(0.85);
+
   // Still paused after all of that.
   expect((await snapshot(page))?.run?.status).toBe("paused");
 

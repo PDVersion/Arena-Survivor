@@ -55,5 +55,6 @@ export function selectMeleeHits<T extends MeleeTarget>(
   }
 
   candidates.sort((left, right) => left.distance - right.distance || left.target.targetId.localeCompare(right.target.targetId));
-  return candidates.slice(0, weapon.targetCap).map(({ target }) => target);
+  const selected = weapon.targetCap === null ? candidates : candidates.slice(0, weapon.targetCap);
+  return selected.map(({ target }) => target);
 }

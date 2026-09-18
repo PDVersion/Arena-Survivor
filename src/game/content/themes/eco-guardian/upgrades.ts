@@ -19,58 +19,63 @@ export const upgrades = [
   {
     id: archetypeIds.upgrade.damage,
     effects: [{ kind: "stat.add", target: "player.damageBonus", value: 0.25 }],
-    maxLevel: 12, rarity: "common", category: "offense", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "common", category: "offense", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.attackSpeed,
     effects: [{ kind: "stat.add", target: "player.attackSpeedBonus", value: 0.2 }],
-    maxLevel: 10, rarity: "common", category: "offense", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "common", category: "offense", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.critChance,
     effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1 }],
-    maxLevel: 15, rarity: "common", category: "critical", presentationToken: "critical",
+    maxLevel: null, track: "general", rarity: "common", category: "critical", presentationToken: "critical",
   },
   {
     id: archetypeIds.upgrade.moveSpeed,
     effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }],
-    maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "common", category: "utility", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.health,
     effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }],
-    maxLevel: 10, rarity: "common", category: "survival", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "common", category: "survival", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.pickupRadius,
     effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }],
-    maxLevel: 5, rarity: "common", category: "utility", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "common", category: "utility", presentationToken: "accent",
+  },
+  {
+    id: archetypeIds.upgrade.weaponRange,
+    effects: [{ kind: "stat.add", target: "weapon.range", value: 18 }],
+    maxLevel: 4, track: "weapon", rarity: "common", category: "offense", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.fracture,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.fracture }],
-    maxLevel: 5, rarity: "rare", category: "skill", presentationToken: "accent",
+    maxLevel: 5, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.bloodlust,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.bloodlust }],
-    maxLevel: 6, rarity: "rare", category: "skill", presentationToken: "accent",
+    maxLevel: 6, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",
   },
   // Survivability, so the answer to every problem is not simply more damage.
   {
     id: archetypeIds.upgrade.armour,
     effects: [{ kind: "stat.add", target: "player.armour", value: 12 }],
-    maxLevel: 8, rarity: "common", category: "survival", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "common", category: "survival", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.regeneration,
     effects: [{ kind: "stat.add", target: "player.regeneration", value: 0.8 }],
-    maxLevel: 6, rarity: "rare", category: "survival", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "rare", category: "survival", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.luck,
     effects: [{ kind: "stat.add", target: "player.luck", value: 25 }],
-    maxLevel: 6, rarity: "rare", category: "utility", presentationToken: "accent",
+    maxLevel: null, track: "general", rarity: "rare", category: "utility", presentationToken: "accent",
   },
   // The deliberately dangerous choices: more pressure bought with more reward.
   {
@@ -79,7 +84,7 @@ export const upgrades = [
       { kind: "world.modify", enemySpawnMultiplier: 1.5, xpMultiplier: 1.25 },
       { kind: "stat.add", target: "player.luck", value: 20 },
     ],
-    maxLevel: 4, rarity: "rare", category: "world", presentationToken: "shrine",
+    maxLevel: 4, track: "general", rarity: "rare", category: "world", presentationToken: "shrine",
   },
   {
     id: archetypeIds.upgrade.worldBrittle,
@@ -87,7 +92,7 @@ export const upgrades = [
       { kind: "stat.add", target: "player.damageBonus", value: 1 },
       { kind: "world.modify", chaosIncrease: 1 },
     ],
-    maxLevel: 3, rarity: "epic", category: "world", presentationToken: "shrine",
+    maxLevel: 3, track: "general", rarity: "epic", category: "world", presentationToken: "shrine",
   },
 ] as const satisfies readonly UpgradeDefinition[];
 

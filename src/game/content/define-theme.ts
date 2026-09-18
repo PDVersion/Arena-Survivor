@@ -232,7 +232,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       if (!Number.isFinite(weapon.width) || weapon.width <= 0) {
         issues.push(`${weapon.id} width must be greater than zero`);
       }
-      if (!Number.isInteger(weapon.targetCap) || weapon.targetCap < 1) {
+      if (weapon.targetCap !== null && (!Number.isInteger(weapon.targetCap) || weapon.targetCap < 1)) {
         issues.push(`${weapon.id} targetCap must be a positive integer`);
       }
       if (!Number.isFinite(weapon.extendMs) || weapon.extendMs <= 0) {
@@ -370,8 +370,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!(upgrade.presentationToken in theme.tokens.palette)) {
       issues.push(`${upgrade.id} references missing presentation token: ${upgrade.presentationToken}`);
     }
-    if (!Number.isInteger(upgrade.maxLevel) || upgrade.maxLevel < 1) {
-      issues.push(`${upgrade.id} maxLevel must be a positive integer`);
+    if (upgrade.maxLevel !== null && (!Number.isInteger(upgrade.maxLevel) || upgrade.maxLevel < 1)) {
+      issues.push(`${upgrade.id} maxLevel must be null or a positive integer`);
+    }
+    if (upgrade.track !== "general" && upgrade.track !== "weapon") {
+      issues.push(`${upgrade.id} track must be general or weapon`);
     }
     if (!upgradeRarities.includes(upgrade.rarity)) {
       issues.push(`${upgrade.id} has an unsupported rarity: ${String(upgrade.rarity)}`);
@@ -499,7 +502,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     for (const effect of upgrade.effects) {
       if (effect.kind !== "skill.level") continue;
       const skill = skills.find((candidate) => candidate.id === effect.skillId);
-      if (skill && upgrade.maxLevel > skill.maxLevel) {
+      if (skill && upgrade.maxLevel !== null && upgrade.maxLevel > skill.maxLevel) {
         issues.push(`${upgrade.id} maxLevel exceeds the cap of ${effect.skillId}`);
       }
     }

@@ -40,7 +40,9 @@ test("combat auto-targets, stabs, and kills swarm enemies", async ({ page }) => 
 
 test("contact damage is visible, throttled, and can cause death", async ({ page }) => {
   test.setTimeout(100_000);
-  await page.goto("/?spawnRadius=320&loadHarness=30&closeLoad=1");
+  // Multi-hit grabber progression can now clear the whole close pack before it
+  // proves contact lethality, so isolate the contact contract from offense.
+  await page.goto("/?spawnRadius=320&loadHarness=30&closeLoad=1&noWeapon=1");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.enemyId))
     .toBe("enemy.swarm_basic");

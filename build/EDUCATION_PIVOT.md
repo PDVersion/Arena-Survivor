@@ -47,6 +47,11 @@ with a recognisable pickup grabber instead of an abstract energy orb. The
 the lesson or the game is working. See
 [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
 
+That rule includes the interface: reference copy, upgrade descriptions, and
+settings are rendered at a crisp scalable baseline and are reachable before a
+run through Info. The minimap supports orientation without revealing more world
+through the gameplay camera.
+
 ---
 
 ## 2. One game, one theme, an optional layer

@@ -89,7 +89,7 @@ export function selectPlayerStats(
     ["critChance", stats.critChance, percent(stats.critChance)],
     ["critDamage", stats.critDamage, multiplier(stats.critDamage)],
     ...deliveryLines,
-    ["range", weapon?.range ?? 0, number(weapon?.range ?? 0)],
+    ["range", (weapon?.range ?? 0) + state.weaponModifiers.range, number((weapon?.range ?? 0) + state.weaponModifiers.range)],
     ["knockback", weapon?.knockback ?? 0, number(weapon?.knockback ?? 0)],
     ["armourPierce", weapon?.armourPierce ?? 0, percent(weapon?.armourPierce ?? 0)],
     ["moveSpeed", stats.moveSpeed, number(stats.moveSpeed)],
@@ -150,7 +150,8 @@ export interface UpgradeDescription {
   /** Times already taken. */
   readonly level: number;
   readonly nextLevel: number;
-  readonly maxLevel: number;
+  readonly maxLevel: number | null;
+  readonly track: UpgradeDefinition["track"];
   readonly isNew: boolean;
   readonly lines: readonly UpgradeChangeLine[];
 }
@@ -168,7 +169,8 @@ export function describeUpgrade(
   theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning">,
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
-  const level = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
+  const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
+  const level = upgrade.track === "weapon" ? picks + 1 : picks;
   // An untiered upgrade is described at its authored value however it rolled,
   // so the card can never promise a bonus the application will not deliver.
   const resolvedTier = isTiered(upgrade) ? tier : "common";
@@ -213,8 +215,11 @@ export function describeUpgrade(
     tierMultiplier: multiplier,
     level,
     nextLevel: level + 1,
-    maxLevel: upgrade.maxLevel,
-    isNew: level === 0,
+    maxLevel: upgrade.maxLevel === null
+      ? null
+      : upgrade.track === "weapon" ? upgrade.maxLevel + 1 : upgrade.maxLevel,
+    track: upgrade.track,
+    isNew: upgrade.track === "general" && level === 0,
     lines: Object.freeze(lines),
   });
 }

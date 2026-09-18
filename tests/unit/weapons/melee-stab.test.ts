@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { MeleeWeaponDefinition } from "../../../src/game/core/archetypes/contracts";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import { selectMeleeAim, selectMeleeHits } from "../../../src/game/systems/weapons/melee-stab";
+import { resolveWeaponDefinition } from "../../../src/game/systems/weapons/resolve-weapon";
 
 const weapon: MeleeWeaponDefinition = {
   id: archetypeIds.weapon.starter,
@@ -13,7 +14,7 @@ const weapon: MeleeWeaponDefinition = {
   armourPierce: 0,
   reach: 78,
   width: 18,
-  targetCap: 1,
+  targetCap: null,
   extendMs: 130,
   retractMs: 180,
   presentationToken: "projectile",
@@ -30,13 +31,23 @@ describe("melee stab", () => {
     expect(selectMeleeAim({ x: 0, y: 0 }, [target("far", 100, 0)], weapon.reach)).toBeNull();
   });
 
-  it("hits exactly one target in its narrow corridor and leaves targets outside untouched", () => {
+  it("hits every target in its narrow corridor and leaves targets outside untouched", () => {
     const hits = selectMeleeHits(
       { x: 0, y: 0 },
       0,
       weapon,
       [target("first", 45, 0), target("second", 60, 0), target("outside", 40, 30)],
     );
-    expect(hits.map(({ targetId }) => targetId)).toEqual(["first"]);
+    expect(hits.map(({ targetId }) => targetId)).toEqual(["first", "second"]);
+  });
+
+  it("uses the reach upgrade for aim, collision, and presentation length", () => {
+    const resolved = resolveWeaponDefinition(weapon, { pierce: 0, projectileCount: 0, range: 72 });
+    expect(resolved.deliveryKind).toBe("melee");
+    if (resolved.deliveryKind !== "melee") throw new Error("expected melee");
+    expect(resolved.reach).toBe(150);
+    expect(resolved.range).toBe(150);
+    expect(selectMeleeAim({ x: 0, y: 0 }, [target("extended", 140, 0)], resolved.reach)?.targetId)
+      .toBe("extended");
   });
 });

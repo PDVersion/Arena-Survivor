@@ -19,6 +19,8 @@ export interface SpriteBuildDefinition {
   readonly palette?: readonly (readonly string[])[];
   /** Fully opaque colour used to close the outside silhouette. */
   readonly outline?: string;
+  /** Remove generator marks disconnected from the subject in each frame. */
+  readonly keepLargestComponentPerFrame?: boolean;
 }
 
 export interface SpriteAtlasEntry {
@@ -48,10 +50,13 @@ const neutralRamp = ["#4b5563", "#9ca3af", "#e2e8f0", "#f8fafc"] as const;
 const defaultRamps = [blueRamp, neutralRamp] as const;
 
 export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promise<void> {
-  const source = removeGeneratedBackground(
+  const normalizedSource = removeGeneratedBackground(
     await readPng(definition.source),
     definition.background ?? "transparent",
   );
+  const source = definition.keepLargestComponentPerFrame
+    ? keepLargestComponentPerFrame(normalizedSource, definition.frames)
+    : normalizedSource;
   const bounds = (definition.background ?? "transparent") === "transparent"
     ? detectSeparatedFrames(source.data, source.width, source.height)
     : detectFrameSlots(source.data, source.width, source.height, definition.frames);
@@ -128,6 +133,61 @@ export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promi
       "utf8",
     );
   }
+}
+
+/**
+ * Deterministic generator cleanup, applied before scaling or palette snapping.
+ * Eight-way connectivity preserves diagonal pixel-art outlines while removing
+ * detached motion marks, sparkles, and backdrop remnants.
+ */
+function keepLargestComponentPerFrame(
+  source: { readonly data: Buffer; readonly width: number; readonly height: number },
+  frames: number,
+): { readonly data: Buffer; readonly width: number; readonly height: number } {
+  const data = Buffer.from(source.data);
+  for (let frame = 0; frame < frames; frame += 1) {
+    const left = Math.floor((frame * source.width) / frames);
+    const right = Math.floor(((frame + 1) * source.width) / frames) - 1;
+    const visited = new Set<number>();
+    const components: number[][] = [];
+    for (let y = 0; y < source.height; y += 1) {
+      for (let x = left; x <= right; x += 1) {
+        const pixel = y * source.width + x;
+        if (visited.has(pixel) || data[pixel * 4 + 3]! <= alphaDetectionThreshold) continue;
+        const component: number[] = [];
+        const queue = [pixel];
+        visited.add(pixel);
+        for (let index = 0; index < queue.length; index += 1) {
+          const current = queue[index]!;
+          component.push(current);
+          const currentX = current % source.width;
+          const currentY = Math.floor(current / source.width);
+          for (let dy = -1; dy <= 1; dy += 1) {
+            for (let dx = -1; dx <= 1; dx += 1) {
+              if (dx === 0 && dy === 0) continue;
+              const nextX = currentX + dx;
+              const nextY = currentY + dy;
+              if (nextX < left || nextX > right || nextY < 0 || nextY >= source.height) continue;
+              const next = nextY * source.width + nextX;
+              if (visited.has(next) || data[next * 4 + 3]! <= alphaDetectionThreshold) continue;
+              visited.add(next);
+              queue.push(next);
+            }
+          }
+        }
+        components.push(component);
+      }
+    }
+    const keep = components.sort((a, b) => b.length - a.length)[0];
+    if (!keep) continue;
+    const retained = new Set(keep);
+    for (const component of components) {
+      for (const pixel of component) {
+        if (!retained.has(pixel)) data.fill(0, pixel * 4, pixel * 4 + 4);
+      }
+    }
+  }
+  return { data, width: source.width, height: source.height };
 }
 
 export async function checkSpriteSheet(

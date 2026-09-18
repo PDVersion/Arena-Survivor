@@ -25,10 +25,27 @@ test("the game opens on a title screen rather than a live run", async ({ page })
     title: activeTheme.copy.gameTitle,
     startAction: activeTheme.copy.vocabulary.startAction,
     runsPlayed: 0,
+    actions: ["start", "info", "settings"],
   });
   // Nothing is simulating yet: the player is not being attacked on arrival.
   expect(menu?.run).toBeUndefined();
   expect(consoleErrors).toEqual([]);
+});
+
+test("Info and Settings open the same shared overlay on their requested page", async ({ page }) => {
+  await page.goto("/?menu=1");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().scene)).toBe("menu");
+  const canvas = page.locator("canvas");
+  const box = await canvas.boundingBox();
+  const scale = (box?.width ?? LOGICAL_VIEW.width) / LOGICAL_VIEW.width;
+
+  await canvas.click({ position: { x: 800 * scale, y: 585 * scale } });
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().menu?.overlayTab)).toBe("codex");
+  await page.keyboard.press("Escape");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().menu?.overlayOpen)).toBe(false);
+
+  await canvas.click({ position: { x: 800 * scale, y: 698 * scale } });
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().menu?.overlayTab)).toBe("settings");
 });
 
 test("Enter leaves the menu for a live run", async ({ page }) => {

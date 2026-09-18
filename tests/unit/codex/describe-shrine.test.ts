@@ -109,7 +109,7 @@ describe("upgrade codex", () => {
       expect(entry.name).toBe(theme.copy.content[entry.id].name);
       expect(entry.sessionTotal).toBe(0);
       expect(entry.bestInRun).toBe(0);
-      expect(entry.maxPerRun).toBeGreaterThan(0);
+      if (entry.maxPerRun !== null) expect(entry.maxPerRun).toBeGreaterThan(0);
     }
   });
 
@@ -141,12 +141,14 @@ describe("upgrade codex", () => {
   it("never claims more taken in one run than the run allows", () => {
     let session = createSessionStatistics();
     for (const upgrade of ecoGuardianTheme.upgrades) {
+      if (upgrade.maxLevel === null) continue;
       session = foldRun(session, {
         level: 30,
         statistics: { kills: 0, totalDamage: 0, upgradeCounts: { [upgrade.id]: upgrade.maxLevel } },
       });
     }
     for (const entry of selectUpgradeCodex(ecoGuardianTheme, session)) {
+      if (entry.maxPerRun === null) continue;
       expect(entry.bestInRun).toBeLessThanOrEqual(entry.maxPerRun);
     }
   });

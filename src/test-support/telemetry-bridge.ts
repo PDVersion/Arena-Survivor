@@ -119,7 +119,7 @@ export interface ArenaTestSnapshot {
     /** Heading the terminal summary is showing, or null when it is not up. */
     terminalTitle: string | null;
     pauseTab: string | null;
-    settings: Readonly<Record<string, boolean>>;
+    settings: Readonly<Record<string, boolean | number>>;
     /** What each offered card claims, derived from the real upgrade application. */
     cardDescriptions: readonly Readonly<{
       id: string;
@@ -146,7 +146,7 @@ export interface ArenaTestSnapshot {
       name: string;
       sessionTotal: number;
       bestInRun: number;
-      maxPerRun: number;
+      maxPerRun: number | null;
     }>[];
     codexSession: readonly Readonly<{ label: string; display: string }>[];
   }>;
@@ -324,6 +324,9 @@ export interface ArenaTestSnapshot {
     startAction: string;
     runsPlayed: number;
     bestLevel: number;
+    overlayOpen?: boolean;
+    overlayTab?: string | null;
+    actions?: readonly string[];
   }>;
   readonly error?: string;
 }

@@ -119,6 +119,7 @@ const projectSprites: readonly ProjectSprite[] = [
     frameHeight: 48,
     frames: 8,
     background: "black",
+    keepLargestComponentPerFrame: true,
     palette: [
       ["#14532d", "#22a34e", "#4ade80", "#8df0ac"],
       ["#111827", "#374151", "#6b7280", "#d1d5db"],

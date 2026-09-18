@@ -1,132 +1,72 @@
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
+import { archetypeIds } from "../core/archetypes/ids";
+import { createRunState } from "../state/run-state";
 import { getSessionStatistics } from "../state/session-statistics";
+import { cycleMinimapOpacity, getSessionSettings, toggleSetting, updateSessionSettings, type SettingKey } from "../state/settings-state";
+import { selectSessionCodex, selectShrineCodex, selectUpgradeCodex } from "../systems/codex/describe-shrine";
+import { selectPlayerStats, selectWorldLines } from "../systems/upgrades/describe-upgrade";
+import { PauseMenuUi, type PauseTab } from "../ui/pause-menu-ui";
+import { addUiText, configureUiContainer, uiPointer, uiViewport } from "../ui/ui-text";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
 
-/**
- * The title screen.
- *
- * The build previously dropped straight from boot into a live run, so a player
- * arrived already being attacked, with no statement of what the game is and
- * nowhere to return to. The menu is deliberately thin — it starts a run, states
- * the fiction, and reports what the session has done so far. Character select,
- * mode select, and the save export/import surface belong to V0.4 and have room
- * here when they land.
- *
- * It owns no simulation. Everything it shows is read from the theme and the
- * session statistics slice, so it cannot drift from the run it starts.
- */
+type MenuAction = "start" | "info" | "settings";
+
+/** Title screen with exactly three actions and no simulation of its own. */
 export class MenuScene extends Phaser.Scene {
-  private startBounds?: Phaser.Geom.Rectangle;
+  private bounds: { readonly action: MenuAction; readonly rect: Phaser.Geom.Rectangle }[] = [];
+  private overlay?: PauseMenuUi;
+  private menuContainer?: Phaser.GameObjects.Container;
 
   constructor() {
     super("menu");
   }
 
   create(): void {
-    const { width, height } = this.scale;
     const palette = activeTheme.tokens.palette;
     const copy = activeTheme.copy;
+    const viewport = uiViewport(this);
+    const centreX = viewport.centreX;
     this.cameras.main.setBackgroundColor(palette.background);
     this.drawBackdrop();
 
-    const centreX = width / 2;
-    this.add
-      .text(centreX, height * 0.24, copy.gameTitle, {
-        color: palette.accent,
-        fontFamily: "Georgia, serif",
-        fontSize: "64px",
-        fontStyle: "bold",
-      })
-      .setOrigin(0.5);
+    const children: Phaser.GameObjects.GameObject[] = [
+      addUiText(this, centreX, viewport.top + 120, copy.gameTitle, {
+        color: palette.accent, fontFamily: "Georgia, serif", fontSize: "56px", fontStyle: "bold",
+      }).setOrigin(0.5),
+      addUiText(this, centreX, viewport.top + 174, copy.arenaName, {
+        color: palette.text, fontFamily: "Georgia, serif", fontSize: "22px",
+      }).setOrigin(0.5).setAlpha(0.75),
+    ];
 
-    this.add
-      .text(centreX, height * 0.24 + 62, copy.arenaName, {
-        color: palette.text,
-        fontFamily: "Georgia, serif",
-        fontSize: "24px",
-      })
-      .setOrigin(0.5)
-      .setAlpha(0.75);
-
-    const startY = height * 0.52;
-    const startLabel = this.add
-      .text(centreX, startY, copy.vocabulary.startAction, {
-        color: palette.background,
-        fontFamily: "Georgia, serif",
-        fontSize: "26px",
-        fontStyle: "bold",
-      })
-      .setOrigin(0.5);
-    // Sized to its own label, because the label is theme copy of unknown length.
-    const buttonWidth = startLabel.width + 72;
-    const button = this.add
-      .rectangle(centreX, startY, buttonWidth, 58, Phaser.Display.Color.HexStringToColor(palette.accent).color, 1)
-      .setStrokeStyle(3, Phaser.Display.Color.HexStringToColor(palette.text).color);
-    button.setInteractive({ useHandCursor: true });
-    this.children.bringToTop(startLabel);
-    this.startBounds = new Phaser.Geom.Rectangle(
-      centreX - buttonWidth / 2,
-      startY - 29,
-      buttonWidth,
-      58,
-    );
-    this.tweens.add({
-      targets: button,
-      alpha: 0.72,
-      duration: 900,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.InOut",
-    });
-
-    this.add
-      .text(centreX, startY + 62, copy.vocabulary.startHint, {
-        color: palette.text,
-        fontFamily: "Georgia, serif",
-        fontSize: "17px",
-      })
-      .setOrigin(0.5)
-      .setAlpha(0.7);
-
-    this.add
-      .text(centreX, height * 0.76, copy.movementHint, {
-        align: "center",
-        color: palette.text,
-        fontFamily: "Georgia, serif",
-        fontSize: "17px",
-      })
-      .setOrigin(0.5)
-      .setAlpha(0.6);
-
-    const session = getSessionStatistics();
-    if (session.runsPlayed > 0) {
-      const codex = copy.codex;
-      this.add
-        .text(
-          centreX,
-          height * 0.76 + 30,
-          [
-            `${codex.runsPlayed} ${session.runsPlayed}`,
-            `${codex.best} ${copy.vocabulary.level} ${session.bestLevel}`,
-            `${codex.best} ${copy.vocabulary.kills} ${session.bestKills}`,
-          ].join("   ·   "),
-          {
-            color: palette.pickup,
-            fontFamily: "Georgia, serif",
-            fontSize: "16px",
-          },
-        )
-        .setOrigin(0.5)
-        .setAlpha(0.85);
+    const actions: readonly { action: MenuAction; label: string; y: number }[] = [
+      { action: "start", label: copy.vocabulary.startAction, y: this.scale.height * 0.52 },
+      { action: "info", label: "Info", y: this.scale.height * 0.62 },
+      { action: "settings", label: "Settings", y: this.scale.height * 0.72 },
+    ];
+    this.bounds = [];
+    const accent = Phaser.Display.Color.HexStringToColor(palette.accent).color;
+    const floor = Phaser.Display.Color.HexStringToColor(palette.floor).color;
+    for (const [index, action] of actions.entries()) {
+      const label = addUiText(this, centreX, action.y, action.label, {
+        color: index === 0 ? palette.background : palette.text,
+        fontFamily: "Georgia, serif", fontSize: "24px", fontStyle: "bold",
+      }).setOrigin(0.5);
+      const width = Math.max(280, label.width + 72);
+      const button = this.add.rectangle(centreX, action.y, width, 54, index === 0 ? accent : floor, 1)
+        .setStrokeStyle(3, accent)
+        .setInteractive({ useHandCursor: true });
+      children.push(button, label);
+      this.bounds.push({ action: action.action, rect: new Phaser.Geom.Rectangle(centreX - width / 2, action.y - 27, width, 54) });
     }
 
+    this.menuContainer = configureUiContainer(this, this.add.container(0, 0, children)).setDepth(10);
+    this.overlay = new PauseMenuUi(this, activeTheme);
     this.input.keyboard?.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.handleKey, this);
     this.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointer, this);
     this.publishTelemetry();
   }
 
-  /** The same grid the arena draws, so the menu reads as part of the game. */
   private drawBackdrop(): void {
     const { width, height } = this.scale;
     const palette = activeTheme.tokens.palette;
@@ -140,13 +80,62 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private handleKey(event: KeyboardEvent): void {
-    if (event.code === "Enter" || event.code === "Space" || event.code === "NumpadEnter") {
-      this.startRun();
+    if (event.code === "Escape" && this.overlay?.isOpen) {
+      this.overlay.hide();
+      this.menuContainer?.setVisible(true);
+      this.publishTelemetry();
+      return;
     }
+    if (this.overlay?.isOpen) {
+      if (event.code === "Tab" || event.code === "ArrowRight") this.overlay.cycleTab(1);
+      if (event.code === "ArrowLeft") this.overlay.cycleTab(-1);
+      if (event.code === "ArrowDown") this.overlay.cycleCodexSection(1);
+      if (event.code === "ArrowUp") this.overlay.cycleCodexSection(-1);
+      return;
+    }
+    if (event.code === "Enter" || event.code === "Space" || event.code === "NumpadEnter") this.startRun();
   }
 
   private handlePointer(pointer: Phaser.Input.Pointer): void {
-    if (this.startBounds?.contains(pointer.x, pointer.y)) this.startRun();
+    if (this.overlay?.isOpen) return;
+    const point = uiPointer(this, pointer);
+    const hit = this.bounds.find((entry) => entry.rect.contains(point.x, point.y));
+    if (hit?.action === "start") this.startRun();
+    if (hit?.action === "info") this.openOverlay("codex");
+    if (hit?.action === "settings") this.openOverlay("settings");
+  }
+
+  private openOverlay(tab: PauseTab): void {
+    this.menuContainer?.setVisible(false);
+    this.overlay?.show(this.infoView(), (key) => this.applySetting(key), { tab, menuContext: true });
+    this.publishTelemetry();
+  }
+
+  private infoView() {
+    const character = activeTheme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
+    const state = createRunState({
+      themeId: activeTheme.id,
+      characterId: character.id,
+      baseStats: character.baseStats,
+      xpCurve: activeTheme.tuning.progression.xpCurve,
+    });
+    const session = getSessionStatistics();
+    return {
+      stats: selectPlayerStats(state, activeTheme),
+      world: selectWorldLines(state.world, activeTheme),
+      upgrades: [],
+      codex: selectShrineCodex(activeTheme),
+      codexUpgrades: selectUpgradeCodex(activeTheme, session),
+      codexSession: selectSessionCodex(activeTheme, session),
+      settings: getSessionSettings(),
+    };
+  }
+
+  private applySetting(key: SettingKey): void {
+    const current = getSessionSettings();
+    updateSessionSettings(key === "minimapOpacity" ? cycleMinimapOpacity(current) : toggleSetting(current, key));
+    this.overlay?.refresh(this.infoView());
+    this.publishTelemetry();
   }
 
   private startRun(): void {
@@ -158,15 +147,16 @@ export class MenuScene extends Phaser.Scene {
   private publishTelemetry(): void {
     const session = getSessionStatistics();
     updateTestTelemetry({
-      status: "ready",
-      scene: this.scene.key,
-      themeId: activeTheme.id,
+      status: "ready", scene: this.scene.key, themeId: activeTheme.id,
       canvas: { width: this.scale.width, height: this.scale.height },
       menu: {
         title: activeTheme.copy.gameTitle,
         startAction: activeTheme.copy.vocabulary.startAction,
         runsPlayed: session.runsPlayed,
         bestLevel: session.bestLevel,
+        overlayOpen: Boolean(this.overlay?.isOpen),
+        overlayTab: this.overlay?.activeTab ?? null,
+        actions: ["start", "info", "settings"],
       },
     });
   }

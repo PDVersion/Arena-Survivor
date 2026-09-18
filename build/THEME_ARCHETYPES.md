@@ -103,11 +103,12 @@ kinds under the same role:
 
 | Stable role after V0.4.2 | `eco-guardian` | `knight-magic` |
 | --- | --- | --- |
-| `weapon.starter` | Cleanup Grabber — short single-target melee stab | Magic Needle — the parked existing projectile |
+| `weapon.starter` | Cleanup Grabber — narrow multi-target path, reach levels 1–5 | Magic Needle — the parked existing projectile |
 
 This is the boundary working as intended: the core requires a starter weapon,
 not a projectile. The theme owns whether that weapon delivers damage through a
-melee reach or a travelling body. The old projectile actor and effect path stay
+melee reach or a travelling body. A melee delivery may resolve every actor in
+its narrow corridor; this is geometry, not the projectile pierce mechanic. The old projectile actor and effect path stay
 available; only the active eco definition stops using them.
 
 ## Theme manifest contract

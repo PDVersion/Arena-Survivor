@@ -368,7 +368,8 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
   readonly reach: number;
   /** Width of the grabber head's contact corridor. */
   readonly width: number;
-  readonly targetCap: number;
+  /** `null` resolves every target in the corridor, near to far. */
+  readonly targetCap: number | null;
   readonly extendMs: number;
   readonly retractMs: number;
 }
@@ -423,8 +424,10 @@ export type UpgradeCategory = (typeof upgradeCategories)[number];
 export interface UpgradeDefinition {
   readonly id: UpgradeId;
   readonly effects: readonly UpgradeEffect[];
-  /** A maxed upgrade leaves the pool, so it can never be offered as a no-op. */
-  readonly maxLevel: number;
+  /** `null` is a repeatable general stat upgrade with no per-run cap. */
+  readonly maxLevel: number | null;
+  /** Weapon progression is displayed separately from the general pool. */
+  readonly track: "general" | "weapon";
   readonly rarity: UpgradeRarity;
   readonly category: UpgradeCategory;
   readonly presentationToken: keyof Pick<ThemePalette, "accent" | "critical" | "overcritical" | "shrine">;

@@ -95,6 +95,8 @@ describe("upgrade availability", () => {
 
   it("removes a maxed upgrade from the pool", () => {
     const entry = upgrade(archetypeIds.upgrade.projectileCount);
+    expect(entry.maxLevel).not.toBeNull();
+    if (entry.maxLevel === null) throw new Error("fixture must be capped");
     const taken = Array.from({ length: entry.maxLevel }, () => entry.id);
 
     expect(isUpgradeAvailable(entry, [])).toBe(true);
@@ -102,11 +104,20 @@ describe("upgrade availability", () => {
     // The V0.2 defect: an offer that can do nothing.
     expect(isUpgradeAvailable(entry, taken)).toBe(false);
   });
+
+  it("keeps an uncapped general stat upgrade available", () => {
+    const entry = upgrade(archetypeIds.upgrade.damage);
+    const uncapped = { ...entry, maxLevel: null, track: "general" as const };
+    const taken = Array.from({ length: 200 }, () => uncapped.id);
+    expect(isUpgradeAvailable(uncapped, taken)).toBe(true);
+  });
 });
 
 describe("upgrade selection", () => {
   it("never offers a maxed upgrade", () => {
     const maxed = upgrade(archetypeIds.upgrade.chainReaction);
+    expect(maxed.maxLevel).not.toBeNull();
+    if (maxed.maxLevel === null) throw new Error("fixture must be capped");
     const selected = Array.from({ length: maxed.maxLevel }, () => maxed.id);
     const random = createSeededRandom(0x31);
 

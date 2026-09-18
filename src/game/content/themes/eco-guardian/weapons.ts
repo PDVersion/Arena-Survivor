@@ -12,7 +12,7 @@ export const weapons = [
     armourPierce: 0,
     reach: 78,
     width: 18,
-    targetCap: 1,
+    targetCap: null,
     extendMs: 130,
     retractMs: 180,
     presentationToken: "projectile",

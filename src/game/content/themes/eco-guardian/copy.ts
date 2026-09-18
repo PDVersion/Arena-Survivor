@@ -183,7 +183,11 @@ export const copy = {
     },
     [archetypeIds.upgrade.damage]: {
       name: "Reinforced Tools",
-      description: "Process more waste with every charge.",
+      description: "Process more waste with every grab.",
+    },
+    [archetypeIds.upgrade.weaponRange]: {
+      name: "Longer Grabber",
+      description: "Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5.",
     },
     [archetypeIds.upgrade.attackSpeed]: {
       name: "Rapid Cycling",

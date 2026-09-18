@@ -2143,7 +2143,8 @@ offers or make systems infer delivery from a theme identity.
 Decision / solution:
 Rename the required role to `weapon.starter` before persistence ships and make
 `WeaponDefinition` a discriminated projectile/melee union. The eco definition
-uses a 78-unit, 18-unit-wide, one-target stab; knight-magic retains the existing
+initially used a 78-unit, 18-unit-wide, one-target stab; REC-097 supersedes only
+that target-cap decision with path-based multi-hit. Knight-magic retains the existing
 projectile values. Theme validation checks only fields belonging to the selected
 delivery. Upgrade registries may differ by theme, with only the universal damage
 role required; eco parks pierce, projectile-count, piercing-momentum,
@@ -2207,6 +2208,95 @@ Revisit when:
 External play testing finds 0.5 tiring, the 120-second occupancy too dense, or
 the final grabber sprite makes extend/contact/retract less legible than the
 primitive fallback.
+
+### REC-094 — World zoom is not an interface scale
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.2; camera, HUD, overlays, text rendering
+- Blocks: None
+
+Context / observation:
+The 2× camera made fixed UI larger as a raster transform. Text edges softened,
+panel content overflowed, and serif descenders could be clipped even though the
+world itself became easier to read.
+
+Decision / solution:
+Screen UI now counter-scales the world camera, applies an intentional 1.25× UI
+scale inside a reduced authored viewport, and renders text to 4× private text
+textures with explicit bottom padding. Pointer coordinates are transformed back
+through the same scale before hit testing.
+
+Future guardrail:
+Never use gameplay-camera zoom as the UI scaling mechanism. New canvas UI text
+uses `addUiText`, and new overlay roots use `configureUiContainer`.
+
+### REC-095 — Generated motion marks are removed reproducibly
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.1 sprite pipeline; V0.4.2 player presentation
+- Blocks: None
+
+Context / observation:
+At 2× zoom the accepted player sheet exposed detached green generator marks,
+including a large blob beside idle and motion streaks in the fourth walk pose.
+They read as unintended particles.
+
+Decision / solution:
+The preserved raw generation is unchanged. The deterministic build pipeline now
+retains the largest eight-way-connected subject in each player frame before
+scaling and palette snapping. Runtime walk presentation uses the clean
+0→1→2→1 poses at 240 ms per step and omits the artifact-bearing fourth pose.
+
+Future guardrail:
+Do not hand-edit generated sheets. Fix generator cleanup in the reproducible
+pipeline or regenerate from a corrected prompt.
+
+### REC-096 — The minimap is adjustable presentation, not simulation
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.2; navigation, settings, save seam
+- Blocks: None
+
+Context / observation:
+The cropped camera improves local readability but removes broad arena context.
+
+Decision / solution:
+A presentation-only minimap projects existing actor positions into arena bounds
+and never feeds data back into spawning, targeting, or collision. Its session
+setting cycles Off, 35%, 60%, and 85%, defaulting to 60%; the setting remains in
+the serializable settings slice for the future persistence adapter.
+
+Future guardrail:
+The minimap may summarize known world state, but it must never become an
+authoritative gameplay index or change how much world the main camera reveals.
+
+### REC-097 — Cleanup Grabber progression is reach-only and path-based
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.2; weapon delivery, upgrades, catalogue, title menu
+- Blocks: None
+
+Context / observation:
+A single-target cap contradicted the visible grabber path, while mixing its
+progression with general damage, speed, and critical upgrades hid the weapon's
+simple identity.
+
+Decision / solution:
+The grabber resolves every eligible enemy intersecting its narrow corridor in
+deterministic near-to-far order. Its only dedicated upgrade adds 18 world units
+of reach and can be taken four times: owned level 1 through maximum level 5.
+General stat upgrades are uncapped; skill and world upgrades keep caps where a
+further pick would be a no-op. Choice cards and the full-description catalogue
+label weapon and general tracks separately. Start, Info, and Settings are the
+title's only three actions, and Info/Settings reuse the Escape overlay.
+
+Future guardrail:
+Effective melee reach must be resolved once for aim, collision, presentation,
+and stat copy. Weapon-specific effects never masquerade as general stat picks.
 
 ## V0.4.3 entries — content growth
 
