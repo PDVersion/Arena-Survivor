@@ -72,7 +72,7 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 | `character.starter` | Environment Protector | Wandering Knight |
 | `weapon.starter` | Cleanup Grabber | Magic Needle |
 | `enemy.swarm_basic` | Plastic Bottle | Grunt |
-| `enemy.fast_fragile` | Plastic Bag | Runner |
+| `enemy.fast_fragile` | Microplastics (V0.4.2.1; replaces Plastic Bag) | Runner |
 | `enemy.slow_durable` | Glass Bottle | Tank |
 | `enemy.death_spawner` | Bagged Waste | Broodmother |
 | `pickup.experience` | Impact Point | Arcane Spark |
@@ -104,6 +104,15 @@ kinds under the same role:
 | Stable role after V0.4.2 | `eco-guardian` | `knight-magic` |
 | --- | --- | --- |
 | `weapon.starter` | Cleanup Grabber — narrow multi-target path, reach levels 1–5 | Magic Needle — the parked existing projectile |
+
+### V0.4.2.1 material-family extension
+
+The next correction keeps core IDs role-based. `enemy.fast_fragile` becomes
+Microplastics in the eco pack; a new stationary-fragment role becomes Glass
+Shards. Plastic Bottle fragments route to Microplastics, Glass Bottle fragments
+route to Glass Shards, and Bagged Waste releases the finite primary material
+set without creating another Bagged Waste. See
+[`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md) for the editorial relationship map.
 
 This is the boundary working as intended: the core requires a starter weapon,
 not a projectile. The theme owns whether that weapon delivers damage through a

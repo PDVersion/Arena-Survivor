@@ -10,6 +10,13 @@ the environment theme became the primary production theme in
 the baseline through a cropped 2× view, a 0.5 gameplay rate, and a real-world
 Cleanup Grabber starter. Everything else here remains exploratory.
 
+V0.4.2.1 promotes one further environmental rule: fragmentation now produces
+material-specific outcomes. Plastic Bottles create Microplastics, Glass Bottles
+create stationary Glass Shards, and Bagged Waste releases a finite mixture of
+primary waste roles. The concise names and relationships are recorded in
+[`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md); precise factual claims still need
+the evidence workflow below.
+
 Status: **Exploration.** Earliest realistic start for the layers below is V0.4.
 
 ---

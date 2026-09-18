@@ -2298,6 +2298,59 @@ Future guardrail:
 Effective melee reach must be resolved once for aim, collision, presentation,
 and stat copy. Weapon-specific effects never masquerade as general stat picks.
 
+Amendment for V0.4.2.1: “only dedicated upgrade” described the accepted
+V0.4.2 baseline, not a permanent one-track limit. Longer Grabber remains the
+owned reach track; Collection Sweep is a second, separately acquired weapon
+track whose cadence and area never alter the reach calculation above.
+
+### REC-098 — Visible footprint and contact footprint are authored together
+
+- Status: Accepted for V0.4.2.1
+- Date: 2026-09-18
+- Affects: Player/enemy presentation, contact, separation, sprite QA
+- Blocks: V0.4.3
+
+Context / observation:
+The tighter camera made it obvious when a sprite's visible silhouette occupied
+only part of its authored collision circle. Solid enemies also blocked the
+player before the visible objects appeared to make credible contact.
+
+Decision / solution:
+Theme data authors gameplay radius and sprite display diameter together from the
+intended physical footprint, verified with a debug overlay. No bitmap is ever
+measured by physics. Player/enemy overlap no longer resolves as a solid barrier;
+valid contact instead gives the player a small, cooldown-limited knockback.
+Enemy/enemy separation and obstacle collision remain independent.
+
+Future guardrail:
+Changing art never silently changes physics. Any footprint adjustment changes
+explicit theme data and reruns contact/separation tests, including the 300-enemy
+sample.
+
+### REC-099 — Material fragments use finite role relationships
+
+- Status: Accepted for V0.4.2.1
+- Date: 2026-09-18
+- Affects: Eco enemies, Fragmentation, death spawning, catalogue, sprite roster
+- Blocks: V0.4.3 and remaining sprite generation
+
+Context / observation:
+Same-parent scaled fragments do not teach what the material becomes. “Plastic
+Bag” also conflated a fast enemy with the larger Bagged Waste death-spawner.
+
+Decision / solution:
+`enemy.fast_fragile` becomes Microplastics. Plastic Bottle fragments route to
+Microplastics; Glass Bottle fragments route to a stationary Glass Shards role;
+neither child fragments again. Bagged Waste releases Plastic Bottle,
+Microplastics, and Glass Bottle, but never itself. Runtime theme definitions own
+the relationships; `build/ECO_CONTENT_MAP.md` is their wiki-shaped editorial
+map and future catalogue structure, not a second executable ruleset.
+
+Future guardrail:
+Validate every spawn relation as a finite graph, keep child identity independent
+of sprite art, and regenerate renamed subjects through the manifest rather than
+relabeling accepted images.
+
 ## V0.4.3 entries — content growth
 
 <!-- REC-090 is preserved here as an early merged discovery. New V0.4.3 entries use REC-100 to REC-119. -->

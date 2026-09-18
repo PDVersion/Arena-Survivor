@@ -36,6 +36,14 @@ unchanged. The first active-theme weapon is a recognisable real-world tool with
 one readable stab, not an abstract orb projectile. See
 [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
 
+The first follow-up play test is scheduled as V0.4.2.1 before content growth.
+It stabilises player animation, moves the minimap, dismisses the opening hint,
+aligns authored contact footprints, replaces enemy blocking with slight player
+knockback, adds the optional Collection Sweep grabber track, and establishes
+Microplastics/Glass Shards material relationships. See
+[`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) and
+[`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md).
+
 The world camera and interface are separate presentation concerns. UI is
 authored larger, rendered from high-resolution text textures, and fitted to the
 screen rather than enlarged as part of the world camera. The title offers Start,
