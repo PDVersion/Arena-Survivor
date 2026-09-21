@@ -10,6 +10,7 @@ export const archetypeIds = {
     fastFragile: "enemy.fast_fragile",
     slowDurable: "enemy.slow_durable",
     deathSpawner: "enemy.death_spawner",
+    stationaryFragment: "enemy.stationary_fragment",
   },
   pickup: {
     experience: "pickup.experience",
@@ -26,6 +27,7 @@ export const archetypeIds = {
     fracture: "skill.fracture",
     bloodlust: "skill.bloodlust",
     chainReaction: "skill.chain_reaction",
+    collectionSweep: "skill.collection_sweep",
   },
   hazard: {
     damageZone: "hazard.damage_zone",
@@ -52,6 +54,7 @@ export const archetypeIds = {
     regeneration: "upgrade.regeneration",
     luck: "upgrade.luck",
     weaponRange: "upgrade.weapon_range",
+    weaponCollectionSweep: "upgrade.weapon_collection_sweep",
   },
 } as const;
 

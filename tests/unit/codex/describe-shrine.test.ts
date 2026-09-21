@@ -3,6 +3,7 @@ import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian"
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import {
+  selectEnemyCodex,
   selectSessionCodex,
   selectShrineCodex,
   selectUpgradeCodex,
@@ -150,6 +151,25 @@ describe("upgrade codex", () => {
     for (const entry of selectUpgradeCodex(ecoGuardianTheme, session)) {
       if (entry.maxPerRun === null) continue;
       expect(entry.bestInRun).toBeLessThanOrEqual(entry.maxPerRun);
+    }
+  });
+});
+
+describe("enemy codex", () => {
+  it("derives identity, footprints, and material relations from live theme data", () => {
+    const entries = selectEnemyCodex(ecoGuardianTheme);
+    expect(entries).toHaveLength(ecoGuardianTheme.enemies.length);
+    const bag = entries.find(({ id }) => id === archetypeIds.enemy.deathSpawner)!;
+    expect(bag.name).toBe(ecoGuardianTheme.copy.content[bag.id].name);
+    expect(bag.relations.map(({ enemyId, count }) => ({ enemyId, count }))).toEqual([
+      { enemyId: archetypeIds.enemy.swarmBasic, count: 2 },
+      { enemyId: archetypeIds.enemy.fastFragile, count: 2 },
+      { enemyId: archetypeIds.enemy.slowDurable, count: 1 },
+    ]);
+    for (const entry of entries) {
+      const definition = ecoGuardianTheme.enemies.find(({ id }) => id === entry.id)!;
+      expect(entry.bodyDiameter).toBe(definition.radius * 2);
+      expect(entry.displayDiameter).toBe(definition.displayDiameter);
     }
   });
 });

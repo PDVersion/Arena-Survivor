@@ -129,6 +129,10 @@ export const copy = {
       name: "Broodmother",
       description: "A swollen creature whose defeat releases a fresh brood.",
     },
+    [archetypeIds.enemy.stationaryFragment]: {
+      name: "Rune Shards",
+      description: "Broken sigil fragments linger where they fall until destroyed.",
+    },
     [archetypeIds.pickup.experience]: {
       name: "Arcane Spark",
       description: "A trace of power left by a fallen enemy.",
@@ -145,6 +149,7 @@ export const copy = {
     [archetypeIds.skill.fracture]: { name: "Fracture", description: "Some defeated foes split into smaller enemies." },
     [archetypeIds.skill.bloodlust]: { name: "Bloodlust", description: "Recent kills quicken your attacks." },
     [archetypeIds.skill.chainReaction]: { name: "Chain Reaction", description: "Explosion kills may detonate in turn." },
+    [archetypeIds.skill.collectionSweep]: { name: "Arc Sweep", description: "Periodically sweep a wider arc around the weapon path." },
     [archetypeIds.hazard.damageZone]: {
       name: "Cursed Mire",
       description: "A lingering blight that burns and drags at anything wading through it.",
@@ -164,6 +169,10 @@ export const copy = {
     [archetypeIds.upgrade.weaponRange]: {
       name: "Far Reach",
       description: "Extend the starter weapon's effective range.",
+    },
+    [archetypeIds.upgrade.weaponCollectionSweep]: {
+      name: "Arc Sweep",
+      description: "Periodically sweep a wider arc around the starter weapon.",
     },
     [archetypeIds.upgrade.attackSpeed]: {
       name: "Quickened Weave",

@@ -15,7 +15,7 @@ test("the accepted player and enemy roster load together in a live run", async (
       () => window.__ARENA_TEST__?.getSnapshot().combat?.rosterHighWater,
     );
     return roster ? Object.values(roster).filter((count) => count > 0).length : 0;
-  }).toBe(4);
+  }).toBe(5);
 
   const loaded = await page.evaluate(() =>
     performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),

@@ -12,9 +12,10 @@ test("elite capability applies to every enemy role and survives duplication", as
     "enemy.fast_fragile": expect.any(Number),
     "enemy.slow_durable": expect.any(Number),
     "enemy.death_spawner": expect.any(Number),
+    "enemy.stationary_fragment": expect.any(Number),
   });
   for (const count of Object.values(snapshot?.elites?.byRole ?? {})) expect(count).toBeGreaterThanOrEqual(2);
-  expect(snapshot?.world?.duplicatedEnemiesSpawned).toBeGreaterThanOrEqual(4);
+  expect(snapshot?.world?.duplicatedEnemiesSpawned).toBeGreaterThanOrEqual(5);
 });
 
 test("feedback unlocks after interaction, throttles dense combat, and supports mute", async ({ page }) => {
@@ -47,7 +48,7 @@ test("reduced-motion feedback remains bounded without changing elite simulation"
   await page.goto("/?forceElite=1&enemyRoster=all&reducedMotion=1&noXp=1");
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().elites?.spawned,
-  )).toBe(4);
+  )).toBe(5);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.feedback?.reducedMotion).toBe(true);
   expect(snapshot?.feedback?.visualHighWater).toBeLessThanOrEqual(48);

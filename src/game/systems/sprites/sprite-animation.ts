@@ -2,7 +2,7 @@ import type { SpriteState } from "../../core/archetypes/contracts";
 
 /** Presentation timing only: no simulation reads these values. */
 export const SPRITE_MOVE_FRAME_MS = 180;
-export const SPRITE_PLAYER_MOVE_FRAME_MS = 240;
+export const SPRITE_PLAYER_FRAME_DISTANCE = 60;
 export const SPRITE_DEATH_FRAME_MS = 220;
 
 export interface SpriteAnimationState {
@@ -27,12 +27,31 @@ export function resolveAnimatedSpriteState(
   return step % 2 === 0 ? "idle" : "move";
 }
 
-/** Frames 0–3 are the authored player walk cycle; frame 4 is idle. */
-export function resolvePlayerMovementFrame(nowMs: number, moving: boolean): number {
-  if (!moving) return 4;
-  // The generated fourth walk pose contains detached motion marks that read as
-  // particles at 2× zoom. Keep the accepted source reproducible and use the
-  // three clean poses in a stable return cycle until that pose is regenerated.
+export interface PlayerMovementAnimation {
+  readonly step: number;
+  readonly distance: number;
+  readonly frame: number;
+}
+
+/**
+ * Advance the authored 0→1→2→1 walk by travelled distance.
+ *
+ * Sixty world units is 300 ms at the player's current 200-unit base speed.
+ * At most one pose advances per update, so a long frame or overlay resume can
+ * never flash through several poses before the player sees one.
+ */
+export function advancePlayerMovementFrame(
+  previous: Readonly<{ step: number; distance: number }>,
+  movedDistance: number,
+): PlayerMovementAnimation {
+  if (movedDistance <= 0.01) return { step: 0, distance: 0, frame: 4 };
   const cycle = [0, 1, 2, 1] as const;
-  return cycle[Math.floor(Math.max(0, nowMs) / SPRITE_PLAYER_MOVE_FRAME_MS) % cycle.length]!;
+  const total = previous.distance + movedDistance;
+  const advances = total >= SPRITE_PLAYER_FRAME_DISTANCE ? 1 : 0;
+  const step = (previous.step + advances) % cycle.length;
+  return {
+    step,
+    distance: advances ? Math.min(total - SPRITE_PLAYER_FRAME_DISTANCE, SPRITE_PLAYER_FRAME_DISTANCE) : total,
+    frame: cycle[step]!,
+  };
 }

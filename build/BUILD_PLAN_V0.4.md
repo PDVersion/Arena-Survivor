@@ -10,8 +10,8 @@ better than the simpler educational game.
 | **V0.4.0** | Optional-sprite seam | This file's historical contract; REC-071–073 | Merged from `claude/v0.4.0` |
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
 | **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Built on `codex/v0.4.2` |
-| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Planned; must land before V0.4.3 |
-| **V0.4.3** | Weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | Renumbered; not started |
+| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Built on `codex/v0.4.2.1` |
+| **V0.4.3** | Weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | Next; not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -50,7 +50,7 @@ simulation. Three rules remain permanent:
    presentation remnant.
 
 V0.4.1 delivered the reusable pipeline and accepted sheets #1–5: Plastic
-Bottle, Plastic Bag, Glass Bottle, Bagged Waste, and Environment Protector. Rows
+Bottle, the since-replaced Plastic Bag, Glass Bottle, Bagged Waste, and Environment Protector. Rows
 #6–19 remain unclaimed under REC-078 until V0.4.4 reconciles them against the
 post-redirect roster.
 

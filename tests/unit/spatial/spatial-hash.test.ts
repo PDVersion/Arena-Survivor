@@ -115,11 +115,10 @@ describe("body tuning", () => {
       (left, right) => enemies.get(left.enemyId)!.radius - enemies.get(right.enemyId)!.radius,
     );
 
-    // Smallest role overlaps most; largest holds its ground and is solid.
+    // Smallest role overlaps most; largest holds its ground through mass. All
+    // roles stay walk-through for player contact.
     expect(sorted[0]!.separationScale).toBeLessThan(sorted.at(-1)!.separationScale);
     expect(sorted[0]!.mass).toBeLessThan(sorted.at(-1)!.mass);
-    expect(sorted[0]!.solid).toBe(false);
-    expect(sorted.some((role) => role.solid)).toBe(true);
   });
 
   it.each([

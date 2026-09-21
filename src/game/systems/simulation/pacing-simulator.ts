@@ -86,6 +86,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   const tuning = theme.tuning;
   const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter);
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter);
+  const collectionSweep = (theme.skills ?? [])
+    .find((entry) => entry.id === archetypeIds.skill.collectionSweep)
+    ?.effects?.find((effect) => effect.kind === "collection_sweep");
   if (!weapon || !character) throw new Error("The theme is missing required simulation content");
 
   const world = chaosWorldState(chaos);
@@ -177,6 +180,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
       baseCritChance: character.baseStats.critChance,
       critDamage: character.baseStats.critDamage,
       liveEnemies: liveCount(),
+      collectionSweep,
     };
     const dps = options.build.damagePerSecond(progression.level, context);
     bucketDpsTotal += dps;

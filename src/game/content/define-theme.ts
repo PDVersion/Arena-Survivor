@@ -142,6 +142,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(character.radius) || character.radius <= 0) {
       issues.push(`${character.id} radius must be greater than zero`);
     }
+    if (!Number.isFinite(character.displayDiameter) || character.displayDiameter <= 0) {
+      issues.push(`${character.id} displayDiameter must be greater than zero`);
+    }
     if (!(character.presentationToken in theme.tokens.palette)) {
       issues.push(`${character.id} references missing presentation token: ${character.presentationToken}`);
     }
@@ -262,8 +265,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(enemy.maxHealth) || enemy.maxHealth <= 0) {
       issues.push(`${enemy.id} maxHealth must be greater than zero`);
     }
-    if (!Number.isFinite(enemy.moveSpeed) || enemy.moveSpeed <= 0) {
-      issues.push(`${enemy.id} moveSpeed must be greater than zero`);
+    if (!Number.isFinite(enemy.moveSpeed) || enemy.moveSpeed < 0) {
+      issues.push(`${enemy.id} moveSpeed cannot be negative`);
+    }
+    if (enemy.moveSpeed === 0 && enemy.id !== archetypeIds.enemy.stationaryFragment) {
+      issues.push(`${enemy.id} may not be stationary`);
     }
     if (!Number.isFinite(enemy.contactDamage) || enemy.contactDamage <= 0) {
       issues.push(`${enemy.id} contactDamage must be greater than zero`);
@@ -274,18 +280,21 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(enemy.radius) || enemy.radius <= 0) {
       issues.push(`${enemy.id} radius must be greater than zero`);
     }
+    if (!Number.isFinite(enemy.displayDiameter) || enemy.displayDiameter <= 0) {
+      issues.push(`${enemy.id} displayDiameter must be greater than zero`);
+    }
     if (!Number.isFinite(enemy.xpReward) || enemy.xpReward < 0) {
       issues.push(`${enemy.id} xpReward cannot be negative`);
     }
     if (!(["circle", "triangle", "square", "hexagon"] as const).includes(enemy.geometry)) {
       issues.push(`${enemy.id} geometry is unsupported: ${String(enemy.geometry)}`);
     }
-    if (enemy.deathSpawn) {
-      if (!Number.isInteger(enemy.deathSpawn.count) || enemy.deathSpawn.count < 1) {
-        issues.push(`${enemy.id} deathSpawn count must be a positive integer`);
+    for (const child of enemy.deathSpawns ?? []) {
+      if (!Number.isInteger(child.count) || child.count < 1) {
+        issues.push(`${enemy.id} deathSpawns count must be a positive integer`);
       }
-      if (!Number.isFinite(enemy.deathSpawn.rewardMultiplier) || enemy.deathSpawn.rewardMultiplier < 0) {
-        issues.push(`${enemy.id} deathSpawn rewardMultiplier cannot be negative`);
+      if (!Number.isFinite(child.rewardMultiplier) || child.rewardMultiplier < 0) {
+        issues.push(`${enemy.id} deathSpawns rewardMultiplier cannot be negative`);
       }
     }
     if (!(enemy.presentationToken in theme.tokens.palette)) {
@@ -299,8 +308,34 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
   }
   for (const enemy of enemies) {
-    if (enemy.deathSpawn && !enemyIds.has(enemy.deathSpawn.enemyId)) {
-      issues.push(`${enemy.id} references missing death-spawn enemy: ${enemy.deathSpawn.enemyId}`);
+    for (const child of enemy.deathSpawns ?? []) {
+      if (!enemyIds.has(child.enemyId)) issues.push(`${enemy.id} references missing death-spawn enemy: ${child.enemyId}`);
+    }
+    if (enemy.fragmentInto && !enemyIds.has(enemy.fragmentInto)) {
+      issues.push(`${enemy.id} references missing fragment enemy: ${enemy.fragmentInto}`);
+    }
+  }
+  const spawnEdges = new Map(enemies.map((enemy) => [
+    enemy.id,
+    [...(enemy.deathSpawns ?? []).map((child: { enemyId: string }) => child.enemyId), ...(enemy.fragmentInto ? [enemy.fragmentInto] : [])],
+  ]));
+  const visiting = new Set<string>();
+  const visited = new Set<string>();
+  const visitsCycle = (id: string): boolean => {
+    if (visiting.has(id)) return true;
+    if (visited.has(id)) return false;
+    visiting.add(id);
+    for (const child of spawnEdges.get(id) ?? []) {
+      if (visitsCycle(child)) return true;
+    }
+    visiting.delete(id);
+    visited.add(id);
+    return false;
+  };
+  for (const enemy of enemies) {
+    if (visitsCycle(enemy.id)) {
+      issues.push(`${enemy.id} participates in a recursive spawn family`);
+      break;
     }
   }
 
@@ -455,26 +490,6 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         if (!Number.isFinite(effect.chancePerLevel) || effect.chancePerLevel < 0) issues.push(`${skill.id} fracture chancePerLevel cannot be negative`);
         if (!Number.isInteger(effect.childCount) || effect.childCount < 1) issues.push(`${skill.id} fracture childCount must be a positive integer`);
         if (!Number.isFinite(effect.rewardMultiplier) || effect.rewardMultiplier < 0) issues.push(`${skill.id} fracture rewardMultiplier cannot be negative`);
-        const fragment = effect.fragment;
-        if (!fragment) {
-          issues.push(`${skill.id} fracture must declare a fragment shape`);
-        } else {
-          // A fragment is defined against whatever broke, so every multiplier
-          // has to be a real positive ratio rather than an absolute value.
-          for (const [key, value] of Object.entries(fragment) as [string, number][]) {
-            if (!Number.isFinite(value) || value <= 0) {
-              issues.push(`${skill.id} fracture fragment.${key} must be greater than zero`);
-            }
-          }
-          // The whole point of the change: a fragment outpaces what it came
-          // from, and is smaller than it.
-          if (fragment.speedMultiplier <= 1) {
-            issues.push(`${skill.id} fracture fragment.speedMultiplier must exceed one`);
-          }
-          if (fragment.radiusMultiplier >= 1) {
-            issues.push(`${skill.id} fracture fragment.radiusMultiplier must be below one`);
-          }
-        }
       }
       if (effect.kind === "bloodlust" &&
         (!Number.isFinite(effect.windowMs) || effect.windowMs <= 0 || !Number.isInteger(effect.killsPerStep) || effect.killsPerStep < 1 || !Number.isFinite(effect.attackSpeedPerStep) || effect.attackSpeedPerStep <= 0)) {
@@ -488,6 +503,19 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
           if (!Number.isFinite(value) || value <= 0 || value > 1) {
             issues.push(`${skill.id} chain ${key} must be within (0, 1]`);
           }
+        }
+      }
+      if (effect.kind === "collection_sweep") {
+        if (effect.triggerEvery.length !== 4 || effect.triggerEvery.some((value: number) => !Number.isInteger(value) || value < 1)) {
+          issues.push(`${skill.id} collection sweep must declare four positive trigger intervals`);
+        }
+        if (!Number.isFinite(effect.radius) || effect.radius <= 0) issues.push(`${skill.id} collection sweep radius must be greater than zero`);
+        if (!Number.isFinite(effect.damageMultiplier) || effect.damageMultiplier <= 0) issues.push(`${skill.id} collection sweep damageMultiplier must be greater than zero`);
+        if (!Number.isInteger(effect.levelFiveInterval.min) || !Number.isInteger(effect.levelFiveInterval.max) || effect.levelFiveInterval.min < 1 || effect.levelFiveInterval.max < effect.levelFiveInterval.min) {
+          issues.push(`${skill.id} collection sweep level-five interval is invalid`);
+        }
+        if (!Number.isInteger(effect.levelFiveExtraPositions.min) || !Number.isInteger(effect.levelFiveExtraPositions.max) || effect.levelFiveExtraPositions.min < 1 || effect.levelFiveExtraPositions.max < effect.levelFiveExtraPositions.min) {
+          issues.push(`${skill.id} collection sweep level-five positions are invalid`);
         }
       }
     }
@@ -806,8 +834,11 @@ function validateTuning(
     if (!Number.isFinite(bodies.eliteMassMultiplier) || bodies.eliteMassMultiplier < 1) {
       issues.push("tuning.bodies.eliteMassMultiplier must be at least one");
     }
-    if (!Number.isFinite(bodies.contactKnockback) || bodies.contactKnockback < 0) {
-      issues.push("tuning.bodies.contactKnockback cannot be negative");
+    if (!Number.isFinite(bodies.contactKnockbackImpulse) || bodies.contactKnockbackImpulse < 0) {
+      issues.push("tuning.bodies.contactKnockbackImpulse cannot be negative");
+    }
+    if (!Number.isFinite(bodies.contactKnockbackCooldownMs) || bodies.contactKnockbackCooldownMs < 0) {
+      issues.push("tuning.bodies.contactKnockbackCooldownMs cannot be negative");
     }
     const seenBodies = new Set<string>();
     let largestSeparation = 0;

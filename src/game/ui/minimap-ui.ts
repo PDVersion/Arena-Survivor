@@ -23,8 +23,9 @@ export class MinimapUi {
   private readonly worldHeight: number;
   private readonly theme: ThemeManifest;
   private opacity: RunSettings["minimapOpacity"];
-  private readonly left: number;
-  private readonly top: number;
+  private left = 0;
+  private top = 0;
+  private overlayHidden = false;
   private readonly width = 196;
   private readonly height = 132;
 
@@ -38,9 +39,7 @@ export class MinimapUi {
     this.worldWidth = world.width;
     this.worldHeight = world.height;
     this.opacity = opacity;
-    const viewport = uiViewport(scene);
-    this.left = viewport.left + viewport.width - this.width - 18;
-    this.top = viewport.top + 112;
+    this.anchor(scene);
     this.graphics = scene.add.graphics();
     this.container = configureUiContainer(scene, scene.add.container(0, 0, [this.graphics]))
       .setDepth(920);
@@ -48,12 +47,29 @@ export class MinimapUi {
 
   setOpacity(opacity: RunSettings["minimapOpacity"]): void {
     this.opacity = opacity;
-    this.container.setVisible(opacity > 0);
+    this.container.setVisible(!this.overlayHidden && opacity > 0);
+  }
+
+  setOverlayHidden(hidden: boolean): void {
+    this.overlayHidden = hidden;
+    this.container.setVisible(!hidden && this.opacity > 0);
+  }
+
+  resize(scene: Phaser.Scene): void {
+    this.anchor(scene);
+  }
+
+  get bounds(): Readonly<{ left: number; top: number; width: number; height: number }> {
+    return { left: this.left, top: this.top, width: this.width, height: this.height };
+  }
+
+  get visible(): boolean {
+    return this.container.visible;
   }
 
   update(view: MinimapView): void {
     const graphics = this.graphics.clear();
-    if (this.opacity === 0) {
+    if (this.opacity === 0 || this.overlayHidden) {
       this.container.setVisible(false);
       return;
     }
@@ -87,5 +103,11 @@ export class MinimapUi {
 
   destroy(): void {
     this.container.destroy(true);
+  }
+
+  private anchor(scene: Phaser.Scene): void {
+    const viewport = uiViewport(scene);
+    this.left = viewport.left + viewport.width - this.width - 18;
+    this.top = viewport.top + viewport.height - this.height - 18;
   }
 }

@@ -178,40 +178,24 @@ describe("skill content", () => {
   });
 });
 
-describe("fragments", () => {
+describe("material fragments", () => {
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
-  ])("defines a %s fragment against its parent, not a fixed enemy", (_name, theme) => {
+  ])("defines finite %s child routes on enemy data", (_name, theme) => {
     const fracture = findSkillEffect(theme.skills, archetypeIds.skill.fracture, "fracture")!;
-
-    // The defect this replaced: fragments were spawned as the fast role, so
-    // breaking a glass bottle produced plastic bags and every fracture added
-    // more of the one enemy that was already the most pressuring.
     expect("childEnemyId" in fracture).toBe(false);
-    expect(fracture.fragment.speedMultiplier).toBeGreaterThan(1);
-    expect(fracture.fragment.radiusMultiplier).toBeLessThan(1);
-    expect(fracture.fragment.healthMultiplier).toBeLessThan(1);
+    const fast = theme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.fastFragile)!;
+    const stationary = theme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.stationaryFragment)!;
+    expect("fragmentInto" in fast ? fast.fragmentInto : undefined).toBeUndefined();
+    expect("fragmentInto" in stationary ? stationary.fragmentInto : undefined).toBeUndefined();
   });
 
-  it("keeps a fragment only slightly quicker than what it broke off", () => {
-    const fracture = findSkillEffect(
-      ecoGuardianTheme.skills,
-      archetypeIds.skill.fracture,
-      "fracture",
-    )!;
-
-    // "Slightly" is the point: a fragment inherits its parent's pace rather
-    // than jumping to the fast role's.
-    expect(fracture.fragment.speedMultiplier).toBeLessThanOrEqual(1.25);
-
-    const slowest = Math.min(...ecoGuardianTheme.enemies.map((enemy) => enemy.moveSpeed));
-    const fast = ecoGuardianTheme.enemies.find(
-      (enemy) => enemy.id === archetypeIds.enemy.fastFragile,
-    )!;
-    // A fragment of the slowest role must stay well short of the fast role, or
-    // the distinction the change exists to make would not survive contact.
-    expect(slowest * fracture.fragment.speedMultiplier).toBeLessThan(fast.moveSpeed);
+  it("routes plastic and glass parents to their authored child roles", () => {
+    const plastic = ecoGuardianTheme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.swarmBasic)!;
+    const glass = ecoGuardianTheme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.slowDurable)!;
+    expect(plastic.fragmentInto).toBe(archetypeIds.enemy.fastFragile);
+    expect(glass.fragmentInto).toBe(archetypeIds.enemy.stationaryFragment);
   });
 
   it("is worth nothing, so fracturing stays a crowd trade rather than income", () => {

@@ -16,7 +16,7 @@ and **Parked** is not offered by this theme.
 | `character.starter` | Environment Protector | Character | A field operative clearing an overflowing waste site. | Live |
 | `weapon.starter` | Cleanup Grabber | Melee weapon | A mechanical grabber that extends through every item in its narrow path, then retracts. | Live |
 | `upgrade.weapon_range` | Longer Grabber | Weapon track, owned level 1 | Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5. | Live |
-| `upgrade.weapon_collection_sweep` (planned) | Collection Sweep | Weapon track, starts unowned | Periodically sweep a wider area at the grabber's jaws. Higher levels trigger more often and add sweeps along extension and retraction. | V0.4.2.1 |
+| `upgrade.weapon_collection_sweep` | Collection Sweep | Weapon track, starts unowned | Periodically sweep a wider area at the grabber's jaws. Higher levels trigger more often and add sweeps along extension and retraction. | Live |
 
 Collection Sweep level wording:
 
@@ -32,11 +32,11 @@ Collection Sweep level wording:
 
 | Stable role | Eco name | Identity and behavior | Can create | Status |
 | --- | --- | --- | --- | --- |
-| `enemy.swarm_basic` | Plastic Bottle | Common moving plastic waste; the baseline crowd role. | Microplastics through Fragmentation | Live behavior; relation changes in V0.4.2.1 |
-| `enemy.fast_fragile` | Microplastics | Small, fast, multicolour shards and pieces of plastic waste. This replaces Plastic Bag. | Nothing | V0.4.2.1 |
-| `enemy.slow_durable` | Glass Bottle | Slow, durable glass waste. | Glass Shards through Fragmentation | Live behavior; relation changes in V0.4.2.1 |
-| `enemy.death_spawner` | Bagged Waste | A large rubbish bag of mixed waste whose threat is what spills out. | Plastic Bottle, Microplastics, Glass Bottle | Live; children change in V0.4.2.1 |
-| `enemy.stationary_fragment` (planned) | Glass Shards | A stationary contact hazard left by broken glass. It can be cleared but still hurts a player who stands on it. | Nothing | V0.4.2.1 |
+| `enemy.swarm_basic` | Plastic Bottle | Common moving plastic waste; the baseline crowd role. | Microplastics through Fragmentation | Live |
+| `enemy.fast_fragile` | Microplastics | Small, fast, multicolour shards and pieces of plastic waste. This replaces Plastic Bag. | Nothing | Live |
+| `enemy.slow_durable` | Glass Bottle | Slow, durable glass waste. | Glass Shards through Fragmentation | Live |
+| `enemy.death_spawner` | Bagged Waste | A large rubbish bag of mixed waste whose threat is what spills out. | Plastic Bottle, Microplastics, Glass Bottle | Live |
+| `enemy.stationary_fragment` | Glass Shards | A stationary contact hazard left by broken glass. It can be cleared but still hurts a player who stands on it. | Nothing | Live |
 
 Relationship map:
 

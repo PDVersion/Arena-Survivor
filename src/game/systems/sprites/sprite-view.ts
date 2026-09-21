@@ -3,7 +3,7 @@ import type { SpriteDefinition, SpriteState, ThemeTokens } from "../../core/arch
 import type { ContentId } from "../../core/archetypes/ids";
 import {
   resolveAnimatedSpriteState,
-  resolvePlayerMovementFrame,
+  advancePlayerMovementFrame,
   SPRITE_DEATH_FRAME_MS,
   type SpriteAnimationState,
 } from "./sprite-animation";
@@ -39,7 +39,7 @@ export type SpriteViewSource = Phaser.GameObjects.GameObject &
 
 export interface SpriteViewOptions {
   /**
-   * The drawn diameter, derived from the definition's radius.
+   * The drawn diameter, authored beside the gameplay radius in theme data.
    *
    * The sprite is scaled to fit the simulation's size. The simulation is never
    * scaled to fit the sprite — that direction is the rule the whole split
@@ -66,6 +66,8 @@ export class SpriteView {
   private previousX: number;
   private previousY: number;
   private facingX = 1;
+  private playerStep = 0;
+  private playerDistance = 0;
   private detached = false;
 
   constructor(
@@ -160,10 +162,16 @@ export class SpriteView {
     );
     this.image.setAlpha(source.alpha);
     this.image.setDepth(source.depth);
-    const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
-    if (usesPlayerCycle && state === "idle") {
-      this.setFrame(resolvePlayerMovementFrame(this.image.scene.time.now, moving));
+    if (usesPlayerCycle) {
+      const next = advancePlayerMovementFrame(
+        { step: this.playerStep, distance: this.playerDistance },
+        moving ? Math.hypot(deltaX, deltaY) : 0,
+      );
+      this.playerStep = next.step;
+      this.playerDistance = next.distance;
+      this.setFrame(next.frame);
     } else {
+      const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
       this.setState(state);
     }
   }

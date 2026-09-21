@@ -145,6 +145,7 @@ export const alternateTheme = defineTheme({
     {
       id: archetypeIds.character.starter,
       radius: 18,
+      displayDiameter: 36,
       presentationToken: "player",
       baseStats: {
         maxHealth: 100,
@@ -186,14 +187,17 @@ export const alternateTheme = defineTheme({
       contactDamage: 10,
       contactCooldownMs: 1000,
       radius: 14,
+      displayDiameter: 28,
       xpReward: 1,
       armour: 0,
       geometry: "circle",
       presentationToken: "enemy",
+      fragmentInto: archetypeIds.enemy.fastFragile,
     },
-    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 190, contactDamage: 8, contactCooldownMs: 1000, radius: 10, xpReward: 2, armour: 0, geometry: "triangle", presentationToken: "enemyFast" },
-    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 70, contactDamage: 20, contactCooldownMs: 1000, radius: 22, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank" },
-    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 80, contactDamage: 12, contactCooldownMs: 1000, radius: 25, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawn: { enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 } },
+    { id: archetypeIds.enemy.fastFragile, maxHealth: 10, moveSpeed: 190, contactDamage: 8, contactCooldownMs: 1000, radius: 10, displayDiameter: 20, xpReward: 2, armour: 0, geometry: "triangle", presentationToken: "enemyFast" },
+    { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 70, contactDamage: 20, contactCooldownMs: 1000, radius: 22, displayDiameter: 44, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank", fragmentInto: archetypeIds.enemy.fastFragile },
+    { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 80, contactDamage: 12, contactCooldownMs: 1000, radius: 25, displayDiameter: 50, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawns: [{ enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 }] },
+    { id: archetypeIds.enemy.stationaryFragment, maxHealth: 18, moveSpeed: 0, contactDamage: 7, contactCooldownMs: 1000, radius: 12, displayDiameter: 24, xpReward: 0, armour: 12, geometry: "triangle", presentationToken: "enemyTank" },
   ],
   pickups: [
     {
@@ -217,6 +221,7 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.upgrade.fracture, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.fracture }], maxLevel: 5, track: "general", rarity: "common", category: "utility", presentationToken: "accent" },
     { id: archetypeIds.upgrade.bloodlust, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.bloodlust }], maxLevel: 6, track: "general", rarity: "common", category: "utility", presentationToken: "accent" },
     { id: archetypeIds.upgrade.chainReaction, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.chainReaction }], maxLevel: 5, track: "general", rarity: "common", category: "utility", presentationToken: "accent" },
+    { id: archetypeIds.upgrade.weaponCollectionSweep, effects: [{ kind: "skill.level", skillId: archetypeIds.skill.collectionSweep }], maxLevel: 5, track: "weapon", rarity: "rare", category: "offense", presentationToken: "accent" },
     { id: archetypeIds.upgrade.armour, effects: [{ kind: "stat.add", target: "player.armour", value: 12 }], maxLevel: 8, track: "general", rarity: "common", category: "survival", presentationToken: "accent" },
     { id: archetypeIds.upgrade.regeneration, effects: [{ kind: "stat.add", target: "player.regeneration", value: 0.8 }], maxLevel: 6, track: "general", rarity: "rare", category: "survival", presentationToken: "accent" },
     { id: archetypeIds.upgrade.luck, effects: [{ kind: "stat.add", target: "player.luck", value: 25 }], maxLevel: 6, track: "general", rarity: "rare", category: "utility", presentationToken: "accent" },
@@ -244,9 +249,10 @@ export const alternateTheme = defineTheme({
   skills: [
     { id: archetypeIds.skill.piercingMomentum, maxLevel: 6, effects: [{ kind: "piercing_momentum", damagePerUniqueHit: 0.1, perLevel: 0.1 }] },
     { id: archetypeIds.skill.onKillExplosion, maxLevel: 8, effects: [{ kind: "on_kill_explosion", baseRadius: 44, radiusPerLevel: 12, flatDamage: 3, flatPerLevel: 2, victimHealthShare: 0.3, sharePerLevel: 0.08, maxShare: 0.9 }] },
-    { id: archetypeIds.skill.fracture, maxLevel: 5, effects: [{ kind: "fracture", chance: 0.15, chancePerLevel: 0.05, childCount: 2, rewardMultiplier: 0, fragment: { speedMultiplier: 1.15, healthMultiplier: 0.35, radiusMultiplier: 0.62, damageMultiplier: 0.6 } }] },
+    { id: archetypeIds.skill.fracture, maxLevel: 5, effects: [{ kind: "fracture", chance: 0.15, chancePerLevel: 0.05, childCount: 2, rewardMultiplier: 0 }] },
     { id: archetypeIds.skill.bloodlust, maxLevel: 6, effects: [{ kind: "bloodlust", windowMs: 5_000, killsPerStep: 10, attackSpeedPerStep: 0.01, attackSpeedPerLevel: 0.005 }] },
     { id: archetypeIds.skill.chainReaction, maxLevel: 5, effects: [{ kind: "chain_reaction", baseDepth: 2, depthPerLevel: 1, damageFalloff: 0.7, falloffPerLevel: 0.04, radiusFalloff: 0.85, radiusFalloffPerLevel: 0.02 }] },
+    { id: archetypeIds.skill.collectionSweep, maxLevel: 5, effects: [{ kind: "collection_sweep", triggerEvery: [8, 6, 4, 4], radius: 34, damageMultiplier: 0.75, levelFiveInterval: { min: 2, max: 4 }, levelFiveExtraPositions: { min: 1, max: 3 } }] },
   ],
   hazards: [
     { id: archetypeIds.hazard.damageZone, kind: "damage_zone", radius: 110, telegraphMs: 900, lifetimeMs: 9_000, damage: 4, tickMs: 500, slowMultiplier: 0.6, presentationToken: "explosion" },
@@ -322,12 +328,14 @@ export const alternateTheme = defineTheme({
       maxNeighbours: 8,
       maxDisplacement: 6,
       eliteMassMultiplier: 2,
-      contactKnockback: 26,
+      contactKnockbackImpulse: 18,
+      contactKnockbackCooldownMs: 350,
       roles: [
-        { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6, solid: false },
-        { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1, solid: false },
-        { enemyId: archetypeIds.enemy.slowDurable, separationScale: 1, mass: 4, solid: true },
-        { enemyId: archetypeIds.enemy.deathSpawner, separationScale: 0.95, mass: 3, solid: true },
+        { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6 },
+        { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1 },
+        { enemyId: archetypeIds.enemy.slowDurable, separationScale: 1, mass: 4 },
+        { enemyId: archetypeIds.enemy.deathSpawner, separationScale: 0.95, mass: 3 },
+        { enemyId: archetypeIds.enemy.stationaryFragment, separationScale: 0.9, mass: 2 },
       ],
     },
     difficulty: {

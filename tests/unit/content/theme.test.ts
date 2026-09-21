@@ -157,6 +157,21 @@ describe("theme manifests", () => {
     );
   });
 
+  it("rejects recursive material spawn families", () => {
+    const invalid = {
+      ...alternateTheme,
+      enemies: alternateTheme.enemies.map((enemy) =>
+        enemy.id === archetypeIds.enemy.fastFragile
+          ? { ...enemy, fragmentInto: archetypeIds.enemy.swarmBasic }
+          : enemy,
+      ),
+    } as unknown as ThemeManifest;
+
+    expect(validateTheme(invalid)).toContain(
+      `${archetypeIds.enemy.swarmBasic} participates in a recursive spawn family`,
+    );
+  });
+
   it("reports missing combat registries without throwing", () => {
     const invalid = {
       ...alternateTheme,

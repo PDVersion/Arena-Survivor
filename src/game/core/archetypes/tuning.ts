@@ -174,8 +174,6 @@ export interface BodyRoleTuning {
   readonly separationScale: number;
   /** Heavier bodies are displaced less by their neighbours. */
   readonly mass: number;
-  /** Solid roles block the player instead of being walked through. */
-  readonly solid: boolean;
 }
 
 export interface BodiesTuning {
@@ -185,10 +183,12 @@ export interface BodiesTuning {
   readonly maxNeighbours: number;
   /** Ceiling on a single frame's displacement, so a dense pile cannot explode. */
   readonly maxDisplacement: number;
-  /** Elite mass multiplier; elites are solid regardless of their role. */
+  /** Elite mass multiplier; elites resist enemy/enemy separation more strongly. */
   readonly eliteMassMultiplier: number;
-  /** How far a solid enemy shoves the player when it damages them. */
-  readonly contactKnockback: number;
+  /** Player impulse applied on valid damaging enemy contact. */
+  readonly contactKnockbackImpulse: number;
+  /** Minimum simulated time between contact pushes. */
+  readonly contactKnockbackCooldownMs: number;
   readonly roles: readonly BodyRoleTuning[];
 }
 

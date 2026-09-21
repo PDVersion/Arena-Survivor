@@ -14,7 +14,7 @@ test("Chaos resolves two Multiplicity shrines through one world model", async ({
 
 test("all shrine roles activate exactly once and Duplication retains every copy", async ({ page }) => {
   await page.goto("/?shrineLayout=adjacent&worldScenario=all&enemyRoster=all&noXp=1&atTimeUp=complete");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.duplicatedEnemiesSpawned), { timeout: 15_000 }).toBe(4);
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.duplicatedEnemiesSpawned), { timeout: 15_000 }).toBe(5);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.world?.activations).toMatchObject({
     "shrine.spawn_surge": 1,
@@ -22,7 +22,7 @@ test("all shrine roles activate exactly once and Duplication retains every copy"
     "shrine.multiplicity": 2,
     "shrine.duplication": 1,
   });
-  expect(snapshot?.world).toMatchObject({ chaos: 4.2, duplicatedEnemiesQueued: 4, duplicatedEnemiesSpawned: 4 });
+  expect(snapshot?.world).toMatchObject({ chaos: 4.2, duplicatedEnemiesQueued: 5, duplicatedEnemiesSpawned: 5 });
   expect(snapshot?.shrine?.instances.every(({ activated }) => activated)).toBe(true);
   expect(snapshot?.run?.liveEnemies).toBeLessThanOrEqual(snapshot?.combat?.enemyCap ?? 0);
 });

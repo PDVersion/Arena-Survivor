@@ -120,6 +120,9 @@ export interface ArenaTestSnapshot {
     terminalTitle: string | null;
     pauseTab: string | null;
     settings: Readonly<Record<string, boolean | number>>;
+    movementHintVisible: boolean;
+    minimapVisible: boolean;
+    minimapBounds: Readonly<{ left: number; top: number; width: number; height: number }> | null;
     /** What each offered card claims, derived from the real upgrade application. */
     cardDescriptions: readonly Readonly<{
       id: string;
@@ -295,6 +298,9 @@ export interface ArenaTestSnapshot {
     meleeStrikes: number;
     meleeHits: number;
     grabberActive: number;
+    collectionSweepAttacks: number;
+    collectionSweepsTriggered: number;
+    collectionSweepHits: number;
     firstMeleeHitAtMs: number | null;
     firstKillAtMs: number | null;
     firstContactAtMs: number | null;

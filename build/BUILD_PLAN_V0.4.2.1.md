@@ -35,11 +35,11 @@ catalogue must be checked against.
 
 ## Phase tracker
 
-- [ ] P0 — Contract, content IDs, tuning seams, and catalogue mapping
-- [ ] P1 — Walk animation, minimap anchor, and opening-hint lifetime
-- [ ] P2 — Contact footprints, walk-through enemies, and player knockback
-- [ ] P3 — Collection Sweep levels 1–5
-- [ ] P4 — Microplastics, Glass Shards, material spawn relations, and integration
+- [x] P0 — Contract, content IDs, tuning seams, and catalogue mapping
+- [x] P1 — Walk animation, minimap anchor, and opening-hint lifetime
+- [x] P2 — Contact footprints, walk-through enemies, and player knockback
+- [x] P3 — Collection Sweep levels 1–5
+- [x] P4 — Microplastics, Glass Shards, material spawn relations, and integration
 
 Each phase is one reviewable commit and updates `RECONCILIATION.md` when it
 discovers or changes a reusable rule.
@@ -159,3 +159,17 @@ slight knockback; deterministic Collection Sweep behavior at every level; and
 finite material-family spawning below the 300-enemy cap.
 
 V0.4.3 remains blocked until this pass is accepted.
+
+## Completion record — 2026-09-21
+
+The automated visual/contact path records the supported viewport with the
+bottom-right minimap, both hint dismissal paths, debug body circles, traversal
+through the five-role roster, cooldown-limited contact shove, and a live
+Collection Sweep trigger. Levels 1–4 have exact cadence/position tests; level 5
+has seeded bounded tests. The material graph is validation-tested as finite,
+the five-child Bagged Waste breakup is browser-tested below the 300-enemy cap,
+and the Microplastics replacement passed the manifest acceptance/build check.
+
+Completion gate: `npm run typecheck`, the 401-test unit suite, production build,
+72-test Chromium suite (one opt-in measurement skipped), Collection Sweep
+balance model, and five-sheet sprite check all pass.

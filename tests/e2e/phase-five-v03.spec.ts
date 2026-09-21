@@ -39,28 +39,22 @@ test("a dense crowd never stays perfectly stacked", async ({ page }) => {
   expect(settled?.crowd?.pairChecksHighWater).toBeLessThan(200 * 200);
 });
 
-test("solid enemies block the player and soft ones do not", async ({ page }) => {
+test("every enemy remains walk-through without displacing the player", async ({ page }) => {
   test.setTimeout(120_000);
-  // Only the durable role, which is solid, spawned right on the player.
   await page.goto("/?enemyRoster=all&noXp=1&noContact=1&spawnRadius=90&runDurationMs=20000&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
 
-  await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().crowd?.solidResolutions ?? 0), {
-      timeout: 30_000,
-    })
-    .toBeGreaterThan(0);
-
+  const startX = (await snapshot(page))?.player?.x ?? 0;
+  await page.keyboard.down("KeyD");
+  await expect.poll(
+    () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().player?.x ?? 0),
+    { timeout: 5_000 },
+  ).toBeGreaterThan(startX + 150);
+  await page.keyboard.up("KeyD");
   const state = await snapshot(page);
-  // The player is displaced out of solids but never out of the arena.
-  const player = state?.player;
-  const arena = state?.arena;
-  expect(player!.x).toBeGreaterThanOrEqual(player!.radius - 1);
-  expect(player!.y).toBeGreaterThanOrEqual(player!.radius - 1);
-  expect(player!.x).toBeLessThanOrEqual(arena!.width - player!.radius + 1);
-  expect(player!.y).toBeLessThanOrEqual(arena!.height - player!.radius + 1);
+  expect(state?.crowd?.solidResolutions).toBe(0);
 });
 
 test("separation never alters damage, rewards, or statistics", async ({ page }) => {

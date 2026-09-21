@@ -279,22 +279,6 @@ export type SkillEffectDefinition =
       chancePerLevel: number;
       childCount: number;
       rewardMultiplier: number;
-      /**
-       * What a fragment is, relative to whatever it broke off.
-       *
-       * Fragments used to be spawned as a fixed enemy id — the fast role — so
-       * breaking a glass bottle produced plastic bags, and every fracture in
-       * the run added more of the one enemy that was already the most
-       * pressuring. A fragment is now a smaller, quicker piece of its own
-       * parent, so what you broke still determines what you are fighting.
-       */
-      fragment: Readonly<{
-        /** Slightly above `1`: a fragment outpaces what it came from. */
-        speedMultiplier: number;
-        healthMultiplier: number;
-        radiusMultiplier: number;
-        damageMultiplier: number;
-      }>;
     }>
   | Readonly<{
       kind: "bloodlust";
@@ -312,6 +296,15 @@ export type SkillEffectDefinition =
       falloffPerLevel: number;
       radiusFalloff: number;
       radiusFalloffPerLevel: number;
+    }>
+  | Readonly<{
+      kind: "collection_sweep";
+      /** Levels 1–4 trigger after these completed grabber attacks. */
+      triggerEvery: readonly [number, number, number, number];
+      radius: number;
+      damageMultiplier: number;
+      levelFiveInterval: Readonly<{ min: number; max: number }>;
+      levelFiveExtraPositions: Readonly<{ min: number; max: number }>;
     }>;
 
 export interface EliteDefinition {
@@ -326,6 +319,8 @@ export interface EliteDefinition {
 export interface CharacterDefinition {
   readonly id: CharacterId;
   readonly radius: number;
+  /** Authored visual footprint; physics never derives this from the bitmap. */
+  readonly displayDiameter: number;
   readonly presentationToken: keyof Pick<ThemePalette, "player">;
   readonly baseStats: PlayerBaseStats;
 }
@@ -384,6 +379,8 @@ export interface EnemyDefinition {
   readonly contactDamage: number;
   readonly contactCooldownMs: number;
   readonly radius: number;
+  /** Authored visual footprint; physics never measures the sprite. */
+  readonly displayDiameter: number;
   readonly xpReward: number;
   /** Multiplicative damage reduction; the durable role's defining trait. */
   readonly armour: number;
@@ -392,11 +389,14 @@ export interface EnemyDefinition {
     ThemePalette,
     "enemy" | "enemyFast" | "enemyTank" | "enemySpawner"
   >;
-  readonly deathSpawn?: Readonly<{
+  /** Finite, theme-owned children released on death. */
+  readonly deathSpawns?: readonly Readonly<{
     enemyId: EnemyId;
     count: number;
     rewardMultiplier: number;
-  }>;
+  }>[];
+  /** Material-specific Fragmentation result. Absence means this role cannot fragment. */
+  readonly fragmentInto?: EnemyId;
 }
 
 export interface PickupDefinition {

@@ -119,80 +119,13 @@ export function separateCrowd<T extends SeparationBody>(
   return Object.freeze({ pairChecks, adjustments });
 }
 
-export interface SolidBody extends SeparationBody {
-  readonly solid: boolean;
-}
-
-export interface PlayerBody {
-  x: number;
-  y: number;
-  readonly radius: number;
-}
-
-export interface ArenaSize {
-  readonly width: number;
-  readonly height: number;
-}
-
-/**
- * Push the player out of solid enemies.
- *
- * Contact damage still flows through the existing overlap handler, so damage
- * semantics are unchanged; this only resolves position. When displacing the
- * player would push them out of the arena, the enemy is displaced instead, so
- * a crowd cannot wedge the player through a wall.
- *
- * Returns how many solids were resolved.
- */
-export function resolvePlayerAgainstSolids<T extends SolidBody>(
-  player: PlayerBody,
-  hash: SpatialHash<T>,
-  arena: ArenaSize,
-  maxSolidRadius: number,
-): number {
-  let resolvedCount = 0;
-
-  hash.forEachWithin(player.x, player.y, player.radius + maxSolidRadius, (solid) => {
-    if (!solid.solid) return;
-
-    const minDistance = player.radius + solid.separationRadius;
-    const dx = player.x - solid.x;
-    const dy = player.y - solid.y;
-    const distanceSquared = dx * dx + dy * dy;
-    if (distanceSquared >= minDistance * minDistance) return;
-
-    const distance = Math.sqrt(distanceSquared);
-    let normalX: number;
-    let normalY: number;
-    if (distance > 0) {
-      normalX = dx / distance;
-      normalY = dy / distance;
-    } else {
-      const fallback = coincidentNormal(solid.id);
-      normalX = fallback.x;
-      normalY = fallback.y;
-    }
-
-    resolvedCount += 1;
-    const overlap = minDistance - distance;
-    const nextX = player.x + normalX * overlap;
-    const nextY = player.y + normalY * overlap;
-    const insideArena =
-      nextX >= player.radius &&
-      nextY >= player.radius &&
-      nextX <= arena.width - player.radius &&
-      nextY <= arena.height - player.radius;
-
-    if (insideArena) {
-      player.x = nextX;
-      player.y = nextY;
-    } else {
-      solid.x -= normalX * overlap;
-      solid.y -= normalY * overlap;
-    }
-  });
-
-  return resolvedCount;
+/** One shared shove cooldown prevents a dense crowd from vibrating the player. */
+export function canApplyContactKnockback(
+  nowMs: number,
+  lastAppliedAtMs: number,
+  cooldownMs: number,
+): boolean {
+  return nowMs - lastAppliedAtMs >= cooldownMs;
 }
 
 /** Displacement applied to a body knocked away from a point. */

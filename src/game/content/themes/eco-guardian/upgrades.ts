@@ -52,6 +52,11 @@ export const upgrades = [
     maxLevel: 4, track: "weapon", rarity: "common", category: "offense", presentationToken: "accent",
   },
   {
+    id: archetypeIds.upgrade.weaponCollectionSweep,
+    effects: [{ kind: "skill.level", skillId: archetypeIds.skill.collectionSweep }],
+    maxLevel: 5, track: "weapon", rarity: "rare", category: "offense", presentationToken: "accent",
+  },
+  {
     id: archetypeIds.upgrade.fracture,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.fracture }],
     maxLevel: 5, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",

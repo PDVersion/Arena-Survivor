@@ -255,7 +255,8 @@ describe("engagement envelope", () => {
     //
     // A loose sanity bound on everything: a role slower than this would be
     // decorative, never reaching the fight it was spawned for.
-    for (const enemy of theme.enemies) {
+    const directedIds = new Set<string>(theme.tuning.director.roles.map(({ enemyId }) => enemyId));
+    for (const enemy of theme.enemies.filter(({ id }) => directedIds.has(id))) {
       const approachSeconds = radius / enemy.moveSpeed;
       expect(approachSeconds).toBeLessThan(16);
     }

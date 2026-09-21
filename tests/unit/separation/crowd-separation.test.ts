@@ -3,13 +3,12 @@ import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian"
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { SpatialHash } from "../../../src/game/systems/spatial/spatial-hash";
 import {
+  canApplyContactKnockback,
   knockbackDisplacement,
-  resolvePlayerAgainstSolids,
   separateCrowd,
-  type SolidBody,
+  type SeparationBody,
 } from "../../../src/game/systems/separation/crowd-separation";
 
-const ARENA = { width: 3600, height: 2400 };
 const OPTIONS = { maxNeighbours: 8, maxDisplacement: 6 };
 
 function body(
@@ -18,18 +17,17 @@ function body(
   y: number,
   separationRadius = 10,
   mass = 1,
-  solid = false,
-): SolidBody {
-  return { id, x, y, separationRadius, mass, solid };
+): SeparationBody {
+  return { id, x, y, separationRadius, mass };
 }
 
-function indexed(bodies: readonly SolidBody[]): SpatialHash<SolidBody> {
-  const hash = new SpatialHash<SolidBody>(64);
+function indexed(bodies: readonly SeparationBody[]): SpatialHash<SeparationBody> {
+  const hash = new SpatialHash<SeparationBody>(64);
   for (const entry of bodies) hash.insert(entry);
   return hash;
 }
 
-function distance(a: SolidBody, b: SolidBody): number {
+function distance(a: SeparationBody, b: SeparationBody): number {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
@@ -115,53 +113,12 @@ describe("crowd separation", () => {
   });
 });
 
-describe("player against solids", () => {
-  const player = () => ({ x: 500, y: 500, radius: 18 });
-
-  it("pushes the player out of a solid enemy", () => {
-    const solid = body("glass", 505, 500, 22, 4, true);
-    const target = player();
-
-    const resolved = resolvePlayerAgainstSolids(target, indexed([solid]), ARENA, 30);
-
-    expect(resolved).toBe(1);
-    expect(Math.hypot(target.x - solid.x, target.y - solid.y)).toBeGreaterThanOrEqual(
-      18 + 22 - 0.001,
-    );
-  });
-
-  it("ignores non-solid enemies so small litter is walked through", () => {
-    const soft = body("bag", 505, 500, 22, 1, false);
-    const target = player();
-
-    expect(resolvePlayerAgainstSolids(target, indexed([soft]), ARENA, 30)).toBe(0);
-    expect(target).toEqual(player());
-  });
-
-  it("displaces the enemy instead when the player is against a wall", () => {
-    // Player pinned in the corner: pushing them out would leave the arena, so
-    // a crowd must not be able to wedge them through it.
-    const target = { x: 18, y: 18, radius: 18 };
-    const solid = body("glass", 30, 18, 22, 4, true);
-
-    resolvePlayerAgainstSolids(target, indexed([solid]), ARENA, 30);
-
-    expect(target.x).toBeGreaterThanOrEqual(18);
-    expect(target.y).toBeGreaterThanOrEqual(18);
-    expect(solid.x).toBeGreaterThan(30);
-  });
-
-  it("separates a solid sharing the player's exact position", () => {
-    const target = player();
-    const solid = body("glass", 500, 500, 22, 4, true);
-
-    resolvePlayerAgainstSolids(target, indexed([solid]), ARENA, 30);
-
-    expect(Math.hypot(target.x - solid.x, target.y - solid.y)).toBeGreaterThan(0);
-  });
-});
-
 describe("knockback", () => {
+  it("gates repeated contact pushes with one shared cooldown", () => {
+    expect(canApplyContactKnockback(1_349, 1_000, 350)).toBe(false);
+    expect(canApplyContactKnockback(1_350, 1_000, 350)).toBe(true);
+  });
+
   it("pushes directly away from the source", () => {
     const push = knockbackDisplacement({ x: 0, y: 0 }, { x: 10, y: 0 }, 20, 1);
     expect(push.x).toBeCloseTo(20);

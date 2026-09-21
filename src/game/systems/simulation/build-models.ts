@@ -1,4 +1,5 @@
 import { critTierMultiplier } from "../../core/combat/crit";
+import type { SkillEffectDefinition } from "../../core/archetypes/contracts";
 
 /**
  * A coarse model of how a player's damage output grows with level.
@@ -26,6 +27,7 @@ export interface BuildContext {
   readonly critDamage: number;
   /** Live enemies at this moment, for models whose output scales with density. */
   readonly liveEnemies: number;
+  readonly collectionSweep?: Extract<SkillEffectDefinition, { kind: "collection_sweep" }>;
 }
 
 function baseDps(context: BuildContext): number {
@@ -89,6 +91,26 @@ const models: readonly BuildModel[] = [
         projectiles *
         expectedCritMultiplier(critChance, context.critDamage)
       );
+    },
+  },
+  {
+    id: "collection-sweep",
+    description: "Buys Collection Sweep through level five; assumes each authored sweep circle catches one target.",
+    damagePerSecond: (level, context) => {
+      const effect = context.collectionSweep;
+      const sweepLevel = Math.min(5, Math.max(0, level - 1));
+      if (!effect || sweepLevel === 0) return baseDps(context);
+      const cadence = sweepLevel < 5
+        ? effect.triggerEvery[sweepLevel - 1]!
+        : (effect.levelFiveInterval.min + effect.levelFiveInterval.max) / 2;
+      const positions = sweepLevel < 4
+        ? 1
+        : sweepLevel === 4
+        ? 2
+        : 2 + effect.levelFiveExtraPositions.min + effect.levelFiveExtraPositions.max;
+      const extraDamagePerAttack = positions / cadence * effect.damageMultiplier;
+      return baseDps(context) * (1 + extraDamagePerAttack) *
+        expectedCritMultiplier(context.baseCritChance, context.critDamage);
     },
   },
   {

@@ -113,18 +113,18 @@ describe("spawning rules", () => {
     );
     if (!definition) throw new Error("Missing death-spawner definition");
 
-    expect(createDeathSpawns(definition, "parent-1", "death-1")).toEqual({
+    expect(createDeathSpawns(definition, "parent-1", "death-1")).toEqual([{
       enemyId: archetypeIds.enemy.fastFragile,
       count: 5,
       parentEntityId: "parent-1",
       parentEventId: "death-1",
       spawnSource: archetypeIds.enemy.deathSpawner,
       rewardMultiplier: 0.5,
-    });
+    }]);
 
     const plain = knightMagicTheme.enemies.find(
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
     );
-    expect(createDeathSpawns(plain!, "parent-2", "death-2")).toBeNull();
+    expect(createDeathSpawns(plain!, "parent-2", "death-2")).toEqual([]);
   });
 });

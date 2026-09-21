@@ -22,7 +22,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   /** Personal space in the crowd, deliberately smaller than the drawn radius. */
   readonly separationRadius: number;
   readonly mass: number;
-  readonly solid: boolean;
+  readonly displayDiameter: number;
   defeated = false;
   /** Present only when this pack has a sprite for the role. */
   readonly view?: SpriteView;
@@ -42,7 +42,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       healthMultiplier: number;
       damageMultiplier: number;
       moveSpeedMultiplier?: number;
-      /** Shrinks a fragment; separation and the body follow it automatically. */
+      /** Optional authored size modifier (currently used by elites only). */
       radiusMultiplier?: number;
     }> = {
       healthMultiplier: 1,
@@ -72,8 +72,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.movement = movement;
     this.separationRadius = radius * (body?.role.separationScale ?? 1);
     this.mass = (body?.role.mass ?? 1) * (elite ? (body?.eliteMassMultiplier ?? 1) : 1);
-    // Elites hold their ground regardless of the role's own solidity.
-    this.solid = (body?.role.solid ?? false) || Boolean(elite);
+    this.displayDiameter = definition.displayDiameter *
+      (elite?.radiusMultiplier ?? 1) * (modifiers.radiusMultiplier ?? 1);
     this.baseColour = colour;
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -88,10 +88,9 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       this.setStrokeStyle(5, eliteColour, 1).setDepth(25);
     }
     if (!elite) this.setDepth(20);
-    // The sprite is sized from the radius the simulation already resolved, so
-    // separation, the body, and the crowd tuning are untouched by art.
+    // Display size is authored beside the radius; neither is inferred from art.
     this.view = createSpriteView(this, tokens, definition.id, {
-      diameter: radius * 2,
+      diameter: this.displayDiameter,
       animateMovement: true,
     });
   }
@@ -113,6 +112,10 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
    * sweeps past as an obstacle rather than pursuing.
    */
   advance(target: Phaser.Math.Vector2): void {
+    if (this.moveSpeed <= 0) {
+      this.arcadeBody.setVelocity(0, 0);
+      return;
+    }
     if (this.movement === "drift") {
       if (this.launched) return;
       this.launched = true;
