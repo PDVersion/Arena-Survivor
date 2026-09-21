@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { RunMode } from "../state/run-state";
+import { addUiText, configureUiContainer, uiPointer } from "./ui-text";
 
 export type OvertimeChoice = Exclude<RunMode, "timed">;
 
@@ -51,16 +52,14 @@ export class OvertimeChoiceUi {
 
     const children: Phaser.GameObjects.GameObject[] = [
       panel,
-      this.scene.add
-        .text(width / 2, top + 40, copy.timeUpTitle, {
+      addUiText(this.scene, width / 2, top + 40, copy.timeUpTitle, {
           color: palette.accent,
           fontFamily: "Georgia, serif",
           fontSize: "30px",
           fontStyle: "bold",
         })
         .setOrigin(0.5),
-      this.scene.add
-        .text(width / 2, top + 82, copy.timeUpMessage, {
+      addUiText(this.scene, width / 2, top + 82, copy.timeUpMessage, {
           align: "center",
           color: palette.text,
           fontFamily: "Georgia, serif",
@@ -92,8 +91,7 @@ export class OvertimeChoiceUi {
           .rectangle(centreX, centreY, buttonWidth, 76, floor, 1)
           .setStrokeStyle(3, accent)
           .setInteractive({ useHandCursor: true }),
-        this.scene.add
-          .text(centreX, centreY - 14, `${index + 1}. ${option.label}`, {
+        addUiText(this.scene, centreX, centreY - 14, `${index + 1}. ${option.label}`, {
             align: "center",
             color: palette.accent,
             fontFamily: "Georgia, serif",
@@ -102,8 +100,7 @@ export class OvertimeChoiceUi {
             wordWrap: { width: buttonWidth - 24 },
           })
           .setOrigin(0.5),
-        this.scene.add
-          .text(centreX, centreY + 20, option.detail, {
+        addUiText(this.scene, centreX, centreY + 20, option.detail, {
             align: "center",
             color: palette.text,
             fontFamily: "Georgia, serif",
@@ -120,8 +117,7 @@ export class OvertimeChoiceUi {
     });
 
     children.push(
-      this.scene.add
-        .text(width / 2, top + panelHeight - 28, copy.timeUpHint, {
+      addUiText(this.scene, width / 2, top + panelHeight - 28, copy.timeUpHint, {
           color: palette.text,
           fontFamily: "Georgia, serif",
           fontSize: "15px",
@@ -131,7 +127,7 @@ export class OvertimeChoiceUi {
     );
 
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
-    this.container = this.scene.add.container(0, 0, children).setScrollFactor(0, 0, true).setDepth(1080);
+    this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, children)).setDepth(1080);
   }
 
   hide(): void {
@@ -143,7 +139,8 @@ export class OvertimeChoiceUi {
   }
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
-    const hit = this.bounds.find((entry) => entry.rect.contains(pointer.x, pointer.y));
+    const point = uiPointer(this.scene, pointer);
+    const hit = this.bounds.find((entry) => entry.rect.contains(point.x, point.y));
     if (hit) this.callback?.(hit.choice);
   }
 }

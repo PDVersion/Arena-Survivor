@@ -119,7 +119,7 @@ export interface ArenaTestSnapshot {
     /** Heading the terminal summary is showing, or null when it is not up. */
     terminalTitle: string | null;
     pauseTab: string | null;
-    settings: Readonly<Record<string, boolean>>;
+    settings: Readonly<Record<string, boolean | number>>;
     /** What each offered card claims, derived from the real upgrade application. */
     cardDescriptions: readonly Readonly<{
       id: string;
@@ -146,7 +146,7 @@ export interface ArenaTestSnapshot {
       name: string;
       sessionTotal: number;
       bestInRun: number;
-      maxPerRun: number;
+      maxPerRun: number | null;
     }>[];
     codexSession: readonly Readonly<{ label: string; display: string }>[];
   }>;
@@ -181,9 +181,16 @@ export interface ArenaTestSnapshot {
     /** World-space rectangle currently visible. */
     worldWidth: number;
     worldHeight: number;
+    zoom: number;
+    visibleEnemies: number;
+    peakVisibleEnemies: number;
     spawnRadius: number;
   }>;
   readonly pacing?: Readonly<{
+    /** Simulated seconds advanced per wall-clock second. */
+    gameplayRate: number;
+    /** Authored run duration after conversion to expected wall-clock time. */
+    expectedRealDurationMs: number;
     /** Run progress in `[0, 1]`, the input the V0.3 director curves resolve from. */
     progress: number;
     /** Ambient spawn cadence currently in effect, after world multipliers. */
@@ -281,9 +288,16 @@ export interface ArenaTestSnapshot {
   }>;
   readonly combat?: Readonly<{
     weaponId: string | null;
+    deliveryKind: "projectile" | "melee" | null;
     enemyId: string | null;
     projectiles: number;
     shotsFired: number;
+    meleeStrikes: number;
+    meleeHits: number;
+    grabberActive: number;
+    firstMeleeHitAtMs: number | null;
+    firstKillAtMs: number | null;
+    firstContactAtMs: number | null;
     criticalShots: number;
     highestCritTier: number;
     longestPierceChain: number;
@@ -310,6 +324,9 @@ export interface ArenaTestSnapshot {
     startAction: string;
     runsPlayed: number;
     bestLevel: number;
+    overlayOpen?: boolean;
+    overlayTab?: string | null;
+    actions?: readonly string[];
   }>;
   readonly error?: string;
 }

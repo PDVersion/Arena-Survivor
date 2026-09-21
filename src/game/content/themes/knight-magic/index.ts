@@ -15,6 +15,8 @@ import { director } from "./director";
 import { difficulty } from "./difficulty";
 import { bodies } from "./bodies";
 import { hazards, hazardTuning } from "./hazards";
+import { view } from "./view";
+import { pace } from "./pace";
 
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
@@ -33,6 +35,8 @@ export const knightMagicTheme = defineTheme({
   elites,
   hazards,
   tuning: {
+    view,
+    pace,
     progression,
     director,
     difficulty,

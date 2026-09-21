@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
 
 async function snapshot(page: Page) {
   return page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
@@ -122,6 +123,22 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
     .toBe(true);
   expect((await snapshot(page))?.feedback?.muted).toBe(true);
 
+  // The minimap is the fourth row on the shared Settings page. Its opacity is
+  // a real session setting, not a visual-only test hook.
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab))
+    .toBe("settings");
+  const canvas = page.locator("canvas");
+  const box = await canvas.boundingBox();
+  const scale = (box?.width ?? 1600) / 1600;
+  await canvas.click({ position: { x: 1230 * scale, y: 398 * scale } });
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.settings?.minimapOpacity))
+    .toBe(0.85);
+
   // Still paused after all of that.
   expect((await snapshot(page))?.run?.status).toBe("paused");
 
@@ -149,5 +166,5 @@ test("both overlays survive a resize", async ({ page }) => {
   expect(resized?.ui?.pauseOpen).toBe(true);
   expect(resized?.run?.status).toBe("paused");
   // The logical view is fixed, so the overlay reflows rather than rescaling.
-  expect(resized?.view?.worldWidth).toBe(1600);
+  expect(resized?.view?.worldWidth).toBe(1600 / activeTheme.tuning.view.zoom);
 });

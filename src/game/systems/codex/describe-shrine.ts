@@ -95,7 +95,8 @@ export interface CodexUpgradeEntry {
   /** The most this upgrade was taken within one run. */
   readonly bestInRun: number;
   /** Times it can be taken in a single run, from the definition's cap. */
-  readonly maxPerRun: number;
+  readonly maxPerRun: number | null;
+  readonly track: "general" | "weapon";
 }
 
 /**
@@ -121,6 +122,7 @@ export function selectUpgradeCodex(
         sessionTotal: record?.total ?? 0,
         bestInRun: record?.bestInRun ?? 0,
         maxPerRun: upgrade.maxLevel,
+        track: upgrade.track,
       });
     }),
   );

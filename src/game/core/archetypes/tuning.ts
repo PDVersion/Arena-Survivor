@@ -275,7 +275,21 @@ export interface UpgradeTiersTuning {
   readonly luckWeightBias: number;
 }
 
+/** Camera presentation that changes how much world is visible, never actor geometry. */
+export interface ViewTuning {
+  /** World camera zoom. The fixed renderer and screen-space UI are unchanged. */
+  readonly zoom: number;
+}
+
+/** One reversible mapping from real time to playable simulation time. */
+export interface PaceTuning {
+  /** `0.5` advances half a second of simulation per real second. */
+  readonly gameplayRate: number;
+}
+
 export interface TuningPack {
+  readonly view: ViewTuning;
+  readonly pace: PaceTuning;
   readonly progression: ProgressionTuning;
   readonly director: DirectorTuning;
   readonly difficulty: DifficultyTuning;

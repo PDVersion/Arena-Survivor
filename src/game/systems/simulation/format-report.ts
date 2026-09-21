@@ -23,7 +23,7 @@ function compact(value: number): string {
 export function formatPacingReport(report: PacingReport): string {
   const lines: string[] = [];
   lines.push(
-    `theme ${report.themeId}  ·  build ${report.buildId}  ·  ${clock(report.durationMs)} run  ·  chaos x${report.chaos.toFixed(1)}`,
+    `theme ${report.themeId}  ·  build ${report.buildId}  ·  ${clock(report.durationMs)} simulated / ${clock(report.expectedRealDurationMs)} real at ${report.gameplayRate.toFixed(2)}x  ·  chaos x${report.chaos.toFixed(1)}`,
   );
   lines.push("");
   lines.push(

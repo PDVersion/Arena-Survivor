@@ -218,13 +218,13 @@ describe("engagement envelope", () => {
    */
   const LOGICAL_VIEW = { width: 1600, height: 900 };
 
-  it.each([
-    ["eco-guardian", ecoGuardianTheme],
-    ["knight-magic", knightMagicTheme],
-  ])("keeps %s able to shoot what it spawns", (_name, theme) => {
+  it("keeps the knight projectile able to shoot what it spawns", () => {
+    const theme = knightMagicTheme;
     const radius = Math.hypot(LOGICAL_VIEW.width, LOGICAL_VIEW.height) / 2 +
       theme.tuning.director.spawnMargin;
     const weapon = theme.weapons[0]!;
+    expect(weapon.deliveryKind).toBe("projectile");
+    if (weapon.deliveryKind !== "projectile") throw new Error("Expected projectile fixture");
 
     // A shot fired the instant an enemy appears must be able to cross the ring.
     // Asserted against the declared range, with delivery covering that range
@@ -233,6 +233,14 @@ describe("engagement envelope", () => {
     expect((weapon.projectileSpeed * weapon.projectileLifetimeMs) / 1000).toBeGreaterThan(
       radius * 1.2,
     );
+  });
+
+  it("keeps the eco grabber local to the cropped view", () => {
+    const weapon = ecoGuardianTheme.weapons[0]!;
+    expect(weapon.deliveryKind).toBe("melee");
+    if (weapon.deliveryKind !== "melee") throw new Error("Expected melee fixture");
+    expect(weapon.reach).toBe(weapon.range);
+    expect(weapon.reach).toBeLessThan(LOGICAL_VIEW.width / ecoGuardianTheme.tuning.view.zoom / 2);
   });
 
   it.each([

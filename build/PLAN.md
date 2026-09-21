@@ -36,6 +36,20 @@ unchanged. The first active-theme weapon is a recognisable real-world tool with
 one readable stab, not an abstract orb projectile. See
 [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
 
+The first follow-up play test is scheduled as V0.4.2.1 before content growth.
+It stabilises player animation, moves the minimap, dismisses the opening hint,
+aligns authored contact footprints, replaces enemy blocking with slight player
+knockback, adds the optional Collection Sweep grabber track, and establishes
+Microplastics/Glass Shards material relationships. See
+[`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) and
+[`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md).
+
+The world camera and interface are separate presentation concerns. UI is
+authored larger, rendered from high-resolution text textures, and fitted to the
+screen rather than enlarged as part of the world camera. The title offers Start,
+Info, and Settings; Info is the same reference surface available from Escape in
+a run. A translucent minimap can be set to Off, Low, Medium, or High.
+
 ---
 
 # Core Gameplay Loop
@@ -150,15 +164,18 @@ Example:
 Damage:          10
 Attack Cooldown: 1 simulated second
 Reach:           ~72 world units (initial experiment)
-Targets:         1
+Targets:         Every enemy intersecting the narrow forward path
 Motion:          narrow extend, contact, retract
 Crit Chance:     Uses player stat
 Crit Damage:     Uses player stat
 ```
 
 The weapon automatically faces the nearest eligible enemy in reach, extends the
-grabber, damages at most that one target, and retracts. It does not spawn a
-projectile, pierce, splash, or sweep in its first form.
+grabber, damages every enemy physically intersecting that narrow path, and
+retracts. It does not spawn a projectile, splash, or wide sweep. Its dedicated
+tree is reach only: the owned tool is level 1, and four reach picks take it to
+level 5. Damage, attack speed, and critical chance belong to the repeatable
+general upgrade pool.
 
 The first priority is making this one action legible and satisfying before
 adding more weapons or restoring the parked projectile interaction families.

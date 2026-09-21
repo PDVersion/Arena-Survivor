@@ -2,6 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { activeTheme } from "../../src/game/content/active-theme";
 
 const shrineTuning = activeTheme.tuning.shrines;
+const SIMULATION_BUDGET_MS = 90_000;
 
 function snapshot(page: Page) {
   return page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
@@ -30,7 +31,7 @@ async function pressUntil(
 }
 
 test("shrines arrive across the run rather than all at the start", async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(210_000);
   // A short run compresses the whole arrival schedule into the path's budget
   // without changing it: arrivals are normalized progress, not minutes.
   await page.goto("/?runDurationMs=12000&noContact&noXp=1&atTimeUp=complete");
@@ -45,7 +46,7 @@ test("shrines arrive across the run rather than all at the start", async ({ page
   // Arrivals accumulate rather than landing together.
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.revealedCount), {
-      timeout: 20_000,
+      timeout: SIMULATION_BUDGET_MS,
     })
     .toBeGreaterThan(1);
   const midRun = await snapshot(page);
@@ -53,7 +54,7 @@ test("shrines arrive across the run rather than all at the start", async ({ page
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.revealedCount), {
-      timeout: 25_000,
+      timeout: SIMULATION_BUDGET_MS,
     })
     .toBe(shrineTuning.arrivals.length);
 
@@ -75,18 +76,18 @@ test("shrines arrive across the run rather than all at the start", async ({ page
 });
 
 test("a restarted run reschedules its shrines from the opening", async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(150_000);
   await page.goto("/?runDurationMs=3000&noContact&noXp=1&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.revealedCount), {
-      timeout: 20_000,
+      timeout: SIMULATION_BUDGET_MS,
     })
     .toBe(shrineTuning.arrivals.length);
   const generation = (await snapshot(page))?.lifecycle?.runGeneration ?? 0;
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
-      timeout: 15_000,
+      timeout: SIMULATION_BUDGET_MS,
     })
     .toBe("complete");
   await page.keyboard.press("KeyR");
@@ -104,8 +105,7 @@ test("the codex states what every shrine does", async ({ page }) => {
   await page.goto("/?noContact&noXp=1&spawnRadius=320&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
 
-  await page.keyboard.press("Escape");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
+  await pressUntil(page, "Escape", (snap) => snap?.ui?.pauseOpen === true);
 
   // The tab is reachable by keyboard alone, like every other pause tab.
   await pressUntil(page, "Tab", (snap) => snap?.ui?.pauseTab === "codex");
@@ -155,8 +155,7 @@ test("the Field Guide catalogues the upgrade pool and the session so far", async
     })
     .toBe("playing");
 
-  await page.keyboard.press("Escape");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
+  await pressUntil(page, "Escape", (snap) => snap?.ui?.pauseOpen === true);
   await pressUntil(page, "Tab", (snap) => snap?.ui?.pauseTab === "codex");
   expect((await snapshot(page))?.ui?.codexSection).toBe("shrines");
 

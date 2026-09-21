@@ -14,6 +14,93 @@ V0.4.2 changes the baseline before more content or more sprites are built:
 3. replace the eco theme's abstract Sorting Pulse with a short-range,
    auto-aimed cleanup grabber that stabs outward and retracts.
 
+## Readability correction — 2026-09-18
+
+The first integrated play test exposed a bad assumption in R1A: applying the
+2× camera to camera-fixed UI made the UI larger only as a raster transform. It
+did not give text, panels, or hit areas a higher-quality authored baseline. The
+result was fuzzy type, clipped card copy, and menus laid out for the old view.
+This correction remains part of V0.4.2 and supersedes any R1A statement that UI
+scale should remain unchanged.
+
+The corrected target is:
+
+1. keep the accepted 2× cropped **world** view, but render all UI text at a
+   high-resolution baseline with padding for font ascenders/descenders and
+   layouts measured inside the visible screen;
+2. slow the player walk presentation and omit the generated fourth walk pose,
+   whose detached motion marks read as stray particles at the new view scale;
+3. add a translucent minimap whose opacity can be changed from Settings;
+4. make the Cleanup Grabber hit every enemy intersecting its narrow corridor;
+5. give that weapon one dedicated reach track: base level 1 plus four reach
+   upgrades, for a maximum weapon level of 5;
+6. keep general stat upgrades repeatable without a per-run cap, and distinguish
+   weapon upgrades from general upgrades on both choice cards and the catalogue;
+7. replace the title screen's single action with exactly Start, Info, and
+   Settings. Info and Settings open the same reusable information overlay that
+   Escape opens during a run.
+
+No generated sprite is edited by hand. The accepted sheet remains reproducible;
+the runtime walk contract simply uses the three clean poses in a slower
+0→1→2→1 sequence until a later sprite generation replaces the rejected pose.
+
+### Correction phase tracker
+
+- [x] C0 — Plan, UI-quality seam, and reusable menu overlay
+- [x] C1 — Player animation cleanup and adjustable minimap
+- [x] C2 — Multi-hit grabber and separated upgrade tracks
+- [x] C3 — Three-action start menu, integration, and verification
+
+### C0 — Plan and UI-quality seam
+
+**Commit:** `fix(v0.4.2): restore crisp scalable interface rendering`
+
+- Add one UI text factory that applies a high-resolution text texture and safe
+  glyph padding, then migrate every HUD/overlay/menu text surface to it.
+- Centralise the screen-space UI scale so the world zoom never becomes the
+  interface's raster scale.
+- Keep all panels content-measured; no line may cross a border at 1600×900.
+- Make the pause/info overlay reusable from both MenuScene and RunScene.
+
+### C1 — Sprite presentation and minimap
+
+**Commit:** `feat(v0.4.2): add readable navigation and player motion`
+
+- Use a slower 0→1→2→1 player walk cycle and never show the artifact-bearing
+  fourth generated walk pose.
+- Add a screen-space minimap showing arena bounds, player, enemies, shrines,
+  and hazards without changing simulation or spawning.
+- Add Off/Low/Medium/High minimap opacity to the session settings model; use a
+  translucent default and expose it in the shared Settings page.
+
+### C2 — Grabber and upgrade structure
+
+**Commit:** `feat(v0.4.2): deepen the cleanup grabber progression`
+
+- Resolve every eligible enemy in the grabber corridor in deterministic
+  near-to-far order. The melee weapon has no arbitrary target cap.
+- Add a theme-owned reach increment and a capped four-pick weapon upgrade.
+  Effective reach drives aim, hit selection, presentation, and stat copy.
+- Mark upgrades as weapon or general tracks. General stat upgrades have no
+  per-run cap; specialist skill/world definitions keep their authored caps.
+- Split weapon and general upgrades visually on choice cards, run summaries,
+  and the information catalogue. Catalogue entries include their descriptions.
+
+### C3 — Start menu and integration
+
+**Commit:** `fix(v0.4.2): complete the readable menu and upgrade flow`
+
+- Present exactly three title actions: Start, Info, Settings.
+- Info opens the shared information overlay; Settings opens that overlay on its
+  Settings tab. Escape/back returns to the title when opened outside a run.
+- Add unit coverage for UI settings, walk frames, uncapped upgrades, reach
+  levels, effective weapon range, and corridor multi-hit.
+- Add browser coverage for title navigation, catalogue separation, minimap
+  opacity, crisp text metadata, card containment, and multi-hit telemetry.
+- Run `npm run typecheck`, `npm test -- --run`, `npm run build`, the focused
+  browser suite, the full browser suite, `npm run balance`, and
+  `npm run sprites -- check` before marking the correction complete.
+
 The old V0.4.2 content-growth plan had not started. It is now
 [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md). The remaining sprite roster is
 V0.4.4 work, after this baseline and V0.4.3's content roster are settled.
@@ -112,6 +199,14 @@ R2 merge, tune, play-test, and deliver codex/v0.4.2
 The feature branches are temporary implementation branches. `codex/v0.4.2` is
 the milestone branch and the only pull request into `main`.
 
+## Phase tracker
+
+- [x] R0 — Neutral camera, pace, and weapon-orchestration seams
+- [x] R1A — Tighter camera and cropped play area
+- [x] R1B — Half-speed gameplay experiment
+- [x] R1C — Cleanup Grabber melee starter
+- [x] R2 — Combined integration, measurement, and play-test gate
+
 ## Phase R0 — Land the three seams
 
 **Commit:** `build(v0.4.2): isolate view pace and weapon delivery seams`
@@ -170,7 +265,7 @@ Deliver:
 Do not retune speed, cadence, weapon range, hitboxes, actor scale, or sprite
 files in this branch.
 
-### R1B — Half-speed gameplay experiment
+### R1B — Half-speed gameplay experiment ✅
 
 **Branch:** `codex/v0.4.2-pace`
 **Commit:** `feat(v0.4.2): slow the playable simulation`
@@ -198,7 +293,7 @@ Deliver:
 Do not change any authored speed, health, damage, cooldown, director, or hazard
 coefficient in this branch.
 
-### R1C — Cleanup Grabber melee starter
+### R1C — Cleanup Grabber melee starter ✅
 
 **Branch:** `codex/v0.4.2-grabber`
 **Commit:** `feat(v0.4.2): replace the eco starter with a cleanup grabber`
@@ -233,7 +328,7 @@ Deliver:
 
 Do not generate or claim a grabber sprite in this branch.
 
-## Phase R2 — Integrate and retune the combined game
+## Phase R2 — Integrate and retune the combined game ✅
 
 **Commit:** `fix(v0.4.2): reconcile the readable gameplay baseline`
 
@@ -297,9 +392,10 @@ npm run sprites -- check
 
 ## Definition of done
 
-V0.4.2 is complete when the active eco game renders a cropped 2× world view,
-runs its coherent simulation at 0.5 rate, and starts with a short single-target
-Cleanup Grabber whose full motion is readable. Neither the zoom nor sprite
+V0.4.2 is complete when the active eco game renders a cropped 2× world view
+behind a crisp independently-scaled interface, runs its coherent simulation at
+0.5 rate, and starts with a short path-based Cleanup Grabber whose full motion
+is readable. Neither the zoom nor sprite
 presentation changes simulation geometry; the knight theme still proves the
 parked projectile path; the active eco upgrade pool offers no dead or
 projectile-only cards; the full suite passes; and the play-test gate is recorded

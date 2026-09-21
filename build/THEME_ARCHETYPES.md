@@ -70,9 +70,9 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 | Stable archetype ID | `eco-guardian` (production) | `knight-magic` (secondary) |
 | --- | --- | --- |
 | `character.starter` | Environment Protector | Wandering Knight |
-| `weapon.starter_projectile` | Sorting Pulse | Magic Needle |
+| `weapon.starter` | Cleanup Grabber | Magic Needle |
 | `enemy.swarm_basic` | Plastic Bottle | Grunt |
-| `enemy.fast_fragile` | Plastic Bag | Runner |
+| `enemy.fast_fragile` | Microplastics (V0.4.2.1; replaces Plastic Bag) | Runner |
 | `enemy.slow_durable` | Glass Bottle | Tank |
 | `enemy.death_spawner` | Bagged Waste | Broodmother |
 | `pickup.experience` | Impact Point | Arcane Spark |
@@ -94,20 +94,30 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 
 The table is an intent map, not a second runtime catalog. When source files exist, names are edited in `copy.ts`, and this table records the conceptual mapping only.
 
-### Planned V0.4.2 starter-role migration
+### V0.4.2 starter-role migration
 
 `weapon.starter_projectile` describes a delivery mechanism, not a semantic
-role. V0.4.2 replaces it with `weapon.starter` while persistence is still
+role. V0.4.2 replaced it with `weapon.starter` while persistence was still
 unshipped. The two production themes deliberately supply different delivery
 kinds under the same role:
 
 | Stable role after V0.4.2 | `eco-guardian` | `knight-magic` |
 | --- | --- | --- |
-| `weapon.starter` | Cleanup Grabber — short single-target melee stab | Magic Needle — the parked existing projectile |
+| `weapon.starter` | Cleanup Grabber — narrow multi-target path, reach levels 1–5 | Magic Needle — the parked existing projectile |
+
+### V0.4.2.1 material-family extension
+
+The next correction keeps core IDs role-based. `enemy.fast_fragile` becomes
+Microplastics in the eco pack; a new stationary-fragment role becomes Glass
+Shards. Plastic Bottle fragments route to Microplastics, Glass Bottle fragments
+route to Glass Shards, and Bagged Waste releases the finite primary material
+set without creating another Bagged Waste. See
+[`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md) for the editorial relationship map.
 
 This is the boundary working as intended: the core requires a starter weapon,
 not a projectile. The theme owns whether that weapon delivers damage through a
-melee reach or a travelling body. The old projectile actor and effect path stay
+melee reach or a travelling body. A melee delivery may resolve every actor in
+its narrow corridor; this is geometry, not the projectile pierce mechanic. The old projectile actor and effect path stay
 available; only the active eco definition stops using them.
 
 ## Theme manifest contract

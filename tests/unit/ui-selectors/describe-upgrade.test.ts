@@ -12,6 +12,7 @@ import { applyUpgrade, createWeaponStatModifiers, type UpgradeableState } from "
 import { createWorldState } from "../../../src/game/systems/chaos/world-modifiers";
 import { skillMaxLevel } from "../../../src/game/systems/skills/resolve-skill";
 import {
+  cycleMinimapOpacity,
   createSettings,
   resetSessionSettings,
   toggleSetting,
@@ -44,7 +45,9 @@ const maxLevelFor = (skillId: Parameters<typeof skillMaxLevel>[1]): number =>
 describe("player stat lines", () => {
   it("covers every declared stat key exactly once", () => {
     const lines = selectPlayerStats(state(), theme);
-    expect(lines.map((line) => line.key)).toEqual([...statKeys]);
+    expect(lines.map((line) => line.key)).toEqual(
+      statKeys.filter((key) => key !== "projectiles" && key !== "pierce"),
+    );
   });
 
   it("resolves what the player experiences, not the raw stat", () => {
@@ -119,21 +122,27 @@ describe("upgrade descriptions", () => {
   });
 
   it("reads multi-projectile upgrades as counts", () => {
-    const description = describeUpgrade(state(), upgrade(archetypeIds.upgrade.projectileCount), theme);
-    const line = description.lines.find((entry) => entry.label === theme.copy.stats.projectiles)!;
+    const projectileUpgrade = knightMagicTheme.upgrades.find(
+      (entry) => entry.id === archetypeIds.upgrade.projectileCount,
+    )!;
+    const description = describeUpgrade(state(), projectileUpgrade, knightMagicTheme);
+    const line = description.lines.find((entry) => entry.label === knightMagicTheme.copy.stats.projectiles)!;
     expect([line.from, line.to]).toEqual(["1", "2"]);
 
     const later = describeUpgrade(
-      state({ weaponModifiers: { pierce: 0, projectileCount: 8 } }),
-      upgrade(archetypeIds.upgrade.projectileCount),
-      theme,
+      state({ weaponModifiers: { pierce: 0, projectileCount: 8, range: 0 } }),
+      projectileUpgrade,
+      knightMagicTheme,
     );
-    const laterLine = later.lines.find((entry) => entry.label === theme.copy.stats.projectiles)!;
+    const laterLine = later.lines.find((entry) => entry.label === knightMagicTheme.copy.stats.projectiles)!;
     expect([laterLine.from, laterLine.to]).toEqual(["9", "10"]);
   });
 
   it("omits the from value for something the player does not have yet", () => {
-    const description = describeUpgrade(state(), upgrade(archetypeIds.upgrade.onKillExplosion), theme);
+    const skillUpgrade = knightMagicTheme.upgrades.find(
+      (entry) => entry.id === archetypeIds.upgrade.onKillExplosion,
+    )!;
+    const description = describeUpgrade(state(), skillUpgrade, knightMagicTheme);
     expect(description.isNew).toBe(true);
     expect(description.lines.length).toBeGreaterThan(0);
     for (const line of description.lines) expect(line.from).toBeUndefined();
@@ -144,8 +153,11 @@ describe("upgrade descriptions", () => {
       selectedUpgradeIds: [archetypeIds.upgrade.onKillExplosion],
       skillLevels: { [archetypeIds.skill.onKillExplosion]: 1 },
     });
-    const description = describeUpgrade(taken, upgrade(archetypeIds.upgrade.onKillExplosion), theme);
-    const radius = description.lines.find((line) => line.label === theme.copy.stats.range)!;
+    const skillUpgrade = knightMagicTheme.upgrades.find(
+      (entry) => entry.id === archetypeIds.upgrade.onKillExplosion,
+    )!;
+    const description = describeUpgrade(taken, skillUpgrade, knightMagicTheme);
+    const radius = description.lines.find((line) => line.label === knightMagicTheme.copy.stats.range)!;
 
     expect(radius.from).toBe("44");
     expect(radius.to).toBe("56");
@@ -195,7 +207,9 @@ describe("upgrade descriptions", () => {
       const description = describeUpgrade(packState, entry, pack);
       expect(description.name).toBe(pack.copy.content[entry.id]!.name);
       expect(description.summary.length).toBeGreaterThan(0);
-      expect(description.maxLevel).toBe(entry.maxLevel);
+      expect(description.maxLevel).toBe(
+        entry.maxLevel === null ? null : entry.track === "weapon" ? entry.maxLevel + 1 : entry.maxLevel,
+      );
     }
   });
 });
@@ -203,6 +217,7 @@ describe("upgrade descriptions", () => {
 describe("session settings", () => {
   it("defaults detailed cards on", () => {
     expect(createSettings().detailedUpgradeCards).toBe(true);
+    expect(createSettings().minimapOpacity).toBe(0.6);
   });
 
   it("toggles one key without disturbing the others", () => {
@@ -216,6 +231,12 @@ describe("session settings", () => {
   it("stays serializable for the deferred persistence adapter", () => {
     const settings = toggleSetting(createSettings(), "reducedMotion");
     expect(JSON.parse(JSON.stringify(settings))).toEqual(settings);
+  });
+
+  it("cycles minimap visibility through off, low, medium, and high", () => {
+    const high = cycleMinimapOpacity(createSettings());
+    expect(high.minimapOpacity).toBe(0.85);
+    expect(cycleMinimapOpacity(high).minimapOpacity).toBe(0);
   });
 
   it("resets cleanly for tests", () => {

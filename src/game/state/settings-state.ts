@@ -12,14 +12,18 @@ export interface RunSettings {
   readonly detailedUpgradeCards: boolean;
   readonly reducedMotion: boolean;
   readonly muted: boolean;
+  /** Screen-space minimap opacity. Zero hides it. */
+  readonly minimapOpacity: 0 | 0.35 | 0.6 | 0.85;
 }
 
 export type SettingKey = keyof RunSettings;
+export type BooleanSettingKey = Exclude<SettingKey, "minimapOpacity">;
 
 export const settingKeys: readonly SettingKey[] = Object.freeze([
   "detailedUpgradeCards",
   "reducedMotion",
   "muted",
+  "minimapOpacity",
 ]);
 
 export function createSettings(overrides: Partial<RunSettings> = {}): RunSettings {
@@ -29,12 +33,23 @@ export function createSettings(overrides: Partial<RunSettings> = {}): RunSetting
     detailedUpgradeCards: true,
     reducedMotion: false,
     muted: false,
+    minimapOpacity: 0.6,
     ...overrides,
   });
 }
 
-export function toggleSetting(settings: RunSettings, key: SettingKey): RunSettings {
+export function toggleSetting(settings: RunSettings, key: BooleanSettingKey): RunSettings {
   return Object.freeze({ ...settings, [key]: !settings[key] });
+}
+
+const minimapOpacities: readonly RunSettings["minimapOpacity"][] = [0, 0.35, 0.6, 0.85];
+
+export function cycleMinimapOpacity(settings: RunSettings): RunSettings {
+  const index = minimapOpacities.indexOf(settings.minimapOpacity);
+  return Object.freeze({
+    ...settings,
+    minimapOpacity: minimapOpacities[(index + 1) % minimapOpacities.length]!,
+  });
 }
 
 let sessionSettings = createSettings();

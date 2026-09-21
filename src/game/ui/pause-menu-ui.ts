@@ -7,6 +7,7 @@ import type {
   CodexSessionLine,
   CodexUpgradeEntry,
 } from "../systems/codex/describe-shrine";
+import { addUiText, configureUiContainer, uiPointer } from "./ui-text";
 
 export const pauseTabs = ["stats", "upgrades", "world", "codex", "settings"] as const;
 export type PauseTab = (typeof pauseTabs)[number];
@@ -52,6 +53,7 @@ export class PauseMenuUi {
   private settingBounds: { readonly key: SettingKey; readonly bounds: Phaser.Geom.Rectangle }[] = [];
   private sectionBounds: { readonly section: CodexSection; readonly bounds: Phaser.Geom.Rectangle }[] = [];
   private onToggle?: (key: SettingKey) => void;
+  private menuContext = false;
 
   constructor(scene: Phaser.Scene, theme: ThemeManifest) {
     this.scene = scene;
@@ -79,9 +81,15 @@ export class PauseMenuUi {
     if (this.view) this.render();
   }
 
-  show(view: PauseMenuView, onToggle: (key: SettingKey) => void): void {
+  show(
+    view: PauseMenuView,
+    onToggle: (key: SettingKey) => void,
+    options: Readonly<{ tab?: PauseTab; menuContext?: boolean }> = {},
+  ): void {
     this.view = view;
     this.onToggle = onToggle;
+    this.tab = options.tab ?? this.tab;
+    this.menuContext = options.menuContext ?? false;
     this.render();
   }
 
@@ -118,8 +126,7 @@ export class PauseMenuUi {
 
     const children: Phaser.GameObjects.GameObject[] = [panel];
     children.push(
-      this.scene.add
-        .text(width / 2, top + 26, this.theme.copy.vocabulary.paused, {
+      addUiText(this.scene, width / 2, top + 26, this.menuContext ? this.theme.copy.codex.title : this.theme.copy.vocabulary.paused, {
           color: palette.accent,
           fontFamily: "Georgia, serif",
           fontSize: "24px",
@@ -139,8 +146,7 @@ export class PauseMenuUi {
       const x = left + 24 + tabWidth * index + tabWidth / 2;
       const y = top + 72;
       const active = tab === this.tab;
-      const label = this.scene.add
-        .text(x, y, this.tabLabel(tab), {
+      const label = addUiText(this.scene, x, y, this.tabLabel(tab), {
           align: "center",
           color: active ? palette.background : palette.text,
           fontFamily: "Georgia, serif",
@@ -185,23 +191,27 @@ export class PauseMenuUi {
       );
     } else if (this.tab === "upgrades") {
       const text = view.upgrades.length > 0 ? view.upgrades.join("\n") : "—";
-      children.push(this.scene.add.text(left + 32, bodyTop, text, rowStyle));
+      children.push(addUiText(this.scene, left + 32, bodyTop, text, rowStyle));
     } else {
       const labels: Readonly<Record<SettingKey, string>> = {
         detailedUpgradeCards: "Detailed upgrade cards",
         reducedMotion: "Reduced motion",
         muted: "Mute audio",
+        minimapOpacity: "Minimap visibility",
       };
       (Object.keys(labels) as SettingKey[]).forEach((key, index) => {
         const y = bodyTop + index * 44;
-        const on = view.settings[key];
+        const value = view.settings[key];
+        const on = typeof value === "boolean" ? value : value > 0;
+        const display = typeof value === "boolean"
+          ? (value ? "ON" : "OFF")
+          : value === 0 ? "OFF" : `${Math.round(value * 100)}%`;
         children.push(
-          this.scene.add.text(left + 32, y, labels[key], rowStyle),
+          addUiText(this.scene, left + 32, y, labels[key], rowStyle),
           this.scene.add
             .rectangle(left + panelWidth - 96, y + 10, 96, 30, on ? accent : floor, 1)
             .setStrokeStyle(2, accent),
-          this.scene.add
-            .text(left + panelWidth - 96, y + 10, on ? "ON" : "OFF", {
+          addUiText(this.scene, left + panelWidth - 96, y + 10, display, {
               ...rowStyle,
               color: on ? palette.background : palette.text,
               fontStyle: "bold",
@@ -216,8 +226,7 @@ export class PauseMenuUi {
     }
 
     children.push(
-      this.scene.add
-        .text(width / 2, top + panelHeight - 26, "Tab / arrows to switch · Escape to resume", {
+      addUiText(this.scene, width / 2, top + panelHeight - 26, this.menuContext ? "Tab / arrows to switch · Escape to go back" : "Tab / arrows to switch · Escape to resume", {
           color: palette.text,
           fontFamily: "Georgia, serif",
           fontSize: "15px",
@@ -227,7 +236,7 @@ export class PauseMenuUi {
     );
 
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
-    this.container = this.scene.add.container(0, 0, children).setScrollFactor(0, 0, true).setDepth(1050);
+    this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, children)).setDepth(1050);
   }
 
   private renderRows(
@@ -243,8 +252,8 @@ export class PauseMenuUi {
     return columns.flatMap((column, index) => {
       const x = left + 32 + index * ((panelWidth - 64) / 2);
       return [
-        this.scene.add.text(x, top, column.map((row) => row.label).join("\n"), style),
-        this.scene.add.text(
+        addUiText(this.scene, x, top, column.map((row) => row.label).join("\n"), style),
+        addUiText(this.scene,
           x + (panelWidth - 64) / 2 - 24,
           top,
           column.map((row) => row.display).join("\n"),
@@ -272,7 +281,7 @@ export class PauseMenuUi {
     let chipLeft = left + 32;
     for (const section of codexSections) {
       const active = section === this.codexSection;
-      const label = this.scene.add.text(0, 0, this.codexSectionLabel(section).toUpperCase(), {
+      const label = addUiText(this.scene, 0, 0, this.codexSectionLabel(section).toUpperCase(), {
         ...style,
         color: active ? palette.background : palette.text,
         fontSize: "13px",
@@ -341,47 +350,42 @@ export class PauseMenuUi {
     style: Phaser.Types.GameObjects.Text.TextStyle,
   ): Phaser.GameObjects.GameObject[] {
     const palette = this.theme.tokens.palette;
-    const codex = this.theme.copy.codex;
-    const right = left + panelWidth - 32;
-    const columns = [
-      { x: right - 260, heading: codex.sessionTotal },
-      { x: right - 130, heading: codex.bestInRun },
-      { x: right, heading: codex.maxPerRun },
+    const children: Phaser.GameObjects.GameObject[] = [];
+    const groups = [
+      { track: "weapon" as const, title: "WEAPON UPGRADES", x: left + 32 },
+      { track: "general" as const, title: "GENERAL UPGRADES", x: left + panelWidth / 2 + 12 },
     ];
-    const headingStyle = { ...style, fontSize: "13px" };
-    const rowStyle = { ...style, fontSize: "15px" };
-
-    const children: Phaser.GameObjects.GameObject[] = columns.map((column) =>
-      this.scene.add
-        .text(column.x, top, column.heading.toUpperCase(), headingStyle)
-        .setOrigin(1, 0)
-        .setAlpha(0.6),
-    );
-
-    // Pitch is derived from the space the panel actually has, so a longer pool
-    // tightens the table instead of running past the footer.
-    const rowsTop = top + 24;
-    const pitch = Math.min(21, Math.max(15, (availableHeight - 24) / Math.max(1, entries.length)));
-
-    entries.forEach((entry, index) => {
-      const y = rowsTop + index * pitch;
-      children.push(
-        this.scene.add.text(left + 32, y, entry.name, {
-          ...rowStyle,
-          color: entry.sessionTotal > 0 ? palette.accent : palette.text,
-        }).setAlpha(entry.sessionTotal > 0 ? 1 : 0.6),
-        this.scene.add
-          .text(columns[0]!.x, y, String(entry.sessionTotal), rowStyle)
-          .setOrigin(1, 0),
-        this.scene.add
-          .text(columns[1]!.x, y, String(entry.bestInRun), rowStyle)
-          .setOrigin(1, 0),
-        this.scene.add
-          .text(columns[2]!.x, y, String(entry.maxPerRun), rowStyle)
-          .setOrigin(1, 0)
-          .setAlpha(0.7),
-      );
-    });
+    const columnWidth = panelWidth / 2 - 56;
+    for (const group of groups) {
+      children.push(addUiText(this.scene, group.x, top, group.title, {
+        ...style,
+        color: palette.accent,
+        fontSize: "14px",
+        fontStyle: "bold",
+      }));
+      const groupEntries = entries.filter((entry) => entry.track === group.track);
+      const pitch = Math.min(48, Math.max(27, (availableHeight - 26) / Math.max(1, groupEntries.length)));
+      groupEntries.forEach((entry, index) => {
+        const y = top + 25 + index * pitch;
+        const cap = entry.maxPerRun === null
+          ? "∞"
+          : String(entry.track === "weapon" ? entry.maxPerRun + 1 : entry.maxPerRun);
+        children.push(
+          addUiText(this.scene, group.x, y, `${entry.name}  ·  ${cap}`, {
+            ...style,
+            color: entry.sessionTotal > 0 ? palette.accent : palette.text,
+            fontSize: "14px",
+            fontStyle: "bold",
+            wordWrap: { width: columnWidth },
+          }),
+          addUiText(this.scene, group.x, y + 17, entry.description, {
+            ...style,
+            fontSize: "11px",
+            wordWrap: { width: columnWidth },
+          }).setAlpha(0.68),
+        );
+      });
+    }
     return children;
   }
 
@@ -405,21 +409,19 @@ export class PauseMenuUi {
 
     let y = top;
     for (const entry of entries) {
-      const name = this.scene.add.text(left + 32, y, entry.name, {
+      const name = addUiText(this.scene, left + 32, y, entry.name, {
         ...style,
         color: palette.accent,
         fontStyle: "bold",
       });
-      const effects = this.scene.add
-        .text(left + 32 + width, y, entry.effects.map((effect) => `${effect.label} ${effect.display}`).join("   ·   "), {
+      const effects = addUiText(this.scene, left + 32 + width, y, entry.effects.map((effect) => `${effect.label} ${effect.display}`).join("   ·   "), {
           ...style,
           color: palette.pickup,
           fontSize: "15px",
           align: "right",
         })
         .setOrigin(1, 0);
-      const description = this.scene.add
-        .text(left + 32, y + Math.max(name.height, effects.height) + 2, entry.description, {
+      const description = addUiText(this.scene, left + 32, y + Math.max(name.height, effects.height) + 2, entry.description, {
           ...style,
           fontSize: "15px",
           wordWrap: { width },
@@ -454,19 +456,20 @@ export class PauseMenuUi {
   }
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
-    const tab = this.tabBounds.find((entry) => entry.bounds.contains(pointer.x, pointer.y));
+    const point = uiPointer(this.scene, pointer);
+    const tab = this.tabBounds.find((entry) => entry.bounds.contains(point.x, point.y));
     if (tab) {
       this.tab = tab.tab;
       this.render();
       return;
     }
-    const section = this.sectionBounds.find((entry) => entry.bounds.contains(pointer.x, pointer.y));
+    const section = this.sectionBounds.find((entry) => entry.bounds.contains(point.x, point.y));
     if (section) {
       this.codexSection = section.section;
       this.render();
       return;
     }
-    const setting = this.settingBounds.find((entry) => entry.bounds.contains(pointer.x, pointer.y));
+    const setting = this.settingBounds.find((entry) => entry.bounds.contains(point.x, point.y));
     if (setting) this.onToggle?.(setting.key);
   }
 }

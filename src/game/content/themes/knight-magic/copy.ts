@@ -109,7 +109,7 @@ export const copy = {
       name: "Wandering Knight",
       description: "A lone champion entering the Ember Court.",
     },
-    [archetypeIds.weapon.starterProjectile]: {
+    [archetypeIds.weapon.starter]: {
       name: "Magic Needle",
       description: "A precise enchanted projectile that seeks the nearest foe.",
     },
@@ -160,6 +160,10 @@ export const copy = {
     [archetypeIds.upgrade.damage]: {
       name: "Tempered Power",
       description: "Increase damage dealt.",
+    },
+    [archetypeIds.upgrade.weaponRange]: {
+      name: "Far Reach",
+      description: "Extend the starter weapon's effective range.",
     },
     [archetypeIds.upgrade.attackSpeed]: {
       name: "Quickened Weave",

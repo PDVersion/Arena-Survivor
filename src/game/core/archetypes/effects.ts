@@ -10,6 +10,7 @@ export const upgradeStatTargets = [
   "player.critChance",
   "weapon.pierce",
   "weapon.projectileCount",
+  "weapon.range",
 ] as const;
 
 export type UpgradeStatTarget = (typeof upgradeStatTargets)[number];

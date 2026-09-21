@@ -76,23 +76,20 @@ export function selectPlayerStats(
   const attackRate = weapon ? (1000 / weapon.cooldownMs) * (1 + stats.attackSpeedBonus) : 0;
   const damage = weapon ? weapon.damage * (1 + stats.damageBonus) : 0;
 
+  const deliveryLines: readonly (readonly [StatKey, number, string])[] = weapon?.deliveryKind === "projectile"
+    ? [
+        ["projectiles", weapon.projectileCount + state.weaponModifiers.projectileCount, number(weapon.projectileCount + state.weaponModifiers.projectileCount)],
+        ["pierce", weapon.pierce + state.weaponModifiers.pierce, number(weapon.pierce + state.weaponModifiers.pierce)],
+      ]
+    : [];
   const lines: readonly (readonly [StatKey, number, string])[] = [
     ["health", state.player.health, `${Math.ceil(state.player.health)} / ${Math.ceil(stats.maxHealth)}`],
     ["damage", damage, number(damage)],
     ["attackRate", attackRate, `${round(attackRate, 2)} /s`],
     ["critChance", stats.critChance, percent(stats.critChance)],
     ["critDamage", stats.critDamage, multiplier(stats.critDamage)],
-    [
-      "projectiles",
-      (weapon?.projectileCount ?? 0) + state.weaponModifiers.projectileCount,
-      number((weapon?.projectileCount ?? 0) + state.weaponModifiers.projectileCount),
-    ],
-    [
-      "pierce",
-      (weapon?.pierce ?? 0) + state.weaponModifiers.pierce,
-      number((weapon?.pierce ?? 0) + state.weaponModifiers.pierce),
-    ],
-    ["range", weapon?.range ?? 0, number(weapon?.range ?? 0)],
+    ...deliveryLines,
+    ["range", (weapon?.range ?? 0) + state.weaponModifiers.range, number((weapon?.range ?? 0) + state.weaponModifiers.range)],
     ["knockback", weapon?.knockback ?? 0, number(weapon?.knockback ?? 0)],
     ["armourPierce", weapon?.armourPierce ?? 0, percent(weapon?.armourPierce ?? 0)],
     ["moveSpeed", stats.moveSpeed, number(stats.moveSpeed)],
@@ -153,7 +150,8 @@ export interface UpgradeDescription {
   /** Times already taken. */
   readonly level: number;
   readonly nextLevel: number;
-  readonly maxLevel: number;
+  readonly maxLevel: number | null;
+  readonly track: UpgradeDefinition["track"];
   readonly isNew: boolean;
   readonly lines: readonly UpgradeChangeLine[];
 }
@@ -171,7 +169,8 @@ export function describeUpgrade(
   theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning">,
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
-  const level = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
+  const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
+  const level = upgrade.track === "weapon" ? picks + 1 : picks;
   // An untiered upgrade is described at its authored value however it rolled,
   // so the card can never promise a bonus the application will not deliver.
   const resolvedTier = isTiered(upgrade) ? tier : "common";
@@ -216,8 +215,11 @@ export function describeUpgrade(
     tierMultiplier: multiplier,
     level,
     nextLevel: level + 1,
-    maxLevel: upgrade.maxLevel,
-    isNew: level === 0,
+    maxLevel: upgrade.maxLevel === null
+      ? null
+      : upgrade.track === "weapon" ? upgrade.maxLevel + 1 : upgrade.maxLevel,
+    track: upgrade.track,
+    isNew: upgrade.track === "general" && level === 0,
     lines: Object.freeze(lines),
   });
 }

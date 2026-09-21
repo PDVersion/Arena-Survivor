@@ -9,7 +9,8 @@ better than the simpler educational game.
 | --- | --- | --- | --- |
 | **V0.4.0** | Optional-sprite seam | This file's historical contract; REC-071–073 | Merged from `claude/v0.4.0` |
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
-| **V0.4.2** | 2× cropped view, 0.5 gameplay rate, Cleanup Grabber starter | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | **Next**, on `codex/v0.4.2` |
+| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Built on `codex/v0.4.2` |
+| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Planned; must land before V0.4.3 |
 | **V0.4.3** | Weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | Renumbered; not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 
@@ -85,6 +86,7 @@ entries:
 | V0.4.1 sprites | REC-074–089 |
 | V0.4.3 early discovery | REC-090 (preserved) |
 | V0.4.2 redirect | REC-091–099 |
+| V0.4.2.1 correction | REC-098–099 within the V0.4.2 range |
 | V0.4.3 content growth | REC-100–119 |
 | V0.4.4 sprites | REC-120 onward |
 
@@ -109,7 +111,8 @@ preserving the permanent presentation/simulation boundary above.
 - V0.4.2 does not start from an unmerged sprite branch; V0.4.1 is already on
   `main`.
 - V0.4.3 does not start until V0.4.2's combined play-test gate accepts the view,
-  pace, and starter weapon.
+  pace, and starter weapon, and V0.4.2.1 resolves the follow-up readability,
+  contact, and material-family findings.
 - V0.4.4 does not claim or generate remaining sheets until V0.4.2 and V0.4.3
   settle stable IDs, subjects, sizes, and frame roles.
 - Any build phase that changes product direction must update `PLAN.md`,

@@ -3,19 +3,18 @@ import type { WeaponDefinition } from "../../../core/archetypes/contracts";
 
 export const weapons = [
   {
-    id: archetypeIds.weapon.starterProjectile,
+    id: archetypeIds.weapon.starter,
+    deliveryKind: "melee",
     damage: 10,
     cooldownMs: 1000,
-    // Comfortably beyond the ~958-unit off-screen spawn ring, so the player can
-    // engage what appears. Projectile flight covers 1,280, validated against this.
-    range: 1000,
-    knockback: 0,
+    range: 78,
+    knockback: 10,
     armourPierce: 0,
-    projectileSpeed: 400,
-    projectileLifetimeMs: 3200,
-    projectileRadius: 6,
-    projectileCount: 1,
-    pierce: 0,
+    reach: 78,
+    width: 18,
+    targetCap: null,
+    extendMs: 130,
+    retractMs: 180,
     presentationToken: "projectile",
   },
 ] as const satisfies readonly WeaponDefinition[];

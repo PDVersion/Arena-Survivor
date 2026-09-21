@@ -3,7 +3,7 @@ export const archetypeIds = {
     starter: "character.starter",
   },
   weapon: {
-    starterProjectile: "weapon.starter_projectile",
+    starter: "weapon.starter",
   },
   enemy: {
     swarmBasic: "enemy.swarm_basic",
@@ -51,6 +51,7 @@ export const archetypeIds = {
     armour: "upgrade.armour",
     regeneration: "upgrade.regeneration",
     luck: "upgrade.luck",
+    weaponRange: "upgrade.weapon_range",
   },
 } as const;
 

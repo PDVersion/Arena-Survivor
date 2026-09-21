@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { RunState } from "../state/run-state";
 import { selectRunSummaryValues } from "../state/statistics";
+import { addUiText, configureUiContainer, uiPointer } from "./ui-text";
 
 export class RunEndOverlay {
   private readonly scene: Phaser.Scene;
@@ -49,14 +50,14 @@ export class RunEndOverlay {
       .setStrokeStyle(4, accent);
     const top = height / 2 - panelHeight / 2;
     this.shownTitle = title;
-    const heading = this.scene.add.text(width / 2, top + 45, title, {
+    const heading = addUiText(this.scene, width / 2, top + 45, title, {
       color: palette.accent,
       fontFamily: "Georgia, serif",
       fontSize: "34px",
       fontStyle: "bold",
       align: "center",
     }).setOrigin(0.5);
-    const detail = this.scene.add.text(width / 2, top + 90, message, {
+    const detail = addUiText(this.scene, width / 2, top + 90, message, {
       color: palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "20px",
@@ -64,7 +65,7 @@ export class RunEndOverlay {
       wordWrap: { width: Math.min(580, width - 80) },
     }).setOrigin(0.5);
     const causeText = summary.deathCause
-      ? this.scene.add.text(width / 2, top + 116, summary.deathCause, {
+      ? addUiText(this.scene, width / 2, top + 116, summary.deathCause, {
           color: palette.critical,
           fontFamily: "Georgia, serif",
           fontSize: "18px",
@@ -73,7 +74,7 @@ export class RunEndOverlay {
           wordWrap: { width: Math.min(620, width - 80) },
         }).setOrigin(0.5)
       : null;
-    const summaryTitle = this.scene.add.text(width / 2, top + 148, summary.title, {
+    const summaryTitle = addUiText(this.scene, width / 2, top + 148, summary.title, {
       color: palette.accent,
       fontFamily: "Georgia, serif",
       fontSize: "22px",
@@ -91,8 +92,8 @@ export class RunEndOverlay {
       wordWrap: { width: columnWidth },
     };
     const left = width / 2 - columnWidth * 1.5 - 20;
-    const metrics = this.scene.add.text(left, top + 182, summary.metrics.join("\n"), columnStyle);
-    const damage = this.scene.add.text(
+    const metrics = addUiText(this.scene, left, top + 182, summary.metrics.join("\n"), columnStyle);
+    const damage = addUiText(this.scene,
       left + columnWidth + 20,
       top + 182,
       `${vocabulary.damageBreakdown}\n${summary.damage.join("\n")}`,
@@ -105,7 +106,7 @@ export class RunEndOverlay {
     const upgradeLines = summary.upgrades.length === 0
       ? ["—"]
       : hidden > 0 ? [...shown, `+${hidden} more`] : shown;
-    const upgrades = this.scene.add.text(
+    const upgrades = addUiText(this.scene,
       left + (columnWidth + 20) * 2,
       top + 182,
       `${summary.upgradesTitle}\n${upgradeLines.join("\n")}`,
@@ -115,7 +116,7 @@ export class RunEndOverlay {
     const button = this.scene.add.rectangle(width / 2, buttonY, 260, 56, floor, 1)
       .setStrokeStyle(2, accent)
       .setInteractive({ useHandCursor: true });
-    const action = this.scene.add.text(width / 2, buttonY, `${vocabulary.restartAction} · R / Enter`, {
+    const action = addUiText(this.scene, width / 2, buttonY, `${vocabulary.restartAction} · R / Enter`, {
       color: palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "20px",
@@ -125,8 +126,7 @@ export class RunEndOverlay {
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
     const parts = [panel, heading, detail, summaryTitle, metrics, damage, upgrades, button, action];
     if (causeText) parts.splice(3, 0, causeText);
-    this.container = this.scene.add.container(0, 0, parts)
-      .setScrollFactor(0, 0, true)
+    this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, parts))
       .setDepth(1100);
   }
 
@@ -145,6 +145,7 @@ export class RunEndOverlay {
   }
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
-    if (this.restartBounds?.contains(pointer.x, pointer.y)) this.restartCallback?.();
+    const point = uiPointer(this.scene, pointer);
+    if (this.restartBounds?.contains(point.x, point.y)) this.restartCallback?.();
   }
 }

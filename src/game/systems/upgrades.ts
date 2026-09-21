@@ -10,6 +10,7 @@ export type RandomSource = () => number;
 export interface WeaponStatModifiers {
   readonly pierce: number;
   readonly projectileCount: number;
+  readonly range: number;
 }
 
 export interface UpgradeableState {
@@ -24,7 +25,7 @@ export interface UpgradeableState {
 }
 
 export function createWeaponStatModifiers(): WeaponStatModifiers {
-  return { pierce: 0, projectileCount: 0 };
+  return { pierce: 0, projectileCount: 0, range: 0 };
 }
 
 export function createSeededRandom(seed: number): RandomSource {
@@ -50,7 +51,7 @@ export function isUpgradeAvailable(
   upgrade: UpgradeDefinition,
   selectedUpgradeIds: readonly UpgradeId[],
 ): boolean {
-  return upgradeLevel(selectedUpgradeIds, upgrade.id) < upgrade.maxLevel;
+  return upgrade.maxLevel === null || upgradeLevel(selectedUpgradeIds, upgrade.id) < upgrade.maxLevel;
 }
 
 /**
@@ -212,6 +213,9 @@ export function applyUpgrade<T extends UpgradeableState>(
         break;
       case "weapon.projectileCount":
         weaponModifiers.projectileCount += value;
+        break;
+      case "weapon.range":
+        weaponModifiers.range += value;
         break;
     }
   }

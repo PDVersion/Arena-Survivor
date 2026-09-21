@@ -18,85 +18,85 @@ export const upgrades = [
   {
     id: archetypeIds.upgrade.damage,
     effects: [{ kind: "stat.add", target: "player.damageBonus", value: 0.25 }],
-    maxLevel: 12, rarity: "common", category: "offense", presentationToken: "accent",
+    maxLevel: 12, track: "general", rarity: "common", category: "offense", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.attackSpeed,
     effects: [{ kind: "stat.add", target: "player.attackSpeedBonus", value: 0.2 }],
-    maxLevel: 10, rarity: "common", category: "offense", presentationToken: "accent",
+    maxLevel: 10, track: "general", rarity: "common", category: "offense", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.critChance,
     effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1 }],
-    maxLevel: 15, rarity: "common", category: "critical", presentationToken: "critical",
+    maxLevel: 15, track: "general", rarity: "common", category: "critical", presentationToken: "critical",
   },
   {
     id: archetypeIds.upgrade.pierce,
     // Common appearance, not because it is weak but because it defines a build
     // and arriving late made the build unreachable. See REC-065.
     effects: [{ kind: "stat.add", target: "weapon.pierce", value: 1 }],
-    maxLevel: 8, rarity: "common", category: "projectile", presentationToken: "accent",
+    maxLevel: 8, track: "weapon", rarity: "common", category: "projectile", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.projectileCount,
     effects: [{ kind: "stat.add", target: "weapon.projectileCount", value: 1 }],
-    maxLevel: 6, rarity: "rare", category: "projectile", presentationToken: "accent",
+    maxLevel: 6, track: "weapon", rarity: "rare", category: "projectile", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.moveSpeed,
     effects: [{ kind: "stat.add", target: "player.moveSpeed", value: 30 }],
-    maxLevel: 6, rarity: "common", category: "utility", presentationToken: "accent",
+    maxLevel: 6, track: "general", rarity: "common", category: "utility", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.health,
     effects: [{ kind: "stat.add", target: "player.maxHealth", value: 25 }],
-    maxLevel: 10, rarity: "common", category: "survival", presentationToken: "accent",
+    maxLevel: 10, track: "general", rarity: "common", category: "survival", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.pickupRadius,
     effects: [{ kind: "stat.add", target: "player.pickupRadius", value: 40 }],
-    maxLevel: 5, rarity: "common", category: "utility", presentationToken: "accent",
+    maxLevel: 5, track: "general", rarity: "common", category: "utility", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.piercingMomentum,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.piercingMomentum }],
-    maxLevel: 6, rarity: "rare", category: "skill", presentationToken: "accent",
+    maxLevel: 6, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.onKillExplosion,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.onKillExplosion }],
-    maxLevel: 8, rarity: "rare", category: "skill", presentationToken: "accent",
+    maxLevel: 8, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.fracture,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.fracture }],
-    maxLevel: 5, rarity: "rare", category: "skill", presentationToken: "accent",
+    maxLevel: 5, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.bloodlust,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.bloodlust }],
-    maxLevel: 6, rarity: "rare", category: "skill", presentationToken: "accent",
+    maxLevel: 6, track: "general", rarity: "rare", category: "skill", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.chainReaction,
     effects: [{ kind: "skill.level", skillId: archetypeIds.skill.chainReaction }],
-    maxLevel: 5, rarity: "epic", category: "skill", presentationToken: "overcritical",
+    maxLevel: 5, track: "general", rarity: "epic", category: "skill", presentationToken: "overcritical",
   },
   // Survivability, so the answer to every problem is not simply more damage.
   {
     id: archetypeIds.upgrade.armour,
     effects: [{ kind: "stat.add", target: "player.armour", value: 12 }],
-    maxLevel: 8, rarity: "common", category: "survival", presentationToken: "accent",
+    maxLevel: 8, track: "general", rarity: "common", category: "survival", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.regeneration,
     effects: [{ kind: "stat.add", target: "player.regeneration", value: 0.8 }],
-    maxLevel: 6, rarity: "rare", category: "survival", presentationToken: "accent",
+    maxLevel: 6, track: "general", rarity: "rare", category: "survival", presentationToken: "accent",
   },
   {
     id: archetypeIds.upgrade.luck,
     effects: [{ kind: "stat.add", target: "player.luck", value: 25 }],
-    maxLevel: 6, rarity: "rare", category: "utility", presentationToken: "accent",
+    maxLevel: 6, track: "general", rarity: "rare", category: "utility", presentationToken: "accent",
   },
   // The deliberately dangerous choices: more pressure bought with more reward.
   {
@@ -105,7 +105,7 @@ export const upgrades = [
       { kind: "world.modify", enemySpawnMultiplier: 1.5, xpMultiplier: 1.25 },
       { kind: "stat.add", target: "player.luck", value: 20 },
     ],
-    maxLevel: 4, rarity: "rare", category: "world", presentationToken: "shrine",
+    maxLevel: 4, track: "general", rarity: "rare", category: "world", presentationToken: "shrine",
   },
   {
     id: archetypeIds.upgrade.worldBrittle,
@@ -113,7 +113,7 @@ export const upgrades = [
       { kind: "stat.add", target: "player.damageBonus", value: 1 },
       { kind: "world.modify", chaosIncrease: 1 },
     ],
-    maxLevel: 3, rarity: "epic", category: "world", presentationToken: "shrine",
+    maxLevel: 3, track: "general", rarity: "epic", category: "world", presentationToken: "shrine",
   },
 ] as const satisfies readonly UpgradeDefinition[];
 

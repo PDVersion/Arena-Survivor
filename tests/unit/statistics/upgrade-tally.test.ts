@@ -44,12 +44,12 @@ describe("upgrade tally", () => {
 
     run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.damage));
     run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.damage));
-    run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.pierce));
+    run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.critChance));
     run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.damage));
 
     expect(run.statistics.upgradeCounts).toEqual({
       [archetypeIds.upgrade.damage]: 3,
-      [archetypeIds.upgrade.pierce]: 1,
+      [archetypeIds.upgrade.critChance]: 1,
     });
   });
 
@@ -57,10 +57,10 @@ describe("upgrade tally", () => {
     let run = withPendingChoices(startRun(), 5);
     for (const id of [
       archetypeIds.upgrade.damage,
-      archetypeIds.upgrade.pierce,
+      archetypeIds.upgrade.critChance,
       archetypeIds.upgrade.damage,
       archetypeIds.upgrade.moveSpeed,
-      archetypeIds.upgrade.pierce,
+      archetypeIds.upgrade.critChance,
     ]) {
       run = applyRunUpgrade(run, upgrade(id));
     }
@@ -79,14 +79,14 @@ describe("upgrade tally", () => {
 
   it("renders theme names ordered by count then first selection", () => {
     let run = withPendingChoices(startRun(), 4);
-    run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.pierce));
+    run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.critChance));
     run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.damage));
     run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.damage));
     run = applyRunUpgrade(run, upgrade(archetypeIds.upgrade.moveSpeed));
 
     expect(selectUpgradeTally(run, ecoGuardianTheme.copy.content)).toEqual([
       "Reinforced Tools ×2",
-      "Deep Reach ×1",
+      "Precision Sort ×1",
       "Field Boots ×1",
     ]);
   });

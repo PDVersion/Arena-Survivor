@@ -75,7 +75,7 @@ defines the anchors:
 | `enemyTank` | `#2dd4bf` | Glass bottle family |
 | `enemySpawner` | `#c084fc` | Bagged waste family |
 | `player` | `#4ade80` | The Environment Protector |
-| `projectile` | `#7dd3fc` | Sorting Pulse and its upgrades |
+| `projectile` | `#7dd3fc` | Cleanup Grabber and reusable weapon effects |
 | `pickup` | `#a3e635` | Impact points |
 | `shrine` | `#fb7185` | Site events |
 | `elite` | `#fde047` | Elite outline treatment |

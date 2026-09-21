@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
+import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import type { UpgradeDefinition } from "../../../src/game/core/archetypes/contracts";
 import {
@@ -16,7 +17,9 @@ import { createWorldState } from "../../../src/game/systems/chaos/world-modifier
 import { skillLevel, skillMaxLevel } from "../../../src/game/systems/skills/resolve-skill";
 
 const character = ecoGuardianTheme.characters[0]!;
-const pool = ecoGuardianTheme.upgrades;
+// Generic upgrade mechanics use the complete projectile pack; eco deliberately
+// parks projectile and burst-chain offers while its grabber is active.
+const pool = knightMagicTheme.upgrades;
 
 function upgrade(id: string): UpgradeDefinition {
   const found = pool.find((entry) => entry.id === id);
@@ -35,7 +38,7 @@ function baseState(): UpgradeableState {
 }
 
 const maxLevelFor = (skillId: Parameters<typeof skillMaxLevel>[1]): number =>
-  skillMaxLevel(ecoGuardianTheme.skills, skillId);
+  skillMaxLevel(knightMagicTheme.skills, skillId);
 
 describe("upgrade application", () => {
   it("adds stat effects and heals when maximum health rises", () => {
@@ -92,6 +95,8 @@ describe("upgrade availability", () => {
 
   it("removes a maxed upgrade from the pool", () => {
     const entry = upgrade(archetypeIds.upgrade.projectileCount);
+    expect(entry.maxLevel).not.toBeNull();
+    if (entry.maxLevel === null) throw new Error("fixture must be capped");
     const taken = Array.from({ length: entry.maxLevel }, () => entry.id);
 
     expect(isUpgradeAvailable(entry, [])).toBe(true);
@@ -99,11 +104,20 @@ describe("upgrade availability", () => {
     // The V0.2 defect: an offer that can do nothing.
     expect(isUpgradeAvailable(entry, taken)).toBe(false);
   });
+
+  it("keeps an uncapped general stat upgrade available", () => {
+    const entry = upgrade(archetypeIds.upgrade.damage);
+    const uncapped = { ...entry, maxLevel: null, track: "general" as const };
+    const taken = Array.from({ length: 200 }, () => uncapped.id);
+    expect(isUpgradeAvailable(uncapped, taken)).toBe(true);
+  });
 });
 
 describe("upgrade selection", () => {
   it("never offers a maxed upgrade", () => {
     const maxed = upgrade(archetypeIds.upgrade.chainReaction);
+    expect(maxed.maxLevel).not.toBeNull();
+    if (maxed.maxLevel === null) throw new Error("fixture must be capped");
     const selected = Array.from({ length: maxed.maxLevel }, () => maxed.id);
     const random = createSeededRandom(0x31);
 

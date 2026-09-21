@@ -13,6 +13,7 @@ import { EnemyActor } from "../entities/enemy-actor";
 import { PickupActor } from "../entities/pickup-actor";
 import { PlayerActor } from "../entities/player-actor";
 import { ProjectileActor } from "../entities/projectile-actor";
+import { GrabberActor } from "../entities/grabber-actor";
 import { ShrineActor } from "../entities/shrine-actor";
 import type { EnemySpawnSource } from "../entities/enemy-actor";
 import { createInitialProfile } from "../state/profile-state";
@@ -85,6 +86,7 @@ import {
   selectWorldLines,
 } from "../systems/upgrades/describe-upgrade";
 import {
+  cycleMinimapOpacity,
   getSessionSettings,
   toggleSetting,
   updateSessionSettings,
@@ -94,6 +96,7 @@ import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
 import { OvertimeChoiceUi, type OvertimeChoice } from "../ui/overtime-choice-ui";
+import { MinimapUi } from "../ui/minimap-ui";
 import { selectHudValues, selectRunSummaryValues } from "../state/statistics";
 import {
   activateShrineSurge,
@@ -139,6 +142,14 @@ import {
   type HitStopState,
 } from "../systems/feedback/impact";
 import { shouldSpawnElite } from "../systems/elites/elites";
+import { configureRunCamera } from "../systems/view/configure-run-camera";
+import {
+  expectedRealDurationMs,
+  resolveGameplayRate,
+} from "../systems/time/gameplay-time";
+import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
+import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
+import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
 import {
   chainScaleAtDepth,
   explosionDamage,
@@ -331,6 +342,7 @@ export class RunScene extends Phaser.Scene {
   private hud?: Hud;
   private runEndOverlay?: RunEndOverlay;
   private overtimeUi?: OvertimeChoiceUi;
+  private minimap?: MinimapUi;
   private overtimeChoicesMade = 0;
   private currentChoices: readonly UpgradeDefinition[] = [];
   /** The same draw, carrying each card's rolled tier. */
@@ -373,6 +385,13 @@ export class RunScene extends Phaser.Scene {
   private enemySequence = 0;
   private projectileSequence = 0;
   private shotsFired = 0;
+  private meleeStrikes = 0;
+  private meleeHits = 0;
+  private activeGrabbers = 0;
+  private firstMeleeHitAtMs: number | null = null;
+  private firstKillAtMs: number | null = null;
+  private firstContactAtMs: number | null = null;
+  private peakVisibleEnemies = 0;
   private criticalShots = 0;
   private contactHits = 0;
   private pickupSequence = 0;
@@ -462,7 +481,7 @@ export class RunScene extends Phaser.Scene {
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
     );
     this.weaponDefinition = activeTheme.weapons.find(
-      (weapon) => weapon.id === archetypeIds.weapon.starterProjectile,
+      (weapon) => weapon.id === archetypeIds.weapon.starter,
     );
     this.pickupDefinition = activeTheme.pickups.find(
       (pickup) => pickup.id === archetypeIds.pickup.experience,
@@ -532,7 +551,6 @@ export class RunScene extends Phaser.Scene {
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
-    this.cameras.main.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.drawArena();
 
     this.player = new PlayerActor(
@@ -543,7 +561,9 @@ export class RunScene extends Phaser.Scene {
       activeTheme.tokens,
     );
     this.planShrineArrivals();
-    this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
+    configureRunCamera(this.cameras.main, ARENA_SIZE, this.player, activeTheme.tuning.view.zoom);
+    this.time.timeScale = activeTheme.tuning.pace.gameplayRate;
+    this.tweens.timeScale = activeTheme.tuning.pace.gameplayRate;
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
     this.projectileGroup = this.physics.add.group({ runChildUpdate: false });
@@ -586,6 +606,12 @@ export class RunScene extends Phaser.Scene {
     this.hud = new Hud(this, activeTheme);
     this.runEndOverlay = new RunEndOverlay(this, activeTheme);
     this.overtimeUi = new OvertimeChoiceUi(this, activeTheme);
+    this.minimap = new MinimapUi(
+      this,
+      activeTheme,
+      ARENA_SIZE,
+      getSessionSettings().minimapOpacity,
+    );
 
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.game.events.on(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
@@ -600,7 +626,8 @@ export class RunScene extends Phaser.Scene {
       this.levelUpUi?.hide();
       this.pauseMenu?.hide();
       this.runEndOverlay?.hide();
-    this.overtimeUi?.hide();
+      this.overtimeUi?.hide();
+      this.minimap?.destroy();
       this.audioFeedback.destroy();
     });
     this.hud.update(this.runState, this.hudExtras());
@@ -618,7 +645,12 @@ export class RunScene extends Phaser.Scene {
     // the run still ends after its full simulated duration.
     const frozen = isHitStopActive(this.hitStop, time);
     const dying = time < this.deathSlowUntilMs;
-    const timeScale = this.reducedMotion ? 1 : frozen ? 0.08 : dying ? 0.35 : 1;
+    const timeScale = resolveGameplayRate({
+      baseRate: activeTheme.tuning.pace.gameplayRate,
+      reducedMotion: this.reducedMotion,
+      hitStopActive: frozen,
+      deathSlowActive: dying,
+    });
     if (this.physics.world.timeScale !== 1 / timeScale) {
       this.physics.world.timeScale = 1 / timeScale;
     }
@@ -692,6 +724,7 @@ export class RunScene extends Phaser.Scene {
     }
 
     this.hud?.update(this.runState, this.hudExtras());
+    this.updateMinimap();
     this.publishTelemetry();
   }
 
@@ -732,6 +765,7 @@ export class RunScene extends Phaser.Scene {
     this.hud = undefined;
     this.runEndOverlay = undefined;
     this.overtimeUi = undefined;
+    this.minimap = undefined;
     this.overtimeChoicesMade = 0;
     this.currentChoices = [];
     this.currentOffers = [];
@@ -772,6 +806,13 @@ export class RunScene extends Phaser.Scene {
     this.enemySequence = 0;
     this.projectileSequence = 0;
     this.shotsFired = 0;
+    this.meleeStrikes = 0;
+    this.meleeHits = 0;
+    this.activeGrabbers = 0;
+    this.firstMeleeHitAtMs = null;
+    this.firstKillAtMs = null;
+    this.firstContactAtMs = null;
+    this.peakVisibleEnemies = 0;
     this.criticalShots = 0;
     this.contactHits = 0;
     this.pickupSequence = 0;
@@ -853,15 +894,18 @@ export class RunScene extends Phaser.Scene {
       const definition = representative
         ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
         : this.enemyDefinition;
-      const closeAngle = sequence * GOLDEN_ANGLE;
+      const closeAngle = testSkillEnabled("lineLoad") ? 0 : sequence * GOLDEN_ANGLE;
+      const closeDistance = this.weaponDefinition?.deliveryKind === "melee"
+        ? this.weaponDefinition.reach * (testSkillEnabled("lineLoad") ? 0.35 + (sequence % 3) * 0.15 : 0.75)
+        : 100;
       // `closeLoad` places harness spawns next to the player so a path that is
       // about combat density does not also depend on travel time across the
       // off-screen spawn ring. Usable on its own, not only with
       // `representativeLoad`.
       const requestedPoint = testSkillEnabled("closeLoad") && this.player && definition
         ? {
-            x: Math.min(ARENA_SIZE.width - definition.radius, Math.max(definition.radius, this.player.x + Math.cos(closeAngle) * 100)),
-            y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * 100)),
+            x: Math.min(ARENA_SIZE.width - definition.radius, Math.max(definition.radius, this.player.x + Math.cos(closeAngle) * closeDistance)),
+            y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * closeDistance)),
           }
         : undefined;
       if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
@@ -1642,6 +1686,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private fireIfReady(): void {
+    if (testSkillEnabled("noWeapon")) return;
     if (
       testSkillEnabled("representativeLoad") &&
       testSkillEnabled("closeLoad") &&
@@ -1652,27 +1697,76 @@ export class RunScene extends Phaser.Scene {
       !this.runState ||
       !this.weaponDefinition ||
       !this.projectileGroup ||
-      this.runState.elapsedMs < this.nextFireAtMs ||
-      !canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)
+      this.runState.elapsedMs < this.nextFireAtMs
     ) {
       return;
     }
 
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const target = findNearestTarget(this.player, this.enemies);
+    const weapon = resolveWeaponDefinition(this.weaponDefinition, this.runState.weaponModifiers);
+    const target = weapon.deliveryKind === "melee"
+      ? selectMeleeAim(this.player, this.enemies, weapon.reach)
+      : findNearestTarget(this.player, this.enemies);
     if (!target) return;
 
     const baseAngle = Phaser.Math.Angle.Between(this.player.x, this.player.y, target.x, target.y);
     const damage = rollDamage({
-      baseDamage: this.weaponDefinition.damage,
+      baseDamage: weapon.damage,
       damageBonus: this.runState.player.stats.damageBonus,
       // A weapon may override the player's crit stats; both production weapons
       // leave them undefined and inherit.
-      critChance: this.weaponDefinition.critChance ?? this.runState.player.stats.critChance,
-      critDamage: this.weaponDefinition.critDamage ?? this.runState.player.stats.critDamage,
+      critChance: weapon.critChance ?? this.runState.player.stats.critChance,
+      critDamage: weapon.critDamage ?? this.runState.player.stats.critDamage,
       random: Math.random,
     });
+    if (weapon.deliveryKind === "melee") {
+      const hits = selectMeleeHits(
+        this.player,
+        baseAngle,
+        weapon,
+        this.enemies,
+      );
+      if (hits.length === 0) return;
+      this.activeGrabbers += 1;
+      new GrabberActor(
+        this,
+        this.player.x,
+        this.player.y,
+        baseAngle,
+        weapon,
+        activeTheme.tokens,
+        () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); },
+      );
+      this.meleeStrikes += 1;
+      this.shotsFired += 1;
+      if (damage.critical) this.criticalShots += 1;
+      this.runState = observeRunCrit(this.runState, damage.tier);
+      for (const enemy of hits) {
+        accumulateDamage(
+          this.damageNumbers,
+          { targetId: enemy.targetId, amount: damage.damage, tier: damage.tier, x: enemy.x, y: enemy.y },
+          this.runState.elapsedMs,
+          DAMAGE_NUMBER_WINDOW_MS,
+        );
+        this.commitEnemyDamage(enemy, damage.damage, "direct", undefined, {
+          directBase: damage.baseDamage,
+          criticalBonus: damage.bonusDamage,
+          piercingMomentum: 0,
+        });
+        this.applyWeaponKnockback(enemy);
+        this.meleeHits += 1;
+        this.firstMeleeHitAtMs ??= this.runState.elapsedMs;
+      }
+      this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
+        weapon.cooldownMs,
+        this.runState.player.stats.attackSpeedBonus,
+        this.bloodlustAttackSpeedBonus,
+      );
+      return;
+    }
+
+    if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) return;
     const momentumEffect = findSkillEffect(
       activeTheme.skills,
       archetypeIds.skill.piercingMomentum,
@@ -1684,17 +1778,16 @@ export class RunScene extends Phaser.Scene {
       : 0;
     const projectileCount = Math.max(
       1,
-      Math.floor(this.weaponDefinition.projectileCount + this.runState.weaponModifiers.projectileCount),
+      Math.floor(weapon.projectileCount),
     );
-    for (let index = 0; index < projectileCount; index += 1) {
+    for (const angle of projectileSpreadAngles(baseAngle, projectileCount)) {
       if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) break;
-      const offset = (index - (projectileCount - 1) / 2) * 0.12;
       const projectile = new ProjectileActor(
         this,
         `projectile-${this.projectileSequence + 1}`,
         this.player.x,
         this.player.y,
-        this.weaponDefinition,
+        weapon,
         activeTheme.tokens,
         damage.damage,
         damage.baseDamage,
@@ -1702,23 +1795,23 @@ export class RunScene extends Phaser.Scene {
         damage.critical,
         damage.tier,
         this.runState.elapsedMs,
-        Math.max(0, Math.floor(this.weaponDefinition.pierce + this.runState.weaponModifiers.pierce)),
+        Math.max(0, Math.floor(weapon.pierce)),
         momentumPerHit,
       );
       this.projectiles.add(projectile);
       this.projectileGroup.add(projectile);
       this.projectileSequence += 1;
-      projectile.launch(baseAngle + offset, this.weaponDefinition.projectileSpeed);
+      projectile.launch(angle, weapon.projectileSpeed);
       projectile.once(Phaser.GameObjects.Events.DESTROY, () => this.projectiles.delete(projectile));
       this.shotsFired += 1;
       if (damage.critical) this.criticalShots += 1;
       this.runState = observeRunCrit(this.runState, damage.tier);
     }
-    const attackSpeedMultiplier = Math.max(
-      0.01,
-      1 + this.runState.player.stats.attackSpeedBonus + this.bloodlustAttackSpeedBonus,
+    this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
+      weapon.cooldownMs,
+      this.runState.player.stats.attackSpeedBonus,
+      this.bloodlustAttackSpeedBonus,
     );
-    this.nextFireAtMs = this.runState.elapsedMs + this.weaponDefinition.cooldownMs / attackSpeedMultiplier;
   }
 
   /** Projectiles clear destructible obstacles; clearing one is the reward. */
@@ -1820,6 +1913,7 @@ export class RunScene extends Phaser.Scene {
       ...direct,
     });
     if (!result.killed) return;
+    this.firstKillAtMs ??= this.runState.elapsedMs;
     if (!this.eventQueue.claimLethal(enemy.targetId)) return;
     this.eventSequence += 1;
     const deathEventId = `death-${this.eventSequence}`;
@@ -2280,11 +2374,27 @@ export class RunScene extends Phaser.Scene {
   }
 
   private applySetting(key: SettingKey): void {
-    const next = updateSessionSettings(toggleSetting(getSessionSettings(), key));
+    const current = getSessionSettings();
+    const next = updateSessionSettings(
+      key === "minimapOpacity"
+        ? cycleMinimapOpacity(current)
+        : toggleSetting(current, key),
+    );
     this.reducedMotion = prefersReducedMotion() || next.reducedMotion;
     this.audioFeedback.setMuted(next.muted);
+    this.minimap?.setOpacity(next.minimapOpacity);
     this.pauseMenu?.refresh(this.pauseMenuView());
     this.publishTelemetry();
+  }
+
+  private updateMinimap(): void {
+    if (!this.minimap || !this.player) return;
+    this.minimap.update({
+      player: this.player,
+      enemies: [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated),
+      shrines: this.shrineActors.filter((shrine) => shrine.active),
+      hazards: [...this.hazards].filter((hazard) => hazard.active),
+    });
   }
 
   private readOvertimeChoiceInput(): void {
@@ -2346,6 +2456,7 @@ export class RunScene extends Phaser.Scene {
     this.lastContactDamageAtMs = this.runState.elapsedMs;
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
+    this.firstContactAtMs ??= this.runState.elapsedMs;
     if (enemy.solid) this.shovePlayer(enemy);
     this.player.setAlpha(0.35);
     this.player.flashDamage(activeTheme.tokens.palette.critical);
@@ -2590,6 +2701,13 @@ export class RunScene extends Phaser.Scene {
     const summary = this.runState
       ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
       : undefined;
+    const view = this.viewRect();
+    const visibleEnemies = [...this.enemies].filter(
+      (enemy) => enemy.active && !enemy.defeated &&
+        Math.abs(enemy.x - view.centreX) <= view.width / 2 + enemy.radius &&
+        Math.abs(enemy.y - view.centreY) <= view.height / 2 + enemy.radius,
+    ).length;
+    this.peakVisibleEnemies = Math.max(this.peakVisibleEnemies, visibleEnemies);
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
@@ -2636,9 +2754,16 @@ export class RunScene extends Phaser.Scene {
         : undefined,
       combat: {
         weaponId: this.weaponDefinition?.id ?? null,
+        deliveryKind: this.weaponDefinition?.deliveryKind ?? null,
         enemyId: this.enemyDefinition?.id ?? null,
         projectiles: this.projectiles.size,
         shotsFired: this.shotsFired,
+        meleeStrikes: this.meleeStrikes,
+        meleeHits: this.meleeHits,
+        grabberActive: this.activeGrabbers,
+        firstMeleeHitAtMs: this.firstMeleeHitAtMs,
+        firstKillAtMs: this.firstKillAtMs,
+        firstContactAtMs: this.firstContactAtMs,
         criticalShots: this.criticalShots,
         highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
         longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,
@@ -2824,12 +2949,20 @@ export class RunScene extends Phaser.Scene {
         displayHeight: Math.round(this.scale.displaySize.height),
         worldWidth: Math.round(this.viewRect().width),
         worldHeight: Math.round(this.viewRect().height),
+        zoom: this.cameras.main.zoom,
+        visibleEnemies,
+        peakVisibleEnemies: this.peakVisibleEnemies,
         spawnRadius: Math.round(
           offScreenSpawnRadius(this.viewRect(), activeTheme.tuning.director.spawnMargin),
         ),
       },
       pacing: this.runState
         ? {
+            gameplayRate: activeTheme.tuning.pace.gameplayRate,
+            expectedRealDurationMs: expectedRealDurationMs(
+              this.runState.durationMs,
+              activeTheme.tuning.pace.gameplayRate,
+            ),
             progress: this.runState.durationMs === 0
               ? 0
               : Math.min(1, this.runState.elapsedMs / this.runState.durationMs),

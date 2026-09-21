@@ -19,7 +19,7 @@ import type { SkillLevels } from "../../../src/game/systems/skills/resolve-skill
 const tuning = ecoGuardianTheme.tuning.upgradeTiers;
 
 function findUpgrade(id: string) {
-  return ecoGuardianTheme.upgrades.find((upgrade) => upgrade.id === id)!;
+  return knightMagicTheme.upgrades.find((upgrade) => upgrade.id === id)!;
 }
 
 function state() {

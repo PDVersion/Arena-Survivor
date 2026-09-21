@@ -109,9 +109,9 @@ export const copy = {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",
     },
-    [archetypeIds.weapon.starterProjectile]: {
-      name: "Sorting Pulse",
-      description: "A guided reclaim charge that seeks the nearest waste.",
+    [archetypeIds.weapon.starter]: {
+      name: "Cleanup Grabber",
+      description: "A short mechanical reach that picks up one nearby piece of waste.",
     },
     [archetypeIds.enemy.swarmBasic]: {
       name: "Plastic Bottle",
@@ -183,7 +183,11 @@ export const copy = {
     },
     [archetypeIds.upgrade.damage]: {
       name: "Reinforced Tools",
-      description: "Process more waste with every charge.",
+      description: "Process more waste with every grab.",
+    },
+    [archetypeIds.upgrade.weaponRange]: {
+      name: "Longer Grabber",
+      description: "Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5.",
     },
     [archetypeIds.upgrade.attackSpeed]: {
       name: "Rapid Cycling",

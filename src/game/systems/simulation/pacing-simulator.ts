@@ -6,6 +6,7 @@ import { V02_SPAWN_LIMITS } from "../spawning";
 import { resolveDirectorPlan, runProgress, selectRole } from "../director/spawn-director";
 import { createSeededRandom } from "../upgrades";
 import type { BuildContext, BuildModel } from "./build-models";
+import { expectedRealDurationMs } from "../time/gameplay-time";
 
 /**
  * A deterministic, Phaser-free model of run pacing.
@@ -48,6 +49,8 @@ export interface PacingReport {
   readonly themeId: string;
   readonly buildId: string;
   readonly durationMs: number;
+  readonly gameplayRate: number;
+  readonly expectedRealDurationMs: number;
   readonly chaos: number;
   readonly buckets: readonly PacingBucket[];
   readonly finalLevel: number;
@@ -81,7 +84,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
   const theme = options.theme;
   const tuning = theme.tuning;
-  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starterProjectile);
+  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter);
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter);
   if (!weapon || !character) throw new Error("The theme is missing required simulation content");
 
@@ -219,6 +222,11 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     themeId: theme.id,
     buildId: options.build.id,
     durationMs: options.durationMs,
+    gameplayRate: theme.tuning.pace.gameplayRate,
+    expectedRealDurationMs: expectedRealDurationMs(
+      options.durationMs,
+      theme.tuning.pace.gameplayRate,
+    ),
     chaos,
     buckets: Object.freeze(buckets),
     finalLevel: progression.level,
@@ -252,7 +260,7 @@ export interface TimeToKillRow {
  */
 export function timeToKillTable(report: PacingReport, options: PacingOptions): readonly TimeToKillRow[] {
   const theme = options.theme;
-  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starterProjectile)!;
+  const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter)!;
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
   const world = chaosWorldState(options.chaos ?? 1);
 

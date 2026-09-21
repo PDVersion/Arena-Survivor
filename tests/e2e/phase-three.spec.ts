@@ -5,32 +5,21 @@ async function waitForCombat(page: Page): Promise<void> {
   // sits ~958 units out, so a stationary player waits seconds for the first
   // enemy and far longer to accumulate kills. This path is about combat, not
   // about where enemies appear -- phase-four-v03 covers that. See REC-049.
-  await page.goto("/?spawnRadius=320");
+  await page.goto("/?spawnRadius=320&loadHarness=4&closeLoad=1");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.enemyId))
     .toBe("enemy.swarm_basic");
 }
 
-test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => {
+test("combat auto-targets, stabs, and kills swarm enemies", async ({ page }) => {
   test.setTimeout(45_000);
   await waitForCombat(page);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.shotsFired))
     .toBeGreaterThan(0);
   await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.projectileSample))
-    .not.toBeNull();
-  const fired = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.projectileSample);
-  expect(Math.hypot(fired?.velocityX ?? 0, fired?.velocityY ?? 0)).toBeCloseTo(400);
-  await expect
-    .poll(() =>
-      page.evaluate((sample) => {
-        const current = window.__ARENA_TEST__?.getSnapshot().combat?.projectileSample;
-        if (!current || current.id !== sample?.id) return 0;
-        return Math.hypot(current.x - sample.x, current.y - sample.y);
-      }, fired),
-    )
-    .toBeGreaterThan(20);
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.meleeHits))
+    .toBeGreaterThan(0);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.kills), {
       timeout: 25_000,
@@ -39,7 +28,9 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
 
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.combat).toMatchObject({
-    weaponId: "weapon.starter_projectile",
+    weaponId: "weapon.starter",
+    deliveryKind: "melee",
+    projectiles: 0,
     enemyId: "enemy.swarm_basic",
     enemyCap: 300,
     projectileCap: 192,
@@ -49,7 +40,12 @@ test("combat auto-targets, fires, and kills swarm enemies", async ({ page }) => 
 
 test("contact damage is visible, throttled, and can cause death", async ({ page }) => {
   test.setTimeout(100_000);
-  await waitForCombat(page);
+  // Multi-hit grabber progression can now clear the whole close pack before it
+  // proves contact lethality, so isolate the contact contract from offense.
+  await page.goto("/?spawnRadius=320&loadHarness=30&closeLoad=1&noWeapon=1");
+  await expect
+    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.enemyId))
+    .toBe("enemy.swarm_basic");
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.contactHits), {

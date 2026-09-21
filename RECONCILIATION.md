@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.2 planned, not started: land the neutral seam, then build the 2× cropped view, 0.5 gameplay rate, and Cleanup Grabber in three parallel feature branches before core integration. The old content-growth V0.4.2 is now V0.4.3; remaining sprites are V0.4.4.**
+- Active phase: **V0.4.2 complete on `codex/v0.4.2`: 2× view, 0.5 gameplay rate, delivery-neutral starter contract, Cleanup Grabber, measurements, and play-test gate are recorded. V0.4.3 is next.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2126,6 +2126,230 @@ The combined play test shows that 2× is too tight, 0.5 is too slow, the opening
 wait is too long, or the grabber cannot stay engaging through the first two
 simulated minutes. Adjust the single view/rate tuning values or theme-owned
 grabber data before broadening scope.
+
+### REC-092 — Weapon roles are delivery-neutral and theme pools may differ
+
+- Status: Accepted
+- Date: 2026-09-17
+- Affects: V0.4.2 onward; weapon contracts, theme validation, upgrade pools, UI stats
+- Blocks: None
+
+Context / observation:
+The required `weapon.starter_projectile` role forced every theme to expose
+projectile fields and every pause surface to show projectile count and pierce.
+Keeping those assumptions while adding a grabber would either create inert
+offers or make systems infer delivery from a theme identity.
+
+Decision / solution:
+Rename the required role to `weapon.starter` before persistence ships and make
+`WeaponDefinition` a discriminated projectile/melee union. The eco definition
+initially used a 78-unit, 18-unit-wide, one-target stab; REC-097 supersedes only
+that target-cap decision with path-based multi-hit. Knight-magic retains the existing
+projectile values. Theme validation checks only fields belonging to the selected
+delivery. Upgrade registries may differ by theme, with only the universal damage
+role required; eco parks pierce, projectile-count, piercing-momentum,
+on-kill-explosion, and chain-reaction offers while knight-magic keeps them.
+Resolved stat lines likewise omit projectile-only values for melee weapons.
+
+Why:
+Delivery is mechanical data, not theme identity. The union lets reusable systems
+remain generic while preventing impossible combinations at compile time. A
+theme-owned upgrade pool is necessary for every offered choice to do real work.
+
+Future guardrail:
+Systems branch only on `deliveryKind`, never on a theme or player-facing name.
+A melee attack does not instantiate `ProjectileActor` or consume projectile
+capacity. Presentation reads the authored reach but never defines it.
+
+Revisit when:
+A second melee shape needs an arc or area cap, weapon slots make more than one
+delivery active at once, or saved weapon IDs require a migration table.
+
+### REC-093 — The combined readable baseline passes its measured gate
+
+- Status: Accepted
+- Date: 2026-09-17
+- Affects: V0.4.2 onward; baseline pacing, visible occupancy, performance budget
+- Blocks: None
+
+Context / observation:
+Zoom, rate, and delivery each passed alone, but their combination could still
+have produced an empty opening, an unreadable tool, or a 300-enemy regression.
+The simulator also continued to print authored duration as though it were wall
+time, hiding the most important consequence of the 0.5 experiment.
+
+Measurement:
+One production-rate browser observation ran for 120 simulated seconds (about
+four real minutes), auto-resolving level cards and suppressing contact damage so
+the same run could be observed continuously. The first enemy entered the view at
+2,349 ms, the first grab landed at 4,844 ms, the first kill at 5,849 ms, and the
+first level at 12,890 ms. Visible occupancy was 22 at 30 seconds, 49 at 60, and
+144 at 120; peak visible occupancy was 144. A separate 300-enemy mixed-roster
+stress run at zoom 2 sampled 210 frames at 8.05 ms average and 11.67 ms maximum,
+with 290 enemies visible at peak. The technical cap therefore remains 300.
+
+Decision / solution:
+Keep zoom 2 and gameplay rate 0.5 for the next play-test baseline. The balance
+report now prints simulated and expected real duration together (5:00 authored
+is 10:00 wall time). The primitive grabber uses a high-contrast light shaft,
+green grip/jaws, and a contact ring; local visual inspection showed all four
+accepted enemy silhouettes together and the full grabber extension above them.
+The five play-test questions pass for this developer baseline: roles and tool
+motion are legible, interaction begins quickly, the cropped view fills far below
+the cap, and the single-target loop remained active through two simulated
+minutes without projectile, pierce, splash, or chain delivery.
+
+Future guardrail:
+Keep the long observation opt-in via `ARENA_LONG_MEASURE=1`; ordinary CI must not
+gain four minutes. Every future pacing pass records simulated time separately
+from wall time and repeats the 300-enemy frame sample after renderer changes.
+
+Revisit when:
+External play testing finds 0.5 tiring, the 120-second occupancy too dense, or
+the final grabber sprite makes extend/contact/retract less legible than the
+primitive fallback.
+
+### REC-094 — World zoom is not an interface scale
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.2; camera, HUD, overlays, text rendering
+- Blocks: None
+
+Context / observation:
+The 2× camera made fixed UI larger as a raster transform. Text edges softened,
+panel content overflowed, and serif descenders could be clipped even though the
+world itself became easier to read.
+
+Decision / solution:
+Screen UI now counter-scales the world camera, applies an intentional 1.25× UI
+scale inside a reduced authored viewport, and renders text to 4× private text
+textures with explicit bottom padding. Pointer coordinates are transformed back
+through the same scale before hit testing.
+
+Future guardrail:
+Never use gameplay-camera zoom as the UI scaling mechanism. New canvas UI text
+uses `addUiText`, and new overlay roots use `configureUiContainer`.
+
+### REC-095 — Generated motion marks are removed reproducibly
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.1 sprite pipeline; V0.4.2 player presentation
+- Blocks: None
+
+Context / observation:
+At 2× zoom the accepted player sheet exposed detached green generator marks,
+including a large blob beside idle and motion streaks in the fourth walk pose.
+They read as unintended particles.
+
+Decision / solution:
+The preserved raw generation is unchanged. The deterministic build pipeline now
+retains the largest eight-way-connected subject in each player frame before
+scaling and palette snapping. Runtime walk presentation uses the clean
+0→1→2→1 poses at 240 ms per step and omits the artifact-bearing fourth pose.
+
+Future guardrail:
+Do not hand-edit generated sheets. Fix generator cleanup in the reproducible
+pipeline or regenerate from a corrected prompt.
+
+### REC-096 — The minimap is adjustable presentation, not simulation
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.2; navigation, settings, save seam
+- Blocks: None
+
+Context / observation:
+The cropped camera improves local readability but removes broad arena context.
+
+Decision / solution:
+A presentation-only minimap projects existing actor positions into arena bounds
+and never feeds data back into spawning, targeting, or collision. Its session
+setting cycles Off, 35%, 60%, and 85%, defaulting to 60%; the setting remains in
+the serializable settings slice for the future persistence adapter.
+
+Future guardrail:
+The minimap may summarize known world state, but it must never become an
+authoritative gameplay index or change how much world the main camera reveals.
+
+### REC-097 — Cleanup Grabber progression is reach-only and path-based
+
+- Status: Accepted
+- Date: 2026-09-18
+- Affects: V0.4.2; weapon delivery, upgrades, catalogue, title menu
+- Blocks: None
+
+Context / observation:
+A single-target cap contradicted the visible grabber path, while mixing its
+progression with general damage, speed, and critical upgrades hid the weapon's
+simple identity.
+
+Decision / solution:
+The grabber resolves every eligible enemy intersecting its narrow corridor in
+deterministic near-to-far order. Its only dedicated upgrade adds 18 world units
+of reach and can be taken four times: owned level 1 through maximum level 5.
+General stat upgrades are uncapped; skill and world upgrades keep caps where a
+further pick would be a no-op. Choice cards and the full-description catalogue
+label weapon and general tracks separately. Start, Info, and Settings are the
+title's only three actions, and Info/Settings reuse the Escape overlay.
+
+Future guardrail:
+Effective melee reach must be resolved once for aim, collision, presentation,
+and stat copy. Weapon-specific effects never masquerade as general stat picks.
+
+Amendment for V0.4.2.1: “only dedicated upgrade” described the accepted
+V0.4.2 baseline, not a permanent one-track limit. Longer Grabber remains the
+owned reach track; Collection Sweep is a second, separately acquired weapon
+track whose cadence and area never alter the reach calculation above.
+
+### REC-098 — Visible footprint and contact footprint are authored together
+
+- Status: Accepted for V0.4.2.1
+- Date: 2026-09-18
+- Affects: Player/enemy presentation, contact, separation, sprite QA
+- Blocks: V0.4.3
+
+Context / observation:
+The tighter camera made it obvious when a sprite's visible silhouette occupied
+only part of its authored collision circle. Solid enemies also blocked the
+player before the visible objects appeared to make credible contact.
+
+Decision / solution:
+Theme data authors gameplay radius and sprite display diameter together from the
+intended physical footprint, verified with a debug overlay. No bitmap is ever
+measured by physics. Player/enemy overlap no longer resolves as a solid barrier;
+valid contact instead gives the player a small, cooldown-limited knockback.
+Enemy/enemy separation and obstacle collision remain independent.
+
+Future guardrail:
+Changing art never silently changes physics. Any footprint adjustment changes
+explicit theme data and reruns contact/separation tests, including the 300-enemy
+sample.
+
+### REC-099 — Material fragments use finite role relationships
+
+- Status: Accepted for V0.4.2.1
+- Date: 2026-09-18
+- Affects: Eco enemies, Fragmentation, death spawning, catalogue, sprite roster
+- Blocks: V0.4.3 and remaining sprite generation
+
+Context / observation:
+Same-parent scaled fragments do not teach what the material becomes. “Plastic
+Bag” also conflated a fast enemy with the larger Bagged Waste death-spawner.
+
+Decision / solution:
+`enemy.fast_fragile` becomes Microplastics. Plastic Bottle fragments route to
+Microplastics; Glass Bottle fragments route to a stationary Glass Shards role;
+neither child fragments again. Bagged Waste releases Plastic Bottle,
+Microplastics, and Glass Bottle, but never itself. Runtime theme definitions own
+the relationships; `build/ECO_CONTENT_MAP.md` is their wiki-shaped editorial
+map and future catalogue structure, not a second executable ruleset.
+
+Future guardrail:
+Validate every spawn relation as a finite graph, keep child identity independent
+of sprite art, and regenerate renamed subjects through the manifest rather than
+relabeling accepted images.
 
 ## V0.4.3 entries — content growth
 

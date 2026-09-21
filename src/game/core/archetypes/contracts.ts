@@ -330,20 +330,7 @@ export interface CharacterDefinition {
   readonly baseStats: PlayerBaseStats;
 }
 
-/**
- * A weapon's stats.
- *
- * The block above `presentationToken` is generic to any weapon and is the
- * surface later weapons are expected to share. The `projectile*` and `pierce`
- * fields below it describe how *this* weapon delivers its damage, and belong to
- * a projectile delivery specifically.
- *
- * Splitting delivery into a discriminated union — so a melee weapon can declare
- * an arc and target cap instead of a projectile speed — is deliberately parked
- * for V0.4, where weapon slots decide the shape. Until then every weapon is a
- * projectile and the fields sit flat.
- */
-export interface WeaponDefinition {
+interface WeaponDefinitionBase {
   readonly id: WeaponId;
   readonly damage: number;
   readonly cooldownMs: number;
@@ -363,15 +350,32 @@ export interface WeaponDefinition {
   /** Overrides the player's crit damage for this weapon only. */
   readonly critDamage?: number;
 
-  // Projectile delivery.
+  readonly presentationToken: keyof Pick<ThemePalette, "projectile" | "critical" | "overcritical">;
+}
+
+export interface ProjectileWeaponDefinition extends WeaponDefinitionBase {
+  readonly deliveryKind: "projectile";
   readonly projectileSpeed: number;
   readonly projectileLifetimeMs: number;
   readonly projectileRadius: number;
   readonly projectileCount: number;
   readonly pierce: number;
-
-  readonly presentationToken: keyof Pick<ThemePalette, "projectile" | "critical" | "overcritical">;
 }
+
+export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
+  readonly deliveryKind: "melee";
+  /** Length of the forward stab from the player's centre. */
+  readonly reach: number;
+  /** Width of the grabber head's contact corridor. */
+  readonly width: number;
+  /** `null` resolves every target in the corridor, near to far. */
+  readonly targetCap: number | null;
+  readonly extendMs: number;
+  readonly retractMs: number;
+}
+
+/** Theme-owned weapon data with delivery-specific fields kept type-safe. */
+export type WeaponDefinition = ProjectileWeaponDefinition | MeleeWeaponDefinition;
 
 export interface EnemyDefinition {
   readonly id: EnemyId;
@@ -420,8 +424,10 @@ export type UpgradeCategory = (typeof upgradeCategories)[number];
 export interface UpgradeDefinition {
   readonly id: UpgradeId;
   readonly effects: readonly UpgradeEffect[];
-  /** A maxed upgrade leaves the pool, so it can never be offered as a no-op. */
-  readonly maxLevel: number;
+  /** `null` is a repeatable general stat upgrade with no per-run cap. */
+  readonly maxLevel: number | null;
+  /** Weapon progression is displayed separately from the general pool. */
+  readonly track: "general" | "weapon";
   readonly rarity: UpgradeRarity;
   readonly category: UpgradeCategory;
   readonly presentationToken: keyof Pick<ThemePalette, "accent" | "critical" | "overcritical" | "shrine">;

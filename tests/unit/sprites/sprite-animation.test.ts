@@ -28,10 +28,11 @@ describe("sprite animation state", () => {
     expect(resolveAnimatedSpriteState(10_000, { moving: false, phaseMs: 0 })).toBe("idle");
   });
 
-  it("cycles all four player walk poses and returns to authored idle", () => {
+  it("cycles the three clean player poses slowly and returns to authored idle", () => {
     expect(resolvePlayerMovementFrame(0, true)).toBe(0);
     expect(resolvePlayerMovementFrame(SPRITE_PLAYER_MOVE_FRAME_MS, true)).toBe(1);
-    expect(resolvePlayerMovementFrame(SPRITE_PLAYER_MOVE_FRAME_MS * 3, true)).toBe(3);
+    expect(resolvePlayerMovementFrame(SPRITE_PLAYER_MOVE_FRAME_MS * 2, true)).toBe(2);
+    expect(resolvePlayerMovementFrame(SPRITE_PLAYER_MOVE_FRAME_MS * 3, true)).toBe(1);
     expect(resolvePlayerMovementFrame(SPRITE_PLAYER_MOVE_FRAME_MS * 4, true)).toBe(0);
     expect(resolvePlayerMovementFrame(10_000, false)).toBe(4);
   });

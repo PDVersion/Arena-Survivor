@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import type { ThemeManifest, UpgradeDefinition } from "../core/archetypes/contracts";
 import type { UpgradeTier } from "../core/archetypes/tiers";
 import type { UpgradeDescription } from "../systems/upgrades/describe-upgrade";
+import { addUiText, configureUiContainer, uiPointer } from "./ui-text";
 
 export interface LevelUpView {
   readonly descriptions: readonly UpgradeDescription[];
@@ -76,10 +77,12 @@ export class LevelUpChoiceUi {
     const innerWidth = cardWidth - CARD_PADDING * 2;
 
     // Badges are identity, not detail, so they show regardless of the toggle.
-    const badge = description?.isNew
+    const levelBadge = description?.isNew
       ? "NEW"
       : `Lv ${description?.level ?? 0}→${description?.nextLevel ?? 1}`;
-    const badgeText = this.scene.add.text(0, 0, badge, {
+    const trackBadge = description?.track === "weapon" ? "WEAPON" : "GENERAL";
+    const badge = `${trackBadge} · ${description?.maxLevel === null ? "∞" : levelBadge}`;
+    const badgeText = addUiText(this.scene, 0, 0, badge, {
       color: description?.isNew ? palette.overcritical : palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "17px",
@@ -87,7 +90,7 @@ export class LevelUpChoiceUi {
     }).setOrigin(1, 0);
 
     const tier = description?.tier ?? "common";
-    const heading = this.scene.add.text(0, 0, `${index + 1}. ${description?.name ?? choice.id}`, {
+    const heading = addUiText(this.scene, 0, 0, `${index + 1}. ${description?.name ?? choice.id}`, {
       color: this.theme.tokens.tiers[tier],
       fontFamily: "Georgia, serif",
       fontSize: "21px",
@@ -99,7 +102,7 @@ export class LevelUpChoiceUi {
     // Only worth saying when the roll actually changed the numbers; a common
     // card would just be reading the baseline back to the player.
     const tierNote = description && description.tierMultiplier > 1
-      ? this.scene.add.text(0, 0, `${description.tierLabel}  ×${description.tierMultiplier}`, {
+      ? addUiText(this.scene, 0, 0, `${description.tierLabel}  ×${description.tierMultiplier}`, {
           color: this.theme.tokens.tiers[tier],
           fontFamily: "Georgia, serif",
           fontSize: "14px",
@@ -107,7 +110,7 @@ export class LevelUpChoiceUi {
         }).setOrigin(1, 0)
       : undefined;
 
-    const summary = this.scene.add.text(0, 0, description?.summary ?? "", {
+    const summary = addUiText(this.scene, 0, 0, description?.summary ?? "", {
       color: palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "16px",
@@ -128,7 +131,7 @@ export class LevelUpChoiceUi {
           return `${line.label}   ${change}${line.delta ? `   (${line.delta})` : ""}`;
         })
         .join("\n");
-      detailText = this.scene.add.text(0, 0, detail, {
+      detailText = addUiText(this.scene, 0, 0, detail, {
         color: palette.pickup,
         fontFamily: "Georgia, serif",
         fontSize: "15px",
@@ -180,8 +183,7 @@ export class LevelUpChoiceUi {
       .setStrokeStyle(3, Phaser.Display.Color.HexStringToColor(palette.accent).color);
     const top = height / 2 - panelHeight / 2;
 
-    const title = this.scene.add
-      .text(width / 2, top + 38, this.theme.copy.levelUpTitle, {
+    const title = addUiText(this.scene, width / 2, top + 38, this.theme.copy.levelUpTitle, {
         color: palette.accent,
         fontFamily: "Georgia, serif",
         fontSize: "32px",
@@ -195,8 +197,7 @@ export class LevelUpChoiceUi {
 
     if (view.pendingAfterThis > 0) {
       children.push(
-        this.scene.add
-          .text(width / 2, top + 70, `+${view.pendingAfterThis} more`, {
+        addUiText(this.scene, width / 2, top + 70, `+${view.pendingAfterThis} more`, {
             color: palette.text,
             fontFamily: "Georgia, serif",
             fontSize: "16px",
@@ -242,7 +243,7 @@ export class LevelUpChoiceUi {
 
     this.choiceBounds = bounds;
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
-    this.container = this.scene.add.container(0, 0, children).setScrollFactor(0, 0, true).setDepth(1000);
+    this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, children)).setDepth(1000);
   }
 
   hide(): void {
@@ -255,7 +256,8 @@ export class LevelUpChoiceUi {
   }
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
-    const index = this.choiceBounds.findIndex((bounds) => bounds.contains(pointer.x, pointer.y));
+    const point = uiPointer(this.scene, pointer);
+    const index = this.choiceBounds.findIndex((bounds) => bounds.contains(point.x, point.y));
     const choice = this.choices[index];
     if (choice) this.choiceCallback?.(choice);
   }
