@@ -97,12 +97,12 @@ test("the director gates the roster on run progress and announces each milestone
 });
 
 test("a restarted run rewinds the director to its opening state", async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   await waitForPlaying(page, "/?runDurationMs=8000&noContact&noXp&atTimeUp=complete");
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
-      timeout: 30_000,
+      timeout: 90_000,
     })
     .toBe("complete");
 

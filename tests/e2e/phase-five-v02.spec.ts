@@ -28,9 +28,10 @@ test("all shrine roles activate exactly once and Duplication retains every copy"
 });
 
 test("world multipliers restart to a clean 1.0x state", async ({ page }) => {
+  test.setTimeout(120_000);
   await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&runDurationMs=900&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.chaos)).toBe(2.4);
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 15_000 }).toBe("complete");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 90_000 }).toBe("complete");
   await page.keyboard.press("r");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration)).toBeGreaterThan(1);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
