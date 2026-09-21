@@ -118,7 +118,7 @@ accepted    █████░░░░░░░░░░░░░░░  5
 | # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Claimed by | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `accepted` |
-| 2 | `enemy.fast_fragile` | Microplastics | 24×24 | 4 | low | 1 | 2 | n/a (built-in) | Codex | `generating` |
+| 2 | `enemy.fast_fragile` | Microplastics | 24×24 | 4 | low | 1 | 3 | n/a (built-in) | Codex | `accepted` |
 | 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
 | 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `accepted` |
@@ -159,17 +159,20 @@ DETAIL BUDGET: medium — cap, neck ridge, and label band are the only interior 
 ```
 Frames: `idle upright; leaning forward mid-tumble; same as idle; crushed flat and split into two pieces`
 
-### 2 · `enemy.fast_fragile` — Plastic Bag
+### 2 · `enemy.fast_fragile` — Microplastics
 
 ```text
-SUBJECT: a light supermarket carrier bag caught mid-air, part-inflated by wind,
-handles trailing, seen as a small hostile creature-object.
-BASE COLOUR: #e2e8f0 — build the 4-step ramp from this exact hue.
-SILHOUETTE: irregular billowing pouch, wider at the top than the bottom, two thin
-handle loops rising from the top edge. Deliberately asymmetric.
-DETAIL BUDGET: low — silhouette and two or three crease lines only.
+SUBJECT: one compact cluster of typical multicolour microplastic waste pieces —
+three or four irregular snapped packaging shards fused into a readable hostile
+creature-object, with red, blue, yellow, and pale plastic regions. Not glitter,
+confetti, dust, sparkles, or detached motion particles.
+BASE COLOUR: #e2e8f0 — use this pale neutral for the shared outline ramp and keep
+the coloured shards saturated within the established eco-guardian palette.
+SILHOUETTE: one low jagged cluster with a broad base and several uneven angular
+peaks; every piece touches the cluster so the subject reads as one actor.
+DETAIL BUDGET: low — silhouette and distinct flat colour regions only.
 ```
-Frames: `billowed open; collapsed and stretched sideways; billowed open; torn into drifting strips`
+Frames: `compact cluster; tipped forward in a quick scuttle; compact cluster; snapped apart into a few larger touching pieces`
 
 ### 3 · `enemy.slow_durable` — Glass Bottle
 
@@ -327,3 +330,4 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-09-02 | `character.starter` | 1 | 1 | n/a (built-in) | rejected | The eight Environment Protector poses read clearly, but the tool rendered an opaque RGB checkerboard. |
 | 2026-09-02 | `character.starter` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose and equipment consistency but returned an opaque black RGB background. |
 | 2026-09-18 | `character.starter` | 2 | 1 | n/a (built-in) | accepted | Deterministic normalization now retains the largest connected subject per frame, removing detached generator marks without hand-editing the preserved raw attempt; runtime uses the clean 0→1→2→1 walk cycle. |
+| 2026-09-21 | `enemy.fast_fragile` | 3 | 1 | n/a (built-in) | accepted | Replaced the obsolete Plastic Bag with a transparent four-pose Microplastics cluster; deterministic normalization preserves the multicolour material regions and compact connected silhouette. |
