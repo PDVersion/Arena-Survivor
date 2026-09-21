@@ -2901,6 +2901,8 @@ export class RunScene extends Phaser.Scene {
             moveSpeed: this.runState?.player.stats.moveSpeed ?? this.player.definition.baseStats.moveSpeed,
             velocityX: body?.velocity.x ?? 0,
             velocityY: body?.velocity.y ?? 0,
+            spriteFrame: this.player.view?.frame ?? null,
+            spriteMirrored: this.player.view?.mirrored ?? null,
             health: this.runState?.player.health ?? 0,
             invulnerable: Boolean(
               this.runState && this.runState.elapsedMs < this.invulnerableUntilMs,

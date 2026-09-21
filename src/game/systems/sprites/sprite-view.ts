@@ -4,7 +4,9 @@ import type { ContentId } from "../../core/archetypes/ids";
 import {
   resolveAnimatedSpriteState,
   advancePlayerMovementFrame,
+  resolveSpriteFlipX,
   SPRITE_DEATH_FRAME_MS,
+  SPRITE_MOVE_FRAME_MS,
   type SpriteAnimationState,
 } from "./sprite-animation";
 import { resolveSprite } from "./resolve-sprite";
@@ -65,10 +67,21 @@ export class SpriteView {
   private renderedFrame: number;
   private previousX: number;
   private previousY: number;
-  private facingX = 1;
+  private readonly animateMovement: boolean;
+  private flipX = false;
   private playerStep = 0;
   private playerDistance = 0;
   private detached = false;
+
+  /** Read-only presentation state used by the browser verification bridge. */
+  get frame(): number {
+    return this.renderedFrame;
+  }
+
+  /** True when the authored left-facing sheet is mirrored to face right. */
+  get mirrored(): boolean {
+    return this.flipX;
+  }
 
   constructor(
     source: SpriteViewSource,
@@ -84,11 +97,13 @@ export class SpriteView {
     this.renderedFrame = definition.states[state];
     this.previousX = source.x;
     this.previousY = source.y;
+    this.animateMovement = options.animateMovement ?? false;
     // Stable from the spawn position, but varied enough that a crowd does not
     // tumble in one synchronized wall.
     this.animation = {
-      moving: options.animateMovement ?? false,
-      phaseMs: Math.abs(Math.round(source.x * 31 + source.y * 17)) % 360,
+      moving: false,
+      phaseMs:
+        Math.abs(Math.round(source.x * 31 + source.y * 17)) % (SPRITE_MOVE_FRAME_MS * 2),
     };
     this.baseScaleX = options.diameter / definition.frameWidth;
     this.baseScaleY = options.diameter / definition.frameHeight;
@@ -150,27 +165,48 @@ export class SpriteView {
     const deltaX = source.x - this.previousX;
     const deltaY = source.y - this.previousY;
     const usesPlayerCycle = this.definition.frames >= 8;
-    const moving = Math.abs(deltaX) + Math.abs(deltaY) > 0.01;
-    if (usesPlayerCycle && Math.abs(deltaX) > 0.01) this.facingX = Math.sign(deltaX);
+    const body = (source as SpriteViewSource & {
+      body?: Readonly<{ velocity?: Readonly<{ x: number; y: number }> }> | null;
+    }).body;
+    const velocityX = body?.velocity?.x ?? 0;
+    const velocityY = body?.velocity?.y ?? 0;
+    const movedDistance = Math.hypot(deltaX, deltaY);
+    // Velocity supplies the movement state even on render ticks where the
+    // physics position has not advanced. Distance remains the sole cadence
+    // input, so animation can never affect simulation.
+    const moving =
+      movedDistance > 0.01 || Math.abs(velocityX) + Math.abs(velocityY) > 0.01;
+    const horizontalMotion = Math.abs(velocityX) > 0.01 ? velocityX : deltaX;
+    if (usesPlayerCycle || this.animateMovement) {
+      this.flipX = resolveSpriteFlipX(this.flipX, horizontalMotion);
+    }
     this.previousX = source.x;
     this.previousY = source.y;
     this.image.setPosition(source.x, source.y);
     this.image.setRotation(source.rotation);
     this.image.setScale(
-      this.baseScaleX * source.scaleX * (usesPlayerCycle ? this.facingX : 1),
+      this.baseScaleX * source.scaleX,
       this.baseScaleY * source.scaleY,
     );
+    this.image.setFlipX(this.flipX);
     this.image.setAlpha(source.alpha);
     this.image.setDepth(source.depth);
     if (usesPlayerCycle) {
       const next = advancePlayerMovementFrame(
         { step: this.playerStep, distance: this.playerDistance },
-        moving ? Math.hypot(deltaX, deltaY) : 0,
+        movedDistance,
+        moving,
       );
       this.playerStep = next.step;
       this.playerDistance = next.distance;
-      this.setFrame(next.frame);
+      const transient = this.animation.transient;
+      if (transient && this.image.scene.time.now < transient.untilMs) {
+        this.setState(transient.state);
+      } else {
+        this.setFrame(next.frame);
+      }
     } else {
+      this.animation.moving = this.animateMovement && moving;
       const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
       this.setState(state);
     }

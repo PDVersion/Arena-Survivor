@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   advancePlayerMovementFrame,
+  resolveSpriteFlipX,
   resolveAnimatedSpriteState,
   SPRITE_MOVE_FRAME_MS,
   SPRITE_PLAYER_FRAME_DISTANCE,
@@ -36,5 +37,19 @@ describe("sprite animation state", () => {
     animation = advancePlayerMovementFrame(animation, SPRITE_PLAYER_FRAME_DISTANCE * 4);
     expect(animation.frame).toBe(2);
     expect(advancePlayerMovementFrame(animation, 0).frame).toBe(4);
+  });
+
+  it("holds the current walk pose across a zero-displacement render tick while still moving", () => {
+    const started = advancePlayerMovementFrame({ step: 0, distance: 0 }, 30, true);
+    const held = advancePlayerMovementFrame(started, 0, true);
+
+    expect(held).toEqual(started);
+    expect(advancePlayerMovementFrame(held, 0, false).frame).toBe(4);
+  });
+
+  it("keeps the authored left-facing pose regular and mirrors rightward motion", () => {
+    expect(resolveSpriteFlipX(true, -1)).toBe(false);
+    expect(resolveSpriteFlipX(false, 1)).toBe(true);
+    expect(resolveSpriteFlipX(true, 0)).toBe(true);
   });
 });

@@ -1,7 +1,7 @@
 import type { SpriteState } from "../../core/archetypes/contracts";
 
 /** Presentation timing only: no simulation reads these values. */
-export const SPRITE_MOVE_FRAME_MS = 180;
+export const SPRITE_MOVE_FRAME_MS = 320;
 export const SPRITE_PLAYER_FRAME_DISTANCE = 60;
 export const SPRITE_DEATH_FRAME_MS = 220;
 
@@ -43,9 +43,13 @@ export interface PlayerMovementAnimation {
 export function advancePlayerMovementFrame(
   previous: Readonly<{ step: number; distance: number }>,
   movedDistance: number,
+  moving = movedDistance > 0.01,
 ): PlayerMovementAnimation {
-  if (movedDistance <= 0.01) return { step: 0, distance: 0, frame: 4 };
+  if (!moving) return { step: 0, distance: 0, frame: 4 };
   const cycle = [0, 1, 2, 1] as const;
+  if (movedDistance <= 0.01) {
+    return { step: previous.step, distance: previous.distance, frame: cycle[previous.step]! };
+  }
   const total = previous.distance + movedDistance;
   const advances = total >= SPRITE_PLAYER_FRAME_DISTANCE ? 1 : 0;
   const step = (previous.step + advances) % cycle.length;
@@ -54,4 +58,14 @@ export function advancePlayerMovementFrame(
     distance: advances ? Math.min(total - SPRITE_PLAYER_FRAME_DISTANCE, SPRITE_PLAYER_FRAME_DISTANCE) : total,
     frame: cycle[step]!,
   };
+}
+
+/**
+ * The accepted sheets face left in their authored orientation.
+ * Horizontal motion to the right mirrors them; vertical/no motion preserves
+ * the last facing so a sprite never jitters around zero.
+ */
+export function resolveSpriteFlipX(previous: boolean, horizontalMotion: number): boolean {
+  if (Math.abs(horizontalMotion) <= 0.01) return previous;
+  return horizontalMotion > 0;
 }

@@ -170,6 +170,13 @@ has seeded bounded tests. The material graph is validation-tested as finite,
 the five-child Bagged Waste breakup is browser-tested below the 300-enemy cap,
 and the Microplastics replacement passed the manifest acceptance/build check.
 
-Completion gate: `npm run typecheck`, the 401-test unit suite, production build,
-72-test Chromium suite (one opt-in measurement skipped), Collection Sweep
+Completion gate: `npm run typecheck`, the 403-test unit suite, production build,
+73-test Chromium suite (one opt-in measurement skipped), Collection Sweep
 balance model, and five-sheet sprite check all pass.
+
+Post-completion animation correction (2026-09-21): recorded play exposed idle
+flashes on render ticks with zero displacement but non-zero body velocity. The
+player now holds its current distance-driven pose across those ticks, and every
+moving player/enemy sprite keeps the accepted sheet's regular left-facing
+orientation while mirroring for rightward motion. Pure animation coverage locks
+both behaviours.

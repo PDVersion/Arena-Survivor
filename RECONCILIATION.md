@@ -2024,6 +2024,18 @@ runtime texture.
 Revisit when:
 A second player layout needs a different frame count or directional sheets.
 
+Post-V0.4.2.1 correction (2026-09-21): a recorded play pass showed that
+frame-to-frame displacement can briefly be zero while an Arcade body still has
+non-zero velocity. Treating that render tick as a stop reset the player to idle
+and made the walk cycle flash. Sprite views now use body velocity only to retain
+the presentation movement state while travelled distance remains the cadence
+input. All moving sprite views use the same horizontal-facing rule: accepted
+sheets are authored facing left, so left is regular and right is mirrored;
+near-zero horizontal motion retains the last facing. The named enemy-state
+cadence is 320 ms so two-frame sheets also read as held poses rather than a
+flash. These choices remain presentation-only and are covered by pure animation
+tests.
+
 ### REC-078 — Rebalance the roster before generating the rest of it
 
 - Status: Accepted

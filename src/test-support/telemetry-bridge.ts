@@ -26,6 +26,8 @@ export interface ArenaTestSnapshot {
     moveSpeed: number;
     velocityX: number;
     velocityY: number;
+    spriteFrame: number | null;
+    spriteMirrored: boolean | null;
     health: number;
     invulnerable: boolean;
     maxHealth: number;
