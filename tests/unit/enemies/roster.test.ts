@@ -20,7 +20,7 @@ describe("expanded enemy roster", () => {
     const definition = knightMagicTheme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.deathSpawner);
     if (!definition) throw new Error("Missing Broodmother definition");
     const queue = new CausalEventQueue();
-    const spawn = createDeathSpawns(definition, "brood-1", "death-1");
+    const [spawn] = createDeathSpawns(definition, "brood-1", "death-1");
     if (!spawn) throw new Error("Missing death-spawn capability");
     expect(queue.claimLethal("brood-1")).toBe(true);
     expect(queue.claimLethal("brood-1")).toBe(false);

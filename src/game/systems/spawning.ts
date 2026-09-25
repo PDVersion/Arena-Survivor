@@ -126,14 +126,13 @@ export function createDeathSpawns(
   definition: EnemyDefinition,
   parentEntityId: string,
   parentEventId: string,
-): PendingSpawn | null {
-  if (!definition.deathSpawn) return null;
-  return Object.freeze({
-    enemyId: definition.deathSpawn.enemyId,
-    count: definition.deathSpawn.count,
+): readonly PendingSpawn[] {
+  return Object.freeze((definition.deathSpawns ?? []).map((child) => Object.freeze({
+    enemyId: child.enemyId,
+    count: child.count,
     parentEntityId,
     parentEventId,
     spawnSource: definition.id,
-    rewardMultiplier: definition.deathSpawn.rewardMultiplier,
-  });
+    rewardMultiplier: child.rewardMultiplier,
+  })));
 }

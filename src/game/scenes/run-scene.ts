@@ -67,8 +67,8 @@ import {
   type HazardState,
 } from "../systems/hazards/hazards";
 import {
+  canApplyContactKnockback,
   knockbackDisplacement,
-  resolvePlayerAgainstSolids,
   separateCrowd,
 } from "../systems/separation/crowd-separation";
 import { findNearestTarget } from "../systems/targeting";
@@ -151,6 +151,13 @@ import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/wea
 import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
 import {
+  completeCollectionSweepAttack,
+  createCollectionSweepProgress,
+  selectCollectionSweepHits,
+  type CollectionSweepPosition,
+  type CollectionSweepProgress,
+} from "../systems/weapons/collection-sweep";
+import {
   chainScaleAtDepth,
   explosionDamage,
   findSkillEffect,
@@ -178,13 +185,7 @@ const PICKUP_CAP = 250;
 const DRIFT_RECLAIM_MARGIN = 240;
 const DEFAULT_UPGRADE_SEED = 0xa7e4_0001;
 const SHRINE_PLACEMENT_SEED = 0x5471_0008;
-/** An ordinary spawn: itself, at full size. */
-const NO_FRAGMENT: FragmentShape = Object.freeze({
-  speedMultiplier: 1,
-  healthMultiplier: 1,
-  radiusMultiplier: 1,
-  damageMultiplier: 1,
-});
+const COLLECTION_SWEEP_SEED = 0xc011_ec71;
 /** How far outside the view a shrine marker is pinned, so it never hides a wall. */
 const SHRINE_MARKER_INSET = 44;
 let runGenerationSequence = 0;
@@ -212,6 +213,11 @@ function testRosterHarnessSelection(): string | null {
   return new URLSearchParams(window.location.search).get("enemyRoster");
 }
 
+function testLoadHarnessRole(): string | null {
+  if (import.meta.env.MODE !== "test") return null;
+  return new URLSearchParams(window.location.search).get("loadRole");
+}
+
 function testCombatNumber(name: string): number | undefined {
   if (import.meta.env.MODE !== "test") return undefined;
   const value = Number(new URLSearchParams(window.location.search).get(name));
@@ -220,6 +226,26 @@ function testCombatNumber(name: string): number | undefined {
 
 function testSkillEnabled(name: string): boolean {
   return import.meta.env.MODE === "test" && new URLSearchParams(window.location.search).has(name);
+}
+
+function testSkillLevel(name: string): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const value = Number(new URLSearchParams(window.location.search).get(name));
+  return Number.isInteger(value) && value >= 0 ? value : undefined;
+}
+
+function testXpLevelCap(): number | undefined {
+  if (import.meta.env.MODE !== "test") return undefined;
+  const value = Number(new URLSearchParams(window.location.search).get("xpLevelCap"));
+  return Number.isInteger(value) && value > 1 ? value : undefined;
+}
+
+function movementHintDurationMs(): number {
+  if (import.meta.env.MODE === "test") {
+    const value = Number(new URLSearchParams(window.location.search).get("movementHintDurationMs"));
+    if (Number.isFinite(value) && value > 0) return value;
+  }
+  return 20_000;
 }
 
 /**
@@ -292,12 +318,6 @@ interface MovementKeys {
 }
 
 type DamageSource = "direct" | "explosion" | "chained_explosion";
-type FragmentShape = Readonly<{
-  speedMultiplier: number;
-  healthMultiplier: number;
-  radiusMultiplier: number;
-  damageMultiplier: number;
-}>;
 interface ExplosionEventPayload {
   readonly x: number;
   readonly y: number;
@@ -343,6 +363,10 @@ export class RunScene extends Phaser.Scene {
   private runEndOverlay?: RunEndOverlay;
   private overtimeUi?: OvertimeChoiceUi;
   private minimap?: MinimapUi;
+  private movementHint?: Phaser.GameObjects.Text;
+  private movementHintActiveRealMs = 0;
+  private movementHintDismissed = false;
+  private bodyDebug?: Phaser.GameObjects.Graphics;
   private overtimeChoicesMade = 0;
   private currentChoices: readonly UpgradeDefinition[] = [];
   /** The same draw, carrying each card's rolled tier. */
@@ -380,6 +404,7 @@ export class RunScene extends Phaser.Scene {
   private xpEarnedTotal = 0;
   private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
+  private lastContactKnockbackAtMs = Number.NEGATIVE_INFINITY;
   private invulnerableUntilMs = 0;
   private spawnSequence = 0;
   private enemySequence = 0;
@@ -388,6 +413,10 @@ export class RunScene extends Phaser.Scene {
   private meleeStrikes = 0;
   private meleeHits = 0;
   private activeGrabbers = 0;
+  private collectionSweepProgress: CollectionSweepProgress = createCollectionSweepProgress();
+  private collectionSweepRandom = createSeededRandom(COLLECTION_SWEEP_SEED);
+  private collectionSweepsTriggered = 0;
+  private collectionSweepHits = 0;
   private firstMeleeHitAtMs: number | null = null;
   private firstKillAtMs: number | null = null;
   private firstContactAtMs: number | null = null;
@@ -548,6 +577,16 @@ export class RunScene extends Phaser.Scene {
       };
     }
     this.runState = observeRunCrit(this.runState);
+    const testCollectionSweepLevel = testSkillLevel("collectionSweepLevel");
+    if (testCollectionSweepLevel !== undefined) {
+      this.runState = {
+        ...this.runState,
+        skillLevels: {
+          ...this.runState.skillLevels,
+          [archetypeIds.skill.collectionSweep]: Math.min(5, testCollectionSweepLevel),
+        },
+      };
+    }
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
     this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
@@ -612,6 +651,7 @@ export class RunScene extends Phaser.Scene {
       ARENA_SIZE,
       getSessionSettings().minimapOpacity,
     );
+    if (testSkillEnabled("debugBodies")) this.bodyDebug = this.add.graphics().setDepth(100);
 
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.game.events.on(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
@@ -638,6 +678,7 @@ export class RunScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     if (!this.player || !this.runState || !this.pauseKey) return;
+    const wallDelta = delta;
     this.lastFrameMs = delta;
 
     // Hit-stop and the death moment slow the mapping from wall time to
@@ -682,8 +723,10 @@ export class RunScene extends Phaser.Scene {
         this.frameTotalMs += delta;
         this.maxFrameMs = Math.max(this.maxFrameMs, delta);
       }
+      const movementInput = this.readMovementInput();
+      this.updateMovementHint(movementInput, wallDelta);
       this.player.move(
-        this.readMovementInput(),
+        movementInput,
         this.runState.player.stats.moveSpeed * this.hazardSlow,
       );
       this.updateEnemies();
@@ -725,6 +768,7 @@ export class RunScene extends Phaser.Scene {
 
     this.hud?.update(this.runState, this.hudExtras());
     this.updateMinimap();
+    this.drawBodyDebug();
     this.publishTelemetry();
   }
 
@@ -766,6 +810,11 @@ export class RunScene extends Phaser.Scene {
     this.runEndOverlay = undefined;
     this.overtimeUi = undefined;
     this.minimap = undefined;
+    this.movementHint = undefined;
+    this.movementHintActiveRealMs = 0;
+    this.movementHintDismissed = false;
+    this.bodyDebug?.destroy();
+    this.bodyDebug = undefined;
     this.overtimeChoicesMade = 0;
     this.currentChoices = [];
     this.currentOffers = [];
@@ -801,6 +850,7 @@ export class RunScene extends Phaser.Scene {
     this.xpEarnedTotal = 0;
     this.nextFireAtMs = 0;
     this.lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
+    this.lastContactKnockbackAtMs = Number.NEGATIVE_INFINITY;
     this.invulnerableUntilMs = 0;
     this.spawnSequence = 0;
     this.enemySequence = 0;
@@ -809,6 +859,10 @@ export class RunScene extends Phaser.Scene {
     this.meleeStrikes = 0;
     this.meleeHits = 0;
     this.activeGrabbers = 0;
+    this.collectionSweepProgress = createCollectionSweepProgress();
+    this.collectionSweepRandom = createSeededRandom(COLLECTION_SWEEP_SEED);
+    this.collectionSweepsTriggered = 0;
+    this.collectionSweepHits = 0;
     this.firstMeleeHitAtMs = null;
     this.firstKillAtMs = null;
     this.firstContactAtMs = null;
@@ -891,7 +945,10 @@ export class RunScene extends Phaser.Scene {
     this.loadEventQueue.process(Math.min(12, capacity), (event) => {
       const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
       const representative = testSkillEnabled("representativeLoad");
-      const definition = representative
+      const requestedRole = testLoadHarnessRole();
+      const definition = requestedRole
+        ? this.enemyDefinitions.find(({ id }) => id === requestedRole)
+        : representative
         ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
         : this.enemyDefinition;
       const closeAngle = testSkillEnabled("lineLoad") ? 0 : sequence * GOLDEN_ANGLE;
@@ -965,7 +1022,7 @@ export class RunScene extends Phaser.Scene {
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement, payload.reason === "fracture")) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -999,16 +1056,6 @@ export class RunScene extends Phaser.Scene {
     this.separationPairChecks = stats.pairChecks;
     this.separationPairChecksHighWater = Math.max(this.separationPairChecksHighWater, stats.pairChecks);
     this.separationAdjustments += stats.adjustments;
-
-    const maxSolidRadius = Math.max(
-      ...this.enemyDefinitions.map((definition) => definition.radius),
-    ) * 1.3;
-    this.solidResolutions += resolvePlayerAgainstSolids(
-      this.player,
-      this.enemyHash,
-      ARENA_SIZE,
-      maxSolidRadius,
-    );
 
     // Obstacles are solid for the player using the same resolution.
     for (const obstacle of this.activeObstacles()) {
@@ -1594,7 +1641,6 @@ export class RunScene extends Phaser.Scene {
     eliteOverride?: boolean,
     angleRadians?: number,
     movement: WaveMovement = "chase",
-    fragment = false,
   ): boolean {
     if (
       !this.player ||
@@ -1626,7 +1672,6 @@ export class RunScene extends Phaser.Scene {
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = this.worldModifiers();
-    const fragmentShape = fragment ? this.fragmentShape() : NO_FRAGMENT;
     const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
       activeTheme.tuning.director,
@@ -1653,18 +1698,16 @@ export class RunScene extends Phaser.Scene {
       spawnSource,
       rewardMultiplier * (elite?.rewardMultiplier ?? 1) * toughnessReward,
       {
-        healthMultiplier: worldModifiers.enemyHealthMultiplier *
-          (elite?.healthMultiplier ?? 1) * fragmentShape.healthMultiplier,
-        damageMultiplier: worldModifiers.enemyDamageMultiplier *
-          (elite?.damageMultiplier ?? 1) * fragmentShape.damageMultiplier,
-        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier * fragmentShape.speedMultiplier,
-        radiusMultiplier: fragmentShape.radiusMultiplier,
+        healthMultiplier: worldModifiers.enemyHealthMultiplier * (elite?.healthMultiplier ?? 1),
+        damageMultiplier: worldModifiers.enemyDamageMultiplier * (elite?.damageMultiplier ?? 1),
+        moveSpeedMultiplier: worldModifiers.enemyMoveSpeedMultiplier,
+        radiusMultiplier: 1,
       },
       elite,
       movement,
       {
         role: activeTheme.tuning.bodies.roles.find((role) => role.enemyId === definition.id) ??
-          { enemyId: definition.id, separationScale: 1, mass: 1, solid: false },
+          { enemyId: definition.id, separationScale: 1, mass: 1 },
         eliteMassMultiplier: activeTheme.tuning.bodies.eliteMassMultiplier,
       },
     );
@@ -1758,6 +1801,7 @@ export class RunScene extends Phaser.Scene {
         this.meleeHits += 1;
         this.firstMeleeHitAtMs ??= this.runState.elapsedMs;
       }
+      this.completeCollectionSweep(baseAngle, weapon, damage);
       this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
         weapon.cooldownMs,
         this.runState.player.stats.attackSpeedBonus,
@@ -1814,6 +1858,81 @@ export class RunScene extends Phaser.Scene {
     );
   }
 
+  /** Complete one committed grabber attack and resolve its optional sweep track. */
+  private completeCollectionSweep(
+    angle: number,
+    weapon: Extract<ReturnType<typeof resolveWeaponDefinition>, { deliveryKind: "melee" }>,
+    damage: ReturnType<typeof rollDamage>,
+  ): void {
+    if (!this.runState || !this.player) return;
+    const effect = findSkillEffect(
+      activeTheme.skills,
+      archetypeIds.skill.collectionSweep,
+      "collection_sweep",
+    );
+    if (!effect) return;
+    const level = skillLevel(this.runState.skillLevels, archetypeIds.skill.collectionSweep);
+    const resolution = completeCollectionSweepAttack(
+      this.collectionSweepProgress,
+      level,
+      effect,
+      this.collectionSweepRandom,
+    );
+    this.collectionSweepProgress = resolution.progress;
+    if (!resolution.triggered) return;
+    this.collectionSweepsTriggered += 1;
+
+    for (const position of resolution.positions) {
+      const x = this.player.x + Math.cos(angle) * weapon.reach * position.fraction;
+      const y = this.player.y + Math.sin(angle) * weapon.reach * position.fraction;
+      const targets = selectCollectionSweepHits({ x, y }, effect.radius, this.enemies);
+      for (const enemy of targets) {
+        const amount = damage.damage * effect.damageMultiplier;
+        accumulateDamage(
+          this.damageNumbers,
+          { targetId: enemy.targetId, amount, tier: damage.tier, x: enemy.x, y: enemy.y },
+          this.runState.elapsedMs,
+          DAMAGE_NUMBER_WINDOW_MS,
+        );
+        this.commitEnemyDamage(enemy, amount, "direct", undefined, {
+          directBase: damage.baseDamage * effect.damageMultiplier,
+          criticalBonus: damage.bonusDamage * effect.damageMultiplier,
+          piercingMomentum: 0,
+        });
+        this.collectionSweepHits += 1;
+      }
+      const delay = this.collectionSweepCueDelay(position, weapon.extendMs, weapon.retractMs);
+      this.time.delayedCall(delay, () => this.renderCollectionSweepCue(x, y, effect.radius));
+    }
+  }
+
+  private collectionSweepCueDelay(
+    position: CollectionSweepPosition,
+    extendMs: number,
+    retractMs: number,
+  ): number {
+    return position.phase === "extension"
+      ? extendMs * position.fraction
+      : extendMs + retractMs * (1 - position.fraction);
+  }
+
+  /** Presentation follows the attack timing, while hit geometry remains pure. */
+  private renderCollectionSweepCue(x: number, y: number, radius: number): void {
+    if (!this.scene.isActive()) return;
+    const colour = Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.player).color;
+    const cue = this.add.circle(x, y, radius, colour, 0.14)
+      .setStrokeStyle(3, colour, 0.9)
+      .setDepth(44)
+      .setScale(0.55);
+    this.tweens.add({
+      targets: cue,
+      scale: 1.15,
+      alpha: 0,
+      duration: this.reducedMotion ? 100 : 240,
+      onComplete: () => cue.destroy(),
+    });
+  }
+
   /** Projectiles clear destructible obstacles; clearing one is the reward. */
   private damageObstacles(projectile: ProjectileActor): boolean {
     for (const obstacle of this.activeObstacles()) {
@@ -1854,13 +1973,19 @@ export class RunScene extends Phaser.Scene {
     this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
   }
 
-  /** A solid enemy shoves the player on contact, selling the mass difference. */
+  /** Valid enemy contact nudges the player without turning an enemy into a wall. */
   private shovePlayer(enemy: EnemyActor): void {
-    if (!this.player) return;
+    if (!this.player || !this.runState) return;
+    const tuning = activeTheme.tuning.bodies;
+    if (!canApplyContactKnockback(
+      this.runState.elapsedMs,
+      this.lastContactKnockbackAtMs,
+      tuning.contactKnockbackCooldownMs,
+    )) return;
     const push = knockbackDisplacement(
       enemy,
       this.player,
-      activeTheme.tuning.bodies.contactKnockback,
+      tuning.contactKnockbackImpulse,
       1,
     );
     this.player.x = Phaser.Math.Clamp(
@@ -1873,6 +1998,7 @@ export class RunScene extends Phaser.Scene {
       this.player.definition.radius,
       ARENA_SIZE.height - this.player.definition.radius,
     );
+    this.lastContactKnockbackAtMs = this.runState.elapsedMs;
     this.contactShoves += 1;
   }
 
@@ -1930,21 +2056,23 @@ export class RunScene extends Phaser.Scene {
     });
     const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
-      deathSpawns &&
+      deathSpawns.length > 0 &&
       this.eventQueue.claimEffect(enemy.targetId, "enemy.death_spawn")
     ) {
-      for (let index = 0; index < deathSpawns.count; index += 1) {
-        this.enqueueSpawnRequest(
-          deathSpawns.enemyId,
-          deathSpawns.spawnSource as EnemySpawnSource,
-          deathSpawns.rewardMultiplier,
-          deathSpawns.parentEntityId,
-          deathSpawns.parentEventId,
-          "offspring",
-          { x: enemy.x, y: enemy.y },
-          Boolean(enemy.elite),
-        );
-        this.offspringQueued += 1;
+      for (const spawn of deathSpawns) {
+        for (let index = 0; index < spawn.count; index += 1) {
+          this.enqueueSpawnRequest(
+            spawn.enemyId,
+            spawn.spawnSource as EnemySpawnSource,
+            spawn.rewardMultiplier,
+            spawn.parentEntityId,
+            spawn.parentEventId,
+            "offspring",
+            { x: enemy.x, y: enemy.y },
+            Boolean(enemy.elite),
+          );
+          this.offspringQueued += 1;
+        }
       }
     }
     this.enqueueConfiguredOnKillEffects(enemy, deathEventId, damageSource);
@@ -2036,13 +2164,13 @@ export class RunScene extends Phaser.Scene {
         resolveFractureChance(fracture, fractureLevel) * this.luckScale(),
         this.effectRandom,
       ) &&
+      enemy.definition.fragmentInto &&
+      (enemy.definition.deathSpawns?.length ?? 0) === 0 &&
       this.eventQueue.claimEffect(enemy.targetId, archetypeIds.skill.fracture)
     ) {
       for (let index = 0; index < fracture.childCount; index += 1) {
-        // The parent's own id: a fragment is a smaller, quicker piece of what
-        // broke, not a spawn of the fast role.
         this.enqueueSpawnRequest(
-          enemy.definition.id,
+          enemy.definition.fragmentInto,
           archetypeIds.skill.fracture,
           fracture.rewardMultiplier,
           enemy.targetId,
@@ -2054,17 +2182,6 @@ export class RunScene extends Phaser.Scene {
         this.fractureQueued += 1;
       }
     }
-  }
-
-  /**
-   * How a fragment differs from what it broke off.
-   *
-   * Theme data, read from the fracture skill itself, so the shape of a fragment
-   * cannot drift from the skill that produces it.
-   */
-  private fragmentShape(): FragmentShape {
-    const fracture = findSkillEffect(activeTheme.skills, archetypeIds.skill.fracture, "fracture");
-    return fracture?.fragment ?? NO_FRAGMENT;
   }
 
   private processExplosionEvent(payload: ExplosionEventPayload, eventId: string): void {
@@ -2257,6 +2374,11 @@ export class RunScene extends Phaser.Scene {
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
+    const levelCap = testXpLevelCap();
+    if (levelCap !== undefined && this.runState.progression.level >= levelCap) {
+      this.pickupsCollected += 1;
+      return;
+    }
     const awardedXp = claim.awardedXp * this.worldModifiers().xpMultiplier;
     const levelBefore = this.runState.progression.level;
     this.runState = awardRunExperience(this.runState, awardedXp);
@@ -2389,12 +2511,31 @@ export class RunScene extends Phaser.Scene {
 
   private updateMinimap(): void {
     if (!this.minimap || !this.player) return;
+    this.minimap.setOverlayHidden(this.runState?.status !== "playing");
     this.minimap.update({
       player: this.player,
       enemies: [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated),
       shrines: this.shrineActors.filter((shrine) => shrine.active),
       hazards: [...this.hazards].filter((hazard) => hazard.active),
     });
+  }
+
+  /** Test-only footprint audit: cyan bodies and yellow presentation bounds. */
+  private drawBodyDebug(): void {
+    const graphics = this.bodyDebug;
+    if (!graphics || !this.player) return;
+    graphics.clear();
+    graphics.lineStyle(2, 0x00ffff, 0.95);
+    graphics.strokeCircle(this.player.x, this.player.y, this.player.definition.radius);
+    graphics.lineStyle(1, 0xffff00, 0.85);
+    graphics.strokeCircle(this.player.x, this.player.y, this.player.definition.displayDiameter / 2);
+    for (const enemy of this.enemies) {
+      if (!enemy.active || enemy.defeated) continue;
+      graphics.lineStyle(2, 0x00ffff, 0.95);
+      graphics.strokeCircle(enemy.x, enemy.y, enemy.radius);
+      graphics.lineStyle(1, 0xffff00, 0.85);
+      graphics.strokeCircle(enemy.x, enemy.y, enemy.displayDiameter / 2);
+    }
   }
 
   private readOvertimeChoiceInput(): void {
@@ -2457,7 +2598,7 @@ export class RunScene extends Phaser.Scene {
     this.invulnerableUntilMs = this.runState.elapsedMs + enemy.definition.contactCooldownMs;
     this.contactHits += 1;
     this.firstContactAtMs ??= this.runState.elapsedMs;
-    if (enemy.solid) this.shovePlayer(enemy);
+    this.shovePlayer(enemy);
     this.player.setAlpha(0.35);
     this.player.flashDamage(activeTheme.tokens.palette.critical);
     this.hitFlashes += 1;
@@ -2616,7 +2757,7 @@ export class RunScene extends Phaser.Scene {
         fontStyle: "bold",
       })
       .setOrigin(0.5);
-    this.add
+    this.movementHint = this.add
       .text(centreX, centreY + 120, activeTheme.copy.movementHint, {
         color: palette.text,
         fontFamily: "Georgia, serif",
@@ -2624,6 +2765,24 @@ export class RunScene extends Phaser.Scene {
       })
       .setAlpha(0.8)
       .setOrigin(0.5);
+  }
+
+  private updateMovementHint(input: DirectionalInput, activeRealDeltaMs: number): void {
+    if (!this.movementHint || this.movementHintDismissed) return;
+    this.movementHintActiveRealMs += Math.max(0, activeRealDeltaMs);
+    const moved = input.left || input.right || input.up || input.down;
+    if (!moved && this.movementHintActiveRealMs < movementHintDurationMs()) return;
+    this.movementHintDismissed = true;
+    const hint = this.movementHint;
+    this.tweens.add({
+      targets: hint,
+      alpha: 0,
+      duration: 300,
+      onComplete: () => {
+        hint.destroy();
+        if (this.movementHint === hint) this.movementHint = undefined;
+      },
+    });
   }
 
   private readMovementInput(): DirectionalInput {
@@ -2652,6 +2811,7 @@ export class RunScene extends Phaser.Scene {
   private handleResize(gameSize: Phaser.Structs.Size): void {
     this.cameras.resize(gameSize.width, gameSize.height);
     this.hud?.resize();
+    this.minimap?.resize(this);
     if (this.runState?.status === "level_up" && this.currentChoices.length === 3) {
       this.levelUpUi?.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
     }
@@ -2741,6 +2901,8 @@ export class RunScene extends Phaser.Scene {
             moveSpeed: this.runState?.player.stats.moveSpeed ?? this.player.definition.baseStats.moveSpeed,
             velocityX: body?.velocity.x ?? 0,
             velocityY: body?.velocity.y ?? 0,
+            spriteFrame: this.player.view?.frame ?? null,
+            spriteMirrored: this.player.view?.mirrored ?? null,
             health: this.runState?.player.health ?? 0,
             invulnerable: Boolean(
               this.runState && this.runState.elapsedMs < this.invulnerableUntilMs,
@@ -2761,6 +2923,9 @@ export class RunScene extends Phaser.Scene {
         meleeStrikes: this.meleeStrikes,
         meleeHits: this.meleeHits,
         grabberActive: this.activeGrabbers,
+        collectionSweepAttacks: this.collectionSweepProgress.completedAttacks,
+        collectionSweepsTriggered: this.collectionSweepsTriggered,
+        collectionSweepHits: this.collectionSweepHits,
         firstMeleeHitAtMs: this.firstMeleeHitAtMs,
         firstKillAtMs: this.firstKillAtMs,
         firstContactAtMs: this.firstContactAtMs,
@@ -2865,6 +3030,9 @@ export class RunScene extends Phaser.Scene {
         terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
         settings: { ...getSessionSettings() },
+        movementHintVisible: Boolean(this.movementHint?.active && this.movementHint.visible),
+        minimapVisible: this.minimap?.visible ?? false,
+        minimapBounds: this.minimap?.bounds ?? null,
         cardDescriptions: this.runState
           ? this.currentChoices.map((choice) => {
               const offer = this.currentOffers.find(

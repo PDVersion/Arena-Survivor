@@ -111,15 +111,15 @@ export const copy = {
     },
     [archetypeIds.weapon.starter]: {
       name: "Cleanup Grabber",
-      description: "A short mechanical reach that picks up one nearby piece of waste.",
+      description: "A mechanical grabber that extends through every item in its narrow path.",
     },
     [archetypeIds.enemy.swarmBasic]: {
       name: "Plastic Bottle",
       description: "The most common thing on the ground, and it never truly goes away.",
     },
     [archetypeIds.enemy.fastFragile]: {
-      name: "Plastic Bag",
-      description: "Light enough to travel on the wind and reach almost anywhere.",
+      name: "Microplastics",
+      description: "Small plastic fragments spread easily and are difficult to recover once they enter the environment.",
     },
     [archetypeIds.enemy.slowDurable]: {
       name: "Glass Bottle",
@@ -128,6 +128,10 @@ export const copy = {
     [archetypeIds.enemy.deathSpawner]: {
       name: "Bagged Waste",
       description: "A sealed bundle that spills its mixed contents the moment it opens.",
+    },
+    [archetypeIds.enemy.stationaryFragment]: {
+      name: "Glass Shards",
+      description: "Broken glass stays where it falls and remains hazardous until it is cleared.",
     },
     [archetypeIds.pickup.experience]: {
       name: "Impact Point",
@@ -169,6 +173,10 @@ export const copy = {
       name: "Cascade",
       description: "A compaction burst can set off the next one.",
     },
+    [archetypeIds.skill.collectionSweep]: {
+      name: "Collection Sweep",
+      description: "Periodically sweep a wider area along the Cleanup Grabber's path.",
+    },
     [archetypeIds.hazard.damageZone]: {
       name: "Contamination Spill",
       description: "A lingering spill that burns and drags at anything wading through it.",
@@ -188,6 +196,10 @@ export const copy = {
     [archetypeIds.upgrade.weaponRange]: {
       name: "Longer Grabber",
       description: "Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5.",
+    },
+    [archetypeIds.upgrade.weaponCollectionSweep]: {
+      name: "Collection Sweep",
+      description: "Periodically sweep a wider area at the grabber's jaws, then along its path.",
     },
     [archetypeIds.upgrade.attackSpeed]: {
       name: "Rapid Cycling",

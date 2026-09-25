@@ -1,5 +1,5 @@
 import type { ShrineDefinition, ThemeCopy, ThemeManifest } from "../../core/archetypes/contracts";
-import type { ShrineId, UpgradeId } from "../../core/archetypes/ids";
+import type { EnemyId, ShrineId, UpgradeId } from "../../core/archetypes/ids";
 import type { SessionStatistics } from "../../state/session-statistics";
 
 /**
@@ -97,6 +97,62 @@ export interface CodexUpgradeEntry {
   /** Times it can be taken in a single run, from the definition's cap. */
   readonly maxPerRun: number | null;
   readonly track: "general" | "weapon";
+}
+
+export interface CodexEnemyRelation {
+  readonly kind: "fractures_into" | "releases_on_death";
+  readonly enemyId: EnemyId;
+  readonly name: string;
+  readonly count: number;
+}
+
+export interface CodexEnemyEntry {
+  readonly id: EnemyId;
+  readonly name: string;
+  readonly description: string;
+  readonly health: number;
+  readonly moveSpeed: number;
+  readonly contactDamage: number;
+  readonly bodyDiameter: number;
+  readonly displayDiameter: number;
+  readonly relations: readonly CodexEnemyRelation[];
+}
+
+/** Enemy catalogue data comes only from live definitions and their themed copy. */
+export function selectEnemyCodex(
+  theme: Pick<ThemeManifest, "enemies" | "copy">,
+): readonly CodexEnemyEntry[] {
+  const enemyName = (id: EnemyId) => theme.copy.content[id]?.name ?? id;
+  return Object.freeze(theme.enemies.map((enemy) => {
+    const relations: CodexEnemyRelation[] = [];
+    if (enemy.fragmentInto) {
+      relations.push(Object.freeze({
+        kind: "fractures_into" as const,
+        enemyId: enemy.fragmentInto,
+        name: enemyName(enemy.fragmentInto),
+        count: 1,
+      }));
+    }
+    for (const child of enemy.deathSpawns ?? []) {
+      relations.push(Object.freeze({
+        kind: "releases_on_death" as const,
+        enemyId: child.enemyId,
+        name: enemyName(child.enemyId),
+        count: child.count,
+      }));
+    }
+    return Object.freeze({
+      id: enemy.id,
+      name: enemyName(enemy.id),
+      description: theme.copy.content[enemy.id]?.description ?? "",
+      health: enemy.maxHealth,
+      moveSpeed: enemy.moveSpeed,
+      contactDamage: enemy.contactDamage,
+      bodyDiameter: enemy.radius * 2,
+      displayDiameter: enemy.displayDiameter,
+      relations: Object.freeze(relations),
+    });
+  }));
 }
 
 /**

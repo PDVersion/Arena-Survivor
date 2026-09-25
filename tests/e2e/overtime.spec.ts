@@ -37,6 +37,19 @@ async function waitForTimeUp(page: Page, path: string): Promise<void> {
     .toBe("time_up");
 }
 
+async function pressUntil(
+  page: Page,
+  key: string,
+  reached: (state: Awaited<ReturnType<typeof snapshot>>) => boolean,
+  presses = 12,
+): Promise<void> {
+  for (let press = 0; press < presses; press += 1) {
+    if (reached(await snapshot(page))) return;
+    await page.keyboard.press(key);
+    await page.waitForTimeout(100);
+  }
+}
+
 // Every other browser path answers this decision through `atTimeUp=complete`,
 // which reproduces the V0.3 ending. This file is the only coverage of the
 // decision itself and of the two modes it can leave the run in.
@@ -56,7 +69,11 @@ test("continuing endlessly lifts the limit and keeps the run going", async ({ pa
   test.setTimeout(150_000);
   await waitForTimeUp(page, "/?runDurationMs=1500&noContact&noXp=1&noHazards&spawnRadius=320");
 
-  await page.keyboard.press("Digit1");
+  await pressUntil(
+    page,
+    "Digit1",
+    (state) => state?.run?.mode === "endless",
+  );
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.mode))
     .toBe("endless");
@@ -83,7 +100,11 @@ test("overtime escalates far harder than the timed run ever did", async ({ page 
   const atLimit = await snapshot(page);
   const healthAtLimit = atLimit?.world?.enemyHealthMultiplier ?? 1;
 
-  await page.keyboard.press("Digit1");
+  await pressUntil(
+    page,
+    "Digit1",
+    (state) => state?.run?.mode === "endless",
+  );
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.mode))
     .toBe("endless");
@@ -169,7 +190,11 @@ test("a level-up card states the tier it rolled and gives what it states", async
   const before = await snapshot(page);
   const claimed = cards[0]!.lines[0];
   const takenBefore = before?.progression?.selectedUpgradeIds?.length ?? 0;
-  await page.keyboard.press("Digit1");
+  await pressUntil(
+    page,
+    "Digit1",
+    (state) => (state?.progression?.selectedUpgradeIds?.length ?? 0) > takenBefore,
+  );
   // Wait on the choice being consumed, not on leaving `level_up`: with this
   // much XP income the next level-up is usually already queued behind it.
   await expect

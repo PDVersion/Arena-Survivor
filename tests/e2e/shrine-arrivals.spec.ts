@@ -20,7 +20,7 @@ async function pressUntil(
   page: Page,
   key: string,
   reached: (snap: Awaited<ReturnType<typeof snapshot>>) => boolean,
-  presses = 8,
+  presses = 20,
 ): Promise<void> {
   for (let press = 0; press < presses; press += 1) {
     if (reached(await snapshot(page))) return;
@@ -127,7 +127,7 @@ test("the Field Guide catalogues the upgrade pool and the session so far", async
   test.setTimeout(150_000);
   // `closeLoad` puts enemies beside the player so this path spends its budget on
   // the Field Guide rather than on waiting for the first level-up. See REC-049.
-  await page.goto("/?noContact&closeLoad=1&loadHarness=60&critChance=0.6&pierce=4&atTimeUp=complete");
+  await page.goto("/?noContact&closeLoad=1&loadHarness=60&critChance=0.6&pierce=4&xpLevelCap=2&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
 
   // Take one upgrade, so the catalogue has something real to count. The budget

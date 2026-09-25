@@ -16,7 +16,7 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
     definition: CharacterDefinition,
     tokens: ThemeTokens,
   ) {
-    const diameter = definition.radius * 2;
+    const diameter = definition.displayDiameter;
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
     ).color;
@@ -29,6 +29,7 @@ export class PlayerActor extends Phaser.GameObjects.Rectangle {
     if (tokens.playerShape === "diamond") this.setRotation(Math.PI / 4);
 
     this.arcadeBody.setCollideWorldBounds(true);
+    this.arcadeBody.setSize(definition.radius * 2, definition.radius * 2, true);
     this.setDepth(30);
     this.view = createSpriteView(this, tokens, definition.id, { diameter });
   }

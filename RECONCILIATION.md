@@ -5,7 +5,7 @@ Read this file immediately after the current milestone plan, `build/BUILD_PLAN_V
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.2 complete on `codex/v0.4.2`: 2× view, 0.5 gameplay rate, delivery-neutral starter contract, Cleanup Grabber, measurements, and play-test gate are recorded. V0.4.3 is next.**
+- Active phase: **V0.4.2.1 complete on `codex/v0.4.2.1`: readable contact, Collection Sweep, Microplastics, Glass Shards, and finite material families are verified. V0.4.3 is next.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2024,6 +2024,18 @@ runtime texture.
 Revisit when:
 A second player layout needs a different frame count or directional sheets.
 
+Post-V0.4.2.1 correction (2026-09-21): a recorded play pass showed that
+frame-to-frame displacement can briefly be zero while an Arcade body still has
+non-zero velocity. Treating that render tick as a stop reset the player to idle
+and made the walk cycle flash. Sprite views now use body velocity only to retain
+the presentation movement state while travelled distance remains the cadence
+input. All moving sprite views use the same horizontal-facing rule: accepted
+sheets are authored facing left, so left is regular and right is mirrored;
+near-zero horizontal motion retains the last facing. The named enemy-state
+cadence is 320 ms so two-frame sheets also read as held poses rather than a
+flash. These choices remain presentation-only and are covered by pure animation
+tests.
+
 ### REC-078 — Rebalance the roster before generating the rest of it
 
 - Status: Accepted
@@ -2305,8 +2317,8 @@ track whose cadence and area never alter the reach calculation above.
 
 ### REC-098 — Visible footprint and contact footprint are authored together
 
-- Status: Accepted for V0.4.2.1
-- Date: 2026-09-18
+- Status: Accepted
+- Date: 2026-09-21
 - Affects: Player/enemy presentation, contact, separation, sprite QA
 - Blocks: V0.4.3
 
@@ -2322,6 +2334,13 @@ measured by physics. Player/enemy overlap no longer resolves as a solid barrier;
 valid contact instead gives the player a small, cooldown-limited knockback.
 Enemy/enemy separation and obstacle collision remain independent.
 
+Implementation evidence:
+Every enemy role is now structurally walk-through: solidity was removed from
+the body-role contract and the obsolete player/enemy solid resolver was
+deleted. A test-only overlay draws gameplay radii and independently authored
+display diameters, while the Chromium contact path crosses the complete
+five-role roster and observes a bounded shove with no enemy resolution.
+
 Future guardrail:
 Changing art never silently changes physics. Any footprint adjustment changes
 explicit theme data and reruns contact/separation tests, including the 300-enemy
@@ -2329,8 +2348,8 @@ sample.
 
 ### REC-099 — Material fragments use finite role relationships
 
-- Status: Accepted for V0.4.2.1
-- Date: 2026-09-18
+- Status: Accepted
+- Date: 2026-09-21
 - Affects: Eco enemies, Fragmentation, death spawning, catalogue, sprite roster
 - Blocks: V0.4.3 and remaining sprite generation
 
@@ -2345,6 +2364,14 @@ neither child fragments again. Bagged Waste releases Plastic Bottle,
 Microplastics, and Glass Bottle, but never itself. Runtime theme definitions own
 the relationships; `build/ECO_CONTENT_MAP.md` is their wiki-shaped editorial
 map and future catalogue structure, not a second executable ruleset.
+
+Implementation evidence:
+The validator rejects recursive death/fragment graphs. Runtime death spawning
+retains the full bounded child list in causal order, Fragmentation selects the
+parent definition's stable child role without scaling the parent, and the
+active browser path observes exactly two Plastic Bottles, two Microplastics,
+and one Glass Bottle from Bagged Waste. The replacement Microplastics sheet is
+preserved as raw attempt 3 and accepted through the deterministic sprite build.
 
 Future guardrail:
 Validate every spawn relation as a finite graph, keep child identity independent

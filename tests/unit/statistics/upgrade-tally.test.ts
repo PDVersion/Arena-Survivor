@@ -138,13 +138,12 @@ describe("per-role reward scaling", () => {
     const bagged = ecoGuardianTheme.enemies.find(
       (enemy) => enemy.id === archetypeIds.enemy.deathSpawner,
     );
-    const child = ecoGuardianTheme.enemies.find(
-      (enemy) => enemy.id === bagged?.deathSpawn?.enemyId,
-    );
+    const spawn = bagged?.deathSpawns?.[0];
+    const child = ecoGuardianTheme.enemies.find((enemy) => enemy.id === spawn?.enemyId);
 
     // The burst is part of the package, but a child must never be worth more
     // than its own role or a spawner becomes an experience pump.
-    const childReward = child!.xpReward * bagged!.deathSpawn!.rewardMultiplier;
+    const childReward = child!.xpReward * spawn!.rewardMultiplier;
     expect(childReward).toBeGreaterThan(0);
     expect(childReward).toBeLessThan(child!.xpReward);
   });

@@ -5,6 +5,7 @@ export const characters = [
   {
     id: archetypeIds.character.starter,
     radius: 18,
+    displayDiameter: 42,
     presentationToken: "player",
     baseStats: {
       maxHealth: 100,

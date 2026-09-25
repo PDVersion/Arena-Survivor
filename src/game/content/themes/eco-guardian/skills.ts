@@ -41,14 +41,6 @@ export const skills = [
         chancePerLevel: 0.05,
         childCount: 2,
         rewardMultiplier: 0,
-        // Quicker and much smaller than the parent, and worth nothing, so
-        // fracturing is a crowd-control trade rather than an XP engine.
-        fragment: {
-          speedMultiplier: 1.15,
-          healthMultiplier: 0.35,
-          radiusMultiplier: 0.62,
-          damageMultiplier: 0.6,
-        },
       },
     ],
   },
@@ -76,6 +68,18 @@ export const skills = [
       falloffPerLevel: 0.04,
       radiusFalloff: 0.85,
       radiusFalloffPerLevel: 0.02,
+    }],
+  },
+  {
+    id: archetypeIds.skill.collectionSweep,
+    maxLevel: 5,
+    effects: [{
+      kind: "collection_sweep",
+      triggerEvery: [8, 6, 4, 4],
+      radius: 34,
+      damageMultiplier: 0.75,
+      levelFiveInterval: { min: 2, max: 4 },
+      levelFiveExtraPositions: { min: 1, max: 3 },
     }],
   },
 ] as const satisfies readonly SkillDefinition[];

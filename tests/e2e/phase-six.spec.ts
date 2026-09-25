@@ -26,6 +26,17 @@ async function choosePendingUpgrades(page: Page, deadlineMs: number): Promise<vo
   }
 }
 
+async function activateNearbyShrine(page: Page): Promise<void> {
+  for (let press = 0; press < 12; press += 1) {
+    const activated = await page.evaluate(
+      () => window.__ARENA_TEST__?.getSnapshot().shrine?.activated,
+    );
+    if (activated) return;
+    await page.keyboard.press("KeyE");
+    await page.waitForTimeout(100);
+  }
+}
+
 test("Horde shrine activates once, schedules 100 tagged enemies, and creates bonus XP", async ({
   page,
 }) => {
@@ -48,7 +59,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
     rewardMultiplier: 1.5,
   });
 
-  await page.keyboard.press("KeyE");
+  await activateNearbyShrine(page);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.activated))
     .toBe(true);

@@ -26,7 +26,7 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  *
  *   role            V0.3    now    ring crossing    vs player 200
  *   Plastic Bottle   140    104          9.2 s      0.52x
- *   Plastic Bag      240    190          5.0 s      0.95x
+ *   Microplastics    240    190          5.0 s      0.95x
  *   Glass Bottle      90     70         13.7 s      0.35x
  *   Bagged Waste     110     80         12.0 s      0.40x
  *
@@ -51,19 +51,22 @@ export const enemies = [
     contactDamage: 10,
     contactCooldownMs: 1000,
     radius: 14,
+    displayDiameter: 36,
     xpReward: 1,
     armour: 0,
     geometry: "circle",
     presentationToken: "enemy",
+    fragmentInto: archetypeIds.enemy.fastFragile,
   },
   {
-    // Plastic bag — ~20 years. Light, wind-blown, and fragile.
+    // Microplastics — small, mobile pieces that spread easily.
     id: archetypeIds.enemy.fastFragile,
     maxHealth: 11,
     moveSpeed: 190,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
+    displayDiameter: 26,
     xpReward: 2,
     armour: 0,
     geometry: "triangle",
@@ -79,10 +82,12 @@ export const enemies = [
     contactDamage: 9,
     contactCooldownMs: 1000,
     radius: 22,
+    displayDiameter: 50,
     xpReward: 7,
     armour: 40,
     geometry: "square",
     presentationToken: "enemyTank",
+    fragmentInto: archetypeIds.enemy.stationaryFragment,
   },
   {
     // Bagged mixed waste — ~1,000 years. Compaction and the anaerobic
@@ -94,14 +99,30 @@ export const enemies = [
     contactDamage: 12,
     contactCooldownMs: 1000,
     radius: 25,
+    displayDiameter: 56,
     xpReward: 5,
     armour: 10,
     geometry: "hexagon",
     presentationToken: "enemySpawner",
-    deathSpawn: {
-      enemyId: archetypeIds.enemy.fastFragile,
-      count: 5,
-      rewardMultiplier: 0.5,
-    },
+    deathSpawns: [
+      { enemyId: archetypeIds.enemy.swarmBasic, count: 2, rewardMultiplier: 0.5 },
+      { enemyId: archetypeIds.enemy.fastFragile, count: 2, rewardMultiplier: 0.5 },
+      { enemyId: archetypeIds.enemy.slowDurable, count: 1, rewardMultiplier: 0.5 },
+    ],
+  },
+  {
+    // Glass shards remain where they fall. They are clearable enemies rather
+    // than a hazard actor so they share the enemy cap and contact rules.
+    id: archetypeIds.enemy.stationaryFragment,
+    maxHealth: 18,
+    moveSpeed: 0,
+    contactDamage: 7,
+    contactCooldownMs: 1000,
+    radius: 12,
+    displayDiameter: 28,
+    xpReward: 0,
+    armour: 12,
+    geometry: "triangle",
+    presentationToken: "enemyTank",
   },
 ] as const satisfies readonly EnemyDefinition[];
