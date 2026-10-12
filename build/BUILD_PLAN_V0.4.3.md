@@ -1,7 +1,8 @@
-# V0.4.3 — Content Growth
+# V0.4.3 — Performance Readiness and Selected Content Growth
 
-The content-growth increment of V0.4: what [`PLAN.md`](./PLAN.md) asks for after
-V0.4.2 has proved the tighter, slower, real-world-tool baseline is worth growing.
+This increment establishes browser performance readiness before selected content
+growth from [`PLAN.md`](./PLAN.md), after V0.4.2 proved the tighter, slower,
+real-world-tool baseline is worth growing.
 
 This plan was originally V0.4.2. It had not started when the readability,
 pacing, and real-world starter-weapon redirect was accepted, so that redirect
@@ -13,7 +14,76 @@ first. In particular: **never read a sprite from a system, and never derive a
 radius, hitbox, or separation value from one.** New content added here renders
 as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
-## Scope, from PLAN.md
+## Execution status
+
+**P0 complete on `codex/v0.4.3` (2026-10-12); P1 next, unstarted.** The merged readable
+baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
+authorized performance P0–P6 from the autonomous roadmap, ahead of content
+growth (REC-100, REC-102). C1–C7 below retain their order; no optional content
+has been selected. Historical status annotations supplied in the working tree
+record the pre-session planning assessment; the execution status here is current.
+
+## Performance prerequisites — P0–P6
+
+Use one milestone branch, `codex/v0.4.3`, with the following phase commits and
+ownership. Each phase also owns matching tests, its checklist, progress, and
+material reconciliation updates. Add any newly profiled path to its ownership
+before editing. Sprites, roster claims, product/content changes and persistence
+are excluded from these performance phases.
+
+| Phase | Ownership / permitted scope | Commit subject |
+| --- | --- | --- |
+| P0 | Active plans, `AGENTS.md`, `README.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, roadmap status; known lint defect in `tests/unit/weapons/collection-sweep.test.ts`; `src/test-support/**`; frame sampling only in `src/game/scenes/run-scene.ts`; `tests/unit/performance/**`, `tests/e2e/frame-measurements.spec.ts`; opt-in `scripts/performance.ts`, measurement command only in `package.json`, measurement config/tests and `build/performance/**` reports | `build(v0.4.3): establish browser performance measurements` |
+| P1 | Telemetry call sites in scenes, test-support bridge, architecture/production guard tests | `perf(v0.4.3): avoid production telemetry work` |
+| P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests | `perf(v0.4.3): reduce repeated interface work` |
+| P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites | `perf(v0.4.3): reduce measured simulation overhead` |
+| P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests | `feat(v0.4.3): add a lightweight presentation mode` |
+| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
+
+- [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
+  hit-stop regression, lint repair, types/units/lint/build and browser boot/load
+  baseline; bounded percentiles / update CPU / metadata reporting if time permits.
+- [ ] P1 — guard snapshot construction outside test mode; verify production
+  interface exclusion and working test snapshots; compare equivalent profiles.
+- [ ] P2 — profile minimap/HUD, reduce confirmed repeated work; validate visibility,
+  resize, opacity, pause/restart and prompt critical status updates.
+- [ ] P3 — improve measured simulation hotspot; preserve targets, causal order,
+  exact rewards/ledger, caps and stress; skip speculative optimization.
+- [ ] P4 — add Default/Low only if measured presentation cost warrants it;
+  simulation, visible world and telegraphs remain equivalent. Read `SAVE_DATA.md`
+  before serializable settings; presentation budgets stay theme-owned.
+- [ ] P5 — sustained play/restarts/focus and cold/warm startup evidence; fix only
+  demonstrated lifecycle/boot issues, keeping cleanup bounded.
+- [ ] P6 — combined software gate, baseline/final reports and manual device
+  checklist; representative older-device acceptance measured or explicitly pending.
+
+P0's short gate is `npm run typecheck`, `npm test -- --run`, `npm run lint`,
+`npm run build`, serial boot/load/frame-measurement browser tests and the existing
+serial stress path. Run `npm run test:e2e:ci` before committing P0. A blocked
+browser check has its actual reason and rerun command recorded; it does not become
+a passing gate. Later phases use affected units/browser tests, production build
+and serial stress where relevant; P6 runs the full roadmap verification suite.
+Use `npm run balance` for actual pacing/tuning changes and audit for dependency
+changes/milestone delivery. Hardware thresholds never enter required CI.
+
+Performance reports state device/OS/browser/renderer, viewport, mode, build,
+scenario, gameplay rate and sample exclusions. Warm up, sample sustained cases
+for at least 60 seconds and repeat comparisons three times serially. Targets are
+provisional: desktop p95 ≤20 ms, older device / worst supported 300-load p95
+≤40 ms; intervals >100 ms below 1%, plus p99/max. Profile production separately
+from test instrumentation. Throttled Chromium is comparative evidence only.
+P0–P6's software gate precedes C1; missing physical hardware leaves acceptance
+pending and must be reported before describing older-device readiness as complete.
+
+P0 evidence: 408 units / 47 files, typecheck/lint/build, 72 Chromium regressions
+(one opt-in skip), serial stress/cleanup/restarts, six warmed 60-second test /
+production recordings and three short instrumented stress recordings all pass.
+See [`performance/P0_BASELINE.md`](./performance/P0_BASELINE.md), REC-103/104.
+These verify the measurement/software gate; provisional throughput and physical
+older-device acceptance remain pending. Production diagnostic scans are P1.
+
+## Content scope, from PLAN.md
 
 | # | Item | Phase | Notes |
 | --- | --- | --- | --- |

@@ -121,6 +121,7 @@ import {
   type ScheduledShrine,
 } from "../systems/shrines/shrine-placement";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
+import { FrameMeasurements } from "../../test-support/frame-measurements";
 import { CausalEventQueue, type EventQueueSnapshot } from "../systems/events/causal-events";
 import {
   selectBloodlust,
@@ -449,9 +450,7 @@ export class RunScene extends Phaser.Scene {
   private loadHarnessSpawned = 0;
   private liveHighWater = 0;
   private trackedHighWater = 0;
-  private frameSamples = 0;
-  private frameTotalMs = 0;
-  private maxFrameMs = 0;
+  private frameMeasurements?: FrameMeasurements;
   private droppedPresentationCues = 0;
   private rosterHighWater: Record<string, number> = {};
   private offspringQueued = 0;
@@ -634,6 +633,7 @@ export class RunScene extends Phaser.Scene {
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
     ];
     window.addEventListener("keydown", this.handleRestartKey);
+    if (this.frameMeasurements) document.addEventListener("visibilitychange", this.handleMeasurementVisibility);
     this.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
     this.choiceKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
@@ -661,6 +661,7 @@ export class RunScene extends Phaser.Scene {
       this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
       this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
       window.removeEventListener("keydown", this.handleRestartKey);
+      document.removeEventListener("visibilitychange", this.handleMeasurementVisibility);
       this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
       this.hud?.destroy();
       this.levelUpUi?.hide();
@@ -678,7 +679,9 @@ export class RunScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     if (!this.player || !this.runState || !this.pauseKey) return;
+    const updateCpuStartedAt = this.frameMeasurements ? performance.now() : undefined;
     const wallDelta = delta;
+    const startedPlaying = this.runState.status === "playing";
     this.lastFrameMs = delta;
 
     // Hit-stop and the death moment slow the mapping from wall time to
@@ -718,11 +721,6 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
-      if (testSkillEnabled("representativeLoad")) {
-        this.frameSamples += 1;
-        this.frameTotalMs += delta;
-        this.maxFrameMs = Math.max(this.maxFrameMs, delta);
-      }
       const movementInput = this.readMovementInput();
       this.updateMovementHint(movementInput, wallDelta);
       this.player.move(
@@ -770,6 +768,14 @@ export class RunScene extends Phaser.Scene {
     this.updateMinimap();
     this.drawBodyDebug();
     this.publishTelemetry();
+    this.frameMeasurements?.observe({
+      wallFrameMs: this.game.loop.rawDelta,
+      simulationDeltaMs: delta,
+      updateCpuMs: updateCpuStartedAt === undefined ? undefined : performance.now() - updateCpuStartedAt,
+      active: startedPlaying && this.runState.status === "playing" &&
+        !preparingRepresentativeLoad && timeScale === activeTheme.tuning.pace.gameplayRate &&
+        !document.hidden && !this.focusPaused,
+    });
   }
 
   private resetTransientRuntime(): void {
@@ -894,9 +900,9 @@ export class RunScene extends Phaser.Scene {
     this.loadHarnessSpawned = 0;
     this.liveHighWater = 0;
     this.trackedHighWater = 0;
-    this.frameSamples = 0;
-    this.frameTotalMs = 0;
-    this.maxFrameMs = 0;
+    this.frameMeasurements = testSkillEnabled("representativeLoad") || testSkillEnabled("frameMeasure")
+      ? new FrameMeasurements(testSkillEnabled("frameMeasure") ? 4096 : 0)
+      : undefined;
     this.droppedPresentationCues = 0;
     this.rosterHighWater = {};
     this.offspringQueued = 0;
@@ -2709,7 +2715,12 @@ export class RunScene extends Phaser.Scene {
     this.audioFeedback.unlock();
   };
 
+  private readonly handleMeasurementVisibility = (): void => {
+    this.frameMeasurements?.interrupt();
+  };
+
   private handleGameBlur(): void {
+    this.frameMeasurements?.interrupt();
     if (!this.runState || this.runState.status !== "playing") return;
     this.runState = setRunStatus(this.runState, "paused");
     this.player?.stop();
@@ -2845,6 +2856,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private publishTelemetry(): void {
+    const frameMeasurements = this.frameMeasurements?.snapshot(this.runState?.status !== "playing");
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
     const hud = this.runState ? selectHudValues(this.runState) : undefined;
@@ -3171,9 +3183,16 @@ export class RunScene extends Phaser.Scene {
         droppedPresentationCues: this.droppedPresentationCues + feedback.dropped,
         liveHighWater: this.liveHighWater,
         trackedHighWater: this.trackedHighWater,
-        frameSamples: this.frameSamples,
-        averageFrameMs: this.frameSamples === 0 ? 0 : this.frameTotalMs / this.frameSamples,
-        maxFrameMs: this.maxFrameMs,
+        clock: "phaser-raw-wall-ms",
+        frameSamples: frameMeasurements?.frameSamples ?? 0,
+        averageFrameMs: frameMeasurements?.averageFrameMs ?? 0,
+        maxFrameMs: frameMeasurements?.maxFrameMs ?? 0,
+        averageSimulationDeltaMs: frameMeasurements?.averageSimulationDeltaMs ?? 0,
+        excludedFrames: frameMeasurements?.excludedFrames ?? 0,
+        updateCpuSamples: frameMeasurements?.updateCpuSamples ?? 0,
+        averageUpdateCpuMs: frameMeasurements?.averageUpdateCpuMs ?? 0,
+        maxUpdateCpuMs: frameMeasurements?.maxUpdateCpuMs ?? 0,
+        distribution: frameMeasurements?.distribution,
       },
       effects: {
         explosionsCommitted: this.explosionsCommitted,

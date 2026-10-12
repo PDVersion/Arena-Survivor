@@ -5,29 +5,26 @@ recognisable real-world tools, and optional educational depth.
 
 ## Status
 
-V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
+**V0.4.2 and V0.4.2.1 are merged.** The readable baseline has a 2× cropped
+world view, coherent 0.5 gameplay rate, Cleanup Grabber and Collection Sweep,
+walk-through contact with bounded knockback, Microplastics, Glass Shards and
+finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
+checkpoint are also merged; remaining art stays gated until the roster settles.
 
-**V0.4.2 is planned next.** It tightens the camera to a 2× cropped world view,
-starts a coherent half-speed gameplay experiment, and replaces the active eco
-theme's abstract Sorting Pulse with a short-range Cleanup Grabber. A small seam
-allows view, pace, and grabber to be built by three equivalent agents before one
-core integration and play-test pass. The old content-growth V0.4.2 is now V0.4.3,
-and the remaining sprite roster follows as V0.4.4.
+**V0.4.3 is active on `codex/v0.4.3`, starting with performance P0–P6.**
+Trustworthy wall-frame measurements precede production diagnostics, interface,
+simulation, presentation and lifecycle profiling. Selected content C1–C7 follows
+the performance gate; no optional feature has been selected. Real older-device
+acceptance remains pending measurement. See [session progress](AUTONOMOUS_PROGRESS.md),
+[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–102.
 
-**V0.4.0 and V0.4.1 are built.** Sprites are optional theme content:
-a pack may declare a sheet per content id, and an actor with no sheet renders the
-primitive it always did, which is a complete state rather than a missing one. The
-V0.4.1 checkpoint adds the Environment Protector and four enemy sheets from one
-reproducible atlas; the rest are deliberately gated until after the redirect.
-See [the V0.4 sequence](build/BUILD_PLAN_V0.4.md) and REC-071 to REC-078.
-
-**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-069).
-
-V0.3 in full — a rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
+V0.1–V0.3 and the V0.3.1 corrections are complete. Their plans retain the
+implementation history for progression, director, hazards, shrines, skills,
+statistics, settings and endless/clearing behaviour.
 
 ## Project documents
 
-- [V0.3 build plan](build/BUILD_PLAN_V0.3.md) — current scope, phase order, verification gates, and commit boundaries.
+- [V0.3 build plan](build/BUILD_PLAN_V0.3.md) — completed implementation record, architecture and verification conventions.
 - [Education pivot](build/EDUCATION_PIVOT.md) — exploratory design for the type system, real-data enemy stats, and the knowledge layer.
 - [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
 - [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
@@ -35,7 +32,9 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md) — current increment order, gates, ownership, and reconciliation ranges.
 - [V0.4.1 sprite plan](build/SPRITE_PLAN_V0.4.1.md) — the completed pipeline and five-sheet checkpoint, plus the gated historical inventory.
 - [V0.4.2 readable-baseline plan](build/BUILD_PLAN_V0.4.2.md) — camera zoom, coherent slowdown, Cleanup Grabber, parallel delivery, and integration gate.
-- [V0.4.3 content plan](build/BUILD_PLAN_V0.4.3.md) — weapons, evolution, bosses, curses, unlocks, and persistence after the new baseline passes.
+- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md) — performance prerequisites, ownership and gates, followed by selected content.
+- [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md) — session protocol, measurements and optional feature menu.
+- [Autonomous progress](AUTONOMOUS_PROGRESS.md) — actual checks, evidence, blockers and the next task.
 - [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) — the art bible and the reusable image-generation prompt.
 - [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, claim protocol, status, and the generation log.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
@@ -43,7 +42,8 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 
 Before beginning any work, read [the V0.4 sequence](build/BUILD_PLAN_V0.4.md),
-then the reconciliation log and the active increment plan.
+then the reconciliation log and V0.3 implementation record, followed by session
+progress and the active increment plan.
 `build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone
 underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
@@ -147,5 +147,5 @@ For a manual smoke test, verify movement, combat, XP collection, upgrade choices
 
 - Visuals and sounds are generated placeholders; audio uses theme-defined synthesized cues.
 - Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting. `npm run balance -- --ttk` is the instrument for revisiting them.
-- Profile persistence, save export/import, weapon slots and melee delivery, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
+- Profile persistence, save export/import, weapon slots, additional weapons, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
 - The production bundle currently includes Phaser in the initial chunk, so Vite reports its large-chunk advisory during builds.

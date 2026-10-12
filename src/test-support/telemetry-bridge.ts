@@ -1,3 +1,5 @@
+import type { FrameDistributionSnapshot } from "./frame-measurements";
+
 export interface ArenaTestSnapshot {
   readonly status: "booting" | "ready" | "failed";
   readonly scene: string | null;
@@ -231,9 +233,16 @@ export interface ArenaTestSnapshot {
     droppedPresentationCues: number;
     liveHighWater: number;
     trackedHighWater: number;
+    clock: "phaser-raw-wall-ms";
     frameSamples: number;
     averageFrameMs: number;
     maxFrameMs: number;
+    averageSimulationDeltaMs: number;
+    excludedFrames: number;
+    updateCpuSamples: number;
+    averageUpdateCpuMs: number;
+    maxUpdateCpuMs: number;
+    distribution?: FrameDistributionSnapshot;
   }>;
   readonly effects?: Readonly<{
     explosionsCommitted: number;

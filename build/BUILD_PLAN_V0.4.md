@@ -9,9 +9,9 @@ better than the simpler educational game.
 | --- | --- | --- | --- |
 | **V0.4.0** | Optional-sprite seam | This file's historical contract; REC-071–073 | Merged from `claude/v0.4.0` |
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
-| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Built on `codex/v0.4.2` |
-| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Built on `codex/v0.4.2.1` |
-| **V0.4.3** | Weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | Next; not started |
+| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Merged from `codex/v0.4.2` |
+| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Merged from `codex/v0.4.2.1` |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0 verified on `codex/v0.4.3`; P1 next; content not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -96,12 +96,21 @@ renumbering a merged decision.
 
 ## Cross-increment ownership
 
+V0.4.3 now starts with the browser-performance prerequisite P0–P6, promoted
+from [`AUTONOMOUS_DEVELOPMENT_PLAN.md`](./AUTONOMOUS_DEVELOPMENT_PLAN.md) at the
+owner's Session 1 request (REC-102). Measurement precedes optimization and
+content growth; C1–C7 retain their dependencies and require owner selection.
+The active increment plan owns the exact performance paths, commit subjects,
+verification, and hardware-reporting gates. This is a technical prerequisite,
+not a change to game content, balance, or the V0.4.4 sprite gate.
+
 | Path | Owner while active |
 | --- | --- |
 | `build/SPRITE_*.md`, `build/sprites/**`, `public/sprites/**` | V0.4.1, then V0.4.4 |
 | `src/game/content/themes/*/sprites.ts`, `src/game/systems/sprites/**` | V0.4.1, then V0.4.4; V0.4.2 may only add a generic timing input through R0 |
 | Paths listed in `BUILD_PLAN_V0.4.2.md` R1A/R1B/R1C | The named V0.4.2 feature branch |
 | Content-growth systems, persistence, bosses, curses, and weapon slots | V0.4.3 after V0.4.2 merges |
+| Diagnostic/frame sampling, measured hot paths, presentation/lifecycle work | V0.4.3 P0–P6, within that plan's phase ownership |
 
 Once an increment merges, the next increment may edit its code normally while
 preserving the permanent presentation/simulation boundary above.
@@ -115,6 +124,9 @@ preserving the permanent presentation/simulation boundary above.
   contact, and material-family findings.
 - V0.4.4 does not claim or generate remaining sheets until V0.4.2 and V0.4.3
   settle stable IDs, subjects, sizes, and frame roles.
+- V0.4.3 content C1 does not start before the P0–P6 software gate passes and
+  optional content is selected. Older-device acceptance requires device evidence;
+  absent hardware remains explicitly pending, never inferred from throttling.
 - Any build phase that changes product direction must update `PLAN.md`,
   `EDUCATION_PIVOT.md`, `THEME_ARCHETYPES.md`, and reconciliation in the same
   phase rather than leaving contradictory authorities.
