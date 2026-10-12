@@ -190,6 +190,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private publishTelemetry(): void {
+    if (import.meta.env.MODE !== "test") return;
     const session = getSessionStatistics();
     updateTestTelemetry({
       status: "ready", scene: this.scene.key, themeId: activeTheme.id,

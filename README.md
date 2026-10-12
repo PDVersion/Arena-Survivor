@@ -11,14 +11,15 @@ walk-through contact with bounded knockback, Microplastics, Glass Shards and
 finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
 checkpoint are also merged; remaining art stays gated until the roster settles.
 
-**V0.4.3 is active on `codex/v0.4.3`; P0 measurement and Q1 play-test corrections are verified.**
+**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2 and P1 are verified; P2 is next.**
 Q1 fixes player facing/walking and zoomed world text, makes both Cleanup Grabber
 upgrade entries common in the offer pool, and adds Beginner / Normal / Experienced
-difficulty (selected F16). P1 production diagnostics is next, then interface,
-simulation, presentation and lifecycle profiling through P6. Other optional
+difficulty (selected F16). Q2 adds event readability, fragment pose reuse, a sprite review browser and spawn
+source counts. P1 excludes production diagnostics; interface, simulation,
+presentation and lifecycle profiling continue through P2–P6. Other optional
 content remains unselected; C1–C7 follows the performance gate. Real older-device
 acceptance remains pending measurement. See [session progress](AUTONOMOUS_PROGRESS.md),
-[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–106.
+[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–110.
 
 V0.1–V0.3 and the V0.3.1 corrections are complete. Their plans retain the
 implementation history for progression, director, hazards, shrines, skills,
@@ -49,6 +50,24 @@ progress and the active increment plan.
 `build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone
 underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
+## Performance measurements
+
+`npm run measure:performance -- --mode production --seconds 60 --warmup 10 --repeats 3 --output build/performance/local-production.json`
+records production page frames and Chromium main-thread counters. Build first.
+For a sustained population/capacity probe, use:
+
+```bash
+npm run measure:performance -- --mode test --scenario capacity --loads 150,300,450,600 --seconds 60 --warmup 10 --repeats 3 --output build/performance/local-capacity.json
+```
+
+Add `--headed` to measure a visible Chromium window and record its actual GPU
+renderer on the target machine. Run browser measurements alone. The capacity fixture holds a mixed crowd with
+weapons/contact/XP/hazards disabled and records live/visible counts plus source
+origins. It includes test telemetry overhead and does not establish mixed-combat
+or hardware acceptance. The production safety cap remains 300. `npm run
+check:production` checks the built output and production boot/play/pause without
+test hooks. The P1 report records actual before/after results and limits.
+
 ## Sprite inspection
 
 Open `/sprite-browser.html` on the local server (for example
@@ -59,7 +78,7 @@ good/bad/review and add notes; reviews persist in that browser and export as JSO
 Missing sprite bindings are listed as fallbacks. Glass Shards reuse the accepted
 broken-glass pose until the dedicated art pass; no generated image was edited.
 
-Live source counts appear in the HUD, with live/total counts in Pause → World:
+Live source counts appear in the HUD, with live/total counts in Pause → Pollution:
 natural (including waves), fragments, Bagged Waste releases, site effects and
 benchmark loads. Shrine-modified ambient arrivals are counted as natural.
 

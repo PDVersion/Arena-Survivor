@@ -5,7 +5,7 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2 verified on `codex/v0.4.3`; P1 production telemetry guard next. F16 is delivered; other content selections remain pending.**
+- Active phase: **V0.4.3 P0/Q1/Q2 verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2743,6 +2743,83 @@ pending; independent work does not change this mix. The new pacing exposed an
 old clearing-browser assertion that live population only decreases. It can rise
 by retained offspring while ambient arrivals stop; assert natural source totals
 stay fixed and the field eventually becomes empty instead of discarding births.
+
+### REC-109 — Production diagnostic guards must precede snapshot work
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 P1; production/test mode boundaries
+- Blocks: None
+
+The inert updater did not prevent its callers from constructing snapshots:
+RunScene.publishTelemetry scanned populations per role, built selectors/copy and
+summaries every frame; updateLoadHighWaterMarks separately scanned each roster
+role. Menu publication also read session/selector data. Add direct mode guards
+at each method's entry before any reads, and at boot-failure publication/sampler
+construction; the bridge is mode guarded as a second boundary. Production has
+no diagnostic dependency reads, checked emitted fields or test interface.
+Real game statistics, immediate spawn origins, HUD/minimap and simulation remain
+active. Unit probes execute the actual method bodies against throwing proxies
+with production/development modes and positive test-mode controls; a production
+bundle/browser check and the test-mode browser regression verify both sides.
+
+Compare the Q2 gameplay source 7ff8bbf before/after guards, not the older P0
+opening. Three warmed 60-second serial production repeats per build give median
+wall p95 17.2 ms before and after: no observed frame-rate improvement. CDP
+ScriptDuration median is 1.5925 s before / 1.3815 s after (~13.2% lower in these
+windows); this noisy three-repeat software-rendered comparison does not isolate
+function cost or prove physical GPU/older-device performance. All six windows
+have no browser errors or >100 ms sampled intervals. The game chunk shrinks
+~9.23 kB / ~2.11 kB gzip. Actual configuration, digests, repeated records and
+limitations are in `build/performance/P1_REPORT.md`.
+
+Keep early guards even though emitted test globals are already excluded. An
+absent interface alone does not establish zero snapshot cost. Benchmark capacity
+is a separate test-only override; production always resolves its canonical 300
+budget regardless of the URL. Core gates pass; final extended recordings and
+regression are recorded in the phase progress before completion. Parallel browser
+load exposed two new default five-second transition waits; use the existing
+bounded 30-second simulation-transition convention (REC-041), preserving the
+assertions and simulation clock rather than treating real time as game progress.
+
+### REC-110 — Capacity depends on actual rendering and visible population, not only update CPU
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 P1 measurements; future cap approval / P2–P6
+- Blocks: None; production-cap increase requires further acceptance
+
+The owner's capacity question needs a sustained fixture, not a short 300-peak
+correctness burst. The recorder holds mixed 150/300/450/600 live populations,
+waits for preparation, warms 10 seconds, then records three serial 60-second
+windows each. It records p95/p99/max/>100 ms stalls, update CPU, CDP work,
+actual live/visible populations, source counts and device/renderer. The validated
+cap override is test-only (300–1000); production ignores it and stays at 300.
+Fixtures disable weapons/contact/XP/hazards; all arrivals are benchmark origin.
+This is calm crowd capacity, not mixed-combat or a gameplay pacing goal.
+
+Twelve headless SwiftShader windows pass fixture correctness, with no browser
+errors or sampled >100 ms intervals. At 300 live, page p95 is 40.6–41.6 ms;
+450 is 50.0–50.1 ms; 600 is 58.4–58.5 ms. These do not meet the provisional
+40 ms worst-load budget. Update p95 is only .8 / 1.4 / 2.2–2.3 ms, which
+excludes engine/physics/rendering outside RunScene.update; do not infer a GPU
+bottleneck from that subtraction without attribution.
+
+A headed option exposes the real local Apple M5 Pro Metal renderer. The first
+short probe failed on a confirmed `/favicon.ico` 404; preserve the failure and
+declare an empty favicon in both HTML entries rather than hide error reporting.
+Six sustained headed windows (300/600, three repeats each) then pass with no
+browser errors. At 600 live / 489–517 visible, page p95 is 17.5–18.0 ms;
+one 100.1 ms interval remains included (0.028% in that repeat). This indicates
+headroom on the modern local GPU but does not approve a global cap increase.
+The spread/visible count differs across renderer/frame cadences; a live cap of
+600 does not mean 600 on-screen actors. Every repeat and scope is in the P1 report.
+
+Future cap approval needs sustained combat with effects, fragmentation/site
+births, exact ledger/queue/cap correctness and lifecycle checks on supported
+physical devices including older integrated GPUs. Headless/software and headed/
+hardware measurements answer different questions. Keep technical ceilings
+separate from desirable gameplay density and keep the gameplay clock unchanged.
 
 ## V0.4.4 entries — reconciled sprite roster
 

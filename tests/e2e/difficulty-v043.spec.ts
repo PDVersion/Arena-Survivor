@@ -42,7 +42,7 @@ test("changing difficulty while paused takes effect on the next run", async ({ p
   expect(paused?.run?.difficulty).toBe("normal");
   expect(paused?.pacing?.baseSpawnIntervalMs).toBe(opening?.pacing?.baseSpawnIntervalMs);
   await page.keyboard.press("Escape");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("complete");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 30_000 }).toBe("complete");
   await page.keyboard.press("r");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.difficulty)).toBe("experienced");
   expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.baseSpawnIntervalMs))

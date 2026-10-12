@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-12T06:55:35.899Z",
+  "browserVersion": "151.0.7922.34",
+  "bundlesChecked": [
+    "game-BtaybQCp.js",
+    "runtime-sprite-HZoUHTnb.js",
+    "sprites-Bzu5L0ZP.js"
+  ],
+  "diagnosticMarkersAbsent": true,
+  "testInterfaceAbsent": true,
+  "productionBootPlayPause": true,
+  "spriteBrowserLoads": true,
+  "errors": []
+}

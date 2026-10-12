@@ -1,0 +1,171 @@
+{
+  "recordedAt": "2026-10-12T06:44:03.056Z",
+  "revision": "7ff8bbf2b8915f524a8a9937e3dd77ecd7268435",
+  "workingTree": " M AUTONOMOUS_PROGRESS.md\n M README.md\n M RECONCILIATION.md\n M build/AUTONOMOUS_DEVELOPMENT_PLAN.md\n M build/BUILD_PLAN_V0.1.md\n M build/BUILD_PLAN_V0.2.md\n M build/BUILD_PLAN_V0.3.md\n M build/BUILD_PLAN_V0.4.2.1.md\n M build/BUILD_PLAN_V0.4.2.md\n M build/BUILD_PLAN_V0.4.3.md\n M build/BUILD_PLAN_V0.4.md\n M package.json\n M scripts/performance.ts\n M src/game/scenes/menu-scene.ts\n M src/game/scenes/run-scene.ts\n M src/main.ts\n M src/test-support/telemetry-bridge.ts\n?? build/performance/P1_AFTER.json\n?? build/performance/P1_BEFORE.json\n?? build/performance/P1_CAPACITY.json\n?? build/performance/P1_PRODUCTION_CHECK.json\n?? build/performance/P1_REPORT.md\n?? scripts/check-production.ts\n?? tests/e2e/capacity-probe.spec.ts\n?? tests/unit/architecture/production-telemetry.test.ts\n",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "options": {
+    "seconds": 5,
+    "warmup": 3,
+    "repeats": 1,
+    "mode": "test",
+    "scenario": "capacity",
+    "headed": true,
+    "loads": [
+      600
+    ]
+  },
+  "results": [
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "loadCount": 600,
+      "repeat": 1,
+      "startedAt": "2026-10-12T06:43:52.580Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Apple)",
+          "name": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 3,
+      "requestedSeconds": 5,
+      "actualSeconds": 5.008099999952315,
+      "pageRaf": {
+        "capturedFrames": 300,
+        "retainedFrames": 300,
+        "averageMs": 16.675666666666665,
+        "maxMs": 17.5,
+        "distribution": {
+          "p50Ms": 16.699999999999818,
+          "p95Ms": 17.099999999999454,
+          "p99Ms": 17.399999999999636
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 300
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 2.399986,
+        "TaskDuration": 2.4242,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 30976316,
+        "afterBytes": 40921776,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 600,
+        "liveMax": 600,
+        "visibleMin": 480,
+        "visibleMax": 487
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 600
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 600
+        }
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 600,
+        "spawned": 600,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 600,
+        "processedEffects": 600,
+        "gameplayBacklogHighWater": 0,
+        "processedGameplayEvents": 0,
+        "droppedPresentationCues": 181,
+        "liveHighWater": 600,
+        "trackedHighWater": 600,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 481,
+        "averageFrameMs": 16.675675675675674,
+        "maxFrameMs": 17.699999999999818,
+        "averageSimulationDeltaMs": 8.326590436590466,
+        "excludedFrames": 52,
+        "updateCpuSamples": 481,
+        "averageUpdateCpuMs": 2.203118505448165,
+        "maxUpdateCpuMs": 4.700000047683716,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 481,
+          "throughSample": 481,
+          "wall": {
+            "p50Ms": 16.699999999999818,
+            "p95Ms": 17.199999999999818,
+            "p99Ms": 17.59999999999991
+          },
+          "updateCpu": {
+            "p50Ms": 2.1999999284744263,
+            "p95Ms": 2.399999976158142,
+            "p99Ms": 3
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 4013.345000000015,
+        "durationMs": 300000,
+        "kills": 0,
+        "liveEnemies": 600,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 0,
+        "hitStopDenied": 0,
+        "hitStopSpentMs": 0,
+        "damageAccumulated": 0,
+        "damageFlushed": 0,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 0,
+        "deathCause": null
+      },
+      "errors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "note": "Controlled mixed crowd with no weapon/contact/XP/hazards; test instrumentation included. Not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    }
+  ]
+}

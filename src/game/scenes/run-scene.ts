@@ -209,10 +209,18 @@ function testSurgeDurationMs(): number | undefined {
   return Number.isFinite(configured) && configured > 0 ? configured : undefined;
 }
 
+/** A benchmark override; production retains its fixed safety budget. */
+function testEnemyCapacity(): number {
+  if (import.meta.env.MODE !== "test") return V02_SPAWN_LIMITS.maxAlive;
+  const configured = Number(new URLSearchParams(window.location.search).get("enemyCap"));
+  return Number.isInteger(configured) && configured >= 300 && configured <= 1000
+    ? configured : V02_SPAWN_LIMITS.maxAlive;
+}
+
 function testLoadHarnessCount(): number {
   if (import.meta.env.MODE !== "test") return 0;
   const configured = Number(new URLSearchParams(window.location.search).get("loadHarness"));
-  return Number.isInteger(configured) && configured > 0 ? Math.min(configured, 300) : 0;
+  return Number.isInteger(configured) && configured > 0 ? Math.min(configured, testEnemyCapacity()) : 0;
 }
 
 function testRosterHarnessSelection(): string | null {
@@ -335,6 +343,7 @@ interface ExplosionEventPayload {
 
 export class RunScene extends Phaser.Scene {
   private runTheme: ThemeManifest = activeTheme;
+  private enemyCapacity = V02_SPAWN_LIMITS.maxAlive;
   private spawnStatistics = new SpawnStatistics();
   private player?: PlayerActor;
   private runState?: RunState;
@@ -793,6 +802,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private resetTransientRuntime(): void {
+    this.enemyCapacity = testEnemyCapacity();
     this.spawnStatistics = new SpawnStatistics();
     this.player = undefined;
     this.runState = undefined;
@@ -916,9 +926,11 @@ export class RunScene extends Phaser.Scene {
     this.loadHarnessSpawned = 0;
     this.liveHighWater = 0;
     this.trackedHighWater = 0;
-    this.frameMeasurements = testSkillEnabled("representativeLoad") || testSkillEnabled("frameMeasure")
-      ? new FrameMeasurements(testSkillEnabled("frameMeasure") ? 4096 : 0)
-      : undefined;
+    this.frameMeasurements = undefined;
+    if (import.meta.env.MODE === "test") {
+      this.frameMeasurements = testSkillEnabled("representativeLoad") || testSkillEnabled("frameMeasure")
+        ? new FrameMeasurements(testSkillEnabled("frameMeasure") ? 4096 : 0) : undefined;
+    }
     this.droppedPresentationCues = 0;
     this.rosterHighWater = {};
     this.offspringQueued = 0;
@@ -963,7 +975,7 @@ export class RunScene extends Phaser.Scene {
 
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
-    const capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    const capacity = Math.max(0, this.enemyCapacity - this.enemies.size);
     this.loadEventQueue.process(Math.min(12, capacity), (event) => {
       const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
       const representative = testSkillEnabled("representativeLoad");
@@ -1031,7 +1043,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private processCausalEvents(): void {
-    let capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    let capacity = Math.max(0, this.enemyCapacity - this.enemies.size);
     let remaining = 24;
     remaining -= this.eventQueue.processMatching(remaining, (event) => event.kind !== "spawn.requested", (event) => {
       if (event.kind === "effect.explosion") {
@@ -1219,6 +1231,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private updateLoadHighWaterMarks(): void {
+    if (import.meta.env.MODE !== "test") return;
     this.liveHighWater = Math.max(this.liveHighWater, this.enemies.size);
     this.trackedHighWater = Math.max(
       this.trackedHighWater,
@@ -1526,7 +1539,7 @@ export class RunScene extends Phaser.Scene {
       this.surgeState,
       this.shrineDefinition,
       this.runState.elapsedMs,
-      V02_SPAWN_LIMITS.maxAlive - this.enemies.size,
+      this.enemyCapacity - this.enemies.size,
     );
     this.surgeState = result.state;
     for (let index = 0; index < result.spawnNow; index += 1) {
@@ -1633,7 +1646,7 @@ export class RunScene extends Phaser.Scene {
       !this.player ||
       !this.runState ||
       this.runState.elapsedMs < this.nextSpawnAtMs ||
-      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, this.enemyCapacity)
     ) {
       return;
     }
@@ -1644,7 +1657,7 @@ export class RunScene extends Phaser.Scene {
     // A batch shares one ring arc so it reads as a wave rather than a trickle.
     const arc = this.spawnSequence * GOLDEN_ANGLE;
     for (let index = 0; index < plan.batchSize; index += 1) {
-      if (!canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)) break;
+      if (!canSpawn(this.enemies.size, this.enemyCapacity)) break;
       const enemyId = selectRole(plan.weights, this.enemyRandom);
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === enemyId);
       if (!definition) continue;
@@ -1673,7 +1686,7 @@ export class RunScene extends Phaser.Scene {
       !this.runState ||
       !definition ||
       !this.enemyGroup ||
-      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, this.enemyCapacity)
     ) {
       return false;
     }
@@ -2881,6 +2894,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private publishTelemetry(): void {
+    if (import.meta.env.MODE !== "test") return;
     const frameMeasurements = this.frameMeasurements?.snapshot(this.runState?.status !== "playing");
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
@@ -2974,7 +2988,7 @@ export class RunScene extends Phaser.Scene {
         highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
         longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,
         contactHits: this.contactHits,
-        enemyCap: V02_SPAWN_LIMITS.maxAlive,
+        enemyCap: this.enemyCapacity,
         projectileCap: V02_SPAWN_LIMITS.maxProjectiles,
         projectileSample: projectileSample
           ? {

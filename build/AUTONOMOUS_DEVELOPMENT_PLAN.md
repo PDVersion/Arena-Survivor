@@ -1,6 +1,6 @@
 # Autonomous development plan — browser performance first
 
-Status: **Session 1 / P0 verified 2026-10-12 on `codex/v0.4.3`; Q1 player/difficulty correction verified; P1 next. See `../AUTONOMOUS_PROGRESS.md` for actual results.**
+Status: **Session 1 / P0 verified 2026-10-12 on `codex/v0.4.3`; Q1/Q2 and Session 2 / P1 verified; Session 3 / P2 next. See `../AUTONOMOUS_PROGRESS.md` for actual results.**
 Assessment date: 2026-10-11 (Australia/Sydney).
 Amended: 2026-10-11 with the owner's recycling-game ideation document.
 
@@ -212,6 +212,12 @@ production versus instrumented costs and prioritize the next measured hotspot.
 
 **Exit:** measurement units are explicit and verified, production/test separation
 is understood, and each blocked check has a concrete reason and rerun command.
+
+Q2 event/roster inspection and immediate spawn accounting are verified in
+`7ff8bbf` (REC-107/108). The owner also authorized a test-only capacity sweep at
+150/300/450/600, reported with actual visible population and diagnostic overhead.
+Keep production at 300 until sustained mixed-combat and representative hardware
+results justify an increase. Bagged Waste's fixed composition awaits confirmation.
 
 ### Session 2 — P1: remove diagnostic work from the production loop
 

@@ -1,0 +1,212 @@
+{
+  "recordedAt": "2026-10-12T06:20:02.369Z",
+  "revision": "7ff8bbf2b8915f524a8a9937e3dd77ecd7268435",
+  "workingTree": " M build/BUILD_PLAN_V0.1.md\n M build/BUILD_PLAN_V0.2.md\n M build/BUILD_PLAN_V0.3.md\n M build/BUILD_PLAN_V0.4.2.1.md\n M build/BUILD_PLAN_V0.4.2.md\n M build/BUILD_PLAN_V0.4.3.md\n M build/BUILD_PLAN_V0.4.md\n M scripts/performance.ts\n M src/game/scenes/menu-scene.ts\n M src/game/scenes/run-scene.ts\n M src/main.ts\n M src/test-support/telemetry-bridge.ts\n?? tests/e2e/capacity-probe.spec.ts\n?? tests/unit/architecture/production-telemetry.test.ts\n",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "options": {
+    "seconds": 60,
+    "warmup": 10,
+    "repeats": 3,
+    "mode": "production",
+    "scenario": "default"
+  },
+  "results": [
+    {
+      "buildMode": "production",
+      "scenario": "default",
+      "repeat": 1,
+      "startedAt": "2026-10-12T06:16:27.085Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": false
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.01069999997616,
+      "pageRaf": {
+        "capturedFrames": 4068,
+        "retainedFrames": 4068,
+        "averageMs": 14.753588987217308,
+        "maxMs": 33.29999999999927,
+        "distribution": {
+          "p50Ms": 16.60000000000582,
+          "p95Ms": 16.900000000001455,
+          "p99Ms": 17.69999999999709
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "unobservable-production": 4068
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 1.438193,
+        "TaskDuration": 60.043634,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 10312888,
+        "afterBytes": 11102988,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "errors": [],
+      "note": "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution.",
+      "screenshot": "/private/tmp/arena-p1-before/production-default-1.png"
+    },
+    {
+      "buildMode": "production",
+      "scenario": "default",
+      "repeat": 2,
+      "startedAt": "2026-10-12T06:17:38.715Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": false
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.01659999992847,
+      "pageRaf": {
+        "capturedFrames": 3965,
+        "retainedFrames": 3965,
+        "averageMs": 15.138587641866328,
+        "maxMs": 28.19999999999709,
+        "distribution": {
+          "p50Ms": 16.60000000000582,
+          "p95Ms": 17.299999999995634,
+          "p99Ms": 25
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "unobservable-production": 3965
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 1.6065360000000002,
+        "TaskDuration": 60.029636999999994,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 11992692,
+        "afterBytes": 16957608,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "errors": [],
+      "note": "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution.",
+      "screenshot": "/private/tmp/arena-p1-before/production-default-2.png"
+    },
+    {
+      "buildMode": "production",
+      "scenario": "default",
+      "repeat": 3,
+      "startedAt": "2026-10-12T06:18:50.540Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": false
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.001400000095366,
+      "pageRaf": {
+        "capturedFrames": 3933,
+        "retainedFrames": 3933,
+        "averageMs": 15.256598016781084,
+        "maxMs": 25.900000000001455,
+        "distribution": {
+          "p50Ms": 16.60000000000582,
+          "p95Ms": 17.200000000004366,
+          "p99Ms": 25
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "unobservable-production": 3933
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 1.592468,
+        "TaskDuration": 60.00902000000001,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 11986764,
+        "afterBytes": 20215796,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "errors": [],
+      "note": "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution.",
+      "screenshot": "/private/tmp/arena-p1-before/production-default-3.png"
+    }
+  ],
+  "productionBuildSha256": {
+    "dist/index.html": "ffe895302764d26d07ee62c2cfbde1cb6ae3b5ef0c5fcbf7e615867ead96c595",
+    "dist/sprite-browser.html": "3b5d13325519c614a4066cf28647d87a2fed2fcfb46cf4011217f00b18d0904c",
+    "dist/assets/game-BHAiNkPv.css": "bf5517af4f6634e1ebaa10748005b8bf4a1a410abb3659b0b712519cb89e2170",
+    "dist/assets/sprites-CpBbX2C4.css": "b2f2c71905654d2625466701a061e2dd61822f86b2222eb79612dd1ea23c40e1",
+    "dist/assets/sprites-Bzu5L0ZP.js": "e16777cdc196a63a20e558864c21993fc3b7cd0949b1196f2d8f636581124fc8",
+    "dist/assets/runtime-sprite-HZoUHTnb.js": "40418033e275419b241c381f099340015c2947644e6047f3be1778c56e124da1",
+    "dist/assets/game-DnwDOTK8.js": "1fd209ba965d7b27a40aa29b7dc08659f8447d03dfd63eba64848c0ddc318c14",
+    "dist/sprites/eco-guardian/enemy_swarm_basic.png": "b57bda0060acf056708f151f70ade00ff64f69b384f0a000795982d6219319b7",
+    "dist/sprites/eco-guardian/enemy_fast_fragile.png": "29f7e15764e963a9fa1d981c27c7e1db1353b6d26bf90426e5cab8a7796e9a3b",
+    "dist/sprites/eco-guardian/enemy_death_spawner.png": "e166329eda4a34a32f9c7c023669b0be16ef8bc60c5e8ddecb78dfa6b86c047f",
+    "dist/sprites/eco-guardian/character_starter.png": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4",
+    "dist/sprites/eco-guardian/atlas.png": "b0a2fc9157486c643870936e5b4a23188fc143d28acf357cf17cd77517d74047",
+    "dist/sprites/eco-guardian/atlas.json": "b8c736d1fd049eba5c917c8ef3c035947a35afe046736234ae1ba0d530bf2059",
+    "dist/sprites/eco-guardian/enemy_slow_durable.png": "e4e764040c76def34334afbbb6ed1f357e4cce21b78f231ade41963a5fdd93ac"
+  },
+  "sourceBuildNote": "Production dist built from verified Q2 commit 7ff8bbf before telemetry guards; source edits during sampling do not change dist."
+}

@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2 corrections verified; P1 next.** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2 and P1 verified; P2 next.** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -90,7 +90,12 @@ Q2 gate: 416 units / 49 files, types/lint/build, all-preset balance, 13 focused
 browsers, corrected full Chromium 78 pass / one opt-in skip, three serial stress
 cases, and live event/roster/tool screenshots pass. See REC-107/108.
 
-P1 additionally owns `scripts/performance.ts`, measurement reports/config and
+P1 also owns favicon metadata in `index.html` / `sprite-browser.html`: a
+headed probe confirmed `/favicon.ico` 404s, so explicitly declare an empty icon
+rather than hide resource failures. No bitmap/art generation is involved.
+
+P1 additionally owns `scripts/performance.ts`, `scripts/check-production.ts`, its validation command
+in `package.json`, measurement reports/config and
 bench-only RunScene cap/load options for a sustained capacity sweep. Production
 stays capped at 300; controlled 150/300/450/600 loads measure wall p95/p99/stalls,
 update CPU, visible population, source counts and errors. Repeated software-GPU
@@ -117,7 +122,7 @@ are excluded from these performance phases.
 - [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
   hit-stop regression, lint repair, types/units/lint/build and browser boot/load
   baseline; bounded percentiles / update CPU / metadata reporting if time permits.
-- [ ] P1 — guard snapshot construction outside test mode; verify production
+- [x] P1 — guard snapshot construction outside test mode; verify production
   interface exclusion and working test snapshots; compare equivalent profiles.
 - [ ] P2 — profile minimap/HUD, reduce confirmed repeated work; validate visibility,
   resize, opacity, pause/restart and prompt critical status updates.
@@ -155,6 +160,16 @@ production recordings and three short instrumented stress recordings all pass.
 See [`performance/P0_BASELINE.md`](./performance/P0_BASELINE.md), REC-103/104.
 These verify the measurement/software gate; provisional throughput and physical
 older-device acceptance remain pending. Production diagnostic scans are P1.
+
+P1 verified 2026-10-12: 420 units / 50 files, types/lint/build, production
+emitted-code/boot/play/pause/tool check, 79 Chromium regressions (one opt-in
+skip), and three serial stress cases pass. Six matched production windows,
+12 software and six local Metal GPU capacity windows are recorded in
+[`performance/P1_REPORT.md`](./performance/P1_REPORT.md) (REC-109/110).
+Production diagnostic work is excluded; frame p95 in the default comparison
+remains 17.2 ms. Local calm 600-live performance shows headroom, but supported
+older-device/mixed-combat cap acceptance remains pending. Production stays 300.
+P2 is next; no dependent phase has started.
 
 ## Content scope, from PLAN.md
 

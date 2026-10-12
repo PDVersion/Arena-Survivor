@@ -368,5 +368,6 @@ export function registerTestTelemetryUpdater(nextUpdater: TelemetryUpdater): voi
 }
 
 export function updateTestTelemetry(snapshot: ArenaTestSnapshot): void {
+  if (import.meta.env.MODE !== "test") return;
   updater?.(snapshot);
 }

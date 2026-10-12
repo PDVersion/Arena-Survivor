@@ -7,13 +7,13 @@ Updated: 2026-10-12 (Australia/Sydney).
 Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
-common tool offer entries and selected F16 Beginner/Normal/Experienced. P1 is next
-and unstarted. Content C1–C7 and other optional features have not started;
+common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2 and
+Session 2 / P1 are now verified; Session 3 / P2 is next and unstarted. Content C1–C7 and other optional features have not started;
 physical older-device acceptance remains pending. No performance improvement is claimed.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
-Delivery: the P0 phase commit `build(v0.4.3): establish browser performance measurements`.
-Use `git log -1` for its resulting HEAD; this record is included in that commit.
+Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
+Q1 is `8d142ed`; Q2 is `7ff8bbf`. P1 is the next phase commit recorded below.
 
 ## Session 1 time budget
 
@@ -185,3 +185,94 @@ No bitmap generation/edits, remaining roster claims or profile writes.
 P1 now begins after the Q2 gate: matched production before/after recordings,
 early diagnostic guards, production exclusion and retained test snapshots,
 plus an explicitly test-only sustained capacity sweep. Production cap stays 300.
+
+
+P1 core checkpoint: `7ff8bbf` is the verified Q2 before-build source. Three warmed
+60-second production before windows passed without browser errors. Added direct
+mode guards before Run/Menu snapshot construction and Run roster high-water
+scans, and guarded frame-sampler construction/boot-failure publication. Test
+mode remains active. Core validation: **420 units / 50 files**, types/lint/build,
+**7 focused browser checks** including 450-enemy benchmark/restart, and
+`npm run check:production` pass. Emitted diagnostic markers/test interface are
+absent; actual production play/pause and the standalone tool were exercised.
+The after-recording/capacity comparison and final regression gate are pending.
+
+
+P1 measurement cycle: six isolated 60-second production windows passed (3 before,
+3 after; each warmed 10 s, no browser errors). Median page p95 remains 17.2 ms;
+CDP script median 1.5925 s → 1.3815 s is a scoped observation, not function-level
+attribution or a physical-device improvement claim. REC-109 and the P1 report
+record guards, emitted-code/boot checks, digests and limitations. The independent
+capacity sweep is running serially with actual live/visible counts.
+
+
+Capacity measurement cycle: **12 × 60-second software-rendered windows** pass
+correctness and exact live-population retention, with no browser errors/stalls
+>100 ms. At 150/300/450/600 the page p95 ranges are 25.6–25.8 / 40.6–41.6 /
+50.0–50.1 / 58.4–58.5 ms. Thus calm-fixture correctness above 300 is verified,
+but software frame-budget acceptance is not. Actual visible ranges and CPU
+update distributions are retained in the report/JSON. This does not raise the
+production cap. A headed probe identifies the real Apple M5 Pro Metal GPU;
+a confirmed favicon 404 was fixed in HTML metadata, retaining the failed probe.
+The sustained headed 300/600 comparison is underway; older-device and mixed-combat
+acceptance remain pending. Final validation/review began **17:43:13 AEDT /
+06:43:13 UTC**, before the reserved latest start.
+
+
+Headed capacity cycle: **6 × warmed 60-second windows** on Apple M5 Pro Metal
+hardware pass exact population retention and browser-error checks. At 600 live,
+489–517 visible, p95 17.5–18.0 ms; one 100.1 ms interval (0.028%) is retained.
+This supports a higher-cap candidate on this modern GPU, not older-device or
+sustained mixed-combat acceptance; production remains 300. REC-110 and raw
+hardware/software reports preserve both renderers and every repeat.
+
+Final production build/check passes after the favicon correction. An initial
+P1 full regression run passed 77 cases, skipped the existing opt-in case, and
+hit two five-second transition timeouts under parallel software rendering.
+Those two waits now use the bounded 30-second simulation-transition convention
+(REC-041), keeping their state/count assertions. The final rerun is in progress.
+
+A concurrent design-review/architecture amendment appeared in the roadmap; it
+is preserved outside the performance commit alongside the original seven plan
+annotations. The session does not implement those optional recommendations.
+
+
+## Session 2 final gate — verified
+
+Final gate checkpoint: **18:07:16 AEDT / 07:07:16 UTC**, actual elapsed
+**79 min 33 s**; recording/index review/commit follow within the 90-minute deadline.
+Final validation/review began at 17:43:13 AEDT, ahead of the reserved latest start.
+
+| Executed final check | Result |
+| --- | --- |
+| `npm run typecheck` / `npm run lint` | Pass |
+| `npm test -- --run` | **420 tests / 50 files pass** |
+| `npm run build` | Pass; game 1,616.84 kB / 377.12 kB gzip plus unchanged shared 54.80 kB / 14.42 kB; existing chunk advisory |
+| `npm run check:production` | Pass; checked diagnostic fields/global absent, live boot/movement/pause and sprite entry exercised |
+| P1 focused browsers | **7 pass**, including 450-live cap/restart origin reset |
+| Final `npm run test:e2e:ci -- --retries=0` | **79 pass / 1 existing opt-in skip**, 2.6 min |
+| Final `npm run test:e2e:stress -- --workers=1` | **3 pass**, 33.7 s, zero retries |
+| Matched production before/after | **6 × warmed 60 s pass**, median page p95 17.2 ms unchanged; scoped CDP script reduction recorded |
+| Software capacity 150/300/450/600 | **12 × warmed 60 s**, exact live populations/no browser errors; frame-budget acceptance above 300 fails on this software renderer |
+| Actual M5 Pro Metal capacity 300/600 | **6 × warmed 60 s**, exact live populations/no browser errors; 600-live / 489–517-visible p95 17.5–18.0 ms; one 100.1 ms interval retained |
+| Headed diagnostic probe | Initial favicon 404 failed; exact URL confirmed, metadata fixed; sustained headed rerun passed |
+
+P1 commit: `perf(v0.4.3): avoid production telemetry work`, including guards,
+measurement/capacity/prod-check tooling, regressions, reports and REC-109/110.
+No push/PR/merge. The seven original annotations and concurrent roadmap/architecture
+amendment stay outside the phase commit. The review tool remains separate from
+game-profile storage; no sprites are generated/edited, new roster claimed or
+production cap increased. Gameplay uses the same simulation clock.
+
+Next: **Session 3 / P2**, measured minimap/HUD repeated-work reductions and the
+visibility/resize/opacity/critical-update gate. P3–P6 remain unstarted. Capacity
+approval needs sustained combat/effects/fragment/site births, ledger/queues and
+lifecycle on supported physical devices, including older integrated GPUs. Human
+survival tuning and another browser engine remain pending. Bagged Waste remains
+fixed 2 bottles / 2 Microplastics / 1 glass at 50% normal rewards; confirmation
+of a changed/random mix is pending and did not block independent work. Dedicated
+fragment/event art and any rejected-sheet regeneration remain roster-gated.
+
+Final recording/index preservation checkpoint: **18:11:17 AEDT / 07:11:17 UTC**,
+elapsed **83 min 34 s**; the final response records the end after phase commit.
+The dedicated local server on port 4213 serves the sprite browser for review.

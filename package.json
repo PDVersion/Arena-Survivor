@@ -16,7 +16,8 @@
     "test:e2e:stress": "playwright test --grep @stress --retries=0",
     "balance": "vite-node scripts/balance.ts",
     "measure:performance": "vite-node scripts/performance.ts",
-    "sprites": "vite-node scripts/sprites.ts"
+    "sprites": "vite-node scripts/sprites.ts",
+    "check:production": "vite-node scripts/check-production.ts"
   },
   "dependencies": {
     "phaser": "3.90.0"
