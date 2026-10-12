@@ -16,6 +16,7 @@ import {
   type ProgressionState,
 } from "../systems/xp";
 import type { XpCurve } from "../core/archetypes/tuning";
+import type { DifficultyId } from "../core/archetypes/difficulty";
 import { createWorldState, type WorldState } from "../systems/chaos/world-modifiers";
 import {
   createRunStatistics,
@@ -53,6 +54,7 @@ export interface RunPlayerState {
 }
 
 export interface RunState {
+  readonly difficulty: DifficultyId;
   readonly version: typeof RUN_STATE_VERSION;
   readonly themeId: string;
   readonly status: RunStatus;
@@ -83,6 +85,7 @@ export interface DeathCause {
 }
 
 export interface CreateRunOptions {
+  readonly difficulty?: DifficultyId;
   readonly themeId: string;
   readonly characterId: CharacterId;
   readonly baseStats: PlayerBaseStats;
@@ -102,6 +105,7 @@ export function createRunState(options: CreateRunOptions): RunState {
 
   const xpCurve = options.xpCurve ?? DEFAULT_XP_CURVE;
   return {
+    difficulty: options.difficulty ?? "normal",
     version: RUN_STATE_VERSION,
     themeId: options.themeId,
     status: "playing",

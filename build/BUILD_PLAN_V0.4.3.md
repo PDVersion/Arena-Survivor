@@ -16,12 +16,53 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); P1 next, unstarted.** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1 corrections verified; P1 next.** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
-growth (REC-100, REC-102). C1–C7 below retain their order; no optional content
-has been selected. Historical status annotations supplied in the working tree
+growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
+selected and delivered in Q1, and other optional content remains unselected. Historical status annotations supplied in the working tree
 record the pre-session planning assessment; the execution status here is current.
+
+## Q1 — Player presentation and selected difficulty presets
+
+The owner requested these corrections after P0: correct player facing and smooth
+walking, crisp world/background text, common tool-upgrade availability, and
+Beginner / Normal / Experienced run difficulty. This explicitly selects F16 and
+brings this small play-test correction ahead of P1 (REC-105/106); other optional
+content and the P1–P6 order remain gated. Normal is slightly easier than the
+current baseline; Experienced is harder. Difficulty never changes the gameplay
+clock, visible world, actor radii or technical population caps.
+
+**Commit:** `feat(v0.4.3): correct player presentation and add difficulty presets`
+
+Ownership: this plan and V0.4 sequence; `PLAN.md`, `EDUCATION_PIVOT.md`,
+`THEME_ARCHETYPES.md`, `SAVE_DATA.md`, README, autonomous roadmap/progress and
+reconciliation; core sprite/difficulty contracts and validation; theme-owned
+preset data/copy and eco sprite metadata/upgrade rarity; sprite animation/view
+presentation, menu/run scenes, UI text/settings/HUD, settings/run state,
+`systems/difficulty/**`, pacing simulator/format and `scripts/balance.ts`, test
+bridge, alternate fixture and corresponding units/browser tests. Sprite bitmap,
+raw generation, loader/packing and remaining roster claims are excluded.
+
+- [x] Q1 — reproduce/correct authored facing and frame cadence; render world text
+  at adequate texture resolution; select/snapshot three theme-owned presets;
+  make tool upgrades commonly available; validate menu/run/restart, ledger,
+  readable text, both themes, balance comparisons and per-preset stress.
+
+Short gate: typecheck, targeted sprite/settings/difficulty/content/simulation
+units, `npm run balance -- --difficulty all --build damage-rush`, lint/build,
+focused sprite/difficulty/text/menu browsers, full units/Chromium and serial
+stress for all presets. Inspect player-facing motion/text in the real browser;
+do not infer correct facing from the mirrored boolean alone. Keep the supplied
+seven status annotations outside this phase commit.
+
+Q1 evidence (2026-10-12): 414 units / 48 files, typecheck/lint/build; full
+Chromium regression (75 pass, one existing opt-in skip), four difficulty browser
+cases including next-run settings, and all three serial stress cases pass.
+Actual PNG/browser inspection confirms authored right-facing walks and left-facing
+hit-pose correction; a 136-frame movement trace has no idle flashes/wrong flips.
+World title/hint textures use resolution 4 at 2× camera zoom. See REC-105/106 and
+`AUTONOMOUS_PROGRESS.md` for balance evidence and limitations.
 
 ## Performance prerequisites — P0–P6
 

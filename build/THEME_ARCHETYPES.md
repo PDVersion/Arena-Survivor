@@ -212,3 +212,14 @@ Three manifests are validated on every run: the two production packs and a tiny 
 - the browser boot path resolves the expected theme from the facade rather than a hard-coded id.
 
 V0.3 Phase 2 replaced the single-production-theme assumption. Keeping `knight-magic` complete costs one content directory and buys a real second implementation of every contract — the swap to `eco-guardian` was a one-line change in `active-theme.ts` plus one test that had hard-coded a theme id.
+
+## Q1 difficulty and sprite presentation metadata
+
+Beginner / Normal / Experienced are stable run-setting IDs; names/descriptions
+and all preset multipliers live in each theme. The selected preset resolves an
+immutable per-run view of character, weapon, enemy, hazard and director data.
+The source manifest stays unchanged, preserving material identity and the
+persistence-health model. Session choices apply to the next run; settings do
+not silently change an active run's difficulty. Sprite metadata declares the
+sheet's authored facing and walk poses/stride, including differently facing hit
+poses; no physics or gameplay value is derived from those fields.

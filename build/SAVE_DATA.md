@@ -112,3 +112,12 @@ Browser tests:
 ## Implementation acceptance
 
 The feature is complete when a player can export all persistent progress, clear or change browsers, import the text save, and recover the same validated profile, statistics, progress, unlocks, and settings without server infrastructure.
+
+## Q1 difficulty setting seam
+
+Session settings now include the stable `difficulty` value `beginner`, `normal`
+or `experienced`, defaulting to `normal`. Active run state snapshots this ID at
+creation; changing the session selection affects the next run. No storage adapter
+or migration is introduced here. Future profile/import validation must allow
+only those IDs and supply `normal` for older settings without the field, while
+retaining the ordinary backup/confirmation requirements above.

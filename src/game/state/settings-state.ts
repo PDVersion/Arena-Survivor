@@ -7,7 +7,11 @@
  * player's choices, which is what "session" means to them.
  */
 
+import { difficultyIds, type DifficultyId } from "../core/archetypes/difficulty";
+
 export interface RunSettings {
+  /** Chosen before play; changing it during play affects the next run. */
+  readonly difficulty: DifficultyId;
   /** Show before/after numbers on upgrade cards. Badges are always shown. */
   readonly detailedUpgradeCards: boolean;
   readonly reducedMotion: boolean;
@@ -17,9 +21,10 @@ export interface RunSettings {
 }
 
 export type SettingKey = keyof RunSettings;
-export type BooleanSettingKey = Exclude<SettingKey, "minimapOpacity">;
+export type BooleanSettingKey = Exclude<SettingKey, "minimapOpacity" | "difficulty">;
 
 export const settingKeys: readonly SettingKey[] = Object.freeze([
+  "difficulty",
   "detailedUpgradeCards",
   "reducedMotion",
   "muted",
@@ -28,6 +33,7 @@ export const settingKeys: readonly SettingKey[] = Object.freeze([
 
 export function createSettings(overrides: Partial<RunSettings> = {}): RunSettings {
   return Object.freeze({
+    difficulty: "normal",
     // Numbers on by default: strictly more information, and the toggle is there
     // for players who prefer clean cards.
     detailedUpgradeCards: true,
@@ -49,6 +55,14 @@ export function cycleMinimapOpacity(settings: RunSettings): RunSettings {
   return Object.freeze({
     ...settings,
     minimapOpacity: minimapOpacities[(index + 1) % minimapOpacities.length]!,
+  });
+}
+
+export function cycleDifficulty(settings: RunSettings, direction = 1): RunSettings {
+  const index = difficultyIds.indexOf(settings.difficulty);
+  return Object.freeze({
+    ...settings,
+    difficulty: difficultyIds[(index + direction + difficultyIds.length) % difficultyIds.length]!,
   });
 }
 

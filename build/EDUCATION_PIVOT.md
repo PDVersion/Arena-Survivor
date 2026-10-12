@@ -17,6 +17,11 @@ primary waste roles. The concise names and relationships are recorded in
 [`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md); precise factual claims still need
 the evidence workflow below.
 
+The owner's post-P0 correction also selects Beginner / Normal / Experienced
+presets for approachability. They change game pressure, not the environmental
+facts or material relationships. Crisp world labels and correctly facing player
+motion are part of the existing readability goal; no educational content is added.
+
 Status: **Exploration.** Earliest realistic start for the layers below is V0.4.
 
 ---

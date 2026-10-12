@@ -46,6 +46,9 @@ export const sprites = {
     states: { idle: 0, move: 1, hit: 2, death: 3 },
   },
   [archetypeIds.character.starter]: {
+    authoredFacing: "right",
+    stateFacing: { hit: "left" },
+    walkAnimation: { frames: [0, 1, 2, 1], distancePerFrame: 20 },
     key: "eco_guardian.character.starter",
     path: "sprites/eco-guardian/atlas.png",
     frameWidth: 48,

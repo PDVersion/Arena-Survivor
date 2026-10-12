@@ -1,6 +1,6 @@
 # Autonomous development plan — browser performance first
 
-Status: **Session 1 / P0 verified 2026-10-12 on `codex/v0.4.3`; P1 next. See `../AUTONOMOUS_PROGRESS.md` for actual results.**
+Status: **Session 1 / P0 verified 2026-10-12 on `codex/v0.4.3`; Q1 player/difficulty correction verified; P1 next. See `../AUTONOMOUS_PROGRESS.md` for actual results.**
 Assessment date: 2026-10-11 (Australia/Sydney).
 Amended: 2026-10-11 with the owner's recycling-game ideation document.
 
@@ -11,7 +11,7 @@ the slower, readable environmental game. Work autonomously in **60–120 minute
 sessions**, measuring, implementing, testing, reviewing, and recording each
 completed cycle. Offer optional features for the owner to select before building
 them. The performance work below can proceed without another task-selection
-question; optional content remains pending selection.
+question; F16 difficulty is selected/delivered in Q1, with other optional content pending selection.
 
 This document is an execution roadmap, not a claim of completion. It does not
 create a recurring automation or launch a timed session. Existing milestone
@@ -185,6 +185,16 @@ minutes. Estimates include testing/review. If the core finishes early, select
 from the extension or the next eligible phase; if it takes longer, carry its
 remaining work forward. Do not enter a dependent phase before the current gate
 passes. Do not stop after one small fix while useful authorized work remains.
+
+## Selected interruption after Session 1
+
+The owner selected F16 as Beginner / Normal / Experienced (Normal slightly
+below the old baseline), plus player walk/facing, crisp background text and common
+tool-upgrade corrections. Q1 in the active plan owns this before Session 2/P1.
+This replaces F16's provisional Relaxed/Standard/Challenge naming and its
+unchanged-Standard assumption. Other optional features are unselected. After Q1
+verifies, resume P1, then P2–P6; refresh the P0 comparison scenario for the new
+Normal baseline rather than claim that old gameplay recordings are equivalent.
 
 ## Performance session backlog — approximately 8–16 hours
 
@@ -417,7 +427,7 @@ in one hour. Already shipped features such as endless mode are not on this list.
 | F13 | **One new waste behaviour:** a rolling can, unfolding box, or zone-producing food waste | 2–3 | New scoped content phase; F1 not required; finite spawn/hazard rules and stress gate |
 | F14 | **Automatic recyclable-resource totals:** recover materials alongside XP, initially without extra pickups | 3–4 | New economy phase, F6 for storage; exact committed rewards and bounded counters |
 | F15 | **Small park-restoration progression:** three visible milestones and equipment/cosmetic unlocks between runs | 3–4 | F14 + F6; new scoped phase; menu presentation first, no city simulation |
-| F16 | **Relaxed/Standard/Challenge presets:** approachable or more demanding runs chosen before play | 2–3 | Theme-owned difficulty data; Standard unchanged; balance and mode-specific performance gate |
+| F16 | **Beginner/Normal/Experienced presets (Q1 verified):** approachable or more demanding runs chosen before play | 2–3 | Theme-owned difficulty data; Normal gentler than old baseline; Q1 balance/browser/stress gate |
 | F17 | **One optional collection-station objective:** deposit selected resources or safely clear a marked zone for a reward | 3–4 | F14 for deposits; education research if factual; later E6-style opt-in objective, no mandatory quiz |
 | F18 | **Controller support:** movement, interaction, and complete menu navigation with a gamepad | 2–3 | Existing input/settings seam; disconnect/focus/deadzone/menu regression coverage |
 
@@ -462,7 +472,7 @@ because a session ended.
 | F13 — One enemy | (1) author one role's theme contract, reusable movement/spawn/hazard behaviour and deterministic tests; (2) director integration, readable primitive cues, offspring/cap/ledger browser checks and balance; (3) dense mixed-roster/default-low stress, edge cases and corrections if needed |
 | F14 — Resources | (1) finite theme-owned resource definitions, reward provenance and exact-once run counters alongside XP; (2) run-end/session summary and storage/schema migration, with restart/double-count/import fixtures; (3) browser collection/reload/recovery and stress with no new collectible actors; (4) narrowly scoped eligibility/recovery rules only if selected, plus full economy gate |
 | F15 — Restoration | (1) three milestone conditions, costs/unlocks and pure insufficient-resource/idempotence tests; (2) existing-menu progress screen and bounded before/after scene presentation; (3) persist spend/unlock safely, handle storage failure and import compatibility; (4) complete restore/reload/browser/low-mode gate and adjust the progression economy using evidence |
-| F16 — Difficulty | (1) neutral preset contracts, theme tuning and Standard-equivalence tests; (2) pre-run choice, clear copy, settings compatibility and browser lifecycle; (3) simulator comparisons, escape/telegraph/readability checks and per-preset stress; difficulty never changes implicitly with graphics quality |
+| F16 — Difficulty | (1) neutral preset contracts, theme tuning and ordering and baseline-comparison tests; (2) pre-run choice, clear copy, settings compatibility and browser lifecycle; (3) simulator comparisons, escape/telegraph/readability checks and per-preset stress; difficulty never changes implicitly with graphics quality |
 | F17 — Station/objective | (1) one optional objective's state/reward/expiry rules and duplicate-completion tests; (2) bounded placement/telegraph and existing interaction prompt; (3) committed resource deposit or zone-clear reward, helpful failure feedback and factual-content review when applicable; (4) ignore/complete/restart/reload, balance and stress gate |
 | F18 — Controller | (1) input adapter with deadzones, action mapping, repeat behaviour and disconnect tests; (2) title/pause/guide/level-up/overtime/end-screen navigation and device-switch browser checks; (3) focus/unplug/reconnect, remapping compatibility and real-controller smoke if hardware is available |
 

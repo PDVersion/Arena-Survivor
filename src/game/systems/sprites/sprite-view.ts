@@ -78,9 +78,9 @@ export class SpriteView {
     return this.renderedFrame;
   }
 
-  /** True when the authored left-facing sheet is mirrored to face right. */
+  /** Whether the current authored pose is mirrored. */
   get mirrored(): boolean {
-    return this.flipX;
+    return this.image.flipX;
   }
 
   constructor(
@@ -164,7 +164,7 @@ export class SpriteView {
     const source = this.source;
     const deltaX = source.x - this.previousX;
     const deltaY = source.y - this.previousY;
-    const usesPlayerCycle = this.definition.frames >= 8;
+    const usesPlayerCycle = Boolean(this.definition.walkAnimation) || this.definition.frames >= 8;
     const body = (source as SpriteViewSource & {
       body?: Readonly<{ velocity?: Readonly<{ x: number; y: number }> }> | null;
     }).body;
@@ -178,7 +178,7 @@ export class SpriteView {
       movedDistance > 0.01 || Math.abs(velocityX) + Math.abs(velocityY) > 0.01;
     const horizontalMotion = Math.abs(velocityX) > 0.01 ? velocityX : deltaX;
     if (usesPlayerCycle || this.animateMovement) {
-      this.flipX = resolveSpriteFlipX(this.flipX, horizontalMotion);
+      this.flipX = resolveSpriteFlipX(this.flipX, horizontalMotion, this.definition.authoredFacing ?? "left");
     }
     this.previousX = source.x;
     this.previousY = source.y;
@@ -196,12 +196,20 @@ export class SpriteView {
         { step: this.playerStep, distance: this.playerDistance },
         movedDistance,
         moving,
+        this.definition.walkAnimation?.distancePerFrame,
+        this.definition.walkAnimation?.frames,
       );
       this.playerStep = next.step;
       this.playerDistance = next.distance;
       const transient = this.animation.transient;
       if (transient && this.image.scene.time.now < transient.untilMs) {
         this.setState(transient.state);
+        // Some generated poses face differently from the clean walk strip.
+        // Preserve the chosen direction rather than flipping on a hit flash.
+        const facing = this.definition.stateFacing?.[transient.state];
+        if (facing && facing !== (this.definition.authoredFacing ?? "left")) {
+          this.image.setFlipX(!this.flipX);
+        }
       } else {
         this.setFrame(next.frame);
       }

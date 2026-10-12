@@ -2,6 +2,16 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { ThemeCopy } from "../../../core/archetypes/contracts";
 
 export const copy = {
+  difficulty: {
+    label: "Difficulty",
+    nextRun: "Next run difficulty",
+    hint: "1 / 2 / 3 or left / right to choose",
+    levels: {
+      beginner: { name: "Beginner", description: "A gentler start: fewer threats, less harm, more health and a stronger tool." },
+      normal: { name: "Normal", description: "Balanced pressure with room to learn and build your equipment." },
+      experienced: { name: "Experienced", description: "More arrivals and tougher threats for practiced players." },
+    },
+  },
   gameTitle: "Arena Survivor",
   arenaName: "The Ember Court",
   bootStatus: "The arena awaits",

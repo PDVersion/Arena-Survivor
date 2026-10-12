@@ -13,6 +13,7 @@ import { elites } from "./elites";
 import { progression } from "./progression";
 import { director } from "./director";
 import { difficulty } from "./difficulty";
+import { difficultyPresets } from "./difficulty-presets";
 import { bodies } from "./bodies";
 import { hazards, hazardTuning } from "./hazards";
 import { view } from "./view";
@@ -44,6 +45,7 @@ export const ecoGuardianTheme = defineTheme({
   elites,
   hazards,
   tuning: {
+    difficultyPresets,
     view,
     pace,
     progression,

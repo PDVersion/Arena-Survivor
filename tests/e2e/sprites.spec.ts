@@ -25,7 +25,7 @@ test("the accepted player and enemy roster load together in a live run", async (
   expect(errors).toEqual([]);
 });
 
-test("the player holds a walk pose and mirrors right while restoring the regular left pose", async ({ page }) => {
+test("the player holds a walk pose with the authored right facing and mirrors left", async ({ page }) => {
   await page.goto("/?noContact=1&noXp=1&noHazards=1");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
@@ -41,7 +41,7 @@ test("the player holds a walk pose and mirrors right while restoring the regular
           : null;
       }),
     )
-    .toEqual({ walking: true, mirrored: true });
+    .toEqual({ walking: true, mirrored: false });
   await page.keyboard.up("ArrowRight");
 
   await page.keyboard.down("ArrowLeft");
@@ -52,7 +52,7 @@ test("the player holds a walk pose and mirrors right while restoring the regular
         return player?.velocityX && player.velocityX < 0 ? player.spriteMirrored : null;
       }),
     )
-    .toBe(false);
+    .toBe(true);
   await page.keyboard.up("ArrowLeft");
 
   await expect

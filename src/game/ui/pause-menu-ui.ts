@@ -198,20 +198,23 @@ export class PauseMenuUi {
         reducedMotion: "Reduced motion",
         muted: "Mute audio",
         minimapOpacity: "Minimap visibility",
+        difficulty: this.menuContext ? this.theme.copy.difficulty.label : this.theme.copy.difficulty.nextRun,
       };
       (Object.keys(labels) as SettingKey[]).forEach((key, index) => {
         const y = bodyTop + index * 44;
         const value = view.settings[key];
-        const on = typeof value === "boolean" ? value : value > 0;
-        const display = typeof value === "boolean"
+        const on = typeof value === "boolean" ? value : typeof value === "string" || value > 0;
+        const display = typeof value === "string" ? this.theme.copy.difficulty.levels[value].name : typeof value === "boolean"
           ? (value ? "ON" : "OFF")
           : value === 0 ? "OFF" : `${Math.round(value * 100)}%`;
+        const valueWidth = key === "difficulty" ? 200 : 96;
+        const valueX = left + panelWidth - 48 - valueWidth / 2;
         children.push(
           addUiText(this.scene, left + 32, y, labels[key], rowStyle),
           this.scene.add
-            .rectangle(left + panelWidth - 96, y + 10, 96, 30, on ? accent : floor, 1)
+            .rectangle(valueX, y + 10, valueWidth, 30, on ? accent : floor, 1)
             .setStrokeStyle(2, accent),
-          addUiText(this.scene, left + panelWidth - 96, y + 10, display, {
+          addUiText(this.scene, valueX, y + 10, display, {
               ...rowStyle,
               color: on ? palette.background : palette.text,
               fontStyle: "bold",
@@ -220,7 +223,7 @@ export class PauseMenuUi {
         );
         this.settingBounds.push({
           key,
-          bounds: new Phaser.Geom.Rectangle(left + panelWidth - 144, y - 5, 96, 40),
+          bounds: new Phaser.Geom.Rectangle(valueX - valueWidth / 2, y - 5, valueWidth, 40),
         });
       });
     }

@@ -11,7 +11,7 @@ better than the simpler educational game.
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
 | **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Merged from `codex/v0.4.2` |
 | **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Merged from `codex/v0.4.2.1` |
-| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0 verified on `codex/v0.4.3`; P1 next; content not started |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0 and Q1 verified on `codex/v0.4.3`; P1 next; other content not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -114,6 +114,12 @@ not a change to game content, balance, or the V0.4.4 sprite gate.
 
 Once an increment merges, the next increment may edit its code normally while
 preserving the permanent presentation/simulation boundary above.
+
+After P0, the owner selected a Q1 correction before P1: player facing/walk,
+crisp background text, common tool-upgrade availability and three difficulty
+presets (F16). `BUILD_PLAN_V0.4.3.md` owns that exception and its exact paths.
+It may amend eco sprite presentation metadata; bitmap generation and remaining
+roster work remain gated to V0.4.4. Other optional content is still unselected.
 
 ## Gates
 

@@ -22,6 +22,17 @@ product goal. The camera should make a modest population feel present, and a
 technical ceiling such as 300 enemies should remain available without requiring
 the design to fill it.
 
+## Three run difficulty levels — selected after V0.4.3 P0
+
+Choose Beginner, Normal or Experienced before starting. Normal is the default,
+slightly gentler than the previously single baseline; Experienced increases
+pressure, and Beginner reduces incoming pressure while improving the starter
+character/tool. Presets are theme-owned data resolved once per run and shown on
+the title/settings surfaces. Changes during a run apply to the next run. The
+0.5 gameplay rate, view, collision geometry, material relationships and caps
+remain independent of difficulty. Preserve real-world identity and relative
+material-health ordering; preset multipliers are game balance, not fact claims.
+
 ## V0.4.2 direction correction
 
 The original plan was written around large swarms, projectile penetration,

@@ -64,3 +64,6 @@ export function addUiText(
     .text(x, y, text, { ...style, resolution: UI_TEXT_RESOLUTION })
     .setPadding(4, 4, 4, 8);
 }
+
+/** World labels also need oversampled glyph textures when the camera enlarges them. */
+export const addWorldText = addUiText;

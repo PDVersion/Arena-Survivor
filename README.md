@@ -11,12 +11,14 @@ walk-through contact with bounded knockback, Microplastics, Glass Shards and
 finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
 checkpoint are also merged; remaining art stays gated until the roster settles.
 
-**V0.4.3 is active on `codex/v0.4.3`, starting with performance P0–P6.**
-Trustworthy wall-frame measurements precede production diagnostics, interface,
-simulation, presentation and lifecycle profiling. Selected content C1–C7 follows
-the performance gate; no optional feature has been selected. Real older-device
+**V0.4.3 is active on `codex/v0.4.3`; P0 measurement and Q1 play-test corrections are verified.**
+Q1 fixes player facing/walking and zoomed world text, makes both Cleanup Grabber
+upgrade entries common in the offer pool, and adds Beginner / Normal / Experienced
+difficulty (selected F16). P1 production diagnostics is next, then interface,
+simulation, presentation and lifecycle profiling through P6. Other optional
+content remains unselected; C1–C7 follows the performance gate. Real older-device
 acceptance remains pending measurement. See [session progress](AUTONOMOUS_PROGRESS.md),
-[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–102.
+[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–106.
 
 V0.1–V0.3 and the V0.3.1 corrections are complete. Their plans retain the
 implementation history for progression, director, hazards, shrines, skills,
@@ -65,13 +67,28 @@ WASD / Arrow keys = Move
 Enter / Space     = Begin a run from the title screen
 Escape            = Pause or resume
 E / Space         = Activate a shrine while in range
-1 / 2 / 3         = Choose a level-up upgrade
+1 / 2 / 3         = Choose title-screen difficulty or a level-up upgrade
 1 / 2             = Answer the end-of-timer choice
 R / Enter         = Restart after death or completion
 M                 = Mute or unmute session audio
 Tab / left/right  = Switch pause-menu tabs while paused
 Up / down         = Switch Field Guide sections
 ```
+
+Choose difficulty on the title screen (buttons, 1/2/3 or left/right). Normal is
+the default. Settings changes during play apply to the next run; the HUD names
+the current preset. Choices last for this browser session and are not saved yet.
+Multipliers below are relative to the game before presets:
+
+| Preset | Enemy health / damage / arrival rate | Player and tool help |
+| --- | --- | --- |
+| Beginner | 75% / 60% / 70%; enemy speed 85% | Health 125%, speed 110%, pickup reach 125%, tool damage 120%, cooldown 90% |
+| Normal | 95% / 85% / 90% | Original player/tool stats |
+| Experienced | 110% / 110% / 115% | Original player/tool stats |
+
+Hazard damage/rate follows the preset's enemy damage/arrival multipliers. Both
+tool upgrade entries use common offer weighting; card quality still rolls across
+Common through Unique, preserving stronger rewards.
 
 Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, and live world pressure.
 

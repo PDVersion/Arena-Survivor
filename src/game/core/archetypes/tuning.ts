@@ -1,5 +1,6 @@
 import type { EnemyId, HazardId, ShrineId } from "./ids";
 import type { UpgradeTier } from "./tiers";
+import type { DifficultyPresets } from "./difficulty";
 
 /**
  * Theme-owned tuning contracts.
@@ -288,6 +289,7 @@ export interface PaceTuning {
 }
 
 export interface TuningPack {
+  readonly difficultyPresets: DifficultyPresets;
   readonly view: ViewTuning;
   readonly pace: PaceTuning;
   readonly progression: ProgressionTuning;

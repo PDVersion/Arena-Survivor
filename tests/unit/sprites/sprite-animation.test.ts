@@ -52,4 +52,22 @@ describe("sprite animation state", () => {
     expect(resolveSpriteFlipX(false, 1)).toBe(true);
     expect(resolveSpriteFlipX(true, 0)).toBe(true);
   });
+
+  it("respects right-facing artwork and retains facing on vertical/no-motion ticks", () => {
+    expect(resolveSpriteFlipX(true, 10, "right")).toBe(false);
+    expect(resolveSpriteFlipX(false, -10, "right")).toBe(true);
+    expect(resolveSpriteFlipX(true, 0, "right")).toBe(true);
+  });
+
+  it("uses the theme stride without idle flashes or skipped poses", () => {
+    let state = advancePlayerMovementFrame({ step: 0, distance: 0 }, 0, true, 20);
+    const frames: number[] = [];
+    for (let step = 0; step < 8; step += 1) {
+      state = advancePlayerMovementFrame(state, 20, true, 20);
+      frames.push(state.frame);
+      expect(advancePlayerMovementFrame(state, 0, true, 20)).toEqual(state);
+    }
+    expect(frames).toEqual([1, 2, 1, 0, 1, 2, 1, 0]);
+    expect(advancePlayerMovementFrame(state, 200, true, 20).frame).toBe(1);
+  });
 });

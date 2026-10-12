@@ -6,6 +6,8 @@ import { V02_SPAWN_LIMITS } from "../spawning";
 import { resolveDirectorPlan, runProgress, selectRole } from "../director/spawn-director";
 import { createSeededRandom } from "../upgrades";
 import type { BuildContext, BuildModel } from "./build-models";
+import { resolveDifficultyTheme } from "../difficulty/resolve-difficulty";
+import type { DifficultyId } from "../../core/archetypes/difficulty";
 import { expectedRealDurationMs } from "../time/gameplay-time";
 
 /**
@@ -23,6 +25,7 @@ const DEFAULT_BUCKET_MS = 15_000;
 const SIMULATION_SEED = 0x5157_0003;
 
 export interface PacingOptions {
+  readonly difficulty?: DifficultyId;
   readonly theme: ThemeManifest;
   readonly build: BuildModel;
   readonly durationMs: number;
@@ -46,6 +49,7 @@ export interface PacingBucket {
 }
 
 export interface PacingReport {
+  readonly difficulty: DifficultyId;
   readonly themeId: string;
   readonly buildId: string;
   readonly durationMs: number;
@@ -82,7 +86,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   }
   if (!Number.isFinite(stepMs) || stepMs <= 0) throw new Error("Step must be greater than zero");
 
-  const theme = options.theme;
+  const theme = resolveDifficultyTheme(options.theme, options.difficulty ?? "normal");
   const tuning = theme.tuning;
   const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter);
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter);
@@ -223,6 +227,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   }
 
   return Object.freeze({
+    difficulty: options.difficulty ?? "normal",
     themeId: theme.id,
     buildId: options.build.id,
     durationMs: options.durationMs,
@@ -263,7 +268,7 @@ export interface TimeToKillRow {
  * is either trivial or a wall.
  */
 export function timeToKillTable(report: PacingReport, options: PacingOptions): readonly TimeToKillRow[] {
-  const theme = options.theme;
+  const theme = resolveDifficultyTheme(options.theme, options.difficulty ?? "normal");
   const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter)!;
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
   const world = chaosWorldState(options.chaos ?? 1);

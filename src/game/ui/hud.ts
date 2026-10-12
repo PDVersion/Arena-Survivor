@@ -127,6 +127,7 @@ export class Hud {
     this.experienceLabel.setText(`${vocabulary.experience}: ${values.experience}`);
 
     const right = [
+      `${this.theme.copy.difficulty.label}: ${this.theme.copy.difficulty.levels[state.difficulty].name}`,
       `${vocabulary.time}: ${values.time}`,
       `${vocabulary.kills}: ${values.kills}`,
       `${vocabulary.enemies}: ${values.enemies}`,

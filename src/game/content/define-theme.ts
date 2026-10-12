@@ -11,6 +11,7 @@ import {
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
 import { upgradeTiers } from "../core/archetypes/tiers";
+import { difficultyIds, difficultyMultiplierKeys } from "../core/archetypes/difficulty";
 
 const HEX_COLOUR = /^#[0-9a-f]{6}$/i;
 const vocabularyKeys = [
@@ -96,6 +97,19 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!theme.copy.bootFailure.trim()) issues.push("boot failure copy is required");
   if (!theme.copy.movementHint.trim()) issues.push("movement hint copy is required");
   if (!theme.copy.levelUpTitle.trim()) issues.push("level-up title copy is required");
+  for (const key of ["label", "nextRun", "hint"] as const) {
+    if (!theme.copy.difficulty?.[key]?.trim()) issues.push(`difficulty.${key} copy is required`);
+  }
+  for (const id of difficultyIds) {
+    const preset = theme.tuning?.difficultyPresets?.[id];
+    if (!preset) issues.push(`difficulty preset ${id} is required`);
+    else for (const key of difficultyMultiplierKeys) {
+      const value = preset[key];
+      if (!Number.isFinite(value) || value <= 0) issues.push(`difficulty.${id}.${key} must be positive`);
+    }
+    const copy = theme.copy.difficulty?.levels?.[id];
+    if (!copy?.name?.trim() || !copy.description?.trim()) issues.push(`difficulty.${id} name/description is required`);
+  }
   if (!theme.copy.vocabulary) {
     issues.push("HUD vocabulary is required");
   } else {
@@ -673,6 +687,18 @@ function validateSprites(
       // which reads as a missing entity rather than as a broken index.
       if (!Number.isInteger(frame) || frame < 0 || frame >= sprite.frames) {
         issues.push(`sprites.${contentId} ${state} frame must be within [0, ${sprite.frames})`);
+      }
+      const facing = sprite.stateFacing?.[state];
+      if (facing !== undefined && facing !== "left" && facing !== "right") issues.push(`sprites.${contentId} ${state} facing is invalid`);
+    }
+    if (sprite.authoredFacing !== undefined && sprite.authoredFacing !== "left" && sprite.authoredFacing !== "right") {
+      issues.push(`sprites.${contentId} authored facing is invalid`);
+    }
+    if (sprite.walkAnimation) {
+      if (!Number.isFinite(sprite.walkAnimation.distancePerFrame) || sprite.walkAnimation.distancePerFrame <= 0 ||
+          sprite.walkAnimation.frames.length < 2 || sprite.walkAnimation.frames.some((frame) =>
+            !Number.isInteger(frame) || frame < 0 || frame >= sprite.frames)) {
+        issues.push(`sprites.${contentId} walk animation needs valid frames and positive stride`);
       }
     }
   }

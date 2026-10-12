@@ -2600,6 +2600,93 @@ Do not claim target completion, a bottleneck, a performance improvement or
 older-device readiness from this software-rendered baseline. P1 addresses
 confirmed retained diagnostic work and measures its effect before later tuning.
 
+### REC-105 — Inspect actual sprite facing and cadence at the effective gameplay rate
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 Q1; accepted player presentation and zoomed world text
+- Blocks: None
+
+Context / observation:
+The accepted player walk PNG faces right, while the shared helper assumed every
+sheet faced left. That made rightward walking appear backwards. Its hit pose
+(frame 5) faces left. The prior 60-world-unit stride took about 600 ms per pose
+at the effective 100-unit/second speed (200 base × 0.5 rate), despite the older
+comment describing 300 ms. This made a short cycle feel jerky.
+
+Decision / solution:
+Declare authored facing, exceptional state facing and walk frames/stride in
+presentation-only theme sprite metadata. The eco player keeps the clean
+0→1→2→1 strip with a 20-unit stride (about 200 ms/pose at Normal speed), mirrors
+leftward movement, and compensates for the hit pose. Hold a walk pose on a
+zero-displacement render tick with nonzero velocity; advance at most one pose
+per update. No bitmap is edited/generated and no sprite field drives physics.
+The background title/movement hint now use the existing resolution-4 text
+helper, giving the 2× world camera enough glyph pixels without enlarging a
+resolution-1 texture. Global sprite filtering stays unchanged.
+
+Evidence / guardrail:
+Inspected accepted/raw PNGs and live right/left browser screenshots. A two-second
+right-walk trace sampled 136 render frames: zero idle flashes, zero wrong flips,
+with the authored pose sequence maintained. Units and browser movement tests
+pass. This corrects REC-077's implementation assumptions without rewriting its
+history. Verify actual art and effective real-time cadence for each new sheet;
+a mirrored flag alone does not prove correct facing. No rendering-speed gain
+or acceptance on other displays is claimed.
+
+### REC-106 — Difficulty is a theme-owned per-run snapshot; offer rarity and quality differ
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 Q1, selected F16, balance reports and future persistence
+- Blocks: None; hardware/survival tuning acceptance remains unmeasured
+
+Context / observation:
+After verified P0, the owner requested Beginner / Normal / Experienced, with
+Normal slightly easier than the previous single baseline. This explicitly
+selects F16 and authorizes Q1 before P1. The old roadmap's unchanged Standard
+assumption is superseded. Other optional content remains unselected.
+
+Decision / solution:
+Each production theme owns eleven preset multipliers and its labels/descriptions.
+Resolve a fresh manifest view once before initializing a run's actors, director,
+hazards, weapons and UI; never multiply the source manifest or reapply the preset
+on top of a resolved view. Session selection defaults to Normal, survives restart,
+and is snapshotted in RunState. A settings change during play says "Next run"
+and applies on restart. No persistence adapter or saved-schema migration ships.
+Uniform enemy-health multipliers preserve the material ordering; radius, hitbox,
+gameplay clock, view, rewards and technical caps do not depend on difficulty.
+
+Relative to the pre-preset baseline:
+
+| Preset | Enemy health / damage / spawn rate / speed | Player health / speed / pickup reach | Tool damage / cooldown | Hazard damage / rate |
+| --- | --- | --- | --- | --- |
+| Beginner | .75 / .60 / .70 / .85 | 1.25 / 1.10 / 1.25 | 1.20 / .90 | .60 / .70 |
+| Normal | .95 / .85 / .90 / 1 | 1 / 1 / 1 | 1 / 1 | .85 / .90 |
+| Experienced | 1.10 / 1.10 / 1.15 / 1 | 1 / 1 / 1 | 1 / 1 | 1.10 / 1.15 |
+
+The eco Longer Grabber entry was already common in the offer pool; Collection
+Sweep was rare and is now common too. Both tool entries are commonly available.
+Card quality still rolls Common through Unique. This uses the recommended
+interpretation presented to the owner; no reply changed it during execution.
+Do not confuse offer weighting with a card's rolled quality label (REC-065).
+
+Evidence / limits:
+`npm run balance -- --difficulty all --build damage-rush` reports five-minute
+simulated final levels 32 / 25 / 24, peak live 86 / 300 / 300 and total XP
+2173 / 1005 / 853. The pre-change model was level 25 / peak 300 / XP 948.
+These are deterministic pacing estimates, not survival predictions: the model
+has no movement/contact survival. Both production manifests validate; 414 units,
+75 full browser regressions plus the next-run settings case, and all three serial
+300-peak stress/ledger/restart cases pass. One overlapping stress invocation lost
+its reused server after the full suite shutdown; rerunning it alone passed.
+
+Future guardrail:
+Keep session IDs stable, validate all preset fields, and snapshot difficulty at
+run creation. Refresh equivalent P0/P1 comparison recordings on this new Normal
+baseline; old gameplay recordings remain historical. Human survival tuning and
+physical older-device acceptance remain pending rather than inferred from CI.
+
 ## V0.4.4 entries — reconciled sprite roster
 
 <!-- V0.4.4 appends here. Reserved ids: REC-120 onward. No row #6–19 claim before its plan lifts REC-078. -->
