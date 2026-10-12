@@ -2456,6 +2456,8 @@ export class RunScene extends Phaser.Scene {
     const drawn = selectUpgradeChoices(this.runTheme.upgrades, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
       luck,
+      skillLevels: this.runState.skillLevels,
+      skills: this.runTheme.skills,
     });
     // Which upgrades appeared, then how good each one rolled. Luck feeds both,
     // but only the second makes a card actually stronger.

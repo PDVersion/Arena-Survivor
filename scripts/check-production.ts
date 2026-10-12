@@ -42,9 +42,14 @@ try {
   await page.waitForSelector(".card canvas[data-loaded=true]");
   if (await page.evaluate(() => Boolean(window.__ARENA_TEST__))) throw new Error("Sprite tool test interface leaked");
   if (errors.length) throw new Error(errors.join("; "));
+  await page.getByRole("link", { name: "Architecture atlas", exact: true }).click();
+  await page.getByRole("heading", { name: "Architecture atlas", exact: true }).waitFor();
+  await page.getByRole("link", { name: "Sprite browser ↗", exact: true }).click();
+  await page.waitForSelector(".card canvas[data-loaded=true]");
+  if (errors.length) throw new Error(errors.join("; "));
   const result = { checkedAt: new Date().toISOString(), browserVersion: browser.version(),
     bundlesChecked: emitted.map(({ name }) => name), diagnosticMarkersAbsent: true,
-    testInterfaceAbsent: true, productionBootPlayPause: true, spriteBrowserLoads: true, errors };
-  await writeFile("build/performance/P1_PRODUCTION_CHECK.json", JSON.stringify(result, null, 2) + "\n");
+    testInterfaceAbsent: true, productionBootPlayPause: true, spriteBrowserLoads: true, architectureNavigation: true, errors };
+  await writeFile(process.argv[2] ?? "build/performance/P1_PRODUCTION_CHECK.json", JSON.stringify(result, null, 2) + "\n");
   console.log(JSON.stringify(result));
 } finally { await browser.close(); server.kill("SIGTERM"); }

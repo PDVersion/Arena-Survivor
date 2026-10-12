@@ -7,13 +7,13 @@ Updated: 2026-10-12 (Australia/Sydney).
 Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
-common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2 and
+common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up and
 Session 2 / P1 are now verified; Session 3 / P2 is next and unstarted. Content C1–C7 and other optional features have not started;
 physical older-device acceptance remains pending. No performance improvement is claimed.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
-Q1 is `8d142ed`; Q2 is `7ff8bbf`. P1 is the next phase commit recorded below.
+Q1 is `8d142ed`; Q2 is `7ff8bbf`; verified P1 is `8cd149c`.
 
 ## Session 1 time budget
 
@@ -89,9 +89,8 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Next: Session 2 / P1**, guard production telemetry before diagnostic scans,
-verify test-mode snapshots and production exclusion, and compare equivalent
-before/after recordings. P2–P6 follow their verified gates; no later phase started.
+**Current next: Session 3 / P2.** The historical P0 next task, Session 2 / P1,
+has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
 was provided/measured, and an additional browser was not profiled. Full-run/overtime/10-restart soak, sustained mixed
@@ -155,7 +154,7 @@ stays roster-gated. Human survival tuning and representative older-device
 acceptance remain pending; neither is claimed by these checks.
 
 
-## Session 2 with Q2 follow-up — in progress
+## Session 2 with Q2 follow-up — completed
 
 Start: **2026-10-12 16:47:43 AEDT / 05:47:43 UTC**. Working limit: 90 minutes;
 deadline **18:17:43 AEDT / 07:17:43 UTC**, reserve final validation/review from
@@ -276,3 +275,62 @@ fragment/event art and any rejected-sheet regeneration remain roster-gated.
 Final recording/index preservation checkpoint: **18:11:17 AEDT / 07:11:17 UTC**,
 elapsed **83 min 34 s**; the final response records the end after phase commit.
 The dedicated local server on port 4213 serves the sprite browser for review.
+
+
+## Q3 wrap-up — 2026-10-12
+
+Start: **18:26:14 AEDT / 07:26:14 UTC**. This is the requested wrap-up, not
+a new P2 execution session. P1 was delivered at `8cd149c`; its previous final
+response was at 18:12:14 AEDT, **84 min 31 s** after Session 2 start.
+
+Completed correction cycle: stronger skill rolls could reach the skill cap
+before the upgrade pick-count cap, producing blank-detail/no-op offers. Selection
+now checks current skill levels and theme caps, retaining mixed upgrades if
+another effect can change state. Upgrade overlays keep their full measured
+content, fit the scaled viewport together and convert pointer clicks consistently.
+Summary and quality badge reserve separate horizontal space. Focused upgrade
+units pass in both themes. No tuning/clock/bitmap changes.
+
+The existing local architecture atlas is deliberately adopted as a reference
+artifact for the owner's navigation/docs request, preserving its embedded
+catalog/proposals. Its P1 snapshot is reconciled; atlas and sprite browser link
+both ways and build as separate pages. The concurrent roadmap design-review
+section and seven original status annotations remain outside this correction.
+
+Inspection findings: aqua triangles are intentional stationary, clearable Glass
+Shards; fresh-run browser coverage resolves accepted broken-glass frame 3. A
+pre-Q2 run can retain its old primitive until restarted; that screenshot's exact
+run provenance is unknown. Half-speed timing is authored: 5 simulated minutes
+take about 10 active real minutes, plus pauses/feedback/load effects. Detached
+intact-bottle pixels are baked into accepted/runtime art and absent from the
+intact brief; flagged for future regeneration, with shattered-pose debris kept
+distinct. REC-111 and the manifest record this.
+
+Gate completed at **18:43:51 AEDT / 07:43:51 UTC**, elapsed **17 min 37 s**;
+final documentation/index review and commit follow. Validation began about
+18:36 AEDT; Q3's correction cycle and final validation cycle are complete.
+
+| Executed Q3 check | Result |
+| --- | --- |
+| Final typecheck / lint / production build | Pass; game 1,617.45 kB / 377.33 kB gzip, existing chunk advisory; standalone atlas 117.88 kB / 29.29 kB at build checkpoint |
+| Final full unit suite | **424 tests / 50 files pass** |
+| Focused upgrade/layout/tool/roster/clock/overlay browser gate | **13 pass**, 37.7 s |
+| Full Chromium regression, zero retries | **81 pass / 1 existing opt-in measurement skip**, 3.0 min |
+| Strengthened actual per-card containment/pointer regression | **1 pass**, 2.0 s |
+| Serial per-preset stress/ledger/restart | **3 pass**, 34.9 s, zero retries |
+| Final production check, separate Q3 report | Pass; diagnostics/global absent, actual boot/play/pause and built atlas/tool navigation, zero browser errors |
+| Live layout / accepted and packed PNG inspection | Completed; capture `/private/tmp/arena-q3-upgrade-layout.png` |
+| Existing work preservation | Five historical plans byte-for-byte match initial backups; both active-plan annotations and full concurrent roadmap section preserved |
+
+Report: `build/performance/Q3_PRODUCTION_CHECK.json`. Historical P1 reports stay
+unchanged. No fresh sustained performance improvement claim, balance tuning,
+dependency update, sprite generation or profile migration; balance/audit were
+not rerun. The two-minute opt-in measurement remains unexecuted in Q3. Next remains
+Session 3/P2, using `build/SESSION_3_PROMPT.md`; no automatic new thread is created.
+
+Final recording/index review checkpoint: **18:45:40 AEDT / 07:45:40 UTC**,
+actual wrap-up elapsed **19 min 26 s**. All Q3 gates pass; final index review
+confirms only the requested correction/adopted atlas/handoff are staged. Commit:
+`fix(v0.4.3): bound upgrade cards and close capped skill offers` on
+`codex/v0.4.3`; no push/PR/merge. Original annotations/concurrent roadmap section
+remain unstaged. The final response records elapsed time after commit.

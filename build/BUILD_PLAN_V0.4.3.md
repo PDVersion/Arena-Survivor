@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2 and P1 verified; P2 next.** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3 and P1 verified; P2 next.** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -100,6 +100,32 @@ bench-only RunScene cap/load options for a sustained capacity sweep. Production
 stays capped at 300; controlled 150/300/450/600 loads measure wall p95/p99/stalls,
 update CPU, visible population, source counts and errors. Repeated software-GPU
 results do not authorize a production cap increase or replace hardware evidence.
+
+## Q3 — Wrap-up corrections and Session 3 handoff
+
+Owner-requested before starting P2: investigate clipped/missing upgrade detail,
+stationary aqua shards, slow timer and detached glass pixels; link sprite browser
+back to the architecture atlas; reconcile documentation and prepare a new-session
+prompt. P2 remains unstarted. Ownership: upgrade selection/description rules and
+RunScene offer call site, level-up overlay layout and corresponding tests;
+sprite browser navigation, architecture snapshot/status, Vite atlas entry,
+production navigation/report-output check, manifest review notes,
+plans/progress/README/reconciliation and `SESSION_3_PROMPT.md`. No bitmap changes,
+clock/fragment tuning, cap increase or optional content is authorized by this correction.
+
+Commit: `fix(v0.4.3): bound upgrade cards and close capped skill offers`
+
+- [x] Q3 — focused upgrade/layout/navigation/roster/clock gate, types/units/lint/
+  build, production check and browser regression; inspect live layout and record
+  findings. Preserve existing status annotations and concurrent atlas/roadmap work.
+
+Q3 gate (2026-10-12): final types/lint/build and **424 units / 50 files** pass;
+13 focused browsers, full Chromium **81 pass / one existing opt-in skip**, final
+strengthened per-card containment/pointer regression and **3 serial stress cases**
+(34.9 s) pass. Built production diagnostics/boot/play/pause/tool/atlas navigation
+passes with zero browser errors. Visual layout and accepted/packed art inspected.
+See REC-111 and the new-session `SESSION_3_PROMPT.md`. No new sustained performance
+comparison was required or claimed by this correction.
 
 ## Performance prerequisites — P0–P6
 

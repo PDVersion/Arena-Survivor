@@ -341,3 +341,14 @@ currently bind to the accepted Glass Bottle broken pose (frame 3), explicitly
 labelled "Reused accepted pose". No sheet or claim is added and the remaining
 roster generation gate is unchanged. Tool reviews are local developer assessments,
 not acceptance edits to this manifest or game-profile saves.
+
+### Q3 review finding — Glass Bottle detached pixels (2026-10-12)
+
+The owner highlighted detached cyan/dark pixels at the bottom-right of an intact
+Glass Bottle pose. Inspection confirms they exist in the accepted source and
+processed runtime art, rather than a particle effect or inspection overlay. The
+intact-pose brief does not call for debris; treat this as an art-review defect.
+The shattered frame intentionally contains angular fragments. No pixels, source
+attempts, atlas or acceptance state were changed. Future remediation must use the
+claim/prompt/regeneration/acceptance workflow after the roster gate, retaining the
+original sheet and matching world display size. See REC-111.

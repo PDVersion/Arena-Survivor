@@ -235,6 +235,10 @@ simulation/ledger behaviour is unchanged. Record measured benefit, including zer
 
 ### Session 3 — P2: reduce repeated minimap and HUD work
 
+New-session handoff: [`SESSION_3_PROMPT.md`](./SESSION_3_PROMPT.md). Q3 wraps
+up card fitting/early skill caps and atlas navigation before P2; it does not
+start this phase. Half-speed timing and stationary Glass Shards are deliberate.
+
 **60-minute core:** profile minimap on/off and hidden overlays; skip hidden-map
 view construction, cache stable palette values, and avoid unchanged text work
 where Phaser does not already do so. Keep essential status/health/XP updates

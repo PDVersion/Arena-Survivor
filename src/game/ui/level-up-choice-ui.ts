@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import type { ThemeManifest, UpgradeDefinition } from "../core/archetypes/contracts";
 import type { UpgradeTier } from "../core/archetypes/tiers";
 import type { UpgradeDescription } from "../systems/upgrades/describe-upgrade";
-import { addUiText, configureUiContainer, uiPointer } from "./ui-text";
+import { addUiText, configureUiContainer, uiPointer, uiViewport } from "./ui-text";
 
 export interface LevelUpView {
   readonly descriptions: readonly UpgradeDescription[];
@@ -34,6 +34,7 @@ export class LevelUpChoiceUi {
   private choices: readonly UpgradeDefinition[] = [];
   private choiceBounds: readonly Phaser.Geom.Rectangle[] = [];
   private choiceCallback?: (choice: UpgradeDefinition) => void;
+  private layoutScale = 1;
 
   constructor(scene: Phaser.Scene, theme: ThemeManifest) {
     this.scene = scene;
@@ -114,13 +115,13 @@ export class LevelUpChoiceUi {
       color: palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "16px",
-      wordWrap: { width: innerWidth },
+      wordWrap: { width: innerWidth - (tierNote ? tierNote.width + 16 : 0) },
     }).setAlpha(0.85);
 
     const texts = [heading, badgeText, summary];
     if (tierNote) texts.push(tierNote);
     let height = CARD_PADDING + Math.max(heading.height, badgeText.height) + CARD_ROW_GAP +
-      summary.height;
+      Math.max(summary.height, tierNote?.height ?? 0);
 
     let detailText: Phaser.GameObjects.Text | undefined;
     if (view.showDetail && description && description.lines.length > 0) {
@@ -162,11 +163,12 @@ export class LevelUpChoiceUi {
     this.choices = choices;
     this.choiceCallback = onSelect;
     const { width, height } = this.scene.scale;
+    const viewport = uiViewport(this.scene);
     const palette = this.theme.tokens.palette;
     const backgroundColour = Phaser.Display.Color.HexStringToColor(palette.background).color;
     const floorColour = Phaser.Display.Color.HexStringToColor(palette.floor).color;
 
-    const panelWidth = Math.min(820, width - 32);
+    const panelWidth = Math.min(820, viewport.width - 32);
     const cardWidth = Math.min(720, panelWidth - 100);
 
     // Measure first: the panel is sized to the cards, not the cards to the panel.
@@ -176,7 +178,10 @@ export class LevelUpChoiceUi {
     const cardsHeight = cards.reduce((total, card) => total + card.height, 0) +
       CARD_GAP * Math.max(0, cards.length - 1);
     const headerHeight = view.pendingAfterThis > 0 ? 108 : 84;
-    const panelHeight = Math.min(height - 32, headerHeight + cardsHeight + 28);
+    // Keep the panel around its measured content. If unusually large cards
+    // exceed the authored UI viewport, fit the whole overlay together.
+    const panelHeight = headerHeight + cardsHeight + 28;
+    this.layoutScale = Math.min(1, (viewport.height - 32) / panelHeight);
 
     const panel = this.scene.add
       .rectangle(width / 2, height / 2, panelWidth, panelHeight, backgroundColour, 1)
@@ -233,7 +238,7 @@ export class LevelUpChoiceUi {
       summary!.setPosition(left + CARD_PADDING, y);
       // Bottom-right of the card, clear of the summary text's wrap width.
       tierNote?.setPosition(left + cardWidth - CARD_PADDING, y);
-      y += summary!.height + CARD_ROW_GAP;
+      y += Math.max(summary!.height, tierNote?.height ?? 0) + CARD_ROW_GAP;
       detailText?.setPosition(left + CARD_PADDING, y);
       children.push(...card.texts);
 
@@ -244,6 +249,8 @@ export class LevelUpChoiceUi {
     this.choiceBounds = bounds;
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
     this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, children)).setDepth(1000);
+    const scale = this.container.scaleX * this.layoutScale;
+    this.container.setScale(scale).setPosition(width / 2 * (1 - scale), height / 2 * (1 - scale));
   }
 
   hide(): void {
@@ -257,6 +264,10 @@ export class LevelUpChoiceUi {
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
     const point = uiPointer(this.scene, pointer);
+    point.set(
+      this.scene.scale.width / 2 + (point.x - this.scene.scale.width / 2) / this.layoutScale,
+      this.scene.scale.height / 2 + (point.y - this.scene.scale.height / 2) / this.layoutScale,
+    );
     const index = this.choiceBounds.findIndex((bounds) => bounds.contains(point.x, point.y));
     const choice = this.choices[index];
     if (choice) this.choiceCallback?.(choice);

@@ -5,7 +5,7 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2 verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3 verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2833,3 +2833,44 @@ separate from desirable gameplay density and keep the gameplay clock unchanged.
 - The final current-theme names for the starter character, starter weapon, XP pickup, and several basic upgrades are intentionally TBD in `build/THEME_ARCHETYPES.md`; mechanics must not wait on those copy choices.
 - The long-term distinction between a reusable “skill,” a level-up “upgrade,” and a weapon-owned effect should be settled when the first non-stat skill enters scope. Stable IDs keep that taxonomy migratable.
 - The portable save checksum algorithm, import size limit, unknown-content policy details, and whether settings travel in every export remain provisional until persistence implementation.
+
+### REC-111 — Strong-roll caps, scaled card bounds and visual review provenance
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 Q3 wrap-up; future overlay and sprite review
+- Blocks: None; P2 remains next
+
+The owner's upgrade screenshot has a blank-detail Cleanup Streak at pick level
+5→6. Skill quality can advance multiple levels and cap at six before six picks,
+but the offer pool only checked pick counts. Applying that offer changes nothing
+and the description correctly has no change rows. Filter using current skill
+levels and theme caps at the real RunScene draw; mixed effects remain available
+when another effect changes state. Both themes' early-cap/selection regressions
+pass. This is distinct from clipping: the overlay also bounded its panel against
+the unscaled viewport while allowing measured cards to extend past it. Preserve
+measured content, fit the whole overlay within the authored UI viewport and invert
+that extra scale for pointer selection. Reserve summary width for the tier note.
+A real Phaser browser fixture stresses long headings/summaries, three detail rows
+per card, queued choices and scaled third-card selection; its capture is inspected.
+
+Stationary aqua triangles match the deliberately immobile clearable Glass Shards
+definition. Fresh-run browser coverage uses the accepted broken-glass frame 3;
+a pre-Q2 live actor may retain its primitive until restart. The screenshot's run
+provenance is unknown, so do not claim that image demonstrates a fresh-load bug.
+The timer uses the unchanged .5 simulation rate (REC-103): five timer minutes
+mean about ten active wall minutes, plus paused/feedback/load effects. Do not
+make the timer real-time alone while the rest of simulation stays half-speed.
+
+Detached bottom-right pixels in an intact Glass Bottle are present in accepted
+and packed runtime images. They are baked art, not particle code, and absent from
+the intact-pose brief. This art review remains open, nonblocking; the broken pose
+intentionally contains shards. Record the defect in the manifest and regenerate
+through the future approved prompt/acceptance workflow, never hand-edit a sheet.
+
+The owner explicitly requested atlas/tool linking and wrap-up docs. Adopt the
+existing local atlas reference artifact, preserving its catalog/proposals, update
+its stale P1 snapshot and build it as a separate HTML entry. Navigation is
+bidirectional in development and production; game imports no atlas catalog.
+The concurrent roadmap design-review section and original seven plan annotations
+remain outside the Q3 commit. Optional atlas proposals remain unselected.

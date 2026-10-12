@@ -1,8 +1,8 @@
-import type { UpgradeCategory, UpgradeDefinition, UpgradeRarity } from "../core/archetypes/contracts";
+import type { SkillDefinition, UpgradeCategory, UpgradeDefinition, UpgradeRarity } from "../core/archetypes/contracts";
 import type { SkillId, UpgradeId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 import { applyWorldModifier, type WorldState } from "./chaos/world-modifiers";
-import { raiseSkillLevel, type SkillLevels } from "./skills/resolve-skill";
+import { raiseSkillLevel, skillLevel, skillMaxLevel, type SkillLevels } from "./skills/resolve-skill";
 import { scaleSkillLevels, scaleStatValue } from "./upgrades/upgrade-tiers";
 
 export type RandomSource = () => number;
@@ -50,8 +50,18 @@ export function upgradeLevel(
 export function isUpgradeAvailable(
   upgrade: UpgradeDefinition,
   selectedUpgradeIds: readonly UpgradeId[],
+  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills">,
 ): boolean {
-  return upgrade.maxLevel === null || upgradeLevel(selectedUpgradeIds, upgrade.id) < upgrade.maxLevel;
+  if (upgrade.maxLevel !== null && upgradeLevel(selectedUpgradeIds, upgrade.id) >= upgrade.maxLevel) return false;
+  // Strong rolls can fill a skill before its pick-count cap. Mixed upgrades
+  // remain available while any effect can still change the run.
+  const skills = context?.skills;
+  const levels = context?.skillLevels;
+  if (!skills || !levels) return true;
+  return upgrade.effects.some((effect) =>
+    effect.kind !== "skill.level" ||
+    skillLevel(levels, effect.skillId) < skillMaxLevel(skills, effect.skillId),
+  );
 }
 
 /**
@@ -82,6 +92,8 @@ export function rarityWeight(rarity: UpgradeRarity, luck = 0): number {
 export interface UpgradeSelectionContext {
   readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly luck?: number;
+  readonly skillLevels?: SkillLevels;
+  readonly skills?: readonly SkillDefinition[];
 }
 
 /**
@@ -100,7 +112,7 @@ export function selectUpgradeChoices(
 ): readonly UpgradeDefinition[] {
   if (!Number.isInteger(count) || count < 1) throw new Error("Choice count must be positive");
 
-  const available = pool.filter((upgrade) => isUpgradeAvailable(upgrade, context.selectedUpgradeIds));
+  const available = pool.filter((upgrade) => isUpgradeAvailable(upgrade, context.selectedUpgradeIds, context));
   if (available.length < count) {
     throw new Error("Upgrade pool cannot provide enough distinct choices");
   }

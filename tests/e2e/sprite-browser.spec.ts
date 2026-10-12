@@ -40,3 +40,12 @@ test("sprite browser exposes fallbacks and exports review data", async ({ page }
   await page.locator("#theme").selectOption("knight_magic");
   await expect(page.locator(".card").first()).toContainText("Primitive fallback");
 });
+
+test("sprite browser links to the architecture atlas and back", async ({ page }) => {
+  await page.goto("/sprite-browser.html");
+  await page.getByRole("link", { name: "Architecture atlas", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Architecture atlas", exact: true })).toBeVisible();
+  await expect(page.locator("#snapshot")).toContainText("P1 verified");
+  await page.getByRole("link", { name: "Sprite browser ↗", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Sprite browser", exact: true })).toBeVisible();
+});

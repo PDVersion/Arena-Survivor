@@ -187,3 +187,39 @@ describe("upgrade selection", () => {
     expect(() => selectUpgradeChoices(pool, 3, () => 1)).toThrow(/\[0, 1\)/);
   });
 });
+
+describe("strong-roll skill caps", () => {
+  it("removes a skill after two Unique rolls fill six levels", () => {
+    const choice = upgrade(archetypeIds.upgrade.bloodlust);
+    let state = baseState();
+    for (let pick = 0; pick < 2; pick += 1) {
+      state = applyUpgrade(state, choice, (id) => skillMaxLevel(knightMagicTheme.skills, id), 2.5);
+    }
+    expect(upgradeLevel(state.selectedUpgradeIds, choice.id)).toBe(2);
+    expect(skillLevel(state.skillLevels, archetypeIds.skill.bloodlust)).toBe(6);
+    expect(isUpgradeAvailable(choice, state.selectedUpgradeIds, { ...state, skills: knightMagicTheme.skills })).toBe(false);
+  });
+  it.each([ecoGuardianTheme, knightMagicTheme])("excludes a capped skill before its pick-count cap in $id", (theme) => {
+    const choice = theme.upgrades.find((entry) => entry.id === archetypeIds.upgrade.bloodlust)!;
+    const state = {
+      selectedUpgradeIds: [choice.id],
+      skillLevels: { [archetypeIds.skill.bloodlust]: skillMaxLevel(theme.skills, archetypeIds.skill.bloodlust) },
+      skills: theme.skills,
+    };
+    expect(isUpgradeAvailable(choice, state.selectedUpgradeIds)).toBe(true);
+    expect(isUpgradeAvailable(choice, state.selectedUpgradeIds, state)).toBe(false);
+    for (let seed = 0; seed < 30; seed += 1) {
+      expect(selectUpgradeChoices(theme.upgrades, 3, createSeededRandom(seed), state)).not.toContain(choice);
+    }
+    expect(isUpgradeAvailable(choice, state.selectedUpgradeIds, {
+      ...state, skillLevels: { [archetypeIds.skill.bloodlust]: 5 },
+    })).toBe(true);
+  });
+
+  it("retains a mixed upgrade when another effect still changes stats", () => {
+    const choice = upgrade(archetypeIds.upgrade.bloodlust);
+    expect(isUpgradeAvailable({ ...choice, effects: [...choice.effects, { kind: "stat.add", target: "player.armour", value: 1 }] }, [], {
+      skills: knightMagicTheme.skills, skillLevels: { [archetypeIds.skill.bloodlust]: 6 },
+    })).toBe(true);
+  });
+});

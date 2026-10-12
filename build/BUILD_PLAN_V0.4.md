@@ -149,3 +149,8 @@ production themes still satisfy their contracts, and every accepted balance
 value remains theme-owned data. A 300-enemy stress test must still pass, but the
 game no longer treats reaching 300 enemies—or filling the screen with effects—as
 a design goal.
+
+Q3 is the owner's wrap-up correction before Session 3/P2: measured upgrade-card
+bounds, filtering early-capped skill offers, atlas/tool navigation and handoff
+documentation. The active increment plan owns its paths; it does not start P2,
+change the half-speed clock, move Glass Shards or authorize bitmap edits.

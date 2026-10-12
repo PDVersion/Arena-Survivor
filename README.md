@@ -11,7 +11,7 @@ walk-through contact with bounded knockback, Microplastics, Glass Shards and
 finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
 checkpoint are also merged; remaining art stays gated until the roster settles.
 
-**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2 and P1 are verified; P2 is next.**
+**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2/Q3 and P1 are verified; P2 is next.**
 Q1 fixes player facing/walking and zoomed world text, makes both Cleanup Grabber
 upgrade entries common in the offer pool, and adds Beginner / Normal / Experienced
 difficulty (selected F16). Q2 adds event readability, fragment pose reuse, a sprite review browser and spawn
@@ -91,7 +91,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). The game opens on a title screen; press Enter, Space, or click to begin. Runs last five minutes, combat fires automatically, and risk/reward shrines permanently raise world pressure. Shrines arrive one at a time across the run at scattered positions rather than all at the start; while one is off screen, a named marker on the edge of the view points the way.
+Open the URL printed by Vite (normally `http://localhost:5173`). The game opens on a title screen; press Enter, Space, or click to begin. Runs reach a five-minute simulation checkpoint (about ten active real-world minutes at the current 0.5 gameplay rate, plus pauses); combat fires automatically, and risk/reward shrines permanently raise world pressure. Shrines arrive one at a time across the run at scattered positions rather than all at the start; while one is off screen, a named marker on the edge of the view points the way.
 
 Controls:
 
@@ -175,7 +175,7 @@ npm audit --audit-level=high
 
 ## Balance without playing
 
-A five-minute run takes five minutes to evaluate, so pacing questions go through the headless simulator instead:
+An authored five-minute run takes about ten active real-world minutes at the current half-speed pace, so pacing questions go through the headless simulator instead:
 
 ```bash
 npm run balance                                      # every build model, 5 minutes
@@ -199,3 +199,11 @@ For a manual smoke test, verify movement, combat, XP collection, upgrade choices
 - Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting. `npm run balance -- --ttk` is the instrument for revisiting them.
 - Profile persistence, save export/import, weapon slots, additional weapons, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
 - The production bundle currently includes Phaser in the initial chunk, so Vite reports its large-chunk advisory during builds.
+
+The [architecture atlas](build/ARCHITECTURE_MAP.html) and
+[sprite browser](sprite-browser.html) link to one another and are separate built
+reference pages. Run Vite to use the sprite browser; its review notes stay local.
+The [Session 3 prompt](build/SESSION_3_PROMPT.md) resumes P2 in a new session.
+Glass Shards deliberately remain stationary and clearable; restart a pre-Q2 live
+run to load their broken-glass sprite binding. Detached pixels in intact Glass
+Bottle poses are an art-review finding, not runtime particles.
