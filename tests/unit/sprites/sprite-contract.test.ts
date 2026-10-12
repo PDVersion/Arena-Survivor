@@ -91,3 +91,11 @@ describe("sprite contract", () => {
     expect(validateTheme(theme)).toContain("sprites.enemy.swarm_basic hit frame must be within [0, 4)");
   });
 });
+
+
+describe("accepted atlas reuse", () => {
+  it("rejects an alias to a missing row", () => {
+    const theme = withSprites({ [archetypeIds.enemy.swarmBasic]: { ...wellFormed, path: "sprites/alternate/atlas.png", atlasFrameKey: "missing" } });
+    expect(validateTheme(theme)).toContain("sprites.enemy.swarm_basic atlas frame alias must match an existing direct atlas row");
+  });
+});

@@ -97,6 +97,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!theme.copy.bootFailure.trim()) issues.push("boot failure copy is required");
   if (!theme.copy.movementHint.trim()) issues.push("movement hint copy is required");
   if (!theme.copy.levelUpTitle.trim()) issues.push("level-up title copy is required");
+  for (const key of ["live", "total", "natural", "fragmentation", "baggedWaste", "environment", "benchmark"] as const) {
+    if (!theme.copy.spawnOrigins?.[key]?.trim()) issues.push(`spawnOrigins.${key} copy is required`);
+  }
   for (const key of ["label", "nextRun", "hint"] as const) {
     if (!theme.copy.difficulty?.[key]?.trim()) issues.push(`difficulty.${key} copy is required`);
   }
@@ -675,6 +678,14 @@ function validateSprites(
     ] as const) {
       if (!Number.isInteger(value) || value < 1) {
         issues.push(`sprites.${contentId} ${key} must be a positive integer`);
+      }
+    }
+    if (sprite.atlasFrameKey !== undefined) {
+      const target = Object.values(sprites).find((entry) => entry?.key === sprite.atlasFrameKey);
+      if (!sprite.path.endsWith("/atlas.png") || !target || target.atlasFrameKey ||
+          target.path !== sprite.path || target.frames !== sprite.frames ||
+          target.frameWidth !== sprite.frameWidth || target.frameHeight !== sprite.frameHeight) {
+        issues.push(`sprites.${contentId} atlas frame alias must match an existing direct atlas row`);
       }
     }
     for (const state of spriteStates) {

@@ -134,10 +134,11 @@ test("clearing the field stops arrivals and ends on an empty arena", async ({ pa
 
   // No new arrivals. Measured against simulated time, so the window genuinely
   // covers a spawn interval rather than however much wall time the runner had.
-  const atChoice = (await snapshot(page))?.run?.liveEnemies ?? 0;
+  const atChoice = (await snapshot(page))?.spawnOrigins?.spawned.natural ?? 0;
   if ((await snapshot(page))?.run?.status === "playing") {
     await advanceSimulation(page, 1_200);
-    expect((await snapshot(page))?.run?.liveEnemies ?? 0).toBeLessThanOrEqual(atChoice);
+    // Bagged Waste can release children while clearing; natural arrivals stop.
+    expect((await snapshot(page))?.spawnOrigins?.spawned.natural ?? 0).toBe(atChoice);
   }
 
   // The field empties by being fought, and the run ends when it is empty.

@@ -45,6 +45,14 @@ export const sprites = {
     frames: 4,
     states: { idle: 0, move: 1, hit: 2, death: 3 },
   },
+  // Accepted broken-glass pose, reused until the dedicated fragment art pass.
+  [archetypeIds.enemy.stationaryFragment]: {
+    key: "eco_guardian.enemy.stationary_fragment",
+    atlasFrameKey: "eco_guardian.enemy.slow_durable",
+    path: "sprites/eco-guardian/atlas.png",
+    frameWidth: 48, frameHeight: 48, frames: 4,
+    states: { idle: 3, move: 3, hit: 3, death: 3 },
+  },
   [archetypeIds.character.starter]: {
     authoredFacing: "right",
     stateFacing: { hit: "left" },

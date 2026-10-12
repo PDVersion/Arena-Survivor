@@ -153,3 +153,35 @@ presentation only if measurements justify it, P5 lifecycle/startup and P6 readin
 F16 is delivered; other optional content awaits selection. V0.4.4 remaining art
 stays roster-gated. Human survival tuning and representative older-device
 acceptance remain pending; neither is claimed by these checks.
+
+
+## Session 2 with Q2 follow-up — in progress
+
+Start: **2026-10-12 16:47:43 AEDT / 05:47:43 UTC**. Working limit: 90 minutes;
+deadline **18:17:43 AEDT / 07:17:43 UTC**, reserve final validation/review from
+**17:57:43 AEDT / 06:57:43 UTC**. Resume `codex/v0.4.3` at `8d142ed` with the
+seven original plan annotations intact. Owner-authorized Q2 correction precedes
+P1's matched before/after recording. Bagged Waste confirmation is pending; its
+fixed five-child composition is preserved while independent work proceeds.
+
+
+Q2 completed-cycle checkpoint: **17:15:04 AEDT / 06:15:04 UTC**, elapsed
+**27 min 21 s** from this session's start. Event text now renders at resolution 4
+with camera compensation, spent minimap markers are removed, Glass Shards reuse
+accepted art, and the standalone sprite review browser is built. Microplastics
+open the eco run; bottles quietly unlock at .1 progress. Live/cumulative origin
+accounting is event-driven. REC-107/108 record the findings and pending Bagged
+Waste confirmation; its fixed five-child mix remains unchanged.
+
+Q2 gate: types/lint/build pass; **416 units / 49 files**, **13 focused browsers**,
+final **78 full Chromium passes / 1 existing opt-in skip**, **3 serial stress
+passes** (32.8 s), final tool checks **2 pass**. An earlier full run exposed the
+clearing test's monotonic-population assumption; it was corrected to assert
+natural arrivals stop, and the final full rerun passed. All-preset damage-rush
+balance: levels 31 / 26 / 25, peaks 43 / 300 / 300, XP 1954 / 1056 / 927.
+Inspected live event/roster/tool screenshots at `/private/tmp/arena-q2-qa/`.
+No bitmap generation/edits, remaining roster claims or profile writes.
+
+P1 now begins after the Q2 gate: matched production before/after recordings,
+early diagnostic guards, production exclusion and retained test snapshots,
+plus an explicitly test-only sustained capacity sweep. Production cap stays 300.

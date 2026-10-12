@@ -67,31 +67,32 @@ describe("spawn cadence", () => {
 
 describe("role composition", () => {
   it("gates roles behind their unlock threshold", () => {
-    expect(Object.keys(shares(0))).toEqual([archetypeIds.enemy.swarmBasic]);
-    expect(Object.keys(shares(0.19))).toHaveLength(1);
+    expect(Object.keys(shares(0))).toEqual([archetypeIds.enemy.fastFragile]);
+    expect(Object.keys(shares(0.099))).toHaveLength(1);
+    expect(Object.keys(shares(0.1))).toHaveLength(2);
     expect(Object.keys(shares(0.2))).toHaveLength(2);
     expect(Object.keys(shares(0.4))).toHaveLength(3);
     expect(Object.keys(shares(0.45))).toHaveLength(4);
   });
 
   it("produces the documented five-minute shape from the curves", () => {
-    expect(shares(0)).toEqual({ [archetypeIds.enemy.swarmBasic]: 100 });
+    expect(shares(0)).toEqual({ [archetypeIds.enemy.fastFragile]: 100 });
     expect(shares(0.2)).toMatchObject({
-      [archetypeIds.enemy.swarmBasic]: 74,
-      [archetypeIds.enemy.fastFragile]: 26,
+      [archetypeIds.enemy.swarmBasic]: 12,
+      [archetypeIds.enemy.fastFragile]: 88,
     });
     expect(shares(1)).toMatchObject({
-      [archetypeIds.enemy.swarmBasic]: 33,
+      [archetypeIds.enemy.swarmBasic]: 43,
       [archetypeIds.enemy.fastFragile]: 28,
-      [archetypeIds.enemy.slowDurable]: 22,
-      [archetypeIds.enemy.deathSpawner]: 17,
+      [archetypeIds.enemy.slowDurable]: 16,
+      [archetypeIds.enemy.deathSpawner]: 13,
     });
   });
 
-  it("thins the baseline role as heavier roles arrive", () => {
-    const opening = shares(0.2)[archetypeIds.enemy.swarmBasic] ?? 0;
+  it("ramps bottles from a sporadic introduction", () => {
+    const opening = shares(0.1)[archetypeIds.enemy.swarmBasic] ?? 0;
     const closing = shares(1)[archetypeIds.enemy.swarmBasic] ?? 0;
-    expect(closing).toBeLessThan(opening);
+    expect(closing).toBeGreaterThan(opening);
   });
 
   it("shifts composition toward heavy roles as Chaos rises, not just volume", () => {
@@ -150,9 +151,7 @@ describe("elite escalation", () => {
 
 describe("milestone waves", () => {
   it("fires once when progress crosses a role unlock", () => {
-    expect(crossedUnlocks(tuning, 0.19, 0.21).map((role) => role.enemyId)).toEqual([
-      archetypeIds.enemy.fastFragile,
-    ]);
+    expect(crossedUnlocks(tuning, 0.09, 0.11)).toEqual([]);
     expect(crossedUnlocks(tuning, 0.21, 0.3)).toEqual([]);
     expect(crossedUnlocks(tuning, 0.39, 0.46).map((role) => role.enemyId)).toEqual([
       archetypeIds.enemy.slowDurable,
@@ -336,13 +335,14 @@ describe("wave movement", () => {
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
-  ])("keeps the first %s wave non-homing", (_name, theme) => {
+  ])("keeps fast %s milestone waves non-homing", (_name, theme) => {
     const waves = theme.tuning.director.roles
-      .filter((role) => role.unlockAt > 0)
+      .filter((role) => role.unlockAt > 0 && (!("milestoneWave" in role) || role.milestoneWave !== false) &&
+        theme.enemies.find((enemy) => enemy.id === role.enemyId)!.moveSpeed > theme.characters[0]!.baseStats.moveSpeed * 0.8)
       .sort((left, right) => left.unlockAt - right.unlockAt);
 
     // The first wave arrives before the player has any crowd clearing.
-    expect(waves[0]?.waveMovement).toBe("drift");
+    for (const role of waves) expect(role.waveMovement).toBe("drift");
   });
 
   it("still lets slower roles encircle the player", () => {

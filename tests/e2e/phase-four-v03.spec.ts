@@ -62,7 +62,7 @@ test("the director gates the roster on run progress and announces each milestone
 
   const opening = await snapshot(page);
   expect(Object.keys(opening?.pacing?.roleWeights ?? {})).toEqual([
-    archetypeIds.enemy.swarmBasic,
+    archetypeIds.enemy.fastFragile,
   ]);
   expect(opening?.pacing?.batchSize).toBe(1);
   expect(opening?.pacing?.eliteChance).toBe(0);
@@ -88,7 +88,7 @@ test("the director gates the roster on run progress and announces each milestone
   expect(late?.world?.chaos).toBe(1);
 
   // One announced wave per role unlocked after the opening.
-  expect(late?.pacing?.milestoneWaves).toBe(director.roles.length - 1);
+  expect(late?.pacing?.milestoneWaves).toBe(director.roles.filter((role) => role.unlockAt > 0 && (!("milestoneWave" in role) || role.milestoneWave !== false)).length);
   expect(late?.pacing?.waveSpawned).toBeGreaterThan(0);
 
   // Cadence tightened as the run progressed.
@@ -119,33 +119,18 @@ test("a restarted run rewinds the director to its opening state", async ({ page 
   expect(restarted?.pacing?.waveSpawned).toBe(0);
   expect(restarted?.pacing?.progress).toBeLessThan(0.2);
   expect(Object.keys(restarted?.pacing?.roleWeights ?? {})).toEqual([
-    archetypeIds.enemy.swarmBasic,
+    archetypeIds.enemy.fastFragile,
   ]);
 });
 
-test("the first milestone wave sweeps past instead of homing in", async ({ page }) => {
-  test.setTimeout(120_000);
+test("bottles unlock quietly before the heavy-role milestone waves", async ({ page }) => {
   await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp&atTimeUp=complete");
-
-  // Cross the first unlock, which releases the fast role's wave.
-  await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.milestoneWaves ?? 0), {
-      timeout: 60_000,
-    })
-    .toBeGreaterThanOrEqual(1);
-
-  const released = await snapshot(page);
-  // The fast role outruns the player, so its wave must not chase.
-  expect(released?.pacing?.driftSpawned).toBeGreaterThan(0);
-  expect(released?.pacing?.driftLive).toBeGreaterThan(0);
-
-  // Drifting enemies leave rather than accumulating against the arena edge.
-  await expect
-    .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.driftReclaimed ?? 0), {
-      timeout: 60_000,
-    })
-    .toBeGreaterThan(0);
-
-  const later = await snapshot(page);
-  expect(later?.pacing?.driftLive).toBeLessThan(released?.pacing?.driftSpawned ?? 0);
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.progress ?? 0), { timeout: 20_000 }).toBeGreaterThan(0.12);
+  const quiet = await snapshot(page);
+  expect(quiet?.pacing?.roleWeights[archetypeIds.enemy.swarmBasic]).toBeGreaterThan(0);
+  expect(quiet?.pacing?.milestoneWaves).toBe(0);
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.milestoneWaves ?? 0), { timeout: 30_000 }).toBeGreaterThanOrEqual(1);
+  const wave = await snapshot(page);
+  expect(wave?.pacing?.waveSpawned).toBeGreaterThan(0);
+  expect(wave?.pacing?.driftSpawned).toBe(0);
 });

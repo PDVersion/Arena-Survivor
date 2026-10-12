@@ -109,6 +109,7 @@ export const worldKeys = [
 export type WorldKey = (typeof worldKeys)[number];
 
 export interface ThemeCopy {
+  readonly spawnOrigins: Readonly<{ live: string; total: string; natural: string; fragmentation: string; baggedWaste: string; environment: string; benchmark: string }>;
   readonly difficulty: Readonly<{
     label: string;
     nextRun: string;
@@ -208,6 +209,8 @@ export interface SpriteDefinition {
     frames: readonly number[];
     distancePerFrame: number;
   }>;
+  /** Reuse an existing atlas row without editing its accepted pixels. */
+  readonly atlasFrameKey?: string;
   /** Stable texture key, e.g. `enemy.swarm_basic`. */
   readonly key: string;
   /** Path relative to `public/`, e.g. `sprites/eco-guardian/enemy_swarm_basic.png`. */

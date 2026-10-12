@@ -331,3 +331,13 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-09-02 | `character.starter` | 2 | 1 | n/a (built-in) | rejected | Targeted alpha-only retry improved pose and equipment consistency but returned an opaque black RGB background. |
 | 2026-09-18 | `character.starter` | 2 | 1 | n/a (built-in) | accepted | Deterministic normalization now retains the largest connected subject per frame, removing detached generator marks without hand-editing the preserved raw attempt; runtime uses the clean 0→1→2→1 walk cycle. |
 | 2026-09-21 | `enemy.fast_fragile` | 3 | 1 | n/a (built-in) | accepted | Replaced the obsolete Plastic Bag with a transparent four-pose Microplastics cluster; deterministic normalization preserves the multicolour material regions and compact connected silhouette. |
+
+
+## Runtime inspection follow-up — 2026-10-12 Q2
+
+Use `/sprite-browser.html` to inspect current atlas bindings at native zoom,
+step/freeze every pose and export per-sheet good/bad/review notes. Glass Shards
+currently bind to the accepted Glass Bottle broken pose (frame 3), explicitly
+labelled "Reused accepted pose". No sheet or claim is added and the remaining
+roster generation gate is unchanged. Tool reviews are local developer assessments,
+not acceptance edits to this manifest or game-profile saves.

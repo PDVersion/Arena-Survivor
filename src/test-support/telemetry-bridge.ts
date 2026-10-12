@@ -1,8 +1,10 @@
+import type { SpawnCounts } from "../game/systems/statistics/spawn-statistics";
 import type { FrameDistributionSnapshot } from "./frame-measurements";
 import type { DifficultyId } from "../game/core/archetypes/difficulty";
 import type { RunSettings } from "../game/state/settings-state";
 
 export interface ArenaTestSnapshot {
+  readonly spawnOrigins?: Readonly<{ live: SpawnCounts; spawned: SpawnCounts }>;
   readonly status: "booting" | "ready" | "failed";
   readonly scene: string | null;
   readonly themeId: string;
@@ -128,6 +130,8 @@ export interface ArenaTestSnapshot {
     terminalTitle: string | null;
     pauseTab: string | null;
     settings: RunSettings;
+    minimapShrines?: number;
+    shrineTextResolution?: number;
     movementHintVisible: boolean;
     minimapVisible: boolean;
     minimapBounds: Readonly<{ left: number; top: number; width: number; height: number }> | null;
@@ -336,6 +340,7 @@ export interface ArenaTestSnapshot {
       critTier: number;
       pierceChainIndex: number;
     }> | null;
+    spriteFramesByRole?: Readonly<Record<string, number | null>>;
     roster: Readonly<Record<string, number>>;
     rosterHighWater: Readonly<Record<string, number>>;
     offspringQueued: number;

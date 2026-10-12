@@ -49,6 +49,20 @@ progress and the active increment plan.
 `build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone
 underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
+## Sprite inspection
+
+Open `/sprite-browser.html` on the local server (for example
+[Sprite browser](http://localhost:5173/sprite-browser.html)). Filter/search the
+roster, compare idle/move/hit/death poses as a set, then select an entry to freeze
+or step every frame, play its walk, mirror it and change zoom/background. Mark
+good/bad/review and add notes; reviews persist in that browser and export as JSON.
+Missing sprite bindings are listed as fallbacks. Glass Shards reuse the accepted
+broken-glass pose until the dedicated art pass; no generated image was edited.
+
+Live source counts appear in the HUD, with live/total counts in Pause → World:
+natural (including waves), fragments, Bagged Waste releases, site effects and
+benchmark loads. Shrine-modified ambient arrivals are counted as natural.
+
 ## Run locally
 
 Requirements: Node.js 20+ and npm 10+.

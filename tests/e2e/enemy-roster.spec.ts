@@ -7,6 +7,7 @@ test("enemy roster exposes all five distinct configured roles", async ({ page })
     return roster ? Object.values(roster).filter((count) => count > 0).length : 0;
   }).toBe(5);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  expect(snapshot?.combat?.spriteFramesByRole?.["enemy.stationary_fragment"]).toBe(3);
   expect(snapshot?.combat?.rosterHighWater).toMatchObject({
     "enemy.swarm_basic": 1,
     "enemy.fast_fragile": 1,
@@ -26,6 +27,8 @@ test("Bagged Waste queues and eventually spawns its finite five-child material m
   await expect.poll(async () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.offspringSpawned), { timeout: 90_000 }).toBe(5);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.combat?.offspringQueued).toBe(5);
+  expect(snapshot?.spawnOrigins?.spawned.baggedWaste).toBe(5);
+  expect(snapshot?.spawnOrigins?.spawned.benchmark).toBe(1);
   expect(snapshot?.combat?.rosterHighWater["enemy.death_spawner"]).toBe(1);
   expect(snapshot?.combat?.rosterHighWater["enemy.swarm_basic"]).toBe(2);
   expect(snapshot?.combat?.rosterHighWater["enemy.fast_fragile"]).toBe(2);

@@ -121,6 +121,10 @@ presets (F16). `BUILD_PLAN_V0.4.3.md` owns that exception and its exact paths.
 It may amend eco sprite presentation metadata; bitmap generation and remaining
 roster work remain gated to V0.4.4. Other optional content is still unselected.
 
+The owner also authorized Q2 event readability, sprite inspection/reuse, opening
+composition and spawn accounting before P1 (REC-107/108). Exact paths and gates
+are in the active plan; new bitmap generation/remaining roster stays gated.
+
 ## Gates
 
 - V0.4.2 does not start from an unmerged sprite branch; V0.4.1 is already on

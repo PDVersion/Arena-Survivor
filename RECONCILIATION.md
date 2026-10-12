@@ -5,7 +5,7 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0 verified on `codex/v0.4.3`; P1 production telemetry guard is next, unstarted. V0.4.2.1 is merged; content C1–C7 and optional selections remain pending.**
+- Active phase: **V0.4.3 P0/Q1/Q2 verified on `codex/v0.4.3`; P1 production telemetry guard next. F16 is delivered; other content selections remain pending.**
 - Release-blocking open entries: **None**
 
 ## How to maintain this file
@@ -2686,6 +2686,63 @@ Keep session IDs stable, validate all preset fields, and snapshot difficulty at
 run creation. Refresh equivalent P0/P1 comparison recordings on this new Normal
 baseline; old gameplay recordings remain historical. Human survival tuning and
 physical older-device acceptance remain pending rather than inferred from CI.
+
+### REC-107 — Event labels and fragment inspection use the actual render surfaces
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 Q2 presentation/tooling
+- Blocks: None
+
+The owner's screenshots revealed raw resolution-1 ShrineActor text left behind
+by Q1's title/hint correction. Labels/prompts now use resolution 4 and UI scale
+countering the world's camera zoom. The minimap excludes activated shrines;
+spent world actors remain visible as the existing used cue. Glass Shards lacked
+a sprite binding: they now reuse accepted Glass Bottle frame 3 through a validated
+`atlasFrameKey` alias, without editing pixels, packing or claims. Runtime and
+inspection resolve the same frame key and preserve simulation geometry.
+
+`/sprite-browser.html` is a separate built entry with theme/search/art/review
+filters, pose comparison at game proportions, all-frame strip, freeze/step,
+walk playback, zoom/mirror/background and good/bad/review notes. Browser-local
+reviews export as JSON and do not modify accepted art/manifest or game saves.
+Missing sprites are listed explicitly. The theme registry stays tooling-only;
+no art is accepted or rejected automatically. Captures under
+`/private/tmp/arena-q2-qa/` were visually inspected; the browser verifies review
+retention and actual atlas loading. Dedicated fragment and event art stays gated.
+
+### REC-108 — Opening composition, immediate spawn origins and clearing semantics
+
+- Status: Accepted
+- Date: 2026-10-12
+- Affects: V0.4.3 Q2 eco director/rewards/diagnostics
+- Blocks: None; Bagged Waste change awaits owner confirmation
+
+The owner requested Microplastics first and sporadic bottles from 30 seconds.
+The eco director opens on the small role and unlocks bottles at normalized .1
+(30 s timer / about 60 s active real time at .5 rate), with no milestone burst.
+Calm bottle share starts ~6% and ramps to ~43%; heavier role thresholds remain.
+The old 2-XP small-role reward made the new common opening violate the existing
+cross-theme pacing gate. Set it to 1 XP, matching the common opening baseline;
+material health/harm/geometry and source IDs remain intact. Five-minute model
+levels are 31 / 26 / 25 for Beginner/Normal/Experienced, peaks 43 / 300 / 300,
+XP 1954 / 1056 / 927; these are pacing estimates, not survival measurements.
+
+Maintain live and cumulative source counts on successful actor creation/removal,
+with an idempotent ID ledger. Natural includes ordinary director and milestone
+waves; fragmentation is Fracture; Bagged Waste children are released; environment
+is surge/duplication; roster/load fixtures are benchmark. A shrine modifying
+natural cadence does not change that arrival's immediate origin. HUD shows live
+sources; Pause → World shows live/total, and the test bridge records all categories.
+Removal lowers live only, so totals survive death/cleanup; restart creates a fresh
+ledger and destruction callbacks capture their original ledger.
+
+Bagged Waste remains deterministic: 2 bottles, 2 Microplastics, 1 glass, at half
+the child's normal reward. No chance roll. The explicit confirmation question is
+pending; independent work does not change this mix. The new pacing exposed an
+old clearing-browser assertion that live population only decreases. It can rise
+by retained offspring while ambient arrivals stop; assert natural source totals
+stay fixed and the field eventually becomes empty instead of discarding births.
 
 ## V0.4.4 entries — reconciled sprite roster
 

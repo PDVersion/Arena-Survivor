@@ -13,6 +13,7 @@ export const alternateTheme = defineTheme({
   id: "alternate_test",
   schemaVersion: 1,
   copy: {
+    spawnOrigins: { live: "Live sources", total: "Spawn totals", natural: "Natural", fragmentation: "Split", baggedWaste: "Offspring", environment: "Events", benchmark: "Fixture" },
     difficulty: {
       label: "Pressure", nextRun: "Next pressure", hint: "Choose a pressure",
       levels: {

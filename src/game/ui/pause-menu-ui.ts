@@ -24,7 +24,7 @@ export type CodexSection = (typeof codexSections)[number];
 
 export interface PauseMenuView {
   readonly stats: readonly StatLine[];
-  readonly world: readonly WorldLine[];
+  readonly world: readonly Pick<WorldLine, "label" | "display">[];
   /** Upgrades taken, already formatted by the shared run-summary selector. */
   readonly upgrades: readonly string[];
   /** Shrine reference entries. */

@@ -124,7 +124,7 @@ export function crossedUnlocks(
 ): readonly DirectorRoleTuning[] {
   if (progress <= previousProgress) return [];
   return tuning.roles.filter(
-    (role) => role.unlockAt > 0 && role.unlockAt > previousProgress && role.unlockAt <= progress,
+    (role) => role.milestoneWave !== false && role.unlockAt > 0 && role.unlockAt > previousProgress && role.unlockAt <= progress,
   );
 }
 

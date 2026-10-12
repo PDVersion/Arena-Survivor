@@ -67,7 +67,8 @@ export const enemies = [
     contactCooldownMs: 1000,
     radius: 10,
     displayDiameter: 26,
-    xpReward: 2,
+    // Now the opening/common enemy: keep its reward at the bottle baseline.
+    xpReward: 1,
     armour: 0,
     geometry: "triangle",
     presentationToken: "enemyFast",

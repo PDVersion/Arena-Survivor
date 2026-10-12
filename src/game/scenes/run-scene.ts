@@ -1,8 +1,9 @@
 import Phaser from "phaser";
+import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
 import { activeTheme } from "../content/active-theme";
 import { isDifficultyId } from "../core/archetypes/difficulty";
 import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
-import { addWorldText } from "../ui/ui-text";
+import { addWorldText, UI_SCALE } from "../ui/ui-text";
 import { archetypeIds } from "../core/archetypes/ids";
 import { eliteIds, type FeedbackCategory } from "../core/archetypes/categories";
 import type {
@@ -334,6 +335,7 @@ interface ExplosionEventPayload {
 
 export class RunScene extends Phaser.Scene {
   private runTheme: ThemeManifest = activeTheme;
+  private spawnStatistics = new SpawnStatistics();
   private player?: PlayerActor;
   private runState?: RunState;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -791,6 +793,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private resetTransientRuntime(): void {
+    this.spawnStatistics = new SpawnStatistics();
     this.player = undefined;
     this.runState = undefined;
     this.cursors = undefined;
@@ -984,7 +987,7 @@ export class RunScene extends Phaser.Scene {
             y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * closeDistance)),
           }
         : undefined;
-      if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
+      if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0, undefined, "chase", "benchmark")) {
         this.loadHarnessSpawned += 1;
       }
     });
@@ -1041,7 +1044,9 @@ export class RunScene extends Phaser.Scene {
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement,
+        payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
+          payload.reason === "duplication" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural")) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1339,6 +1344,7 @@ export class RunScene extends Phaser.Scene {
       this.runTheme.tokens,
       this.runTheme.copy.content[definition.id].name,
       this.runTheme.copy.vocabulary.shrinePrompt,
+      UI_SCALE / this.runTheme.tuning.view.zoom,
     );
     this.shrineActors.push(actor);
     this.shrine ??= definition.id === archetypeIds.shrine.spawnSurge ? actor : undefined;
@@ -1660,6 +1666,7 @@ export class RunScene extends Phaser.Scene {
     eliteOverride?: boolean,
     angleRadians?: number,
     movement: WaveMovement = "chase",
+    origin: SpawnOrigin = spawnSource === "ambient" ? "natural" : "environment",
   ): boolean {
     if (
       !this.player ||
@@ -1731,6 +1738,8 @@ export class RunScene extends Phaser.Scene {
       },
     );
     if (movement === "drift") this.driftSpawned += 1;
+    const spawnStatistics = this.spawnStatistics;
+    spawnStatistics.add(enemy.targetId, origin);
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
     if (elite) {
@@ -1741,6 +1750,7 @@ export class RunScene extends Phaser.Scene {
     if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
       this.enemies.delete(enemy);
+      spawnStatistics.remove(enemy.targetId);
       if (this.runState) this.runState = setLiveEnemyCount(this.runState, this.enemies.size);
     });
     this.runState = setLiveEnemyCount(this.runState, this.enemies.size);
@@ -2461,6 +2471,7 @@ export class RunScene extends Phaser.Scene {
         : 0,
       killChain: runState?.statistics.recentKillTimesMs.length ?? 0,
       levelProgress: required > 0 ? (progression?.xp ?? 0) / required : 0,
+      spawnCounts: this.spawnStatistics.live,
     };
   }
 
@@ -2487,11 +2498,14 @@ export class RunScene extends Phaser.Scene {
     return {
       stats: runState ? selectPlayerStats(runState, this.runTheme) : [],
       world: runState
-        ? selectWorldLines(
+        ? [...selectWorldLines(
             runState.world,
             this.runTheme,
             runProgress(runState.elapsedMs, runState.durationMs),
-          )
+          ), { label: `${this.runTheme.copy.spawnOrigins.live} / ${this.runTheme.copy.spawnOrigins.total}`, display: "" }, ...spawnOrigins.map((origin) => ({
+            label: this.runTheme.copy.spawnOrigins[origin],
+            display: `${this.spawnStatistics.live[origin]} / ${this.spawnStatistics.spawned[origin]}`,
+          }))]
         : [],
       upgrades: summary?.upgrades ?? [],
       codex: selectShrineCodex(this.runTheme),
@@ -2534,7 +2548,7 @@ export class RunScene extends Phaser.Scene {
     this.minimap.update({
       player: this.player,
       enemies: [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated),
-      shrines: this.shrineActors.filter((shrine) => shrine.active),
+      shrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated),
       hazards: [...this.hazards].filter((hazard) => hazard.active),
     });
   }
@@ -2939,7 +2953,9 @@ export class RunScene extends Phaser.Scene {
             critChance: this.runState?.player.stats.critChance ?? 0,
           }
         : undefined,
+      spawnOrigins: this.spawnStatistics.snapshot(),
       combat: {
+        spriteFramesByRole: Object.fromEntries(this.enemyDefinitions.map((definition) => [definition.id, [...this.enemies].find((enemy) => enemy.definition.id === definition.id)?.view?.frame ?? null])),
         weaponId: this.weaponDefinition?.id ?? null,
         deliveryKind: this.weaponDefinition?.deliveryKind ?? null,
         enemyId: this.enemyDefinition?.id ?? null,
@@ -3055,6 +3071,8 @@ export class RunScene extends Phaser.Scene {
         terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
         settings: { ...getSessionSettings() },
+        minimapShrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated).length,
+        shrineTextResolution: this.shrineActors[0]?.textResolution ?? 0,
         movementHintVisible: Boolean(this.movementHint?.active && this.movementHint.visible),
         minimapVisible: this.minimap?.visible ?? false,
         minimapBounds: this.minimap?.bounds ?? null,

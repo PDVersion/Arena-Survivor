@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1 corrections verified; P1 next.** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2 corrections verified; P1 next.** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -64,6 +64,38 @@ hit-pose correction; a 136-frame movement trace has no idle flashes/wrong flips.
 World title/hint textures use resolution 4 at 2× camera zoom. See REC-105/106 and
 `AUTONOMOUS_PROGRESS.md` for balance evidence and limitations.
 
+## Q2 — Event readability, roster inspection, opening composition and spawn accounting
+
+Owner-authorized follow-up before P1: crisp event name/prompt textures and spent
+minimap removal; opening Microplastics with sporadic Plastic Bottles from 30 s
+(timer time) ramping later; visible Glass Shards using the existing accepted
+broken-glass frame; standalone sprite inspection/review tool; live/cumulative
+spawn-origin counts. Bagged Waste composition remains unchanged pending owner
+confirmation. This is a narrow exception to the sprite ownership gate: reuse
+accepted art without bitmap edits, new generation or remaining roster claims.
+
+Ownership: plans/progress/README/reconciliation, product/theme/education and
+sprite plan/manifest notes; ShrineActor, EnemyActor, RunScene; theme director/enemy opening reward,
+sprite aliases and copy; core sprite frame alias/role wave switch contracts and
+validation; sprite resolver/runtime frame; spawn accounting and matching HUD/
+pause statistics; standalone `sprite-browser.html`, `src/tools/sprite-browser*`,
+Vite multi-entry configuration; corresponding unit/browser tests and fixtures.
+
+Commit: `fix(v0.4.3): clarify site events and inspect the sprite roster`
+
+- [x] Q2 — affected units/types/lint/build, balance, focused event/minimap/roster/
+  sprite-browser/provenance browsers, serial stress and visual inspection pass.
+
+Q2 gate: 416 units / 49 files, types/lint/build, all-preset balance, 13 focused
+browsers, corrected full Chromium 78 pass / one opt-in skip, three serial stress
+cases, and live event/roster/tool screenshots pass. See REC-107/108.
+
+P1 additionally owns `scripts/performance.ts`, measurement reports/config and
+bench-only RunScene cap/load options for a sustained capacity sweep. Production
+stays capped at 300; controlled 150/300/450/600 loads measure wall p95/p99/stalls,
+update CPU, visible population, source counts and errors. Repeated software-GPU
+results do not authorize a production cap increase or replace hardware evidence.
+
 ## Performance prerequisites — P0–P6
 
 Use one milestone branch, `codex/v0.4.3`, with the following phase commits and
@@ -75,7 +107,7 @@ are excluded from these performance phases.
 | Phase | Ownership / permitted scope | Commit subject |
 | --- | --- | --- |
 | P0 | Active plans, `AGENTS.md`, `README.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, roadmap status; known lint defect in `tests/unit/weapons/collection-sweep.test.ts`; `src/test-support/**`; frame sampling only in `src/game/scenes/run-scene.ts`; `tests/unit/performance/**`, `tests/e2e/frame-measurements.spec.ts`; opt-in `scripts/performance.ts`, measurement command only in `package.json`, measurement config/tests and `build/performance/**` reports | `build(v0.4.3): establish browser performance measurements` |
-| P1 | Telemetry call sites in scenes, test-support bridge, architecture/production guard tests | `perf(v0.4.3): avoid production telemetry work` |
+| P1 | Telemetry call sites in scenes, main boot failure, test-support bridge, architecture/production guard tests; measurement reports/script and bench-only load/cap options per Q2 | `perf(v0.4.3): avoid production telemetry work` |
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests | `perf(v0.4.3): reduce repeated interface work` |
 | P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests | `feat(v0.4.3): add a lightweight presentation mode` |

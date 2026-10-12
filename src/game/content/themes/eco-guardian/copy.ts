@@ -2,6 +2,7 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { ThemeCopy } from "../../../core/archetypes/contracts";
 
 export const copy = {
+  spawnOrigins: { live: "Live origins", total: "Total spawned", natural: "Natural", fragmentation: "Fragments", baggedWaste: "Released", environment: "Site effects", benchmark: "Test load" },
   difficulty: {
     label: "Difficulty",
     nextRun: "Next run difficulty",

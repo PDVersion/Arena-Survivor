@@ -56,6 +56,8 @@ export type WaveMovement = "chase" | "drift";
  * run progress rather than wall-clock time.
  */
 export interface DirectorRoleTuning {
+  /** False allows a quiet unlock without a burst/announcement. */
+  readonly milestoneWave?: boolean;
   readonly enemyId: EnemyId;
   /** Movement used by this role's milestone wave. Ambient spawns always chase. */
   readonly waveMovement: WaveMovement;
