@@ -11,7 +11,7 @@ walk-through contact with bounded knockback, Microplastics, Glass Shards and
 finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
 checkpoint are also merged; remaining art stays gated until the roster settles.
 
-**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2/Q3 and P1 are verified; P2 is next.**
+**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2/Q3/Q4 and P1 gameplay/software gates are verified; P2 is next.**
 Q1 fixes player facing/walking and zoomed world text, makes both Cleanup Grabber
 upgrade entries common in the offer pool, and adds Beginner / Normal / Experienced
 difficulty (selected F16). Q2 adds event readability, fragment pose reuse, a sprite review browser and spawn
@@ -207,3 +207,13 @@ The [Session 3 prompt](build/SESSION_3_PROMPT.md) resumes P2 in a new session.
 Glass Shards deliberately remain stationary and clearable; restart a pre-Q2 live
 run to load their broken-glass sprite binding. Detached pixels in intact Glass
 Bottle poses are an art-review finding, not runtime particles.
+
+Q4 makes ordinary opening Microplastics one-hit on every difficulty: 9 base
+health becomes 6.75 / 8.55 / 9.9 against 12 / 10 / 10 starting damage. Later
+scaling remains active. The sprite browser's starting-difficulty selector shows
+health and other stats from actual theme definitions; the atlas also captures
+the updated base value. See [the balance comparison](build/balance/Q4_OPENING_REPORT.md).
+
+The current dependency audit fails on the unchanged main-branch lockfile
+(11 high, 2 critical, 1 moderate advisories). REC-113 records this release blocker;
+the owner-requested V0.4.3 checkpoint PR is draft until readiness is settled.

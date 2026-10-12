@@ -2,6 +2,9 @@ import { themeRegistry } from "../game/content/theme-registry";
 import type { ContentId } from "../game/core/archetypes/ids";
 import type { SpriteDefinition, SpriteState, ThemeManifest } from "../game/core/archetypes/contracts";
 import { runtimeFrame } from "../game/systems/sprites/runtime-sprite";
+import { difficultyIds, type DifficultyId } from "../game/core/archetypes/difficulty";
+import { resolveDifficultyTheme } from "../game/systems/difficulty/resolve-difficulty";
+import { contentStatRows } from "./content-stats";
 import "./sprite-browser.css";
 
 type Verdict = "unreviewed" | "good" | "bad" | "review";
@@ -14,6 +17,12 @@ root.innerHTML = `<header><h1>Sprite browser</h1><p>Inspect every pose, compare 
 <p id="summary" role="status"></p><main><section id="set" aria-label="Sprite set"></section><aside id="detail" aria-label="Selected sprite"></aside></main>`;
 const element = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const themeSelect = element<HTMLSelectElement>("theme");
+const difficultyLabel = document.createElement("label"); difficultyLabel.textContent = "Starting difficulty";
+const difficultySelect = document.createElement("select"); difficultySelect.id = "difficulty";
+for (const id of difficultyIds) difficultySelect.add(new Option(id, id));
+difficultySelect.value = "normal"; difficultyLabel.append(difficultySelect);
+root.querySelector("nav")!.prepend(difficultyLabel);
+difficultySelect.onchange = () => { stop(); renderDetail(); };
 for (const pack of themeRegistry) themeSelect.add(new Option(pack.key, pack.theme.id));
 themeSelect.value = "eco_guardian";
 let selected: ContentId | undefined;
@@ -21,6 +30,7 @@ let timer: number | undefined;
 let frame = 0;
 let zoom = 8;
 let mirrored = false;
+let statsExpanded = false;
 const reviews: Record<string, Review> = {};
 const storageKey = "arena-sprite-reviews-v1";
 try {
@@ -102,13 +112,36 @@ function renderSet() {
   element("summary").textContent = `${visible.length} shown · ${roster.filter((entry) => entry.sprite).length} sprite bindings · ${roster.filter((entry) => !entry.sprite).length} fallbacks. Set shown at game proportions and 2× world zoom.`;
 }
 function renderDetail() {
-  const detail = element("detail"); detail.replaceChildren();
+  const detail = element("detail");
+  // Read the live state before replacing it: native toggle events can arrive
+  // after a difficulty change, so the queued event alone is not authoritative.
+  const previousStats = detail.querySelector<HTMLDetailsElement>("#stats-panel");
+  if (previousStats) statsExpanded = previousStats.open;
+  detail.replaceChildren();
   const entry = entries().find((entry) => entry.id === selected);
   if (!entry) { detail.textContent = "Select a sprite to freeze, step through frames, animate, or review."; return; }
   const title = document.createElement("h2"); title.textContent = entry.name;
   const metadata = document.createElement("p"); metadata.className = "metadata";
   metadata.textContent = entry.sprite ? `${entry.id} · ${entry.sprite.frameWidth}×${entry.sprite.frameHeight} · ${entry.sprite.frames} poses · world diameter ${entry.diameter}\nFacing: ${entry.sprite.authoredFacing ?? "legacy left"}${entry.sprite.atlasFrameKey ? `\nReused row: ${entry.sprite.atlasFrameKey}` : ""}` : `${entry.id}\nPrimitive fallback; no bitmap exists yet.`;
   detail.append(title, metadata);
+  const rows = contentStatRows(resolveDifficultyTheme(theme(), difficultySelect.value as DifficultyId), entry.id);
+  if (rows.length) {
+    const stats = document.createElement("details"); stats.id = "stats-panel"; stats.open = statsExpanded;
+    stats.ontoggle = () => { if (stats.isConnected) statsExpanded = stats.open; };
+    const heading = document.createElement("summary");
+    const health = rows.find((row) => row.label === theme().copy.stats.health);
+    const hits = rows.find((row) => row.label === "Starter hits (non-critical)");
+    heading.textContent = `Starting stats${health ? ` · ${health.label} ${Number(health.value.toFixed(2))}` : ""}${hits ? ` · Starter hits ${hits.value}` : ""}`;
+    const scope = document.createElement("p"); scope.className = "metadata";
+    scope.textContent = `Ordinary starting values before time, site pressure, elites or upgrades. Rates use simulation seconds (gameplay rate ${theme().tuning.pace.gameplayRate}×).`;
+    const table = document.createElement("table"); table.id = "content-stats"; table.ariaLabel = "Starting stats";
+    for (const row of rows) {
+      const tr = document.createElement("tr"); const label = document.createElement("th"); label.scope = "row"; label.textContent = row.label;
+      const value = document.createElement("td"); value.textContent = `${Number(row.value.toFixed(2))}${row.unit ? ` ${row.unit}` : ""}`;
+      tr.append(label, value); table.append(tr);
+    }
+    stats.append(heading, scope, table); detail.append(stats);
+  }
   if (entry.sprite) {
     const sprite = entry.sprite;
     const stage = document.createElement("div"); stage.className = "stage checker";

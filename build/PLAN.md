@@ -1417,3 +1417,10 @@ natural arrivals (including milestone waves), Fracture, Bagged Waste release,
 site effects (surge/duplication) and test loads; source means immediate creation,
 so ambient pressure modified by a shrine is still natural. No factual claims,
 new material identities or bitmap generation are introduced.
+
+Q4 opening correction (2026-10-13): ordinary Microplastics begin with 9 base
+health, becoming 6.75 / 8.55 / 9.9 in Beginner / Normal / Experienced. Opening
+non-critical starter hits deal 12 / 10 / 10. Only this role's health changes;
+time, Pollution and elite scaling still apply to later or modified enemies.
+This is a playability override to the earlier persistence-derived health model,
+not an environmental measurement. See REC-112 and `balance/Q4_OPENING_REPORT.md`.

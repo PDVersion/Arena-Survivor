@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3 and P1 verified; P2 next.** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2 next; audit blocks release (REC-113).** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -126,6 +126,36 @@ strengthened per-card containment/pointer regression and **3 serial stress cases
 passes with zero browser errors. Visual layout and accepted/packed art inspected.
 See REC-111 and the new-session `SESSION_3_PROMPT.md`. No new sustained performance
 comparison was required or claimed by this correction.
+
+## Q4 — One-hit opening Microplastics and starting-stat inspection
+
+Owner-requested 2026-10-13 before P2: compare lowering Microplastics health with
+raising starter tool damage; make ordinary unmodified opening Microplastics die
+to one non-critical hit in all presets, retaining later escalation. Add starting
+stats to the sprite review tool and refresh the affected atlas definition.
+Ownership: eco enemy health/data comments; standalone sprite browser and pure
+stat-inspection helper; corresponding units/browser checks; balance assessment
+script/report and production stat-view check; active plans, product/theme/education notes, progress, reconciliation,
+README and Session 3 handoff, including the discovered audit/readiness blocker. No bitmap, other roster/tuning, clock or cap changes.
+The owner explicitly requests pushing this verified branch and opening one PR
+into main now; this review checkpoint does not mark P2–P6 or V0.4.3 complete.
+
+Commit: `fix(v0.4.3): make opening Microplastics one-hit across difficulties`
+
+- [x] Q4 — compare actual starting damage/armour/health and deterministic pacing;
+  focused one-hit/later-scaling and stat-view checks; types/units/lint/build,
+  full browser regression, serial stress and production exclusion/navigation.
+
+Q4 gameplay gate (2026-10-13): **428 units / 51 files**, types/lint/build,
+final **85 Chromium passes / one existing opt-in skip** (2.7 min), final seven
+focused browser checks, **3 serial stress cases** (32.6 s), production
+exclusion/boot/play/pause/starting stats/atlas navigation and visual review pass.
+All reference builds/presets/counterfactuals are retained in the balance report.
+The first full run was contaminated by live source edits; final code was frozen.
+Death attribution is isolated from opening difficulty, and the stat panel's
+native toggle-event race is fixed. **Audit fails** with 14 advisories on unchanged
+dependencies (REC-113); this does not complete milestone/readiness or approve merge.
+The owner-requested PR is a draft checkpoint. P2 stays next and unstarted.
 
 ## Performance prerequisites — P0–P6
 

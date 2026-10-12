@@ -1,15 +1,15 @@
 # Autonomous progress
 
-Updated: 2026-10-12 (Australia/Sydney).
+Updated: 2026-10-13 (Australia/Sydney).
 
 ## Objective and current state
 
 Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
-common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up and
+common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
 Session 2 / P1 are now verified; Session 3 / P2 is next and unstarted. Content C1–C7 and other optional features have not started;
-physical older-device acceptance remains pending. No performance improvement is claimed.
+physical older-device acceptance remains pending. No performance improvement is claimed. REC-113 now blocks release on dependency audit; P2 can proceed independently.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -334,3 +334,68 @@ confirms only the requested correction/adopted atlas/handoff are staged. Commit:
 `fix(v0.4.3): bound upgrade cards and close capped skill offers` on
 `codex/v0.4.3`; no push/PR/merge. Original annotations/concurrent roadmap section
 remain unstaged. The final response records elapsed time after commit.
+
+
+## Q4 one-hit opening and starting-stat inspection — 2026-10-13
+
+Owner-requested correction after Q3, with explicit push/PR authorization. Branch
+resumed at `941a065`; original seven plan annotations and concurrent roadmap
+section preserved. P2 remains next and unstarted.
+
+Cycle 1: compared current 11 health / 10 damage with 9 health and a safe 12.2
+global-damage alternative using actual combat rules and every pacing build.
+Selected only Microplastics health 11→9; updated the historical formula test to
+record that opening-role exception and retain ordering. All-preset regression
+checks prove one unupgraded non-critical opening hit plus retained late scaling.
+Added starting stats/difficulty selection to sprite inspection, refreshed atlas
+base health and documented future stat-book data reuse without implementing it.
+Seven focused browser cases pass, including actual one-hit combat in all presets.
+Full units pass (428 / 51 files); final type/build/browser/stress/prod gate follows.
+
+Evidence: `build/balance/Q4_OPENING_REPORT.md`, counterfactual JSON and actual
+`npm run balance -- --difficulty all --build damage-rush` output. Selected model
+levels 32/27/26, peak 24/300/300, XP 2040/1158/1044; these are pacing estimates.
+An initial unit expected the old model-derived 11 HP; after recording the explicit
+exception it passed. A subsequent compile check caught the test's optional lookup
+used as a numeric bound; the helper now throws on missing definitions. Final
+validation must pass before delivery. No bitmap, secondary-theme balance,
+clock/cap, reward or dependency changes; no performance gain is claimed.
+
+Cycle 2 validation findings: the initial full Chromium run passed 82 / skipped 1
+and timed out death, timer and shrine checks. Source edits occurred while its
+Vite server was active, making that run unsuitable as final evidence. The death
+fixture also assumed old opening pressure; it now uses one known attacker with
+weapons disabled and asserts its actual source ID. A frozen-source isolated run
+passed those game paths (13 of 14); the new expandable stat view exposed a native
+toggle-event race on difficulty changes. Read its live open state before replacing
+the DOM; focused rerun and final full gate follow. One earlier isolated run was
+deliberately interrupted before updating the death fixture, and is not counted
+as a pass. Full units/types/lint/build pass after test lookup/compile corrections.
+
+Publication audit: two executed audits return 14 advisories (11 high / 2 critical
+/ 1 moderate) on the lockfile unchanged from main. REC-113 is an open release
+blocker. No dependency upgrade is made in this balance phase; the requested PR
+will be draft, with CI/readiness still subject to the audit and P2–P6 gates.
+
+Final frozen-source full Chromium rerun: **85 pass / one existing opt-in skip**,
+2.7 min, zero retries. Final focused inspector/combat rerun: **7 pass**, 2.8 s.
+All **428 units / 51 files**, types/lint/build pass. The final production and
+serial stress gate run follows; no source changes during the final regression.
+
+Q4 final gameplay gate: **428 units / 51 files**, typecheck/lint/build, **85 full
+Chromium passes / one existing opt-in skip** (2.7 min), final **7 focused browser
+passes** (2.8 s), **3 serial stress cases** (32.6 s) and actual built production
+boot/play/pause/diagnostic exclusion/stat display/atlas navigation all pass.
+`build/performance/Q4_PRODUCTION_CHECK.json` retains final production evidence;
+visual captures `/private/tmp/arena-q4-stats.png` and `arena-q4-overview.png` are
+inspected. Stats expand without hiding the default sprite preview and remain
+expanded across difficulty changes. No new performance comparison is claimed.
+
+Audit remains failed (14 advisories, unchanged lockfile), documented in
+`Q4_AUDIT.md` and REC-113. Other executed checks are green, and original local
+annotations/concurrent roadmap content are preserved. Delivery uses
+`fix(v0.4.3): make opening Microplastics one-hit across difficulties`, then the
+owner-authorized push and draft PR into main; no merge is authorized/executed.
+P2 remains the next gameplay/performance task; dependency maintenance must be
+separately scoped and verified before release. No remaining sprite work or new
+stat-book feature starts here.

@@ -14,6 +14,9 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  * estimates vary widely between sources, so treat every figure below as the
  * midpoint of a range, not a measurement.
  *
+ * Q4 makes Microplastics an explicit one-hit opening exception to this health
+ * formula (REC-112); remaining primary material values keep their model.
+ *
  * Health and harm are deliberately decoupled. Glass is effectively permanent
  * and almost inert on contact; a light bag is fragile and fast. Role identity
  * comes from speed, harm, radius, and behaviour — the health band is narrow on
@@ -59,9 +62,11 @@ export const enemies = [
     fragmentInto: archetypeIds.enemy.fastFragile,
   },
   {
-    // Microplastics — small, mobile pieces that spread easily.
+    // Microplastics — opening fodder. Nine health stays below a plain starter
+    // hit in every preset (Experienced: 9.9 HP / 10 damage); time/pressure
+    // scaling can make later arrivals tougher. See REC-112.
     id: archetypeIds.enemy.fastFragile,
-    maxHealth: 11,
+    maxHealth: 9,
     moveSpeed: 190,
     contactDamage: 8,
     contactCooldownMs: 1000,

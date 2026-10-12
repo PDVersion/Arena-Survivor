@@ -14,7 +14,11 @@ Safely resume `codex/v0.4.3`; preserve all uncommitted work. Seven historical pl
 status annotations and the roadmap's concurrent design-review section have been
 kept outside phase commits. Do not overwrite, silently stage or discard them.
 The architecture atlas has been adopted for the owner's requested tool linking.
-Confirm the Q3 gate and actual HEAD from progress/history rather than assuming it.
+Q4 adds one-hit opening Microplastics (base health 9), difficulty-resolved
+starting stats in the sprite browser and an owner-requested PR checkpoint.
+REC-113 records a failing dependency audit on the unchanged lockfile; the
+checkpoint PR is draft. Dependency maintenance is required before merge/release,
+but is outside P2 ownership until separately scoped. Inspect that PR/CI and confirm the Q4 gate and actual HEAD from progress/history rather than assuming it.
 
 P0, Q1, Q2 and P1 are verified. Q3 corrects upgrade-card fitting and offers for
 skills capped early by strong rolls, links the sprite browser/atlas and records

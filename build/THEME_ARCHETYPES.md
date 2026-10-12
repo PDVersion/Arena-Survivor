@@ -237,3 +237,11 @@ natural arrivals (including milestone waves), Fracture, Bagged Waste release,
 site effects (surge/duplication) and test loads; source means immediate creation,
 so ambient pressure modified by a shrine is still natural. No factual claims,
 new material identities or bitmap generation are introduced.
+
+Q4 opening balance: eco `enemy.fast_fragile` now has 9 base health as an explicit
+one-hit opening override (REC-112), retaining the material ordering. Other roles
+and starter damage stay unchanged. The standalone inspector resolves the chosen
+difficulty using the game's resolver, labels stats through theme copy and reads
+physics/stats from definitions, never sprites. Its starting values exclude
+time/pressure/elites/upgrades; future live stat-book selectors must preserve that
+distinction. The secondary pack's roster balance is unchanged.

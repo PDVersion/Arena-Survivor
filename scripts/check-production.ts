@@ -41,6 +41,14 @@ try {
   if (!spriteResponse?.ok()) throw new Error("Production sprite-browser entry missing");
   await page.waitForSelector(".card canvas[data-loaded=true]");
   if (await page.evaluate(() => Boolean(window.__ARENA_TEST__))) throw new Error("Sprite tool test interface leaked");
+  await page.locator('[data-id="enemy.fast_fragile"]').click();
+  await page.getByLabel("Starting difficulty").selectOption("experienced");
+  await page.locator("#stats-panel summary").click();
+  const microplasticHealth = await page.locator("#content-stats tr").filter({ has: page.getByRole("rowheader", { name: "Health", exact: true }) }).locator("td").textContent();
+  if (microplasticHealth !== "9.9") throw new Error(`Unexpected Experienced starting health ${microplasticHealth}`);
+  await page.screenshot({ path: "/private/tmp/arena-q4-stats.png" });
+  await page.locator("#stats-panel summary").click();
+  await page.screenshot({ path: "/private/tmp/arena-q4-overview.png" });
   if (errors.length) throw new Error(errors.join("; "));
   await page.getByRole("link", { name: "Architecture atlas", exact: true }).click();
   await page.getByRole("heading", { name: "Architecture atlas", exact: true }).waitFor();
@@ -49,7 +57,7 @@ try {
   if (errors.length) throw new Error(errors.join("; "));
   const result = { checkedAt: new Date().toISOString(), browserVersion: browser.version(),
     bundlesChecked: emitted.map(({ name }) => name), diagnosticMarkersAbsent: true,
-    testInterfaceAbsent: true, productionBootPlayPause: true, spriteBrowserLoads: true, architectureNavigation: true, errors };
+    testInterfaceAbsent: true, productionBootPlayPause: true, spriteBrowserLoads: true, startingStatsVerified: true, architectureNavigation: true, errors };
   await writeFile(process.argv[2] ?? "build/performance/P1_PRODUCTION_CHECK.json", JSON.stringify(result, null, 2) + "\n");
   console.log(JSON.stringify(result));
 } finally { await browser.close(); server.kill("SIGTERM"); }

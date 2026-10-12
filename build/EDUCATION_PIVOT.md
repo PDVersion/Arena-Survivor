@@ -567,3 +567,10 @@ natural arrivals (including milestone waves), Fracture, Bagged Waste release,
 site effects (surge/duplication) and test loads; source means immediate creation,
 so ambient pressure modified by a shrine is still natural. No factual claims,
 new material identities or bitmap generation are introduced.
+
+Q4 (2026-10-13) makes ordinary opening Microplastics one-hit across difficulty
+presets by lowering their game health to 9. This is authored game balance, not
+a claim about environmental persistence. Starting stats in the sprite browser
+come from actual difficulty-resolved theme definitions. A future stat book should
+reuse those definitions/selectors and clearly distinguish authored, starting and
+live modified values; that future feature is not implemented here.

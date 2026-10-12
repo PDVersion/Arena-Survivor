@@ -42,15 +42,21 @@ describe("theme manifests", () => {
     expect(ecoGuardianTheme.copy.vocabulary.chaos).not.toBe(knightMagicTheme.copy.vocabulary.chaos);
   });
 
-  it("derives environment enemy health from log-scaled persistence", () => {
+  it("keeps log-scaled health ordering with the selected opening-role override", () => {
     // health = 20 * 1.6 ^ (log10(years) - log10(450)), normalized to the bottle.
     const modelled = (years: number): number =>
       Math.round(20 * 1.6 ** (Math.log10(years) - Math.log10(450)));
-    const health = (id: string): number | undefined =>
-      ecoGuardianTheme.enemies.find((enemy) => enemy.id === id)?.maxHealth;
+    const health = (id: string): number => {
+      const enemy = ecoGuardianTheme.enemies.find((enemy) => enemy.id === id);
+      if (!enemy) throw new Error(`Missing enemy ${id}`);
+      return enemy.maxHealth;
+    };
 
     expect(health(archetypeIds.enemy.swarmBasic)).toBe(modelled(450));
-    expect(health(archetypeIds.enemy.fastFragile)).toBe(modelled(20));
+    // Q4 prioritises a one-hit opening over the historical 20-year estimate.
+    // The all-preset damage/world regression owns the actual one-hit gate.
+    expect(health(archetypeIds.enemy.fastFragile)).toBeLessThan(modelled(20));
+    expect(health(archetypeIds.enemy.fastFragile)).toBeLessThan(health(archetypeIds.enemy.swarmBasic));
     expect(health(archetypeIds.enemy.deathSpawner)).toBe(modelled(1_000));
     expect(health(archetypeIds.enemy.slowDurable)).toBe(modelled(1_000_000));
   });

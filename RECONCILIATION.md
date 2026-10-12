@@ -5,8 +5,8 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3 verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **None**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
+- Release-blocking open entries: **REC-113 — current lockfile fails the high-severity audit gate.**
 
 ## How to maintain this file
 
@@ -2874,3 +2874,68 @@ its stale P1 snapshot and build it as a separate HTML entry. Navigation is
 bidirectional in development and production; game imports no atlas catalog.
 The concurrent roadmap design-review section and original seven plan annotations
 remain outside the Q3 commit. Optional atlas proposals remain unselected.
+
+### REC-112 — One-hit opening is a role-specific playability override
+
+- Status: Accepted
+- Date: 2026-10-13
+- Affects: V0.4.3 Q4 opening balance, tooling stats and PR checkpoint
+- Blocks: None; P2–P6 remain unstarted
+
+The owner requested one plain opening hit for Microplastics in every preset.
+Previous resolved health was 8.25 / 10.45 / 12.1 against 12 / 10 / 10 damage,
+so Normal/Experienced needed two hits. Compare base health 11→9 with damage
+10→12.2 using actual combat/armour rules and all existing deterministic build
+models. Prefer 9 health: 6.75 / 8.55 / 9.9 starting HP, leaving starter damage
+and all other roles unchanged. It is the largest whole-number health with margin
+below Experienced's plain hit; exact 12.1 damage equality can leave tiny positive
+health due to floating-point multiplication. Avoid balancing directly on equality.
+
+Microplastics are now an explicit opening-playability exception to the historical
+persistence health formula. Their health still sorts below Plastic Bottles and
+Glass/Bags keep their authored values; the stale formula unit was updated to
+assert this exception/order. Dedicated damage/world-selection regressions prove
+ordinary opening-step arrivals die to one non-critical unupgraded hit in all
+presets, while later pressure/time can require more hits. Live browser harnesses
+verify one actual hit/one kill per preset. Elites and modified arrivals are not
+the ordinary-opening contract. Do not freeze later scaling to preserve this gate.
+
+Five-minute chaos-1 damage-rush levels are now 32/27/26 versus 31/26/25 before;
+peak live is 24/300/300 and XP 2040/1158/1044 (rounded). Increasing global tool
+damage gives 32/28/27 and XP 2133/1364/1189, a broader pressure reduction. Full
+counterfactuals/reproduction are in `build/balance/Q4_OPENING_REPORT.md`. These
+models estimate pacing, not human survival or hardware performance.
+
+The owner also requested health/stat visibility. The sprite browser's difficulty
+selector resolves the actual theme and displays starting health/armour/contact
+damage/speed/rewards/radius/non-critical starter hits plus player/tool stats.
+Rates use simulation seconds; time, site, elite and upgrade modifiers are clearly
+excluded. Atlas captured base health is refreshed. Future stat-book work should
+reuse definitions/selectors and distinguish authored/starting/live state; no new
+stat-book, persistence or factual education feature starts here.
+
+The owner explicitly authorizes push and a PR to main at this checkpoint. It
+does not declare the milestone or P2–P6 complete. Preserve the seven pre-existing
+status annotations and concurrent roadmap section outside the delivery commit.
+
+### REC-113 — Checkpoint audit fails on unchanged dependencies
+
+- Status: Open
+- Date: 2026-10-13
+- Affects: CI audit, V0.4.3 P6 readiness and PR merge/release
+- Blocks: Release; not Q4 gameplay or independent P2 work
+
+At the owner-requested Q4 push/PR checkpoint, `npm audit --audit-level=high` and
+a bounded repeat exit 1 with 14 advisories (1 moderate, 11 high, 2 critical).
+`package-lock.json` is identical to origin/main; no dependency versions changed
+in this branch. Reported dependency chains include Vitest/@vitest/mocker/Tinypool,
+brace-expansion/braces through typescript-eslint and source-map-js. Full npm
+remediation includes major/out-of-range tooling updates; no force install is
+performed as part of opening balance. Record in `build/performance/Q4_AUDIT.md`.
+
+The CI workflow includes this audit, so keep its failure explicit and open the
+requested checkpoint as a draft PR. Do not call CI/readiness green or describe
+production exploitability without investigation. Dependency maintenance requires
+its own ownership and validation before merging/releasing; P2 measurements can
+continue independently. This audit was an additional publication check rather
+than Q4's gameplay gate.

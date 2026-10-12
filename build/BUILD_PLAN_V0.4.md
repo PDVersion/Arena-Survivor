@@ -11,7 +11,7 @@ better than the simpler educational game.
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
 | **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Merged from `codex/v0.4.2` |
 | **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Merged from `codex/v0.4.2.1` |
-| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0/Q1/Q2/P1 verified on `codex/v0.4.3`; P2 next; other content not started |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0/Q1/Q2/Q3/Q4/P1 verified on `codex/v0.4.3`; P2 next; other content not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -154,3 +154,8 @@ Q3 is the owner's wrap-up correction before Session 3/P2: measured upgrade-card
 bounds, filtering early-capped skill offers, atlas/tool navigation and handoff
 documentation. The active increment plan owns its paths; it does not start P2,
 change the half-speed clock, move Glass Shards or authorize bitmap edits.
+
+Q4 is the owner's one-hit opening correction and stat-inspection checkpoint:
+Microplastics health 11→9, with all other role/tool values and later scaling kept.
+Its gameplay gate passes; the owner requests a draft PR now, while P2–P6 remain
+unstarted and the unchanged lockfile's audit blocks release (REC-112/113).
