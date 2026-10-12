@@ -399,3 +399,13 @@ owner-authorized push and draft PR into main; no merge is authorized/executed.
 P2 remains the next gameplay/performance task; dependency maintenance must be
 separately scoped and verified before release. No remaining sprite work or new
 stat-book feature starts here.
+
+Publication cycle completed **2026-10-13 10:00:04 AEDT / 2026-10-12 23:00:04 UTC**:
+Q4 code/tests/docs committed as `dae5570`, pushed to `origin/codex/v0.4.3`.
+[Draft PR #24](https://github.com/PDVersion/Arena-Survivor/pull/24) is open into
+`main`, with the accumulated P0/P1/Q1–Q4 checkpoint scope and audit blocker
+explicit. The PR is attached to this chat. GitHub CI is **in progress** at this
+publication check; no remote pass is claimed. A focused documentation follow-up
+records this actual delivery and updates the Session 3 handoff. No merge.
+The seven original status annotations and concurrent roadmap section remain
+uncommitted and unchanged.
