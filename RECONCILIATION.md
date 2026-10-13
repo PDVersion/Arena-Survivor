@@ -5,8 +5,8 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P2–P6 readiness remains gated.**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard and P2 interface gate verified; P3 next. F16 is delivered; other content selections remain pending.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P3–P6 readiness remains gated.**
 
 ## How to maintain this file
 
@@ -2989,3 +2989,58 @@ Remote resolution: repair head `28ecdba` passes
 2026-10-13 01:27:58–01:43:02 UTC. Linux reports 428 passing units, 85 passing
 browser cases / one existing skip, no flaky/retried cases, and zero audit
 vulnerabilities. Q5 is verified; this does not complete P2–P6 or device acceptance.
+
+### REC-115 — Hidden maps stop before preparation; HUD caches displayed dependencies
+
+- Status: Accepted
+- Date: 2026-10-13
+- Affects: V0.4.3 P2 interface work and later performance comparisons
+- Blocks: None; hardware/readiness and P3–P6 retain their separate gates
+
+The frozen `6f9ec78` source prepares spread/filter arrays for enemies, hazards
+and sites even when the map is OFF or hidden by an overlay, then clears graphics
+before returning. Visible maps parse six palette colours and allocate coordinate
+tuples/closures every frame. A short CDP profile captures those paths; it does
+not establish that they dominate frame time. Phaser Text.setText already compares
+its final string before updateText, so unchanged text does not imply a repeated
+texture upload. HUD callers still format all values and join an array each frame.
+
+P2 returns at the scene visibility boundary before collection reads, borrows
+bounded actor references into reusable presentation-only arrays, caches immutable
+palette colours per map and draws scalar coordinates. Hidden MinimapUi.update
+also returns before graphics or view reads. Buffers reset on restart; no game
+system reads them. Activated/consumed sites remain excluded. Visible-map drawing
+continues every frame: no measured evidence yet justifies a cadence change.
+
+HUD text preparation compares displayed health/clock boundaries and other scalar
+inputs, including every live source count. The origin ledger mutates in place,
+so caching its object identity would silently stale natural/fragmentation/Bagged
+Waste/environment counts. Health/XP bars still resolve exact fractions every
+call; changed text/status is immediate. Phaser retains its existing string/texture
+guard. Overlays already render on show/change/resize, not every active frame;
+no blanket overlay cache is introduced.
+
+The opt-in collector adds visible/OFF/paused variants through actual keyboard
+and scaled pointer settings, plus separate short CDP/call-count probes. Native
+browser imports are necessary inside vite-node's page.evaluate: a plain import
+expression is transformed into an unavailable SSR helper. Profiling/probe
+wrappers are test-only collector code, absent from game production bundles.
+Sustained comparison windows use no call wrappers or CPU profiler. Before source
+is an immutable archive; edit-time Vite/HMR cannot contaminate its code. Results,
+actual live/visible counts, renderer, production separation and limits will be
+recorded in `build/performance/P2_REPORT.md` before accepting this gate.
+
+Final evidence: 438 units, types/lint/build, 13 targeted browsers, 88 full
+Chromium passes / one existing skip, production exclusion/boot and three serial
+stress cases pass. Eighteen primary test and six production warmed ≥60 s windows
+(three serial repeats each) pass their recording/correctness checks. Three
+exploratory before-visible records remain retained; all three quiet replacements
+are used. Visible-map median p95 is 41.7→41.7 ms, OFF 25.0→24.9, paused
+25.3→25.3; production 16.8→16.8 ms. No meaningful frame-rate improvement
+is established. Visible software rendering remains above the provisional 40 ms
+criterion. Short probes prove zero after hidden-map updates/inputs and zero
+paused HUD setters, while texture updates stay change-only in both builds.
+Report all p99/max/stalls, update exclusions, counts and digests in
+[`P2_REPORT.md`](build/performance/P2_REPORT.md). Production population is
+unavailable, not inferred. Production cap remains 300. Physical older-device
+acceptance and mixed-combat capacity remain pending.

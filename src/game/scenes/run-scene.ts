@@ -102,7 +102,7 @@ import { claimExperiencePickup } from "../systems/xp";
 import { Hud } from "../ui/hud";
 import { RunEndOverlay } from "../ui/run-end-overlay";
 import { OvertimeChoiceUi, type OvertimeChoice } from "../ui/overtime-choice-ui";
-import { MinimapUi } from "../ui/minimap-ui";
+import { MinimapUi, type MinimapPoint } from "../ui/minimap-ui";
 import { selectHudValues, selectRunSummaryValues } from "../state/statistics";
 import {
   activateShrineSurge,
@@ -381,6 +381,14 @@ export class RunScene extends Phaser.Scene {
   private runEndOverlay?: RunEndOverlay;
   private overtimeUi?: OvertimeChoiceUi;
   private minimap?: MinimapUi;
+  // Frame-local borrowed actor references, bounded by the existing populations.
+  // No simulation reads these presentation buffers; restart releases every reference.
+  private readonly minimapView = {
+    player: { x: 0, y: 0 },
+    enemies: [] as MinimapPoint[],
+    shrines: [] as MinimapPoint[],
+    hazards: [] as MinimapPoint[],
+  };
   private movementHint?: Phaser.GameObjects.Text;
   private arenaTitle?: Phaser.GameObjects.Text;
   private movementHintActiveRealMs = 0;
@@ -841,6 +849,9 @@ export class RunScene extends Phaser.Scene {
     this.runEndOverlay = undefined;
     this.overtimeUi = undefined;
     this.minimap = undefined;
+    this.minimapView.enemies.length = 0;
+    this.minimapView.shrines.length = 0;
+    this.minimapView.hazards.length = 0;
     this.movementHint = undefined;
     this.arenaTitle = undefined;
     this.movementHintActiveRealMs = 0;
@@ -2560,12 +2571,23 @@ export class RunScene extends Phaser.Scene {
   private updateMinimap(): void {
     if (!this.minimap || !this.player) return;
     this.minimap.setOverlayHidden(this.runState?.status !== "playing");
-    this.minimap.update({
-      player: this.player,
-      enemies: [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated),
-      shrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated),
-      hazards: [...this.hazards].filter((hazard) => hazard.active),
-    });
+    if (!this.minimap.visible) return;
+    const view = this.minimapView;
+    view.player.x = this.player.x;
+    view.player.y = this.player.y;
+    view.enemies.length = 0;
+    view.shrines.length = 0;
+    view.hazards.length = 0;
+    for (const enemy of this.enemies) {
+      if (enemy.active && !enemy.defeated) view.enemies.push(enemy);
+    }
+    for (const shrine of this.shrineActors) {
+      if (shrine.active && !shrine.activated) view.shrines.push(shrine);
+    }
+    for (const hazard of this.hazards) {
+      if (hazard.active) view.hazards.push(hazard);
+    }
+    this.minimap.update(view);
   }
 
   /** Test-only footprint audit: cyan bodies and yellow presentation bounds. */

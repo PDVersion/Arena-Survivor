@@ -8,7 +8,7 @@ Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
 common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is next and unstarted. Content C1–C7 and other optional features have not started;
+Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 is next. Content C1–C7 and other optional features have not started;
 physical older-device acceptance remains pending. No performance improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P2–P6 readiness remains gated.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
@@ -89,7 +89,7 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Current next: Session 3 / P2.** The historical P0 next task, Session 2 / P1,
+**Current next: Session 4 / P3.** The historical P0 next task, Session 2 / P1,
 has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
@@ -462,3 +462,104 @@ build, **85 browsers / one existing skip** (14.0 min), and audit with **zero
 vulnerabilities**. No browser flaky/retry results. Q5 is verified; P2 remains
 unstarted, and the checkpoint PR remains draft pending P2–P6 readiness. The
 verification-record follow-up must still pass its own latest-head Actions check.
+
+
+## Session 3 / P2 — in progress
+
+Start **2026-10-13 14:08:15 AEDT / 03:08:15 UTC**; deadline
+**15:38:15 AEDT / 04:38:15 UTC** (90 minutes); reserve validation/review
+from **15:18:15 AEDT / 04:18:15 UTC**. Resume `codex/v0.4.3` at
+`6f9ec78`. Initial eight dirty plan files are backed up at
+`/private/tmp/arena-p2-session-20261013/initial/` and `initial.patch`; their
+seven annotations and concurrent roadmap section remain outside phase commits.
+
+Checkpoint verified: latest head `6f9ec78` passes Actions run 38333614171
+(completed 02:04:03 UTC); Q4 gameplay and Q5 audit/CI gates verified. PR #24
+was merged at 02:22:37 UTC as `d721ac5`; owner requests a new draft PR for P2.
+No previous-PR mutation completed. P2 alone is authorized; P3 remains gated.
+
+P2 cycle 1 checkpoint (about **14:25 AEDT / 03:25 UTC**): baseline source
+snapshot `6f9ec78` is isolated from edits. Short CDP CPU profiling captures
+minimap filtering/colour/point work and HUD formatting; Phaser already skips
+unchanged text texture updates. No cadence change is justified. Hidden minimap
+preparation now guards before actor reads, map palette is instance-cached, scalar
+drawing avoids coordinate tuples, and scene-owned bounded buffers are reused.
+HUD text preparation is dependency-driven; health/XP bars remain full precision
+each update and in-place source counts compare scalars. Ten targeted UI units
+pass. Sustained before profiles and actual browser/production gates are pending.
+First collector settings clicks missed the button/timing; corrected and verified
+OFF in telemetry. A browser-side dynamic import was SSR-transformed by vite-node;
+use native browser import in the opt-in probe. Failed/partial probes are retained
+in `/private/tmp/arena-p2-session-20261013/`, not accepted measurements.
+
+P2 cycle 2 checkpoint **14:34 AEDT / 03:34 UTC**: all **438 units / 52 files**,
+types and lint pass; **13 serial focused browser cases** pass in 26.7 seconds
+with zero retries, including both real theme HUD/minimap fixtures, all opacity
+steps at resized viewport, pause/resume/restart, consumed sites, Bagged Waste
+and scaled upgrade pointer selection. Three fixture screenshots were inspected.
+Nine initial warmed ≥60-second before windows hold exactly 300 live actors and
+have no browser errors or >100 ms sampled page intervals. Initial visible
+windows overlapped short local checks, so they remain exploratory; a quiet
+three-repeat visible baseline is being recorded. Hidden/paused before windows
+were isolated. Final matching after/production profiles and regression/stress
+remain pending. No new code changes are planned unless validation finds a defect.
+
+Final validation/review starts **15:14 AEDT / 04:14 UTC**, ahead of the
+04:18 latest reserved start. Two external execution-permission waits consumed
+about 20 minutes each of the wall budget; deadline stays **04:38:15 UTC**.
+Quiet before visible repeats and all short work probes pass. The after capacity,
+production comparison and final browser/stress sequence is approved and serial.
+No phase completion/commit or PR publication is claimed until actual gates pass.
+Initial preservation review confirms all seven untouched plan/roadmap files
+match their initial backups byte-for-byte; the active plan's initial annotation
+is preserved while adding P2 measurement ownership.
+
+P2 cycle 3 measurement checkpoint **15:25:22 AEDT / 04:25:22 UTC**:
+18 primary warmed ≥60 s paired test windows (three repeats per visible/OFF/paused
+state per build) pass exact 300-live retention and browser-error checks; the
+three original exploratory visible windows remain retained separately. All have
+zero sampled >100 ms page intervals. SwiftShader visible median p95 stays
+41.7 ms; OFF 25.0→24.9 ms, paused 25.3→25.3 ms. Visible update p95 (rolling
+active samples) is .9→.8 ms, with engine/render work excluded. CDP script
+medians are 6.2340→6.2426 / 3.1439→3.0831 / 2.0939→2.0356 s/window.
+These small/noisy differences do not establish a causal throughput improvement.
+Visible-map software rendering remains above the provisional 40 ms criterion;
+P2 removes confirmed work but does not pass older-device/readiness acceptance.
+Production before/after, after work probes and final gate remain pending.
+
+
+## Session 3 final P2 gate — verified
+
+Final validation/review began **15:14 AEDT / 04:14 UTC**; no deadline extension.
+P2 software gate passes: **438 units / 52 files**, types/lint/build, **13 targeted
+serial browsers**, **88 full Chromium passes / one existing opt-in skip** (four
+workers, zero retries), **three serial stress cases** (zero retries), and built
+production exclusion/boot/tool checks. Both theme HUD/minimap fixtures and
+resized pointer interaction are exercised; visual captures are inspected.
+
+Measured source: archived `6f9ec78` before; P2 delta after, identified by source
+and build digests. **24 primary serial warmed ≥60 s windows** (18 test, six
+production), three retained exploratory visible windows and six short probes
+pass. All test windows hold exactly 300 live actors; actual visible ranges and
+every p95/p99/max/stall/update/CDP value are in `build/performance/P2_REPORT.md`.
+Visible p95 median stays 41.7 ms; OFF 25.0→24.9, paused 25.3→25.3; production
+16.8→16.8 ms. No meaningful frame-rate improvement is established.
+Confirmed after work probes remove hidden-map preparation and stable paused HUD
+setters; texture updates were already guarded by Phaser. Production population
+and update CPU remain unavailable; test CPU is rolling active update only.
+
+REC-115 accepted. Gate permits P3 next; no P3, optional content, cap increase,
+cadence/tuning, bitmap or save change is implemented. Visible-map software
+performance remains above the provisional 40 ms criterion; physical older-device
+and mixed-combat acceptance stay pending. Audit/balance were not rerun: no
+dependency/game tuning changed and Q5 remains the verified audit checkpoint.
+
+Delivery uses `perf(v0.4.3): reduce repeated interface work` on `codex/v0.4.3`,
+then the owner-requested new draft PR into main. PR #24 is already merged. The
+initial seven plan annotations and concurrent roadmap section remain unstaged
+and unchanged; the active plan is selectively staged without its annotation.
+New-head Actions remains subject to the new PR's actual check result.
+
+Final gate/document recording: **04:37:14 UTC**, elapsed **1:28:59**.
+Full Chromium: 2.7 min; final serial stress: 32.6 s. Own browser servers
+closed after checks; delivery/review follow before the original deadline.

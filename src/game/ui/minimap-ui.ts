@@ -21,7 +21,7 @@ export class MinimapUi {
   private readonly container: Phaser.GameObjects.Container;
   private readonly worldWidth: number;
   private readonly worldHeight: number;
-  private readonly theme: ThemeManifest;
+  private readonly colours: { background: number; text: number; enemy: number; critical: number; shrine: number; player: number };
   private opacity: RunSettings["minimapOpacity"];
   private left = 0;
   private top = 0;
@@ -35,14 +35,20 @@ export class MinimapUi {
     world: { readonly width: number; readonly height: number },
     opacity: RunSettings["minimapOpacity"],
   ) {
-    this.theme = theme;
+    const palette = theme.tokens.palette;
+    const colour = (hex: string) => Phaser.Display.Color.HexStringToColor(hex).color;
+    this.colours = {
+      background: colour(palette.background), text: colour(palette.text),
+      enemy: colour(palette.enemy), critical: colour(palette.critical),
+      shrine: colour(palette.shrine), player: colour(palette.player),
+    };
     this.worldWidth = world.width;
     this.worldHeight = world.height;
     this.opacity = opacity;
     this.anchor(scene);
     this.graphics = scene.add.graphics();
     this.container = configureUiContainer(scene, scene.add.container(0, 0, [this.graphics]))
-      .setDepth(920);
+      .setDepth(920).setVisible(opacity > 0);
   }
 
   setOpacity(opacity: RunSettings["minimapOpacity"]): void {
@@ -68,37 +74,34 @@ export class MinimapUi {
   }
 
   update(view: MinimapView): void {
+    // Hidden maps keep no changing command buffer and do no drawing work.
+    if (!this.visible) return;
     const graphics = this.graphics.clear();
-    if (this.opacity === 0 || this.overlayHidden) {
-      this.container.setVisible(false);
-      return;
-    }
-    this.container.setVisible(true);
-    const palette = this.theme.tokens.palette;
-    const colour = (hex: string) => Phaser.Display.Color.HexStringToColor(hex).color;
-    graphics.fillStyle(colour(palette.background), this.opacity * 0.82);
+    const colours = this.colours;
+    graphics.fillStyle(colours.background, this.opacity * 0.82);
     graphics.fillRoundedRect(this.left, this.top, this.width, this.height, 8);
-    graphics.lineStyle(2, colour(palette.text), this.opacity * 0.9);
+    graphics.lineStyle(2, colours.text, this.opacity * 0.9);
     graphics.strokeRoundedRect(this.left, this.top, this.width, this.height, 8);
 
-    const point = (entry: MinimapPoint): readonly [number, number] => [
+    // Enemy dots communicate pressure, never hitboxes or targeting geometry.
+    this.drawDots(view.enemies, colours.enemy, 1.4);
+    this.drawDots(view.hazards, colours.critical, 2.2);
+    this.drawDots(view.shrines, colours.shrine, 3);
+    graphics.fillStyle(colours.player, this.opacity);
+    this.drawDot(view.player, 3.4);
+  }
+
+  private drawDots(entries: readonly MinimapPoint[], colour: number, radius: number): void {
+    this.graphics.fillStyle(colour, this.opacity);
+    for (const entry of entries) this.drawDot(entry, radius);
+  }
+
+  private drawDot(entry: MinimapPoint, radius: number): void {
+    this.graphics.fillCircle(
       this.left + 5 + (entry.x / this.worldWidth) * (this.width - 10),
       this.top + 5 + (entry.y / this.worldHeight) * (this.height - 10),
-    ];
-    const dots = (entries: readonly MinimapPoint[], hex: string, radius: number) => {
-      graphics.fillStyle(colour(hex), this.opacity);
-      for (const entry of entries) {
-        const [x, y] = point(entry);
-        graphics.fillCircle(x, y, radius);
-      }
-    };
-
-    // Enemy dots stay deliberately tiny: the map communicates pressure and
-    // direction, not exact hitboxes or an alternate targeting surface.
-    dots(view.enemies, palette.enemy, 1.4);
-    dots(view.hazards, palette.critical, 2.2);
-    dots(view.shrines, palette.shrine, 3);
-    dots([view.player], palette.player, 3.4);
+      radius,
+    );
   }
 
   destroy(): void {

@@ -15,6 +15,27 @@ export interface HudExtras {
   readonly levelProgress: number;
 }
 
+interface HudTextInputs {
+  health: number;
+  maxHealth: number;
+  xp: number;
+  requiredXp: number;
+  level: number;
+  clockSecond: number;
+  mode: RunState["mode"];
+  status: RunState["status"];
+  difficulty: RunState["difficulty"];
+  kills: number;
+  enemies: number;
+  chaos: number;
+  threatStep: number;
+  killChain: number;
+  natural: number;
+  fragmentation: number;
+  environment: number;
+  baggedWaste: number;
+}
+
 export class Hud {
   private readonly scene: Phaser.Scene;
   private readonly theme: ThemeManifest;
@@ -30,6 +51,7 @@ export class Hud {
   private readonly container: Phaser.GameObjects.Container;
   private readonly barLeft: number;
   private readonly uiTop: number;
+  private textInputs?: HudTextInputs;
 
   private static readonly BAR_WIDTH = 200;
   private static readonly BAR_HEIGHT = 14;
@@ -123,6 +145,45 @@ export class Hud {
   }
 
   update(state: RunState, extras: HudExtras): void {
+    const previous = this.textInputs;
+    const health = Math.ceil(state.player.health);
+    const maxHealthText = Math.ceil(state.player.stats.maxHealth);
+    const progression = state.progression;
+    const statistics = state.statistics;
+    const clockSecond = Math.max(0, Math.ceil((state.mode === "timed"
+      ? state.durationMs - state.elapsedMs : state.elapsedMs - state.durationMs) / 1000));
+    const killChain = extras.killChain > 1 ? extras.killChain : 0;
+    // The origin ledger mutates in place; compare scalars, never its identity.
+    const counts = extras.spawnCounts;
+    if (!previous || previous.health !== health || previous.maxHealth !== maxHealthText ||
+        previous.xp !== progression.xp || previous.requiredXp !== progression.xpToNextLevel ||
+        previous.level !== progression.level || previous.clockSecond !== clockSecond ||
+        previous.mode !== state.mode || previous.status !== state.status ||
+        previous.difficulty !== state.difficulty || previous.kills !== statistics.kills ||
+        previous.enemies !== statistics.liveEnemies || previous.chaos !== state.world.chaos ||
+        previous.threatStep !== extras.threatStep || previous.killChain !== killChain ||
+        previous.natural !== counts.natural || previous.fragmentation !== counts.fragmentation ||
+        previous.environment !== counts.environment || previous.baggedWaste !== counts.baggedWaste) {
+      this.textInputs = {
+        health, maxHealth: maxHealthText, xp: progression.xp, requiredXp: progression.xpToNextLevel,
+        level: progression.level, clockSecond, mode: state.mode, status: state.status,
+        difficulty: state.difficulty, kills: statistics.kills, enemies: statistics.liveEnemies,
+        chaos: state.world.chaos, threatStep: extras.threatStep, killChain,
+        natural: counts.natural, fragmentation: counts.fragmentation,
+        environment: counts.environment, baggedWaste: counts.baggedWaste,
+      };
+      this.updateText(state, extras);
+    }
+
+    const maxHealth = state.player.stats.maxHealth;
+    const healthProgress = maxHealth > 0 ? state.player.health / maxHealth : 0;
+    const healthWidth = Hud.BAR_WIDTH * Math.min(1, Math.max(0, healthProgress));
+    const xpWidth = Hud.BAR_WIDTH * Math.min(1, Math.max(0, extras.levelProgress));
+    if (this.healthFill.width !== healthWidth) this.healthFill.width = healthWidth;
+    if (this.xpFill.width !== xpWidth) this.xpFill.width = xpWidth;
+  }
+
+  private updateText(state: RunState, extras: HudExtras): void {
     const values = selectHudValues(state);
     const vocabulary = this.theme.copy.vocabulary;
     this.healthLabel.setText(`${vocabulary.health}: ${values.health}`);
@@ -146,10 +207,6 @@ export class Hud {
     }
     this.right.setText(right);
 
-    const maxHealth = state.player.stats.maxHealth;
-    const healthProgress = maxHealth > 0 ? state.player.health / maxHealth : 0;
-    this.healthFill.width = Hud.BAR_WIDTH * Math.min(1, Math.max(0, healthProgress));
-    this.xpFill.width = Hud.BAR_WIDTH * Math.min(1, Math.max(0, extras.levelProgress));
     this.levelLabel.setText(`${vocabulary.level} ${values.level}`);
     this.status.setText(state.status === "paused" ? vocabulary.paused : "");
   }
