@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **Q5 Actions verification pending; REC-113 audit is locally resolved. P2–P6 readiness remains gated.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P2–P6 readiness remains gated.**
 
 ## How to maintain this file
 
@@ -2923,7 +2923,7 @@ status annotations and concurrent roadmap section outside the delivery commit.
 - Status: Resolved
 - Date: 2026-10-13
 - Affects: CI audit, V0.4.3 P6 readiness and PR merge/release
-- Blocks: Release; not Q4 gameplay or independent P2 work
+- Blocks: None after Q5 remediation; P2–P6 retain their separate readiness gates
 
 At the owner-requested Q4 push/PR checkpoint, `npm audit --audit-level=high` and
 a bounded repeat exit 1 with 14 advisories (1 moderate, 11 high, 2 critical).
@@ -2952,7 +2952,7 @@ is tracked with the CI repair below; the old Q4 report remains historical.
 - Status: Accepted
 - Date: 2026-10-13
 - Affects: V0.4.3 Q5, PR #24 and browser verification conventions
-- Blocks: Q5 completion until its pushed Actions run passes; independent P2 stays unstarted
+- Blocks: None; Q5 repair head passed Actions, and P2 stays unstarted
 
 The two failed PR runs (38319851611 / 38319758936) stop in browser checks, not
 audit: movement advances only ~37–47 units in a five-second wall window, bottle
@@ -2983,3 +2983,9 @@ Q5's vetted test/lint upgrades and transitive patches also remove the audit path
 types/lint/build and unchanged balance/script outputs. Full local CI mode passes
 85 cases / one existing skip, serial and without retries. Remote results must
 match the pushed head before calling Actions green. See `Q5_CI_REPAIR.md`.
+
+Remote resolution: repair head `28ecdba` passes
+[Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864),
+2026-10-13 01:27:58–01:43:02 UTC. Linux reports 428 passing units, 85 passing
+browser cases / one existing skip, no flaky/retried cases, and zero audit
+vulnerabilities. Q5 is verified; this does not complete P2–P6 or device acceptance.

@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2 next; Q5 repairs CI/audit; verify latest PR checks (REC-113/114).** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2 next; Q5 CI/audit repair verified (REC-113/114).** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -179,8 +179,10 @@ Commit: `fix(v0.4.3): repair CI timing and dependency audit checks`
 - [x] Q5 local — affected slow-runner browser cases, complete unit/type/lint/build,
   full Chromium and serial stress, simulator/production tooling and npm audit;
   normal clean install and zero advisories.
-- [ ] Q5 remote — push to PR #24 and verify the new Actions run before claiming
-  remote success. P2 stays unstarted.
+- [x] Q5 remote — repair head `28ecdba` passed [Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864):
+  428 units, 85 browser cases / one existing skip, zero flaky/retried cases and
+  zero audit vulnerabilities. P2 stays unstarted; latest PR head remains the
+  publication verification authority.
 
 ## Performance prerequisites — P0–P6
 

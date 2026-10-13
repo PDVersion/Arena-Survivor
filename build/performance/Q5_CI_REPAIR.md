@@ -45,3 +45,12 @@ progress and PR checks. Workflow failure diagnostics now upload `test-results/` 
 days; future Linux failures retain portable screenshot/trace evidence.
 No performance improvement or older-device acceptance is claimed. P2–P6 remain
 unstarted; this is a CI repair within the existing draft checkpoint PR.
+
+Remote gate: repair head `28ecdba91462fdf059f1deb3c75652fea09c4ca5` passes
+[Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864),
+started **2026-10-13 01:27:58 UTC**, completed **01:43:02 UTC** (15 min 4 s).
+All verification steps pass: clean install, types, **428 units / 51 files**, lint,
+build, **85 browsers / one existing skip** (14.0 min), and audit with **zero
+vulnerabilities**. No browser flaky/retry results. Q5 is verified; P2 remains
+unstarted, and the checkpoint PR remains draft pending P2–P6 readiness. The
+verification-record follow-up must still pass its own latest-head Actions check.

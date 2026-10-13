@@ -9,7 +9,7 @@ verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
 common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
 Session 2 / P1 are now verified; Session 3 / P2 is next and unstarted. Content C1–C7 and other optional features have not started;
-physical older-device acceptance remains pending. No performance improvement is claimed. REC-113 now blocks release on dependency audit; P2 can proceed independently.
+physical older-device acceptance remains pending. No performance improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P2–P6 readiness remains gated.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -453,3 +453,12 @@ boot/play/pause, starting stats and atlas navigation, zero browser errors
 (`Q5_PRODUCTION_CHECK.json`). Q5 implementation/test/docs are now ready for the
 owner-authorized existing-PR update. Audit blocker resolved locally; no remote
 success is claimed until the pushed head's Actions checks complete.
+
+Remote gate: repair head `28ecdba91462fdf059f1deb3c75652fea09c4ca5` passes
+[Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864),
+started **2026-10-13 01:27:58 UTC**, completed **01:43:02 UTC** (15 min 4 s).
+All verification steps pass: clean install, types, **428 units / 51 files**, lint,
+build, **85 browsers / one existing skip** (14.0 min), and audit with **zero
+vulnerabilities**. No browser flaky/retry results. Q5 is verified; P2 remains
+unstarted, and the checkpoint PR remains draft pending P2–P6 readiness. The
+verification-record follow-up must still pass its own latest-head Actions check.

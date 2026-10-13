@@ -162,5 +162,6 @@ unstarted and the unchanged lockfile's audit blocks release (REC-112/113).
 
 Q5 is the owner's PR #24 Actions correction: portable test artifacts, bounded
 simulation waits and vetted development-tool patches. The audit now reports
-zero vulnerabilities locally; remote head verification remains part of its gate
-(REC-113/114). It does not start P2 or change gameplay/balance.
+zero vulnerabilities locally and on the verified repair head `28ecdba`:
+[Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864) passes all steps (REC-113/114).
+It does not start P2 or change gameplay/balance.

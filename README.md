@@ -216,5 +216,5 @@ the updated base value. See [the balance comparison](build/balance/Q4_OPENING_RE
 
 Q5 repairs the PR browser timing/output failures and patches audited development
 tooling. The current lockfile installs cleanly and audits with zero vulnerabilities
-(REC-113/114). The V0.4.3 checkpoint PR remains draft while P2–P6 readiness is
+(REC-113/114), and [the repair head passes Actions](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864). The V0.4.3 checkpoint PR remains draft while P2–P6 readiness is
 unfinished; its latest Actions result is the remote verification authority.
