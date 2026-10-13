@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("large measured upgrade cards fit the UI viewport and scaled pointer selection", async ({ page }) => {
+test("large measured upgrade cards fit the UI viewport and scaled pointer selection", async ({ page }, testInfo) => {
   await page.goto("/sprite-browser.html");
   const result = await page.evaluate(async () => {
     const phaserPath = "/node_modules/phaser/dist/phaser.esm.js";
@@ -70,7 +70,7 @@ test("large measured upgrade cards fit the UI viewport and scaled pointer select
   expect(result.details).toBe(3);
   const canvas = page.locator("#layout-fixture canvas");
   const box = (await canvas.boundingBox())!;
-  await page.screenshot({ path: "/private/tmp/arena-q3-upgrade-layout.png" });
+  await page.screenshot({ path: testInfo.outputPath("upgrade-layout.png") });
   await canvas.click({ position: { x: result.targets[2]!.x * box.width / 1600, y: result.targets[2]!.y * box.height / 900 } });
   await expect.poll(() => page.evaluate(() => Reflect.get(window, "__LAYOUT_SELECTION__"))).toBe("upgrade.crit_chance");
 });

@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2 next; audit blocks release (REC-113).** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2 next; Q5 repairs CI/audit; verify latest PR checks (REC-113/114).** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -156,6 +156,31 @@ Death attribution is isolated from opening difficulty, and the stat panel's
 native toggle-event race is fixed. **Audit fails** with 14 advisories on unchanged
 dependencies (REC-113); this does not complete milestone/readiness or approve merge.
 The owner-requested PR is a draft checkpoint. P2 stays next and unstarted.
+
+## Q5 — PR #24 Actions repair
+
+Owner explicitly requests fixing failed Actions checks in the existing PR.
+The two captured failed runs stop at Chromium regressions: short movement,
+bottle-unlock and Collection Sweep waits fail under the slower simulated clock;
+the layout screenshot uses a macOS-only absolute directory. Two level-up paths
+are also flaky on CI. The dependency audit is skipped behind that failure and
+REC-113 still needs remediation. P2 remains unstarted.
+
+Ownership: affected browser specs/helper and test-output handling; patched
+package/lock versions, compatible test/lint/script configuration when necessary;
+CI diagnostic artifacts/workflow handling if needed; active plans, progress,
+README, Session 3 handoff and reconciliation. No gameplay tuning or optional
+feature work. Keep assertions and simulation rate intact; fix bounded scheduling
+assumptions and portable output, then remove audited dependency paths through
+compatible tested updates. Preserve all original local edits.
+
+Commit: `fix(v0.4.3): repair CI timing and dependency audit checks`
+
+- [x] Q5 local — affected slow-runner browser cases, complete unit/type/lint/build,
+  full Chromium and serial stress, simulator/production tooling and npm audit;
+  normal clean install and zero advisories.
+- [ ] Q5 remote — push to PR #24 and verify the new Actions run before claiming
+  remote success. P2 stays unstarted.
 
 ## Performance prerequisites — P0–P6
 

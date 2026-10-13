@@ -124,12 +124,15 @@ test("a restarted run rewinds the director to its opening state", async ({ page 
 });
 
 test("bottles unlock quietly before the heavy-role milestone waves", async ({ page }) => {
-  await waitForPlaying(page, "/?runDurationMs=20000&noContact&noXp&atTimeUp=complete");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.progress ?? 0), { timeout: 20_000 }).toBeGreaterThan(0.12);
+  test.setTimeout(120_000);
+  // This checks normalized unlock order, not a wall-clock duration. Compress
+  // the authored run and allow the software-rendered CI clock to reach it.
+  await waitForPlaying(page, "/?runDurationMs=8000&noContact&noXp&noHazards&atTimeUp=complete");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.progress ?? 0), { timeout: 90_000 }).toBeGreaterThan(0.12);
   const quiet = await snapshot(page);
   expect(quiet?.pacing?.roleWeights[archetypeIds.enemy.swarmBasic]).toBeGreaterThan(0);
   expect(quiet?.pacing?.milestoneWaves).toBe(0);
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.milestoneWaves ?? 0), { timeout: 30_000 }).toBeGreaterThanOrEqual(1);
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.milestoneWaves ?? 0), { timeout: 90_000 }).toBeGreaterThanOrEqual(1);
   const wave = await snapshot(page);
   expect(wave?.pacing?.waveSpawned).toBeGreaterThan(0);
   expect(wave?.pacing?.driftSpawned).toBe(0);

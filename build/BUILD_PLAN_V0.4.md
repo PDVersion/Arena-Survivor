@@ -159,3 +159,8 @@ Q4 is the owner's one-hit opening correction and stat-inspection checkpoint:
 Microplastics health 11→9, with all other role/tool values and later scaling kept.
 Its gameplay gate passes; the owner requests a draft PR now, while P2–P6 remain
 unstarted and the unchanged lockfile's audit blocks release (REC-112/113).
+
+Q5 is the owner's PR #24 Actions correction: portable test artifacts, bounded
+simulation waits and vetted development-tool patches. The audit now reports
+zero vulnerabilities locally; remote head verification remains part of its gate
+(REC-113/114). It does not start P2 or change gameplay/balance.

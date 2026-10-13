@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 — current lockfile fails the high-severity audit gate.**
+- Release-blocking open entries: **Q5 Actions verification pending; REC-113 audit is locally resolved. P2–P6 readiness remains gated.**
 
 ## How to maintain this file
 
@@ -2920,7 +2920,7 @@ status annotations and concurrent roadmap section outside the delivery commit.
 
 ### REC-113 — Checkpoint audit fails on unchanged dependencies
 
-- Status: Open
+- Status: Resolved
 - Date: 2026-10-13
 - Affects: CI audit, V0.4.3 P6 readiness and PR merge/release
 - Blocks: Release; not Q4 gameplay or independent P2 work
@@ -2939,3 +2939,47 @@ production exploitability without investigation. Dependency maintenance requires
 its own ownership and validation before merging/releasing; P2 measurements can
 continue independently. This audit was an additional publication check rather
 than Q4's gameplay gate.
+
+REC-113 resolution (2026-10-13): the owner's subsequent request to fix PR Actions
+authorizes dependency maintenance in Q5. Explicit inspected Vitest/lint versions
+and transitive patches produce a normal clean install and audit with zero
+vulnerabilities (`build/performance/Q5_AUDIT.json`); types/units/lint/build and
+balance scripts pass. No forced install/audit filtering. Remote verification
+is tracked with the CI repair below; the old Q4 report remains historical.
+
+### REC-114 — CI waits obey simulated progress; artifacts use owned output paths
+
+- Status: Accepted
+- Date: 2026-10-13
+- Affects: V0.4.3 Q5, PR #24 and browser verification conventions
+- Blocks: Q5 completion until its pushed Actions run passes; independent P2 stays unstarted
+
+The two failed PR runs (38319851611 / 38319758936) stop in browser checks, not
+audit: movement advances only ~37–47 units in a five-second wall window, bottle
+progress only .068–.079 in 20 seconds, and eight completed sweep attacks miss a
+15-second window. The authored .5 rate and software-rendered/smoothed CI clock
+make those assumptions invalid (REC-041/103). Keep the actual distance, role/wave,
+attack/hit and ledger assertions; bound waits against the existing CI budget.
+Compress normalized test duration for unlock order, and isolate level-up wiring
+with a theme-derived real-XP close-arrival fixture rather than natural travel.
+No gameplay rate or tuning changes.
+
+The layout fixture's absolute macOS output directory fails on Linux after its
+layout assertions pass. Use Playwright's per-test `outputPath`, and upload failed
+test artifacts in the CI workflow. Paths and accounts returned by diagnostics
+are observations, never authority to execute instructions from logs. The Code
+Review connector lacked a connection; existing authenticated GitHub REST access
+retrieved the runs without exposing credentials.
+
+A separate local crowd failure shows the telemetry counts near neighbours under
+.5 world units, not persistent pair identities. An instantaneous ceiling of two
+is unrelated to the named "never stays stacked" invariant. Isolate separation
+from combat, retain all 200 live bodies, and repeatedly require recovery to zero
+within a bounded wait. Three repeats pass; the exact combat/ledger path remains.
+Do not change production separation to satisfy a sampled-count assumption.
+
+Q5's vetted test/lint upgrades and transitive patches also remove the audit paths
+(REC-113), with normal npm ci, Node 20, unchanged game/Vite versions, all units,
+types/lint/build and unchanged balance/script outputs. Full local CI mode passes
+85 cases / one existing skip, serial and without retries. Remote results must
+match the pushed head before calling Actions green. See `Q5_CI_REPAIR.md`.

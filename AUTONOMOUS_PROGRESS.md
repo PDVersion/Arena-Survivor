@@ -409,3 +409,47 @@ publication check; no remote pass is claimed. A focused documentation follow-up
 records this actual delivery and updates the Session 3 handoff. No merge.
 The seven original status annotations and concurrent roadmap section remain
 uncommitted and unchanged.
+
+
+## Q5 — PR #24 Actions repair, 2026-10-13
+
+Resumed `233541e` with original local annotations/roadmap unchanged. The owner
+explicitly requests fixing failed Actions; Q5 ownership recorded before edits.
+P2 remains unstarted. Existing Code Review connector was not connected; GitHub
+REST metadata/logs through the existing login identified both failed head runs.
+Both 38319851611 and 38319758936 have four browser failures and two flaky
+level-up cases. Audit is skipped in both.
+
+Cycle 1: portable layout output, bounded movement/sweep waits, compressed
+normalized bottle unlock, and a real-XP theme-derived level-up fixture. Added
+failure artifact upload. Explicit patched Vitest 4.1.11 / typescript-eslint
+8.71.2 and transitive brace-expansion/source-map-js updates remove all 14 audit
+advisories, retaining game/Vite/TypeScript/vite-node versions. Normal clean
+install, 428 units, types/lint/build and simulator/script equality pass.
+
+Cycle 2: focused run passes 13 cases and exposes a separate crowd transient
+(three near-coincident pairs versus a ceiling of two). Repeats reproduce it even
+without weapons. Correct the check to bounded repeated recovery to zero, retain
+all 200 actors and keep compound ledger assertions separate. Three final repeats
+pass (23.9 s). No physics/tuning changes; failed exploratory runs are not counted
+as verification. Full frozen-source `CI=1` regression with zero retries passes
+**85 / one existing opt-in skip**, 8.5 min. Final stress/production gate follows.
+
+The audit blocker is locally resolved (REC-113); Q5's pushed Actions verification
+remains pending. `build/performance/Q5_CI_REPAIR.md` documents actual failures,
+fixes, compatibility sources and before/after evidence; REC-114 prevents this
+class of test from returning. No new optional content, clock or cap change.
+
+Final local gate after normal clean install: **428 units / 51 files**, types,
+lint, build, **85 browsers / one existing skip** in CI mode with one worker and
+zero retries (8.5 min), and **3 serial stress cases** (33.9 s) pass. Full suite
+source was frozen. The instrumented stress reports one 125.1 ms frame interval
+in Beginner; it is retained in the report, with no device/performance claim.
+The audit has zero advisories and accepted Q4 simulator/script outputs match
+exactly. Final production check and publication verification are recorded next.
+
+Final production gate passes: emitted diagnostic markers/global absent, actual
+boot/play/pause, starting stats and atlas navigation, zero browser errors
+(`Q5_PRODUCTION_CHECK.json`). Q5 implementation/test/docs are now ready for the
+owner-authorized existing-PR update. Audit blocker resolved locally; no remote
+success is claimed until the pushed head's Actions checks complete.

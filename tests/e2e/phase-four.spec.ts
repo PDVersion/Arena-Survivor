@@ -1,19 +1,26 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+import { archetypeIds } from "../../src/game/core/archetypes/ids";
+import { xpRequiredForLevelOn } from "../../src/game/systems/xp";
 
 async function waitForLevelUp(page: Page): Promise<void> {
   // `noContact` keeps this path about the level-up overlay rather than about
   // surviving long enough to reach it; contact damage and death are covered by
   // phase-three. See REC-047 for the early-game observation behind this.
-  await page.goto("/?noContact&spawnRadius=320");
+  // Close deterministic arrivals isolate XP/choice wiring from director pace
+  // and travel time on software-rendered CI. Rewards and upgrades stay real.
+  const role = activeTheme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.fastFragile)!;
+  const count = Math.ceil(xpRequiredForLevelOn(activeTheme.tuning.progression.xpCurve, 1) / role.xpReward);
+  await page.goto(`/?noContact&noHazards&loadHarness=${count}&loadRole=${role.id}&closeLoad&lineLoad`);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
-      timeout: 35_000,
+      timeout: 90_000,
     })
     .toBe("level_up");
 }
 
 test("level up freezes play and presents three distinct themed upgrades", async ({ page }) => {
-  test.setTimeout(50_000);
+  test.setTimeout(120_000);
   await waitForLevelUp(page);
   const paused = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
 
@@ -31,7 +38,7 @@ test("level up freezes play and presents three distinct themed upgrades", async 
 });
 
 test("choosing an upgrade applies its stable effect and resumes safely", async ({ page }) => {
-  test.setTimeout(50_000);
+  test.setTimeout(120_000);
   await waitForLevelUp(page);
   const before = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   const chosenId = before?.progression?.choiceIds[0];
