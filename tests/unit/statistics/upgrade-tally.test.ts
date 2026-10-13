@@ -129,7 +129,8 @@ describe("per-role reward scaling", () => {
     const bagged = byId.get(archetypeIds.enemy.deathSpawner)!;
 
     expect(bottle.xpReward).toBe(1);
-    expect(bag.xpReward).toBeGreaterThan(bottle.xpReward);
+    // Microplastics are now the common opening role, with the same 1 XP baseline.
+    expect(bag.xpReward).toBe(bottle.xpReward);
     expect(glass.xpReward).toBeGreaterThan(bag.xpReward);
     expect(bagged.xpReward).toBeGreaterThan(bag.xpReward);
   });

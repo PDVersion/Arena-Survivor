@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { addWorldText } from "../ui/ui-text";
 import type { ShrineDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
@@ -17,6 +18,7 @@ export class ShrineActor extends Phaser.GameObjects.Star {
     tokens: ThemeTokens,
     label: string,
     interactionPrompt: string,
+    labelScale = 1,
   ) {
     const colour = Phaser.Display.Color.HexStringToColor(
       tokens.palette[definition.presentationToken],
@@ -25,23 +27,25 @@ export class ShrineActor extends Phaser.GameObjects.Star {
     this.definition = definition;
     scene.add.existing(this);
     this.setDepth(15);
-    scene.add.text(x, y - 48, label, {
+    addWorldText(scene, x, y - 48, label, {
       color: tokens.palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "16px",
       stroke: tokens.palette.background,
       strokeThickness: 4,
-    }).setOrigin(0.5).setDepth(16);
-    this.prompt = scene.add.text(x, y + 42, interactionPrompt, {
+    }).setOrigin(0.5).setScale(labelScale).setDepth(16);
+    this.prompt = addWorldText(scene, x, y + 42, interactionPrompt, {
       color: tokens.palette.accent,
       fontFamily: "Georgia, serif",
       fontSize: "17px",
       fontStyle: "bold",
       stroke: tokens.palette.background,
       strokeThickness: 4,
-    }).setOrigin(0.5).setDepth(16).setVisible(false);
+    }).setOrigin(0.5).setScale(labelScale).setDepth(16).setVisible(false);
     this.view = createSpriteView(this, tokens, definition.id, { diameter: definition.radius * 2 });
   }
+
+  get textResolution(): number { return this.prompt.style.resolution; }
 
   setInRange(inRange: boolean): void {
     this.prompt.setVisible(inRange && !this.activated);

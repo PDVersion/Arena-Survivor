@@ -37,7 +37,14 @@ registerTestTelemetryUpdater((nextSnapshot) => {
       summaryMetrics: Object.freeze([...nextSnapshot.statistics.summaryMetrics]),
       summaryDamage: Object.freeze([...nextSnapshot.statistics.summaryDamage]),
     }) : undefined,
-    load: nextSnapshot.load ? Object.freeze({ ...nextSnapshot.load }) : undefined,
+    load: nextSnapshot.load ? Object.freeze({
+      ...nextSnapshot.load,
+      distribution: nextSnapshot.load.distribution ? Object.freeze({
+        ...nextSnapshot.load.distribution,
+        wall: Object.freeze({ ...nextSnapshot.load.distribution.wall }),
+        updateCpu: Object.freeze({ ...nextSnapshot.load.distribution.updateCpu }),
+      }) : undefined,
+    }) : undefined,
     effects: nextSnapshot.effects ? Object.freeze({ ...nextSnapshot.effects }) : undefined,
     shrine: nextSnapshot.shrine ? Object.freeze({
       ...nextSnapshot.shrine,

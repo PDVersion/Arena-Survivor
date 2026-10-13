@@ -5,29 +5,29 @@ recognisable real-world tools, and optional educational depth.
 
 ## Status
 
-V0.2 is complete: the expanded enemy roster, overcrit and compound skills, Chaos and four shrine roles, baseline elites, bounded audiovisual feedback, a 300-enemy representative load path, and a reconciled terminal statistics ledger.
+**V0.4.2 and V0.4.2.1 are merged.** The readable baseline has a 2× cropped
+world view, coherent 0.5 gameplay rate, Cleanup Grabber and Collection Sweep,
+walk-through contact with bounded knockback, Microplastics, Glass Shards and
+finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
+checkpoint are also merged; remaining art stays gated until the roster settles.
 
-**V0.4.2 is planned next.** It tightens the camera to a 2× cropped world view,
-starts a coherent half-speed gameplay experiment, and replaces the active eco
-theme's abstract Sorting Pulse with a short-range Cleanup Grabber. A small seam
-allows view, pace, and grabber to be built by three equivalent agents before one
-core integration and play-test pass. The old content-growth V0.4.2 is now V0.4.3,
-and the remaining sprite roster follows as V0.4.4.
+**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2/Q3/Q4 and P1 gameplay/software gates are verified; P2 is next.**
+Q1 fixes player facing/walking and zoomed world text, makes both Cleanup Grabber
+upgrade entries common in the offer pool, and adds Beginner / Normal / Experienced
+difficulty (selected F16). Q2 adds event readability, fragment pose reuse, a sprite review browser and spawn
+source counts. P1 excludes production diagnostics; interface, simulation,
+presentation and lifecycle profiling continue through P2–P6. Other optional
+content remains unselected; C1–C7 follows the performance gate. Real older-device
+acceptance remains pending measurement. See [session progress](AUTONOMOUS_PROGRESS.md),
+[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–110.
 
-**V0.4.0 and V0.4.1 are built.** Sprites are optional theme content:
-a pack may declare a sheet per content id, and an actor with no sheet renders the
-primitive it always did, which is a complete state rather than a missing one. The
-V0.4.1 checkpoint adds the Environment Protector and four enemy sheets from one
-reproducible atlas; the rest are deliberately gated until after the redirect.
-See [the V0.4 sequence](build/BUILD_PLAN_V0.4.md) and REC-071 to REC-078.
-
-**V0.3 is implementation-complete**, with play-test corrections on `claude/v0.3.1`: the roster closes ~25% slower than V0.3 and nothing outruns you, shrines arrive across the run at scattered positions, overlay text is measured rather than placed at fixed offsets, the game opens on a title screen, the HUD has a health bar, the Field Guide catalogues shrines and the upgrade pool, the timer ends in a choice rather than an ending, and upgrade offers roll a rarity tier that scales what they give (REC-058 to REC-069).
-
-V0.3 in full — a rebalancing, escalation, and readability milestone: a compounding experience curve, a procedural spawn director, enemies with physical presence, elapsed-time escalation, arena hazards, levelling skills with a detonation that scales off what it kills, upgrade cards that state exact before-and-after values, a pause menu, impact feedback, and a published time-to-kill table. The production theme is now environment/nature, with knight-magic retained as a second complete pack.
+V0.1–V0.3 and the V0.3.1 corrections are complete. Their plans retain the
+implementation history for progression, director, hazards, shrines, skills,
+statistics, settings and endless/clearing behaviour.
 
 ## Project documents
 
-- [V0.3 build plan](build/BUILD_PLAN_V0.3.md) — current scope, phase order, verification gates, and commit boundaries.
+- [V0.3 build plan](build/BUILD_PLAN_V0.3.md) — completed implementation record, architecture and verification conventions.
 - [Education pivot](build/EDUCATION_PIVOT.md) — exploratory design for the type system, real-data enemy stats, and the knowledge layer.
 - [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
 - [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
@@ -35,7 +35,9 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md) — current increment order, gates, ownership, and reconciliation ranges.
 - [V0.4.1 sprite plan](build/SPRITE_PLAN_V0.4.1.md) — the completed pipeline and five-sheet checkpoint, plus the gated historical inventory.
 - [V0.4.2 readable-baseline plan](build/BUILD_PLAN_V0.4.2.md) — camera zoom, coherent slowdown, Cleanup Grabber, parallel delivery, and integration gate.
-- [V0.4.3 content plan](build/BUILD_PLAN_V0.4.3.md) — weapons, evolution, bosses, curses, unlocks, and persistence after the new baseline passes.
+- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md) — performance prerequisites, ownership and gates, followed by selected content.
+- [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md) — session protocol, measurements and optional feature menu.
+- [Autonomous progress](AUTONOMOUS_PROGRESS.md) — actual checks, evidence, blockers and the next task.
 - [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) — the art bible and the reusable image-generation prompt.
 - [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, claim protocol, status, and the generation log.
 - [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
@@ -43,9 +45,42 @@ V0.3 in full — a rebalancing, escalation, and readability milestone: a compoun
 - [Game plan](build/PLAN.md) — the broader product and design vision.
 
 Before beginning any work, read [the V0.4 sequence](build/BUILD_PLAN_V0.4.md),
-then the reconciliation log and the active increment plan.
+then the reconciliation log and V0.3 implementation record, followed by session
+progress and the active increment plan.
 `build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone
 underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
+
+## Performance measurements
+
+`npm run measure:performance -- --mode production --seconds 60 --warmup 10 --repeats 3 --output build/performance/local-production.json`
+records production page frames and Chromium main-thread counters. Build first.
+For a sustained population/capacity probe, use:
+
+```bash
+npm run measure:performance -- --mode test --scenario capacity --loads 150,300,450,600 --seconds 60 --warmup 10 --repeats 3 --output build/performance/local-capacity.json
+```
+
+Add `--headed` to measure a visible Chromium window and record its actual GPU
+renderer on the target machine. Run browser measurements alone. The capacity fixture holds a mixed crowd with
+weapons/contact/XP/hazards disabled and records live/visible counts plus source
+origins. It includes test telemetry overhead and does not establish mixed-combat
+or hardware acceptance. The production safety cap remains 300. `npm run
+check:production` checks the built output and production boot/play/pause without
+test hooks. The P1 report records actual before/after results and limits.
+
+## Sprite inspection
+
+Open `/sprite-browser.html` on the local server (for example
+[Sprite browser](http://localhost:5173/sprite-browser.html)). Filter/search the
+roster, compare idle/move/hit/death poses as a set, then select an entry to freeze
+or step every frame, play its walk, mirror it and change zoom/background. Mark
+good/bad/review and add notes; reviews persist in that browser and export as JSON.
+Missing sprite bindings are listed as fallbacks. Glass Shards reuse the accepted
+broken-glass pose until the dedicated art pass; no generated image was edited.
+
+Live source counts appear in the HUD, with live/total counts in Pause → Pollution:
+natural (including waves), fragments, Bagged Waste releases, site effects and
+benchmark loads. Shrine-modified ambient arrivals are counted as natural.
 
 ## Run locally
 
@@ -56,7 +91,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`). The game opens on a title screen; press Enter, Space, or click to begin. Runs last five minutes, combat fires automatically, and risk/reward shrines permanently raise world pressure. Shrines arrive one at a time across the run at scattered positions rather than all at the start; while one is off screen, a named marker on the edge of the view points the way.
+Open the URL printed by Vite (normally `http://localhost:5173`). The game opens on a title screen; press Enter, Space, or click to begin. Runs reach a five-minute simulation checkpoint (about ten active real-world minutes at the current 0.5 gameplay rate, plus pauses); combat fires automatically, and risk/reward shrines permanently raise world pressure. Shrines arrive one at a time across the run at scattered positions rather than all at the start; while one is off screen, a named marker on the edge of the view points the way.
 
 Controls:
 
@@ -65,13 +100,28 @@ WASD / Arrow keys = Move
 Enter / Space     = Begin a run from the title screen
 Escape            = Pause or resume
 E / Space         = Activate a shrine while in range
-1 / 2 / 3         = Choose a level-up upgrade
+1 / 2 / 3         = Choose title-screen difficulty or a level-up upgrade
 1 / 2             = Answer the end-of-timer choice
 R / Enter         = Restart after death or completion
 M                 = Mute or unmute session audio
 Tab / left/right  = Switch pause-menu tabs while paused
 Up / down         = Switch Field Guide sections
 ```
+
+Choose difficulty on the title screen (buttons, 1/2/3 or left/right). Normal is
+the default. Settings changes during play apply to the next run; the HUD names
+the current preset. Choices last for this browser session and are not saved yet.
+Multipliers below are relative to the game before presets:
+
+| Preset | Enemy health / damage / arrival rate | Player and tool help |
+| --- | --- | --- |
+| Beginner | 75% / 60% / 70%; enemy speed 85% | Health 125%, speed 110%, pickup reach 125%, tool damage 120%, cooldown 90% |
+| Normal | 95% / 85% / 90% | Original player/tool stats |
+| Experienced | 110% / 110% / 115% | Original player/tool stats |
+
+Hazard damage/rate follows the preset's enemy damage/arrival multipliers. Both
+tool upgrade entries use common offer weighting; card quality still rolls across
+Common through Unique, preserving stronger rewards.
 
 Upgrade cards state exactly what they do — `Damage 15.0 → 17.5 (+25%)`, `Charges 1 → 2` — with a level badge or a `NEW` marker. The numbers can be hidden from the pause menu's settings tab; the badges always show. Pause also lists your current stats, every upgrade taken with counts, and live world pressure.
 
@@ -125,7 +175,7 @@ npm audit --audit-level=high
 
 ## Balance without playing
 
-A five-minute run takes five minutes to evaluate, so pacing questions go through the headless simulator instead:
+An authored five-minute run takes about ten active real-world minutes at the current half-speed pace, so pacing questions go through the headless simulator instead:
 
 ```bash
 npm run balance                                      # every build model, 5 minutes
@@ -147,5 +197,24 @@ For a manual smoke test, verify movement, combat, XP collection, upgrade choices
 
 - Visuals and sounds are generated placeholders; audio uses theme-defined synthesized cues.
 - Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting. `npm run balance -- --ttk` is the instrument for revisiting them.
-- Profile persistence, save export/import, weapon slots and melee delivery, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
+- Profile persistence, save export/import, weapon slots, additional weapons, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
 - The production bundle currently includes Phaser in the initial chunk, so Vite reports its large-chunk advisory during builds.
+
+The [architecture atlas](build/ARCHITECTURE_MAP.html) and
+[sprite browser](sprite-browser.html) link to one another and are separate built
+reference pages. Run Vite to use the sprite browser; its review notes stay local.
+The [Session 3 prompt](build/SESSION_3_PROMPT.md) resumes P2 in a new session.
+Glass Shards deliberately remain stationary and clearable; restart a pre-Q2 live
+run to load their broken-glass sprite binding. Detached pixels in intact Glass
+Bottle poses are an art-review finding, not runtime particles.
+
+Q4 makes ordinary opening Microplastics one-hit on every difficulty: 9 base
+health becomes 6.75 / 8.55 / 9.9 against 12 / 10 / 10 starting damage. Later
+scaling remains active. The sprite browser's starting-difficulty selector shows
+health and other stats from actual theme definitions; the atlas also captures
+the updated base value. See [the balance comparison](build/balance/Q4_OPENING_REPORT.md).
+
+Q5 repairs the PR browser timing/output failures and patches audited development
+tooling. The current lockfile installs cleanly and audits with zero vulnerabilities
+(REC-113/114), and [the repair head passes Actions](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864). The V0.4.3 checkpoint PR remains draft while P2–P6 readiness is
+unfinished; its latest Actions result is the remote verification authority.

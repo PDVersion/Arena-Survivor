@@ -14,6 +14,7 @@ import type { PlayerBaseStats } from "../stats/player-stats";
 import type { EliteId, FeedbackCategory } from "./categories";
 import type { TuningPack } from "./tuning";
 import type { UpgradeTier } from "./tiers";
+import type { DifficultyId } from "./difficulty";
 
 export interface ContentCopy {
   readonly name: string;
@@ -108,6 +109,13 @@ export const worldKeys = [
 export type WorldKey = (typeof worldKeys)[number];
 
 export interface ThemeCopy {
+  readonly spawnOrigins: Readonly<{ live: string; total: string; natural: string; fragmentation: string; baggedWaste: string; environment: string; benchmark: string }>;
+  readonly difficulty: Readonly<{
+    label: string;
+    nextRun: string;
+    hint: string;
+    levels: Readonly<Record<DifficultyId, Readonly<{ name: string; description: string }>>>;
+  }>;
   readonly gameTitle: string;
   readonly arenaName: string;
   readonly bootStatus: string;
@@ -194,6 +202,15 @@ export type SpriteState = (typeof spriteStates)[number];
 
 /** Where a sprite sheet lives and how it is cut. Optional per theme. */
 export interface SpriteDefinition {
+  /** Actual facing of the authored pixels; never inferred by gameplay. */
+  readonly authoredFacing?: "left" | "right";
+  readonly stateFacing?: Readonly<Partial<Record<SpriteState, "left" | "right">>>;
+  readonly walkAnimation?: Readonly<{
+    frames: readonly number[];
+    distancePerFrame: number;
+  }>;
+  /** Reuse an existing atlas row without editing its accepted pixels. */
+  readonly atlasFrameKey?: string;
   /** Stable texture key, e.g. `enemy.swarm_basic`. */
   readonly key: string;
   /** Path relative to `public/`, e.g. `sprites/eco-guardian/enemy_swarm_basic.png`. */

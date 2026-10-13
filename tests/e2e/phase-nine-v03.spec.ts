@@ -62,7 +62,9 @@ test("hit-stop stays inside its budget under load", async ({ page }) => {
 
 test("a death records what killed the player", async ({ page }) => {
   test.setTimeout(120_000);
-  await page.goto("/?spawnRadius=260&noXp=1&atTimeUp=complete");
+  // The opening now clears in one hit. Isolate contact/death attribution from
+  // natural pacing and weapon balance with one known attacker and no weapon.
+  await page.goto("/?loadHarness=1&loadRole=enemy.fast_fragile&closeLoad=1&noWeapon=1&noXp=1&noHazards=1&atTimeUp=complete");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
       timeout: 90_000,
@@ -73,6 +75,7 @@ test("a death records what killed the player", async ({ page }) => {
   const cause = terminal?.impact?.deathCause;
   expect(cause).not.toBeNull();
   expect(cause!.sourceId.length).toBeGreaterThan(0);
+  expect(cause!.sourceId).toBe("enemy.fast_fragile");
   expect(cause!.atMs).toBeGreaterThan(0);
   expect(typeof cause!.elite).toBe("boolean");
 });

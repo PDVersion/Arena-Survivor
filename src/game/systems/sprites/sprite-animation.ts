@@ -36,7 +36,7 @@ export interface PlayerMovementAnimation {
 /**
  * Advance the authored 0→1→2→1 walk by travelled distance.
  *
- * Sixty world units is 300 ms at the player's current 200-unit base speed.
+ * The theme authors the stride for its sheet (the legacy default is 60 units).
  * At most one pose advances per update, so a long frame or overlay resume can
  * never flash through several poses before the player sees one.
  */
@@ -44,28 +44,29 @@ export function advancePlayerMovementFrame(
   previous: Readonly<{ step: number; distance: number }>,
   movedDistance: number,
   moving = movedDistance > 0.01,
+  distancePerFrame = SPRITE_PLAYER_FRAME_DISTANCE,
+  cycle: readonly number[] = [0, 1, 2, 1],
 ): PlayerMovementAnimation {
   if (!moving) return { step: 0, distance: 0, frame: 4 };
-  const cycle = [0, 1, 2, 1] as const;
   if (movedDistance <= 0.01) {
     return { step: previous.step, distance: previous.distance, frame: cycle[previous.step]! };
   }
   const total = previous.distance + movedDistance;
-  const advances = total >= SPRITE_PLAYER_FRAME_DISTANCE ? 1 : 0;
+  const advances = total >= distancePerFrame ? 1 : 0;
   const step = (previous.step + advances) % cycle.length;
   return {
     step,
-    distance: advances ? Math.min(total - SPRITE_PLAYER_FRAME_DISTANCE, SPRITE_PLAYER_FRAME_DISTANCE) : total,
+    distance: advances ? Math.min(total - distancePerFrame, distancePerFrame) : total,
     frame: cycle[step]!,
   };
 }
 
 /**
- * The accepted sheets face left in their authored orientation.
- * Horizontal motion to the right mirrors them; vertical/no motion preserves
+ * Each sheet declares its authored facing; legacy sheets default to left.
+ * Motion opposite that facing mirrors it; vertical/no motion preserves
  * the last facing so a sprite never jitters around zero.
  */
-export function resolveSpriteFlipX(previous: boolean, horizontalMotion: number): boolean {
+export function resolveSpriteFlipX(previous: boolean, horizontalMotion: number, authoredFacing: "left" | "right" = "left"): boolean {
   if (Math.abs(horizontalMotion) <= 0.01) return previous;
-  return horizontalMotion > 0;
+  return authoredFacing === "left" ? horizontalMotion > 0 : horizontalMotion < 0;
 }

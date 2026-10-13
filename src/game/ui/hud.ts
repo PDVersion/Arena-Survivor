@@ -1,10 +1,12 @@
 import Phaser from "phaser";
+import type { SpawnCounts } from "../systems/statistics/spawn-statistics";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { RunState } from "../state/run-state";
 import { selectHudValues } from "../state/statistics";
 import { addUiText, configureUiContainer, uiViewport } from "./ui-text";
 
 export interface HudExtras {
+  readonly spawnCounts: SpawnCounts;
   /** Discrete elapsed-time escalation step. */
   readonly threatStep: number;
   /** Kills inside the rolling chain window. */
@@ -127,12 +129,17 @@ export class Hud {
     this.experienceLabel.setText(`${vocabulary.experience}: ${values.experience}`);
 
     const right = [
+      `${this.theme.copy.difficulty.label}: ${this.theme.copy.difficulty.levels[state.difficulty].name}`,
       `${vocabulary.time}: ${values.time}`,
       `${vocabulary.kills}: ${values.kills}`,
       `${vocabulary.enemies}: ${values.enemies}`,
       `${vocabulary.chaos}: ×${state.world.chaos.toFixed(1)}`,
       `${this.theme.copy.world.threat}: ${extras.threatStep}`,
     ];
+    const source = this.theme.copy.spawnOrigins;
+    const counts = extras.spawnCounts;
+    right.push(`${source.natural}: ${counts.natural} · ${source.fragmentation}: ${counts.fragmentation}`);
+    right.push(`${source.environment}: ${counts.environment} · ${source.baggedWaste}: ${counts.baggedWaste}`);
     // Only worth showing while a chain is actually running.
     if (extras.killChain > 1) {
       right.push(`${vocabulary.largestKillChain}: ${extras.killChain}`);

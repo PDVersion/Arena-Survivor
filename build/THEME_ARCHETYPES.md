@@ -212,3 +212,36 @@ Three manifests are validated on every run: the two production packs and a tiny 
 - the browser boot path resolves the expected theme from the facade rather than a hard-coded id.
 
 V0.3 Phase 2 replaced the single-production-theme assumption. Keeping `knight-magic` complete costs one content directory and buys a real second implementation of every contract — the swap to `eco-guardian` was a one-line change in `active-theme.ts` plus one test that had hard-coded a theme id.
+
+## Q1 difficulty and sprite presentation metadata
+
+Beginner / Normal / Experienced are stable run-setting IDs; names/descriptions
+and all preset multipliers live in each theme. The selected preset resolves an
+immutable per-run view of character, weapon, enemy, hazard and director data.
+The source manifest stays unchanged, preserving material identity and the
+persistence-health model. Session choices apply to the next run; settings do
+not silently change an active run's difficulty. Sprite metadata declares the
+sheet's authored facing and walk poses/stride, including differently facing hit
+poses; no physics or gameplay value is derived from those fields.
+
+
+Q2 follow-up (2026-10-12): Microplastics now open the eco run; Plastic Bottles
+enter quietly at 10% progress (30 seconds on the five-minute timer) and ramp
+from ~6% to ~43% of calm natural spawn selection. At 0.5 gameplay rate this
+first unlock is about 60 real seconds into active play. Microplastics now pay
+1 XP as the common opening enemy; material health ordering stays unchanged.
+Bagged Waste still releases its fixed 2 bottles / 2 Microplastics / 1 glass mix
+pending owner confirmation. Site-event labels counter camera zoom at UI scale,
+and spent events disappear from the minimap. Spawn accounting distinguishes
+natural arrivals (including milestone waves), Fracture, Bagged Waste release,
+site effects (surge/duplication) and test loads; source means immediate creation,
+so ambient pressure modified by a shrine is still natural. No factual claims,
+new material identities or bitmap generation are introduced.
+
+Q4 opening balance: eco `enemy.fast_fragile` now has 9 base health as an explicit
+one-hit opening override (REC-112), retaining the material ordering. Other roles
+and starter damage stay unchanged. The standalone inspector resolves the chosen
+difficulty using the game's resolver, labels stats through theme copy and reads
+physics/stats from definitions, never sprites. Its starting values exclude
+time/pressure/elites/upgrades; future live stat-book selectors must preserve that
+distinction. The secondary pack's roster balance is unchanged.

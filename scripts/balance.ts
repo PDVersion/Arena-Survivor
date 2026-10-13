@@ -10,6 +10,7 @@
  * `src/game/systems/simulation/pacing-simulator.ts` for what the model does
  * and does not cover.
  */
+import { difficultyIds, isDifficultyId, type DifficultyId } from "../src/game/core/archetypes/difficulty";
 import { activeTheme } from "../src/game/content/active-theme";
 import { themeRegistry } from "../src/game/content/theme-registry";
 import { buildModels, findBuildModel } from "../src/game/systems/simulation/build-models";
@@ -17,6 +18,7 @@ import { formatPacingReport, formatTimeToKill } from "../src/game/systems/simula
 import { simulatePacing, timeToKillTable } from "../src/game/systems/simulation/pacing-simulator";
 
 interface Options {
+  readonly difficulty: DifficultyId | "all";
   readonly build: string;
   readonly minutes: number;
   readonly chaos: number;
@@ -36,7 +38,10 @@ function parseArgs(argv: readonly string[]): Options {
   const chaos = Number(values.get("chaos") ?? 1);
   if (!Number.isFinite(minutes) || minutes <= 0) throw new Error("--minutes must be positive");
   if (!Number.isFinite(chaos) || chaos < 1) throw new Error("--chaos must be at least 1");
+  const difficulty = values.get("difficulty") ?? "normal";
+  if (difficulty !== "all" && !isDifficultyId(difficulty)) throw new Error("--difficulty must be beginner, normal, experienced or all");
   return {
+    difficulty,
     build: values.get("build") ?? "all",
     minutes,
     chaos,
@@ -64,21 +69,24 @@ function main(): void {
     throw new Error(`Unknown build: ${options.build}. Known builds: all, ${known}`);
   }
 
-  for (const build of models) {
-    const pacingOptions = {
-      theme,
-      build,
-      durationMs: options.minutes * 60_000,
-      chaos: options.chaos,
-    };
-    const report = simulatePacing(pacingOptions);
-    process.stdout.write(`\n${build.description}\n`);
-    process.stdout.write(`${formatPacingReport(report)}\n`);
-    if (options.ttk) {
-      process.stdout.write("\ntime to kill\n");
-      process.stdout.write(
-        `${formatTimeToKill(timeToKillTable(report, pacingOptions), theme.enemies.map((enemy) => enemy.id))}\n`,
-      );
+  for (const difficulty of options.difficulty === "all" ? difficultyIds : [options.difficulty]) {
+    for (const build of models) {
+      const pacingOptions = {
+        theme,
+        difficulty,
+        build,
+        durationMs: options.minutes * 60_000,
+        chaos: options.chaos,
+      };
+      const report = simulatePacing(pacingOptions);
+      process.stdout.write(`\n${build.description}\n`);
+      process.stdout.write(`${formatPacingReport(report)}\n`);
+      if (options.ttk) {
+        process.stdout.write("\ntime to kill\n");
+        process.stdout.write(
+          `${formatTimeToKill(timeToKillTable(report, pacingOptions), theme.enemies.map((enemy) => enemy.id))}\n`,
+        );
+      }
     }
   }
   process.stdout.write("\n");

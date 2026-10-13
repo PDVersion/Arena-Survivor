@@ -6,7 +6,7 @@ Every work session in this repository starts by reading, in order:
 2. `RECONCILIATION.md` — decisions, discoveries, pitfalls, and constraints learned while building.
 3. `build/BUILD_PLAN_V0.3.md` — the implementation record for the milestone underneath, and the source for phase order, architecture, and verification conventions.
 
-Consult `build/PLAN.md` whenever product intent or game behaviour needs more detail. It is the product/design source; `build/BUILD_PLAN_V0.3.md` is the current implementation source. Consult `build/BUILD_PLAN_V0.2.md` and `build/BUILD_PLAN_V0.1.md` only when that milestone's implementation history is relevant.
+Consult `build/PLAN.md` whenever product intent or game behaviour needs more detail. It is the product/design source; `build/BUILD_PLAN_V0.4.3.md` is the active implementation source, with `build/BUILD_PLAN_V0.3.md` retained for architecture and verification conventions. Consult `build/BUILD_PLAN_V0.2.md` and `build/BUILD_PLAN_V0.1.md` only when that milestone's implementation history is relevant.
 
 Consult `build/EDUCATION_PIVOT.md` before changing the environment theme's content, enemy identities, or any information/tooltip surface. It is exploratory except where a decision has been promoted into a build plan.
 
@@ -15,10 +15,11 @@ Consult `build/THEME_ARCHETYPES.md` before adding, naming, renaming, tuning, ren
 Consult `build/SAVE_DATA.md` before changing profile state, progression, unlocks, statistics, persistent settings, stable saved IDs, persistence adapters, migrations, or save import/export.
 
 Consult `build/BUILD_PLAN_V0.4.md` before starting any V0.4 work. V0.4.1 is a
-merged five-sheet sprite checkpoint. The active next increment is V0.4.2:
-readability, pace, and Cleanup Grabber, built as one seam, three parallel feature
-branches, and one core integration pass. Content growth is V0.4.3 and the
-reconciled sprite continuation is V0.4.4. Do not edit a file outside the active
+merged five-sheet sprite checkpoint. V0.4.2 and V0.4.2.1 are merged. The active
+increment is V0.4.3: performance prerequisites P0–P6 precede content C1–C7;
+optional content still requires owner selection. Read `AUTONOMOUS_PROGRESS.md`
+and `build/BUILD_PLAN_V0.4.3.md` after the required reading order. The reconciled
+sprite continuation is V0.4.4. Do not edit a file outside the active
 phase or feature branch's ownership block.
 
 The seam itself (V0.4.0) is built and merged. Read REC-071 to REC-073 before either stream starts: they settle the reconciliation ranges, how an actor chooses between a sprite and its primitive, and why the renderer's `pixelArt` flag was not used. A sprite is presentation and nothing else — never read one from a system, and never derive a radius, hitbox, mass, or separation value from one.
@@ -80,6 +81,15 @@ Everything else about a branch — one branch per milestone, one pull request in
   play-test gate, then opens one pull request into `main`.
 - V0.4.3 must not start until that gate passes. V0.4.4 must not claim remaining
   sprite rows until both V0.4.2 and V0.4.3 settle the roster.
+
+## Git workflow for V0.4.3
+
+- Branch: `codex/v0.4.3`, based on merged V0.4.2.1 (`103afa7`).
+- Delivery: one reviewable commit per verified P0–P6 phase, then selected
+  C1–C7 content in dependency order; one eventual pull request into `main`.
+- Follow the ownership, short checks, and gates in `build/BUILD_PLAN_V0.4.3.md`.
+  Record partial/blocked work in `AUTONOMOUS_PROGRESS.md`; no next phase before
+  the current gate passes. Leave unrelated pre-existing local edits unstaged.
 
 ## Git workflow for V0.3.1
 

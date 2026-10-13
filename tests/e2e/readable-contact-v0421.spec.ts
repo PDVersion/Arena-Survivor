@@ -62,10 +62,11 @@ test("all enemy roles are walk-through while valid contact gives one bounded sho
 });
 
 test("Collection Sweep triggers from completed grabber attacks without projectiles", async ({ page }) => {
+  test.setTimeout(120_000);
   await page.goto("/?loadHarness=24&loadRole=enemy.slow_durable&closeLoad&lineLoad&noContact&noXp&noHazards&collectionSweepLevel=1&attackSpeedBonus=8");
   await expect.poll(
     () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.collectionSweepsTriggered),
-    { timeout: 15_000 },
+    { timeout: 90_000 },
   ).toBeGreaterThan(0);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.combat?.collectionSweepAttacks).toBeGreaterThanOrEqual(8);

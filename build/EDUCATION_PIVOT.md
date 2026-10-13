@@ -17,6 +17,11 @@ primary waste roles. The concise names and relationships are recorded in
 [`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md); precise factual claims still need
 the evidence workflow below.
 
+The owner's post-P0 correction also selects Beginner / Normal / Experienced
+presets for approachability. They change game pressure, not the environmental
+facts or material relationships. Crisp world labels and correctly facing player
+motion are part of the existing readability goal; no educational content is added.
+
 Status: **Exploration.** Earliest realistic start for the layers below is V0.4.
 
 ---
@@ -548,3 +553,24 @@ reward knowing things without punishing not knowing them. Validate every fact
 like code, label commentary as commentary, stay accountless and trackerless and
 say so loudly, and aim at a finished small game rather than a large unfinished
 one.
+
+
+Q2 follow-up (2026-10-12): Microplastics now open the eco run; Plastic Bottles
+enter quietly at 10% progress (30 seconds on the five-minute timer) and ramp
+from ~6% to ~43% of calm natural spawn selection. At 0.5 gameplay rate this
+first unlock is about 60 real seconds into active play. Microplastics now pay
+1 XP as the common opening enemy; material health ordering stays unchanged.
+Bagged Waste still releases its fixed 2 bottles / 2 Microplastics / 1 glass mix
+pending owner confirmation. Site-event labels counter camera zoom at UI scale,
+and spent events disappear from the minimap. Spawn accounting distinguishes
+natural arrivals (including milestone waves), Fracture, Bagged Waste release,
+site effects (surge/duplication) and test loads; source means immediate creation,
+so ambient pressure modified by a shrine is still natural. No factual claims,
+new material identities or bitmap generation are introduced.
+
+Q4 (2026-10-13) makes ordinary opening Microplastics one-hit across difficulty
+presets by lowering their game health to 9. This is authored game balance, not
+a claim about environmental persistence. Starting stats in the sprite browser
+come from actual difficulty-resolved theme definitions. A future stat book should
+reuse those definitions/selectors and clearly distinguish authored, starting and
+live modified values; that future feature is not implemented here.

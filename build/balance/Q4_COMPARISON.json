@@ -1,0 +1,482 @@
+{
+  "scope": "Deterministic five-simulation-minute pacing; no movement/contact survival or device performance prediction.",
+  "results": [
+    {
+      "variant": "previous",
+      "difficulty": "beginner",
+      "baseHealth": 11,
+      "baseDamage": 10,
+      "startingHealth": 8.25,
+      "ordinaryHitDamage": 12,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 18,
+          "totalKills": 344,
+          "totalXp": 384.200000000002,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 31,
+          "totalKills": 847,
+          "totalXp": 1953.7999999999906,
+          "peakLiveEnemies": 43
+        },
+        {
+          "id": "crit",
+          "finalLevel": 32,
+          "totalKills": 885,
+          "totalXp": 2115.499999999989,
+          "peakLiveEnemies": 8
+        },
+        {
+          "id": "spread",
+          "finalLevel": 32,
+          "totalKills": 889,
+          "totalXp": 2132.6499999999887,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 25,
+          "totalKills": 586,
+          "totalXp": 905.049999999993,
+          "peakLiveEnemies": 299
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 31,
+          "totalKills": 821,
+          "totalXp": 1796.30000000001,
+          "peakLiveEnemies": 75
+        }
+      ]
+    },
+    {
+      "variant": "previous",
+      "difficulty": "normal",
+      "baseHealth": 11,
+      "baseDamage": 10,
+      "startingHealth": 10.45,
+      "ordinaryHitDamage": 10,
+      "openingHits": 2,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 16,
+          "totalKills": 263,
+          "totalXp": 264.0500000000001,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 26,
+          "totalKills": 685,
+          "totalXp": 1056.0750000000003,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "crit",
+          "finalLevel": 26,
+          "totalKills": 676,
+          "totalXp": 1009.0750000000099,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "spread",
+          "finalLevel": 35,
+          "totalKills": 1146,
+          "totalXp": 2745.949999999976,
+          "peakLiveEnemies": 3
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 21,
+          "totalKills": 478,
+          "totalXp": 542.675000000005,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 29,
+          "totalKills": 851,
+          "totalXp": 1445.7749999999921,
+          "peakLiveEnemies": 295
+        }
+      ]
+    },
+    {
+      "variant": "previous",
+      "difficulty": "experienced",
+      "baseHealth": 11,
+      "baseDamage": 10,
+      "startingHealth": 12.100000000000001,
+      "ordinaryHitDamage": 10,
+      "openingHits": 2,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 15,
+          "totalKills": 243,
+          "totalXp": 243.4500000000001,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 25,
+          "totalKills": 692,
+          "totalXp": 927.2500000000094,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "crit",
+          "finalLevel": 24,
+          "totalKills": 674,
+          "totalXp": 876.9500000000052,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "spread",
+          "finalLevel": 37,
+          "totalKills": 1463,
+          "totalXp": 3490.1749999999415,
+          "peakLiveEnemies": 17
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 20,
+          "totalKills": 465,
+          "totalXp": 493.0499999999963,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 28,
+          "totalKills": 907,
+          "totalXp": 1390.0249999999871,
+          "peakLiveEnemies": 300
+        }
+      ]
+    },
+    {
+      "variant": "lower-health",
+      "difficulty": "beginner",
+      "baseHealth": 9,
+      "baseDamage": 10,
+      "startingHealth": 6.75,
+      "ordinaryHitDamage": 12,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 19,
+          "totalKills": 363,
+          "totalXp": 418.30000000000274,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 32,
+          "totalKills": 867,
+          "totalXp": 2039.54999999999,
+          "peakLiveEnemies": 24
+        },
+        {
+          "id": "crit",
+          "finalLevel": 32,
+          "totalKills": 889,
+          "totalXp": 2132.6499999999887,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "spread",
+          "finalLevel": 32,
+          "totalKills": 889,
+          "totalXp": 2132.6499999999887,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 25,
+          "totalKills": 603,
+          "totalXp": 969.6499999999884,
+          "peakLiveEnemies": 287
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 31,
+          "totalKills": 821,
+          "totalXp": 1820.3499999999794,
+          "peakLiveEnemies": 76
+        }
+      ]
+    },
+    {
+      "variant": "lower-health",
+      "difficulty": "normal",
+      "baseHealth": 9,
+      "baseDamage": 10,
+      "startingHealth": 8.549999999999999,
+      "ordinaryHitDamage": 10,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 16,
+          "totalKills": 280,
+          "totalXp": 291.52500000000157,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 27,
+          "totalKills": 738,
+          "totalXp": 1158.4500000000003,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "crit",
+          "finalLevel": 27,
+          "totalKills": 733,
+          "totalXp": 1140.5750000000003,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "spread",
+          "finalLevel": 35,
+          "totalKills": 1146,
+          "totalXp": 2745.949999999976,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 21,
+          "totalKills": 508,
+          "totalXp": 595.4750000000059,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 29,
+          "totalKills": 873,
+          "totalXp": 1524.97499999999,
+          "peakLiveEnemies": 273
+        }
+      ]
+    },
+    {
+      "variant": "lower-health",
+      "difficulty": "experienced",
+      "baseHealth": 9,
+      "baseDamage": 10,
+      "startingHealth": 9.9,
+      "ordinaryHitDamage": 10,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 16,
+          "totalKills": 275,
+          "totalXp": 275.7999999999999,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 26,
+          "totalKills": 748,
+          "totalXp": 1043.8500000000097,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "crit",
+          "finalLevel": 25,
+          "totalKills": 727,
+          "totalXp": 989.9500000000103,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "spread",
+          "finalLevel": 37,
+          "totalKills": 1463,
+          "totalXp": 3490.6499999999414,
+          "peakLiveEnemies": 9
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 21,
+          "totalKills": 520,
+          "totalXp": 552.4999999999978,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 29,
+          "totalKills": 921,
+          "totalXp": 1449.7500000000175,
+          "peakLiveEnemies": 300
+        }
+      ]
+    },
+    {
+      "variant": "raise-damage",
+      "difficulty": "beginner",
+      "baseHealth": 11,
+      "baseDamage": 12.2,
+      "startingHealth": 8.25,
+      "ordinaryHitDamage": 14.639999999999999,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 20,
+          "totalKills": 395,
+          "totalXp": 468.90000000000384,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 32,
+          "totalKills": 889,
+          "totalXp": 2132.6499999999887,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "crit",
+          "finalLevel": 32,
+          "totalKills": 889,
+          "totalXp": 2132.6499999999887,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "spread",
+          "finalLevel": 32,
+          "totalKills": 889,
+          "totalXp": 2132.6499999999887,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 26,
+          "totalKills": 637,
+          "totalXp": 1103.5999999999876,
+          "peakLiveEnemies": 252
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 31,
+          "totalKills": 840,
+          "totalXp": 1896.7249999999788,
+          "peakLiveEnemies": 58
+        }
+      ]
+    },
+    {
+      "variant": "raise-damage",
+      "difficulty": "normal",
+      "baseHealth": 11,
+      "baseDamage": 12.2,
+      "startingHealth": 10.45,
+      "ordinaryHitDamage": 12.2,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 17,
+          "totalKills": 295,
+          "totalXp": 307.27500000000174,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 28,
+          "totalKills": 810,
+          "totalXp": 1364.0750000000126,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "crit",
+          "finalLevel": 29,
+          "totalKills": 840,
+          "totalXp": 1441.9500000000003,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "spread",
+          "finalLevel": 35,
+          "totalKills": 1146,
+          "totalXp": 2745.949999999976,
+          "peakLiveEnemies": 1
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 22,
+          "totalKills": 536,
+          "totalXp": 652.6750000000064,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 31,
+          "totalKills": 940,
+          "totalXp": 1792.2749999999846,
+          "peakLiveEnemies": 206
+        }
+      ]
+    },
+    {
+      "variant": "raise-damage",
+      "difficulty": "experienced",
+      "baseHealth": 11,
+      "baseDamage": 12.2,
+      "startingHealth": 12.100000000000001,
+      "ordinaryHitDamage": 12.2,
+      "openingHits": 1,
+      "builds": [
+        {
+          "id": "passive",
+          "finalLevel": 16,
+          "totalKills": 285,
+          "totalXp": 285.8499999999998,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "damage-rush",
+          "finalLevel": 27,
+          "totalKills": 805,
+          "totalXp": 1188.9750000000008,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "crit",
+          "finalLevel": 27,
+          "totalKills": 810,
+          "totalXp": 1184.6500000000058,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "spread",
+          "finalLevel": 37,
+          "totalKills": 1463,
+          "totalXp": 3490.6499999999414,
+          "peakLiveEnemies": 9
+        },
+        {
+          "id": "collection-sweep",
+          "finalLevel": 21,
+          "totalKills": 542,
+          "totalXp": 584.0500000000058,
+          "peakLiveEnemies": 300
+        },
+        {
+          "id": "explosion",
+          "finalLevel": 30,
+          "totalKills": 1002,
+          "totalXp": 1693.7250000000213,
+          "peakLiveEnemies": 300
+        }
+      ]
+    }
+  ]
+}

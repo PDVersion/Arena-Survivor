@@ -53,7 +53,7 @@ describe("Collection Sweep", () => {
     expect(run(2, 12)).toEqual([6, 12]);
     expect(run(3, 8)).toEqual([4, 8]);
 
-    let progress: CollectionSweepProgress = { completedAttacks: 3, nextLevelFiveAt: null };
+    const progress: CollectionSweepProgress = { completedAttacks: 3, nextLevelFiveAt: null };
     const levelFour = completeCollectionSweepAttack(progress, 4, effect, () => 0);
     expect(levelFour.positions).toEqual([
       { phase: "extension", fraction: 0.5 },

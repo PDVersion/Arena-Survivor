@@ -9,9 +9,9 @@ better than the simpler educational game.
 | --- | --- | --- | --- |
 | **V0.4.0** | Optional-sprite seam | This file's historical contract; REC-071–073 | Merged from `claude/v0.4.0` |
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
-| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Built on `codex/v0.4.2` |
-| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Built on `codex/v0.4.2.1` |
-| **V0.4.3** | Weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | Next; not started |
+| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Merged from `codex/v0.4.2` |
+| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Merged from `codex/v0.4.2.1` |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0/Q1/Q2/Q3/Q4/P1 verified on `codex/v0.4.3`; P2 next; other content not started |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -96,15 +96,34 @@ renumbering a merged decision.
 
 ## Cross-increment ownership
 
+V0.4.3 now starts with the browser-performance prerequisite P0–P6, promoted
+from [`AUTONOMOUS_DEVELOPMENT_PLAN.md`](./AUTONOMOUS_DEVELOPMENT_PLAN.md) at the
+owner's Session 1 request (REC-102). Measurement precedes optimization and
+content growth; C1–C7 retain their dependencies and require owner selection.
+The active increment plan owns the exact performance paths, commit subjects,
+verification, and hardware-reporting gates. This is a technical prerequisite,
+not a change to game content, balance, or the V0.4.4 sprite gate.
+
 | Path | Owner while active |
 | --- | --- |
 | `build/SPRITE_*.md`, `build/sprites/**`, `public/sprites/**` | V0.4.1, then V0.4.4 |
 | `src/game/content/themes/*/sprites.ts`, `src/game/systems/sprites/**` | V0.4.1, then V0.4.4; V0.4.2 may only add a generic timing input through R0 |
 | Paths listed in `BUILD_PLAN_V0.4.2.md` R1A/R1B/R1C | The named V0.4.2 feature branch |
 | Content-growth systems, persistence, bosses, curses, and weapon slots | V0.4.3 after V0.4.2 merges |
+| Diagnostic/frame sampling, measured hot paths, presentation/lifecycle work | V0.4.3 P0–P6, within that plan's phase ownership |
 
 Once an increment merges, the next increment may edit its code normally while
 preserving the permanent presentation/simulation boundary above.
+
+After P0, the owner selected a Q1 correction before P1: player facing/walk,
+crisp background text, common tool-upgrade availability and three difficulty
+presets (F16). `BUILD_PLAN_V0.4.3.md` owns that exception and its exact paths.
+It may amend eco sprite presentation metadata; bitmap generation and remaining
+roster work remain gated to V0.4.4. Other optional content is still unselected.
+
+The owner also authorized Q2 event readability, sprite inspection/reuse, opening
+composition and spawn accounting before P1 (REC-107/108). Exact paths and gates
+are in the active plan; new bitmap generation/remaining roster stays gated.
 
 ## Gates
 
@@ -115,6 +134,9 @@ preserving the permanent presentation/simulation boundary above.
   contact, and material-family findings.
 - V0.4.4 does not claim or generate remaining sheets until V0.4.2 and V0.4.3
   settle stable IDs, subjects, sizes, and frame roles.
+- V0.4.3 content C1 does not start before the P0–P6 software gate passes and
+  optional content is selected. Older-device acceptance requires device evidence;
+  absent hardware remains explicitly pending, never inferred from throttling.
 - Any build phase that changes product direction must update `PLAN.md`,
   `EDUCATION_PIVOT.md`, `THEME_ARCHETYPES.md`, and reconciliation in the same
   phase rather than leaving contradictory authorities.
@@ -127,3 +149,19 @@ production themes still satisfy their contracts, and every accepted balance
 value remains theme-owned data. A 300-enemy stress test must still pass, but the
 game no longer treats reaching 300 enemies—or filling the screen with effects—as
 a design goal.
+
+Q3 is the owner's wrap-up correction before Session 3/P2: measured upgrade-card
+bounds, filtering early-capped skill offers, atlas/tool navigation and handoff
+documentation. The active increment plan owns its paths; it does not start P2,
+change the half-speed clock, move Glass Shards or authorize bitmap edits.
+
+Q4 is the owner's one-hit opening correction and stat-inspection checkpoint:
+Microplastics health 11→9, with all other role/tool values and later scaling kept.
+Its gameplay gate passes; the owner requests a draft PR now, while P2–P6 remain
+unstarted and the unchanged lockfile's audit blocks release (REC-112/113).
+
+Q5 is the owner's PR #24 Actions correction: portable test artifacts, bounded
+simulation waits and vetted development-tool patches. The audit now reports
+zero vulnerabilities locally and on the verified repair head `28ecdba`:
+[Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864) passes all steps (REC-113/114).
+It does not start P2 or change gameplay/balance.

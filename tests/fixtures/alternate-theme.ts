@@ -13,6 +13,15 @@ export const alternateTheme = defineTheme({
   id: "alternate_test",
   schemaVersion: 1,
   copy: {
+    spawnOrigins: { live: "Live sources", total: "Spawn totals", natural: "Natural", fragmentation: "Split", baggedWaste: "Offspring", environment: "Events", benchmark: "Fixture" },
+    difficulty: {
+      label: "Pressure", nextRun: "Next pressure", hint: "Choose a pressure",
+      levels: {
+        beginner: { name: "Calm", description: "Less pressure." },
+        normal: { name: "Steady", description: "Balanced pressure." },
+        experienced: { name: "Intense", description: "More pressure." },
+      },
+    },
     gameTitle: "Test Swarm",
     arenaName: "Neon Test Grid",
     bootStatus: "Fixture ready",
@@ -261,6 +270,12 @@ export const alternateTheme = defineTheme({
   ],
   elites: [{ id: eliteIds.baseline, healthMultiplier: 2, damageMultiplier: 1.5, rewardMultiplier: 2.5, radiusMultiplier: 1.3, presentationToken: "elite" }],
   tuning: {
+    difficultyPresets: {
+      beginner: { enemyHealth: 0.8, enemyDamage: 0.7, enemySpeed: 0.9, spawnRate: 0.8, playerHealth: 1.2, playerSpeed: 1.1, pickupRadius: 1.2, weaponDamage: 1.2, weaponCooldown: 0.9, hazardDamage: 0.7, hazardRate: 0.8 },
+      normal: { enemyHealth: 1, enemyDamage: 1, enemySpeed: 1, spawnRate: 1, playerHealth: 1, playerSpeed: 1, pickupRadius: 1, weaponDamage: 1, weaponCooldown: 1, hazardDamage: 1, hazardRate: 1 },
+      experienced: { enemyHealth: 1.2, enemyDamage: 1.2, enemySpeed: 1, spawnRate: 1.2, playerHealth: 1, playerSpeed: 1, pickupRadius: 1, weaponDamage: 1, weaponCooldown: 1, hazardDamage: 1.2, hazardRate: 1.2 },
+    },
+
     view: { zoom: 1 },
     pace: { gameplayRate: 1 },
     progression: {

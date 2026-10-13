@@ -373,3 +373,15 @@ live from one atlas, the build is reproducible from untouched raw attempts, and
 the remaining inventory is clearly handed to the post-rebalance sprite phase.
 The full-roster definition above remains the target for that future phase after
 its inventory is revalidated.
+
+
+## Q2 inspection and accepted-pose reuse (2026-10-12)
+
+The owner requested a sprite browser and visible fragment presentation. The
+standalone `/sprite-browser.html` entry inspects actual atlas crops/all poses,
+compares game proportions, marks good/bad/review with notes and exports reviews.
+Its tooling-only theme registry is excluded from the game selection path.
+Glass Shards reuse the accepted Glass Bottle frame 3 via `atlasFrameKey`; this
+adds no pixels/atlas edits and retains batching. It is a labelled reuse, not a
+new accepted sheet. Rows #6–19 remain gated; future dedicated shard art replaces
+this alias through the ordinary claim/generate/accept process.

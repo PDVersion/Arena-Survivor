@@ -16,7 +16,7 @@ function showBootFailure(error: unknown): void {
     message.textContent = `${activeTheme.copy.bootFailure} ${detail}`;
     app.append(message);
   }
-  updateTestTelemetry({
+  if (import.meta.env.MODE === "test") updateTestTelemetry({
     status: "failed",
     scene: null,
     themeId: activeTheme.id,

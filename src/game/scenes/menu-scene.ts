@@ -3,7 +3,9 @@ import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
 import { createRunState } from "../state/run-state";
 import { getSessionStatistics } from "../state/session-statistics";
-import { cycleMinimapOpacity, getSessionSettings, toggleSetting, updateSessionSettings, type SettingKey } from "../state/settings-state";
+import { cycleDifficulty, cycleMinimapOpacity, getSessionSettings, toggleSetting, updateSessionSettings, type SettingKey } from "../state/settings-state";
+import { difficultyIds, type DifficultyId } from "../core/archetypes/difficulty";
+import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
 import { selectSessionCodex, selectShrineCodex, selectUpgradeCodex } from "../systems/codex/describe-shrine";
 import { selectPlayerStats, selectWorldLines } from "../systems/upgrades/describe-upgrade";
 import { PauseMenuUi, type PauseTab } from "../ui/pause-menu-ui";
@@ -17,6 +19,9 @@ export class MenuScene extends Phaser.Scene {
   private bounds: { readonly action: MenuAction; readonly rect: Phaser.Geom.Rectangle }[] = [];
   private overlay?: PauseMenuUi;
   private menuContainer?: Phaser.GameObjects.Container;
+  private difficultyBounds: { id: DifficultyId; rect: Phaser.Geom.Rectangle }[] = [];
+  private difficultyButtons = new Map<DifficultyId, { button: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text }>();
+  private difficultyDescription?: Phaser.GameObjects.Text;
 
   constructor() {
     super("menu");
@@ -38,6 +43,29 @@ export class MenuScene extends Phaser.Scene {
         color: palette.text, fontFamily: "Georgia, serif", fontSize: "22px",
       }).setOrigin(0.5).setAlpha(0.75),
     ];
+
+    this.difficultyBounds = [];
+    this.difficultyButtons.clear();
+    children.push(addUiText(this, centreX, viewport.top + 228, copy.difficulty.label, {
+      color: palette.text, fontFamily: "Georgia, serif", fontSize: "20px",
+    }).setOrigin(0.5));
+    for (const [index, id] of difficultyIds.entries()) {
+      const x = centreX + (index - 1) * 244;
+      const y = viewport.top + 274;
+      const button = this.add.rectangle(x, y, 228, 46, 0, 0.85)
+        .setStrokeStyle(2, Phaser.Display.Color.HexStringToColor(palette.accent).color);
+      const label = addUiText(this, x, y, `${index + 1}. ${copy.difficulty.levels[id].name}`, {
+        color: palette.text, fontFamily: "Georgia, serif", fontSize: "20px", fontStyle: "bold",
+      }).setOrigin(0.5);
+      children.push(button, label);
+      this.difficultyButtons.set(id, { button, label });
+      this.difficultyBounds.push({ id, rect: new Phaser.Geom.Rectangle(x - 114, y - 23, 228, 46) });
+    }
+    this.difficultyDescription = addUiText(this, centreX, viewport.top + 314, "", {
+      color: palette.text, fontFamily: "Georgia, serif", fontSize: "16px",
+    }).setOrigin(0.5);
+    children.push(this.difficultyDescription);
+    this.refreshDifficulty();
 
     const actions: readonly { action: MenuAction; label: string; y: number }[] = [
       { action: "start", label: copy.vocabulary.startAction, y: this.scale.height * 0.52 },
@@ -64,6 +92,11 @@ export class MenuScene extends Phaser.Scene {
     this.overlay = new PauseMenuUi(this, activeTheme);
     this.input.keyboard?.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.handleKey, this);
     this.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointer, this);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.input.keyboard?.off(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.handleKey, this);
+      this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointer, this);
+      this.overlay?.hide();
+    });
     this.publishTelemetry();
   }
 
@@ -94,11 +127,20 @@ export class MenuScene extends Phaser.Scene {
       return;
     }
     if (event.code === "Enter" || event.code === "Space" || event.code === "NumpadEnter") this.startRun();
+    const index = ["Digit1", "Digit2", "Digit3"].indexOf(event.code);
+    if (index >= 0) this.chooseDifficulty(difficultyIds[index]!);
+    if (event.code === "ArrowLeft" || event.code === "ArrowRight") {
+      updateSessionSettings(cycleDifficulty(getSessionSettings(), event.code === "ArrowLeft" ? -1 : 1));
+      this.refreshDifficulty();
+      this.publishTelemetry();
+    }
   }
 
   private handlePointer(pointer: Phaser.Input.Pointer): void {
     if (this.overlay?.isOpen) return;
     const point = uiPointer(this, pointer);
+    const difficulty = this.difficultyBounds.find((entry) => entry.rect.contains(point.x, point.y));
+    if (difficulty) this.chooseDifficulty(difficulty.id);
     const hit = this.bounds.find((entry) => entry.rect.contains(point.x, point.y));
     if (hit?.action === "start") this.startRun();
     if (hit?.action === "info") this.openOverlay("codex");
@@ -112,16 +154,18 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private infoView() {
-    const character = activeTheme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
+    const theme = resolveDifficultyTheme(activeTheme, getSessionSettings().difficulty);
+    const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
     const state = createRunState({
       themeId: activeTheme.id,
       characterId: character.id,
       baseStats: character.baseStats,
       xpCurve: activeTheme.tuning.progression.xpCurve,
+      difficulty: getSessionSettings().difficulty,
     });
     const session = getSessionStatistics();
     return {
-      stats: selectPlayerStats(state, activeTheme),
+      stats: selectPlayerStats(state, theme),
       world: selectWorldLines(state.world, activeTheme),
       upgrades: [],
       codex: selectShrineCodex(activeTheme),
@@ -133,7 +177,8 @@ export class MenuScene extends Phaser.Scene {
 
   private applySetting(key: SettingKey): void {
     const current = getSessionSettings();
-    updateSessionSettings(key === "minimapOpacity" ? cycleMinimapOpacity(current) : toggleSetting(current, key));
+    updateSessionSettings(key === "difficulty" ? cycleDifficulty(current) : key === "minimapOpacity" ? cycleMinimapOpacity(current) : toggleSetting(current, key));
+    this.refreshDifficulty();
     this.overlay?.refresh(this.infoView());
     this.publishTelemetry();
   }
@@ -145,6 +190,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private publishTelemetry(): void {
+    if (import.meta.env.MODE !== "test") return;
     const session = getSessionStatistics();
     updateTestTelemetry({
       status: "ready", scene: this.scene.key, themeId: activeTheme.id,
@@ -157,7 +203,24 @@ export class MenuScene extends Phaser.Scene {
         overlayOpen: Boolean(this.overlay?.isOpen),
         overlayTab: this.overlay?.activeTab ?? null,
         actions: ["start", "info", "settings"],
+        difficulty: getSessionSettings().difficulty,
       },
     });
+  }
+
+  private chooseDifficulty(difficulty: DifficultyId): void {
+    updateSessionSettings({ ...getSessionSettings(), difficulty });
+    this.refreshDifficulty();
+    this.publishTelemetry();
+  }
+
+  private refreshDifficulty(): void {
+    const selected = getSessionSettings().difficulty;
+    const palette = activeTheme.tokens.palette;
+    for (const [id, { button, label }] of this.difficultyButtons) {
+      button.setFillStyle(Phaser.Display.Color.HexStringToColor(id === selected ? palette.accent : palette.floor).color);
+      label.setColor(id === selected ? palette.background : palette.text);
+    }
+    this.difficultyDescription?.setText(activeTheme.copy.difficulty.levels[selected].description);
   }
 }

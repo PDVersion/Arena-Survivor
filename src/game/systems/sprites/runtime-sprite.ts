@@ -16,5 +16,5 @@ export function runtimeFrame(
   definition: SpriteDefinition,
   frame: number,
 ): number | string {
-  return isAtlasSprite(definition) ? `${definition.key}/${frame}` : frame;
+  return isAtlasSprite(definition) ? `${definition.atlasFrameKey ?? definition.key}/${frame}` : frame;
 }

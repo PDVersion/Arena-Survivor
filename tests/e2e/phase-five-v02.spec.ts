@@ -24,6 +24,10 @@ test("all shrine roles activate exactly once and Duplication retains every copy"
   });
   expect(snapshot?.world).toMatchObject({ chaos: 4.2, duplicatedEnemiesQueued: 5, duplicatedEnemiesSpawned: 5 });
   expect(snapshot?.shrine?.instances.every(({ activated }) => activated)).toBe(true);
+  expect(snapshot?.ui?.minimapShrines).toBe(0);
+  expect(snapshot?.ui?.shrineTextResolution).toBe(4);
+  expect(snapshot?.spawnOrigins?.spawned.environment).toBeGreaterThanOrEqual(5);
+  expect(Object.values(snapshot?.spawnOrigins?.live ?? {}).reduce((sum, count) => sum + count, 0)).toBe(snapshot?.run?.liveEnemies);
   expect(snapshot?.run?.liveEnemies).toBeLessThanOrEqual(snapshot?.combat?.enemyCap ?? 0);
 });
 

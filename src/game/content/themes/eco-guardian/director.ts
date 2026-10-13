@@ -5,16 +5,9 @@ import type { DirectorTuning } from "../../../core/archetypes/tuning";
  * Curves, not a phase list. Everything resolves from normalized run progress,
  * so a run of any length restretches without new authoring.
  *
- * Derived shape at five minutes — computed from these coefficients, not
- * authored, and asserted by `tests/unit/director`:
- *
- *   remaining  interval  batch  composition                              elite
- *   5:00        900 ms     1    bottle 100%                               0%
- *   4:00        737 ms     1    bottle 74% · bag 26%                      0%
- *   3:00        603 ms     2    bottle 64% · bag 26% · glass 10%          0%
- *   2:00        494 ms     2    bottle 53% · bag 26% · glass 14% · bag 7% 0%
- *   1:00        404 ms     3    bottle 43% · bag 27% · glass 17% · 12%    4%
- *   0:00        331 ms     4    bottle 33% · bag 28% · glass 22% · 17%    8%
+ * Microplastics open the run. Bottles quietly enter at 10% progress (30 s on
+ * the five-minute timer), with a low initial weight and a gradual ramp.
+ * Heavier material arrivals retain their existing thresholds.
  */
 export const director = {
   baseIntervalMs: 900,
@@ -28,24 +21,24 @@ export const director = {
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
-    // The baseline swarm, thinning as a share as heavier roles arrive.
+    // Bottles start sporadically and become more prevalent.
     {
       enemyId: archetypeIds.enemy.swarmBasic,
       waveMovement: "chase",
-      unlockAt: 0,
-      baseWeight: 100,
-      weightGrowth: -0.65,
+      unlockAt: 0.1,
+      milestoneWave: false,
+      baseWeight: 6,
+      weightGrowth: 9,
       chaosWeightBias: 0,
     },
-    // Faster than the player, so its wave sweeps past on a fixed heading rather
-    // than chasing. An 18-strong homing pack of these is unsurvivable with the
-    // single-projectile starter weapon. See REC-050.
+    // Small opening enemy. Keep drift for any authored milestone burst;
+    // ordinary spawns chase but remain below player movement speed.
     {
       enemyId: archetypeIds.enemy.fastFragile,
       waveMovement: "drift",
-      unlockAt: 0.2,
-      baseWeight: 30,
-      weightGrowth: 0,
+      unlockAt: 0,
+      baseWeight: 100,
+      weightGrowth: -0.6,
       chaosWeightBias: 0.1,
     },
     {

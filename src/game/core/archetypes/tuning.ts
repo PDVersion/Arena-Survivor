@@ -1,5 +1,6 @@
 import type { EnemyId, HazardId, ShrineId } from "./ids";
 import type { UpgradeTier } from "./tiers";
+import type { DifficultyPresets } from "./difficulty";
 
 /**
  * Theme-owned tuning contracts.
@@ -55,6 +56,8 @@ export type WaveMovement = "chase" | "drift";
  * run progress rather than wall-clock time.
  */
 export interface DirectorRoleTuning {
+  /** False allows a quiet unlock without a burst/announcement. */
+  readonly milestoneWave?: boolean;
   readonly enemyId: EnemyId;
   /** Movement used by this role's milestone wave. Ambient spawns always chase. */
   readonly waveMovement: WaveMovement;
@@ -288,6 +291,7 @@ export interface PaceTuning {
 }
 
 export interface TuningPack {
+  readonly difficultyPresets: DifficultyPresets;
   readonly view: ViewTuning;
   readonly pace: PaceTuning;
   readonly progression: ProgressionTuning;

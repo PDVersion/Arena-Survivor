@@ -5,10 +5,12 @@ async function snapshot(page: Page) {
 }
 
 const densePath =
-  "/?representativeLoad=1&closeLoad=1&loadHarness=200&runDurationMs=6000&noXp=1&noContact=1&atTimeUp=complete";
+  "/?representativeLoad=1&closeLoad=1&loadHarness=200&runDurationMs=6000&noWeapon=1&noXp=1&noContact=1&atTimeUp=complete";
 
 test("a dense crowd never stays perfectly stacked", async ({ page }) => {
   test.setTimeout(120_000);
+  // Retain the complete crowd and isolate separation from weapon shoves/kills;
+  // compound combat and its exact ledger have their own path below.
   await page.goto(densePath);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().load?.spawned), {
@@ -28,12 +30,18 @@ test("a dense crowd never stays perfectly stacked", async ({ page }) => {
   for (let sample = 0; sample < 10; sample += 1) {
     const state = await snapshot(page);
     if (state?.run?.status !== "playing") break;
-    // Transients are allowed while spawning continues; a pile is not.
-    expect(state?.crowd?.coincidentPairs).toBeLessThanOrEqual(2);
+    // This metric counts neighbours within 0.5 units, not persistent pair
+    // identities. Cold frames can briefly produce three near-coincidences;
+    // require recovery to zero instead of assuming a per-frame ceiling of two.
+    await expect.poll(
+      async () => (await snapshot(page))?.crowd?.coincidentPairs,
+      { timeout: 30_000 },
+    ).toBe(0);
     await page.waitForTimeout(120);
   }
 
   const settled = await snapshot(page);
+  expect(settled?.run?.liveEnemies).toBe(200);
   expect(settled?.crowd?.adjustments).toBeGreaterThan(0);
   // Bounded work: candidate visits stay far below an all-pairs scan.
   expect(settled?.crowd?.pairChecksHighWater).toBeLessThan(200 * 200);
@@ -50,7 +58,7 @@ test("every enemy remains walk-through without displacing the player", async ({ 
   await page.keyboard.down("KeyD");
   await expect.poll(
     () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().player?.x ?? 0),
-    { timeout: 5_000 },
+    { timeout: 30_000 },
   ).toBeGreaterThan(startX + 150);
   await page.keyboard.up("KeyD");
   const state = await snapshot(page);

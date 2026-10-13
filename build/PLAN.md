@@ -22,6 +22,17 @@ product goal. The camera should make a modest population feel present, and a
 technical ceiling such as 300 enemies should remain available without requiring
 the design to fill it.
 
+## Three run difficulty levels — selected after V0.4.3 P0
+
+Choose Beginner, Normal or Experienced before starting. Normal is the default,
+slightly gentler than the previously single baseline; Experienced increases
+pressure, and Beginner reduces incoming pressure while improving the starter
+character/tool. Presets are theme-owned data resolved once per run and shown on
+the title/settings surfaces. Changes during a run apply to the next run. The
+0.5 gameplay rate, view, collision geometry, material relationships and caps
+remain independent of difficulty. Preserve real-world identity and relative
+material-health ordering; preset multipliers are game balance, not fact claims.
+
 ## V0.4.2 direction correction
 
 The original plan was written around large swarms, projectile penetration,
@@ -1392,3 +1403,24 @@ The first milestone is considered successful when the player can:
 11. Restart and try a different build.
 
 At that point, the project has moved beyond being a technical demo and becomes the first playable version of the game.
+
+
+Q2 follow-up (2026-10-12): Microplastics now open the eco run; Plastic Bottles
+enter quietly at 10% progress (30 seconds on the five-minute timer) and ramp
+from ~6% to ~43% of calm natural spawn selection. At 0.5 gameplay rate this
+first unlock is about 60 real seconds into active play. Microplastics now pay
+1 XP as the common opening enemy; material health ordering stays unchanged.
+Bagged Waste still releases its fixed 2 bottles / 2 Microplastics / 1 glass mix
+pending owner confirmation. Site-event labels counter camera zoom at UI scale,
+and spent events disappear from the minimap. Spawn accounting distinguishes
+natural arrivals (including milestone waves), Fracture, Bagged Waste release,
+site effects (surge/duplication) and test loads; source means immediate creation,
+so ambient pressure modified by a shrine is still natural. No factual claims,
+new material identities or bitmap generation are introduced.
+
+Q4 opening correction (2026-10-13): ordinary Microplastics begin with 9 base
+health, becoming 6.75 / 8.55 / 9.9 in Beginner / Normal / Experienced. Opening
+non-critical starter hits deal 12 / 10 / 10. Only this role's health changes;
+time, Pollution and elite scaling still apply to later or modified enemies.
+This is a playability override to the earlier persistence-derived health model,
+not an environmental measurement. See REC-112 and `balance/Q4_OPENING_REPORT.md`.

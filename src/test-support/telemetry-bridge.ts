@@ -1,4 +1,10 @@
+import type { SpawnCounts } from "../game/systems/statistics/spawn-statistics";
+import type { FrameDistributionSnapshot } from "./frame-measurements";
+import type { DifficultyId } from "../game/core/archetypes/difficulty";
+import type { RunSettings } from "../game/state/settings-state";
+
 export interface ArenaTestSnapshot {
+  readonly spawnOrigins?: Readonly<{ live: SpawnCounts; spawned: SpawnCounts }>;
   readonly status: "booting" | "ready" | "failed";
   readonly scene: string | null;
   readonly themeId: string;
@@ -6,6 +12,7 @@ export interface ArenaTestSnapshot {
   readonly arena?: Readonly<{ width: number; height: number }>;
   readonly camera?: Readonly<{ scrollX: number; scrollY: number }>;
   readonly run?: Readonly<{
+    difficulty: DifficultyId;
     status: "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
     /** How the clock is being treated: `timed`, `endless`, or `clearing`. */
     mode: "timed" | "endless" | "clearing";
@@ -19,6 +26,7 @@ export interface ArenaTestSnapshot {
     pendingChoices: number;
   }>;
   readonly player?: Readonly<{
+    authoredFacing?: "left" | "right" | null;
     characterId: string;
     x: number;
     y: number;
@@ -121,7 +129,9 @@ export interface ArenaTestSnapshot {
     /** Heading the terminal summary is showing, or null when it is not up. */
     terminalTitle: string | null;
     pauseTab: string | null;
-    settings: Readonly<Record<string, boolean | number>>;
+    settings: RunSettings;
+    minimapShrines?: number;
+    shrineTextResolution?: number;
     movementHintVisible: boolean;
     minimapVisible: boolean;
     minimapBounds: Readonly<{ left: number; top: number; width: number; height: number }> | null;
@@ -177,6 +187,7 @@ export interface ArenaTestSnapshot {
     byKind: Readonly<Record<string, number>>;
   }>;
   readonly view?: Readonly<{
+    worldTextResolution?: number;
     /** Constant logical world area, identical at every window size. */
     logicalWidth: number;
     logicalHeight: number;
@@ -231,9 +242,16 @@ export interface ArenaTestSnapshot {
     droppedPresentationCues: number;
     liveHighWater: number;
     trackedHighWater: number;
+    clock: "phaser-raw-wall-ms";
     frameSamples: number;
     averageFrameMs: number;
     maxFrameMs: number;
+    averageSimulationDeltaMs: number;
+    excludedFrames: number;
+    updateCpuSamples: number;
+    averageUpdateCpuMs: number;
+    maxUpdateCpuMs: number;
+    distribution?: FrameDistributionSnapshot;
   }>;
   readonly effects?: Readonly<{
     explosionsCommitted: number;
@@ -322,6 +340,7 @@ export interface ArenaTestSnapshot {
       critTier: number;
       pierceChainIndex: number;
     }> | null;
+    spriteFramesByRole?: Readonly<Record<string, number | null>>;
     roster: Readonly<Record<string, number>>;
     rosterHighWater: Readonly<Record<string, number>>;
     offspringQueued: number;
@@ -335,6 +354,7 @@ export interface ArenaTestSnapshot {
     overlayOpen?: boolean;
     overlayTab?: string | null;
     actions?: readonly string[];
+    difficulty?: DifficultyId;
   }>;
   readonly error?: string;
 }
@@ -348,5 +368,6 @@ export function registerTestTelemetryUpdater(nextUpdater: TelemetryUpdater): voi
 }
 
 export function updateTestTelemetry(snapshot: ArenaTestSnapshot): void {
+  if (import.meta.env.MODE !== "test") return;
   updater?.(snapshot);
 }

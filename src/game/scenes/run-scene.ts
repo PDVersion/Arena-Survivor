@@ -1,5 +1,9 @@
 import Phaser from "phaser";
+import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
 import { activeTheme } from "../content/active-theme";
+import { isDifficultyId } from "../core/archetypes/difficulty";
+import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
+import { addWorldText, UI_SCALE } from "../ui/ui-text";
 import { archetypeIds } from "../core/archetypes/ids";
 import { eliteIds, type FeedbackCategory } from "../core/archetypes/categories";
 import type {
@@ -8,6 +12,7 @@ import type {
   ShrineDefinition,
   UpgradeDefinition,
   WeaponDefinition,
+  ThemeManifest,
 } from "../core/archetypes/contracts";
 import { EnemyActor } from "../entities/enemy-actor";
 import { PickupActor } from "../entities/pickup-actor";
@@ -87,6 +92,7 @@ import {
 } from "../systems/upgrades/describe-upgrade";
 import {
   cycleMinimapOpacity,
+  cycleDifficulty,
   getSessionSettings,
   toggleSetting,
   updateSessionSettings,
@@ -121,6 +127,7 @@ import {
   type ScheduledShrine,
 } from "../systems/shrines/shrine-placement";
 import { updateTestTelemetry } from "../../test-support/telemetry-bridge";
+import { FrameMeasurements } from "../../test-support/frame-measurements";
 import { CausalEventQueue, type EventQueueSnapshot } from "../systems/events/causal-events";
 import {
   selectBloodlust,
@@ -202,10 +209,18 @@ function testSurgeDurationMs(): number | undefined {
   return Number.isFinite(configured) && configured > 0 ? configured : undefined;
 }
 
+/** A benchmark override; production retains its fixed safety budget. */
+function testEnemyCapacity(): number {
+  if (import.meta.env.MODE !== "test") return V02_SPAWN_LIMITS.maxAlive;
+  const configured = Number(new URLSearchParams(window.location.search).get("enemyCap"));
+  return Number.isInteger(configured) && configured >= 300 && configured <= 1000
+    ? configured : V02_SPAWN_LIMITS.maxAlive;
+}
+
 function testLoadHarnessCount(): number {
   if (import.meta.env.MODE !== "test") return 0;
   const configured = Number(new URLSearchParams(window.location.search).get("loadHarness"));
-  return Number.isInteger(configured) && configured > 0 ? Math.min(configured, 300) : 0;
+  return Number.isInteger(configured) && configured > 0 ? Math.min(configured, testEnemyCapacity()) : 0;
 }
 
 function testRosterHarnessSelection(): string | null {
@@ -327,6 +342,9 @@ interface ExplosionEventPayload {
 }
 
 export class RunScene extends Phaser.Scene {
+  private runTheme: ThemeManifest = activeTheme;
+  private enemyCapacity = V02_SPAWN_LIMITS.maxAlive;
+  private spawnStatistics = new SpawnStatistics();
   private player?: PlayerActor;
   private runState?: RunState;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -364,6 +382,7 @@ export class RunScene extends Phaser.Scene {
   private overtimeUi?: OvertimeChoiceUi;
   private minimap?: MinimapUi;
   private movementHint?: Phaser.GameObjects.Text;
+  private arenaTitle?: Phaser.GameObjects.Text;
   private movementHintActiveRealMs = 0;
   private movementHintDismissed = false;
   private bodyDebug?: Phaser.GameObjects.Graphics;
@@ -449,9 +468,7 @@ export class RunScene extends Phaser.Scene {
   private loadHarnessSpawned = 0;
   private liveHighWater = 0;
   private trackedHighWater = 0;
-  private frameSamples = 0;
-  private frameTotalMs = 0;
-  private maxFrameMs = 0;
+  private frameMeasurements?: FrameMeasurements;
   private droppedPresentationCues = 0;
   private rosterHighWater: Record<string, number> = {};
   private offspringQueued = 0;
@@ -472,7 +489,7 @@ export class RunScene extends Phaser.Scene {
   private eliteDefeated = 0;
   private eliteSpawnedByRole: Record<string, number> = {};
   private feedbackLimiter = new FeedbackLimiter();
-  private audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
+  private audioFeedback = new AudioFeedbackService(this.runTheme.tokens.sounds);
   private reducedMotion = false;
   private feedbackObjects = new Set<Phaser.GameObjects.GameObject>();
   private hitStop: HitStopState = createHitStopState();
@@ -486,36 +503,40 @@ export class RunScene extends Phaser.Scene {
   }
 
   create(): void {
+    const configuredDifficulty = import.meta.env.MODE === "test"
+      ? new URLSearchParams(window.location.search).get("difficulty") : null;
+    const difficulty = isDifficultyId(configuredDifficulty) ? configuredDifficulty : getSessionSettings().difficulty;
+    this.runTheme = resolveDifficultyTheme(activeTheme, difficulty);
     this.resetTransientRuntime();
     this.runGeneration = ++runGenerationSequence;
     const keyboard = this.input.keyboard;
     if (!keyboard) throw new Error("Keyboard input is unavailable");
 
-    const starter = activeTheme.characters.find(
+    const starter = this.runTheme.characters.find(
       (character) => character.id === archetypeIds.character.starter,
     );
     if (!starter) throw new Error("The active theme has no starter character");
 
     const profile = createInitialProfile({
-      activeThemeId: activeTheme.id,
-      contentSchemaVersion: activeTheme.schemaVersion,
+      activeThemeId: this.runTheme.id,
+      contentSchemaVersion: this.runTheme.schemaVersion,
       starterCharacterId: starter.id,
     });
-    const selectedCharacter = activeTheme.characters.find(
+    const selectedCharacter = this.runTheme.characters.find(
       (character) => character.id === profile.selectedCharacterId,
     );
     if (!selectedCharacter) throw new Error("The selected character is unavailable");
-    this.enemyDefinitions = activeTheme.enemies;
+    this.enemyDefinitions = this.runTheme.enemies;
     this.enemyDefinition = this.enemyDefinitions.find(
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
     );
-    this.weaponDefinition = activeTheme.weapons.find(
+    this.weaponDefinition = this.runTheme.weapons.find(
       (weapon) => weapon.id === archetypeIds.weapon.starter,
     );
-    this.pickupDefinition = activeTheme.pickups.find(
+    this.pickupDefinition = this.runTheme.pickups.find(
       (pickup) => pickup.id === archetypeIds.pickup.experience,
     );
-    const themedShrine = activeTheme.shrines.find(
+    const themedShrine = this.runTheme.shrines.find(
       (shrine) => shrine.id === archetypeIds.shrine.spawnSurge,
     );
     this.shrineDefinition = themedShrine
@@ -531,13 +552,14 @@ export class RunScene extends Phaser.Scene {
     }
 
     this.runState = createRunState({
-      themeId: activeTheme.id,
+      difficulty,
+      themeId: this.runTheme.id,
       characterId: selectedCharacter.id,
       baseStats: selectedCharacter.baseStats,
       durationMs: testRunDurationMs(),
-      xpCurve: activeTheme.tuning.progression.xpCurve,
+      xpCurve: this.runTheme.tuning.progression.xpCurve,
     });
-    this.spawnIntervalMs = activeTheme.tuning.director.baseIntervalMs;
+    this.spawnIntervalMs = this.runTheme.tuning.director.baseIntervalMs;
     const testCritChance = testCombatNumber("critChance");
     const testPierce = testCombatNumber("pierce");
     const testAttackSpeedBonus = testCombatNumber("attackSpeedBonus");
@@ -589,7 +611,7 @@ export class RunScene extends Phaser.Scene {
     }
 
     this.physics.world.setBounds(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
-    this.cameras.main.setBackgroundColor(activeTheme.tokens.palette.background);
+    this.cameras.main.setBackgroundColor(this.runTheme.tokens.palette.background);
     this.drawArena();
 
     this.player = new PlayerActor(
@@ -597,12 +619,12 @@ export class RunScene extends Phaser.Scene {
       ARENA_SIZE.width / 2,
       ARENA_SIZE.height / 2,
       selectedCharacter,
-      activeTheme.tokens,
+      this.runTheme.tokens,
     );
     this.planShrineArrivals();
-    configureRunCamera(this.cameras.main, ARENA_SIZE, this.player, activeTheme.tuning.view.zoom);
-    this.time.timeScale = activeTheme.tuning.pace.gameplayRate;
-    this.tweens.timeScale = activeTheme.tuning.pace.gameplayRate;
+    configureRunCamera(this.cameras.main, ARENA_SIZE, this.player, this.runTheme.tuning.view.zoom);
+    this.time.timeScale = this.runTheme.tuning.pace.gameplayRate;
+    this.tweens.timeScale = this.runTheme.tuning.pace.gameplayRate;
 
     this.enemyGroup = this.physics.add.group({ runChildUpdate: false });
     this.projectileGroup = this.physics.add.group({ runChildUpdate: false });
@@ -634,20 +656,21 @@ export class RunScene extends Phaser.Scene {
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
     ];
     window.addEventListener("keydown", this.handleRestartKey);
+    if (this.frameMeasurements) document.addEventListener("visibilitychange", this.handleMeasurementVisibility);
     this.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
     this.choiceKeys = [
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
       keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE),
     ];
-    this.levelUpUi = new LevelUpChoiceUi(this, activeTheme);
-    this.pauseMenu = new PauseMenuUi(this, activeTheme);
-    this.hud = new Hud(this, activeTheme);
-    this.runEndOverlay = new RunEndOverlay(this, activeTheme);
-    this.overtimeUi = new OvertimeChoiceUi(this, activeTheme);
+    this.levelUpUi = new LevelUpChoiceUi(this, this.runTheme);
+    this.pauseMenu = new PauseMenuUi(this, this.runTheme);
+    this.hud = new Hud(this, this.runTheme);
+    this.runEndOverlay = new RunEndOverlay(this, this.runTheme);
+    this.overtimeUi = new OvertimeChoiceUi(this, this.runTheme);
     this.minimap = new MinimapUi(
       this,
-      activeTheme,
+      this.runTheme,
       ARENA_SIZE,
       getSessionSettings().minimapOpacity,
     );
@@ -661,6 +684,7 @@ export class RunScene extends Phaser.Scene {
       this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
       this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
       window.removeEventListener("keydown", this.handleRestartKey);
+      document.removeEventListener("visibilitychange", this.handleMeasurementVisibility);
       this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
       this.hud?.destroy();
       this.levelUpUi?.hide();
@@ -678,7 +702,9 @@ export class RunScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     if (!this.player || !this.runState || !this.pauseKey) return;
+    const updateCpuStartedAt = this.frameMeasurements ? performance.now() : undefined;
     const wallDelta = delta;
+    const startedPlaying = this.runState.status === "playing";
     this.lastFrameMs = delta;
 
     // Hit-stop and the death moment slow the mapping from wall time to
@@ -687,7 +713,7 @@ export class RunScene extends Phaser.Scene {
     const frozen = isHitStopActive(this.hitStop, time);
     const dying = time < this.deathSlowUntilMs;
     const timeScale = resolveGameplayRate({
-      baseRate: activeTheme.tuning.pace.gameplayRate,
+      baseRate: this.runTheme.tuning.pace.gameplayRate,
       reducedMotion: this.reducedMotion,
       hitStopActive: frozen,
       deathSlowActive: dying,
@@ -718,11 +744,6 @@ export class RunScene extends Phaser.Scene {
     if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
     if (this.runState.status === "playing") {
-      if (testSkillEnabled("representativeLoad")) {
-        this.frameSamples += 1;
-        this.frameTotalMs += delta;
-        this.maxFrameMs = Math.max(this.maxFrameMs, delta);
-      }
       const movementInput = this.readMovementInput();
       this.updateMovementHint(movementInput, wallDelta);
       this.player.move(
@@ -770,9 +791,19 @@ export class RunScene extends Phaser.Scene {
     this.updateMinimap();
     this.drawBodyDebug();
     this.publishTelemetry();
+    this.frameMeasurements?.observe({
+      wallFrameMs: this.game.loop.rawDelta,
+      simulationDeltaMs: delta,
+      updateCpuMs: updateCpuStartedAt === undefined ? undefined : performance.now() - updateCpuStartedAt,
+      active: startedPlaying && this.runState.status === "playing" &&
+        !preparingRepresentativeLoad && timeScale === this.runTheme.tuning.pace.gameplayRate &&
+        !document.hidden && !this.focusPaused,
+    });
   }
 
   private resetTransientRuntime(): void {
+    this.enemyCapacity = testEnemyCapacity();
+    this.spawnStatistics = new SpawnStatistics();
     this.player = undefined;
     this.runState = undefined;
     this.cursors = undefined;
@@ -811,6 +842,7 @@ export class RunScene extends Phaser.Scene {
     this.overtimeUi = undefined;
     this.minimap = undefined;
     this.movementHint = undefined;
+    this.arenaTitle = undefined;
     this.movementHintActiveRealMs = 0;
     this.movementHintDismissed = false;
     this.bodyDebug?.destroy();
@@ -827,7 +859,7 @@ export class RunScene extends Phaser.Scene {
     this.waveSpawned = 0;
     this.driftSpawned = 0;
     this.driftReclaimed = 0;
-    this.enemyHash = new SpatialHash<EnemyActor>(activeTheme.tuning.bodies.cellSize);
+    this.enemyHash = new SpatialHash<EnemyActor>(this.runTheme.tuning.bodies.cellSize);
     this.separationPairChecks = 0;
     this.separationPairChecksHighWater = 0;
     this.separationAdjustments = 0;
@@ -837,7 +869,7 @@ export class RunScene extends Phaser.Scene {
     for (const hazard of this.hazards) hazard.destroy();
     this.hazards = new Set();
     this.hazardRandom = createSeededRandom(0x4a20_0007);
-    this.nextHazardAtMs = testHazardIntervalMs() ?? activeTheme.tuning.hazards.baseIntervalMs;
+    this.nextHazardAtMs = testHazardIntervalMs() ?? this.runTheme.tuning.hazards.baseIntervalMs;
     this.hazardSequence = 0;
     this.hazardsPlaced = 0;
     this.hazardsCleared = 0;
@@ -894,9 +926,11 @@ export class RunScene extends Phaser.Scene {
     this.loadHarnessSpawned = 0;
     this.liveHighWater = 0;
     this.trackedHighWater = 0;
-    this.frameSamples = 0;
-    this.frameTotalMs = 0;
-    this.maxFrameMs = 0;
+    this.frameMeasurements = undefined;
+    if (import.meta.env.MODE === "test") {
+      this.frameMeasurements = testSkillEnabled("representativeLoad") || testSkillEnabled("frameMeasure")
+        ? new FrameMeasurements(testSkillEnabled("frameMeasure") ? 4096 : 0) : undefined;
+    }
     this.droppedPresentationCues = 0;
     this.rosterHighWater = {};
     this.offspringQueued = 0;
@@ -917,7 +951,7 @@ export class RunScene extends Phaser.Scene {
     this.eliteDefeated = 0;
     this.eliteSpawnedByRole = {};
     this.feedbackLimiter = new FeedbackLimiter();
-    this.audioFeedback = new AudioFeedbackService(activeTheme.tokens.sounds);
+    this.audioFeedback = new AudioFeedbackService(this.runTheme.tokens.sounds);
     this.reducedMotion = prefersReducedMotion() || getSessionSettings().reducedMotion;
     this.feedbackObjects = new Set();
     this.hitStop = createHitStopState();
@@ -941,7 +975,7 @@ export class RunScene extends Phaser.Scene {
 
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
-    const capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    const capacity = Math.max(0, this.enemyCapacity - this.enemies.size);
     this.loadEventQueue.process(Math.min(12, capacity), (event) => {
       const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
       const representative = testSkillEnabled("representativeLoad");
@@ -965,7 +999,7 @@ export class RunScene extends Phaser.Scene {
             y: Math.min(ARENA_SIZE.height - definition.radius, Math.max(definition.radius, this.player.y + Math.sin(closeAngle) * closeDistance)),
           }
         : undefined;
-      if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0)) {
+      if (definition && this.spawnEnemy("ambient", 1, definition, requestedPoint, representative && sequence % 5 === 0, undefined, "chase", "benchmark")) {
         this.loadHarnessSpawned += 1;
       }
     });
@@ -1009,7 +1043,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private processCausalEvents(): void {
-    let capacity = Math.max(0, V02_SPAWN_LIMITS.maxAlive - this.enemies.size);
+    let capacity = Math.max(0, this.enemyCapacity - this.enemies.size);
     let remaining = 24;
     remaining -= this.eventQueue.processMatching(remaining, (event) => event.kind !== "spawn.requested", (event) => {
       if (event.kind === "effect.explosion") {
@@ -1022,7 +1056,9 @@ export class RunScene extends Phaser.Scene {
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement)) {
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement,
+        payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
+          payload.reason === "duplication" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural")) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1048,7 +1084,7 @@ export class RunScene extends Phaser.Scene {
 
   private resolveCrowd(): void {
     if (!this.player) return;
-    const bodies = activeTheme.tuning.bodies;
+    const bodies = this.runTheme.tuning.bodies;
     const stats = separateCrowd(this.enemies, this.enemyHash, {
       maxNeighbours: bodies.maxNeighbours,
       maxDisplacement: bodies.maxDisplacement,
@@ -1092,7 +1128,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || !this.player) return;
     if (testSkillEnabled("noHazards")) return;
     const nowMs = this.runState.elapsedMs;
-    const tuning = activeTheme.tuning.hazards;
+    const tuning = this.runTheme.tuning.hazards;
     const progress = runProgress(nowMs, this.runState.durationMs);
 
     if (nowMs >= this.nextHazardAtMs && this.hazards.size < tuning.maxActive) {
@@ -1123,7 +1159,7 @@ export class RunScene extends Phaser.Scene {
           elite: false,
         });
         this.hazardDamageDealt += effect.damage;
-        this.player.flashDamage(activeTheme.tokens.palette.critical);
+        this.player.flashDamage(this.runTheme.tokens.palette.critical);
         this.emitFeedback("explosion", this.player.x, this.player.y, "!");
         if (this.runState.status === "dead") {
           this.enterTerminalState();
@@ -1138,9 +1174,9 @@ export class RunScene extends Phaser.Scene {
 
   private placeHazard(nowMs: number): void {
     if (!this.player || !this.runState) return;
-    const tuning = activeTheme.tuning.hazards;
+    const tuning = this.runTheme.tuning.hazards;
     const hazardId = selectHazard(tuning, this.hazardRandom);
-    const definition = activeTheme.hazards.find((candidate) => candidate.id === hazardId);
+    const definition = this.runTheme.hazards.find((candidate) => candidate.id === hazardId);
     if (!definition) return;
 
     // Never on top of the player, and always inside the arena.
@@ -1167,7 +1203,7 @@ export class RunScene extends Phaser.Scene {
       nextTickAtMs: nowMs + definition.telegraphMs,
     };
 
-    const hazard = new HazardActor(this, definition, state, activeTheme.tokens);
+    const hazard = new HazardActor(this, definition, state, this.runTheme.tokens);
     this.hazards.add(hazard);
     this.hazardsPlaced += 1;
   }
@@ -1195,6 +1231,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private updateLoadHighWaterMarks(): void {
+    if (import.meta.env.MODE !== "test") return;
     this.liveHighWater = Math.max(this.liveHighWater, this.enemies.size);
     this.trackedHighWater = Math.max(
       this.trackedHighWater,
@@ -1270,7 +1307,7 @@ export class RunScene extends Phaser.Scene {
    */
   private planShrineArrivals(): void {
     this.shrineArrivals = scheduleShrineArrivals(
-      activeTheme.tuning.shrines,
+      this.runTheme.tuning.shrines,
       this.runState?.durationMs ?? 1,
     );
     this.shrinesRevealed = 0;
@@ -1310,22 +1347,23 @@ export class RunScene extends Phaser.Scene {
     announce: boolean,
   ): void {
     this.shrinesRevealed += 1;
-    const definition = activeTheme.shrines.find((candidate) => candidate.id === arrival.shrineId);
+    const definition = this.runTheme.shrines.find((candidate) => candidate.id === arrival.shrineId);
     if (!definition) return;
     const actor = new ShrineActor(
       this,
       at.x,
       at.y,
       definition,
-      activeTheme.tokens,
-      activeTheme.copy.content[definition.id].name,
-      activeTheme.copy.vocabulary.shrinePrompt,
+      this.runTheme.tokens,
+      this.runTheme.copy.content[definition.id].name,
+      this.runTheme.copy.vocabulary.shrinePrompt,
+      UI_SCALE / this.runTheme.tuning.view.zoom,
     );
     this.shrineActors.push(actor);
     this.shrine ??= definition.id === archetypeIds.shrine.spawnSurge ? actor : undefined;
     if (announce) {
-      this.announceShrine(activeTheme.copy.vocabulary.shrineArrived);
-      this.emitFeedback("shrine", at.x, at.y, activeTheme.copy.content[definition.id].name);
+      this.announceShrine(this.runTheme.copy.vocabulary.shrineArrived);
+      this.emitFeedback("shrine", at.x, at.y, this.runTheme.copy.content[definition.id].name);
     }
   }
 
@@ -1346,7 +1384,7 @@ export class RunScene extends Phaser.Scene {
       this.revealShrine(
         this.shrineArrivals[this.shrinesRevealed]!,
         placeShrine(
-          activeTheme.tuning.shrines,
+          this.runTheme.tuning.shrines,
           ARENA_SIZE,
           this.player,
           this.shrineActors,
@@ -1400,16 +1438,16 @@ export class RunScene extends Phaser.Scene {
       }
       this.shrineMarkers.set(shrine, {
         arrow: this.add
-          .triangle(x, y, 0, 22, 11, 0, 22, 22, Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.shrine).color)
+          .triangle(x, y, 0, 22, 11, 0, 22, 22, Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.shrine).color)
           .setRotation(rotation)
           .setScrollFactor(0)
           .setDepth(940),
         label: this.add
-          .text(x, labelY, activeTheme.copy.content[shrine.definition.id].name, {
-            color: activeTheme.tokens.palette.shrine,
+          .text(x, labelY, this.runTheme.copy.content[shrine.definition.id].name, {
+            color: this.runTheme.tokens.palette.shrine,
             fontFamily: "Georgia, serif",
             fontSize: "14px",
-            stroke: activeTheme.tokens.palette.background,
+            stroke: this.runTheme.tokens.palette.background,
             strokeThickness: 4,
           })
           .setOrigin(0.5)
@@ -1422,11 +1460,11 @@ export class RunScene extends Phaser.Scene {
   /** The banner used by both shrine arrival and shrine activation. */
   private announceShrine(text: string): void {
     const message = this.add.text(this.scale.width / 2, 105, text, {
-      color: activeTheme.tokens.palette.shrine,
+      color: this.runTheme.tokens.palette.shrine,
       fontFamily: "Georgia, serif",
       fontSize: "28px",
       fontStyle: "bold",
-      stroke: activeTheme.tokens.palette.background,
+      stroke: this.runTheme.tokens.palette.background,
       strokeThickness: 6,
     }).setOrigin(0.5).setScrollFactor(0).setDepth(950);
     this.tweens.add({
@@ -1490,8 +1528,8 @@ export class RunScene extends Phaser.Scene {
     }
     this.announceShrine(
       definition.effectKind === "spawn_surge"
-        ? activeTheme.copy.vocabulary.surgeActive
-        : activeTheme.copy.content[definition.id].name,
+        ? this.runTheme.copy.vocabulary.surgeActive
+        : this.runTheme.copy.content[definition.id].name,
     );
   }
 
@@ -1501,7 +1539,7 @@ export class RunScene extends Phaser.Scene {
       this.surgeState,
       this.shrineDefinition,
       this.runState.elapsedMs,
-      V02_SPAWN_LIMITS.maxAlive - this.enemies.size,
+      this.enemyCapacity - this.enemies.size,
     );
     this.surgeState = result.state;
     for (let index = 0; index < result.spawnNow; index += 1) {
@@ -1522,7 +1560,7 @@ export class RunScene extends Phaser.Scene {
   private worldModifiers() {
     const runState = this.runState;
     if (!runState) {
-      return selectWorldModifiers(createWorldState(), activeTheme.tuning.difficulty, 0);
+      return selectWorldModifiers(createWorldState(), this.runTheme.tuning.difficulty, 0);
     }
     // Only an endless run is allowed past `1`. A clearing run also outlives the
     // duration, but it has no arrivals and is meant to be finishable, so
@@ -1530,7 +1568,7 @@ export class RunScene extends Phaser.Scene {
     const progress = runProgress(runState.elapsedMs, runState.durationMs);
     return selectWorldModifiers(
       runState.world,
-      activeTheme.tuning.difficulty,
+      this.runTheme.tuning.difficulty,
       runState.mode === "endless" ? progress : Math.min(1, progress),
     );
   }
@@ -1540,7 +1578,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState) return undefined;
     const world = this.worldModifiers();
     return resolveDirectorPlan(
-      activeTheme.tuning.director,
+      this.runTheme.tuning.director,
       runProgress(this.runState.elapsedMs, this.runState.durationMs),
       world,
     );
@@ -1555,11 +1593,11 @@ export class RunScene extends Phaser.Scene {
   private releaseMilestoneWaves(): void {
     if (!this.runState || testSkillEnabled("noAmbient")) return;
     const progress = runProgress(this.runState.elapsedMs, this.runState.durationMs);
-    const crossed = crossedUnlocks(activeTheme.tuning.director, this.lastDirectorProgress, progress);
+    const crossed = crossedUnlocks(this.runTheme.tuning.director, this.lastDirectorProgress, progress);
     this.lastDirectorProgress = progress;
     if (crossed.length === 0) return;
 
-    const burst = enemiesInWave(activeTheme.tuning.director, progress);
+    const burst = enemiesInWave(this.runTheme.tuning.director, progress);
     for (const role of crossed) {
       this.milestoneWaves += 1;
       for (let index = 0; index < burst; index += 1) {
@@ -1575,18 +1613,18 @@ export class RunScene extends Phaser.Scene {
           role.waveMovement,
         );
       }
-      this.announceWave(activeTheme.copy.content[role.enemyId]?.name ?? role.enemyId);
+      this.announceWave(this.runTheme.copy.content[role.enemyId]?.name ?? role.enemyId);
     }
   }
 
   private announceWave(roleName: string): void {
     this.emitFeedback("elite", this.player?.x ?? 0, this.player?.y ?? 0, roleName);
     const banner = this.add.text(this.scale.width / 2, 140, roleName, {
-      color: activeTheme.tokens.palette.accent,
+      color: this.runTheme.tokens.palette.accent,
       fontFamily: "Georgia, serif",
       fontSize: "30px",
       fontStyle: "bold",
-      stroke: activeTheme.tokens.palette.background,
+      stroke: this.runTheme.tokens.palette.background,
       strokeThickness: 6,
     }).setOrigin(0.5).setScrollFactor(0).setDepth(950);
     this.feedbackObjects.add(banner);
@@ -1608,7 +1646,7 @@ export class RunScene extends Phaser.Scene {
       !this.player ||
       !this.runState ||
       this.runState.elapsedMs < this.nextSpawnAtMs ||
-      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, this.enemyCapacity)
     ) {
       return;
     }
@@ -1619,13 +1657,13 @@ export class RunScene extends Phaser.Scene {
     // A batch shares one ring arc so it reads as a wave rather than a trickle.
     const arc = this.spawnSequence * GOLDEN_ANGLE;
     for (let index = 0; index < plan.batchSize; index += 1) {
-      if (!canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)) break;
+      if (!canSpawn(this.enemies.size, this.enemyCapacity)) break;
       const enemyId = selectRole(plan.weights, this.enemyRandom);
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === enemyId);
       if (!definition) continue;
       const spread = plan.batchSize === 1
         ? 0
-        : (index / (plan.batchSize - 1) - 0.5) * activeTheme.tuning.director.batchSpreadRadians;
+        : (index / (plan.batchSize - 1) - 0.5) * this.runTheme.tuning.director.batchSpreadRadians;
       this.spawnEnemy("ambient", 1, definition, undefined, undefined, arc + spread);
     }
 
@@ -1641,13 +1679,14 @@ export class RunScene extends Phaser.Scene {
     eliteOverride?: boolean,
     angleRadians?: number,
     movement: WaveMovement = "chase",
+    origin: SpawnOrigin = spawnSource === "ambient" ? "natural" : "environment",
   ): boolean {
     if (
       !this.player ||
       !this.runState ||
       !definition ||
       !this.enemyGroup ||
-      !canSpawn(this.enemies.size, V02_SPAWN_LIMITS.maxAlive)
+      !canSpawn(this.enemies.size, this.enemyCapacity)
     ) {
       return false;
     }
@@ -1655,7 +1694,7 @@ export class RunScene extends Phaser.Scene {
     const radiusOverride = testSpawnRadius();
     const point = requestedPoint ?? findOffScreenSpawnPoint({
       origin: this.player,
-      radius: radiusOverride ?? offScreenSpawnRadius(view, activeTheme.tuning.director.spawnMargin),
+      radius: radiusOverride ?? offScreenSpawnRadius(view, this.runTheme.tuning.director.spawnMargin),
       angleRadians: angleRadians ?? this.spawnSequence * GOLDEN_ANGLE,
       arena: ARENA_SIZE,
       view,
@@ -1672,9 +1711,9 @@ export class RunScene extends Phaser.Scene {
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = this.worldModifiers();
-    const eliteDefinition = activeTheme.elites.find((elite) => elite.id === eliteIds.baseline);
+    const eliteDefinition = this.runTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
-      activeTheme.tuning.director,
+      this.runTheme.tuning.director,
       runProgress(this.runState.elapsedMs, this.runState.durationMs),
       worldModifiers.eliteChance,
     );
@@ -1687,14 +1726,14 @@ export class RunScene extends Phaser.Scene {
     // multiplier only: elite reward is already an explicit multiplier, so
     // folding elite health in here would pay for the same thing twice.
     const toughnessReward = 1 +
-      (worldModifiers.enemyHealthMultiplier - 1) * activeTheme.tuning.progression.toughnessRewardShare;
+      (worldModifiers.enemyHealthMultiplier - 1) * this.runTheme.tuning.progression.toughnessRewardShare;
     const enemy = new EnemyActor(
       this,
       `enemy-${this.enemySequence}`,
       point.x,
       point.y,
       definition,
-      activeTheme.tokens,
+      this.runTheme.tokens,
       spawnSource,
       rewardMultiplier * (elite?.rewardMultiplier ?? 1) * toughnessReward,
       {
@@ -1706,12 +1745,14 @@ export class RunScene extends Phaser.Scene {
       elite,
       movement,
       {
-        role: activeTheme.tuning.bodies.roles.find((role) => role.enemyId === definition.id) ??
+        role: this.runTheme.tuning.bodies.roles.find((role) => role.enemyId === definition.id) ??
           { enemyId: definition.id, separationScale: 1, mass: 1 },
-        eliteMassMultiplier: activeTheme.tuning.bodies.eliteMassMultiplier,
+        eliteMassMultiplier: this.runTheme.tuning.bodies.eliteMassMultiplier,
       },
     );
     if (movement === "drift") this.driftSpawned += 1;
+    const spawnStatistics = this.spawnStatistics;
+    spawnStatistics.add(enemy.targetId, origin);
     this.enemies.add(enemy);
     this.enemyGroup.add(enemy);
     if (elite) {
@@ -1722,6 +1763,7 @@ export class RunScene extends Phaser.Scene {
     if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
       this.enemies.delete(enemy);
+      spawnStatistics.remove(enemy.targetId);
       if (this.runState) this.runState = setLiveEnemyCount(this.runState, this.enemies.size);
     });
     this.runState = setLiveEnemyCount(this.runState, this.enemies.size);
@@ -1778,7 +1820,7 @@ export class RunScene extends Phaser.Scene {
         this.player.y,
         baseAngle,
         weapon,
-        activeTheme.tokens,
+        this.runTheme.tokens,
         () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); },
       );
       this.meleeStrikes += 1;
@@ -1812,7 +1854,7 @@ export class RunScene extends Phaser.Scene {
 
     if (!canSpawn(this.projectiles.size, V02_SPAWN_LIMITS.maxProjectiles)) return;
     const momentumEffect = findSkillEffect(
-      activeTheme.skills,
+      this.runTheme.skills,
       archetypeIds.skill.piercingMomentum,
       "piercing_momentum",
     );
@@ -1832,7 +1874,7 @@ export class RunScene extends Phaser.Scene {
         this.player.x,
         this.player.y,
         weapon,
-        activeTheme.tokens,
+        this.runTheme.tokens,
         damage.damage,
         damage.baseDamage,
         damage.bonusDamage,
@@ -1866,7 +1908,7 @@ export class RunScene extends Phaser.Scene {
   ): void {
     if (!this.runState || !this.player) return;
     const effect = findSkillEffect(
-      activeTheme.skills,
+      this.runTheme.skills,
       archetypeIds.skill.collectionSweep,
       "collection_sweep",
     );
@@ -1919,7 +1961,7 @@ export class RunScene extends Phaser.Scene {
   /** Presentation follows the attack timing, while hit geometry remains pure. */
   private renderCollectionSweepCue(x: number, y: number, radius: number): void {
     if (!this.scene.isActive()) return;
-    const colour = Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.player).color;
+    const colour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.player).color;
     const cue = this.add.circle(x, y, radius, colour, 0.14)
       .setStrokeStyle(3, colour, 0.9)
       .setDepth(44)
@@ -1976,7 +2018,7 @@ export class RunScene extends Phaser.Scene {
   /** Valid enemy contact nudges the player without turning an enemy into a wall. */
   private shovePlayer(enemy: EnemyActor): void {
     if (!this.player || !this.runState) return;
-    const tuning = activeTheme.tuning.bodies;
+    const tuning = this.runTheme.tuning.bodies;
     if (!canApplyContactKnockback(
       this.runState.elapsedMs,
       this.lastContactKnockbackAtMs,
@@ -2108,13 +2150,13 @@ export class RunScene extends Phaser.Scene {
   ): void {
     if (!this.runState) return;
     const explosionEffect = findSkillEffect(
-      activeTheme.skills,
+      this.runTheme.skills,
       archetypeIds.skill.onKillExplosion,
       "on_kill_explosion",
     );
     const explosionLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.onKillExplosion);
     const chainEffect = findSkillEffect(
-      activeTheme.skills,
+      this.runTheme.skills,
       archetypeIds.skill.chainReaction,
       "chain_reaction",
     );
@@ -2155,7 +2197,7 @@ export class RunScene extends Phaser.Scene {
       });
     }
 
-    const fracture = findSkillEffect(activeTheme.skills, archetypeIds.skill.fracture, "fracture");
+    const fracture = findSkillEffect(this.runTheme.skills, archetypeIds.skill.fracture, "fracture");
     const fractureLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.fracture);
     if (
       fracture &&
@@ -2227,7 +2269,7 @@ export class RunScene extends Phaser.Scene {
       this.audioFeedback.play(category, detune);
     }
     if (!this.feedbackLimiter.beginVisual()) return;
-    const palette = activeTheme.tokens.palette;
+    const palette = this.runTheme.tokens.palette;
     const colour = category === "critical"
       ? palette.critical
       : category === "overcritical" ? palette.overcritical
@@ -2272,8 +2314,8 @@ export class RunScene extends Phaser.Scene {
       return;
     }
     this.activeExplosionCues += 1;
-    const explosionColour = Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.explosion).color;
-    const criticalColour = Phaser.Display.Color.HexStringToColor(activeTheme.tokens.palette.critical).color;
+    const explosionColour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.explosion).color;
+    const criticalColour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.critical).color;
     const cue = this.add.circle(payload.x, payload.y, payload.radius, explosionColour, 0.18)
       .setStrokeStyle(3, criticalColour, 0.75)
       .setDepth(30);
@@ -2293,7 +2335,7 @@ export class RunScene extends Phaser.Scene {
 
   private updateBloodlust(): void {
     if (!this.runState) return;
-    const bloodlust = findSkillEffect(activeTheme.skills, archetypeIds.skill.bloodlust, "bloodlust");
+    const bloodlust = findSkillEffect(this.runTheme.skills, archetypeIds.skill.bloodlust, "bloodlust");
     const level = skillLevel(this.runState.skillLevels, archetypeIds.skill.bloodlust);
     if (!bloodlust || level === 0) {
       this.bloodlustAttackSpeedBonus = 0;
@@ -2322,7 +2364,7 @@ export class RunScene extends Phaser.Scene {
       x,
       y,
       this.pickupDefinition,
-      activeTheme.tokens,
+      this.runTheme.tokens,
       xpValue,
       rewardSource,
     );
@@ -2411,13 +2453,15 @@ export class RunScene extends Phaser.Scene {
     this.player?.stop();
     this.physics.world.pause();
     const luck = this.runState.player.stats.luck;
-    const drawn = selectUpgradeChoices(activeTheme.upgrades, 3, this.upgradeRandom, {
+    const drawn = selectUpgradeChoices(this.runTheme.upgrades, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
       luck,
+      skillLevels: this.runState.skillLevels,
+      skills: this.runTheme.skills,
     });
     // Which upgrades appeared, then how good each one rolled. Luck feeds both,
     // but only the second makes a card actually stronger.
-    this.currentOffers = rollOfferTiers(drawn, activeTheme.tuning.upgradeTiers, this.upgradeRandom, luck);
+    this.currentOffers = rollOfferTiers(drawn, this.runTheme.tuning.upgradeTiers, this.upgradeRandom, luck);
     this.currentChoices = this.currentOffers.map((offer) => offer.definition);
     this.levelUpUi.show(this.currentChoices, this.levelUpView(), (choice) => this.chooseUpgrade(choice));
   }
@@ -2436,12 +2480,13 @@ export class RunScene extends Phaser.Scene {
       threatStep: runState
         ? selectWorldModifiers(
             runState.world,
-            activeTheme.tuning.difficulty,
+            this.runTheme.tuning.difficulty,
             runProgress(runState.elapsedMs, runState.durationMs),
           ).threatStep
         : 0,
       killChain: runState?.statistics.recentKillTimesMs.length ?? 0,
       levelProgress: required > 0 ? (progression?.xp ?? 0) / required : 0,
+      spawnCounts: this.spawnStatistics.live,
     };
   }
 
@@ -2451,7 +2496,7 @@ export class RunScene extends Phaser.Scene {
     return {
       descriptions: runState
         ? this.currentOffers.map((offer) =>
-            describeUpgrade(runState, offer.definition, activeTheme, offer.tier),
+            describeUpgrade(runState, offer.definition, this.runTheme, offer.tier),
           )
         : [],
       pendingAfterThis: Math.max(0, (runState?.progression.pendingChoices ?? 1) - 1),
@@ -2463,21 +2508,24 @@ export class RunScene extends Phaser.Scene {
     const runState = this.runState;
     const session = getSessionStatistics(this.liveRunContribution());
     const summary = runState
-      ? selectRunSummaryValues(runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
+      ? selectRunSummaryValues(runState, this.runTheme.copy.vocabulary, this.runTheme.copy.content)
       : undefined;
     return {
-      stats: runState ? selectPlayerStats(runState, activeTheme) : [],
+      stats: runState ? selectPlayerStats(runState, this.runTheme) : [],
       world: runState
-        ? selectWorldLines(
+        ? [...selectWorldLines(
             runState.world,
-            activeTheme,
+            this.runTheme,
             runProgress(runState.elapsedMs, runState.durationMs),
-          )
+          ), { label: `${this.runTheme.copy.spawnOrigins.live} / ${this.runTheme.copy.spawnOrigins.total}`, display: "" }, ...spawnOrigins.map((origin) => ({
+            label: this.runTheme.copy.spawnOrigins[origin],
+            display: `${this.spawnStatistics.live[origin]} / ${this.spawnStatistics.spawned[origin]}`,
+          }))]
         : [],
       upgrades: summary?.upgrades ?? [],
-      codex: selectShrineCodex(activeTheme),
-      codexUpgrades: selectUpgradeCodex(activeTheme, session),
-      codexSession: selectSessionCodex(activeTheme, session),
+      codex: selectShrineCodex(this.runTheme),
+      codexUpgrades: selectUpgradeCodex(this.runTheme, session),
+      codexSession: selectSessionCodex(this.runTheme, session),
       settings: getSessionSettings(),
     };
   }
@@ -2498,7 +2546,7 @@ export class RunScene extends Phaser.Scene {
   private applySetting(key: SettingKey): void {
     const current = getSessionSettings();
     const next = updateSessionSettings(
-      key === "minimapOpacity"
+      key === "difficulty" ? cycleDifficulty(current) : key === "minimapOpacity"
         ? cycleMinimapOpacity(current)
         : toggleSetting(current, key),
     );
@@ -2515,7 +2563,7 @@ export class RunScene extends Phaser.Scene {
     this.minimap.update({
       player: this.player,
       enemies: [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated),
-      shrines: this.shrineActors.filter((shrine) => shrine.active),
+      shrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated),
       hazards: [...this.hazards].filter((hazard) => hazard.active),
     });
   }
@@ -2562,8 +2610,8 @@ export class RunScene extends Phaser.Scene {
     this.runState = applyRunUpgrade(
       this.runState,
       choice,
-      (skillId) => skillMaxLevel(activeTheme.skills, skillId),
-      tierMultiplier(activeTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
+      (skillId) => skillMaxLevel(this.runTheme.skills, skillId),
+      tierMultiplier(this.runTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
     );
     this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {
@@ -2600,7 +2648,7 @@ export class RunScene extends Phaser.Scene {
     this.firstContactAtMs ??= this.runState.elapsedMs;
     this.shovePlayer(enemy);
     this.player.setAlpha(0.35);
-    this.player.flashDamage(activeTheme.tokens.palette.critical);
+    this.player.flashDamage(this.runTheme.tokens.palette.critical);
     this.hitFlashes += 1;
     if (this.runState.status === "dead") {
       // A moment of slow motion before the overlay, so death reads as an event.
@@ -2709,7 +2757,12 @@ export class RunScene extends Phaser.Scene {
     this.audioFeedback.unlock();
   };
 
+  private readonly handleMeasurementVisibility = (): void => {
+    this.frameMeasurements?.interrupt();
+  };
+
   private handleGameBlur(): void {
+    this.frameMeasurements?.interrupt();
     if (!this.runState || this.runState.status !== "playing") return;
     this.runState = setRunStatus(this.runState, "paused");
     this.player?.stop();
@@ -2731,7 +2784,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private drawArena(): void {
-    const palette = activeTheme.tokens.palette;
+    const palette = this.runTheme.tokens.palette;
     const graphics = this.add.graphics();
     graphics.fillStyle(Phaser.Display.Color.HexStringToColor(palette.floor).color, 1);
     graphics.fillRect(0, 0, ARENA_SIZE.width, ARENA_SIZE.height);
@@ -2749,16 +2802,14 @@ export class RunScene extends Phaser.Scene {
 
     const centreX = ARENA_SIZE.width / 2;
     const centreY = ARENA_SIZE.height / 2;
-    this.add
-      .text(centreX, centreY - 180, activeTheme.copy.arenaName, {
+    this.arenaTitle = addWorldText(this, centreX, centreY - 180, this.runTheme.copy.arenaName, {
         color: palette.accent,
         fontFamily: "Georgia, serif",
         fontSize: "34px",
         fontStyle: "bold",
       })
       .setOrigin(0.5);
-    this.movementHint = this.add
-      .text(centreX, centreY + 120, activeTheme.copy.movementHint, {
+    this.movementHint = addWorldText(this, centreX, centreY + 120, this.runTheme.copy.movementHint, {
         color: palette.text,
         fontFamily: "Georgia, serif",
         fontSize: "18px",
@@ -2845,6 +2896,8 @@ export class RunScene extends Phaser.Scene {
   }
 
   private publishTelemetry(): void {
+    if (import.meta.env.MODE !== "test") return;
+    const frameMeasurements = this.frameMeasurements?.snapshot(this.runState?.status !== "playing");
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
     const hud = this.runState ? selectHudValues(this.runState) : undefined;
@@ -2859,7 +2912,7 @@ export class RunScene extends Phaser.Scene {
     const eventMetrics = this.terminalEventMetrics ?? this.eventQueue.snapshot();
     const directorPlan = this.currentDirectorPlan();
     const summary = this.runState
-      ? selectRunSummaryValues(this.runState, activeTheme.copy.vocabulary, activeTheme.copy.content)
+      ? selectRunSummaryValues(this.runState, this.runTheme.copy.vocabulary, this.runTheme.copy.content)
       : undefined;
     const view = this.viewRect();
     const visibleEnemies = [...this.enemies].filter(
@@ -2871,7 +2924,7 @@ export class RunScene extends Phaser.Scene {
     updateTestTelemetry({
       status: "ready",
       scene: this.scene.key,
-      themeId: activeTheme.id,
+      themeId: this.runTheme.id,
       canvas: { width: this.scale.width, height: this.scale.height },
       arena: ARENA_SIZE,
       camera: {
@@ -2880,6 +2933,7 @@ export class RunScene extends Phaser.Scene {
       },
       run: this.runState
         ? {
+            difficulty: this.runState.difficulty,
             status: this.runState.status,
             mode: this.runState.mode,
             elapsedMs: this.runState.elapsedMs,
@@ -2898,6 +2952,7 @@ export class RunScene extends Phaser.Scene {
             x: this.player.x,
             y: this.player.y,
             radius: this.player.definition.radius,
+            authoredFacing: this.runTheme.tokens.sprites?.[this.player.definition.id]?.authoredFacing ?? null,
             moveSpeed: this.runState?.player.stats.moveSpeed ?? this.player.definition.baseStats.moveSpeed,
             velocityX: body?.velocity.x ?? 0,
             velocityY: body?.velocity.y ?? 0,
@@ -2914,7 +2969,9 @@ export class RunScene extends Phaser.Scene {
             critChance: this.runState?.player.stats.critChance ?? 0,
           }
         : undefined,
+      spawnOrigins: this.spawnStatistics.snapshot(),
       combat: {
+        spriteFramesByRole: Object.fromEntries(this.enemyDefinitions.map((definition) => [definition.id, [...this.enemies].find((enemy) => enemy.definition.id === definition.id)?.view?.frame ?? null])),
         weaponId: this.weaponDefinition?.id ?? null,
         deliveryKind: this.weaponDefinition?.deliveryKind ?? null,
         enemyId: this.enemyDefinition?.id ?? null,
@@ -2933,7 +2990,7 @@ export class RunScene extends Phaser.Scene {
         highestCritTier: this.runState?.statistics.highestCritTier ?? 0,
         longestPierceChain: this.runState?.statistics.longestPierceChain ?? 0,
         contactHits: this.contactHits,
-        enemyCap: V02_SPAWN_LIMITS.maxAlive,
+        enemyCap: this.enemyCapacity,
         projectileCap: V02_SPAWN_LIMITS.maxProjectiles,
         projectileSample: projectileSample
           ? {
@@ -3030,6 +3087,8 @@ export class RunScene extends Phaser.Scene {
         terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
         settings: { ...getSessionSettings() },
+        minimapShrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated).length,
+        shrineTextResolution: this.shrineActors[0]?.textResolution ?? 0,
         movementHintVisible: Boolean(this.movementHint?.active && this.movementHint.visible),
         minimapVisible: this.minimap?.visible ?? false,
         minimapBounds: this.minimap?.bounds ?? null,
@@ -3041,7 +3100,7 @@ export class RunScene extends Phaser.Scene {
               const description = describeUpgrade(
                 this.runState!,
                 choice,
-                activeTheme,
+                this.runTheme,
                 offer?.tier ?? "common",
               );
               return {
@@ -3060,14 +3119,14 @@ export class RunScene extends Phaser.Scene {
               };
             })
           : [],
-        codexEntries: selectShrineCodex(activeTheme).map((entry) => ({
+        codexEntries: selectShrineCodex(this.runTheme).map((entry) => ({
           id: entry.id,
           name: entry.name,
           effects: entry.effects.map((effect) => ({ label: effect.label, display: effect.display })),
         })),
         codexSection: this.pauseMenu?.activeCodexSection ?? null,
         codexUpgrades: selectUpgradeCodex(
-          activeTheme,
+          this.runTheme,
           getSessionStatistics(this.liveRunContribution()),
         ).map((entry) => ({
           id: entry.id,
@@ -3077,11 +3136,11 @@ export class RunScene extends Phaser.Scene {
           maxPerRun: entry.maxPerRun,
         })),
         codexSession: selectSessionCodex(
-          activeTheme,
+          this.runTheme,
           getSessionStatistics(this.liveRunContribution()),
         ).map((line) => ({ label: line.label, display: line.display })),
         statLines: this.runState
-          ? selectPlayerStats(this.runState, activeTheme).map((line) => ({
+          ? selectPlayerStats(this.runState, this.runTheme).map((line) => ({
               key: line.key,
               display: line.display,
             }))
@@ -3104,13 +3163,14 @@ export class RunScene extends Phaser.Scene {
         damageDealt: this.hazardDamageDealt,
         slowActive: this.hazardSlowActive,
         byKind: Object.fromEntries(
-          activeTheme.hazards.map((definition) => [
+          this.runTheme.hazards.map((definition) => [
             definition.id,
             [...this.hazards].filter((hazard) => hazard.definition.id === definition.id).length,
           ]),
         ),
       },
       view: {
+        worldTextResolution: this.arenaTitle?.style.resolution ?? 0,
         logicalWidth: this.scale.width,
         logicalHeight: this.scale.height,
         displayWidth: Math.round(this.scale.displaySize.width),
@@ -3121,21 +3181,21 @@ export class RunScene extends Phaser.Scene {
         visibleEnemies,
         peakVisibleEnemies: this.peakVisibleEnemies,
         spawnRadius: Math.round(
-          offScreenSpawnRadius(this.viewRect(), activeTheme.tuning.director.spawnMargin),
+          offScreenSpawnRadius(this.viewRect(), this.runTheme.tuning.director.spawnMargin),
         ),
       },
       pacing: this.runState
         ? {
-            gameplayRate: activeTheme.tuning.pace.gameplayRate,
+            gameplayRate: this.runTheme.tuning.pace.gameplayRate,
             expectedRealDurationMs: expectedRealDurationMs(
               this.runState.durationMs,
-              activeTheme.tuning.pace.gameplayRate,
+              this.runTheme.tuning.pace.gameplayRate,
             ),
             progress: this.runState.durationMs === 0
               ? 0
               : Math.min(1, this.runState.elapsedMs / this.runState.durationMs),
             spawnIntervalMs: this.spawnIntervalMs,
-            baseSpawnIntervalMs: activeTheme.tuning.director.baseIntervalMs,
+            baseSpawnIntervalMs: this.runTheme.tuning.director.baseIntervalMs,
             liveByRole: Object.fromEntries(
               this.enemyDefinitions.map((definition) => [
                 definition.id,
@@ -3171,9 +3231,16 @@ export class RunScene extends Phaser.Scene {
         droppedPresentationCues: this.droppedPresentationCues + feedback.dropped,
         liveHighWater: this.liveHighWater,
         trackedHighWater: this.trackedHighWater,
-        frameSamples: this.frameSamples,
-        averageFrameMs: this.frameSamples === 0 ? 0 : this.frameTotalMs / this.frameSamples,
-        maxFrameMs: this.maxFrameMs,
+        clock: "phaser-raw-wall-ms",
+        frameSamples: frameMeasurements?.frameSamples ?? 0,
+        averageFrameMs: frameMeasurements?.averageFrameMs ?? 0,
+        maxFrameMs: frameMeasurements?.maxFrameMs ?? 0,
+        averageSimulationDeltaMs: frameMeasurements?.averageSimulationDeltaMs ?? 0,
+        excludedFrames: frameMeasurements?.excludedFrames ?? 0,
+        updateCpuSamples: frameMeasurements?.updateCpuSamples ?? 0,
+        averageUpdateCpuMs: frameMeasurements?.averageUpdateCpuMs ?? 0,
+        maxUpdateCpuMs: frameMeasurements?.maxUpdateCpuMs ?? 0,
+        distribution: frameMeasurements?.distribution,
       },
       effects: {
         explosionsCommitted: this.explosionsCommitted,
