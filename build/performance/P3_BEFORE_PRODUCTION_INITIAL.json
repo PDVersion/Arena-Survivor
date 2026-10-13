@@ -1,0 +1,239 @@
+{
+  "recordedAt": "2026-10-13T06:18:22.412Z",
+  "sourceSha256": {
+    "src/game/scenes/run-scene.ts": "ad64c0923a80c929f0890c3312be4244b5d9ec47cc289aabc8f244c3afe675fd",
+    "src/game/ui/hud.ts": "660e4c5cbaebe4a1de20ff9c0dc4659f6f2a2aeea329f0337073990bbdf76d05",
+    "src/game/ui/minimap-ui.ts": "b6ac7d1e1bc249c3da577fc5145ef26275122f502cd52ac34b283ea2ac66c67f",
+    "src/game/systems/spatial/spatial-hash.ts": "9436ecb77982d55484dd5d1cb3389fea0049bb5713430632b7d105b49ff5b08e",
+    "src/game/systems/separation/crowd-separation.ts": "a68d628e870d01bde64bd43018170d862db1c6126b8e01f3a91eefb94adb8eb6",
+    "src/game/systems/statistics/run-statistics.ts": "1df673b473ce468b20042a8e0d0fb9b4c5be4e359ccc80ea290d524b6b14899c",
+    "src/game/content/active-theme.ts": "2ffb77b34b41648a42c1eea37803b540f61d05bc07cc6f6b3108f7ea738c5756"
+  },
+  "productionSha256": {
+    "combat-7l6na_nE.js": "4c9ccbe766d88009d2284b9e0c7db88733459efa8c8fa9999ea31414e6df6e1f",
+    "game-BT5fXVR5.js": "8f11e07268be4d9ec3bf2993b3e813c18adf1ff7903546cc36a5f8b9a74a9b63",
+    "sprites-CNArbwcS.js": "349813fdcb3ce76f0e6779510ec77bb4696b3ff8b0f1c708845a95db88c362f1"
+  },
+  "revision": "64e77c4",
+  "workingTree": "archived-before",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "options": {
+    "seconds": 60,
+    "warmup": 10,
+    "repeats": 3,
+    "mode": "production",
+    "scenario": "default",
+    "headed": false,
+    "interfaces": [
+      "visible"
+    ],
+    "profile": false,
+    "p3": "none"
+  },
+  "results": [
+    {
+      "buildMode": "production",
+      "scenario": "default",
+      "interfaceState": "visible",
+      "repeat": 1,
+      "startedAt": "2026-10-13T06:14:46.610Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": false
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.00240000004768,
+      "pageRaf": {
+        "capturedFrames": 4160,
+        "retainedFrames": 4160,
+        "averageMs": 14.425072115384614,
+        "maxMs": 33.39999999999782,
+        "distribution": {
+          "p50Ms": 16.600000000002183,
+          "p95Ms": 17,
+          "p99Ms": 17.600000000002183
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "unobservable-production": 4160
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 1.1920709999999999,
+        "TaskDuration": 60.043039,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 9294948,
+        "afterBytes": 17388788,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": null,
+        "liveMax": 0,
+        "visibleMin": null,
+        "visibleMax": 0
+      },
+      "windowStart": {},
+      "p3Work": {},
+      "errors": [],
+      "note": "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    },
+    {
+      "buildMode": "production",
+      "scenario": "default",
+      "interfaceState": "visible",
+      "repeat": 2,
+      "startedAt": "2026-10-13T06:15:58.570Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": false
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.0045,
+      "pageRaf": {
+        "capturedFrames": 4159,
+        "retainedFrames": 4159,
+        "averageMs": 14.428300072132723,
+        "maxMs": 33.29999999999927,
+        "distribution": {
+          "p50Ms": 16.599999999998545,
+          "p95Ms": 16.80000000000291,
+          "p99Ms": 17.60000000000582
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "unobservable-production": 4159
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 1.18229,
+        "TaskDuration": 60.033390999999995,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 13626448,
+        "afterBytes": 14917624,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": null,
+        "liveMax": 0,
+        "visibleMin": null,
+        "visibleMax": 0
+      },
+      "windowStart": {},
+      "p3Work": {},
+      "errors": [],
+      "note": "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    },
+    {
+      "buildMode": "production",
+      "scenario": "default",
+      "interfaceState": "visible",
+      "repeat": 3,
+      "startedAt": "2026-10-13T06:17:10.481Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": false
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.01519999980926,
+      "pageRaf": {
+        "capturedFrames": 4147,
+        "retainedFrames": 4147,
+        "averageMs": 14.472293224017362,
+        "maxMs": 33.29999999999927,
+        "distribution": {
+          "p50Ms": 16.600000000002183,
+          "p95Ms": 16.80000000000291,
+          "p99Ms": 17.600000000002183
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "unobservable-production": 4147
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 1.205103,
+        "TaskDuration": 60.041939,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 13981036,
+        "afterBytes": 17359460,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": null,
+        "liveMax": 0,
+        "visibleMin": null,
+        "visibleMax": 0
+      },
+      "windowStart": {},
+      "p3Work": {},
+      "errors": [],
+      "note": "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    }
+  ]
+}

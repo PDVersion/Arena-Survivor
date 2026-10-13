@@ -1,6 +1,6 @@
 # Autonomous progress
 
-Updated: 2026-10-13 (Australia/Sydney).
+Updated: 2026-10-14 (Australia/Sydney).
 
 ## Objective and current state
 
@@ -8,8 +8,8 @@ Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
 common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 is next. Content C1–C7 and other optional features have not started;
-physical older-device acceptance remains pending. No performance improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P2–P6 readiness remains gated.
+Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 is next. Content C1–C7 and other optional features have not started;
+physical older-device acceptance remains pending. P3 establishes scoped burst CPU savings; no frame-rate/device improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P4–P6 readiness remains gated.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -89,7 +89,7 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Current next: Session 4 / P3.** The historical P0 next task, Session 2 / P1,
+**Current next: Session 5 / P4.** The historical P0 next task, Session 2 / P1,
 has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
@@ -563,3 +563,121 @@ New-head Actions remains subject to the new PR's actual check result.
 Final gate/document recording: **04:37:14 UTC**, elapsed **1:28:59**.
 Full Chromium: 2.7 min; final serial stress: 32.6 s. Own browser servers
 closed after checks; delivery/review follow before the original deadline.
+
+
+## Session 4 / P3 — in progress
+
+Start: **2026-10-13 16:28:48 AEDT / 05:28:48 UTC**. Deadline:
+**17:58:48 AEDT / 06:58:48 UTC**, validation reserve begins by
+**17:38:48 AEDT / 06:38:48 UTC**. Branch `codex/v0.4.3`, actual HEAD `64e77c4`.
+P3 only, local delivery. Backed up all eight existing dirty plans and patch at
+`/private/tmp/arena-p3-session-20261013/initial/`; Session 4 prompt remains an
+untracked owner input. Before game source is archived separately from HEAD;
+installed dependencies shared without alteration. Exact P3 measurement/spatial/
+separation paths added to ownership before editing. P4–P6 remain unstarted.
+
+Cycle 1 profile checkpoint **05:38:30 UTC**, elapsed **9 min 42 s**. Frozen
+`64e77c4` dense and replenished mixed-combat CPU/allocation probes completed.
+Dense test telemetry dominates (excluded as production evidence); separation
+is ~26.3 ms across 274 wrapped updates. Combat's `recordCommittedKill` has
+218.2 ms sampled self CPU, higher than separation/queue traversal; it filters
+and copies the immutable kill window on every kill. Selected a single-pass
+owned result buffer, preserving order/expiry/future exclusion and immutable
+statistics. Added this newly profiled dependency/tests to ownership first.
+Sandbox Chromium launch failed; permitted retry runs. First archived probe
+completed but metadata failed because archives have no `.git`; explicit archive
+revision/state arguments fix this, and corrected probes pass. Remote branch
+read-only retry confirms `64e77c4`; no publication action. Before sustained
+combat comparisons are running serially; no correctness suite overlaps them.
+
+Cycle 2 checkpoint **05:51:52 UTC**, elapsed **23 min 04 s**. Single-pass
+immutable committed-kill window implemented; 137 affected units pass, typecheck/
+lint pass. Final serial fixed-work comparison (10,000 calls, three repeats)
+reduces median CPU by ~75% for both 300 and 3,000 timestamp inputs, identical
+checksum. Three >=60 s eco combat windows each before/after pass without browser
+errors: median rolling update p95 **4.3→2.9 ms**, CDP script **6.7505→5.7091 s**
+(~15% less); wall p95 stays **33.4→33.4 ms**. This is repeated burst work, with
+actual fluctuating live ranges, not sustained 300-live combat/device acceptance.
+The remaining calm dense/distributed, retained-theme projectile and production
+comparisons/probes are serially running on immutable archives. No test/build
+suite overlaps sustained windows. Read-only remote inspection confirms open
+draft PR #25 at `64e77c4` and successful verify run `38347342750`; no push/PR
+creation/merge/deployment is performed.
+
+Cycle 3 calm-crowd checkpoint **05:59:54 UTC**, elapsed **31 min 06 s**.
+Six serial >=60 s dense windows pass, each exactly 300 live actors. Median
+rolling update p95 remains 0.8 ms; wall p95 24.7→25.1 ms and script
+2.9130→2.9145 s show no useful calm-crowd/frame improvement. All actual renderer
+metadata confirms SwiftShader; source-tree digests verify each theme pair differs
+only in `run-statistics.ts`. Distributed and projectile/production windows are
+still running; final software gate remains pending.
+
+Cycle 4 distributed checkpoint **06:06:58 UTC**, elapsed **38 min 10 s**.
+All six >=60 s distributed windows pass, each exactly 300 live / 45 visible
+actors. Rolling update p95 remains 0.6 ms; wall medians 16.9→17.0 ms and script
+2.8457→2.8687 s do not establish a useful difference. The fixture controller
+is included and disclosed. Retained-theme projectile burst comparison has begun;
+production windows, short pickup/after attribution probes and final gate remain.
+
+Cycle 5 projectile/probe checkpoint **06:14:42 UTC**, elapsed **45 min 54 s**.
+Six retained knight/projectile >=60 s windows pass cap/effects/fragments and
+exact damage-ledger checks with zero browser errors. Median update p95
+**3.8→2.4 ms**, CDP script **6.0311→4.9820 s** (~17% less); wall p95 unchanged
+33.4 ms. Short before pickup-cap and after mixed-combat CPU/heap probes pass;
+raw traces remain local, summary retained. Ordinary production comparison is
+now running, followed by final correctness/production/stress checks.
+
+
+## Session 4 / P3 continuation — 2026-10-14
+
+Owner paused at the last recorded active checkpoint **2026-10-13 06:19:22 UTC**
+(**50 min 34 s** since start), then explicitly resumed. Continuation start:
+**2026-10-14 09:32:28 AEDT / 2026-10-13 22:32:28 UTC**. Original background
+recorder unexpectedly remained running after the pause and exited successfully
+at **06:32:56 UTC** (original elapsed **64 min 08 s**). No verification/commit
+ran. Post-pause production after windows are retained separately as exploratory,
+not the primary comparison. Conservatively reserve the remaining **25 min 52 s**
+of the original 90-minute work allowance: continuation hard stop **22:58:20 UTC**
+(**09:58:20 AEDT**); proceed directly to remaining validation/review. No new
+phase or further optimization. Verify pickup active/tracked counts, rerun matched
+production windows serially, then complete final software gate and recording.
+
+
+## Session 4 / P3 final gate — verified 2026-10-14
+
+Final recording checkpoint **22:48:12 UTC**, continuation elapsed **15 min 44 s**; conservatively counted work **79 min 52 s** including original background recorder completion, excluding the inactive paused gap. No deadline extension.
+
+Types/lint/build and all **440 units / 52 files**, built production diagnostic
+exclusion/boot/play/pause/tool checks, **7 targeted serial browsers**, **88 full
+Chromium passes / one existing opt-in skip**, and **3 serial stress cases** pass
+with zero retries. Full browser suite uses four workers for correctness; stress,
+profiles and all sustained comparisons are serial on owned ports. Own servers
+exit after each check; review server 4213 is untouched.
+
+Thirty primary warmed >=60 s windows pass, with three repeats per build/scenario:
+dense/distributed 300-live, active eco melee and retained knight projectile burst
+work, plus matched recovery production. Six original production windows remain
+separate, including three uncontrolled post-pause after windows. Report raw
+p95/p99/max/stalls, actual population, rolling/lifetime update exclusions and
+source/build digests in `build/performance/P3_REPORT.md`. Fixed work (~75% less)
+and sustained burst update p95 **4.3→2.9 / 3.8→2.4 ms** establish useful scoped
+CPU benefit; CDP script ~15%/~17% less, frame p95 unchanged 33.4 ms. Production
+16.9→17.5 ms / script +9.3% does not establish ordinary-play improvement.
+
+REC-116 accepted. REC-117 records pre-existing pickup overflow retention:
+250 active / 535 tracked references, likely destroy-listener registration order.
+P5 must reproduce/fix/test bounded tracking and exact rewards; no P5 code added.
+P4/Default-Low remains next only if measured presentation evidence supports it.
+Physical older-device, visible-map criterion, sustained 300-live mixed combat,
+additional-browser and longer lifecycle/startup readiness remain pending. Content
+C1–C7/other optional selections and V0.4.4 roster work remain gated. No dependency,
+balance, sprite, cap/rate or persistence change; audit/balance not rerun.
+
+Delivery: local `perf(v0.4.3): reduce measured simulation overhead` on
+`codex/v0.4.3`, parent `64e77c4`; commit hash is resolved in Git history. No push,
+PR creation/merge or deployment. PR #25 at the P2 head had successful Actions
+38347342750 at the read-only inspection; P3 has only its recorded local gate.
+All eight original owner plan edits and Session 4 prompt remain unstaged.
+Implementation, regressions, phase checklist, report/evidence, progress and both
+reconciliation entries belong to the same phase commit. Next eligible work is
+Session 5 / P4; this session starts no further phase.

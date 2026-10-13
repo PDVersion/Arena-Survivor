@@ -5,8 +5,8 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard and P2 interface gate verified; P3 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P3–P6 readiness remains gated.**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3 software gates verified; P4 next. F16 is delivered; other content selections remain pending.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P4–P6 readiness remains gated; REC-117 pickup retention blocks P5 completion.**
 
 ## How to maintain this file
 
@@ -3044,3 +3044,78 @@ Report all p99/max/stalls, update exclusions, counts and digests in
 [`P2_REPORT.md`](build/performance/P2_REPORT.md). Production population is
 unavailable, not inferred. Production cap remains 300. Physical older-device
 acceptance and mixed-combat capacity remain pending.
+
+
+### REC-116 — Committed-kill windows need one owned immutable result
+
+- Status: Accepted
+- Date: 2026-10-14
+- Affects: V0.4.3 P3, run statistics, future burst/chain performance work
+- Blocks: None; P4–P6 and physical-device readiness retain separate gates
+
+The frozen `64e77c4` combat CPU trace identifies `recordCommittedKill` as the
+highest useful sampled simulation hotspot: 218.2 ms self CPU in a ten-second
+replenished mixed-burst probe. Dense test telemetry (`countCoincidentPairs`)
+dominates the calm diagnostic build and is not production simulation evidence.
+Kill recording filters a potentially thousands-long immutable timestamp window
+then spreads survivors into another array on every committed kill. Queue/effect
+wrappers include nested kill work; their inclusive times cannot be added.
+
+Build the retained timestamps in one pass into one owned result array, append
+now, and freeze it. Keep strict lower expiry, inclusive current time, future-time
+exclusion, input iteration order, duplicates, total kills and largest-chain
+high-water exactly as before. Do not assume timestamps are sorted or the clock
+monotonic; do not mutate old statistics snapshots or change their shape. Damage,
+rewards, target ties, causal FIFO/retained capacity work, sprite/body data, both
+themes, 0.5 rate and the 300-enemy cap are untouched.
+
+Differential regressions compare the previous algorithm over 3,000 burst/gap/
+non-monotonic events and explicitly check frozen prior snapshots, unsorted/future/
+duplicate timestamps and expiry boundaries. Fixed-work three-repeat microbenchmarks
+reduce 10,000-call CPU ~75% for 300/3,000 timestamps, identical checksum.
+Three warmed >=60-second repeats per build show median update p95 4.3→2.9 ms
+(eco melee) and 3.8→2.4 ms (retained projectile), CDP script ~15%/~17% lower,
+while wall p95 remains 33.4 ms. Calm dense/distributed comparisons show no useful
+change. Actual combat populations fluctuate, so this is sustained burst evidence,
+not sustained 300-live combat or older-device acceptance. Full values, exclusions,
+source/build digests and final verification are in
+[`P3_REPORT.md`](build/performance/P3_REPORT.md).
+
+Freeze game source/build before comparing; archived tooling must receive explicit
+revision/state metadata because an archive has no `.git`. Keep profiler/heap/
+wrapper probes separate from throughput windows. A recorder remained running
+after an owner pause: retain its uncontrolled after-production set, do not select
+its fastest repeat, and rerun both matched production variants before finalizing.
+Physical hardware, renderer and test telemetry limitations remain explicit.
+
+Future guardrail: preserve immutable statistics and add differential window tests
+before changing storage/expiry algorithms; do not infer a frame-rate win from CPU
+savings or fixture populations from unavailable production telemetry.
+
+
+### REC-117 — Pickup cap can leave already-destroyed references tracked
+
+- Status: Open
+- Date: 2026-10-14
+- Affects: V0.4.3 P5 entity/lifecycle gate; pickup overflow/merging
+- Blocks: P5 completion; not the unchanged P3 statistics gate
+
+The immutable P3 before build (`64e77c4`) pressure probe drops 80 pickups every
+500 simulated ms at a distant point, no weapon/contact/hazards. After 1,040 drops
+and 790 merges with no collections, confirmation reports **250 active pickups
+but 535 tracked references**: 285 inactive actors remain in the scene Set. The
+live pickup cap is respected; tracked population is not bounded by that cap.
+This predates P3's only runtime delta (`recordCommittedKill`). Evidence and
+active/tracked counters are retained in `P3_PROFILE_SUMMARY.json`.
+
+Likely cause confirmed by source order: `dropExperience` invokes
+`enforcePickupCap` before installing the new pickup's DESTROY set-removal listener.
+The newly added pickup can be selected as the absorbed actor and destroyed before
+that listener exists. Register ownership/cleanup before any synchronous path can
+destroy the actor; verify rather than assume this is the only retention cause.
+
+P5 must reproduce overflow with the newest actor absorbed, establish bounded
+tracked/active/body populations across repeated bursts and restart, and preserve
+exact reward sums/claim semantics. No P5 code is pulled into this P3 session.
+Do not describe `progression.pickups` (currently Set size) as an active count
+without checking `active`. Revisit at the authorized P5 lifecycle session.

@@ -1,0 +1,97 @@
+[
+  {
+    "scenario": "COMBAT",
+    "records": [
+      "P3_BEFORE_COMBAT.json",
+      "P3_AFTER_COMBAT.json"
+    ],
+    "medians": {
+      "BEFORE": {
+        "wallP95Ms": 33.400000000001455,
+        "scriptSeconds": 6.750476,
+        "updateP95Ms": 4.300000190734863
+      },
+      "AFTER": {
+        "wallP95Ms": 33.39999999999418,
+        "scriptSeconds": 5.709142,
+        "updateP95Ms": 2.9000000953674316
+      }
+    }
+  },
+  {
+    "scenario": "DENSE",
+    "records": [
+      "P3_BEFORE_DENSE.json",
+      "P3_AFTER_DENSE.json"
+    ],
+    "medians": {
+      "BEFORE": {
+        "wallP95Ms": 24.69999999999709,
+        "scriptSeconds": 2.912998,
+        "updateP95Ms": 0.7999999523162842
+      },
+      "AFTER": {
+        "wallP95Ms": 25.099999999998545,
+        "scriptSeconds": 2.914526,
+        "updateP95Ms": 0.7999999523162842
+      }
+    }
+  },
+  {
+    "scenario": "DISTRIBUTED",
+    "records": [
+      "P3_BEFORE_DISTRIBUTED.json",
+      "P3_AFTER_DISTRIBUTED.json"
+    ],
+    "medians": {
+      "BEFORE": {
+        "wallP95Ms": 16.89999999999418,
+        "scriptSeconds": 2.845659,
+        "updateP95Ms": 0.6000001430511475
+      },
+      "AFTER": {
+        "wallP95Ms": 17,
+        "scriptSeconds": 2.868666,
+        "updateP95Ms": 0.6000001430511475
+      }
+    }
+  },
+  {
+    "scenario": "KNIGHT_COMBAT",
+    "records": [
+      "P3_BEFORE_KNIGHT_COMBAT.json",
+      "P3_AFTER_KNIGHT_COMBAT.json"
+    ],
+    "medians": {
+      "BEFORE": {
+        "wallP95Ms": 33.39999999999782,
+        "scriptSeconds": 6.031057,
+        "updateP95Ms": 3.799999952316284
+      },
+      "AFTER": {
+        "wallP95Ms": 33.39999999999418,
+        "scriptSeconds": 4.981953,
+        "updateP95Ms": 2.3999998569488525
+      }
+    }
+  },
+  {
+    "scenario": "PRODUCTION",
+    "records": [
+      "P3_BEFORE_PRODUCTION.json",
+      "P3_AFTER_PRODUCTION.json"
+    ],
+    "medians": {
+      "BEFORE": {
+        "wallP95Ms": 16.900000000001455,
+        "scriptSeconds": 1.188932,
+        "updateP95Ms": null
+      },
+      "AFTER": {
+        "wallP95Ms": 17.5,
+        "scriptSeconds": 1.300026,
+        "updateP95Ms": null
+      }
+    }
+  }
+]

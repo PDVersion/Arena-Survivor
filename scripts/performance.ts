@@ -18,8 +18,13 @@ const mode = argument("mode", "both");
 const scenario = argument("scenario", "default");
 const interfaces = argument("interface", "visible").split(",");
 const profile = process.argv.includes("--profile");
+const p3 = argument("p3", "none");
+if (!["none", "dense", "distributed", "combat", "pickups"].includes(p3) || (p3 !== "none" && (mode !== "test" || scenario !== "capacity"))) throw new Error("P3 fixtures require test/capacity and dense/distributed/combat/pickups");
 const headed = process.argv.includes("--headed");
 const loads = argument("loads", "150,300,450,600").split(",").map(Number);
+if (p3 !== "none" && (loads.some((count) => count > 300) || interfaces.includes("paused"))) {
+  throw new Error("P3 fixtures require active windows and retain the production 300-enemy cap");
+}
 const output = resolve(argument("output", "build/performance/P0_SAMPLES.json"));
 const screenshotDirectory = argument("screenshots", "");
 if (!Number.isFinite(seconds) || seconds < 1 || seconds > 300 ||
@@ -40,6 +45,9 @@ const browser = await chromium.launch({ headless: !headed });
 const results: unknown[] = [];
 const sourceSha256 = Object.fromEntries(await Promise.all([
   "src/game/scenes/run-scene.ts", "src/game/ui/hud.ts", "src/game/ui/minimap-ui.ts",
+  "src/game/systems/spatial/spatial-hash.ts", "src/game/systems/separation/crowd-separation.ts",
+  "src/game/systems/statistics/run-statistics.ts",
+  "src/game/content/active-theme.ts",
 ].map(async (path) => [path, createHash("sha256").update(await readFile(path)).digest("hex")])));
 const productionSha256 = mode === "test" ? undefined : Object.fromEntries(await Promise.all(
   (await readdir("dist/assets")).filter((name) => name.endsWith(".js")).map(async (name) =>
@@ -114,7 +122,7 @@ try {
         page.on("console", (message) => { if (message.type() === "error") errors.push(`${message.text()} [${message.location().url}]`); });
         const startedAt = new Date().toISOString();
         const path = scenario === "capacity"
-          ? `/?frameMeasure=1&representativeLoad=1&closeLoad=1&loadHarness=${loadCount}&enemyCap=${Math.max(300, loadCount)}&noWeapon=1&noContact=1&noXp=1&noHazards=1`
+          ? `/?frameMeasure=1&representativeLoad=1&closeLoad=1&loadHarness=${loadCount}&enemyCap=${Math.max(300, loadCount)}${p3 === "combat" ? "&compoundBuild=1&critChance=1.4&pierce=8&attackSpeedBonus=3" : "&noWeapon=1"}&noContact=1${p3 === "pickups" ? "&xpLevelCap=1" : "&noXp=1"}&noHazards=1`
           : scenario === "stress" ? stressPath : buildMode === "test" ? "/?frameMeasure=1&menu=1" : "/";
         await page.goto(url + path);
         await page.waitForSelector("canvas");
@@ -128,6 +136,46 @@ try {
         }
         if (scenario === "capacity") await page.waitForFunction((count) =>
           window.__ARENA_TEST__?.getSnapshot().load?.spawned === count, loadCount, { timeout: 60_000 });
+        if (p3 !== "none") await page.evaluate(async ({ fixture, count }) => {
+          const browserImport = new Function("url", "return import(url)");
+          const { RunScene } = await browserImport("/src/game/scenes/run-scene.ts");
+          const updateEnemies = RunScene.prototype.updateEnemies;
+          let sequence = 0, nextBurstAt = 0;
+          const control = { fixture, bursts: 0, replenished: 0, controllerMs: 0, activePickups: 0, trackedPickups: 0 };
+          RunScene.prototype.updateEnemies = function() {
+            const start = performance.now();
+            if (fixture === "distributed") {
+              let index = 0;
+              for (const enemy of this.enemies) {
+                enemy.setPosition(500 + (index % 20) * 100, 400 + Math.floor(index / 20) * 100);
+                index += 1;
+              }
+            } else if (fixture === "pickups" && this.runState.elapsedMs >= nextBurstAt) {
+              nextBurstAt = this.runState.elapsedMs + 500;
+              for (let i = 0; i < 80; i += 1) this.dropExperience(100 + (i % 10) * 10, 100 + Math.floor(i / 10) * 10, 1, "ambient");
+              control.bursts += 1;
+            } else if (fixture === "combat" && this.runState.elapsedMs >= nextBurstAt) {
+              nextBurstAt = this.runState.elapsedMs + 1000;
+              control.bursts += 1;
+              const vacant = Math.max(0, count - this.enemies.size);
+              for (let i = 0; i < vacant; i += 1) {
+                const definition = this.enemyDefinitions[(sequence++) % this.enemyDefinitions.length];
+                const angle = sequence * 2.399963229728653;
+                this.enqueueSpawnRequest(definition.id, "ambient", 1, undefined, undefined, "roster",
+                  { x: this.player.x + Math.cos(angle) * 70, y: this.player.y + Math.sin(angle) * 70 });
+                control.replenished += 1;
+              }
+            }
+            if (fixture === "pickups") {
+              control.trackedPickups = this.pickups.size;
+              control.activePickups = 0;
+              for (const pickup of this.pickups) if (pickup.active) control.activePickups += 1;
+            }
+            control.controllerMs += performance.now() - start;
+            return updateEnemies.call(this);
+          };
+          Object.assign(window, { __P3_CONTROL__: control });
+        }, { fixture: p3, count: loadCount });
         // Exercise the real pause/settings pointer path; no writable state hook.
         if (interfaceState !== "visible") {
           await page.keyboard.press("Escape");
@@ -219,11 +267,28 @@ try {
               };
               Object.assign(window, { __INTERFACE_PROFILE__: counts });
             });
+            if (profile && p3 !== "none") await page.evaluate(async () => {
+              const browserImport = new Function("url", "return import(url)");
+              const { RunScene } = await browserImport("/src/game/scenes/run-scene.ts");
+              const counts: Record<string, { calls: number; cpuMs: number }> = {};
+              for (const key of ["rebuildEnemyIndex", "resolveCrowd", "fireIfReady", "processCausalEvents", "processExplosionEvent", "enforcePickupCap", "updatePickups", "commitEnemyDamage", "publishTelemetry"]) {
+                const method = RunScene.prototype[key];
+                counts[key] = { calls: 0, cpuMs: 0 };
+                RunScene.prototype[key] = function(...args: unknown[]) {
+                  const start = performance.now();
+                  try { return method.apply(this, args); }
+                  finally { counts[key]!.calls += 1; counts[key]!.cpuMs += performance.now() - start; }
+                };
+              }
+              Object.assign(window, { __P3_WORK__: counts });
+            });
             if (profile) {
+              await cdp.send("HeapProfiler.startSampling", { samplingInterval: 16384 });
               await cdp.send("Profiler.enable");
               await cdp.send("Profiler.setSamplingInterval", { interval: 1000 });
               await cdp.send("Profiler.start");
             }
+            const windowStartSnapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
             const before = counters((await cdp.send("Performance.getMetrics")).metrics);
             const sample = await page.evaluate(async (durationMs) => {
               const intervals: number[] = [];
@@ -259,6 +324,12 @@ try {
             }, seconds * 1000);
             const interfaceWork = profile && buildMode === "test" ? await page.evaluate(() =>
               (window as Window & { __INTERFACE_PROFILE__?: object }).__INTERFACE_PROFILE__) : undefined;
+            const p3Work = await page.evaluate(() => {
+              const diagnostic = window as Window & { __P3_WORK__?: object; __P3_CONTROL__?: object };
+              return { methods: diagnostic.__P3_WORK__, control: diagnostic.__P3_CONTROL__ };
+            });
+            const allocationProfile = profile ? (await cdp.send("HeapProfiler.stopSampling")).profile : undefined;
+            if (allocationProfile) await writeFile(`${output.replace(/\.json$/, "")}-${buildMode}-${loadCount || "default"}-${interfaceState}-${repeat}.heapprofile`, JSON.stringify(allocationProfile));
             const cpuProfile = profile ? (await cdp.send("Profiler.stop")).profile : undefined;
             if (cpuProfile) await writeFile(`${output.replace(/\.json$/, "")}-${buildMode}-${loadCount || "default"}-${interfaceState}-${repeat}.cpuprofile`, JSON.stringify(cpuProfile));
             const after = counters((await cdp.send("Performance.getMetrics")).metrics);
@@ -268,9 +339,15 @@ try {
               await page.keyboard.press("Escape"); // Flush exact rolling quantiles without a writable game hook.
             }
             const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
-            if (scenario === "capacity" && (sample.liveMin !== loadCount || sample.liveMax !== loadCount ||
+            if (scenario === "capacity" && p3 !== "combat" && (sample.liveMin !== loadCount || sample.liveMax !== loadCount ||
                 Object.keys(sample.stateFrames).some((state) => state !== (interfaceState === "paused" ? "paused" : "playing")))) {
               throw new Error("Capacity window did not sustain the requested live playing population");
+            }
+            if (p3 === "combat") {
+              if (sample.liveMax > loadCount || (snapshot?.effects?.explosionsCommitted ?? 0) <= 0 ||
+                  (snapshot?.effects?.fractureSpawned ?? 0) <= 0) throw new Error("Combat fixture did not preserve cap/exercise effects/fragments");
+              const ledger = Object.values(snapshot?.statistics?.damageBreakdown ?? {}).reduce((sum, value) => sum + value, 0);
+              if (Math.abs(ledger - (snapshot?.statistics?.totalDamage ?? 0)) > 0.000001) throw new Error("Combat damage ledger mismatch");
             }
             const frames = new FrameMeasurements(8192);
             frames.observe({ wallFrameMs: 1, simulationDeltaMs: 0, active: true });
@@ -286,9 +363,10 @@ try {
               mainThread: { units: "seconds of Chromium main-thread work over the measured page window", ...durations },
               heap: { beforeBytes: before.JSHeapUsedSize, afterBytes: after.JSHeapUsedSize, note: "GC-dependent observations, not leak evidence" },
               population: { liveMin: sample.liveMin, liveMax: sample.liveMax, visibleMin: sample.visibleMin, visibleMax: sample.visibleMax },
+              windowStart: { kills: windowStartSnapshot?.statistics?.kills, effects: windowStartSnapshot?.effects, elapsedMs: windowStartSnapshot?.run?.elapsedMs },
               spawnOrigins: snapshot?.spawnOrigins,
-              interfaceWork, instrumented: snapshot?.load, run: snapshot?.run, impact: snapshot?.impact, errors,
-              note: (interfaceState === "paused" ? "Paused overlay: page/render activity; active-update sampler belongs to pre-pause play, not this window. " : "") + (scenario === "capacity" ? "Controlled mixed crowd with no weapon/contact/XP/hazards; test instrumentation included. Not combat/device acceptance. " : "") + "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution." });
+              interfaceWork, p3Work, combat: snapshot?.combat, progression: snapshot?.progression, crowd: snapshot?.crowd, effects: snapshot?.effects, statistics: snapshot?.statistics, instrumented: snapshot?.load, run: snapshot?.run, impact: snapshot?.impact, errors,
+              note: (p3 !== "none" ? `P3 ${p3}: measurement-only controller; inspect control/actual population, not sustained 300 combat. ` : "") + (interfaceState === "paused" ? "Paused overlay: page/render activity; active-update sampler belongs to pre-pause play, not this window. " : "") + (scenario === "capacity" ? "Controlled mixed crowd; see P3 fixture/options for gameplay overrides. Test instrumentation included, not combat/device acceptance. " : "") + "Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution." });
           }
           if (screenshotDirectory) {
             const screenshot = resolve(screenshotDirectory, `${buildMode}-${scenario}-${interfaceState}-${loadCount || "default"}-${repeat}.png`);
@@ -309,11 +387,11 @@ try {
   try {
     await writeFile(output, JSON.stringify({
     recordedAt: new Date().toISOString(), sourceSha256, productionSha256,
-    revision: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
-    workingTree: execFileSync("git", ["status", "--short"], { encoding: "utf8" }),
+    revision: argument("source-revision", "") || execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+    workingTree: argument("source-state", "") || execFileSync("git", ["status", "--short"], { encoding: "utf8" }),
     device: { cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length, memoryBytes: os.totalmem(),
       platform: os.platform(), release: os.release(), arch: os.arch(), node: process.version },
-    browserVersion: browser.version(), options: { seconds, warmup, repeats, mode, scenario, headed, interfaces, profile, loads: scenario === "capacity" ? loads : undefined }, results,
+    browserVersion: browser.version(), options: { seconds, warmup, repeats, mode, scenario, headed, interfaces, profile, p3, loads: scenario === "capacity" ? loads : undefined }, results,
     }, null, 2) + "\n");
   } finally {
     try {

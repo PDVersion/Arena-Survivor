@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2 verified; P3 next; Q5 CI/audit repair verified (REC-113/114).** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2/P3 verified; P4 next; Q5 CI/audit repair verified (REC-113/114).** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -197,7 +197,7 @@ are excluded from these performance phases.
 | P0 | Active plans, `AGENTS.md`, `README.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, roadmap status; known lint defect in `tests/unit/weapons/collection-sweep.test.ts`; `src/test-support/**`; frame sampling only in `src/game/scenes/run-scene.ts`; `tests/unit/performance/**`, `tests/e2e/frame-measurements.spec.ts`; opt-in `scripts/performance.ts`, measurement command only in `package.json`, measurement config/tests and `build/performance/**` reports | `build(v0.4.3): establish browser performance measurements` |
 | P1 | Telemetry call sites in scenes, main boot failure, test-support bridge, architecture/production guard tests; measurement reports/script and bench-only load/cap options per Q2 | `perf(v0.4.3): avoid production telemetry work` |
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
-| P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites | `perf(v0.4.3): reduce measured simulation overhead` |
+| P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests | `feat(v0.4.3): add a lightweight presentation mode` |
 | P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline | `fix(v0.4.3): bound lifecycle and startup costs` |
 | P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
@@ -209,7 +209,7 @@ are excluded from these performance phases.
   interface exclusion and working test snapshots; compare equivalent profiles.
 - [x] P2 — profile minimap/HUD, reduce confirmed repeated work; validate visibility,
   resize, opacity, pause/restart and prompt critical status updates.
-- [ ] P3 — improve measured simulation hotspot; preserve targets, causal order,
+- [x] P3 — improve measured simulation hotspot; preserve targets, causal order,
   exact rewards/ledger, caps and stress; skip speculative optimization.
 - [ ] P4 — add Default/Low only if measured presentation cost warrants it;
   simulation, visible world and telegraphs remain equivalent. Read `SAVE_DATA.md`
@@ -260,6 +260,21 @@ interface calls/allocations, without a meaningful frame-rate gain. Visible-map
 SwiftShader median p95 remains 41.7 ms; physical older-device readiness remains
 pending and production cap stays 300. See [`performance/P2_REPORT.md`](./performance/P2_REPORT.md),
 REC-115. P3 is next; no dependent phase has started.
+
+P3 verified 2026-10-14 after owner pause/resume: 440 units / 52 files,
+typecheck/lint/build, production exclusion/boot/tool check, seven targeted
+browsers, 88 full Chromium passes / one existing opt-in skip, and three serial
+stress cases pass with zero retries. Thirty primary warmed >=60 s windows
+cover dense/distributed 300-live crowds, sustained replenished mixed bursts in
+both production themes/delivery kinds, and matched production play. Six initial
+production windows (including uncontrolled post-pause after data) remain separate.
+Single-pass immutable kill-window construction reduces median active update p95
+4.3→2.9 ms in eco melee and 3.8→2.4 ms in retained projectile bursts; frame p95
+remains 33.4 ms. Ordinary production does not show a speedup (16.9→17.5 ms).
+No global frame/device readiness is claimed. See REC-116 and
+[`performance/P3_REPORT.md`](./performance/P3_REPORT.md). Pre-existing pickup
+retention (250 active / 535 tracked) is REC-117, a P5 gate issue; no lifecycle fix
+is pulled forward. P4–P6 and optional content remain unstarted.
 
 ## Content scope, from PLAN.md
 
