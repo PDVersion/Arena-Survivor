@@ -852,3 +852,26 @@ listeners remain on 4173/4174; unknown processes and port 4213 are untouched.
 All original untouched plan/prompt bytes match backups, and the active plan's
 original annotation will remain unstaged. Commit the Session 7 continuation
 locally with the P5 subject; P5 overall remains open as recorded above.
+
+
+## PR #25 Actions repair — local gate verified 2026-10-16
+
+Run `38670385486` tested `d9047c0`, before the two unpublished P5 commits.
+Two P4 cases failed writing screenshots to macOS-only `/private/tmp`; the
+resize/settings/restart scenario exhausted its cumulative 30-second budget.
+REC-114 records trace evidence. Screenshots now use Playwright-owned output
+paths; two long scenarios have bounded 90-second budgets, retaining all actions
+and assertions. No runtime, dependency or workflow changes.
+
+Three affected browser cases pass serially with one worker and zero retries
+(33.2 seconds); five artifacts exist in test-owned directories. All 474 unit
+tests in 56 files, types, lint, production build and whitespace checks pass.
+Full local Chromium/stress remains deferred under the owner resource policy;
+remote CI is pending publication and a pass matching the repair head. P5 remains
+open; no P6 or content work begins. See `build/performance/CI_REPAIR_20261016.md`.
+
+Initial edits are backed up in `/private/tmp/arena-ci-repair-20261016/initial.patch`.
+The eight original plan edits and three untracked session prompts remain
+unstaged. Session 6 required local-only delivery: no push or CI trigger has
+been made. Publishing this repair also publishes the two local P5 commits
+(`8b700d9`, `3d1ee2f`) and requires owner authorization to lift that constraint.

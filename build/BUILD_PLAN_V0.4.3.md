@@ -476,3 +476,26 @@ production guard, one affected test-mode boot/resize case, 474 units/56 files,
 types/lint/build pass. Remaining P5 lifecycle/broader compatibility acceptance,
 full Chromium/stress and device evidence stay pending; P5 overall remains open.
 No P6/content, push or CI trigger. See `performance/P5_STARTUP_REPORT.md`.
+
+
+## Q5 follow-up — PR #25 CI artifacts and bounded UI-test budgets (2026-10-16)
+
+Owner reports failed Actions. Run `38670385486`, head `d9047c0`, fails two
+P4 screenshot writes to macOS-only `/private/tmp`; the resize/settings/restart
+case is flaky because its cumulative 30-second test budget expires during its
+fourth click. This repair does not start P6 or alter gameplay. Current local
+HEAD `3d1ee2f` also contains the two unpublished P5 slices.
+
+Ownership: `tests/e2e/presentation-v043.spec.ts`, the first scenario in
+`tests/e2e/interface-work.spec.ts`, this plan, `AUTONOMOUS_PROGRESS.md`, REC-114
+and `build/performance/CI_REPAIR_20261016.md`. Use Playwright test-owned artifact
+paths and bounded scenario budgets while retaining every state/cap/resize/XP
+assertion, input action and simulation rate. No forced clicks, retries or runtime
+tuning to mask the CI result. Verify only the three affected browser cases locally,
+one worker/zero retries, plus units/types/lint/build and whitespace. Full CI/stress
+remains deferred under the owner's resource budget. Preserve original plan edits.
+
+- [x] Local CI repair gate — three affected serial cases pass without retries;
+  474 units/56 files, types/lint/build/whitespace pass; five test-owned artifacts.
+- [ ] Remote CI repair gate — only an Actions pass matching a published repair
+  head verifies the PR; prior failed/successful heads are not current evidence.

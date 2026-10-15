@@ -12,7 +12,7 @@ async function settings(page: Page) {
   await expect.poll(async () => (await state(page))?.ui?.pauseTab).toBe("settings");
 }
 
-test("Low switches reversibly while paused, resizes, respects map opacity and survives restart", async ({ page }) => {
+test("Low switches reversibly while paused, resizes, respects map opacity and survives restart", async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   await page.goto("/?noContact=1&noXp=1&noHazards=1&runDurationMs=10000&atTimeUp=complete");
   await expect.poll(async () => (await state(page))?.run?.status).toBe("playing");
@@ -40,14 +40,14 @@ test("Low switches reversibly while paused, resizes, respects map opacity and su
   await clickRow(page, 3); // .35
   await page.keyboard.press("Escape");
   await expect.poll(async () => (await state(page))?.ui?.minimapVisible).toBe(true);
-  await page.screenshot({ path: `/private/tmp/arena-p4-${(await state(page))?.themeId}-low-map.png` });
+  await page.screenshot({ path: testInfo.outputPath("low-map.png") });
   await expect.poll(async () => (await state(page))?.run?.status, { timeout: 30_000 }).toBe("complete");
   const generation = (await state(page))?.lifecycle?.runGeneration ?? 0;
   await page.keyboard.press("r");
   await expect.poll(async () => (await state(page))?.lifecycle?.runGeneration).toBe(generation + 1);
   expect((await state(page))?.ui?.settings.presentationQuality).toBe("low");
   await settings(page);
-  await page.screenshot({ path: `/private/tmp/arena-p4-${(await state(page))?.themeId}-settings.png` });
+  await page.screenshot({ path: testInfo.outputPath("settings.png") });
 });
 
 test("title settings carry Low into the next run and level-up hides the map", async ({ page }) => {
@@ -70,11 +70,12 @@ test("title settings carry Low into the next run and level-up hides the map", as
 });
 
 
-test("dense map keeps the same world and live population with readable Low markers", async ({ page }) => {
+test("dense map keeps the same world and live population with readable Low markers", async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
   await page.goto("/?representativeLoad=1&closeLoad=1&loadHarness=300&noWeapon=1&noContact=1&noXp=1&noHazards=1");
   await expect.poll(async () => (await state(page))?.load?.spawned, { timeout: 30_000 }).toBe(300);
   const before = await state(page);
-  await page.screenshot({ path: `/private/tmp/arena-p4-${(await state(page))?.themeId}-dense-default.png` });
+  await page.screenshot({ path: testInfo.outputPath("dense-default.png") });
   await settings(page);
   await clickRow(page, 5);
   await expect.poll(async () => (await state(page))?.ui?.settings.presentationQuality).toBe("low");
@@ -86,5 +87,5 @@ test("dense map keeps the same world and live population with readable Low marke
   expect(after?.view?.worldHeight).toBe(before?.view?.worldHeight);
   expect(after?.combat?.enemyCap).toBe(300);
   expect(after?.statistics?.totalDamage).toBe(before?.statistics?.totalDamage);
-  await page.screenshot({ path: `/private/tmp/arena-p4-${(await state(page))?.themeId}-dense-low.png` });
+  await page.screenshot({ path: testInfo.outputPath("dense-low.png") });
 });

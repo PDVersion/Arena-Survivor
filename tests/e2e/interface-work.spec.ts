@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test("minimap opacity, scaled settings pointer, resize, pause and restart stay coherent", async ({ page }, testInfo) => {
+  // Includes four settings clicks, resize, terminal transition and reconstruction.
+  test.setTimeout(90_000);
   await page.goto("/?noContact&noXp&noHazards&runDurationMs=2000&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
   const first = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());

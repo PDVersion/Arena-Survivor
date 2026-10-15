@@ -3017,6 +3017,29 @@ Remote resolution: repair head `28ecdba` passes
 browser cases / one existing skip, no flaky/retried cases, and zero audit
 vulnerabilities. Q5 is verified; this does not complete P2–P6 or device acceptance.
 
+PR #25 follow-up (2026-10-16): run `38670385486` on `d9047c0` regressed this
+same artifact rule in the P4 spec. Two cases fail on all three attempts with
+ENOENT writing `/private/tmp/arena-p4-...png`. Use testInfo.outputPath for all four
+P4 images; retain the existing assertions and the workflow's artifact upload.
+The run reports 88 passes, two failures, one flaky case and one existing skip;
+its standalone audit step is skipped after browsers fail (npm ci itself reports
+zero vulnerabilities). The two P5 commits remain local and are not the tested head.
+
+The flaky interface resize/settings/restart case is a cumulative test-budget
+failure, not proof of unstable canvas geometry. Its trace shows the first three
+clicks reach stable and succeed in 2,608 / 2,608 / 2,656 ms. The fourth starts with
+only ~1,132 ms left before the 30-second test deadline. Give that multi-stage case
+and the dense-map case bounded 90-second total budgets, matching P4's other long
+scenario; keep actual input actions, per-step waits, simulation rate and every
+state/cap/ledger/resize assertion. Do not force clicks or raise retries to hide it.
+
+Local repair evidence: three affected cases pass serially with zero retries
+(33.2 s), all five screenshots exist beneath per-test output directories, all
+474 units/56 files and types/lint/build/whitespace pass. Full local Chromium/stress
+is deferred under the owner policy. Remote repair remains pending publication and
+an Actions pass matching that published head; a local pass does not turn the old
+failed run green. See `build/performance/CI_REPAIR_20261016.md`.
+
 ### REC-115 — Hidden maps stop before preparation; HUD caches displayed dependencies
 
 - Status: Accepted
