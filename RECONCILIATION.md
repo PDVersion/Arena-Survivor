@@ -5,8 +5,8 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3/P4 affected software gates verified; P5 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P5–P6 readiness remains gated; REC-117 pickup retention blocks P5 completion.**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3/P4 affected software gates verified; P5 lifecycle slice verified, startup/compatibility still pending. F16 is delivered; other content selections remain pending.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 startup/compatibility and P6 readiness remain gated.**
 
 ## How to maintain this file
 
@@ -3095,10 +3095,10 @@ savings or fixture populations from unavailable production telemetry.
 
 ### REC-117 — Pickup cap can leave already-destroyed references tracked
 
-- Status: Open
+- Status: Resolved
 - Date: 2026-10-14
 - Affects: V0.4.3 P5 entity/lifecycle gate; pickup overflow/merging
-- Blocks: P5 completion; not the unchanged P3 statistics gate
+- Blocks: None after Session 6 lifecycle verification; overall P5 remains open for its other acceptance
 
 The immutable P3 before build (`64e77c4`) pressure probe drops 80 pickups every
 500 simulated ms at a distant point, no weapon/contact/hazards. After 1,040 drops
@@ -3120,6 +3120,18 @@ exact reward sums/claim semantics. No P5 code is pulled into this P3 session.
 Do not describe `progression.pickups` (currently Set size) as an active count
 without checking `active`. Revisit at the authorized P5 lifecycle session.
 
+
+Resolution (2026-10-15, Session 6): deterministic execution of the actual scene
+methods against synchronous DESTROY doubles reproduces **535 tracked / 250 live**
+after exactly 1,040 drops. Installing the scene Set-removal listener before cap
+enforcement reduces tracking to **250**, with unchanged sampled nearest-pair/tie
+order, survivor provenance and 1,040 total XP. Both-theme real Phaser checks use
+three fresh reconstructions each: 250 tracked/active/group members/enabled bodies,
+790 merges, all 1,040 XP awarded once, then zero pickup group/body/Set ownership
+after collect tweens and the next physics post-update. Bodies are deferred engine
+removals, so synchronous Set deletion alone is not counted as physics cleanup.
+See `build/performance/P5_LIFECYCLE_REPORT.md` and lifecycle regression tests.
+The paid-collect-cue race and stopped-scene retention are recorded in REC-119.
 
 ### REC-118 — Minimap circles triangulate again even when their command buffer is retained
 
@@ -3163,3 +3175,45 @@ sessions (recorded in AGENTS.md), overriding older blanket per-session commands.
 Deferred checks are never labelled passed; current P4 work remains local with
 no push or CI claim. P5 must still resolve REC-117; physical older-device,
 additional-browser and sustained 300-live mixed combat remain pending.
+
+
+### REC-119 — Paid pickup cues are presentation; stopped scenes release causal ownership
+
+- Status: Accepted
+- Date: 2026-10-15
+- Affects: V0.4.3 P5 lifecycle, collection/overflow and scene shutdown
+- Blocks: None for the affected lifecycle slice; startup/compatibility and broader P5 acceptance remain pending
+
+A claimed pickup stays active during its collection tween. The old cap search
+could merge it with an unpaid drop, either losing new XP in the paid survivor or
+including an already-paid value in an unpaid survivor. A deterministic cap/race
+regression fails before the fix. At overflow, retire claimed collect presentation
+first; only unpaid pickups participate in the unchanged sampled pair search.
+This preserves the authored total actor cap (250), surviving source/tie semantics
+and exact rewards without a new cap or balance value. The test-only XP-level cap
+also used to return after claiming without starting destruction; schedule the
+collect cue for every successful claim, including suppressed test rewards.
+Fractional rewards and duplicate claims remain exact. Collection animation may
+finish early when needed to admit an unpaid drop at the cap.
+
+A bounded real Phaser stop probe also shows that engine teardown already empties
+display, bodies, timers/tweens and sprite POST_UPDATE hooks, but the reusable scene
+still holds a destroyed hazard/feedback/map reference, 250 claim IDs and two pending
+causal events. Named idempotent shutdown cleanup now releases owned actor/UI/input
+references, hash/map buffers, claim sets, pending damage presentation and both
+causal queues immediately. It retains run data, statistics and terminal snapshots;
+no mid-run deduplication IDs are evicted. Respect REC-020: shutdown does not read
+or tear down physics a second time. Phaser remains responsible for objects,
+timers, tweens, sprite follower destruction and engine registrations.
+
+The affected gate uses both-theme deterministic tests and two serial Chromium
+Canvas lifecycle cases (three stop/start reconstructions each), not an authored
+run or throughput benchmark. Browser fixtures must import the same Vite-resolved
+Phaser instance as RunScene; mixing direct dist ESM and Vite's dependency module
+can fail Scene instanceof/key registration and never start the intended scene.
+The two initial fixture timeouts are harness failures, not passing game evidence.
+
+Full local Chromium/stress, authored/overtime/long soak, focus/resume, settings UI
+mode switching, production startup/boot guards and additional-browser/hardware
+acceptance are explicitly deferred under the owner resource policy. No current
+CI/device pass is claimed. See the P5 lifecycle report for exact commands/counts.

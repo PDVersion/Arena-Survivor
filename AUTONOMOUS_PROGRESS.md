@@ -8,7 +8,7 @@ Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
 common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 affected local gate is verified; P5 is next. Content C1–C7 and other optional features have not started;
+Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 affected local gate is verified; Session 6 / P5 lifecycle affected gate is verified, with startup/compatibility still pending. Content C1–C7 and other optional features have not started;
 physical older-device acceptance remains pending. P3 establishes scoped burst CPU savings; no frame-rate/device improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P5–P6 readiness remains gated.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
@@ -89,7 +89,7 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Current next: Session 6 / P5 lifecycle (REC-117).** The historical P0 next task, Session 2 / P1,
+**Current next: Session 7 / P5 startup and compatibility.** Session 6 resolves REC-117; the P5 overall gate remains open. The historical P0 next task, Session 2 / P1,
 has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
@@ -740,3 +740,52 @@ recorder/server cleanup is verified; unrelated review server 4213 untouched.
 Next eligible session: P5 lifecycle, first resolving REC-117 active/tracked pickup
 retention; physical older-device, sustained 300-live mixed combat, another browser
 and longer lifecycle/startup readiness remain pending.
+
+
+## Session 6 / P5 lifecycle — affected gate verified
+
+Start: **2026-10-15 13:25:18 AEDT / 02:25:18 UTC**. Maximum deadline:
+**14:55:18 AEDT / 03:55:18 UTC**; reserve final verification/review from
+**14:35:18 AEDT / 03:35:18 UTC**. Actual starting HEAD `d9047c0`,
+`codex/v0.4.3`. Initial patch and prompts backed up at
+`/private/tmp/arena-p5-session-20261015/`; eight pre-existing dirty plans and
+three untracked session prompts remain outside this slice's staging.
+
+Scope: reproduce/fix REC-117, inspect related retained resources and add bounded
+regressions. Session 7 startup/compatibility, P6 and optional content stay pending.
+Only affected serial one-worker/zero-retry browser evidence when engine ownership
+requires it; no full local browser/stress, long soak, push or CI trigger.
+
+Completed cycles:
+
+1. Reproduction: actual scene methods reproduce REC-117 exactly (1,040 drops,
+   535 tracked/250 active), plus a failing paid-cue merge/reward race. Install
+   cleanup ownership before overflow and retire paid collect presentation at cap
+   pressure. Every successful claim now schedules cleanup, including test XP caps.
+2. Retained-resource inspection: Phaser source and a narrow real stop probe show
+   engine teardown works, while scene collections still retain a hazard, feedback,
+   map reference, 250 claims and two pending events. Named idempotent shutdown
+   clears those owners without touching already-destroyed physics (REC-020/119).
+3. Affected verification: deterministic both-theme overflow/ties/provenance,
+   fractional/duplicate claims, repeated collection/reconstruction, shutdown/queue
+   claim reset and audio-close ownership; two real serial Chromium Canvas cases,
+   each with three stop/start reconstructions. At pressure: 250 tracked/active/
+   group/enabled bodies, 790 merges, 1,040 XP; after collection zero pickups/bodies;
+   after stop zero tested engine and retained resources. Default/Low fixtures are
+   exercised across cycles; full settings UI/focus/overtime are deferred.
+
+Final verification/review began early at **13:33:47 AEDT / 02:33:47 UTC**,
+8 min 29 s from recorded start. This preserves the final 20-minute reserve.
+Details, executed/deferred checks, fixture failures and limits are recorded in
+`build/performance/P5_LIFECYCLE_REPORT.md`. No broad browser suite, performance
+campaign, long soak or extra production browser run. P5 remains open for Session 7
+startup/compatibility and broader acceptance; P6/optional content not started.
+
+Final delivery recording checkpoint: **2026-10-15 03:17:08 UTC**, actual elapsed
+**51 min 50 s** from the recorded start. Final gate:
+**466 units / 55 files**, types/lint/build, **2 affected serial browser passes**
+(5.3 s, zero retries) and whitespace checks. Original seven untouched plan files
+match their backups; the active plan retains only its original two-line annotation
+unstaged. All three prompts remain untracked. No owned browser/server remains on
+4173; review server 4213 and unknown processes were not touched. Deliver locally
+with the declared P5 subject; startup remains Session 7 and P5 stays open.

@@ -689,21 +689,7 @@ export class RunScene extends Phaser.Scene {
     this.scale.on(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.game.events.on(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
     this.game.events.on(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.scale.off(Phaser.Scale.Events.RESIZE, this.handleResize, this);
-      this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
-      this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
-      window.removeEventListener("keydown", this.handleRestartKey);
-      document.removeEventListener("visibilitychange", this.handleMeasurementVisibility);
-      this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
-      this.hud?.destroy();
-      this.levelUpUi?.hide();
-      this.pauseMenu?.hide();
-      this.runEndOverlay?.hide();
-      this.overtimeUi?.hide();
-      this.minimap?.destroy();
-      this.audioFeedback.destroy();
-    });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdownRuntime, this);
     this.hud.update(this.runState, this.hudExtras());
     this.prepareTestLoadHarness();
     this.prepareTestRosterHarness();
@@ -809,6 +795,68 @@ export class RunScene extends Phaser.Scene {
         !preparingRepresentativeLoad && timeScale === this.runTheme.tuning.pace.gameplayRate &&
         !document.hidden && !this.focusPaused,
     });
+  }
+
+  /**
+   * Phaser owns display objects, bodies, timers and tweens at scene shutdown.
+   * A stopped Scene itself remains reusable, so release our references and
+   * causal claims now rather than retaining a dead run until its next create.
+   */
+  private shutdownRuntime(): void {
+    this.scale.off(Phaser.Scale.Events.RESIZE, this.handleResize, this);
+    this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
+    this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
+    window.removeEventListener("keydown", this.handleRestartKey);
+    document.removeEventListener("visibilitychange", this.handleMeasurementVisibility);
+    this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
+    this.hud?.destroy();
+    this.levelUpUi?.hide();
+    this.pauseMenu?.hide();
+    this.runEndOverlay?.hide();
+    this.overtimeUi?.hide();
+    this.minimap?.destroy();
+    this.audioFeedback.destroy();
+    this.hud = undefined;
+    this.levelUpUi = undefined;
+    this.pauseMenu = undefined;
+    this.runEndOverlay = undefined;
+    this.overtimeUi = undefined;
+    this.minimap = undefined;
+    this.player = undefined;
+    this.enemyGroup = undefined;
+    this.projectileGroup = undefined;
+    this.pickupGroup = undefined;
+    this.cursors = undefined;
+    this.wasd = undefined;
+    this.pauseKey = undefined;
+    this.muteKey = undefined;
+    this.tabKey = undefined;
+    this.interactKeys = [];
+    this.choiceKeys = [];
+    this.movementHint = undefined;
+    this.arenaTitle = undefined;
+    this.bodyDebug = undefined;
+    this.shrine = undefined;
+    this.shrineActors = [];
+    this.shrineMarkers.clear();
+    this.enemies.clear();
+    this.projectiles.clear();
+    this.pickups.clear();
+    this.hazards.clear();
+    this.feedbackObjects.clear();
+    this.enemyHash.clear();
+    this.minimapView.enemies.length = 0;
+    this.minimapView.shrines.length = 0;
+    this.minimapView.hazards.length = 0;
+    this.eventQueue.clear();
+    this.loadEventQueue.clear();
+    this.claimedPickupIds = new Set();
+    this.damageNumbers.pending.clear();
+    this.feedbackLimiter.clearVisuals();
+    this.activeExplosionCues = 0;
+    this.activeGrabbers = 0;
+    this.currentChoices = [];
+    this.currentOffers = [];
   }
 
   private resetTransientRuntime(): void {
@@ -2383,9 +2431,10 @@ export class RunScene extends Phaser.Scene {
     );
     this.pickups.add(pickup);
     this.pickupGroup.add(pickup);
+    // Overflow may absorb this very actor synchronously. Own cleanup first.
+    pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
     this.pickupsDropped += 1;
     this.enforcePickupCap();
-    pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
   }
 
   /**
@@ -2397,6 +2446,12 @@ export class RunScene extends Phaser.Scene {
    */
   private enforcePickupCap(): void {
     if (this.pickups.size <= PICKUP_CAP) return;
+    // A paid collect cue must never absorb unpaid XP (or be absorbed and pay
+    // twice). Under pressure, retire that presentation before merging rewards.
+    for (const pickup of this.pickups) {
+      if (pickup.isClaimed) pickup.destroy();
+      if (this.pickups.size <= PICKUP_CAP) return;
+    }
     const live = [...this.pickups].filter((pickup) => pickup.active);
     let best: readonly [PickupActor, PickupActor] | undefined;
     let bestDistance = Number.POSITIVE_INFINITY;
@@ -2429,9 +2484,11 @@ export class RunScene extends Phaser.Scene {
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;
+    this.pickupsCollected += 1;
+    pickup.playCollectCue();
+    this.pickupCues += 1;
     const levelCap = testXpLevelCap();
     if (levelCap !== undefined && this.runState.progression.level >= levelCap) {
-      this.pickupsCollected += 1;
       return;
     }
     const awardedXp = claim.awardedXp * this.worldModifiers().xpMultiplier;
@@ -2443,9 +2500,6 @@ export class RunScene extends Phaser.Scene {
     } else {
       this.ambientXpCollected += awardedXp;
     }
-    this.pickupsCollected += 1;
-    pickup.playCollectCue();
-    this.pickupCues += 1;
     if (this.runState.status === "level_up") this.beginLevelUpChoice();
   }
 
