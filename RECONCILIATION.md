@@ -5,8 +5,8 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3/P4 affected software gates verified; P5 lifecycle slice verified, startup/compatibility still pending. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 startup/compatibility and P6 readiness remain gated.**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3/P4 affected software gates verified; P5 lifecycle/startup affected gates verified; consolidated lifecycle/compatibility acceptance pending. F16 is delivered; other content selections remain pending.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 readiness remain gated.**
 
 ## How to maintain this file
 
@@ -273,6 +273,33 @@ Keep production build-size output visible in phase verification. Avoid adding la
 
 Revisit when:
 Compressed entry size grows materially beyond this baseline, deployment performance is measured on representative connections, or optional screens/assets provide a natural lazy-load boundary.
+
+Session 7 / V0.4.3 P5 continuation (2026-10-15): production cold/warm startup is
+now measured in `build/performance/P5_STARTUP_REPORT.md`. Browser-native rendering
+observers record the first on-screen draw after title/HUD text creation, resource
+transfer, observed texture uploads and a separate decode trace; no production
+engine/test global is introduced. The first failed collector assumed Phaser's
+debug global survived production; it does not. Cold means HTTP cache cleared,
+not an OS/process cold start, and these markers are not compositor timestamps.
+
+The prior entry catches synchronous construction errors but statically evaluates
+Phaser first. Forcing unavailable canvas contexts produces two uncaught dependency
+errors with no recovery UI. A blocked declared atlas image still reaches the
+menu with no failure UI. P5 adds a 2D canvas preflight and a dynamic Game-start
+boundary inside the existing catch, plus an owned async asset-failure event that
+schedules Game destruction and stops transition. Dependency-fetch and atlas
+network failures now show theme-owned reload controls; retry after recovery boots
+a run. Both themes validate recovery copy. The boundary is justified by observed
+failure recovery, not by the chunk warning; all required game code still loads.
+
+Three serial cold/warm pairs on local Chromium/SwiftShader give title-draw markers
+242.6/115.8/117.9 ms cold and 134.9/140.1/133.6 ms warm. Variation/process caching
+preclude a speedup claim. Forced Canvas, no-graphics, blocked atlas/module and
+both real retry paths pass; a 100 ms latency/200 KBps case reaches the title marker
+at 2,579.7 ms. Full values, decompression/decode/upload scope, source/bundle
+hashes and exclusions are in the report. Broader browser/device, malformed-asset
+processing errors, initial HTML/entry delivery failure and remaining P5 lifecycle
+acceptance are pending. No speculative split, pipeline/art, tuning or persistence.
 
 ### REC-011 — Arcade Physics and a 2400×1600 arena are the initial runtime baseline
 

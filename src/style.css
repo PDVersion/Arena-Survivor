@@ -49,3 +49,15 @@ body,
   border-color: #d97777;
   color: #ffe1e1;
 }
+
+.boot-failure { overflow-wrap: anywhere; }
+.boot-failure button {
+  padding: 0.65rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.35rem;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.boot-failure button:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }

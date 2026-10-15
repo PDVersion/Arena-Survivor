@@ -120,6 +120,8 @@ export interface ThemeCopy {
   readonly arenaName: string;
   readonly bootStatus: string;
   readonly bootFailure: string;
+  readonly bootRetry: string;
+  readonly bootGraphicsFailure: string;
   readonly movementHint: string;
   readonly levelUpTitle: string;
   readonly vocabulary: ThemeVocabulary;

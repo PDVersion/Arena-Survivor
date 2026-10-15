@@ -17,6 +17,8 @@ export const copy = {
   arenaName: "The Overflow Site",
   bootStatus: "The site is being surveyed",
   bootFailure: "The site could not be reached.",
+  bootRetry: "Reload and retry",
+  bootGraphicsFailure: "Graphics could not start. Check your browser graphics settings or try another browser.",
   movementHint: "Move with WASD or arrow keys · Pause with Escape",
   levelUpTitle: "Requisition new equipment",
   vocabulary: {

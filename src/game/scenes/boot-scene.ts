@@ -16,7 +16,10 @@ function testShowsMenu(): boolean {
   return new URLSearchParams(window.location.search).has("menu");
 }
 
+export const BOOT_FAILURE_EVENT = "boot.failed";
+
 export class BootScene extends Phaser.Scene {
+  private failedAsset?: string;
   constructor() {
     super("boot");
   }
@@ -30,10 +33,18 @@ export class BootScene extends Phaser.Scene {
    * sprites declared this queues nothing and boot is unchanged.
    */
   preload(): void {
+    this.failedAsset = undefined;
+    this.load.once(Phaser.Loader.Events.FILE_LOAD_ERROR, (file: Phaser.Loader.File) => {
+      this.failedAsset = file.src;
+    });
     loadThemeSprites(this, activeTheme);
   }
 
   create(): void {
+    if (this.failedAsset) {
+      this.game.events.emit(BOOT_FAILURE_EVENT, new Error(`Unable to load asset: ${this.failedAsset}`));
+      return;
+    }
     this.scene.start(testShowsMenu() ? "menu" : "run");
   }
 }

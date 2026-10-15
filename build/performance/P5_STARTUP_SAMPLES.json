@@ -1,0 +1,1249 @@
+{
+  "recordedAt": "2026-10-15T04:15:36.253Z",
+  "browser": "151.0.7922.34",
+  "host": {
+    "cpu": "Apple M5 Pro",
+    "memoryGiB": 48,
+    "platform": "darwin",
+    "release": "25.5.0"
+  },
+  "viewport": {
+    "default": "1280x720",
+    "faults": "900x600",
+    "dpr": 1
+  },
+  "mode": "production",
+  "source": "8b700d9 plus explicitly recorded working changes",
+  "diagnosticMarkersAbsent": true,
+  "bundleDigests": [
+    {
+      "name": "combat-DP5YJCqn.js",
+      "sha256": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0"
+    },
+    {
+      "name": "game-B2MpO4ae.js",
+      "sha256": "a5503b0e3cf4f0be6ec86a69fbbae33a9e887c23241bb414e22b3a1cd3bced7c"
+    },
+    {
+      "name": "index-ChNAadhX.js",
+      "sha256": "44f9cf7a0bab9db133566257f64cab32647fbbe659197ada75a3dcccf997438c"
+    },
+    {
+      "name": "sprites-wQFwGxXg.js",
+      "sha256": "66eb99ff79551b47e43221b272c852cc74008c3f34b24c4a0af93fd3a1d39922"
+    },
+    {
+      "name": "start-game-Dm7Yt1Yc.js",
+      "sha256": "dd250815926e1448e69d12e75c0da78f3ac5f162416253b15fa0b245833d686f"
+    }
+  ],
+  "timing": "Navigation-start-relative ms; first on-screen draw after title/HUD text creation, not exact compositor presentation. Browser rendering-call observers add overhead. HTTP cache cold, not process/OS cold. ResourceTiming decodedBytes means decompressed bytes, not image decode CPU.",
+  "records": [
+    {
+      "label": "cold-1",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 234.90000009536743,
+      "hudTextMs": 378.60000014305115,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 242.60000014305115,
+      "runMs": 389.2999999523163,
+      "inputMs": 370.40000009536743,
+      "textureCalls": 187,
+      "textureCpuMs": 12.300000190734863,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 18.899999856948853,
+      "loadEndMs": 17.200000047683716,
+      "domReadyMs": 17.200000047683716,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 5,
+          "responseEndMs": 11.700000047683716,
+          "durationMs": 6.700000047683716,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 5.1000001430511475,
+          "responseEndMs": 11.100000143051147,
+          "durationMs": 6,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 5.1000001430511475,
+          "responseEndMs": 12.700000047683716,
+          "durationMs": 7.599999904632568,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 17,
+          "responseEndMs": 19.299999952316284,
+          "durationMs": 2.299999952316284,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 17,
+          "responseEndMs": 42.60000014305115,
+          "durationMs": 25.600000143051147,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 213.5,
+          "responseEndMs": 215.60000014305115,
+          "durationMs": 2.1000001430511475,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 213.60000014305115,
+          "responseEndMs": 215.90000009536743,
+          "durationMs": 2.299999952316284,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "warm-1",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 130.79999995231628,
+      "hudTextMs": 243.39999985694885,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 134.89999985694885,
+      "runMs": 251.59999990463257,
+      "inputMs": 239.59999990463257,
+      "textureCalls": 187,
+      "textureCpuMs": 9.59999966621399,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 12,
+      "loadEndMs": 26.299999952316284,
+      "domReadyMs": 26.299999952316284,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 23.699999809265137,
+          "responseEndMs": 24.799999952316284,
+          "durationMs": 1.1000001430511475,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 23.699999809265137,
+          "responseEndMs": 25.199999809265137,
+          "durationMs": 1.5,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 23.799999952316284,
+          "responseEndMs": 25,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 26.199999809265137,
+          "responseEndMs": 27,
+          "durationMs": 0.8000001907348633,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 26.199999809265137,
+          "responseEndMs": 27.299999952316284,
+          "durationMs": 1.1000001430511475,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 122.5,
+          "responseEndMs": 123.69999980926514,
+          "durationMs": 1.1999998092651367,
+          "transferBytes": 300,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 122.5,
+          "responseEndMs": 123.39999985694885,
+          "durationMs": 0.8999998569488525,
+          "transferBytes": 300,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "cold-2",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 108.5,
+      "hudTextMs": 249.5,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 115.79999995231628,
+      "runMs": 260.2000000476837,
+      "inputMs": 240.90000009536743,
+      "textureCalls": 187,
+      "textureCpuMs": 11.599999904632568,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 19.299999952316284,
+      "loadEndMs": 12.299999952316284,
+      "domReadyMs": 12.299999952316284,
+      "resources": [
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 2.5,
+          "responseEndMs": 5.5,
+          "durationMs": 3,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 2.5,
+          "responseEndMs": 5.900000095367432,
+          "durationMs": 3.4000000953674316,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 2.5,
+          "responseEndMs": 7.799999952316284,
+          "durationMs": 5.299999952316284,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 12.099999904632568,
+          "responseEndMs": 13.400000095367432,
+          "durationMs": 1.3000001907348633,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 12.099999904632568,
+          "responseEndMs": 35.59999990463257,
+          "durationMs": 23.5,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 93.70000004768372,
+          "responseEndMs": 94.79999995231628,
+          "durationMs": 1.0999999046325684,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 93.79999995231628,
+          "responseEndMs": 95.09999990463257,
+          "durationMs": 1.2999999523162842,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "warm-2",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 135.39999985694885,
+      "hudTextMs": 248.20000004768372,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 140.09999990463257,
+      "runMs": 256.59999990463257,
+      "inputMs": 244.59999990463257,
+      "textureCalls": 187,
+      "textureCpuMs": 10.599999904632568,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 12,
+      "loadEndMs": 22.5,
+      "domReadyMs": 22.399999856948853,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 20,
+          "responseEndMs": 21.09999990463257,
+          "durationMs": 1.0999999046325684,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 20.09999990463257,
+          "responseEndMs": 21.299999952316284,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 20.09999990463257,
+          "responseEndMs": 21.5,
+          "durationMs": 1.4000000953674316,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 22.299999952316284,
+          "responseEndMs": 23.200000047683716,
+          "durationMs": 0.9000000953674316,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 22.399999856948853,
+          "responseEndMs": 23.59999990463257,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 120.09999990463257,
+          "responseEndMs": 121,
+          "durationMs": 0.9000000953674316,
+          "transferBytes": 300,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 120.20000004768372,
+          "responseEndMs": 121.29999995231628,
+          "durationMs": 1.0999999046325684,
+          "transferBytes": 300,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "cold-3",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 110.90000009536743,
+      "hudTextMs": 247.60000014305115,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 117.90000009536743,
+      "runMs": 258.5,
+      "inputMs": 239.40000009536743,
+      "textureCalls": 187,
+      "textureCpuMs": 12.400000810623169,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 19.09999990463257,
+      "loadEndMs": 10.600000143051147,
+      "domReadyMs": 10.600000143051147,
+      "resources": [
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 2.700000047683716,
+          "responseEndMs": 5.5,
+          "durationMs": 2.799999952316284,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 2.700000047683716,
+          "responseEndMs": 5.6000001430511475,
+          "durationMs": 2.9000000953674316,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 2.700000047683716,
+          "responseEndMs": 6.5,
+          "durationMs": 3.799999952316284,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 10.5,
+          "responseEndMs": 11.799999952316284,
+          "durationMs": 1.2999999523162842,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 10.5,
+          "responseEndMs": 34.10000014305115,
+          "durationMs": 23.600000143051147,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 92.5,
+          "responseEndMs": 93.5,
+          "durationMs": 1,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 92.60000014305115,
+          "responseEndMs": 93.70000004768372,
+          "durationMs": 1.0999999046325684,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "warm-3",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 129.60000014305115,
+      "hudTextMs": 244.10000014305115,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 133.60000014305115,
+      "runMs": 252.60000014305115,
+      "inputMs": 240.5,
+      "textureCalls": 187,
+      "textureCpuMs": 10.000000476837158,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 12.100000143051147,
+      "loadEndMs": 23,
+      "domReadyMs": 22.90000009536743,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 19,
+          "responseEndMs": 19.800000190734863,
+          "durationMs": 0.8000001907348633,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 19.100000143051147,
+          "responseEndMs": 20,
+          "durationMs": 0.8999998569488525,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 19.100000143051147,
+          "responseEndMs": 20.100000143051147,
+          "durationMs": 1,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 22.800000190734863,
+          "responseEndMs": 23.600000143051147,
+          "durationMs": 0.7999999523162842,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 22.800000190734863,
+          "responseEndMs": 23.90000009536743,
+          "durationMs": 1.0999999046325684,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 121,
+          "responseEndMs": 121.90000009536743,
+          "durationMs": 0.9000000953674316,
+          "transferBytes": 300,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 121,
+          "responseEndMs": 121.80000019073486,
+          "durationMs": 0.8000001907348633,
+          "transferBytes": 300,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "canvas",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 80.19999980926514,
+      "hudTextMs": 101.29999995231628,
+      "rendererDetail": null,
+      "menuMs": 83.39999985694885,
+      "runMs": 103.89999985694885,
+      "inputMs": 88.5,
+      "textureCalls": 0,
+      "textureCpuMs": 0,
+      "renderer": "Canvas",
+      "textures": null,
+      "inputToRunFrameMs": 15.399999856948853,
+      "loadEndMs": 11.199999809265137,
+      "domReadyMs": 11.199999809265137,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 2.3999998569488525,
+          "responseEndMs": 5,
+          "durationMs": 2.6000001430511475,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 2.5,
+          "responseEndMs": 4.699999809265137,
+          "durationMs": 2.1999998092651367,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 2.5,
+          "responseEndMs": 5.799999952316284,
+          "durationMs": 3.299999952316284,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 11,
+          "responseEndMs": 34.799999952316284,
+          "durationMs": 23.799999952316284,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 11.099999904632568,
+          "responseEndMs": 12.299999952316284,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 67.89999985694885,
+          "responseEndMs": 69,
+          "durationMs": 1.1000001430511475,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 67.89999985694885,
+          "responseEndMs": 68.89999985694885,
+          "durationMs": 1,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "no-renderer",
+      "ready": false,
+      "expectedFailure": true,
+      "errors": [],
+      "menuTextMs": null,
+      "hudTextMs": null,
+      "rendererDetail": null,
+      "menuMs": null,
+      "runMs": null,
+      "inputMs": null,
+      "textureCalls": 0,
+      "textureCpuMs": 0,
+      "renderer": null,
+      "textures": null,
+      "inputToRunFrameMs": null,
+      "loadEndMs": 10.299999952316284,
+      "domReadyMs": 10.200000047683716,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 2.4000000953674316,
+          "responseEndMs": 5.400000095367432,
+          "durationMs": 3,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 2.5999999046325684,
+          "responseEndMs": 5.099999904632568,
+          "durationMs": 2.5,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 2.5999999046325684,
+          "responseEndMs": 6.200000047683716,
+          "durationMs": 3.6000001430511475,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        }
+      ],
+      "failureText": "The site could not be reached. Graphics could not start. Check your browser graphics settings or try another browser.Reload and retry",
+      "retryButton": "Reload and retry",
+      "testInterfaceAbsent": true,
+      "canvasCount": 0
+    },
+    {
+      "label": "asset",
+      "ready": false,
+      "expectedFailure": true,
+      "errors": [],
+      "menuTextMs": null,
+      "hudTextMs": null,
+      "rendererDetail": null,
+      "menuMs": null,
+      "runMs": null,
+      "inputMs": null,
+      "textureCalls": 121,
+      "textureCpuMs": 0.10000014305114746,
+      "renderer": null,
+      "textures": 121,
+      "inputToRunFrameMs": null,
+      "loadEndMs": 11,
+      "domReadyMs": 11,
+      "resources": [
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 3.1999998092651367,
+          "responseEndMs": 5.599999904632568,
+          "durationMs": 2.4000000953674316,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 3.1999998092651367,
+          "responseEndMs": 5.699999809265137,
+          "durationMs": 2.5,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 3.1999998092651367,
+          "responseEndMs": 6.599999904632568,
+          "durationMs": 3.4000000953674316,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 10.799999952316284,
+          "responseEndMs": 35.299999952316284,
+          "durationMs": 24.5,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 10.899999856948853,
+          "responseEndMs": 12.5,
+          "durationMs": 1.6000001430511475,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 92.89999985694885,
+          "responseEndMs": 94.09999990463257,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 92.89999985694885,
+          "responseEndMs": 94.5,
+          "durationMs": 1.6000001430511475,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 98.59999990463257,
+          "responseEndMs": 99.59999990463257,
+          "durationMs": 1,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 102,
+          "responseEndMs": 103.09999990463257,
+          "durationMs": 1.0999999046325684,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        }
+      ],
+      "failureText": "The site could not be reached. Unable to load asset: sprites/eco-guardian/atlas.pngReload and retry",
+      "retryButton": "Reload and retry",
+      "testInterfaceAbsent": true,
+      "canvasCount": 0
+    },
+    {
+      "label": "asset-retry",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 116.79999995231628,
+      "hudTextMs": 237.09999990463257,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 123.29999995231628,
+      "runMs": 248.19999980926514,
+      "inputMs": 228.79999995231628,
+      "textureCalls": 187,
+      "textureCpuMs": 11.90000033378601,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 19.399999856948853,
+      "loadEndMs": 12.399999856948853,
+      "domReadyMs": 12.399999856948853,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 9,
+          "responseEndMs": 11.199999809265137,
+          "durationMs": 2.1999998092651367,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 9,
+          "responseEndMs": 11.5,
+          "durationMs": 2.5,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 9.099999904632568,
+          "responseEndMs": 11.199999809265137,
+          "durationMs": 2.0999999046325684,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 12.199999809265137,
+          "responseEndMs": 12.799999952316284,
+          "durationMs": 0.6000001430511475,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 12.299999952316284,
+          "responseEndMs": 13,
+          "durationMs": 0.7000000476837158,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 106.69999980926514,
+          "responseEndMs": 107.59999990463257,
+          "durationMs": 0.9000000953674316,
+          "transferBytes": 300,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 106.69999980926514,
+          "responseEndMs": 107.69999980926514,
+          "durationMs": 1,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "module",
+      "ready": false,
+      "expectedFailure": true,
+      "errors": [],
+      "menuTextMs": null,
+      "hudTextMs": null,
+      "rendererDetail": null,
+      "menuMs": null,
+      "runMs": null,
+      "inputMs": null,
+      "textureCalls": 0,
+      "textureCpuMs": 0,
+      "renderer": null,
+      "textures": null,
+      "inputToRunFrameMs": null,
+      "loadEndMs": 11,
+      "domReadyMs": 10.900000095367432,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 2.799999952316284,
+          "responseEndMs": 5.400000095367432,
+          "durationMs": 2.6000001430511475,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 2.9000000953674316,
+          "responseEndMs": 6.299999952316284,
+          "durationMs": 3.3999998569488525,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 3,
+          "responseEndMs": 5.599999904632568,
+          "durationMs": 2.5999999046325684,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 10.799999952316284,
+          "responseEndMs": 11.700000047683716,
+          "durationMs": 0.9000000953674316,
+          "transferBytes": 0,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 10.799999952316284,
+          "responseEndMs": 12.5,
+          "durationMs": 1.7000000476837158,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        }
+      ],
+      "failureText": "The site could not be reached. Failed to fetch dynamically imported module: http://127.0.0.1:4174/assets/start-game-Dm7Yt1Yc.jsReload and retry",
+      "retryButton": "Reload and retry",
+      "testInterfaceAbsent": true,
+      "canvasCount": 0
+    },
+    {
+      "label": "module-retry",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 108.59999990463257,
+      "hudTextMs": 249.79999995231628,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 116,
+      "runMs": 260.59999990463257,
+      "inputMs": 241.29999995231628,
+      "textureCalls": 187,
+      "textureCpuMs": 11.40000033378601,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 19.299999952316284,
+      "loadEndMs": 6.099999904632568,
+      "domReadyMs": 6.099999904632568,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 2.5999999046325684,
+          "responseEndMs": 4.799999952316284,
+          "durationMs": 2.200000047683716,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 2.700000047683716,
+          "responseEndMs": 5,
+          "durationMs": 2.299999952316284,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 2.700000047683716,
+          "responseEndMs": 5.200000047683716,
+          "durationMs": 2.5,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 6,
+          "responseEndMs": 29.59999990463257,
+          "durationMs": 23.59999990463257,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 6.099999904632568,
+          "responseEndMs": 6.700000047683716,
+          "durationMs": 0.6000001430511475,
+          "transferBytes": 300,
+          "encodedBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 88.20000004768372,
+          "responseEndMs": 89.20000004768372,
+          "durationMs": 1,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 88.29999995231628,
+          "responseEndMs": 89.40000009536743,
+          "durationMs": 1.1000001430511475,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "slow-100ms-200KBps",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 2571.2999999523163,
+      "hudTextMs": 2713.5,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 2579.699999809265,
+      "runMs": 2724,
+      "inputMs": 2705.2999999523163,
+      "textureCalls": 187,
+      "textureCpuMs": 12.1999990940094,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 18.700000047683716,
+      "loadEndMs": 321.59999990463257,
+      "domReadyMs": 321.5,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 115.89999985694885,
+          "responseEndMs": 248.29999995231628,
+          "durationMs": 132.40000009536743,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 116,
+          "responseEndMs": 225.09999990463257,
+          "durationMs": 109.09999990463257,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 116,
+          "responseEndMs": 315.19999980926514,
+          "durationMs": 199.19999980926514,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 321.09999990463257,
+          "responseEndMs": 2318.2999999523163,
+          "durationMs": 1997.2000000476837,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 321.2999999523163,
+          "responseEndMs": 427.2999999523163,
+          "durationMs": 106,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 2403,
+          "responseEndMs": 2566.0999999046326,
+          "durationMs": 163.09999990463257,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 2403.0999999046326,
+          "responseEndMs": 2521.2999999523163,
+          "durationMs": 118.20000004768372,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "decode-probe-traced",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 115.39999985694885,
+      "hudTextMs": 254.69999980926514,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 122.59999990463257,
+      "runMs": 265.2999999523163,
+      "inputMs": 246.5,
+      "textureCalls": 187,
+      "textureCpuMs": 11.500000953674316,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 18.799999952316284,
+      "loadEndMs": 11.799999952316284,
+      "domReadyMs": 11.799999952316284,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 3,
+          "responseEndMs": 6.3999998569488525,
+          "durationMs": 3.3999998569488525,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 3,
+          "responseEndMs": 6.8999998569488525,
+          "durationMs": 3.8999998569488525,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 3.0999999046325684,
+          "responseEndMs": 5.699999809265137,
+          "durationMs": 2.5999999046325684,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 11.5,
+          "responseEndMs": 35.09999990463257,
+          "durationMs": 23.59999990463257,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 11.599999904632568,
+          "responseEndMs": 12.799999952316284,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 95.39999985694885,
+          "responseEndMs": 96.59999990463257,
+          "durationMs": 1.2000000476837158,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 95.39999985694885,
+          "responseEndMs": 96.5,
+          "durationMs": 1.1000001430511475,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "image-decode-trace",
+      "names": [
+        "SoftwareImageDecodeCache::ReduceCacheUsageUntilWithinLimit",
+        "Decode Image"
+      ],
+      "eventCount": 32,
+      "completeDurationMs": 0.154,
+      "scope": "Separate traced probe; durations are summed complete trace spans, may overlap/nest across threads, not critical-path or GPU time. No captured event is reported as no evidence, not zero decode cost."
+    }
+  ]
+}

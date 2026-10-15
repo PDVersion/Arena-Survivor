@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2/P3/P4 verified; P5 lifecycle slice verified, startup/compatibility pending; Q5 CI/audit repair verified (REC-113/114).** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2/P3/P4 verified; P5 lifecycle/startup affected gates verified, consolidated acceptance pending; Q5 CI/audit repair verified (REC-113/114).** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -199,7 +199,7 @@ are excluded from these performance phases.
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
 | P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
-| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. No sprite pipeline or startup architecture edits | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
 | P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
 
 - [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
@@ -220,8 +220,12 @@ are excluded from these performance phases.
 - [x] P5 lifecycle slice / Session 6 — REC-117 overflow tracking, paid-collect-cue
   reward race and stopped-scene references; both-theme deterministic coverage and
   bounded serial Phaser collection/stop/start ownership checks (REC-119).
-- [ ] P5 startup/compatibility / Session 7 — cold/warm/failure evidence and remaining
-  broader lifecycle acceptance; no startup optimization authorized by Session 6.
+- [x] P5 startup affected gate / Session 7 — cold/warm transfer/render/upload/decode
+  evidence; WebGL/Canvas, unsupported graphics and declared asset/module network
+  failures with retry. See REC-010 continuation and `performance/P5_STARTUP_REPORT.md`.
+- [ ] P5 remaining consolidated acceptance — authored/overtime/focus/resume/long
+  lifecycle checks and broader browser compatibility remain deferred under the
+  owner resource policy. Do not treat those as locally passed or start P6 yet.
 - [ ] P6 — combined software gate, baseline/final reports and manual device
   checklist; representative older-device acceptance measured or explicitly pending.
 
@@ -458,3 +462,17 @@ soaks, production boot/startup and hardware/browser acceptance remain deferred,
 not passed. `performance/P5_LIFECYCLE_REPORT.md` records reproduction, checks and
 limits. P5 overall stays open; Session 7 startup/compatibility is next, followed
 by the combined P6 gate. No push/CI trigger, content, art or persistence work.
+
+
+Session 7 / P5 startup affected gate accepted 2026-10-15. Two reproduced boot
+failures now recover: unavailable canvas contexts fail before Phaser evaluation,
+and a failed declared atlas stops transition instead of using missing art.
+A dynamic Game-start boundary catches dependency fetch/initialization failures;
+owned async loader failure schedules destruction and shows theme-owned safe-text
+reload controls. Atlas/module recovery and actual reload-to-run paths pass.
+This is a demonstrated error boundary, with no claimed loading-speed improvement.
+Bounded production cold/warm/slow-network and separate decode evidence, existing
+production guard, one affected test-mode boot/resize case, 474 units/56 files,
+types/lint/build pass. Remaining P5 lifecycle/broader compatibility acceptance,
+full Chromium/stress and device evidence stay pending; P5 overall remains open.
+No P6/content, push or CI trigger. See `performance/P5_STARTUP_REPORT.md`.

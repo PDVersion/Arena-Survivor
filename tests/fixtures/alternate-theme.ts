@@ -26,6 +26,8 @@ export const alternateTheme = defineTheme({
     arenaName: "Neon Test Grid",
     bootStatus: "Fixture ready",
     bootFailure: "Fixture failed",
+    bootRetry: "Retry fixture boot",
+    bootGraphicsFailure: "Fixture graphics unavailable",
     movementHint: "Use test controls",
     levelUpTitle: "Select test modifier",
     vocabulary: {

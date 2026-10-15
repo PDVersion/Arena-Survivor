@@ -8,7 +8,7 @@ Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
 common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 affected local gate is verified; Session 6 / P5 lifecycle affected gate is verified, with startup/compatibility still pending. Content C1–C7 and other optional features have not started;
+Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 affected local gate is verified; Session 6 / P5 lifecycle and Session 7 / P5 startup affected gates are verified; consolidated lifecycle/compatibility acceptance remains pending. Content C1–C7 and other optional features have not started;
 physical older-device acceptance remains pending. P3 establishes scoped burst CPU savings; no frame-rate/device improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P5–P6 readiness remains gated.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
@@ -89,7 +89,7 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Current next: Session 7 / P5 startup and compatibility.** Session 6 resolves REC-117; the P5 overall gate remains open. The historical P0 next task, Session 2 / P1,
+**Current next: P5 consolidated lifecycle/compatibility acceptance, then P6.** Session 6 resolves REC-117 and Session 7 verifies the affected startup gate; P5 overall remains open. The historical P0 next task, Session 2 / P1,
 has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
@@ -789,3 +789,66 @@ match their backups; the active plan retains only its original two-line annotati
 unstaged. All three prompts remain untracked. No owned browser/server remains on
 4173; review server 4213 and unknown processes were not touched. Deliver locally
 with the declared P5 subject; startup remains Session 7 and P5 stays open.
+
+
+## Session 7 / P5 startup and compatibility — affected gate verified
+
+Start **2026-10-15 15:06:48 AEDT / 04:06:48 UTC**; 90-minute working cap,
+deadline **16:36:48 AEDT / 05:36:48 UTC**, final validation reserve from
+**16:16:48 AEDT / 05:16:48 UTC**. Start HEAD `8b700d9`, `codex/v0.4.3`.
+Initial diff and active plan/prompts backed up at
+`/private/tmp/arena-p5-startup-session/`. Preserve all eight dirty plans and
+three prompts outside this work's staging. User authorizes continuation to the
+next section; this slice is startup/compatibility, with P6/content not started.
+
+Use a bounded serial production startup/failure collector, deterministic boot
+units, full units/types/lint/build and production exclusion checks. No full local
+Chromium/stress, long soak, broad browser matrix, push or CI trigger. Measure
+cold/warm resource/first-render/first-run timing and test a small renderer/asset
+failure set before deciding on changes; no speculative Phaser splitting.
+
+Completed cycles:
+
+1. Bounded production reproduction: no canvas contexts cause two uncaught Phaser
+   dependency errors before recovery; a blocked atlas image still reaches the menu.
+   Existing WebGL→Canvas selection works. Initial collector attempts failed because
+   production excludes the debug global and Phaser renders through drawArrays;
+   use browser rendering/text/upload observers without shipping diagnostics.
+2. Correction: preflight required 2D text canvases; await the Game-start module
+   inside the existing error boundary; stop after declared asset load failure and
+   schedule owned Game destruction. Theme-owned graphics instructions/reload action,
+   safe text error details and native keyboard/pointer retry work. No sprite pipeline,
+   content/balance, dependency or persistence change; no speedup claim.
+3. Evidence: three serial HTTP-cache cold/warm pairs; forced Canvas, unsupported
+   graphics, blocked atlas/module and both successful reload retries; one slower
+   network case and separate decode probes. First title-draw markers 116–243 ms
+   cold, 134–140 ms warm; slow-network title/run markers 2.580/2.724 s. Browser
+   render markers include observer overhead and are not compositor or device
+   acceptance. Primary samples retain measured bundle hashes; the final focus-style build is rechecked separately.
+4. Verification: 474 units/56 files, types/lint/build; one affected serial test-mode
+   boot/resize pass; existing production exclusion/boot/play/pause/tool check passes.
+   Recovery screenshots at 900×600 inspected; retry controls fit. All startup/failure
+   cases use one Chromium browser serially; no overlapping suites/servers.
+
+Report and all scope/limitations: `build/performance/P5_STARTUP_REPORT.md`.
+P5 stays open for consolidated authored/overtime/focus/resume/long lifecycle and
+broader compatibility acceptance; P6 and optional content have not started.
+Full local Chromium/stress and physical older-device/additional-browser evidence
+remain deferred, not passed. Delivery remains local; no push/PR/CI trigger.
+
+Continuation/handoff resumed at **2026-10-15 16:39:56 AEDT / 05:39:56 UTC**
+after the user's “continue where you were stopped” request. The original 90-minute
+wall checkpoint passed during interruption; elapsed wall time is not reported as
+active work time. Startup implementation/tests had passed before the interruption.
+Finish the report, final build/hash/preservation review and local commit only;
+no new phase or expanded browser job. Final focus-ring CSS inherits currentColor
+instead of introducing a theme colour literal; startup JS behavior is unchanged.
+
+Final recording checkpoint: **2026-10-15 16:42:32 AEDT / 05:42:32 UTC**.
+Wall elapsed **95 min 44 s**, including interruption; continuation since the
+recorded resume is **2 min 36 s**. Final build and affected recovery recheck pass;
+its JS hashes match current dist. Focus-only CSS uses inherited colour. No owned
+listeners remain on 4173/4174; unknown processes and port 4213 are untouched.
+All original untouched plan/prompt bytes match backups, and the active plan's
+original annotation will remain unstaged. Commit the Session 7 continuation
+locally with the P5 subject; P5 overall remains open as recorded above.
