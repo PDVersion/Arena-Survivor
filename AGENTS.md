@@ -105,3 +105,13 @@ Everything else about a branch — one branch per milestone, one pull request in
 - Each numbered build phase is one reviewable commit using the subject listed in the build plan.
 - If a completed phase needs a later correction, use a focused `fix(v0.3): ...` commit and record the cause in `RECONCILIATION.md`; do not silently rewrite shared history.
 - Keep unrelated refactors and V0.4 ideas out of the V0.3 pull requests.
+
+## Local test resource budget
+
+Owner instruction (2026-10-15): keep heavy local Chromium/browser testing to
+necessary checks for the current change. Run browser/performance checks serially
+and clean up owned browsers/servers/recorders; do not leave background suites
+running. Defer full-app browser/stress regression to GitHub Actions or one
+consolidated local run after several build sessions. A phase must explicitly
+record any deferred checks; never label them locally passed. This instruction
+overrides older per-session full-browser test command lists.

@@ -3,7 +3,7 @@ import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
 import { createRunState } from "../state/run-state";
 import { getSessionStatistics } from "../state/session-statistics";
-import { cycleDifficulty, cycleMinimapOpacity, getSessionSettings, toggleSetting, updateSessionSettings, type SettingKey } from "../state/settings-state";
+import { cyclePresentationQuality, cycleDifficulty, cycleMinimapOpacity, getSessionSettings, toggleSetting, updateSessionSettings, type SettingKey } from "../state/settings-state";
 import { difficultyIds, type DifficultyId } from "../core/archetypes/difficulty";
 import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
 import { selectSessionCodex, selectShrineCodex, selectUpgradeCodex } from "../systems/codex/describe-shrine";
@@ -177,7 +177,7 @@ export class MenuScene extends Phaser.Scene {
 
   private applySetting(key: SettingKey): void {
     const current = getSessionSettings();
-    updateSessionSettings(key === "difficulty" ? cycleDifficulty(current) : key === "minimapOpacity" ? cycleMinimapOpacity(current) : toggleSetting(current, key));
+    updateSessionSettings(key === "presentationQuality" ? cyclePresentationQuality(current) : key === "difficulty" ? cycleDifficulty(current) : key === "minimapOpacity" ? cycleMinimapOpacity(current) : toggleSetting(current, key));
     this.refreshDifficulty();
     this.overlay?.refresh(this.infoView());
     this.publishTelemetry();

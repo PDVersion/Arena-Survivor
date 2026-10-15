@@ -1,6 +1,6 @@
 # Autonomous progress
 
-Updated: 2026-10-14 (Australia/Sydney).
+Updated: 2026-10-15 (Australia/Sydney).
 
 ## Objective and current state
 
@@ -8,8 +8,8 @@ Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
 verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
 play-test correction is also verified**: player facing/walking, crisp world text,
 common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 is next. Content C1–C7 and other optional features have not started;
-physical older-device acceptance remains pending. P3 establishes scoped burst CPU savings; no frame-rate/device improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P4–P6 readiness remains gated.
+Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 affected local gate is verified; P5 is next. Content C1–C7 and other optional features have not started;
+physical older-device acceptance remains pending. P3 establishes scoped burst CPU savings; no frame-rate/device improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P5–P6 readiness remains gated.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -89,7 +89,7 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Current next: Session 5 / P4.** The historical P0 next task, Session 2 / P1,
+**Current next: Session 6 / P5 lifecycle (REC-117).** The historical P0 next task, Session 2 / P1,
 has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
@@ -681,3 +681,62 @@ All eight original owner plan edits and Session 4 prompt remain unstaged.
 Implementation, regressions, phase checklist, report/evidence, progress and both
 reconciliation entries belong to the same phase commit. Next eligible work is
 Session 5 / P4; this session starts no further phase.
+
+
+## Session 5 / P4 — budget and setup
+
+Start: **2026-10-15 00:41:13 UTC**; deadline **2026-10-15 02:11:13 UTC** (90 minutes); reserve
+validation/review from **2026-10-15 01:51:13 UTC**. Branch `codex/v0.4.3`, starting
+HEAD `05c1d4e`; local remote-tracking branch is one commit behind. No remote
+mutation authorized. Initial dirty files and patch backed up at `/private/tmp/arena-p4-session-20261015T004113Z`;
+immutable HEAD archive at `/private/tmp/arena-p4-session-20261015T004113Z/before`. P4 only; REC-117 remains for P5.
+
+Owner testing constraint (2026-10-15): limit heavy local Chromium/browser work
+to necessary current-change tests and serial P4 attribution/comparison windows.
+Defer whole-app browser/stress regression to GitHub Actions or a consolidated
+check after several sessions. Do not launch background suites per build session.
+Record deferred checks honestly; this overrides the older Session 5 blanket
+local full-browser/stress command list. No push is authorized this session.
+
+Cycle 1: required authorities, branch/history/status and prior P2/P3 evidence
+reviewed; original edits preserved. Freeze baseline before measuring optional
+presentation work; add exact dependencies before any runtime edits.
+
+P4 cycle 2 checkpoint: 2026-10-15T01:07:41.020583+00:00. Short separate CDP probes: dense visible 300-circle map p95 41.7 ms; isolated square-marker probe p95 25.0 ms. Renderer triangulation samples fall sharply; diagnostic crowd scans remain separate. Added session Default/Low selecting theme-owned enemy minimap shapes only; unchanged cadence, positions/radii, player/site/hazard markers and gameplay. Types pass. After source frozen for serial comparisons; full suites deferred per owner.
+
+Cycle 3: candidate Low smoke passes after scaled pointer correction. Frozen-baseline build initially rejected the shared collector's new settings type; collector now uses a compatible optional structural type. No game source change required. Both failed preflight attempts remain separate from sustained windows. Serial sustained measurement is validation work, begun before the reserved final 20 minutes. Added both-theme rendering/isolation/settings/seeded-model units and two affected browser flows; execution waits until measurements finish to avoid contention.
+
+P4 final validation checkpoint 2026-10-15 02:08 UTC (about 87 minutes): all 27 sustained windows pass; dense Default→Low p95 41.7→25.1 ms, script 6.1687→3.1860 s; combat p95 unchanged 33.4 ms; production 17.5→17.0 ms. 450 units / 53 files, types/lint/build/production check pass. Temporary config syntax failed before browser execution, corrected separately. Two primary focused browsers pass; resize/restart case failed because its test incorrectly required physical display dimensions unchanged after resize. It now checks unchanged logical world and the resized 900-pixel display explicitly. Focused rerun and retained-theme checks are next; gate not yet accepted, no phase commit. Deadline is 02:11:13 UTC; preserve partial work rather than claim success if review cannot finish. Original edits remain preserved.
+
+
+## Session 5 / P4 — affected local gate accepted
+
+Final validation/recording checkpoint: 2026-10-15T02:10:39.074688+00:00; elapsed 89.43 minutes from
+00:41:13 UTC. Validation began with frozen comparisons at 01:21 UTC, ahead of
+the final 20-minute reserve. P4 only; P5/content never started.
+
+Completed cycle 4: 27 warmed >=60-second windows, three serial repeats of
+baseline/Default/Low × dense map/combat burst/ordinary production; no overlapping
+suites, live-source edits or builds. All retained, zero browser errors; dense
+retains 300 live and combat cap/ledger checks pass. Low visible-map p95 is
+25.1 ms vs candidate Default 41.7 ms (~40% lower), baseline median 35.4 ms.
+See P4_REPORT.md for every mode/scenario result, actual populations, all wall
+percentiles/stalls, CPU exclusions, digests and software-renderer limits.
+
+Completed cycle 5: full units/types/lint/build, production exclusion/boot/play/
+pause/tool check, three focused serial browsers per theme, zero retries. Full
+local Chromium/stress suites deliberately deferred to Actions or a consolidated
+multi-session gate under the owner's newer resource policy; no P4 CI pass claimed.
+Dense Default/Low and settings screenshots inspected for readable actor/map/UI
+art and fitted controls in both themes. Seeded model reports and frozen-input/
+live dispatch tests preserve gameplay/presentation isolation. Measured runtime
+source matches delivered code. No dependencies, gameplay tuning or save storage.
+
+Delivery is local on `codex/v0.4.3`, subject
+`feat(v0.4.3): add a lightweight presentation mode`. Original eight dirty plan
+files (including the active plan's historical annotation) and both prompts stay
+unstaged; backups remain at /private/tmp/arena-p4-session-20261015T004113Z. No push/PR/merge/deploy. Owned browser/
+recorder/server cleanup is verified; unrelated review server 4213 untouched.
+Next eligible session: P5 lifecycle, first resolving REC-117 active/tracked pickup
+retention; physical older-device, sustained 300-live mixed combat, another browser
+and longer lifecycle/startup readiness remain pending.

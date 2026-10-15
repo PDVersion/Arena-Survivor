@@ -18,6 +18,8 @@ const mode = argument("mode", "both");
 const scenario = argument("scenario", "default");
 const interfaces = argument("interface", "visible").split(",");
 const profile = process.argv.includes("--profile");
+const quality = argument("quality", "default");
+if (!["default", "low"].includes(quality)) throw new Error("quality must be default or low");
 const p3 = argument("p3", "none");
 if (!["none", "dense", "distributed", "combat", "pickups"].includes(p3) || (p3 !== "none" && (mode !== "test" || scenario !== "capacity"))) throw new Error("P3 fixtures require test/capacity and dense/distributed/combat/pickups");
 const headed = process.argv.includes("--headed");
@@ -47,7 +49,10 @@ const sourceSha256 = Object.fromEntries(await Promise.all([
   "src/game/scenes/run-scene.ts", "src/game/ui/hud.ts", "src/game/ui/minimap-ui.ts",
   "src/game/systems/spatial/spatial-hash.ts", "src/game/systems/separation/crowd-separation.ts",
   "src/game/systems/statistics/run-statistics.ts",
-  "src/game/content/active-theme.ts",
+  "src/game/content/active-theme.ts", "src/game/ui/pause-menu-ui.ts",
+  "src/game/state/settings-state.ts", "src/game/scenes/menu-scene.ts",
+  "src/game/core/archetypes/tuning.ts", "src/game/content/define-theme.ts",
+  "src/game/content/themes/eco-guardian/view.ts", "src/game/content/themes/knight-magic/view.ts",
 ].map(async (path) => [path, createHash("sha256").update(await readFile(path)).digest("hex")])));
 const productionSha256 = mode === "test" ? undefined : Object.fromEntries(await Promise.all(
   (await readdir("dist/assets")).filter((name) => name.endsWith(".js")).map(async (name) =>
@@ -176,6 +181,20 @@ try {
           };
           Object.assign(window, { __P3_CONTROL__: control });
         }, { fixture: p3, count: loadCount });
+        if (quality === "low") {
+          await page.keyboard.press("Escape");
+          await page.waitForTimeout(200);
+          for (let tab = 0; tab < 4; tab += 1) {
+            await page.keyboard.press("Tab");
+            await page.waitForTimeout(150);
+          }
+          const box = await page.locator("canvas").boundingBox();
+          if (!box) throw new Error("Missing canvas bounds");
+          await page.locator("canvas").click({ position: { x: 1230 * box.width / 1600, y: 507.5 * box.height / 900 } });
+          if (buildMode === "test") await page.waitForFunction(() =>
+            (window.__ARENA_TEST__?.getSnapshot().ui?.settings as { presentationQuality?: string } | undefined)?.presentationQuality === "low");
+          await page.keyboard.press("Escape");
+        }
         // Exercise the real pause/settings pointer path; no writable state hook.
         if (interfaceState !== "visible") {
           await page.keyboard.press("Escape");
@@ -354,7 +373,7 @@ try {
             for (const wallFrameMs of sample.intervals) frames.observe({ wallFrameMs, simulationDeltaMs: 0, active: true });
             const measured = frames.snapshot(true);
             const durations = Object.fromEntries(["ScriptDuration", "TaskDuration", "LayoutDuration", "RecalcStyleDuration"].map((name) => [name, (after[name] ?? 0) - (before[name] ?? 0)]));
-            results.push({ buildMode, scenario, interfaceState, loadCount: loadCount || undefined, repeat, startedAt, environment, warmupSeconds: warmup,
+            results.push({ buildMode, quality, scenario, interfaceState, loadCount: loadCount || undefined, repeat, startedAt, environment, warmupSeconds: warmup,
               requestedSeconds: seconds, actualSeconds: sample.elapsedMs / 1000,
               pageRaf: { capturedFrames: sample.frames, retainedFrames: sample.intervals.length,
                 averageMs: sample.frames === 0 ? 0 : sample.totalMs / sample.frames,
@@ -391,7 +410,7 @@ try {
     workingTree: argument("source-state", "") || execFileSync("git", ["status", "--short"], { encoding: "utf8" }),
     device: { cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length, memoryBytes: os.totalmem(),
       platform: os.platform(), release: os.release(), arch: os.arch(), node: process.version },
-    browserVersion: browser.version(), options: { seconds, warmup, repeats, mode, scenario, headed, interfaces, profile, p3, loads: scenario === "capacity" ? loads : undefined }, results,
+    browserVersion: browser.version(), options: { seconds, warmup, repeats, mode, scenario, headed, interfaces, profile, p3, quality, loads: scenario === "capacity" ? loads : undefined }, results,
     }, null, 2) + "\n");
   } finally {
     try {

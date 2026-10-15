@@ -92,6 +92,7 @@ import {
 } from "../systems/upgrades/describe-upgrade";
 import {
   cycleMinimapOpacity,
+  cyclePresentationQuality,
   cycleDifficulty,
   getSessionSettings,
   toggleSetting,
@@ -681,6 +682,7 @@ export class RunScene extends Phaser.Scene {
       this.runTheme,
       ARENA_SIZE,
       getSessionSettings().minimapOpacity,
+      getSessionSettings().presentationQuality,
     );
     if (testSkillEnabled("debugBodies")) this.bodyDebug = this.add.graphics().setDepth(100);
 
@@ -2557,13 +2559,14 @@ export class RunScene extends Phaser.Scene {
   private applySetting(key: SettingKey): void {
     const current = getSessionSettings();
     const next = updateSessionSettings(
-      key === "difficulty" ? cycleDifficulty(current) : key === "minimapOpacity"
+      key === "presentationQuality" ? cyclePresentationQuality(current) : key === "difficulty" ? cycleDifficulty(current) : key === "minimapOpacity"
         ? cycleMinimapOpacity(current)
         : toggleSetting(current, key),
     );
     this.reducedMotion = prefersReducedMotion() || next.reducedMotion;
     this.audioFeedback.setMuted(next.muted);
     this.minimap?.setOpacity(next.minimapOpacity);
+    this.minimap?.setPresentationQuality(next.presentationQuality);
     this.pauseMenu?.refresh(this.pauseMenuView());
     this.publishTelemetry();
   }

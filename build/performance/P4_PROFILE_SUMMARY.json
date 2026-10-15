@@ -1,0 +1,492 @@
+{
+  "baseline": {
+    "sourceRevision": "05c1d4e",
+    "device": {
+      "cpu": "Apple M5 Pro",
+      "logicalCpus": 18,
+      "memoryBytes": 51539607552,
+      "platform": "darwin",
+      "release": "25.5.0",
+      "arch": "arm64",
+      "node": "v20.20.2"
+    },
+    "browserVersion": "151.0.7922.34",
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 1
+      },
+      "canvas": {
+        "width": 1600,
+        "height": 900
+      },
+      "renderer": {
+        "type": "WebGL",
+        "vendor": "Google Inc. (Google)",
+        "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "testInterface": true
+    },
+    "pageRaf": {
+      "capturedFrames": 297,
+      "retainedFrames": 297,
+      "averageMs": 33.78888888888889,
+      "maxMs": 42.30000000000109,
+      "distribution": {
+        "p50Ms": 33.399999999999636,
+        "p95Ms": 41.69999999999982,
+        "p99Ms": 41.80000000000018
+      },
+      "stallPercent": 0,
+      "stateFrames": {
+        "playing": 297
+      }
+    },
+    "mainThread": {
+      "units": "seconds of Chromium main-thread work over the measured page window",
+      "ScriptDuration": 1.2771400000000002,
+      "TaskDuration": 10.22337,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0
+    },
+    "population": {
+      "liveMin": 300,
+      "liveMax": 300,
+      "visibleMin": 285,
+      "visibleMax": 293
+    },
+    "interfaceWork": {
+      "mapUpdates": 310,
+      "hiddenMapUpdates": 0,
+      "mapEnemyInputs": 93000,
+      "hudUpdates": 310,
+      "hudSetText": 30,
+      "hudTextureUpdates": 6
+    },
+    "topSampledSelfMs": [
+      {
+        "function": "(program)",
+        "file": "",
+        "ms": 9079.140000000065
+      },
+      {
+        "function": "earcutLinked",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 261.9099999999998
+      },
+      {
+        "function": "isEarHashed",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 168.25199999999998
+      },
+      {
+        "function": "GraphicsWebGLRenderer",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 163.26199999999992
+      },
+      {
+        "function": "batchFillPath",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 129.26
+      },
+      {
+        "function": "countCoincidentPairs",
+        "file": "run-scene.ts",
+        "ms": 115.58300000000001
+      },
+      {
+        "function": "earcut",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 110.46899999999998
+      },
+      {
+        "function": "(garbage collector)",
+        "file": "",
+        "ms": 54.05499999999999
+      },
+      {
+        "function": "URLSearchParams",
+        "file": "",
+        "ms": 43.966
+      },
+      {
+        "function": "separateCrowd",
+        "file": "crowd-separation.ts",
+        "ms": 21.35
+      },
+      {
+        "function": "batchSprite",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 16.258
+      },
+      {
+        "function": "sync",
+        "file": "sprite-view.ts",
+        "ms": 13.833999999999998
+      },
+      {
+        "function": "publishTelemetry",
+        "file": "run-scene.ts",
+        "ms": 12.562
+      },
+      {
+        "function": "",
+        "file": "run-scene.ts",
+        "ms": 10.067
+      },
+      {
+        "function": "testSkillEnabled",
+        "file": "run-scene.ts",
+        "ms": 10.060999999999998
+      },
+      {
+        "function": "QuickSelect",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 10.042
+      },
+      {
+        "function": "bufferData",
+        "file": "",
+        "ms": 7.533999999999999
+      },
+      {
+        "function": "postUpdate",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 7.529999999999999
+      },
+      {
+        "function": "preUpdate",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 7.292999999999999
+      },
+      {
+        "function": "update",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 6.353999999999999
+      },
+      {
+        "function": "render",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 6.287
+      },
+      {
+        "function": "toBBox",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 6.285
+      },
+      {
+        "function": "batchLine",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 6.281
+      },
+      {
+        "function": "ContainerWebGLRenderer",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 5.0169999999999995
+      },
+      {
+        "function": "getVisibleChildren",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 3.774
+      },
+      {
+        "function": "requestAnimationFrame",
+        "file": "",
+        "ms": 3.766
+      },
+      {
+        "function": "texImage2D",
+        "file": "",
+        "ms": 2.529
+      },
+      {
+        "function": "tick",
+        "file": "",
+        "ms": 2.5229999999999997
+      },
+      {
+        "function": "batchQuad",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 2.517
+      },
+      {
+        "function": "multiSelect",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 2.513
+      },
+      {
+        "function": "updateLoadHighWaterMarks",
+        "file": "run-scene.ts",
+        "ms": 2.511
+      },
+      {
+        "function": "preRender",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 2.511
+      },
+      {
+        "function": "compareMinY",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 2.511
+      },
+      {
+        "function": "separateCircle",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 2.51
+      },
+      {
+        "function": "collideSpriteVsGroup",
+        "file": "phaser.js?v=f68865f2",
+        "ms": 2.51
+      }
+    ],
+    "note": "Separate 10-second overhead-bearing CPU/heap/wrapper probe; not sustained timing. Square experiment patched only minimap enemy drawDots in isolated archive. No simulation attribution to renderer or diagnostic countCoincidentPairs."
+  },
+  "squareExperiment": {
+    "sourceRevision": "05c1d4e",
+    "device": {
+      "cpu": "Apple M5 Pro",
+      "logicalCpus": 18,
+      "memoryBytes": 51539607552,
+      "platform": "darwin",
+      "release": "25.5.0",
+      "arch": "arm64",
+      "node": "v20.20.2"
+    },
+    "browserVersion": "151.0.7922.34",
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 1
+      },
+      "canvas": {
+        "width": 1600,
+        "height": 900
+      },
+      "renderer": {
+        "type": "WebGL",
+        "vendor": "Google Inc. (Google)",
+        "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "testInterface": true
+    },
+    "pageRaf": {
+      "capturedFrames": 534,
+      "retainedFrames": 534,
+      "averageMs": 18.74194756554307,
+      "maxMs": 25.899999999999636,
+      "distribution": {
+        "p50Ms": 16.700000000000728,
+        "p95Ms": 25,
+        "p99Ms": 25.100000000000364
+      },
+      "stallPercent": 0,
+      "stateFrames": {
+        "playing": 534
+      }
+    },
+    "mainThread": {
+      "units": "seconds of Chromium main-thread work over the measured page window",
+      "ScriptDuration": 0.678801,
+      "TaskDuration": 10.123178000000001,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 0
+    },
+    "population": {
+      "liveMin": 300,
+      "liveMax": 300,
+      "visibleMin": 282,
+      "visibleMax": 289
+    },
+    "interfaceWork": {
+      "mapUpdates": 548,
+      "hiddenMapUpdates": 0,
+      "mapEnemyInputs": 164400,
+      "hudUpdates": 548,
+      "hudSetText": 25,
+      "hudTextureUpdates": 5
+    },
+    "topSampledSelfMs": [
+      {
+        "function": "(program)",
+        "file": "",
+        "ms": 9587.69600000004
+      },
+      {
+        "function": "countCoincidentPairs",
+        "file": "run-scene.ts",
+        "ms": 231.62799999999976
+      },
+      {
+        "function": "URLSearchParams",
+        "file": "",
+        "ms": 38.815
+      },
+      {
+        "function": "sync",
+        "file": "sprite-view.ts",
+        "ms": 26.401000000000003
+      },
+      {
+        "function": "(garbage collector)",
+        "file": "",
+        "ms": 21.380000000000003
+      },
+      {
+        "function": "separateCrowd",
+        "file": "crowd-separation.ts",
+        "ms": 21.243999999999996
+      },
+      {
+        "function": "batchSprite",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 20.091
+      },
+      {
+        "function": "GraphicsWebGLRenderer",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 18.84
+      },
+      {
+        "function": "earcutLinked",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 16.320999999999998
+      },
+      {
+        "function": "preUpdate",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 14.981999999999998
+      },
+      {
+        "function": "publishTelemetry",
+        "file": "run-scene.ts",
+        "ms": 14.873000000000001
+      },
+      {
+        "function": "",
+        "file": "run-scene.ts",
+        "ms": 13.813999999999998
+      },
+      {
+        "function": "",
+        "file": "crowd-separation.ts",
+        "ms": 13.795
+      },
+      {
+        "function": "update",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 13.783
+      },
+      {
+        "function": "batchFillPath",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 11.289000000000001
+      },
+      {
+        "function": "postUpdate",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 10.052
+      },
+      {
+        "function": "getVisibleChildren",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 8.802999999999999
+      },
+      {
+        "function": "rebuildEnemyIndex",
+        "file": "run-scene.ts",
+        "ms": 8.79
+      },
+      {
+        "function": "isEarHashed",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 8.779
+      },
+      {
+        "function": "render",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 7.544
+      },
+      {
+        "function": "forEachWithin",
+        "file": "spatial-hash.ts",
+        "ms": 6.676
+      },
+      {
+        "function": "batchFillRect",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 6.2860000000000005
+      },
+      {
+        "function": "batchLine",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 6.285
+      },
+      {
+        "function": "batchQuad",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 6.285
+      },
+      {
+        "function": "get",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 6.278
+      },
+      {
+        "function": "StableSort",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 5.028
+      },
+      {
+        "function": "compareMinY",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 5.023999999999999
+      },
+      {
+        "function": "testSkillEnabled",
+        "file": "run-scene.ts",
+        "ms": 5.023
+      },
+      {
+        "function": "step",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 5.022
+      },
+      {
+        "function": "",
+        "file": "install-telemetry.ts",
+        "ms": 3.877
+      },
+      {
+        "function": "texImage2D",
+        "file": "",
+        "ms": 3.7779999999999996
+      },
+      {
+        "function": "setQuad",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 3.774
+      },
+      {
+        "function": "fillRect",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 3.774
+      },
+      {
+        "function": "earcut",
+        "file": "phaser.js?v=1f4075a5",
+        "ms": 3.7729999999999997
+      },
+      {
+        "function": "RunScene.<computed>",
+        "file": "",
+        "ms": 3.77
+      }
+    ],
+    "note": "Separate 10-second overhead-bearing CPU/heap/wrapper probe; not sustained timing. Square experiment patched only minimap enemy drawDots in isolated archive. No simulation attribution to renderer or diagnostic countCoincidentPairs."
+  }
+}

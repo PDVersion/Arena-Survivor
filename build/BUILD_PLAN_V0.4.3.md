@@ -16,7 +16,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 ## Execution status
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2/P3 verified; P4 next; Q5 CI/audit repair verified (REC-113/114).** The merged readable
+**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2/P3/P4 verified; P5 next; Q5 CI/audit repair verified (REC-113/114).** The merged readable
 baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
 authorized performance P0–P6 from the autonomous roadmap, ahead of content
 growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
@@ -198,7 +198,7 @@ are excluded from these performance phases.
 | P1 | Telemetry call sites in scenes, main boot failure, test-support bridge, architecture/production guard tests; measurement reports/script and bench-only load/cap options per Q2 | `perf(v0.4.3): avoid production telemetry work` |
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
 | P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
-| P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests | `feat(v0.4.3): add a lightweight presentation mode` |
+| P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
 | P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline | `fix(v0.4.3): bound lifecycle and startup costs` |
 | P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
 
@@ -211,7 +211,7 @@ are excluded from these performance phases.
   resize, opacity, pause/restart and prompt critical status updates.
 - [x] P3 — improve measured simulation hotspot; preserve targets, causal order,
   exact rewards/ledger, caps and stress; skip speculative optimization.
-- [ ] P4 — add Default/Low only if measured presentation cost warrants it;
+- [x] P4 — measured Default/Low enemy minimap geometry; affected local gate accepted;
   simulation, visible world and telegraphs remain equivalent. Read `SAVE_DATA.md`
   before serializable settings; presentation budgets stay theme-owned.
 - [ ] P5 — sustained play/restarts/focus and cold/warm startup evidence; fix only
@@ -424,3 +424,17 @@ This preserves REC-064's principle, which is that the run's length and its
 difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
+
+
+P4 accepted 2026-10-15 under the owner's limited-local-browser policy (REC-118).
+Default retains circular enemy minimap markers; Low uses direct theme-owned
+rectangles, with unchanged centres/extents, cadence, essential markers and game
+rules. Twenty-seven serial warmed >=60-second windows compare frozen baseline,
+candidate Default and Low across visible 300-live map, combat bursts and
+production. Low dense-map median wall p95 is 25.1 ms vs Default 41.7 ms (~40%
+lower); baseline dense varies (median 35.4 ms). No universal or physical-device
+speedup is claimed. Types/units/lint/build/production check and six affected
+browser cases (three per theme), one worker/zero retries, pass. Full local
+Chromium/stress is deferred to Actions or the combined multi-session gate per
+owner; no current P4 CI pass is claimed. Report: `performance/P4_REPORT.md`.
+P5 is next and must address REC-117; P5/content work has not started.

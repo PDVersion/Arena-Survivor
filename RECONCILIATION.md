@@ -5,8 +5,8 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3 software gates verified; P4 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P4–P6 readiness remains gated; REC-117 pickup retention blocks P5 completion.**
+- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3/P4 affected software gates verified; P5 next. F16 is delivered; other content selections remain pending.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P5–P6 readiness remains gated; REC-117 pickup retention blocks P5 completion.**
 
 ## How to maintain this file
 
@@ -3119,3 +3119,47 @@ tracked/active/body populations across repeated bursts and restart, and preserve
 exact reward sums/claim semantics. No P5 code is pulled into this P3 session.
 Do not describe `progression.pickups` (currently Set size) as an active count
 without checking `active`. Revisit at the authorized P5 lifecycle session.
+
+
+### REC-118 — Minimap circles triangulate again even when their command buffer is retained
+
+- Status: Accepted
+- Date: 2026-10-15
+- Affects: V0.4.3 P4 presentation and later rendering measurements
+- Blocks: None; REC-117 still blocks P5 completion
+
+The separate short dense-map CPU probe identifies Phaser Graphics arc/path
+triangulation and batching, separate from test-only coincident-pair diagnostics.
+Phaser replays retained Graphics paths each rendered frame, so merely reducing
+map-update cadence would not avoid their render cost. An isolated square-marker
+probe lowers p95 41.7→25.0 ms; sustained candidate Default/Low repeats confirm
+41.7→25.1 ms median p95 for the visible 300-live map. Starting baseline dense
+median is 35.4 ms with repeat variation; preserve every repeat and both comparisons.
+These are SwiftShader software-renderer observations, not older integrated GPU
+acceptance or a claim that all gameplay becomes faster.
+
+Add one memory-only Default/Low setting through shared title/pause/session
+settings. Both theme view packs own enemy minimap shape mappings. Low changes
+only circular enemy overview markers to direct rectangles at the same centre
+and extents; Default keeps existing circles. Map cadence, essential player/site/
+hazard markers, world/actor/UI art, critical HUD updates, hitboxes and every
+simulation rule remain unchanged. No renderer resolution policy, automatic
+quality switching, sprites, gameplay tuning or persistence is introduced.
+
+Frozen source/build hashes, 27 serial warmed >=60-second repeats, all wall
+p95/p99/max/stalls/actual populations, CPU scope and exclusions, failed harness
+preflights and affected gate results are in `build/performance/P4_REPORT.md`.
+Both-theme units cover immutable map inputs and seeded spawn/kill/XP model
+equivalence; actual setting dispatch needs only presentation/settings
+collaborators. Six single-worker affected browser checks cover reversal, pause,
+resize/pointer transforms, opacity, reduced motion, restart/next run, upgrade
+overlay and dense-map visuals. Full units/types/lint/build and production guard/
+boot checks pass. Screenshots were inspected separately from timing windows.
+
+Owner testing policy: reserve heavy local browser work for necessary current-
+change checks, run serially, and clean up owned processes. Whole-app browser/
+stress regression is deferred to Actions or a consolidated check after several
+sessions (recorded in AGENTS.md), overriding older blanket per-session commands.
+Deferred checks are never labelled passed; current P4 work remains local with
+no push or CI claim. P5 must still resolve REC-117; physical older-device,
+additional-browser and sustained 300-live mixed combat remain pending.

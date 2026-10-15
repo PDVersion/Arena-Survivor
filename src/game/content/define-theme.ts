@@ -742,6 +742,12 @@ function validateTuning(
     issues.push("tuning.pace.gameplayRate must be greater than zero and at most one");
   }
 
+  for (const quality of ["default", "low"] as const) {
+    if (!["circle", "square"].includes(tuning.view?.minimapEnemyShapes?.[quality] ?? "")) {
+      issues.push(`tuning.view.minimapEnemyShapes.${quality} must be circle or square`);
+    }
+  }
+
   const curve = tuning.progression?.xpCurve;
   if (!curve) {
     issues.push("tuning.progression.xpCurve is required");

@@ -276,7 +276,7 @@ export const alternateTheme = defineTheme({
       experienced: { enemyHealth: 1.2, enemyDamage: 1.2, enemySpeed: 1, spawnRate: 1.2, playerHealth: 1, playerSpeed: 1, pickupRadius: 1, weaponDamage: 1, weaponCooldown: 1, hazardDamage: 1.2, hazardRate: 1.2 },
     },
 
-    view: { zoom: 1 },
+    view: { zoom: 1, minimapEnemyShapes: { default: "circle", low: "square" } },
     pace: { gameplayRate: 1 },
     progression: {
       xpCurve: { kind: "linear", baseXp: 2, step: 2 },

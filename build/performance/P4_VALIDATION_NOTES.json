@@ -1,0 +1,116 @@
+{
+  "initialBrowserConfig": "Temporary config generated an invalid baseURL key; parse failed before execution; corrected.",
+  "primaryResize": "Two primary cases passed, one test incorrectly expected physical display dimensions unchanged on resize. Corrected to assert fixed logical/world dimensions and actual displayWidth 900; only this case rerun passed. Retained-theme all three passed. No automatic retries.",
+  "priorAttempts": [
+    [
+      {
+        "command": "npm run typecheck",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:09.604966+00:00",
+        "finishedAt": "2026-10-15T01:57:11.324964+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-0.log"
+      },
+      {
+        "command": "npm test -- --run",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:11.325119+00:00",
+        "finishedAt": "2026-10-15T01:57:12.383837+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-1.log"
+      },
+      {
+        "command": "npm run lint",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:12.383988+00:00",
+        "finishedAt": "2026-10-15T01:57:13.657238+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-2.log"
+      },
+      {
+        "command": "npm run build",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:13.657406+00:00",
+        "finishedAt": "2026-10-15T01:57:17.091667+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-3.log"
+      },
+      {
+        "command": "npm run check:production -- /private/tmp/arena-p4-session-20261015T004113Z/production-check.json",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:17.091835+00:00",
+        "finishedAt": "2026-10-15T01:57:19.426323+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-4.log"
+      },
+      {
+        "command": "npx playwright test --config /private/tmp/arena-p4-session-20261015T004113Z/after/playwright-p4-primary.config.ts presentation-v043.spec.ts --retries=0",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:19.426509+00:00",
+        "finishedAt": "2026-10-15T01:57:19.909395+00:00",
+        "exitCode": 1,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-5.log"
+      }
+    ],
+    [
+      {
+        "command": "npm run typecheck",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:09.604966+00:00",
+        "finishedAt": "2026-10-15T01:57:11.324964+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-0.log"
+      },
+      {
+        "command": "npm test -- --run",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:11.325119+00:00",
+        "finishedAt": "2026-10-15T01:57:12.383837+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-1.log"
+      },
+      {
+        "command": "npm run lint",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:12.383988+00:00",
+        "finishedAt": "2026-10-15T01:57:13.657238+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-2.log"
+      },
+      {
+        "command": "npm run build",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:13.657406+00:00",
+        "finishedAt": "2026-10-15T01:57:17.091667+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-3.log"
+      },
+      {
+        "command": "npm run check:production -- /private/tmp/arena-p4-session-20261015T004113Z/production-check.json",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T01:57:17.091835+00:00",
+        "finishedAt": "2026-10-15T01:57:19.426323+00:00",
+        "exitCode": 0,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-015709-4.log"
+      },
+      {
+        "command": "npx playwright test --config /private/tmp/arena-p4-session-20261015T004113Z/after/playwright-p4-primary.config.ts presentation-v043.spec.ts --retries=0",
+        "cwd": "/Users/pdv/Documents/Projects/Arena-Survivor",
+        "startedAt": "2026-10-15T02:07:58.451137+00:00",
+        "finishedAt": "2026-10-15T02:08:22.687462+00:00",
+        "exitCode": 1,
+        "log": "/private/tmp/arena-p4-session-20261015T004113Z/gate-020758-5.log"
+      }
+    ]
+  ],
+  "screenshotsReviewed": [
+    "eco_guardian dense Default/Low and settings",
+    "knight_magic dense Low and settings"
+  ],
+  "ownedPortsClosed": [
+    4173,
+    4174,
+    4186,
+    4187
+  ]
+}
