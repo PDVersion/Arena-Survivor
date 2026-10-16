@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-10-13T22:47:52Z",
+  "results": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.7150452136993408,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-0.log"
+    },
+    {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--run"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.0155432224273682,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-1.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.2604079246520996,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-2.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3.5261738300323486,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-3.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check:production",
+        "--",
+        "build/performance/P3_PRODUCTION_CHECK.json"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.5505130290985107,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-4.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "--config",
+        "/private/tmp/arena-p3-session-20261013/playwright.p3.config.ts",
+        "tests/e2e/phase-five-v03.spec.ts",
+        "tests/e2e/phase-nine-v03.spec.ts",
+        "--workers=1",
+        "--retries=0"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 90.50234866142273,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-5.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:ci",
+        "--",
+        "--config",
+        "/private/tmp/arena-p3-session-20261013/playwright.p3.config.ts",
+        "--retries=0"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 164.01243901252747,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-6.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:stress",
+        "--",
+        "--config",
+        "/private/tmp/arena-p3-session-20261013/playwright.p3.config.ts",
+        "--workers=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 33.981449842453,
+      "log": "/private/tmp/arena-p3-session-20261013/gate-7.log"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-15T01:08:14.457Z",
+  "sourceSha256": {
+    "src/game/scenes/run-scene.ts": "6e1b3726a69c850ab72f023896012c22ec5ab9e1de9ea623e691f485cf04f89d",
+    "src/game/ui/hud.ts": "660e4c5cbaebe4a1de20ff9c0dc4659f6f2a2aeea329f0337073990bbdf76d05",
+    "src/game/ui/minimap-ui.ts": "30ad12d5e6f0a317b6fd3bda3cc5e4bebae97abad4b7096197d12812c0c541b2",
+    "src/game/systems/spatial/spatial-hash.ts": "9436ecb77982d55484dd5d1cb3389fea0049bb5713430632b7d105b49ff5b08e",
+    "src/game/systems/separation/crowd-separation.ts": "a68d628e870d01bde64bd43018170d862db1c6126b8e01f3a91eefb94adb8eb6",
+    "src/game/systems/statistics/run-statistics.ts": "592ddf86d2be91abc816df0e812f37cc1c5ea41e6e7b8d07c3439663736422ef",
+    "src/game/content/active-theme.ts": "2ffb77b34b41648a42c1eea37803b540f61d05bc07cc6f6b3108f7ea738c5756",
+    "src/game/ui/pause-menu-ui.ts": "86567016a9a331389c2d6583774283c3efa1b78ae4d9d9ebdfecb46243dc00fb",
+    "src/game/state/settings-state.ts": "7218fdffdb2604307ada59e66db75ed66f07d5385aaa96999fc178f4954084b8",
+    "src/game/scenes/menu-scene.ts": "524a2e7add37e89b78f29aab530cc21cd40b9b4ac7f9fa6489feba6d516aa2e9",
+    "src/game/core/archetypes/tuning.ts": "95d37e52329ec66e8af8d0491831a0c1203eae3f82fabde76fd07fb45f981c55",
+    "src/game/content/define-theme.ts": "f0cbe35218e4d216e0f102cc44fef358e6ade189135f23345e52be2809e29e73",
+    "src/game/content/themes/eco-guardian/view.ts": "c1e6c47f0e442852be2cf50358da87382e1b4fca14579b098b82cc0cfbecdb6f",
+    "src/game/content/themes/knight-magic/view.ts": "c1e6c47f0e442852be2cf50358da87382e1b4fca14579b098b82cc0cfbecdb6f"
+  },
+  "revision": "05c1d4e",
+  "workingTree": "frozen-p4",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "options": {
+    "seconds": 3,
+    "warmup": 1,
+    "repeats": 1,
+    "mode": "test",
+    "scenario": "capacity",
+    "headed": false,
+    "interfaces": [
+      "visible"
+    ],
+    "profile": false,
+    "p3": "dense",
+    "quality": "low",
+    "loads": [
+      300
+    ]
+  },
+  "results": []
+}

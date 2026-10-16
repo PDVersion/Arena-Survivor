@@ -282,6 +282,8 @@ export interface UpgradeTiersTuning {
 export interface ViewTuning {
   /** World camera zoom. The fixed renderer and screen-space UI are unchanged. */
   readonly zoom: number;
+  /** Cheaper geometry for optional overview markers; never actor/body art. */
+  readonly minimapEnemyShapes: Readonly<Record<"default" | "low", "circle" | "square">>;
 }
 
 /** One reversible mapping from real time to playable simulation time. */

@@ -97,8 +97,16 @@ export function observePierceChain(statistics: RunStatistics, chain: number): Ru
 }
 
 export function recordCommittedKill(statistics: RunStatistics, nowMs: number): RunStatistics {
-  const retained = statistics.recentKillTimesMs.filter((time) => time > nowMs - KILL_CHAIN_WINDOW_MS && time <= nowMs);
-  const recentKillTimesMs = Object.freeze([...retained, nowMs]);
+  // One owned result buffer preserves the immutable input and timestamp order.
+  // Chained kills repeatedly visit a large window; filter + spread used two
+  // buffers and copied the retained window a second time on every kill.
+  const retained: number[] = [];
+  const oldest = nowMs - KILL_CHAIN_WINDOW_MS;
+  for (const time of statistics.recentKillTimesMs) {
+    if (time > oldest && time <= nowMs) retained.push(time);
+  }
+  retained.push(nowMs);
+  const recentKillTimesMs = Object.freeze(retained);
   return {
     ...statistics,
     kills: statistics.kills + 1,

@@ -168,7 +168,7 @@ function status(entries: readonly ThemeRegistryEntry[]): void {
     process.stdout.write(`\n${entry.key} (${entry.id})\n`);
     if (sprites.length === 0) {
       // Not a warning. A pack with no sprites renders primitives, which is a
-      // complete and supported state — see `build/SPRITE_PLAN_V0.4.1.md` §1.
+      // complete and supported state — see `build/MASTER_BUILD_PLAN.md#v0-4-1-3-contract-changes`.
       process.stdout.write("  no sprites declared — every actor renders its primitive\n");
       continue;
     }

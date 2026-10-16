@@ -1,0 +1,951 @@
+{
+  "recordedAt": "2026-10-13T06:14:07.566Z",
+  "sourceSha256": {
+    "src/game/scenes/run-scene.ts": "ad64c0923a80c929f0890c3312be4244b5d9ec47cc289aabc8f244c3afe675fd",
+    "src/game/ui/hud.ts": "660e4c5cbaebe4a1de20ff9c0dc4659f6f2a2aeea329f0337073990bbdf76d05",
+    "src/game/ui/minimap-ui.ts": "b6ac7d1e1bc249c3da577fc5145ef26275122f502cd52ac34b283ea2ac66c67f",
+    "src/game/systems/spatial/spatial-hash.ts": "9436ecb77982d55484dd5d1cb3389fea0049bb5713430632b7d105b49ff5b08e",
+    "src/game/systems/separation/crowd-separation.ts": "a68d628e870d01bde64bd43018170d862db1c6126b8e01f3a91eefb94adb8eb6",
+    "src/game/systems/statistics/run-statistics.ts": "592ddf86d2be91abc816df0e812f37cc1c5ea41e6e7b8d07c3439663736422ef",
+    "src/game/content/active-theme.ts": "a748548eda57bb63810f6dbb4e336b88edba336254485fae928546b353478820"
+  },
+  "revision": "64e77c4",
+  "workingTree": "archived-after-knight",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "options": {
+    "seconds": 60,
+    "warmup": 10,
+    "repeats": 3,
+    "mode": "test",
+    "scenario": "capacity",
+    "headed": false,
+    "interfaces": [
+      "hidden"
+    ],
+    "profile": false,
+    "p3": "combat",
+    "loads": [
+      300
+    ]
+  },
+  "results": [
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "interfaceState": "hidden",
+      "loadCount": 300,
+      "repeat": 1,
+      "startedAt": "2026-10-13T06:10:25.007Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.0047,
+      "pageRaf": {
+        "capturedFrames": 2404,
+        "retainedFrames": 2404,
+        "averageMs": 24.96185524126456,
+        "maxMs": 57.599999999998545,
+        "distribution": {
+          "p50Ms": 25,
+          "p95Ms": 33.39999999999418,
+          "p99Ms": 33.70000000001164
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 2404
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 4.961251000000001,
+        "TaskDuration": 60.035036000000005,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 43447288,
+        "afterBytes": 20816816,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 0,
+        "liveMax": 168,
+        "visibleMin": 0,
+        "visibleMax": 168
+      },
+      "windowStart": {
+        "kills": 3063,
+        "effects": {
+          "explosionsCommitted": 121,
+          "chainExplosionsCommitted": 2942,
+          "fractureQueued": 226,
+          "fractureSpawned": 188,
+          "bloodlustKills": 3063,
+          "bloodlustAttackSpeedBonus": 4.59,
+          "directDamage": 3007.9228539610385,
+          "explosionDamage": 12288.997750537681,
+          "chainedExplosionDamage": 53382.0636969061,
+          "eventBacklog": 283,
+          "eventBacklogHighWater": 518,
+          "processedEvents": 8946
+        },
+        "elapsedMs": 4474.5725999999995
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 2,
+          "baggedWaste": 19,
+          "environment": 0,
+          "benchmark": 1
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 1444,
+          "baggedWaste": 9181,
+          "environment": 0,
+          "benchmark": 9370
+        }
+      },
+      "p3Work": {
+        "control": {
+          "fixture": "combat",
+          "bursts": 31,
+          "replenished": 9070,
+          "controllerMs": 15.200000047683716
+        }
+      },
+      "combat": {
+        "spriteFramesByRole": {
+          "enemy.swarm_basic": null,
+          "enemy.fast_fragile": null,
+          "enemy.slow_durable": null,
+          "enemy.death_spawner": null,
+          "enemy.stationary_fragment": null
+        },
+        "weaponId": "weapon.starter",
+        "deliveryKind": "projectile",
+        "enemyId": "enemy.swarm_basic",
+        "projectiles": 21,
+        "shotsFired": 231,
+        "meleeStrikes": 0,
+        "meleeHits": 0,
+        "grabberActive": 0,
+        "collectionSweepAttacks": 0,
+        "collectionSweepsTriggered": 0,
+        "collectionSweepHits": 0,
+        "firstMeleeHitAtMs": null,
+        "firstKillAtMs": 0,
+        "firstContactAtMs": null,
+        "criticalShots": 231,
+        "highestCritTier": 2,
+        "longestPierceChain": 9,
+        "contactHits": 0,
+        "enemyCap": 300,
+        "projectileCap": 192,
+        "projectileSample": {
+          "id": "projectile-207",
+          "x": 3258.126871379123,
+          "y": 1126.0674160996273,
+          "velocityX": 399.4868140764671,
+          "velocityY": -20.2555024384529,
+          "damage": 20,
+          "critTier": 1,
+          "pierceChainIndex": 0
+        },
+        "roster": {
+          "enemy.swarm_basic": 0,
+          "enemy.fast_fragile": 21,
+          "enemy.slow_durable": 1,
+          "enemy.death_spawner": 0,
+          "enemy.stationary_fragment": 0
+        },
+        "rosterHighWater": {
+          "enemy.swarm_basic": 60,
+          "enemy.fast_fragile": 190,
+          "enemy.slow_durable": 60,
+          "enemy.death_spawner": 60,
+          "enemy.stationary_fragment": 60
+        },
+        "offspringQueued": 9370,
+        "offspringSpawned": 9181
+      },
+      "progression": {
+        "pickups": 0,
+        "pickupsDropped": 0,
+        "pickupsCollected": 0,
+        "pickupsMerged": 0,
+        "choiceIds": [],
+        "selectedUpgradeIds": [],
+        "skillLevels": {
+          "skill.piercing_momentum": 3,
+          "skill.on_kill_explosion": 3,
+          "skill.fracture": 2,
+          "skill.bloodlust": 2,
+          "skill.chain_reaction": 2,
+          "skill.collection_sweep": 0
+        },
+        "pierceBonus": 8,
+        "projectileCountBonus": 0
+      },
+      "crowd": {
+        "indexed": 9,
+        "pairChecks": 43,
+        "pairChecksHighWater": 15415,
+        "adjustments": 406633,
+        "solidResolutions": 0,
+        "contactShoves": 0,
+        "weaponShoves": 0,
+        "coincidentPairs": 24
+      },
+      "effects": {
+        "explosionsCommitted": 1037,
+        "chainExplosionsCommitted": 18933,
+        "fractureQueued": 1478,
+        "fractureSpawned": 1444,
+        "bloodlustKills": 3231,
+        "bloodlustAttackSpeedBonus": 4.845,
+        "directDamage": 25913.350534665606,
+        "explosionDamage": 83832.02271051798,
+        "chainedExplosionDamage": 309451.7889470327,
+        "eventBacklog": 229,
+        "eventBacklogHighWater": 518,
+        "processedEvents": 59635
+      },
+      "statistics": {
+        "kills": 19973,
+        "peakEnemiesAlive": 300,
+        "highestChaos": 1,
+        "highestCritChance": 1.4,
+        "highestCritTier": 2,
+        "longestPierceChain": 9,
+        "largestKillChain": 3403,
+        "totalDamage": 419197.16219221626,
+        "damageBreakdown": {
+          "direct": 12575.291773010398,
+          "criticalBonus": 8777.960462317542,
+          "piercingMomentum": 4560.098299337663,
+          "explosion": 83832.02271051798,
+          "chainedExplosion": 309451.7889470327,
+          "remainder": 0
+        },
+        "summaryMetrics": [
+          "Foes Vanquished: 19973",
+          "Peak Foes: 300",
+          "Highest Chaos: 1×",
+          "Highest Critical Chance: 140%",
+          "Highest Overcrit Tier: 2",
+          "Longest Pierce: 9",
+          "Largest Kill Chain: 3403"
+        ],
+        "summaryDamage": [
+          "Total Damage: 419197.16",
+          "Direct: 12575.29",
+          "Critical Bonus: 8777.96",
+          "Piercing Momentum: 4560.1",
+          "Explosion: 83832.02",
+          "Chained Explosion: 309451.79",
+          "Other / Remainder: 0"
+        ],
+        "upgradeCounts": {},
+        "summaryUpgrades": []
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 300,
+        "spawned": 300,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 300,
+        "processedEffects": 300,
+        "gameplayBacklogHighWater": 518,
+        "processedGameplayEvents": 59635,
+        "droppedPresentationCues": 56058,
+        "liveHighWater": 300,
+        "trackedHighWater": 301,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 2240,
+        "averageFrameMs": 24.778526785714288,
+        "maxFrameMs": 42.09999999999127,
+        "averageSimulationDeltaMs": 12.469383928571434,
+        "excludedFrames": 728,
+        "updateCpuSamples": 2240,
+        "averageUpdateCpuMs": 1.4474107144134385,
+        "maxUpdateCpuMs": 5.8999998569488525,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 2240,
+          "throughSample": 2240,
+          "wall": {
+            "p50Ms": 25,
+            "p95Ms": 33.30000000000291,
+            "p99Ms": 33.70000000000073
+          },
+          "updateCpu": {
+            "p50Ms": 1.5999999046325684,
+            "p95Ms": 2.3000001907348633,
+            "p99Ms": 3.0999999046325684
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 30703.813200000037,
+        "durationMs": 300000,
+        "kills": 19973,
+        "liveEnemies": 22,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 191,
+        "hitStopDenied": 633,
+        "hitStopSpentMs": 120,
+        "damageAccumulated": 73494,
+        "damageFlushed": 73494,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 900,
+        "deathCause": null
+      },
+      "errors": [],
+      "note": "P3 combat: measurement-only controller; inspect control/actual population, not sustained 300 combat. Controlled mixed crowd; see P3 fixture/options for gameplay overrides. Test instrumentation included, not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    },
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "interfaceState": "hidden",
+      "loadCount": 300,
+      "repeat": 2,
+      "startedAt": "2026-10-13T06:11:39.399Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.01230000004769,
+      "pageRaf": {
+        "capturedFrames": 2344,
+        "retainedFrames": 2344,
+        "averageMs": 25.60439419795222,
+        "maxMs": 41.80000000000291,
+        "distribution": {
+          "p50Ms": 25,
+          "p95Ms": 33.39999999999418,
+          "p99Ms": 33.79999999999927
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 2344
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 4.981953,
+        "TaskDuration": 60.03800799999999,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 23981760,
+        "afterBytes": 46017516,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 0,
+        "liveMax": 168,
+        "visibleMin": 0,
+        "visibleMax": 168
+      },
+      "windowStart": {
+        "kills": 3012,
+        "effects": {
+          "explosionsCommitted": 117,
+          "chainExplosionsCommitted": 2895,
+          "fractureQueued": 262,
+          "fractureSpawned": 220,
+          "bloodlustKills": 3012,
+          "bloodlustAttackSpeedBonus": 4.515,
+          "directDamage": 3288.6399622857143,
+          "explosionDamage": 11995.561804410412,
+          "chainedExplosionDamage": 52060.31096561669,
+          "eventBacklog": 237,
+          "eventBacklogHighWater": 426,
+          "processedEvents": 8859
+        },
+        "elapsedMs": 4474.477800000001
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 4,
+          "baggedWaste": 21,
+          "environment": 0,
+          "benchmark": 3
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 1412,
+          "baggedWaste": 9065,
+          "environment": 0,
+          "benchmark": 9337
+        }
+      },
+      "p3Work": {
+        "control": {
+          "fixture": "combat",
+          "bursts": 31,
+          "replenished": 9037,
+          "controllerMs": 16.700000047683716
+        }
+      },
+      "combat": {
+        "spriteFramesByRole": {
+          "enemy.swarm_basic": null,
+          "enemy.fast_fragile": null,
+          "enemy.slow_durable": null,
+          "enemy.death_spawner": null,
+          "enemy.stationary_fragment": null
+        },
+        "weaponId": "weapon.starter",
+        "deliveryKind": "projectile",
+        "enemyId": "enemy.swarm_basic",
+        "projectiles": 19,
+        "shotsFired": 231,
+        "meleeStrikes": 0,
+        "meleeHits": 0,
+        "grabberActive": 0,
+        "collectionSweepAttacks": 0,
+        "collectionSweepsTriggered": 0,
+        "collectionSweepHits": 0,
+        "firstMeleeHitAtMs": null,
+        "firstKillAtMs": 0,
+        "firstContactAtMs": null,
+        "criticalShots": 231,
+        "highestCritTier": 2,
+        "longestPierceChain": 9,
+        "contactHits": 0,
+        "enemyCap": 300,
+        "projectileCap": 192,
+        "projectileSample": {
+          "id": "projectile-207",
+          "x": 2725.7527572054687,
+          "y": 28.23796060337057,
+          "velocityX": 247.9694885371745,
+          "velocityY": -313.8648319812401,
+          "damage": 50,
+          "critTier": 1,
+          "pierceChainIndex": 5
+        },
+        "roster": {
+          "enemy.swarm_basic": 0,
+          "enemy.fast_fragile": 25,
+          "enemy.slow_durable": 3,
+          "enemy.death_spawner": 0,
+          "enemy.stationary_fragment": 0
+        },
+        "rosterHighWater": {
+          "enemy.swarm_basic": 60,
+          "enemy.fast_fragile": 199,
+          "enemy.slow_durable": 60,
+          "enemy.death_spawner": 60,
+          "enemy.stationary_fragment": 60
+        },
+        "offspringQueued": 9335,
+        "offspringSpawned": 9065
+      },
+      "progression": {
+        "pickups": 0,
+        "pickupsDropped": 0,
+        "pickupsCollected": 0,
+        "pickupsMerged": 0,
+        "choiceIds": [],
+        "selectedUpgradeIds": [],
+        "skillLevels": {
+          "skill.piercing_momentum": 3,
+          "skill.on_kill_explosion": 3,
+          "skill.fracture": 2,
+          "skill.bloodlust": 2,
+          "skill.chain_reaction": 2,
+          "skill.collection_sweep": 0
+        },
+        "pierceBonus": 8,
+        "projectileCountBonus": 0
+      },
+      "crowd": {
+        "indexed": 11,
+        "pairChecks": 73,
+        "pairChecksHighWater": 15881,
+        "adjustments": 394057,
+        "solidResolutions": 0,
+        "contactShoves": 0,
+        "weaponShoves": 0,
+        "coincidentPairs": 31
+      },
+      "effects": {
+        "explosionsCommitted": 999,
+        "chainExplosionsCommitted": 18782,
+        "fractureQueued": 1456,
+        "fractureSpawned": 1412,
+        "bloodlustKills": 3193,
+        "bloodlustAttackSpeedBonus": 4.77,
+        "directDamage": 26102.009924600665,
+        "explosionDamage": 83676.06130250727,
+        "chainedExplosionDamage": 306807.6404087056,
+        "eventBacklog": 324,
+        "eventBacklogHighWater": 510,
+        "processedEvents": 59076
+      },
+      "statistics": {
+        "kills": 19786,
+        "peakEnemiesAlive": 300,
+        "highestChaos": 1,
+        "highestCritChance": 1.4,
+        "highestCritTier": 2,
+        "longestPierceChain": 9,
+        "largestKillChain": 3395,
+        "totalDamage": 416585.7116358136,
+        "damageBreakdown": {
+          "direct": 12092.872014013643,
+          "criticalBonus": 9183.017278950661,
+          "piercingMomentum": 4826.120631636362,
+          "explosion": 83676.06130250727,
+          "chainedExplosion": 306807.6404087056,
+          "remainder": 0
+        },
+        "summaryMetrics": [
+          "Foes Vanquished: 19786",
+          "Peak Foes: 300",
+          "Highest Chaos: 1×",
+          "Highest Critical Chance: 140%",
+          "Highest Overcrit Tier: 2",
+          "Longest Pierce: 9",
+          "Largest Kill Chain: 3395"
+        ],
+        "summaryDamage": [
+          "Total Damage: 416585.71",
+          "Direct: 12092.87",
+          "Critical Bonus: 9183.02",
+          "Piercing Momentum: 4826.12",
+          "Explosion: 83676.06",
+          "Chained Explosion: 306807.64",
+          "Other / Remainder: 0"
+        ],
+        "upgradeCounts": {},
+        "summaryUpgrades": []
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 300,
+        "spawned": 300,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 300,
+        "processedEffects": 300,
+        "gameplayBacklogHighWater": 510,
+        "processedGameplayEvents": 59076,
+        "droppedPresentationCues": 55408,
+        "liveHighWater": 300,
+        "trackedHighWater": 301,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 2184,
+        "averageFrameMs": 25.3441391941392,
+        "maxFrameMs": 34.80000000000291,
+        "averageSimulationDeltaMs": 12.760155677655682,
+        "excludedFrames": 719,
+        "updateCpuSamples": 2184,
+        "averageUpdateCpuMs": 1.4925824195255726,
+        "maxUpdateCpuMs": 6.199999809265137,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 2184,
+          "throughSample": 2184,
+          "wall": {
+            "p50Ms": 25,
+            "p95Ms": 33.399999999999636,
+            "p99Ms": 33.79999999999927
+          },
+          "updateCpu": {
+            "p50Ms": 1.5999999046325684,
+            "p95Ms": 2.3999998569488525,
+            "p99Ms": 3.200000047683716
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 30669.50300000001,
+        "durationMs": 300000,
+        "kills": 19786,
+        "liveEnemies": 28,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 189,
+        "hitStopDenied": 625,
+        "hitStopSpentMs": 180,
+        "damageAccumulated": 71262,
+        "damageFlushed": 71262,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 900,
+        "deathCause": null
+      },
+      "errors": [],
+      "note": "P3 combat: measurement-only controller; inspect control/actual population, not sustained 300 combat. Controlled mixed crowd; see P3 fixture/options for gameplay overrides. Test instrumentation included, not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    },
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "interfaceState": "hidden",
+      "loadCount": 300,
+      "repeat": 3,
+      "startedAt": "2026-10-13T06:12:53.489Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.0055,
+      "pageRaf": {
+        "capturedFrames": 2363,
+        "retainedFrames": 2363,
+        "averageMs": 25.396572154041472,
+        "maxMs": 50.80000000000291,
+        "distribution": {
+          "p50Ms": 25,
+          "p95Ms": 33.39999999999418,
+          "p99Ms": 33.70000000000073
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 2363
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 5.058356,
+        "TaskDuration": 60.029211000000004,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 38053848,
+        "afterBytes": 48184956,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 0,
+        "liveMax": 172,
+        "visibleMin": 0,
+        "visibleMax": 172
+      },
+      "windowStart": {
+        "kills": 3121,
+        "effects": {
+          "explosionsCommitted": 112,
+          "chainExplosionsCommitted": 2983,
+          "fractureQueued": 250,
+          "fractureSpawned": 214,
+          "bloodlustKills": 3121,
+          "bloodlustAttackSpeedBonus": 4.68,
+          "directDamage": 3276.9657135064936,
+          "explosionDamage": 12019.294021371434,
+          "chainedExplosionDamage": 53875.137474045776,
+          "eventBacklog": 344,
+          "eventBacklogHighWater": 518,
+          "processedEvents": 9047
+        },
+        "elapsedMs": 4405.8532
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 20
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 1530,
+          "baggedWaste": 9105,
+          "environment": 0,
+          "benchmark": 9207
+        }
+      },
+      "p3Work": {
+        "control": {
+          "fixture": "combat",
+          "bursts": 31,
+          "replenished": 9102,
+          "controllerMs": 16.40000033378601
+        }
+      },
+      "combat": {
+        "spriteFramesByRole": {
+          "enemy.swarm_basic": null,
+          "enemy.fast_fragile": null,
+          "enemy.slow_durable": null,
+          "enemy.death_spawner": null,
+          "enemy.stationary_fragment": null
+        },
+        "weaponId": "weapon.starter",
+        "deliveryKind": "projectile",
+        "enemyId": "enemy.swarm_basic",
+        "projectiles": 18,
+        "shotsFired": 237,
+        "meleeStrikes": 0,
+        "meleeHits": 0,
+        "grabberActive": 0,
+        "collectionSweepAttacks": 0,
+        "collectionSweepsTriggered": 0,
+        "collectionSweepHits": 0,
+        "firstMeleeHitAtMs": null,
+        "firstKillAtMs": 0,
+        "firstContactAtMs": null,
+        "criticalShots": 237,
+        "highestCritTier": 2,
+        "longestPierceChain": 9,
+        "contactHits": 0,
+        "enemyCap": 300,
+        "projectileCap": 192,
+        "projectileSample": {
+          "id": "projectile-213",
+          "x": 3071.299615913977,
+          "y": 509.6075528937013,
+          "velocityX": 351.511414538426,
+          "velocityY": -190.8919208588851,
+          "damage": 62.000000000000014,
+          "critTier": 1,
+          "pierceChainIndex": 7
+        },
+        "roster": {
+          "enemy.swarm_basic": 3,
+          "enemy.fast_fragile": 3,
+          "enemy.slow_durable": 8,
+          "enemy.death_spawner": 3,
+          "enemy.stationary_fragment": 3
+        },
+        "rosterHighWater": {
+          "enemy.swarm_basic": 60,
+          "enemy.fast_fragile": 168,
+          "enemy.slow_durable": 60,
+          "enemy.death_spawner": 60,
+          "enemy.stationary_fragment": 60
+        },
+        "offspringQueued": 9190,
+        "offspringSpawned": 9105
+      },
+      "progression": {
+        "pickups": 0,
+        "pickupsDropped": 0,
+        "pickupsCollected": 0,
+        "pickupsMerged": 0,
+        "choiceIds": [],
+        "selectedUpgradeIds": [],
+        "skillLevels": {
+          "skill.piercing_momentum": 3,
+          "skill.on_kill_explosion": 3,
+          "skill.fracture": 2,
+          "skill.bloodlust": 2,
+          "skill.chain_reaction": 2,
+          "skill.collection_sweep": 0
+        },
+        "pierceBonus": 8,
+        "projectileCountBonus": 0
+      },
+      "crowd": {
+        "indexed": 11,
+        "pairChecks": 43,
+        "pairChecksHighWater": 15415,
+        "adjustments": 369454,
+        "solidResolutions": 0,
+        "contactShoves": 0,
+        "weaponShoves": 0,
+        "coincidentPairs": 0
+      },
+      "effects": {
+        "explosionsCommitted": 1009,
+        "chainExplosionsCommitted": 18810,
+        "fractureQueued": 1546,
+        "fractureSpawned": 1530,
+        "bloodlustKills": 3269,
+        "bloodlustAttackSpeedBonus": 4.89,
+        "directDamage": 27838.71058270651,
+        "explosionDamage": 77500.09518588656,
+        "chainedExplosionDamage": 307623.2961195904,
+        "eventBacklog": 302,
+        "eventBacklogHighWater": 518,
+        "processedEvents": 59180
+      },
+      "statistics": {
+        "kills": 19822,
+        "peakEnemiesAlive": 300,
+        "highestChaos": 1,
+        "highestCritChance": 1.4,
+        "highestCritTier": 2,
+        "longestPierceChain": 9,
+        "largestKillChain": 3475,
+        "totalDamage": 412962.1018881835,
+        "damageBreakdown": {
+          "direct": 12721.540184602603,
+          "criticalBonus": 9595.290209116894,
+          "piercingMomentum": 5521.880188987013,
+          "explosion": 77500.09518588656,
+          "chainedExplosion": 307623.2961195904,
+          "remainder": 0
+        },
+        "summaryMetrics": [
+          "Foes Vanquished: 19822",
+          "Peak Foes: 300",
+          "Highest Chaos: 1×",
+          "Highest Critical Chance: 140%",
+          "Highest Overcrit Tier: 2",
+          "Longest Pierce: 9",
+          "Largest Kill Chain: 3475"
+        ],
+        "summaryDamage": [
+          "Total Damage: 412962.1",
+          "Direct: 12721.54",
+          "Critical Bonus: 9595.29",
+          "Piercing Momentum: 5521.88",
+          "Explosion: 77500.1",
+          "Chained Explosion: 307623.3",
+          "Other / Remainder: 0"
+        ],
+        "upgradeCounts": {},
+        "summaryUpgrades": []
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 300,
+        "spawned": 300,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 300,
+        "processedEffects": 300,
+        "gameplayBacklogHighWater": 518,
+        "processedGameplayEvents": 59180,
+        "droppedPresentationCues": 55656,
+        "liveHighWater": 300,
+        "trackedHighWater": 301,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 2159,
+        "averageFrameMs": 25.207410838351105,
+        "maxFrameMs": 50.80000000000291,
+        "averageSimulationDeltaMs": 12.655435386753114,
+        "excludedFrames": 759,
+        "updateCpuSamples": 2159,
+        "averageUpdateCpuMs": 1.509031958025658,
+        "maxUpdateCpuMs": 6.8999998569488525,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 2159,
+          "throughSample": 2159,
+          "wall": {
+            "p50Ms": 25,
+            "p95Ms": 33.39999999999418,
+            "p99Ms": 33.79999999999927
+          },
+          "updateCpu": {
+            "p50Ms": 1.5999999046325684,
+            "p95Ms": 2.4000000953674316,
+            "p99Ms": 3.0999999046325684
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 30315.02360000001,
+        "durationMs": 300000,
+        "kills": 19822,
+        "liveEnemies": 20,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 201,
+        "hitStopDenied": 610,
+        "hitStopSpentMs": 180,
+        "damageAccumulated": 73322,
+        "damageFlushed": 73322,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 900,
+        "deathCause": null
+      },
+      "errors": [],
+      "note": "P3 combat: measurement-only controller; inspect control/actual population, not sustained 300 combat. Controlled mixed crowd; see P3 fixture/options for gameplay overrides. Test instrumentation included, not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    }
+  ]
+}

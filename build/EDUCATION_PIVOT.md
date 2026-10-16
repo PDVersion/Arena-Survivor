@@ -6,7 +6,7 @@ It is **not a scheduled milestone**. The primary work remains building a fun gam
 
 Two decisions from this exploration have now been promoted into committed work:
 the environment theme became the primary production theme in
-[`BUILD_PLAN_V0.3.md`](./BUILD_PLAN_V0.3.md), and V0.4.2 now makes readability
+[`MASTER_BUILD_PLAN.md#v0-3`](./MASTER_BUILD_PLAN.md#v0-3), and V0.4.2 now makes readability
 the baseline through a cropped 2× view, a 0.5 gameplay rate, and a real-world
 Cleanup Grabber starter. Everything else here remains exploratory.
 
@@ -57,7 +57,7 @@ than enlarging its art or bodies, slows one coherent gameplay clock, and begins
 with a recognisable pickup grabber instead of an abstract energy orb. The
 300-enemy limit remains a stress ceiling; crowd size is no longer evidence that
 the lesson or the game is working. See
-[`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
+[`MASTER_BUILD_PLAN.md#v0-4-2`](./MASTER_BUILD_PLAN.md#v0-4-2).
 
 That rule includes the interface: reference copy, upgrade descriptions, and
 settings are rendered at a crisp scalable baseline and are reachable before a

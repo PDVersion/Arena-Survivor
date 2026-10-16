@@ -95,6 +95,8 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!theme.copy.arenaName.trim()) issues.push("arena name is required");
   if (!theme.copy.bootStatus.trim()) issues.push("boot status copy is required");
   if (!theme.copy.bootFailure.trim()) issues.push("boot failure copy is required");
+  if (!theme.copy.bootRetry.trim()) issues.push("boot retry copy is required");
+  if (!theme.copy.bootGraphicsFailure.trim()) issues.push("boot graphics failure copy is required");
   if (!theme.copy.movementHint.trim()) issues.push("movement hint copy is required");
   if (!theme.copy.levelUpTitle.trim()) issues.push("level-up title copy is required");
   for (const key of ["live", "total", "natural", "fragmentation", "baggedWaste", "environment", "benchmark"] as const) {
@@ -740,6 +742,12 @@ function validateTuning(
     tuning.pace.gameplayRate > 1
   ) {
     issues.push("tuning.pace.gameplayRate must be greater than zero and at most one");
+  }
+
+  for (const quality of ["default", "low"] as const) {
+    if (!["circle", "square"].includes(tuning.view?.minimapEnemyShapes?.[quality] ?? "")) {
+      issues.push(`tuning.view.minimapEnemyShapes.${quality} must be circle or square`);
+    }
   }
 
   const curve = tuning.progression?.xpCurve;

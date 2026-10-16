@@ -1,0 +1,12 @@
+{
+  "before": {
+    "src/game/scenes/run-scene.ts": "daaa5e3b674b8c06e2d34a1c991a3bac0e9f4656275bf651de6ca4e85a0b9a53",
+    "src/game/ui/hud.ts": "358942c6945d7f18e2177a8f6600aa86e23b95426dd446e3e1c77c057b9b72e4",
+    "src/game/ui/minimap-ui.ts": "2190410301ca02f25ac7db9de85f45973aba055960dc2e11b9fe65cecadee546"
+  },
+  "after": {
+    "src/game/scenes/run-scene.ts": "ad64c0923a80c929f0890c3312be4244b5d9ec47cc289aabc8f244c3afe675fd",
+    "src/game/ui/hud.ts": "660e4c5cbaebe4a1de20ff9c0dc4659f6f2a2aeea329f0337073990bbdf76d05",
+    "src/game/ui/minimap-ui.ts": "b6ac7d1e1bc249c3da577fc5145ef26275122f502cd52ac34b283ea2ac66c67f"
+  }
+}

@@ -45,6 +45,11 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     return this.value;
   }
 
+  /** Claimed actors remain only as short-lived collection presentation. */
+  get isClaimed(): boolean {
+    return this.collected;
+  }
+
   /**
    * Absorb another pickup's value.
    *

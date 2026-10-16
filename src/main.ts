@@ -1,6 +1,4 @@
-import Phaser from "phaser";
 import "./style.css";
-import { createGameConfig } from "./game/config";
 import { activeTheme } from "./game/content/active-theme";
 import { validateTheme } from "./game/content/define-theme";
 import { updateTestTelemetry } from "./test-support/telemetry-bridge";
@@ -10,11 +8,17 @@ const app = document.querySelector<HTMLElement>("#app");
 function showBootFailure(error: unknown): void {
   const detail = error instanceof Error ? error.message : String(error);
   if (app) {
-    app.innerHTML = "";
-    const message = document.createElement("p");
+    const message = document.createElement("div");
     message.className = "boot-failure";
-    message.textContent = `${activeTheme.copy.bootFailure} ${detail}`;
-    app.append(message);
+    message.setAttribute("role", "alert");
+    const description = document.createElement("p");
+    description.textContent = `${activeTheme.copy.bootFailure} ${detail}`;
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.textContent = activeTheme.copy.bootRetry;
+    retry.addEventListener("click", () => window.location.reload(), { once: true });
+    message.append(description, retry);
+    app.replaceChildren(message);
   }
   if (import.meta.env.MODE === "test") updateTestTelemetry({
     status: "failed",
@@ -32,9 +36,17 @@ async function boot(): Promise<void> {
     const issues = validateTheme(activeTheme);
     if (issues.length > 0) throw new Error(issues.join("; "));
     if (!app) throw new Error("Missing application root");
+    // Every renderer needs 2D canvases for text. Check before Phaser evaluates
+    // its canvas feature probes, which otherwise fail outside construction.
+    if (!document.createElement("canvas").getContext("2d")) {
+      throw new Error(activeTheme.copy.bootGraphicsFailure);
+    }
 
     app.innerHTML = '<div id="game-container" aria-label="Arena Survivor game"></div>';
-    new Phaser.Game(createGameConfig("game-container"));
+    // A dependency may fail before Phaser can construct a Game (for example,
+    // unsupported canvas contexts). Keep that import inside the recovery boundary.
+    const { startGame } = await import("./game/start-game");
+    startGame("game-container", showBootFailure);
   } catch (error) {
     showBootFailure(error);
   }

@@ -7,15 +7,16 @@ Two things make that work, and they are the whole document: a **style lock** tha
 never changes between prompts, and a **subject slot** that is the only thing that
 does. Everything else here is scaffolding around those two ideas.
 
-Read this alongside [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md), which owns
-the inventory, the pipeline, and the integration work. This file owns the look.
+Read this alongside [`MASTER_BUILD_PLAN.md#v0-4-1`](./MASTER_BUILD_PLAN.md#v0-4-1), for the completed pipeline, and
+[SPRITE_PLAN_V0.4.4.md](SPRITE_PLAN_V0.4.4.md) for the gated remaining inventory.
+This file owns the look.
 
 > **On the reference.** The target was given as "HoloCure-like, somewhat 2-bit but
 > still detailed enough", with an ArtStation link. The specification below is
 > written from that description, not from an analysis of the image — nobody
 > should treat these numbers as measured from the reference. They are a starting
 > point to be corrected once the first batch exists. Correcting them is expected;
-> see [Tuning the style lock](#tuning-the-style-lock).
+> see [Tuning the style lock](#8-tuning-the-style-lock).
 
 ---
 

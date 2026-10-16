@@ -1,0 +1,463 @@
+{
+  "recordedAt": "2026-10-13T03:56:57.330Z",
+  "sourceSha256": {
+    "src/game/scenes/run-scene.ts": "daaa5e3b674b8c06e2d34a1c991a3bac0e9f4656275bf651de6ca4e85a0b9a53",
+    "src/game/ui/hud.ts": "358942c6945d7f18e2177a8f6600aa86e23b95426dd446e3e1c77c057b9b72e4",
+    "src/game/ui/minimap-ui.ts": "2190410301ca02f25ac7db9de85f45973aba055960dc2e11b9fe65cecadee546"
+  },
+  "revision": "6f9ec78a6e59168a771bf9e2afc719eba6b05c5e",
+  "workingTree": " M scripts/performance.ts\n?? node_modules\n",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "options": {
+    "seconds": 60,
+    "warmup": 10,
+    "repeats": 3,
+    "mode": "test",
+    "scenario": "capacity",
+    "headed": false,
+    "interfaces": [
+      "visible"
+    ],
+    "profile": false,
+    "loads": [
+      300
+    ]
+  },
+  "results": [
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "interfaceState": "visible",
+      "loadCount": 300,
+      "repeat": 1,
+      "startedAt": "2026-10-13T03:53:23.188Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.0325,
+      "pageRaf": {
+        "capturedFrames": 1749,
+        "retainedFrames": 1749,
+        "averageMs": 34.32407089765581,
+        "maxMs": 50,
+        "distribution": {
+          "p50Ms": 33.30000000000291,
+          "p95Ms": 41.69999999999709,
+          "p99Ms": 42.099999999998545
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 1749
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 6.2340290000000005,
+        "TaskDuration": 60.095023999999995,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 17610432,
+        "afterBytes": 33526992,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 300,
+        "liveMax": 300,
+        "visibleMin": 289,
+        "visibleMax": 293
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 300
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 300
+        }
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 300,
+        "spawned": 300,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 300,
+        "processedEffects": 300,
+        "gameplayBacklogHighWater": 0,
+        "processedGameplayEvents": 0,
+        "droppedPresentationCues": 71,
+        "liveHighWater": 300,
+        "trackedHighWater": 300,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 2048,
+        "averageFrameMs": 34.271142578125,
+        "maxFrameMs": 50,
+        "averageSimulationDeltaMs": 16.72771647135414,
+        "excludedFrames": 27,
+        "updateCpuSamples": 2048,
+        "averageUpdateCpuMs": 0.6941894540796056,
+        "maxUpdateCpuMs": 10.099999904632568,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 2048,
+          "throughSample": 2048,
+          "wall": {
+            "p50Ms": 33.30000000000291,
+            "p95Ms": 41.69999999999709,
+            "p99Ms": 42
+          },
+          "updateCpu": {
+            "p50Ms": 0.6999998092651367,
+            "p95Ms": 0.9000000953674316,
+            "p99Ms": 1.5
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 34266.696666666605,
+        "durationMs": 300000,
+        "kills": 0,
+        "liveEnemies": 300,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 0,
+        "hitStopDenied": 0,
+        "hitStopSpentMs": 0,
+        "damageAccumulated": 0,
+        "damageFlushed": 0,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 0,
+        "deathCause": null
+      },
+      "errors": [],
+      "note": "Controlled mixed crowd with no weapon/contact/XP/hazards; test instrumentation included. Not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    },
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "interfaceState": "visible",
+      "loadCount": 300,
+      "repeat": 2,
+      "startedAt": "2026-10-13T03:54:34.811Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.01219999985695,
+      "pageRaf": {
+        "capturedFrames": 1714,
+        "retainedFrames": 1714,
+        "averageMs": 35.0144690781797,
+        "maxMs": 50,
+        "distribution": {
+          "p50Ms": 33.30000000000291,
+          "p95Ms": 41.70000000000073,
+          "p99Ms": 41.80000000000291
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 1714
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 6.234304,
+        "TaskDuration": 60.074352999999995,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 28742136,
+        "afterBytes": 21807680,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 300,
+        "liveMax": 300,
+        "visibleMin": 290,
+        "visibleMax": 293
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 300
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 300
+        }
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 300,
+        "spawned": 300,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 300,
+        "processedEffects": 300,
+        "gameplayBacklogHighWater": 0,
+        "processedGameplayEvents": 0,
+        "droppedPresentationCues": 71,
+        "liveHighWater": 300,
+        "trackedHighWater": 300,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 2004,
+        "averageFrameMs": 35.0124251497006,
+        "maxFrameMs": 50,
+        "averageSimulationDeltaMs": 17.082688789088515,
+        "excludedFrames": 27,
+        "updateCpuSamples": 2004,
+        "averageUpdateCpuMs": 0.6942115755614169,
+        "maxUpdateCpuMs": 10.700000047683716,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 2004,
+          "throughSample": 2004,
+          "wall": {
+            "p50Ms": 33.30000000000291,
+            "p95Ms": 41.70000000000073,
+            "p99Ms": 41.80000000000291
+          },
+          "updateCpu": {
+            "p50Ms": 0.6999998092651367,
+            "p95Ms": 0.8999998569488525,
+            "p99Ms": 1.5
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 34242.041666666715,
+        "durationMs": 300000,
+        "kills": 0,
+        "liveEnemies": 300,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 0,
+        "hitStopDenied": 0,
+        "hitStopSpentMs": 0,
+        "damageAccumulated": 0,
+        "damageFlushed": 0,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 0,
+        "deathCause": null
+      },
+      "errors": [],
+      "note": "Controlled mixed crowd with no weapon/contact/XP/hazards; test instrumentation included. Not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    },
+    {
+      "buildMode": "test",
+      "scenario": "capacity",
+      "interfaceState": "visible",
+      "loadCount": 300,
+      "repeat": 3,
+      "startedAt": "2026-10-13T03:55:46.101Z",
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720,
+          "devicePixelRatio": 1
+        },
+        "canvas": {
+          "width": 1600,
+          "height": 900
+        },
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "testInterface": true
+      },
+      "warmupSeconds": 10,
+      "requestedSeconds": 60,
+      "actualSeconds": 60.008400000143055,
+      "pageRaf": {
+        "capturedFrames": 1717,
+        "retainedFrames": 1717,
+        "averageMs": 34.95096097845079,
+        "maxMs": 68.79999999999563,
+        "distribution": {
+          "p50Ms": 33.099999999998545,
+          "p95Ms": 41.400000000001455,
+          "p99Ms": 41.79999999999927
+        },
+        "stallPercent": 0,
+        "stateFrames": {
+          "playing": 1717
+        }
+      },
+      "mainThread": {
+        "units": "seconds of Chromium main-thread work over the measured page window",
+        "ScriptDuration": 6.208994000000001,
+        "TaskDuration": 59.983968000000004,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0
+      },
+      "heap": {
+        "beforeBytes": 19615204,
+        "afterBytes": 38139988,
+        "note": "GC-dependent observations, not leak evidence"
+      },
+      "population": {
+        "liveMin": 300,
+        "liveMax": 300,
+        "visibleMin": 288,
+        "visibleMax": 295
+      },
+      "spawnOrigins": {
+        "live": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 300
+        },
+        "spawned": {
+          "natural": 0,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 300
+        }
+      },
+      "instrumented": {
+        "enabled": true,
+        "requested": 300,
+        "spawned": 300,
+        "eventBacklog": 0,
+        "eventBacklogHighWater": 300,
+        "processedEffects": 300,
+        "gameplayBacklogHighWater": 0,
+        "processedGameplayEvents": 0,
+        "droppedPresentationCues": 71,
+        "liveHighWater": 300,
+        "trackedHighWater": 300,
+        "clock": "phaser-raw-wall-ms",
+        "frameSamples": 2006,
+        "averageFrameMs": 34.96809571286141,
+        "maxFrameMs": 68.79999999999563,
+        "averageSimulationDeltaMs": 17.044779827185124,
+        "excludedFrames": 27,
+        "updateCpuSamples": 2006,
+        "averageUpdateCpuMs": 0.6953140578027499,
+        "maxUpdateCpuMs": 10.599999904632568,
+        "distribution": {
+          "capacity": 4096,
+          "windowSamples": 2006,
+          "throughSample": 2006,
+          "wall": {
+            "p50Ms": 33.100000000000364,
+            "p95Ms": 41.5,
+            "p99Ms": 41.80000000000109
+          },
+          "updateCpu": {
+            "p50Ms": 0.7000000476837158,
+            "p95Ms": 0.8999998569488525,
+            "p99Ms": 1.5999999046325684
+          },
+          "stallsOver100Ms": 0,
+          "stallPercent": 0
+        }
+      },
+      "run": {
+        "difficulty": "normal",
+        "status": "paused",
+        "mode": "timed",
+        "elapsedMs": 34200.16166666669,
+        "durationMs": 300000,
+        "kills": 0,
+        "liveEnemies": 300,
+        "level": 1,
+        "xp": 0,
+        "xpToNextLevel": 3,
+        "pendingChoices": 0
+      },
+      "impact": {
+        "hitStopGranted": 0,
+        "hitStopDenied": 0,
+        "hitStopSpentMs": 0,
+        "damageAccumulated": 0,
+        "damageFlushed": 0,
+        "pendingNumbers": 0,
+        "killChainDetuneCents": 0,
+        "deathCause": null
+      },
+      "errors": [],
+      "note": "Controlled mixed crowd with no weapon/contact/XP/hazards; test instrumentation included. Not combat/device acceptance. Page rAF includes menus/choices/feedback; production state unavailable. Instrumented active metrics begin at scene creation and use a rolling 4096-sample window. No hardware acceptance or causal cost attribution."
+    }
+  ]
+}

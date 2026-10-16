@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-10-13T05:44:05.748Z",
+  "sourceSha256": "592ddf86d2be91abc816df0e812f37cc1c5ea41e6e7b8d07c3439663736422ef",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "platform": "darwin",
+    "release": "25.5.0",
+    "node": "v20.20.2"
+  },
+  "note": "Fixed frozen inputs, sequential 10000 calls; microbenchmark only, not browser throughput/device acceptance",
+  "checksum": 99090000,
+  "results": [
+    {
+      "count": 0,
+      "repeat": 1,
+      "calls": 10000,
+      "elapsedMs": 1.1845419999999933
+    },
+    {
+      "count": 0,
+      "repeat": 2,
+      "calls": 10000,
+      "elapsedMs": 0.5718749999999915
+    },
+    {
+      "count": 0,
+      "repeat": 3,
+      "calls": 10000,
+      "elapsedMs": 0.5083750000000009
+    },
+    {
+      "count": 300,
+      "repeat": 1,
+      "calls": 10000,
+      "elapsedMs": 16.741416
+    },
+    {
+      "count": 300,
+      "repeat": 2,
+      "calls": 10000,
+      "elapsedMs": 16.919624999999996
+    },
+    {
+      "count": 300,
+      "repeat": 3,
+      "calls": 10000,
+      "elapsedMs": 16.617458999999997
+    },
+    {
+      "count": 3000,
+      "repeat": 1,
+      "calls": 10000,
+      "elapsedMs": 169.421
+    },
+    {
+      "count": 3000,
+      "repeat": 2,
+      "calls": 10000,
+      "elapsedMs": 167.8315
+    },
+    {
+      "count": 3000,
+      "repeat": 3,
+      "calls": 10000,
+      "elapsedMs": 168.49262499999998
+    }
+  ]
+}

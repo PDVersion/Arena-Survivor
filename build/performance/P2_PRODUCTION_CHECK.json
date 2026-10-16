@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-13T04:32:43.825Z",
+  "browserVersion": "151.0.7922.34",
+  "bundlesChecked": [
+    "combat-7l6na_nE.js",
+    "game-BT5fXVR5.js",
+    "sprites-CNArbwcS.js"
+  ],
+  "diagnosticMarkersAbsent": true,
+  "testInterfaceAbsent": true,
+  "productionBootPlayPause": true,
+  "spriteBrowserLoads": true,
+  "startingStatsVerified": true,
+  "architectureNavigation": true,
+  "errors": []
+}

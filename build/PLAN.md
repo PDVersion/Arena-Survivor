@@ -45,14 +45,14 @@ a short-range Cleanup Grabber starter. Actors become larger on screen through
 camera zoom only: sprite files, world radii, hitboxes, mass, and separation are
 unchanged. The first active-theme weapon is a recognisable real-world tool with
 one readable stab, not an abstract orb projectile. See
-[`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md).
+[`MASTER_BUILD_PLAN.md#v0-4-2`](./MASTER_BUILD_PLAN.md#v0-4-2).
 
 The first follow-up play test is scheduled as V0.4.2.1 before content growth.
 It stabilises player animation, moves the minimap, dismisses the opening hint,
 aligns authored contact footprints, replaces enemy blocking with slight player
 knockback, adds the optional Collection Sweep grabber track, and establishes
 Microplastics/Glass Shards material relationships. See
-[`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) and
+[`MASTER_BUILD_PLAN.md#v0-4-2-1`](./MASTER_BUILD_PLAN.md#v0-4-2-1) and
 [`ECO_CONTENT_MAP.md`](./ECO_CONTENT_MAP.md).
 
 The world camera and interface are separate presentation concerns. UI is

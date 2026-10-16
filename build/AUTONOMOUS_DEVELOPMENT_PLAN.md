@@ -1,8 +1,18 @@
 # Autonomous development plan — browser performance first
 
-Status: **Session 1 / P0 verified 2026-10-12 on `codex/v0.4.3`; Q1/Q2 and Session 2 / P1 verified; Session 3 / P2 next. See `../AUTONOMOUS_PROGRESS.md` for actual results.**
+Current dates, statuses and gates: [BUILD_STATUS.md](BUILD_STATUS.md).
 Assessment date: 2026-10-11 (Australia/Sydney).
 Amended: 2026-10-11 with the owner's recycling-game ideation document.
+
+## Resource policy for every future session
+
+The owner's AGENTS.md limited-local-browser policy overrides older session
+command lists below. Prefer deterministic/source checks and existing matching-
+head Actions evidence. Run only necessary bounded affected browsers serially,
+one worker/zero retries; clean up owned processes. Full local Chromium/stress,
+long soaks and repeated performance campaigns require a separately scheduled
+consolidated run. Deferred requirements remain pending. Historical Session 1–7
+recipes are context, not permission to repeat those campaigns.
 
 ## Objective and authority
 
@@ -18,7 +28,7 @@ create a recurring automation or launch a timed session. Existing milestone
 gates, ownership, theme contracts, and phase-commit rules still apply.
 
 Read, in order, `BUILD_PLAN_V0.4.md`, `../RECONCILIATION.md`, and
-`BUILD_PLAN_V0.3.md` at the start of every development session. Then read
+`MASTER_BUILD_PLAN.md#v0-3` at the start of every development session. Then read
 `../AUTONOMOUS_PROGRESS.md`, the active increment plan, and the relevant code.
 Consult `PLAN.md`, `EDUCATION_PIVOT.md`, `THEME_ARCHETYPES.md`, and `SAVE_DATA.md`
 when their corresponding product/content/save boundaries are involved.
@@ -41,8 +51,8 @@ when their corresponding product/content/save boundaries are involved.
   unlocks, and portable save import/export. Remaining sprite work is V0.4.4.
 - README and parts of AGENTS.md still call V0.4.2 the next increment. The current
   milestone plan, phase checklists, reconciliation, and Git history show otherwise.
-- Seven build-plan files already had uncommitted status annotations when this
-  assessment began. Preserve them; never reset, stage, or commit them by accident.
+- The original seven status annotations have been consolidated into
+  `BUILD_STATUS.md`; the owner authorized their cleanup on 2026-10-16.
 
 Assessment checks actually executed:
 
@@ -235,7 +245,7 @@ simulation/ledger behaviour is unchanged. Record measured benefit, including zer
 
 ### Session 3 — P2: reduce repeated minimap and HUD work
 
-New-session handoff: [`SESSION_3_PROMPT.md`](./SESSION_3_PROMPT.md). Q3 wraps
+The completed Session 3 handoff was retired; see the completed master record. Q3 wraps
 up card fitting/early skill caps and atlas navigation before P2; it does not
 start this phase. Half-speed timing and stationary Glass Shards are deliberate.
 
@@ -285,14 +295,16 @@ If no mode is needed, record why and spend the session on the next proven issue.
 
 ### Session 6 — P5, first slice: lifecycle and sustained-play reliability
 
-**60-minute core:** inspect shutdown/restart for actors, sprite followers,
-timers, listeners, physics registrations, graphics, audio, and queue retention;
-run one full-rate authored run and repeated restarts; fix demonstrated leaks.
+**Completed slice reference:** inspect shutdown/restart for actors, sprite
+followers, timers, listeners, physics registrations, graphics, audio and queue
+retention. The affected slice is recorded in the master and P5 lifecycle report;
+remaining acceptance belongs to Session 8 under the resource policy above.
 Use available heap tools, explaining browser-specific measurement limits.
 
-**90–120-minute extension:** add overtime, focus/visibility, pause/resize,
-and mode switching to a 20–30 minute bounded soak; verify no accumulating retained
-objects and no resumed-tab catch-up burst. Add regressions for actual defects.
+**Remaining evidence:** overtime, focus/visibility, pause/resize and mode
+switching must show bounded retained ownership and no resumed-tab catch-up burst.
+Long-soak execution remains deferred; it is not locally authorized by this recipe.
+Add regressions for actual defects.
 
 **Exit:** resources return to the expected baseline and gameplay is stable through
 run endings and reconstruction. Do not call ordinary GC fluctuation a leak.
@@ -311,9 +323,20 @@ build, production guards, browser smoke, and both-theme content validation.
 **Exit:** startup/failure behaviour is measured and clear. Do not split Phaser
 arbitrarily or add a service worker merely to silence the large-chunk warning.
 
-### Session 8 — P6: combined readiness gate and real-device report
+### Session 8 — P5: remaining lifecycle/compatibility acceptance
 
-**60-minute core:** run the complete suite and serial stress; compare baseline
+The affected Session 6/7 gates do not complete P5. Use
+[SESSION_8_PROMPT.md](SESSION_8_PROMPT.md) to inventory remaining authored/overtime,
+focus/resume, presentation-switching, restart and compatibility evidence. Prefer
+existing evidence and deterministic checks; only a necessary bounded serial
+browser fixture is allowed. Long soaks/full local suites remain deferred, not
+passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
+
+### Session 9 — P6: combined readiness gate and real-device report
+
+**60-minute core:** inspect matching-head Actions evidence and the combined
+software gate; full local browser/stress runs require a separately scheduled
+consolidated run under the owner policy. Use affected serial checks only; compare baseline
 versus final results across default/low and 60/150/300 loads. Inspect the combined
 diff and fix regressions. Publish a reproducible manual device checklist.
 
@@ -512,10 +535,117 @@ If only a subset is selected, build its necessary foundations without adding
 unselected content. Resolve substantial design choices from the selection and
 existing authorities; ask only when those cannot determine a safe outcome.
 
+## Design-review priorities and architecture index — 2026-10-12
+
+Owner request: retain the repository-aware recommendations from the environmental
+survivor prompt, place them beside the appropriate planned work, and provide a
+single-file architecture map. This records prioritisation and proposed scope;
+it does not select every optional feature, rename the game, reorder C1–C7,
+or authorize content implementation inside a performance phase.
+
+The [interactive architecture map](ARCHITECTURE_MAP.html) indexes current game
+features, retained secondary-theme mechanics, technical foundations and future
+packages. Every item has a stable reference identifier, related-item links,
+implementation/design sources and an explanation. Future-phase filters only
+change the documentation view; they never enable game code or mark a gate passed.
+The map is a dated snapshot, not a replacement for active plans or live progress.
+
+### Recommended priority, with existing phase placement
+
+| Priority / reference | Recommendation | Placement and dependencies | Acceptance / boundary |
+| --- | --- | --- | --- |
+| R01 / P0–P6 | Finish performance readiness before multiplying tools, actors and effects | Existing P0–P6 sequence; Q1/Q2 remain delivered corrections; read live progress for P1 status | Preserve correctness/caps, measure production and report physical older-device acceptance separately |
+| R02 / F19 | Sharpen identity and selectively polish existing copy/UI | New optional identity/presentation package after the performance gate, with explicit ownership before implementation; coordinate with F9/F10 and C1 copy | “Cleanup Shift” is a proposed name, hopeful/practical/playful tone; no automatic rename. Correct obsolete Sorting Pulse wording, make card hierarchy action → mechanical change → optional context, and lead the run report with outcome/build moment |
+| R03 / F10 | Extend the existing Field Guide with encounters, per-material counts and reviewed optional facts; add a personalised run takeaway | F10's existing four slices, exploratory Education E4/E5; F6 for persistent discovery history. This is a high design priority, not an implicit move ahead of C1–C7 | Start with one relevant takeaway, at most two; use committed outcomes and a pure selection rule. Reading/quizzes never gate ordinary play; sources, region and review dates required |
+| R04 / F1 | Add one contrasting auto-firing cleanup tool, initially a short-cone Vacuum prototype | C1 / F1 after P6; reuse shipped delivery contracts, scheduling, causal budgets and the ledger | Test positioning/build variety at current camera/pace before extra slots or a large tool roster. Existing Longer Grabber and Collection Sweep are not duplicate new features |
+| R05 / F13 | Add one distinct enemy behaviour and a legible wave response | Existing F13 slices; a named future content phase is still required, independent of F1 | First candidate: Rolling Can aimed at the player's previous position then rolling past. Charging Tyre is an alternative, not a second simultaneous commitment. Leaking Waste Container is later, using bounded existing hazard contracts |
+| R06 / F6–F7 | Remember settings/best runs and add modest unlocks; preserve portable saves | Existing C6 / F6, then C7 / F7. Any earlier settings-only prerequisite needs documented resequencing/ownership | Prefer sidegrades, discovery/cosmetics and best records over permanent numerical power; preserve SAVE_DATA validation/backup/import rules |
+| R07 / F2–F5 | Add one qualitative tool evolution and a readable boss climax | C2–C5 in their existing dependency order; keep post-boss endless/clearing choice | Evolution changes a visible action and replaces its slot. New shrine/curse/elite choices must stay understandable and bounded |
+| R08 / F9 and V0.4.4 | Improve role cues, interaction hierarchy and successful-collection feedback; finish art against the settled roster | F9 for accessibility; measured presentation work belongs to P2/P4 only within their existing ownership. Remaining sprites stay V0.4.4-gated | Player harm, attack geometry and hazard warnings have priority over decoration; preserve reduced motion and bounded audio/effects |
+
+F16 has already shipped in Q1 as Beginner / Normal / Experienced. Do not
+schedule difficulty presets or endless/clearing again from the generic prompt.
+The roadmap's earlier assessment table remains a dated historical snapshot;
+current status comes from the active plan/progress, including concurrent sessions.
+
+### Suggested additions within the existing packages
+
+- **F1 / C1:** consider a bounded Vacuum → Collection Sweep interaction only
+  if the prototype's suction/action is immediately legible. Theme data owns
+  reach, angle, force, limits and cadence; no manual weapon switching is needed.
+- **F2 / C2:** evolve an action qualitatively rather than awarding another
+  percentage. A future containment attachment may reduce eligible fragment or
+  spill consequences, but needs supporting enemy content and a tested trade-off.
+- **F10 / E4–E5:** keep upgrade copy mechanical first; optional explanations
+  share the existing information surface. Replace floating facts with a brief
+  discovery cue and a voluntarily opened entry. Start without special fact-orb
+  actors. “Learn mode” means optional information depth initially, not a parallel
+  game ruleset. Explain Fragmentation's gameplay bargain without presenting
+  pollution fragmentation as successful recovery or safe handling advice.
+- **F13:** make Bottle, Microplastics, Glass, Shards and Bagged Waste visually
+  distinguishable before expanding count. Preserve Q2's Microplastics opening
+  and quiet bottle unlock unless an owner-selected tuning change supersedes it.
+  Wave candidates are scattered arrivals, crossing sweeps, durable groups and
+  mixed releases, with telegraphs/recovery; prefer varied responses to density.
+- **F8, then F20:** show seeds/repeatable presets first; an optional daily local
+  challenge can reuse a versioned challenge configuration later. A seed alone
+  is not deterministic replay. Online leaderboards/backend are not prerequisites.
+- **F12 / E2–E3:** defer the full material-effectiveness matrix until a second
+  readable tool proves useful. Layered waste remains an independently
+  abandonable experiment, not a mandatory educational foundation.
+- **F14 → F15:** a small restoration screen can reinforce hope later, after
+  resource/profile foundations. Do not expand it into a city-management game.
+- **Later setting experiments:** oil/contamination fits hazards; heat waves may
+  become telegraphed arena events; invasive plants belong to an accurately
+  identified habitat setting; deforestation/biodiversity loss suit habitat
+  conditions, objectives and restoration. These are ideas, not new scheduled
+  enemy identities, factual claims or approved phases.
+
+### Additional optional and parked identifiers
+
+| ID | Item | Proposed placement / state |
+| --- | --- | --- |
+| F19 | Identity, copy and existing-screen hierarchy pass | Optional, unselected. Two slices: (1) inventory stale copy and propose name/tone/labels against current theme; (2) selected copy/layout changes with content validation, keyboard/pointer/resize and visual checks. No menu/framework rebuild |
+| F20 | Daily challenge built from repeatable presets | Optional, deferred after F8; requires a named phase. Version challenge seed/config/date policy and validate repeatability claims before release |
+| ART-RES | Double native sprite resolution while preserving world display size | **Parked at the owner's request.** No current-phase or automatic V0.4.4 inclusion. If revisited, compare one newly authored higher-resolution baseline at identical display size, measure cost and update style/pipeline coherently; upscaling existing final pixels adds no detail |
+
+Keep the existing pixel style, palette anchors and sprite presentation/simulation
+boundary. Do not rebuild Phaser/TypeScript as single-file vanilla Canvas. New
+functions extend the existing contracts, theme definitions, selectors and UI.
+
+### Concurrent-work and identifier guardrails
+
+This amendment owns this section and `build/ARCHITECTURE_MAP.html` only. It
+does not edit active build checklists, source, manifests, progress, README or
+the shared reconciliation log while the other performance session is writing
+them. Preserve earlier roadmap edits and re-read changed authorities before
+refreshing the map. Record any promoted implementation decision in reconciliation
+with its owning phase later; this section is the durable design-review record.
+
+Map identifiers reuse content IDs (`enemy.fast_fragile`, `upgrade.weapon_range`),
+feature IDs F1–F20 and phase IDs P0–P6 where available. `SYS-*`, `UI-*`,
+`ART-*`, `DATA-*` and `TOOL-*` are documentation references, not new saved IDs.
+Never renumber/reuse an existing map ID; retain a retired identifier with a
+replacement pointer. Preserve ID fragments when updating the single HTML file.
+The map embeds its catalog to work offline and requires no library/build change.
+Source links resolve relative to the repository; the map itself also remains
+usable when copied elsewhere, although source links then need the repository.
+
+Map verification at capture: **126 unique items / 381 linked relationships**,
+90 current items including current-phase foundations. Every source path exists;
+isolated Chromium checks pass for phase/search/area/status filtering, expandable
+details, related-item navigation/history, ID deep links, reset/list/summary
+controls, mobile width and light/dark layouts, with no page errors. Visual
+inspection uses settled screenshots. No game suite or performance recording is
+run by this amendment; the other session retains those resources. The previous
+roadmap text is verified unchanged after removing this added section.
+
 ## Verification and reporting
 
 Run the phase's targeted units/browser paths after meaningful changes. Before
-marking a phase complete, use the existing full gate where applicable:
+marking a phase complete, verify the applicable gate. The following full
+browser/stress commands are CI or separately scheduled consolidated-gate
+references; they are not per-session local requirements:
 
 ```sh
 npm run typecheck
@@ -558,3 +688,27 @@ secret edits, destructive migration, unrelated data access, or external messagin
 Use isolated fixtures for saves. Runtime save import must still require the
 player's explicit confirmation and successful backup. If restricted permissions
 block a check, document it and continue independent work without pretending it ran.
+
+
+## Deferred scope retained from consolidated historical plans
+
+These are historical design inputs, not new content selection. Later delivered
+items (including endless/clearing and difficulty presets) must not be scheduled
+again. Current C1–C7, F1–F20, SAVE_DATA and the active plans govern what remains.
+
+### V0.4 candidates
+
+1. **Weapon and equipment slots, and delivery kinds.** Rather than one deepening weapon, move to a small number of auto-firing weapon slots plus passive equipment slots. This is the natural home for the type system described in [`EDUCATION_PIVOT.md`](./EDUCATION_PIVOT.md), and it is where weapon level caps and evolution belong.
+
+   It is also where `WeaponDefinition` splits delivery into a discriminated union, so a melee weapon can declare an arc and a target cap instead of a projectile speed and lifetime. V0.3 deliberately stops at the generic stat surface — `range`, `knockback`, `armourPierce`, and optional per-weapon crit — because the union's shape depends on decisions slots have not made yet. Splash also belongs here, and needs an explicit boundary against the existing on-kill detonation skill: splash triggers on hit, detonation on kill, and the damage ledger has to keep them apart.
+2. **Type and effectiveness system.** Enemy and tool attributes with a small effectiveness matrix. Designed in `EDUCATION_PIVOT.md`; it needs the slot system first.
+3. **Endless mode.** The director already supports `t > 1`; endless needs only the escalation index and a terminal condition.
+4. **Mini-boss at the final milestone.** The run currently ends when the timer expires; a telegraphed climax is a better ending.
+5. **Per-run seed display and seeded replay.** Nearly free given the existing seeded randoms, and it makes balance reports reproducible.
+6. **Profile persistence** for settings, best-run statistics, and unlocks — the natural first slice of `SAVE_DATA.md`.
+7. **Meta-progression.** Permanent unlocks between runs are why the reference games retain players past the first hour, but they should land only once the in-run curve is right.
+8. **Layered composite enemies.** Multi-material enemies whose outer shell breaks to expose a different interior. Strong design and a natural fit for the environment theme; see `EDUCATION_PIVOT.md`.
+9. **Colour-independent enemy identification.** Roles are distinguished by colour plus subtle geometry; distinct silhouettes would help both accessibility and split-second reads in a 300-enemy crowd.
+10. **Per-enemy invulnerability windows**, revisited alongside the above.
+
+---

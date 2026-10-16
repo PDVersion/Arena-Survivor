@@ -1,15 +1,15 @@
 # Autonomous progress
 
-Updated: 2026-10-13 (Australia/Sydney).
+Updated: 2026-10-15 (Australia/Sydney).
 
 ## Objective and current state
 
-Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
-verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
-play-test correction is also verified**: player facing/walking, crisp world text,
-common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is next and unstarted. Content C1–C7 and other optional features have not started;
-physical older-device acceptance remains pending. No performance improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P2–P6 readiness remains gated.
+Current milestone dates/statuses and published CI evidence are consolidated in
+[build/BUILD_STATUS.md](build/BUILD_STATUS.md). Active work is remaining P5
+acceptance; P6/content remain gated. The session records below are historical
+checkpoints, including their then-current delivery constraints and dirty-file
+notes. Those are superseded where the current summary records later evidence
+or the owner's documentation cleanup.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -89,7 +89,7 @@ No push, PR, merge, deployment, sprite/content generation or profile write.
 
 ## Remaining work / blockers / next task
 
-**Current next: Session 3 / P2.** The historical P0 next task, Session 2 / P1,
+**Current next: P5 consolidated lifecycle/compatibility acceptance, then P6.** Session 6 resolves REC-117 and Session 7 verifies the affected startup gate; P5 overall remains open. The historical P0 next task, Session 2 / P1,
 has passed its gate at `8cd149c`; P2–P6 follow their verified gates.
 
 Hardware acceptance is pending: no representative older integrated-GPU machine
@@ -326,7 +326,7 @@ Report: `build/performance/Q3_PRODUCTION_CHECK.json`. Historical P1 reports stay
 unchanged. No fresh sustained performance improvement claim, balance tuning,
 dependency update, sprite generation or profile migration; balance/audit were
 not rerun. The two-minute opt-in measurement remains unexecuted in Q3. Next remains
-Session 3/P2, using `build/SESSION_3_PROMPT.md`; no automatic new thread is created.
+Session 3/P2, using `build/MASTER_BUILD_PLAN.md#v0-4-3-performance`; no automatic new thread is created.
 
 Final recording/index review checkpoint: **18:45:40 AEDT / 07:45:40 UTC**,
 actual wrap-up elapsed **19 min 26 s**. All Q3 gates pass; final index review
@@ -462,3 +462,445 @@ build, **85 browsers / one existing skip** (14.0 min), and audit with **zero
 vulnerabilities**. No browser flaky/retry results. Q5 is verified; P2 remains
 unstarted, and the checkpoint PR remains draft pending P2–P6 readiness. The
 verification-record follow-up must still pass its own latest-head Actions check.
+
+
+## Session 3 / P2 — in progress
+
+Start **2026-10-13 14:08:15 AEDT / 03:08:15 UTC**; deadline
+**15:38:15 AEDT / 04:38:15 UTC** (90 minutes); reserve validation/review
+from **15:18:15 AEDT / 04:18:15 UTC**. Resume `codex/v0.4.3` at
+`6f9ec78`. Initial eight dirty plan files are backed up at
+`/private/tmp/arena-p2-session-20261013/initial/` and `initial.patch`; their
+seven annotations and concurrent roadmap section remain outside phase commits.
+
+Checkpoint verified: latest head `6f9ec78` passes Actions run 38333614171
+(completed 02:04:03 UTC); Q4 gameplay and Q5 audit/CI gates verified. PR #24
+was merged at 02:22:37 UTC as `d721ac5`; owner requests a new draft PR for P2.
+No previous-PR mutation completed. P2 alone is authorized; P3 remains gated.
+
+P2 cycle 1 checkpoint (about **14:25 AEDT / 03:25 UTC**): baseline source
+snapshot `6f9ec78` is isolated from edits. Short CDP CPU profiling captures
+minimap filtering/colour/point work and HUD formatting; Phaser already skips
+unchanged text texture updates. No cadence change is justified. Hidden minimap
+preparation now guards before actor reads, map palette is instance-cached, scalar
+drawing avoids coordinate tuples, and scene-owned bounded buffers are reused.
+HUD text preparation is dependency-driven; health/XP bars remain full precision
+each update and in-place source counts compare scalars. Ten targeted UI units
+pass. Sustained before profiles and actual browser/production gates are pending.
+First collector settings clicks missed the button/timing; corrected and verified
+OFF in telemetry. A browser-side dynamic import was SSR-transformed by vite-node;
+use native browser import in the opt-in probe. Failed/partial probes are retained
+in `/private/tmp/arena-p2-session-20261013/`, not accepted measurements.
+
+P2 cycle 2 checkpoint **14:34 AEDT / 03:34 UTC**: all **438 units / 52 files**,
+types and lint pass; **13 serial focused browser cases** pass in 26.7 seconds
+with zero retries, including both real theme HUD/minimap fixtures, all opacity
+steps at resized viewport, pause/resume/restart, consumed sites, Bagged Waste
+and scaled upgrade pointer selection. Three fixture screenshots were inspected.
+Nine initial warmed ≥60-second before windows hold exactly 300 live actors and
+have no browser errors or >100 ms sampled page intervals. Initial visible
+windows overlapped short local checks, so they remain exploratory; a quiet
+three-repeat visible baseline is being recorded. Hidden/paused before windows
+were isolated. Final matching after/production profiles and regression/stress
+remain pending. No new code changes are planned unless validation finds a defect.
+
+Final validation/review starts **15:14 AEDT / 04:14 UTC**, ahead of the
+04:18 latest reserved start. Two external execution-permission waits consumed
+about 20 minutes each of the wall budget; deadline stays **04:38:15 UTC**.
+Quiet before visible repeats and all short work probes pass. The after capacity,
+production comparison and final browser/stress sequence is approved and serial.
+No phase completion/commit or PR publication is claimed until actual gates pass.
+Initial preservation review confirms all seven untouched plan/roadmap files
+match their initial backups byte-for-byte; the active plan's initial annotation
+is preserved while adding P2 measurement ownership.
+
+P2 cycle 3 measurement checkpoint **15:25:22 AEDT / 04:25:22 UTC**:
+18 primary warmed ≥60 s paired test windows (three repeats per visible/OFF/paused
+state per build) pass exact 300-live retention and browser-error checks; the
+three original exploratory visible windows remain retained separately. All have
+zero sampled >100 ms page intervals. SwiftShader visible median p95 stays
+41.7 ms; OFF 25.0→24.9 ms, paused 25.3→25.3 ms. Visible update p95 (rolling
+active samples) is .9→.8 ms, with engine/render work excluded. CDP script
+medians are 6.2340→6.2426 / 3.1439→3.0831 / 2.0939→2.0356 s/window.
+These small/noisy differences do not establish a causal throughput improvement.
+Visible-map software rendering remains above the provisional 40 ms criterion;
+P2 removes confirmed work but does not pass older-device/readiness acceptance.
+Production before/after, after work probes and final gate remain pending.
+
+
+## Session 3 final P2 gate — verified
+
+Final validation/review began **15:14 AEDT / 04:14 UTC**; no deadline extension.
+P2 software gate passes: **438 units / 52 files**, types/lint/build, **13 targeted
+serial browsers**, **88 full Chromium passes / one existing opt-in skip** (four
+workers, zero retries), **three serial stress cases** (zero retries), and built
+production exclusion/boot/tool checks. Both theme HUD/minimap fixtures and
+resized pointer interaction are exercised; visual captures are inspected.
+
+Measured source: archived `6f9ec78` before; P2 delta after, identified by source
+and build digests. **24 primary serial warmed ≥60 s windows** (18 test, six
+production), three retained exploratory visible windows and six short probes
+pass. All test windows hold exactly 300 live actors; actual visible ranges and
+every p95/p99/max/stall/update/CDP value are in `build/performance/P2_REPORT.md`.
+Visible p95 median stays 41.7 ms; OFF 25.0→24.9, paused 25.3→25.3; production
+16.8→16.8 ms. No meaningful frame-rate improvement is established.
+Confirmed after work probes remove hidden-map preparation and stable paused HUD
+setters; texture updates were already guarded by Phaser. Production population
+and update CPU remain unavailable; test CPU is rolling active update only.
+
+REC-115 accepted. Gate permits P3 next; no P3, optional content, cap increase,
+cadence/tuning, bitmap or save change is implemented. Visible-map software
+performance remains above the provisional 40 ms criterion; physical older-device
+and mixed-combat acceptance stay pending. Audit/balance were not rerun: no
+dependency/game tuning changed and Q5 remains the verified audit checkpoint.
+
+Delivery uses `perf(v0.4.3): reduce repeated interface work` on `codex/v0.4.3`,
+then the owner-requested new draft PR into main. PR #24 is already merged. The
+initial seven plan annotations and concurrent roadmap section remain unstaged
+and unchanged; the active plan is selectively staged without its annotation.
+New-head Actions remains subject to the new PR's actual check result.
+
+Final gate/document recording: **04:37:14 UTC**, elapsed **1:28:59**.
+Full Chromium: 2.7 min; final serial stress: 32.6 s. Own browser servers
+closed after checks; delivery/review follow before the original deadline.
+
+
+## Session 4 / P3 — in progress
+
+Start: **2026-10-13 16:28:48 AEDT / 05:28:48 UTC**. Deadline:
+**17:58:48 AEDT / 06:58:48 UTC**, validation reserve begins by
+**17:38:48 AEDT / 06:38:48 UTC**. Branch `codex/v0.4.3`, actual HEAD `64e77c4`.
+P3 only, local delivery. Backed up all eight existing dirty plans and patch at
+`/private/tmp/arena-p3-session-20261013/initial/`; Session 4 prompt remains an
+untracked owner input. Before game source is archived separately from HEAD;
+installed dependencies shared without alteration. Exact P3 measurement/spatial/
+separation paths added to ownership before editing. P4–P6 remain unstarted.
+
+Cycle 1 profile checkpoint **05:38:30 UTC**, elapsed **9 min 42 s**. Frozen
+`64e77c4` dense and replenished mixed-combat CPU/allocation probes completed.
+Dense test telemetry dominates (excluded as production evidence); separation
+is ~26.3 ms across 274 wrapped updates. Combat's `recordCommittedKill` has
+218.2 ms sampled self CPU, higher than separation/queue traversal; it filters
+and copies the immutable kill window on every kill. Selected a single-pass
+owned result buffer, preserving order/expiry/future exclusion and immutable
+statistics. Added this newly profiled dependency/tests to ownership first.
+Sandbox Chromium launch failed; permitted retry runs. First archived probe
+completed but metadata failed because archives have no `.git`; explicit archive
+revision/state arguments fix this, and corrected probes pass. Remote branch
+read-only retry confirms `64e77c4`; no publication action. Before sustained
+combat comparisons are running serially; no correctness suite overlaps them.
+
+Cycle 2 checkpoint **05:51:52 UTC**, elapsed **23 min 04 s**. Single-pass
+immutable committed-kill window implemented; 137 affected units pass, typecheck/
+lint pass. Final serial fixed-work comparison (10,000 calls, three repeats)
+reduces median CPU by ~75% for both 300 and 3,000 timestamp inputs, identical
+checksum. Three >=60 s eco combat windows each before/after pass without browser
+errors: median rolling update p95 **4.3→2.9 ms**, CDP script **6.7505→5.7091 s**
+(~15% less); wall p95 stays **33.4→33.4 ms**. This is repeated burst work, with
+actual fluctuating live ranges, not sustained 300-live combat/device acceptance.
+The remaining calm dense/distributed, retained-theme projectile and production
+comparisons/probes are serially running on immutable archives. No test/build
+suite overlaps sustained windows. Read-only remote inspection confirms open
+draft PR #25 at `64e77c4` and successful verify run `38347342750`; no push/PR
+creation/merge/deployment is performed.
+
+Cycle 3 calm-crowd checkpoint **05:59:54 UTC**, elapsed **31 min 06 s**.
+Six serial >=60 s dense windows pass, each exactly 300 live actors. Median
+rolling update p95 remains 0.8 ms; wall p95 24.7→25.1 ms and script
+2.9130→2.9145 s show no useful calm-crowd/frame improvement. All actual renderer
+metadata confirms SwiftShader; source-tree digests verify each theme pair differs
+only in `run-statistics.ts`. Distributed and projectile/production windows are
+still running; final software gate remains pending.
+
+Cycle 4 distributed checkpoint **06:06:58 UTC**, elapsed **38 min 10 s**.
+All six >=60 s distributed windows pass, each exactly 300 live / 45 visible
+actors. Rolling update p95 remains 0.6 ms; wall medians 16.9→17.0 ms and script
+2.8457→2.8687 s do not establish a useful difference. The fixture controller
+is included and disclosed. Retained-theme projectile burst comparison has begun;
+production windows, short pickup/after attribution probes and final gate remain.
+
+Cycle 5 projectile/probe checkpoint **06:14:42 UTC**, elapsed **45 min 54 s**.
+Six retained knight/projectile >=60 s windows pass cap/effects/fragments and
+exact damage-ledger checks with zero browser errors. Median update p95
+**3.8→2.4 ms**, CDP script **6.0311→4.9820 s** (~17% less); wall p95 unchanged
+33.4 ms. Short before pickup-cap and after mixed-combat CPU/heap probes pass;
+raw traces remain local, summary retained. Ordinary production comparison is
+now running, followed by final correctness/production/stress checks.
+
+
+## Session 4 / P3 continuation — 2026-10-14
+
+Owner paused at the last recorded active checkpoint **2026-10-13 06:19:22 UTC**
+(**50 min 34 s** since start), then explicitly resumed. Continuation start:
+**2026-10-14 09:32:28 AEDT / 2026-10-13 22:32:28 UTC**. Original background
+recorder unexpectedly remained running after the pause and exited successfully
+at **06:32:56 UTC** (original elapsed **64 min 08 s**). No verification/commit
+ran. Post-pause production after windows are retained separately as exploratory,
+not the primary comparison. Conservatively reserve the remaining **25 min 52 s**
+of the original 90-minute work allowance: continuation hard stop **22:58:20 UTC**
+(**09:58:20 AEDT**); proceed directly to remaining validation/review. No new
+phase or further optimization. Verify pickup active/tracked counts, rerun matched
+production windows serially, then complete final software gate and recording.
+
+
+## Session 4 / P3 final gate — verified 2026-10-14
+
+Final recording checkpoint **22:48:12 UTC**, continuation elapsed **15 min 44 s**; conservatively counted work **79 min 52 s** including original background recorder completion, excluding the inactive paused gap. No deadline extension.
+
+Types/lint/build and all **440 units / 52 files**, built production diagnostic
+exclusion/boot/play/pause/tool checks, **7 targeted serial browsers**, **88 full
+Chromium passes / one existing opt-in skip**, and **3 serial stress cases** pass
+with zero retries. Full browser suite uses four workers for correctness; stress,
+profiles and all sustained comparisons are serial on owned ports. Own servers
+exit after each check; review server 4213 is untouched.
+
+Thirty primary warmed >=60 s windows pass, with three repeats per build/scenario:
+dense/distributed 300-live, active eco melee and retained knight projectile burst
+work, plus matched recovery production. Six original production windows remain
+separate, including three uncontrolled post-pause after windows. Report raw
+p95/p99/max/stalls, actual population, rolling/lifetime update exclusions and
+source/build digests in `build/performance/P3_REPORT.md`. Fixed work (~75% less)
+and sustained burst update p95 **4.3→2.9 / 3.8→2.4 ms** establish useful scoped
+CPU benefit; CDP script ~15%/~17% less, frame p95 unchanged 33.4 ms. Production
+16.9→17.5 ms / script +9.3% does not establish ordinary-play improvement.
+
+REC-116 accepted. REC-117 records pre-existing pickup overflow retention:
+250 active / 535 tracked references, likely destroy-listener registration order.
+P5 must reproduce/fix/test bounded tracking and exact rewards; no P5 code added.
+P4/Default-Low remains next only if measured presentation evidence supports it.
+Physical older-device, visible-map criterion, sustained 300-live mixed combat,
+additional-browser and longer lifecycle/startup readiness remain pending. Content
+C1–C7/other optional selections and V0.4.4 roster work remain gated. No dependency,
+balance, sprite, cap/rate or persistence change; audit/balance not rerun.
+
+Delivery: local `perf(v0.4.3): reduce measured simulation overhead` on
+`codex/v0.4.3`, parent `64e77c4`; commit hash is resolved in Git history. No push,
+PR creation/merge or deployment. PR #25 at the P2 head had successful Actions
+38347342750 at the read-only inspection; P3 has only its recorded local gate.
+All eight original owner plan edits and Session 4 prompt remain unstaged.
+Implementation, regressions, phase checklist, report/evidence, progress and both
+reconciliation entries belong to the same phase commit. Next eligible work is
+Session 5 / P4; this session starts no further phase.
+
+
+## Session 5 / P4 — budget and setup
+
+Start: **2026-10-15 00:41:13 UTC**; deadline **2026-10-15 02:11:13 UTC** (90 minutes); reserve
+validation/review from **2026-10-15 01:51:13 UTC**. Branch `codex/v0.4.3`, starting
+HEAD `05c1d4e`; local remote-tracking branch is one commit behind. No remote
+mutation authorized. Initial dirty files and patch backed up at `/private/tmp/arena-p4-session-20261015T004113Z`;
+immutable HEAD archive at `/private/tmp/arena-p4-session-20261015T004113Z/before`. P4 only; REC-117 remains for P5.
+
+Owner testing constraint (2026-10-15): limit heavy local Chromium/browser work
+to necessary current-change tests and serial P4 attribution/comparison windows.
+Defer whole-app browser/stress regression to GitHub Actions or a consolidated
+check after several sessions. Do not launch background suites per build session.
+Record deferred checks honestly; this overrides the older Session 5 blanket
+local full-browser/stress command list. No push is authorized this session.
+
+Cycle 1: required authorities, branch/history/status and prior P2/P3 evidence
+reviewed; original edits preserved. Freeze baseline before measuring optional
+presentation work; add exact dependencies before any runtime edits.
+
+P4 cycle 2 checkpoint: 2026-10-15T01:07:41.020583+00:00. Short separate CDP probes: dense visible 300-circle map p95 41.7 ms; isolated square-marker probe p95 25.0 ms. Renderer triangulation samples fall sharply; diagnostic crowd scans remain separate. Added session Default/Low selecting theme-owned enemy minimap shapes only; unchanged cadence, positions/radii, player/site/hazard markers and gameplay. Types pass. After source frozen for serial comparisons; full suites deferred per owner.
+
+Cycle 3: candidate Low smoke passes after scaled pointer correction. Frozen-baseline build initially rejected the shared collector's new settings type; collector now uses a compatible optional structural type. No game source change required. Both failed preflight attempts remain separate from sustained windows. Serial sustained measurement is validation work, begun before the reserved final 20 minutes. Added both-theme rendering/isolation/settings/seeded-model units and two affected browser flows; execution waits until measurements finish to avoid contention.
+
+P4 final validation checkpoint 2026-10-15 02:08 UTC (about 87 minutes): all 27 sustained windows pass; dense Default→Low p95 41.7→25.1 ms, script 6.1687→3.1860 s; combat p95 unchanged 33.4 ms; production 17.5→17.0 ms. 450 units / 53 files, types/lint/build/production check pass. Temporary config syntax failed before browser execution, corrected separately. Two primary focused browsers pass; resize/restart case failed because its test incorrectly required physical display dimensions unchanged after resize. It now checks unchanged logical world and the resized 900-pixel display explicitly. Focused rerun and retained-theme checks are next; gate not yet accepted, no phase commit. Deadline is 02:11:13 UTC; preserve partial work rather than claim success if review cannot finish. Original edits remain preserved.
+
+
+## Session 5 / P4 — affected local gate accepted
+
+Final validation/recording checkpoint: 2026-10-15T02:10:39.074688+00:00; elapsed 89.43 minutes from
+00:41:13 UTC. Validation began with frozen comparisons at 01:21 UTC, ahead of
+the final 20-minute reserve. P4 only; P5/content never started.
+
+Completed cycle 4: 27 warmed >=60-second windows, three serial repeats of
+baseline/Default/Low × dense map/combat burst/ordinary production; no overlapping
+suites, live-source edits or builds. All retained, zero browser errors; dense
+retains 300 live and combat cap/ledger checks pass. Low visible-map p95 is
+25.1 ms vs candidate Default 41.7 ms (~40% lower), baseline median 35.4 ms.
+See P4_REPORT.md for every mode/scenario result, actual populations, all wall
+percentiles/stalls, CPU exclusions, digests and software-renderer limits.
+
+Completed cycle 5: full units/types/lint/build, production exclusion/boot/play/
+pause/tool check, three focused serial browsers per theme, zero retries. Full
+local Chromium/stress suites deliberately deferred to Actions or a consolidated
+multi-session gate under the owner's newer resource policy; no P4 CI pass claimed.
+Dense Default/Low and settings screenshots inspected for readable actor/map/UI
+art and fitted controls in both themes. Seeded model reports and frozen-input/
+live dispatch tests preserve gameplay/presentation isolation. Measured runtime
+source matches delivered code. No dependencies, gameplay tuning or save storage.
+
+Delivery is local on `codex/v0.4.3`, subject
+`feat(v0.4.3): add a lightweight presentation mode`. Original eight dirty plan
+files (including the active plan's historical annotation) and both prompts stay
+unstaged; backups remain at /private/tmp/arena-p4-session-20261015T004113Z. No push/PR/merge/deploy. Owned browser/
+recorder/server cleanup is verified; unrelated review server 4213 untouched.
+Next eligible session: P5 lifecycle, first resolving REC-117 active/tracked pickup
+retention; physical older-device, sustained 300-live mixed combat, another browser
+and longer lifecycle/startup readiness remain pending.
+
+
+## Session 6 / P5 lifecycle — affected gate verified
+
+Start: **2026-10-15 13:25:18 AEDT / 02:25:18 UTC**. Maximum deadline:
+**14:55:18 AEDT / 03:55:18 UTC**; reserve final verification/review from
+**14:35:18 AEDT / 03:35:18 UTC**. Actual starting HEAD `d9047c0`,
+`codex/v0.4.3`. Initial patch and prompts backed up at
+`/private/tmp/arena-p5-session-20261015/`; eight pre-existing dirty plans and
+three untracked session prompts remain outside this slice's staging.
+
+Scope: reproduce/fix REC-117, inspect related retained resources and add bounded
+regressions. Session 7 startup/compatibility, P6 and optional content stay pending.
+Only affected serial one-worker/zero-retry browser evidence when engine ownership
+requires it; no full local browser/stress, long soak, push or CI trigger.
+
+Completed cycles:
+
+1. Reproduction: actual scene methods reproduce REC-117 exactly (1,040 drops,
+   535 tracked/250 active), plus a failing paid-cue merge/reward race. Install
+   cleanup ownership before overflow and retire paid collect presentation at cap
+   pressure. Every successful claim now schedules cleanup, including test XP caps.
+2. Retained-resource inspection: Phaser source and a narrow real stop probe show
+   engine teardown works, while scene collections still retain a hazard, feedback,
+   map reference, 250 claims and two pending events. Named idempotent shutdown
+   clears those owners without touching already-destroyed physics (REC-020/119).
+3. Affected verification: deterministic both-theme overflow/ties/provenance,
+   fractional/duplicate claims, repeated collection/reconstruction, shutdown/queue
+   claim reset and audio-close ownership; two real serial Chromium Canvas cases,
+   each with three stop/start reconstructions. At pressure: 250 tracked/active/
+   group/enabled bodies, 790 merges, 1,040 XP; after collection zero pickups/bodies;
+   after stop zero tested engine and retained resources. Default/Low fixtures are
+   exercised across cycles; full settings UI/focus/overtime are deferred.
+
+Final verification/review began early at **13:33:47 AEDT / 02:33:47 UTC**,
+8 min 29 s from recorded start. This preserves the final 20-minute reserve.
+Details, executed/deferred checks, fixture failures and limits are recorded in
+`build/performance/P5_LIFECYCLE_REPORT.md`. No broad browser suite, performance
+campaign, long soak or extra production browser run. P5 remains open for Session 7
+startup/compatibility and broader acceptance; P6/optional content not started.
+
+Final delivery recording checkpoint: **2026-10-15 03:17:08 UTC**, actual elapsed
+**51 min 50 s** from the recorded start. Final gate:
+**466 units / 55 files**, types/lint/build, **2 affected serial browser passes**
+(5.3 s, zero retries) and whitespace checks. Original seven untouched plan files
+match their backups; the active plan retains only its original two-line annotation
+unstaged. All three prompts remain untracked. No owned browser/server remains on
+4173; review server 4213 and unknown processes were not touched. Deliver locally
+with the declared P5 subject; startup remains Session 7 and P5 stays open.
+
+
+## Session 7 / P5 startup and compatibility — affected gate verified
+
+Start **2026-10-15 15:06:48 AEDT / 04:06:48 UTC**; 90-minute working cap,
+deadline **16:36:48 AEDT / 05:36:48 UTC**, final validation reserve from
+**16:16:48 AEDT / 05:16:48 UTC**. Start HEAD `8b700d9`, `codex/v0.4.3`.
+Initial diff and active plan/prompts backed up at
+`/private/tmp/arena-p5-startup-session/`. Preserve all eight dirty plans and
+three prompts outside this work's staging. User authorizes continuation to the
+next section; this slice is startup/compatibility, with P6/content not started.
+
+Use a bounded serial production startup/failure collector, deterministic boot
+units, full units/types/lint/build and production exclusion checks. No full local
+Chromium/stress, long soak, broad browser matrix, push or CI trigger. Measure
+cold/warm resource/first-render/first-run timing and test a small renderer/asset
+failure set before deciding on changes; no speculative Phaser splitting.
+
+Completed cycles:
+
+1. Bounded production reproduction: no canvas contexts cause two uncaught Phaser
+   dependency errors before recovery; a blocked atlas image still reaches the menu.
+   Existing WebGL→Canvas selection works. Initial collector attempts failed because
+   production excludes the debug global and Phaser renders through drawArrays;
+   use browser rendering/text/upload observers without shipping diagnostics.
+2. Correction: preflight required 2D text canvases; await the Game-start module
+   inside the existing error boundary; stop after declared asset load failure and
+   schedule owned Game destruction. Theme-owned graphics instructions/reload action,
+   safe text error details and native keyboard/pointer retry work. No sprite pipeline,
+   content/balance, dependency or persistence change; no speedup claim.
+3. Evidence: three serial HTTP-cache cold/warm pairs; forced Canvas, unsupported
+   graphics, blocked atlas/module and both successful reload retries; one slower
+   network case and separate decode probes. First title-draw markers 116–243 ms
+   cold, 134–140 ms warm; slow-network title/run markers 2.580/2.724 s. Browser
+   render markers include observer overhead and are not compositor or device
+   acceptance. Primary samples retain measured bundle hashes; the final focus-style build is rechecked separately.
+4. Verification: 474 units/56 files, types/lint/build; one affected serial test-mode
+   boot/resize pass; existing production exclusion/boot/play/pause/tool check passes.
+   Recovery screenshots at 900×600 inspected; retry controls fit. All startup/failure
+   cases use one Chromium browser serially; no overlapping suites/servers.
+
+Report and all scope/limitations: `build/performance/P5_STARTUP_REPORT.md`.
+P5 stays open for consolidated authored/overtime/focus/resume/long lifecycle and
+broader compatibility acceptance; P6 and optional content have not started.
+Full local Chromium/stress and physical older-device/additional-browser evidence
+remain deferred, not passed. Delivery remains local; no push/PR/CI trigger.
+
+Continuation/handoff resumed at **2026-10-15 16:39:56 AEDT / 05:39:56 UTC**
+after the user's “continue where you were stopped” request. The original 90-minute
+wall checkpoint passed during interruption; elapsed wall time is not reported as
+active work time. Startup implementation/tests had passed before the interruption.
+Finish the report, final build/hash/preservation review and local commit only;
+no new phase or expanded browser job. Final focus-ring CSS inherits currentColor
+instead of introducing a theme colour literal; startup JS behavior is unchanged.
+
+Final recording checkpoint: **2026-10-15 16:42:32 AEDT / 05:42:32 UTC**.
+Wall elapsed **95 min 44 s**, including interruption; continuation since the
+recorded resume is **2 min 36 s**. Final build and affected recovery recheck pass;
+its JS hashes match current dist. Focus-only CSS uses inherited colour. No owned
+listeners remain on 4173/4174; unknown processes and port 4213 are untouched.
+All original untouched plan/prompt bytes match backups, and the active plan's
+original annotation will remain unstaged. Commit the Session 7 continuation
+locally with the P5 subject; P5 overall remains open as recorded above.
+
+
+## PR #25 Actions repair — local gate verified 2026-10-16
+
+Run `38670385486` tested `d9047c0`, before the two unpublished P5 commits.
+Two P4 cases failed writing screenshots to macOS-only `/private/tmp`; the
+resize/settings/restart scenario exhausted its cumulative 30-second budget.
+REC-114 records trace evidence. Screenshots now use Playwright-owned output
+paths; two long scenarios have bounded 90-second budgets, retaining all actions
+and assertions. No runtime, dependency or workflow changes.
+
+Three affected browser cases pass serially with one worker and zero retries
+(33.2 seconds); five artifacts exist in test-owned directories. All 474 unit
+tests in 56 files, types, lint, production build and whitespace checks pass.
+Full local Chromium/stress remains deferred under the owner resource policy;
+remote CI is pending publication and a pass matching the repair head. P5 remains
+open; no P6 or content work begins. See `build/performance/CI_REPAIR_20261016.md`.
+
+Initial edits are backed up in `/private/tmp/arena-ci-repair-20261016/initial.patch`.
+The eight original plan edits and three untracked session prompts remain
+unstaged. Session 6 required local-only delivery: no push or CI trigger has
+been made. Publishing this repair also publishes the two local P5 commits
+(`8b700d9`, `3d1ee2f`) and requires owner authorization to lift that constraint.
+
+
+## Documentation consolidation — 2026-10-16
+
+Owner authorizes updating planning documents, consolidating date/status banners,
+combining completed build records and retiring completed handoffs. Previously
+unstaged design-review recommendations are adopted in the ongoing roadmap;
+completed milestone plans are consolidated into `build/MASTER_BUILD_PLAN.md`.
+Future recommendations and unreconciled sprite targets remain outside that
+completed record. `build/BUILD_STATUS.md` holds verified Git dates and current
+gates. AGENTS/README and local source links follow the new locations.
+Session 3–6 handoffs are retired; Session 8 covers the actual next open work,
+P5 consolidated acceptance. The roadmap moves future P6 to Session 9.
+
+Owner-authorized publication of `8b700d9`, `3d1ee2f`, `2086a41` is confirmed.
+Matching-head Actions `38824954227` passes: 474 units/56 files, types/lint/build,
+93 browsers/one existing skip and zero audit findings. Remote CI repair is now
+verified. P5 overall, P6 and physical older-device acceptance remain open.
+
+Documentation-only verification passes: 517 local links/catalog sources, 155
+unique master anchors, all 126 architecture nodes/relationships, historical
+code/verification block preservation, unchanged active C1–C7 scope and original
+design-review recommendations, pending P5/P6 gates, `git diff --check` and
+`npm run build`. Production JS/CSS filenames/hashes remain unchanged; the
+existing large-chunk advisory remains. Both TypeScript edits are comments only.
+No runtime changes, local browser/stress suites, performance recordings or new
+CI runs are needed for this cleanup. Original inputs were backed up at
+`/private/tmp/arena-doc-consolidation-20261016/`. Documentation delivery is local;
+this request does not merge/deploy or start the next implementation session.

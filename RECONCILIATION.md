@@ -1,12 +1,12 @@
 # Reconciliation Log
 
-Read this file immediately after the current milestone sequence, `build/BUILD_PLAN_V0.4.md`, before beginning any work; then read `build/BUILD_PLAN_V0.3.md` for the underlying architecture and verification conventions. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. Completed plans are preserved as `build/BUILD_PLAN_V0.1.md` and `build/BUILD_PLAN_V0.2.md`.
+Read this file immediately after the current milestone sequence, `build/BUILD_PLAN_V0.4.md`, before beginning any work; then read `build/MASTER_BUILD_PLAN.md#v0-3` for the underlying architecture and verification conventions. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. Completed plans are consolidated in `build/MASTER_BUILD_PLAN.md`; milestone dates/statuses are summarized in `build/BUILD_STATUS.md`.
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1 production telemetry guard verified; P2 next. F16 is delivered; other content selections remain pending.**
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. P2–P6 readiness remains gated.**
+- Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 readiness remain gated.**
 
 ## How to maintain this file
 
@@ -273,6 +273,33 @@ Keep production build-size output visible in phase verification. Avoid adding la
 
 Revisit when:
 Compressed entry size grows materially beyond this baseline, deployment performance is measured on representative connections, or optional screens/assets provide a natural lazy-load boundary.
+
+Session 7 / V0.4.3 P5 continuation (2026-10-15): production cold/warm startup is
+now measured in `build/performance/P5_STARTUP_REPORT.md`. Browser-native rendering
+observers record the first on-screen draw after title/HUD text creation, resource
+transfer, observed texture uploads and a separate decode trace; no production
+engine/test global is introduced. The first failed collector assumed Phaser's
+debug global survived production; it does not. Cold means HTTP cache cleared,
+not an OS/process cold start, and these markers are not compositor timestamps.
+
+The prior entry catches synchronous construction errors but statically evaluates
+Phaser first. Forcing unavailable canvas contexts produces two uncaught dependency
+errors with no recovery UI. A blocked declared atlas image still reaches the
+menu with no failure UI. P5 adds a 2D canvas preflight and a dynamic Game-start
+boundary inside the existing catch, plus an owned async asset-failure event that
+schedules Game destruction and stops transition. Dependency-fetch and atlas
+network failures now show theme-owned reload controls; retry after recovery boots
+a run. Both themes validate recovery copy. The boundary is justified by observed
+failure recovery, not by the chunk warning; all required game code still loads.
+
+Three serial cold/warm pairs on local Chromium/SwiftShader give title-draw markers
+242.6/115.8/117.9 ms cold and 134.9/140.1/133.6 ms warm. Variation/process caching
+preclude a speedup claim. Forced Canvas, no-graphics, blocked atlas/module and
+both real retry paths pass; a 100 ms latency/200 KBps case reaches the title marker
+at 2,579.7 ms. Full values, decompression/decode/upload scope, source/bundle
+hashes and exclusions are in the report. Broader browser/device, malformed-asset
+processing errors, initial HTML/entry delivery failure and remaining P5 lifecycle
+acceptance are pending. No speculative split, pipeline/art, tuning or persistence.
 
 ### REC-011 — Arcade Physics and a 2400×1600 arena are the initial runtime baseline
 
@@ -573,7 +600,7 @@ Context / observation:
 V0.1 completed all six phases, but the generic `BUILD_PLAN.md` filename still looked current and repository instructions pointed every future session to it. The V0.1 deferred list deliberately grouped work from several later milestones, while `PLAN.md` defines a narrower authoritative V0.2 scope.
 
 Decision / solution:
-Preserve the completed milestone as `build/BUILD_PLAN_V0.1.md`, make `build/BUILD_PLAN_V0.2.md` the current implementation source, and update repository/README references. Derive V0.2 from the product plan's V0.2 section: expanded enemies; overcrit, piercing, and on-kill interactions; Chaos, multipliers, shrines, and baseline elites; scalable feedback; and the named statistics. Use V0.1's deferred list only as candidate context. Keep persistence/export, additional weapons, bosses, general curses, elite modifiers, endless mode, and other V0.3 work out.
+Preserve the completed milestone as `build/MASTER_BUILD_PLAN.md#v0-1`, make `build/MASTER_BUILD_PLAN.md#v0-2` the current implementation source, and update repository/README references. Derive V0.2 from the product plan's V0.2 section: expanded enemies; overcrit, piercing, and on-kill interactions; Chaos, multipliers, shrines, and baseline elites; scalable feedback; and the named statistics. Use V0.1's deferred list only as candidate context. Keep persistence/export, additional weapons, bosses, general curses, elite modifiers, endless mode, and other V0.3 work out.
 
 Why:
 Versioned plans retain the evidence and commit history of a completed milestone without making stale instructions appear active. Product scope prevents the broad deferred list from silently expanding V0.2, while seven dependency-ordered phases put provenance and load safety before recursive interaction mechanics.
@@ -993,7 +1020,7 @@ Context / observation:
 V0.2 completed every named mechanic, but play testing showed the loop reads as flat: `xpRequiredForLevel` is linear (`src/game/systems/xp.ts:20`) while XP income is not; enemies share a physics group with no collider (`src/game/scenes/run-scene.ts:334`); `SPAWN_RADIUS` is 360 against a viewport half-extent of roughly 960, so spawns are visible; the roster fully unlocks within 24 seconds; enemy strength scales with Chaos but not elapsed time; upgrade cards state no values; and Detonation is one fixed 96/15 blast forever. Three defects surfaced alongside those: `eliteChance` is `min(0.4, 0.04p)` so a shrine-free run sees no elites; `selectUpgradeChoices` can re-offer an already-enabled skill, wasting a level-up; and `armour`, `regeneration`, and `luck` are declared and validated but read by no system. The prior `PLAN.md` V0.3 section listed content growth — weapons, bosses, unlocks, persistence, endless mode — none of which addresses these.
 
 Decision / solution:
-Re-sequence rather than expand. `PLAN.md` V0.3 now describes a rebalancing, escalation, and readability milestone; the previous V0.3 content list moves verbatim to a new V0.4 section, gaining weapon evolution. `build/BUILD_PLAN_V0.3.md` is the implementation plan for the new V0.3 in eight phases. `SAVE_DATA.md` moves its export/import UI expectation to V0.4 and records that V0.3 adds only a serializable settings slice behind a marked adapter seam. Completed milestone plans stay immutable except for forward-looking factual errata, so `BUILD_PLAN_V0.2.md` gains one corrected milestone reference and nothing else.
+Re-sequence rather than expand. `PLAN.md` V0.3 now describes a rebalancing, escalation, and readability milestone; the previous V0.3 content list moves verbatim to a new V0.4 section, gaining weapon evolution. `build/MASTER_BUILD_PLAN.md#v0-3` is the implementation plan for the new V0.3 in eight phases. `SAVE_DATA.md` moves its export/import UI expectation to V0.4 and records that V0.3 adds only a serializable settings slice behind a marked adapter seam. Completed milestone plans stay immutable except for forward-looking factual errata, so `MASTER_BUILD_PLAN.md#v0-2` gains one corrected milestone reference and nothing else.
 
 Why:
 Every V0.4 item inherits whatever curve exists when it lands. Tuning four enemy roles, one weapon, and five skills is materially cheaper than tuning them after adding more weapons, bosses, and unlockable pools on top, and a wrong curve would be re-tuned twice. The three defects above are also cheapest to fix before content multiplies the surface they affect.
@@ -1585,7 +1612,7 @@ Context / observation:
 Decision / solution:
 The limit now produces a new `time_up` status that holds the simulation and asks. `endless` lifts the limit entirely and plays until the player actually dies. `clearing` stops new arrivals and keeps every other system running — projectiles, pickups, hazards, on-kill effects — so the run ends on an empty field rather than a freeze-frame. `RunState` carries the mode, so the clock, the HUD, and the director all resolve from one field.
 
-Endless needs nothing from the director: it already resolves from `t = elapsed / duration` with no clamp, and `BUILD_PLAN_V0.3.md` listed `t > 1` as supported. Time-based escalation plateaus at the end of the authored duration rather than growing without bound, which is the right shape — Chaos and the player's own world upgrades are what push an endless run further.
+Endless needs nothing from the director: it already resolves from `t = elapsed / duration` with no clamp, and `MASTER_BUILD_PLAN.md#v0-3` listed `t > 1` as supported. Time-based escalation plateaus at the end of the authored duration rather than growing without bound, which is the right shape — Chaos and the player's own world upgrades are what push an endless run further.
 
 Clearing waits on the causal event backlog as well as the live enemy count. A death-spawner that dies on the last tick still owes its offspring, and ending on an empty set while spawn work was queued would drop enemies the player had just been told they had to clear.
 
@@ -1868,9 +1895,9 @@ Frame time with 300 textured followers is measured in V0.4.1 Phase S1 against th
 - Blocks: None
 
 Context / observation:
-`BUILD_PLAN_V0.4.md` §2 and `SPRITE_PLAN_V0.4.1.md` §7 both specify `config.ts: antialias: true` becomes `pixelArt: true`, on the correct observation that the current setting would blur every sprite. But `pixelArt: true` is not a filtering switch — Phaser expands it to `antialias: false` plus `roundPixels: true` for the entire renderer, which hardens the edge of every `Arc`, `Star`, `Triangle`, and `Rectangle` in the game and snaps all movement to whole pixels.
+`BUILD_PLAN_V0.4.md` §2 and `MASTER_BUILD_PLAN.md#v0-4-1` §7 both specify `config.ts: antialias: true` becomes `pixelArt: true`, on the correct observation that the current setting would blur every sprite. But `pixelArt: true` is not a filtering switch — Phaser expands it to `antialias: false` plus `roundPixels: true` for the entire renderer, which hardens the edge of every `Arc`, `Star`, `Triangle`, and `Rectangle` in the game and snaps all movement to whole pixels.
 
-That is a visible change, in the one PR whose stated acceptance criterion is that a run looks identical. It is also not a transitional cost: `knight-magic` gets no sprite roster at all by design (`SPRITE_PLAN_V0.4.1.md` §1), the floor grid stays procedural (§Scope), and every enemy, shrine, curse, and boss V0.4.2 adds renders as a primitive until someone draws it.
+That is a visible change, in the one PR whose stated acceptance criterion is that a run looks identical. It is also not a transitional cost: `knight-magic` gets no sprite roster at all by design (`MASTER_BUILD_PLAN.md#v0-4-1` §1), the floor grid stays procedural (§Scope), and every enemy, shrine, curse, and boss V0.4.2 adds renders as a primitive until someone draws it.
 
 Decision / solution:
 `config.ts` is left alone. `loadThemeSprites` applies `Phaser.Textures.FilterMode.NEAREST` per texture on load complete, so nearest-neighbour lands exactly where pixel art exists and nowhere else.
@@ -2530,6 +2557,21 @@ older-device support. Commit only deliberate phase changes after verification;
 compare the final index against the saved starting diff when local edits overlap.
 Record actual elapsed time, missing measurements and rerun commands on recovery.
 
+Owner-authorized documentation consolidation (2026-10-16): completed milestone
+plans and verified slices now live in `build/MASTER_BUILD_PLAN.md`; ongoing
+V0.4 sequence, V0.4.3 and gated V0.4.4 plans remain separate.
+`build/BUILD_STATUS.md` replaces scattered date/status annotations, including
+the stale pre-build V0.4.3 banner. Historical phase specs and evidence remain
+traceable; unfinished content and sprite targets remain in ongoing plans.
+AGENTS/README, source comments and the architecture-map source links follow
+the new locations. Completed Session 3–6 handoffs are removed after their
+results are recorded; only the current handoff is maintained.
+The prior instruction to preserve those dirty annotations/prompts is superseded
+by this explicit cleanup request; no runtime or acceptance gate changes follow.
+P5 consolidated acceptance is still next, so Session 8 remains P5 and the
+roadmap's future P6 handoff becomes Session 9. No new reconciliation ID is
+allocated outside V0.4.3's reserved range.
+
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 
 - Status: Accepted
@@ -2989,3 +3031,260 @@ Remote resolution: repair head `28ecdba` passes
 2026-10-13 01:27:58–01:43:02 UTC. Linux reports 428 passing units, 85 passing
 browser cases / one existing skip, no flaky/retried cases, and zero audit
 vulnerabilities. Q5 is verified; this does not complete P2–P6 or device acceptance.
+
+PR #25 follow-up (2026-10-16): run `38670385486` on `d9047c0` regressed this
+same artifact rule in the P4 spec. Two cases fail on all three attempts with
+ENOENT writing `/private/tmp/arena-p4-...png`. Use testInfo.outputPath for all four
+P4 images; retain the existing assertions and the workflow's artifact upload.
+The run reports 88 passes, two failures, one flaky case and one existing skip;
+its standalone audit step is skipped after browsers fail (npm ci itself reports
+zero vulnerabilities). The two P5 commits remain local and are not the tested head.
+
+The flaky interface resize/settings/restart case is a cumulative test-budget
+failure, not proof of unstable canvas geometry. Its trace shows the first three
+clicks reach stable and succeed in 2,608 / 2,608 / 2,656 ms. The fourth starts with
+only ~1,132 ms left before the 30-second test deadline. Give that multi-stage case
+and the dense-map case bounded 90-second total budgets, matching P4's other long
+scenario; keep actual input actions, per-step waits, simulation rate and every
+state/cap/ledger/resize assertion. Do not force clicks or raise retries to hide it.
+
+Local repair evidence: three affected cases pass serially with zero retries
+(33.2 s), all five screenshots exist beneath per-test output directories, all
+474 units/56 files and types/lint/build/whitespace pass. Full local Chromium/stress
+is deferred under the owner policy. Remote repair remains pending publication and
+an Actions pass matching that published head; a local pass does not turn the old
+failed run green. See `build/performance/CI_REPAIR_20261016.md`.
+
+Remote follow-up: owner-authorized push published `2086a41`; matching-head
+[Actions run 38824954227](https://github.com/PDVersion/Arena-Survivor/actions/runs/38824954227)
+passes 474 units/56 files, types/lint/build, 93 browser cases/one existing skip
+and zero audit findings. The PR #25 CI repair is verified, without closing the
+remaining P5/P6 or hardware gates.
+
+### REC-115 — Hidden maps stop before preparation; HUD caches displayed dependencies
+
+- Status: Accepted
+- Date: 2026-10-13
+- Affects: V0.4.3 P2 interface work and later performance comparisons
+- Blocks: None; hardware/readiness and P3–P6 retain their separate gates
+
+The frozen `6f9ec78` source prepares spread/filter arrays for enemies, hazards
+and sites even when the map is OFF or hidden by an overlay, then clears graphics
+before returning. Visible maps parse six palette colours and allocate coordinate
+tuples/closures every frame. A short CDP profile captures those paths; it does
+not establish that they dominate frame time. Phaser Text.setText already compares
+its final string before updateText, so unchanged text does not imply a repeated
+texture upload. HUD callers still format all values and join an array each frame.
+
+P2 returns at the scene visibility boundary before collection reads, borrows
+bounded actor references into reusable presentation-only arrays, caches immutable
+palette colours per map and draws scalar coordinates. Hidden MinimapUi.update
+also returns before graphics or view reads. Buffers reset on restart; no game
+system reads them. Activated/consumed sites remain excluded. Visible-map drawing
+continues every frame: no measured evidence yet justifies a cadence change.
+
+HUD text preparation compares displayed health/clock boundaries and other scalar
+inputs, including every live source count. The origin ledger mutates in place,
+so caching its object identity would silently stale natural/fragmentation/Bagged
+Waste/environment counts. Health/XP bars still resolve exact fractions every
+call; changed text/status is immediate. Phaser retains its existing string/texture
+guard. Overlays already render on show/change/resize, not every active frame;
+no blanket overlay cache is introduced.
+
+The opt-in collector adds visible/OFF/paused variants through actual keyboard
+and scaled pointer settings, plus separate short CDP/call-count probes. Native
+browser imports are necessary inside vite-node's page.evaluate: a plain import
+expression is transformed into an unavailable SSR helper. Profiling/probe
+wrappers are test-only collector code, absent from game production bundles.
+Sustained comparison windows use no call wrappers or CPU profiler. Before source
+is an immutable archive; edit-time Vite/HMR cannot contaminate its code. Results,
+actual live/visible counts, renderer, production separation and limits will be
+recorded in `build/performance/P2_REPORT.md` before accepting this gate.
+
+Final evidence: 438 units, types/lint/build, 13 targeted browsers, 88 full
+Chromium passes / one existing skip, production exclusion/boot and three serial
+stress cases pass. Eighteen primary test and six production warmed ≥60 s windows
+(three serial repeats each) pass their recording/correctness checks. Three
+exploratory before-visible records remain retained; all three quiet replacements
+are used. Visible-map median p95 is 41.7→41.7 ms, OFF 25.0→24.9, paused
+25.3→25.3; production 16.8→16.8 ms. No meaningful frame-rate improvement
+is established. Visible software rendering remains above the provisional 40 ms
+criterion. Short probes prove zero after hidden-map updates/inputs and zero
+paused HUD setters, while texture updates stay change-only in both builds.
+Report all p99/max/stalls, update exclusions, counts and digests in
+[`P2_REPORT.md`](build/performance/P2_REPORT.md). Production population is
+unavailable, not inferred. Production cap remains 300. Physical older-device
+acceptance and mixed-combat capacity remain pending.
+
+
+### REC-116 — Committed-kill windows need one owned immutable result
+
+- Status: Accepted
+- Date: 2026-10-14
+- Affects: V0.4.3 P3, run statistics, future burst/chain performance work
+- Blocks: None; P4–P6 and physical-device readiness retain separate gates
+
+The frozen `64e77c4` combat CPU trace identifies `recordCommittedKill` as the
+highest useful sampled simulation hotspot: 218.2 ms self CPU in a ten-second
+replenished mixed-burst probe. Dense test telemetry (`countCoincidentPairs`)
+dominates the calm diagnostic build and is not production simulation evidence.
+Kill recording filters a potentially thousands-long immutable timestamp window
+then spreads survivors into another array on every committed kill. Queue/effect
+wrappers include nested kill work; their inclusive times cannot be added.
+
+Build the retained timestamps in one pass into one owned result array, append
+now, and freeze it. Keep strict lower expiry, inclusive current time, future-time
+exclusion, input iteration order, duplicates, total kills and largest-chain
+high-water exactly as before. Do not assume timestamps are sorted or the clock
+monotonic; do not mutate old statistics snapshots or change their shape. Damage,
+rewards, target ties, causal FIFO/retained capacity work, sprite/body data, both
+themes, 0.5 rate and the 300-enemy cap are untouched.
+
+Differential regressions compare the previous algorithm over 3,000 burst/gap/
+non-monotonic events and explicitly check frozen prior snapshots, unsorted/future/
+duplicate timestamps and expiry boundaries. Fixed-work three-repeat microbenchmarks
+reduce 10,000-call CPU ~75% for 300/3,000 timestamps, identical checksum.
+Three warmed >=60-second repeats per build show median update p95 4.3→2.9 ms
+(eco melee) and 3.8→2.4 ms (retained projectile), CDP script ~15%/~17% lower,
+while wall p95 remains 33.4 ms. Calm dense/distributed comparisons show no useful
+change. Actual combat populations fluctuate, so this is sustained burst evidence,
+not sustained 300-live combat or older-device acceptance. Full values, exclusions,
+source/build digests and final verification are in
+[`P3_REPORT.md`](build/performance/P3_REPORT.md).
+
+Freeze game source/build before comparing; archived tooling must receive explicit
+revision/state metadata because an archive has no `.git`. Keep profiler/heap/
+wrapper probes separate from throughput windows. A recorder remained running
+after an owner pause: retain its uncontrolled after-production set, do not select
+its fastest repeat, and rerun both matched production variants before finalizing.
+Physical hardware, renderer and test telemetry limitations remain explicit.
+
+Future guardrail: preserve immutable statistics and add differential window tests
+before changing storage/expiry algorithms; do not infer a frame-rate win from CPU
+savings or fixture populations from unavailable production telemetry.
+
+
+### REC-117 — Pickup cap can leave already-destroyed references tracked
+
+- Status: Resolved
+- Date: 2026-10-14
+- Affects: V0.4.3 P5 entity/lifecycle gate; pickup overflow/merging
+- Blocks: None after Session 6 lifecycle verification; overall P5 remains open for its other acceptance
+
+The immutable P3 before build (`64e77c4`) pressure probe drops 80 pickups every
+500 simulated ms at a distant point, no weapon/contact/hazards. After 1,040 drops
+and 790 merges with no collections, confirmation reports **250 active pickups
+but 535 tracked references**: 285 inactive actors remain in the scene Set. The
+live pickup cap is respected; tracked population is not bounded by that cap.
+This predates P3's only runtime delta (`recordCommittedKill`). Evidence and
+active/tracked counters are retained in `P3_PROFILE_SUMMARY.json`.
+
+Likely cause confirmed by source order: `dropExperience` invokes
+`enforcePickupCap` before installing the new pickup's DESTROY set-removal listener.
+The newly added pickup can be selected as the absorbed actor and destroyed before
+that listener exists. Register ownership/cleanup before any synchronous path can
+destroy the actor; verify rather than assume this is the only retention cause.
+
+P5 must reproduce overflow with the newest actor absorbed, establish bounded
+tracked/active/body populations across repeated bursts and restart, and preserve
+exact reward sums/claim semantics. No P5 code is pulled into this P3 session.
+Do not describe `progression.pickups` (currently Set size) as an active count
+without checking `active`. Revisit at the authorized P5 lifecycle session.
+
+
+Resolution (2026-10-15, Session 6): deterministic execution of the actual scene
+methods against synchronous DESTROY doubles reproduces **535 tracked / 250 live**
+after exactly 1,040 drops. Installing the scene Set-removal listener before cap
+enforcement reduces tracking to **250**, with unchanged sampled nearest-pair/tie
+order, survivor provenance and 1,040 total XP. Both-theme real Phaser checks use
+three fresh reconstructions each: 250 tracked/active/group members/enabled bodies,
+790 merges, all 1,040 XP awarded once, then zero pickup group/body/Set ownership
+after collect tweens and the next physics post-update. Bodies are deferred engine
+removals, so synchronous Set deletion alone is not counted as physics cleanup.
+See `build/performance/P5_LIFECYCLE_REPORT.md` and lifecycle regression tests.
+The paid-collect-cue race and stopped-scene retention are recorded in REC-119.
+
+### REC-118 — Minimap circles triangulate again even when their command buffer is retained
+
+- Status: Accepted
+- Date: 2026-10-15
+- Affects: V0.4.3 P4 presentation and later rendering measurements
+- Blocks: None; REC-117 still blocks P5 completion
+
+The separate short dense-map CPU probe identifies Phaser Graphics arc/path
+triangulation and batching, separate from test-only coincident-pair diagnostics.
+Phaser replays retained Graphics paths each rendered frame, so merely reducing
+map-update cadence would not avoid their render cost. An isolated square-marker
+probe lowers p95 41.7→25.0 ms; sustained candidate Default/Low repeats confirm
+41.7→25.1 ms median p95 for the visible 300-live map. Starting baseline dense
+median is 35.4 ms with repeat variation; preserve every repeat and both comparisons.
+These are SwiftShader software-renderer observations, not older integrated GPU
+acceptance or a claim that all gameplay becomes faster.
+
+Add one memory-only Default/Low setting through shared title/pause/session
+settings. Both theme view packs own enemy minimap shape mappings. Low changes
+only circular enemy overview markers to direct rectangles at the same centre
+and extents; Default keeps existing circles. Map cadence, essential player/site/
+hazard markers, world/actor/UI art, critical HUD updates, hitboxes and every
+simulation rule remain unchanged. No renderer resolution policy, automatic
+quality switching, sprites, gameplay tuning or persistence is introduced.
+
+Frozen source/build hashes, 27 serial warmed >=60-second repeats, all wall
+p95/p99/max/stalls/actual populations, CPU scope and exclusions, failed harness
+preflights and affected gate results are in `build/performance/P4_REPORT.md`.
+Both-theme units cover immutable map inputs and seeded spawn/kill/XP model
+equivalence; actual setting dispatch needs only presentation/settings
+collaborators. Six single-worker affected browser checks cover reversal, pause,
+resize/pointer transforms, opacity, reduced motion, restart/next run, upgrade
+overlay and dense-map visuals. Full units/types/lint/build and production guard/
+boot checks pass. Screenshots were inspected separately from timing windows.
+
+Owner testing policy: reserve heavy local browser work for necessary current-
+change checks, run serially, and clean up owned processes. Whole-app browser/
+stress regression is deferred to Actions or a consolidated check after several
+sessions (recorded in AGENTS.md), overriding older blanket per-session commands.
+Deferred checks are never labelled passed; current P4 work remains local with
+no push or CI claim. P5 must still resolve REC-117; physical older-device,
+additional-browser and sustained 300-live mixed combat remain pending.
+
+
+### REC-119 — Paid pickup cues are presentation; stopped scenes release causal ownership
+
+- Status: Accepted
+- Date: 2026-10-15
+- Affects: V0.4.3 P5 lifecycle, collection/overflow and scene shutdown
+- Blocks: None for the affected lifecycle slice; startup/compatibility and broader P5 acceptance remain pending
+
+A claimed pickup stays active during its collection tween. The old cap search
+could merge it with an unpaid drop, either losing new XP in the paid survivor or
+including an already-paid value in an unpaid survivor. A deterministic cap/race
+regression fails before the fix. At overflow, retire claimed collect presentation
+first; only unpaid pickups participate in the unchanged sampled pair search.
+This preserves the authored total actor cap (250), surviving source/tie semantics
+and exact rewards without a new cap or balance value. The test-only XP-level cap
+also used to return after claiming without starting destruction; schedule the
+collect cue for every successful claim, including suppressed test rewards.
+Fractional rewards and duplicate claims remain exact. Collection animation may
+finish early when needed to admit an unpaid drop at the cap.
+
+A bounded real Phaser stop probe also shows that engine teardown already empties
+display, bodies, timers/tweens and sprite POST_UPDATE hooks, but the reusable scene
+still holds a destroyed hazard/feedback/map reference, 250 claim IDs and two pending
+causal events. Named idempotent shutdown cleanup now releases owned actor/UI/input
+references, hash/map buffers, claim sets, pending damage presentation and both
+causal queues immediately. It retains run data, statistics and terminal snapshots;
+no mid-run deduplication IDs are evicted. Respect REC-020: shutdown does not read
+or tear down physics a second time. Phaser remains responsible for objects,
+timers, tweens, sprite follower destruction and engine registrations.
+
+The affected gate uses both-theme deterministic tests and two serial Chromium
+Canvas lifecycle cases (three stop/start reconstructions each), not an authored
+run or throughput benchmark. Browser fixtures must import the same Vite-resolved
+Phaser instance as RunScene; mixing direct dist ESM and Vite's dependency module
+can fail Scene instanceof/key registration and never start the intended scene.
+The two initial fixture timeouts are harness failures, not passing game evidence.
+
+Full local Chromium/stress, authored/overtime/long soak, focus/resume, settings UI
+mode switching, production startup/boot guards and additional-browser/hardware
+acceptance are explicitly deferred under the owner resource policy. No current
+CI/device pass is claimed. See the P5 lifecycle report for exact commands/counts.

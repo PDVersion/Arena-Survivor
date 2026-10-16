@@ -5,50 +5,25 @@ recognisable real-world tools, and optional educational depth.
 
 ## Status
 
-**V0.4.2 and V0.4.2.1 are merged.** The readable baseline has a 2× cropped
-world view, coherent 0.5 gameplay rate, Cleanup Grabber and Collection Sweep,
-walk-through contact with bounded knockback, Microplastics, Glass Shards and
-finite material families. V0.4.0's optional-sprite seam and V0.4.1's five-sheet
-checkpoint are also merged; remaining art stays gated until the roster settles.
-
-**V0.4.3 is active on `codex/v0.4.3`; P0/Q1/Q2/Q3/Q4 and P1 gameplay/software gates are verified; P2 is next.**
-Q1 fixes player facing/walking and zoomed world text, makes both Cleanup Grabber
-upgrade entries common in the offer pool, and adds Beginner / Normal / Experienced
-difficulty (selected F16). Q2 adds event readability, fragment pose reuse, a sprite review browser and spawn
-source counts. P1 excludes production diagnostics; interface, simulation,
-presentation and lifecycle profiling continue through P2–P6. Other optional
-content remains unselected; C1–C7 follows the performance gate. Real older-device
-acceptance remains pending measurement. See [session progress](AUTONOMOUS_PROGRESS.md),
-[the active plan](build/BUILD_PLAN_V0.4.3.md) and REC-100–110.
-
-V0.1–V0.3 and the V0.3.1 corrections are complete. Their plans retain the
-implementation history for progression, director, hazards, shrines, skills,
-statistics, settings and endless/clearing behaviour.
+See [build dates and status](build/BUILD_STATUS.md) for verified checkpoints,
+merge dates, current PR/CI evidence and remaining acceptance limits.
+V0.4.3 is active; P5's affected lifecycle/startup slices are verified and its
+consolidated acceptance remains open. P6 and optional content remain gated.
 
 ## Project documents
 
-- [V0.3 build plan](build/BUILD_PLAN_V0.3.md) — completed implementation record, architecture and verification conventions.
-- [Education pivot](build/EDUCATION_PIVOT.md) — exploratory design for the type system, real-data enemy stats, and the knowledge layer.
-- [Completed V0.2 build plan](build/BUILD_PLAN_V0.2.md) — implementation record for the interaction milestone.
-- [Completed V0.1 build plan](build/BUILD_PLAN_V0.1.md) — implementation record for the first playable.
-- [Theme and archetype system](build/THEME_ARCHETYPES.md) — modular content boundaries and safe retheme workflow.
-- [V0.4 sequence](build/BUILD_PLAN_V0.4.md) — current increment order, gates, ownership, and reconciliation ranges.
-- [V0.4.1 sprite plan](build/SPRITE_PLAN_V0.4.1.md) — the completed pipeline and five-sheet checkpoint, plus the gated historical inventory.
-- [V0.4.2 readable-baseline plan](build/BUILD_PLAN_V0.4.2.md) — camera zoom, coherent slowdown, Cleanup Grabber, parallel delivery, and integration gate.
-- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md) — performance prerequisites, ownership and gates, followed by selected content.
-- [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md) — session protocol, measurements and optional feature menu.
-- [Autonomous progress](AUTONOMOUS_PROGRESS.md) — actual checks, evidence, blockers and the next task.
-- [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) — the art bible and the reusable image-generation prompt.
-- [Sprite manifest](build/sprites/MANIFEST.md) — per-sprite subject blocks, claim protocol, status, and the generation log.
-- [Portable save data plan](build/SAVE_DATA.md) — encoded text export/import, versioning, validation, and migration.
-- [Reconciliation log](RECONCILIATION.md) — decisions, pitfalls, discoveries, and future guardrails.
-- [Game plan](build/PLAN.md) — the broader product and design vision.
+- [Master build plan — completed work](build/MASTER_BUILD_PLAN.md): consolidated V0.1–V0.4.2.1 implementation/architecture records and verified V0.4.3 slices.
+- [Build dates and status](build/BUILD_STATUS.md): one current milestone/phase summary.
+- [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
+- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): remaining P5/P6 work and gated C1–C7.
+- [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
+- [Next session — remaining P5 acceptance](build/SESSION_8_PROMPT.md).
+- [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
+- [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
+- [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).
+- [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) and [manifest](build/sprites/MANIFEST.md).
+- [Architecture map](build/ARCHITECTURE_MAP.html): searchable feature/system index.
 
-Before beginning any work, read [the V0.4 sequence](build/BUILD_PLAN_V0.4.md),
-then the reconciliation log and V0.3 implementation record, followed by session
-progress and the active increment plan.
-`build/BUILD_PLAN_V0.3.md` remains the implementation record for the milestone
-underneath. The repository-wide workflow is defined in [AGENTS.md](AGENTS.md).
 
 ## Performance measurements
 
@@ -203,7 +178,7 @@ For a manual smoke test, verify movement, combat, XP collection, upgrade choices
 The [architecture atlas](build/ARCHITECTURE_MAP.html) and
 [sprite browser](sprite-browser.html) link to one another and are separate built
 reference pages. Run Vite to use the sprite browser; its review notes stay local.
-The [Session 3 prompt](build/SESSION_3_PROMPT.md) resumes P2 in a new session.
+The [Session 3 prompt](build/MASTER_BUILD_PLAN.md#v0-4-3-performance) resumes P2 in a new session.
 Glass Shards deliberately remain stationary and clearable; restart a pre-Q2 live
 run to load their broken-glass sprite binding. Detached pixels in intact Glass
 Bottle poses are an art-review finding, not runtime particles.

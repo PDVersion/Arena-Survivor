@@ -199,12 +199,13 @@ export class PauseMenuUi {
         muted: "Mute audio",
         minimapOpacity: "Minimap visibility",
         difficulty: this.menuContext ? this.theme.copy.difficulty.label : this.theme.copy.difficulty.nextRun,
+        presentationQuality: "Presentation",
       };
       (Object.keys(labels) as SettingKey[]).forEach((key, index) => {
         const y = bodyTop + index * 44;
         const value = view.settings[key];
         const on = typeof value === "boolean" ? value : typeof value === "string" || value > 0;
-        const display = typeof value === "string" ? this.theme.copy.difficulty.levels[value].name : typeof value === "boolean"
+        const display = key === "presentationQuality" ? (value === "low" ? "Low" : "Default") : typeof value === "string" ? this.theme.copy.difficulty.levels[value as RunSettings["difficulty"]].name : typeof value === "boolean"
           ? (value ? "ON" : "OFF")
           : value === 0 ? "OFF" : `${Math.round(value * 100)}%`;
         const valueWidth = key === "difficulty" ? 200 : 96;

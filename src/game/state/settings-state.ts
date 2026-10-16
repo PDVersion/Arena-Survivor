@@ -10,6 +10,8 @@
 import { difficultyIds, type DifficultyId } from "../core/archetypes/difficulty";
 
 export interface RunSettings {
+  /** Presentation only; retained for this browser session, including restarts. */
+  readonly presentationQuality: "default" | "low";
   /** Chosen before play; changing it during play affects the next run. */
   readonly difficulty: DifficultyId;
   /** Show before/after numbers on upgrade cards. Badges are always shown. */
@@ -21,7 +23,7 @@ export interface RunSettings {
 }
 
 export type SettingKey = keyof RunSettings;
-export type BooleanSettingKey = Exclude<SettingKey, "minimapOpacity" | "difficulty">;
+export type BooleanSettingKey = Exclude<SettingKey, "minimapOpacity" | "difficulty" | "presentationQuality">;
 
 export const settingKeys: readonly SettingKey[] = Object.freeze([
   "difficulty",
@@ -29,11 +31,13 @@ export const settingKeys: readonly SettingKey[] = Object.freeze([
   "reducedMotion",
   "muted",
   "minimapOpacity",
+  "presentationQuality",
 ]);
 
 export function createSettings(overrides: Partial<RunSettings> = {}): RunSettings {
   return Object.freeze({
     difficulty: "normal",
+    presentationQuality: "default",
     // Numbers on by default: strictly more information, and the toggle is there
     // for players who prefer clean cards.
     detailedUpgradeCards: true,
@@ -64,6 +68,10 @@ export function cycleDifficulty(settings: RunSettings, direction = 1): RunSettin
     ...settings,
     difficulty: difficultyIds[(index + direction + difficultyIds.length) % difficultyIds.length]!,
   });
+}
+
+export function cyclePresentationQuality(settings: RunSettings): RunSettings {
+  return Object.freeze({ ...settings, presentationQuality: settings.presentationQuality === "default" ? "low" : "default" });
 }
 
 let sessionSettings = createSettings();

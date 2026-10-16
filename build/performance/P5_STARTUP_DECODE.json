@@ -1,0 +1,153 @@
+{
+  "recordedAt": "2026-10-15T04:17:39.405Z",
+  "browser": "151.0.7922.34",
+  "host": {
+    "cpu": "Apple M5 Pro",
+    "memoryGiB": 48,
+    "platform": "darwin",
+    "release": "25.5.0"
+  },
+  "viewport": {
+    "default": "1280x720",
+    "faults": "900x600",
+    "dpr": 1
+  },
+  "mode": "production",
+  "source": "8b700d9 plus explicitly recorded working changes",
+  "diagnosticMarkersAbsent": true,
+  "bundleDigests": [
+    {
+      "name": "combat-DP5YJCqn.js",
+      "sha256": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0"
+    },
+    {
+      "name": "game-B2MpO4ae.js",
+      "sha256": "a5503b0e3cf4f0be6ec86a69fbbae33a9e887c23241bb414e22b3a1cd3bced7c"
+    },
+    {
+      "name": "index-ChNAadhX.js",
+      "sha256": "44f9cf7a0bab9db133566257f64cab32647fbbe659197ada75a3dcccf997438c"
+    },
+    {
+      "name": "sprites-wQFwGxXg.js",
+      "sha256": "66eb99ff79551b47e43221b272c852cc74008c3f34b24c4a0af93fd3a1d39922"
+    },
+    {
+      "name": "start-game-Dm7Yt1Yc.js",
+      "sha256": "dd250815926e1448e69d12e75c0da78f3ac5f162416253b15fa0b245833d686f"
+    }
+  ],
+  "timing": "Navigation-start-relative ms; first on-screen draw after title/HUD text creation, not exact compositor presentation. Browser rendering-call observers add overhead. HTTP cache cold, not process/OS cold. ResourceTiming decodedBytes means decompressed bytes, not image decode CPU.",
+  "records": [
+    {
+      "label": "decode-probe-traced",
+      "ready": true,
+      "expectedFailure": false,
+      "errors": [],
+      "menuTextMs": 263.69999980926514,
+      "hudTextMs": 420.39999985694885,
+      "rendererDetail": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+      "menuMs": 271.69999980926514,
+      "runMs": 431.89999985694885,
+      "inputMs": 411.2999999523163,
+      "textureCalls": 187,
+      "textureCpuMs": 12.499999046325684,
+      "renderer": "WebGL",
+      "textures": 156,
+      "inputToRunFrameMs": 20.59999990463257,
+      "loadEndMs": 16.59999990463257,
+      "domReadyMs": 16.59999990463257,
+      "resources": [
+        {
+          "path": "/assets/game-B2MpO4ae.js",
+          "startMs": 3.8999998569488525,
+          "responseEndMs": 8.799999952316284,
+          "durationMs": 4.900000095367432,
+          "transferBytes": 1490,
+          "encodedBytes": 1190,
+          "decodedBytes": 2284
+        },
+        {
+          "path": "/assets/game-CEk33VUv.css",
+          "startMs": 4,
+          "responseEndMs": 8,
+          "durationMs": 4,
+          "transferBytes": 1187,
+          "encodedBytes": 887,
+          "decodedBytes": 887
+        },
+        {
+          "path": "/assets/index-ChNAadhX.js",
+          "startMs": 4,
+          "responseEndMs": 9.5,
+          "durationMs": 5.5,
+          "transferBytes": 14787,
+          "encodedBytes": 14487,
+          "decodedBytes": 55047
+        },
+        {
+          "path": "/assets/combat-DP5YJCqn.js",
+          "startMs": 16.5,
+          "responseEndMs": 18.59999990463257,
+          "durationMs": 2.0999999046325684,
+          "transferBytes": 1284,
+          "encodedBytes": 984,
+          "decodedBytes": 2416
+        },
+        {
+          "path": "/assets/start-game-Dm7Yt1Yc.js",
+          "startMs": 16.5,
+          "responseEndMs": 44.89999985694885,
+          "durationMs": 28.399999856948853,
+          "transferBytes": 377789,
+          "encodedBytes": 377489,
+          "decodedBytes": 1618717
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.png",
+          "startMs": 240.09999990463257,
+          "responseEndMs": 241.89999985694885,
+          "durationMs": 1.7999999523162842,
+          "transferBytes": 9362,
+          "encodedBytes": 9062,
+          "decodedBytes": 9062
+        },
+        {
+          "path": "/sprites/eco-guardian/atlas.json",
+          "startMs": 240.29999995231628,
+          "responseEndMs": 242.19999980926514,
+          "durationMs": 1.8999998569488525,
+          "transferBytes": 769,
+          "encodedBytes": 469,
+          "decodedBytes": 8635
+        }
+      ],
+      "failureText": null,
+      "retryButton": null,
+      "testInterfaceAbsent": true,
+      "canvasCount": 1
+    },
+    {
+      "label": "image-decode-trace",
+      "names": [
+        "SoftwareImageDecodeCache::ReduceCacheUsageUntilWithinLimit",
+        "Decode Image"
+      ],
+      "byName": [
+        {
+          "name": "SoftwareImageDecodeCache::ReduceCacheUsageUntilWithinLimit",
+          "count": 27,
+          "completeDurationMs": 0.01
+        },
+        {
+          "name": "Decode Image",
+          "count": 6,
+          "completeDurationMs": 0.384
+        }
+      ],
+      "eventCount": 33,
+      "completeDurationMs": 0.394,
+      "scope": "Separate traced probe; durations are summed complete trace spans, may overlap/nest across threads, not critical-path or GPU time. No captured event is reported as no evidence, not zero decode cost."
+    }
+  ]
+}

@@ -143,7 +143,7 @@ export class SpriteView {
    * The damage flash, against a texture.
    *
    * The primitive version sets a fill colour, which does nothing to a sprite —
-   * so a view tints instead. `SPRITE_PLAN_V0.4.1.md` §7.
+   * so a view tints instead. `build/MASTER_BUILD_PLAN.md#v0-4-1-implemented-rendering-decisions`.
    */
   flash(colour: number, durationMs: number): void {
     if (!this.image.active) return;
