@@ -3306,3 +3306,32 @@ properties. The temporary unverified fixture was removed. Next native check uses
 actual same-window tabs; long soak, ten terminal cycles, real audio-device release
 and additional browser/physical older-device evidence stay pending. Existing CI
 excludes @stress, so green regression does not close these gates. P5 remains open.
+
+
+Session 9 native-event continuation (2026-10-16): Playwright's installed
+Chromium adapter installs focus emulation on its own Page CDP session. A second
+session setting it false still leaves the document visible on tab activation;
+that first bounded attempt verifies same-window IDs but fails its precondition.
+Use a fresh owned native Chromium process and attach to the default context with
+`connectOverCDP(..., { noDefaults: true })`; installed types document that it
+omits focus/media overrides. The default context has no inherited baseURL, so
+construct an absolute navigation URL (the first external setup attempt exposes
+that fixture error). Do not alter dependency code, document.hidden or dispatch
+fake events to obtain native acceptance.
+
+The corrected single 30-second-bounded case passes in 4.4 s, zero retries, with
+trusted native blur/hidden/focus/visible and matching window IDs. A 1,330.6 ms
+hidden interval preserves elapsed 258.463 ms, one natural spawn and empty causal/
+load queues. First observed advancing rAF telemetry adds 7.493 ms at rate 0.5;
+there is no catch-up in this light case. Chromium 151.0.7922.34, M5 Pro/48 GiB,
+Darwin 25.5.0, native Metal WebGL, actual viewport 1280×657/DPR1, test/Default.
+Record raw evidence in `build/performance/P5_NATIVE_VISIBILITY.json` and the
+acceptance matrix. This is neither pending-work/combat nor older-device evidence.
+
+Fourteen actual-handler deterministic tests preserve both themes' manual pause,
+level-up, time-up and terminal intent; native overlay paths remain a separate
+acceptance limit. No runtime fix is justified. The opt-in test owns and closes
+its browser/tabs/temp profile and bounds child termination; normal headless CI
+skips it. Do not repeatedly run passed native cases or inventory-only slices:
+next meaningful P5 work is the separately authorized consolidated lifecycle gate
+and actual supported-browser/physical-device evidence. Overall P5 stays open.

@@ -37,7 +37,7 @@ are excluded from these performance phases.
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
 | P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
-| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. Session 9 exact acceptance dependencies: `tests/e2e/native-visibility-v043.spec.ts`, `tests/unit/lifecycle/focus.test.ts`, `build/performance/P5_NATIVE_VISIBILITY.json`, acceptance report and current/successor handoffs. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
 | P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
 
 - [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
@@ -64,11 +64,17 @@ are excluded from these performance phases.
 - [x] P5 acceptance inventory / Session 8 — inspected scenario assertions and
   recorded covered/partial/pending evidence in `performance/P5_ACCEPTANCE_REPORT.md`.
   Native tab-switch probe did not reach hidden state; no runtime defect reproduced.
+- [x] P5 native-event slice / Session 9 — actual same-window Chromium tabs with
+  focus emulation absent, trusted events, frozen hidden clock/spawns/queues and
+  7.493 ms first observed advancement; 14 both-theme deterministic state guards.
+  This brief light case does not accept native overlays, pending work or long play.
 - [ ] P5 remaining acceptance — authored/extended overtime/ten terminal cycles/
-  long soak, native visibility/first-return catch-up, real audio cleanup and
+  long soak, native overlay/pending-work resume, real audio cleanup and
   broader compatibility remain pending. Bounded pause/resize/Default–Low and
   short ending/reconstruction evidence is mapped, not missing wholesale.
-  Next: Session 9 / P5; no P6 until this gate passes or owner changes it.
+  Native playing-run resume is now boundedly covered by Session 9 below;
+  native overlay/pending-work and sustained acceptance still need the combined gate.
+  Next: Session 10 / P5; no P6 until this gate passes or owner changes it.
 - [ ] P6 — combined software gate, baseline/final reports and manual device
   checklist; representative older-device acceptance measured or explicitly pending.
 
@@ -241,14 +247,13 @@ expiring no longer holds the simulation — the boss fight is live play.
 
 ## Next slice — remaining P5 acceptance
 
-Session 8 completed the scenario inventory in
+Sessions 8–9 inventory and native playing-run evidence are in
 [`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
-Its bounded native visibility probe never reached hidden state, so native
-resume/catch-up remains pending. Existing short ending, pause/resize/settings and
-stop/start assertions are mapped with their limits. No runtime defect reproduced.
-Session 9 continues P5 with an actual same-window tab preflight; authored/extended
-play, ten terminal cycles, long soak, real audio and broader compatibility remain
-pending under the owner resource policy. No full local suite/soak is authorized
-by this handoff, and P6 stays gated. Keep the matrix and active checkbox open
-until required evidence passes or the owner explicitly changes the gate.
-The next-session handoff is [SESSION_9_PROMPT.md](SESSION_9_PROMPT.md).
+Session 9 passes one brief same-window native Chromium/Metal round trip with no
+hidden-time catch-up, plus deterministic intent guards for paused/level_up/time_up
+and terminal states. It changes no runtime code. Do not repeat the passed light
+case without a new reason. Remaining authored/extended play, ten terminal cycles,
+long soak, native overlays/pending work, real audio and broader compatibility need
+an owner-authorized consolidated gate and available devices. This handoff does not
+authorize full local suites/soaks or waive P5; P6 remains gated.
+The next-session handoff is [SESSION_10_PROMPT.md](SESSION_10_PROMPT.md).

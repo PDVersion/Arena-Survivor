@@ -946,3 +946,59 @@ this request does not merge/deploy or start the next implementation session.
   101 local Markdown link targets (zero missing) pass; `git diff --check` passes.
   This evidence-only session finishes early with the unsupported gates explicitly
   pending, rather than spending the remaining budget on prohibited long checks.
+
+
+## Session 9 — P5 native-event acceptance (2026-10-16)
+
+- Start: **12:01:40 AEDT / 01:01:40 UTC**; maximum deadline
+  **13:31:40 AEDT / 02:31:40 UTC**. Final verification/review reserve begins
+  no later than **13:11:40 AEDT / 02:11:40 UTC**.
+- Initial checkout: clean `b8114cb`, existing `codex/v0.4.3`. No unrelated edits.
+- Read required authorities and P5 slice reports. PR #25 remains merged at
+  `03965ef` / `54b9b1b`; read-only run inspection confirms `38829241556` now
+  succeeds on `03965ef`: 474 units/56 files, 93 browsers/one existing skip,
+  types/lint/build and zero audit findings. No new local-head CI claim.
+- Browser plan: one 30-second maximum native same-window two-tab case, one
+  worker/zero retries, one brief hidden/visible round trip. Playwright source
+  installs Emulation.setFocusEmulationEnabled(true); disable that override on
+  both owned tabs and verify browser window IDs before checking native events.
+  No synthetic DOM visibility or focus events; no document.hidden overrides.
+- Native outcome: the first same-window attempt still stays visible with a
+  separate-session emulation reset (6.3 s failure); installed Playwright documents
+  noDefaults for default-context attachment. One external-context setup then
+  stops before navigation on its relative URL (1.3 s). Absolute URL correction
+  yields **1 pass in 4.4 s / 5.1 s total**, zero automatic retries. Only the
+  successful attempt produces a native hidden/visible round trip.
+- Accepted bounded result: actual same-window tabs, trusted blur/hidden/focus/
+  visible; 1,330.6 ms hidden, elapsed held at 258.463333 ms, one natural spawn,
+  queues empty/unchanged, first observed rAF advancement 7.493333 ms at rate 0.5.
+  M5 Pro/48 GiB, Darwin 25.5.0, Chromium 151.0.7922.34, native Metal WebGL,
+  test/Default, actual viewport 1280×657/DPR1. Raw capture preserved verbatim as
+  `build/performance/P5_NATIVE_VISIBILITY.json`. Light no-contact/no-XP/no-hazard/
+  no-weapon case; no sustained combat, pending-work or older-device claim.
+- Added 14 deterministic actual-handler checks across both themes: duplicate
+  focus events, auto-pause ownership, retained paused/level_up/time_up/dead/
+  complete intent and safe late events with no run. Native overlay transitions
+  remain unmeasured; no runtime defect/fix. The native fixture is opt-in, adding
+  one skip to future headless regression; a skip is never a native pass.
+- Final verification/review started early around **12:05:40 AEDT / 01:05:40 UTC**,
+  preserving the deadline's final 20-minute reserve. Targeted 14 units and full
+  **488 units/57 files**, types/lint/build pass; existing chunk advisory only.
+  Final fixture review adds bounded child termination/finally cleanup; no further
+  browser campaign is needed for that cleanup-only adjustment. Final types/lint
+  and document/whitespace/ownership review follow the recording below.
+- The owned browser/tabs/temp profile and server were cleaned up; port 4173 has
+  no listener. Unknown/review-port 4213 processes untouched. No runtime imports/
+  telemetry boundary changes, so production/startup guards were not repeated.
+  Full Chromium/stress, authored/extended overtime, ten terminal cycles, long
+  soaks, real audio and broader device/browser evidence stay deferred, not passed.
+- Updated acceptance matrix, active P5 gate, status, REC-119 continuation and
+  master record. Session 9 handoff retired; Session 10 stays P5 and requires the
+  separately authorized consolidated gate/device access. Do not repeat an
+  unchanged native case or inventory-only slice to imply acceptance progress.
+  No P6/content/persistence/sprites/publication or workflow trigger.
+- Final recording checkpoint: **12:09:41 AEDT / 01:09:41 UTC**; actual elapsed
+  **8 min 01 s**. Final types/lint, 488 units/57 files and build pass; 107 local
+  Markdown targets resolve, preserved raw event/clock/spawn assertions revalidate
+  without another browser, and whitespace/ownership review passes. Local test/
+  evidence commit follows; all runtime/assets/dependencies remain unchanged.

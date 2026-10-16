@@ -328,7 +328,7 @@ arbitrarily or add a service worker merely to silence the large-chunk warning.
 The affected Session 6/7 gates do not complete P5. Session 8 completed the
 [acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
 probe could not reach hidden state. Continue with
-[Session 9 / P5](SESSION_9_PROMPT.md) for remaining authored/overtime,
+[Session 10 / P5](SESSION_10_PROMPT.md) for remaining authored/overtime,
 focus/resume, restart and compatibility evidence. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
@@ -336,10 +336,20 @@ passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
 
 ### Session 9 — P5 continuation: native events and remaining acceptance
 
-Use [SESSION_9_PROMPT.md](SESSION_9_PROMPT.md). First establish native tab
-visibility in a real same-window tab setup with one bounded check. Long lifecycle
-and browser/device evidence remain pending and require an authorized consolidated
-campaign. No P6, content or persistence work while P5 remains open.
+Completed bounded slice: one trusted native same-window tab round trip passes
+on Chromium/Metal, with 7.493 ms first observed advancement after 1.33 s hidden,
+unchanged spawns/empty queues, and 14 deterministic focus-state checks. See the
+[acceptance report](performance/P5_ACCEPTANCE_REPORT.md). No runtime defect or
+change; authored/sustained/native-overlay/audio/device requirements remain open.
+
+### Session 10 — P5: authorized consolidated lifecycle and device evidence
+
+Use [SESSION_10_PROMPT.md](SESSION_10_PROMPT.md). Do not repeat the accepted
+light native case or another inventory-only session. Remaining lifecycle work
+requires separately scheduled owner authorization under the resource policy;
+broader compatibility needs selected browsers and physical-device access.
+P5 stays pending until evidence passes or the owner explicitly changes its gate.
+No P6, content or persistence work while it is open.
 
 ### After P5 — P6: combined readiness gate and real-device report
 

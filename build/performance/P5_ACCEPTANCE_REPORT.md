@@ -1,11 +1,12 @@
-# P5 consolidated acceptance — Session 8
+# P5 consolidated acceptance — Sessions 8–9
 
 **P5 remains pending.** This evidence inventory is complete; it does not close
-sustained lifecycle, native visibility or broader compatibility acceptance.
-No runtime defect was demonstrated in this slice, so no runtime or test change
-is delivered. P6, content, persistence and sprite work remain gated.
+sustained lifecycle, native overlay/pending-work or broader compatibility acceptance.
+No runtime defect was demonstrated. Session 8 delivered the inventory; Session 9
+adds a bounded native-tab acceptance fixture and deterministic focus-state checks.
+No runtime change is delivered. P6, content, persistence and sprite work remain gated.
 
-## Checkpoint and evidence rules
+## Session 8 checkpoint and evidence rules
 
 Inspected local source: `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, clean
 `codex/v0.4.3`. The documentation consolidation is preserved. Compared with
@@ -43,8 +44,8 @@ this session's execution.
 | Death and terminal presentation | `phase-three.spec.ts` contact fixture asserts dead/zero health, zero velocity/projectiles and dead overlay. `phase-nine-v03.spec.ts` known enemy attribution and terminal flush reconcile damage. `enterTerminalState` has terminalShown guard, snapshots then clears queues, destroys feedback/audio and pauses physics. | **Partial** — short death/terminal behavior covered; repeated death→restart ownership baseline and long-play terminal resources remain pending. |
 | Pause and resize, unchanged simulation/world | `gameplay-rate.spec.ts` freezes clock for 500 wall ms at rate 0.5; `boot.spec.ts` and `phase-five.spec.ts` verify fixed logical/world view and coherent HUD on resize. `interface-work.spec.ts` covers opacity, overlays, resize and terminal restart. | **Covered** for bounded wiring in existing CI; sustained pause/resize ownership remains part of the pending lifecycle campaign. |
 | Default/Low reversible changes and reconstruction | `presentation-v043.spec.ts` clicks the actual pause settings, switches Low→Default→Low, resizes, checks frozen player/statistics/clock, opacity/reduced motion, terminal restart and next-run setting; title/level-up and dense 300-enemy cases add UI wiring. `tests/unit/ui/presentation-quality.test.ts` checks both themes, immutable inputs and seeded pacing equivalence. P4 report has six both-theme bounded cases and measurements. | **Covered** for bounded UI/presentation isolation; sustained settings churn is pending. Session 6 direct fixture setter is not UI-switching evidence. |
-| Window blur/focus | `phase-five.spec.ts`, “HUD and run remain coherent through focus loss and resize”: **synthetic** window blur/focus, focusPaused/audio flag, frozen clock, resize and resumed playing. Scene owns/removes named BLUR/FOCUS handlers; Phaser VisibilityHandler maps window events. | **Partial** — existing CI verifies synthetic event wiring, not native window switching, first-return delta or catch-up work. |
-| Native visibility loss/resume without catch-up | Phaser 3.90 `VisibilityHandler.js` emits HIDDEN/VISIBLE separately from BLUR/FOCUS; `Game.onHidden/onVisible` call TimeStep pause/resume, and resume resets delta history. `handleMeasurementVisibility` only interrupts test frame measurements. `tests/unit/performance/frame-measurements.test.ts` rejects hidden/return samples, **not gameplay catch-up**. Session 8 native probe below failed its hidden-state precondition. | **Pending** — native hidden/focus ordering, first advancing simulation delta and resumed spawn/queue behavior are not accepted. No missing scene HIDDEN handler is diagnosed merely from source: Phaser already handles its loop. |
+| Window blur/focus | Existing `phase-five.spec.ts` synthetic event wiring remains distinct. Session 9 `tests/e2e/native-visibility-v043.spec.ts` records trusted blur/focus plus hidden/visible from same-window tabs without focus emulation. `tests/unit/lifecycle/focus.test.ts` executes actual handlers against both themes: automatic pause/resume ownership, duplicate events, preserved paused/level_up/time_up/dead/complete states and late events without engine access. | **Covered** for one native playing-run round trip and deterministic state guards; native overlay/window-minimize/device combinations and sustained transitions are not claimed. |
+| Native visibility loss/resume without catch-up | Session 9 bounded case and `P5_NATIVE_VISIBILITY.json`: matching native window IDs, trusted hidden/visible, 1,330.6 ms hidden interval, unchanged elapsed/spawns/empty queues; first observed advancing rAF sample adds 7.493 ms at unchanged 0.5 rate. Phaser retains loop ownership; no runtime handler change. | **Covered** for this brief macOS Chromium/Metal playing-run case only. Empty queues/light load do not establish recovery with pending work or sustained combat; overlay guards are deterministic, not native overlay acceptance. |
 | Bounded pickup/resource reconstruction | `tests/e2e/lifecycle-v043.spec.ts` and `P5_LIFECYCLE_REPORT.md`: both themes × three idle Canvas stop/start reconstructions; 1,040 drops, 790 merges, 250 tracked/live/group/enabled bodies, exact 1,040 XP once, post-update removal and zero stopped resource/listener references. `tests/unit/lifecycle/pickup-lifecycle.test.ts` preserves ties/provenance/fractions/paid-cue races. | **Covered** for the cap-pressure/idle stop-start slice; update is disabled, so this is not authored gameplay or terminal restart coverage. Existing CI/current units. |
 | Repeated terminal restart and long soak | `phase-five.spec.ts` checks three shortened completions / two restarts without navigation, fresh health/level/XP/upgrades. `phase-six-v03.spec.ts` resets hazards/escalation. Session 6 separately verifies stopped engine ownership. | **Partial** — ten end-to-end terminal/restart cycles and 20–30-minute sustained lifecycle soak remain pending. These distinct tests cannot be added together to claim ten terminal cycles. |
 | Async loader failure and game destruction | `tests/unit/boot/boot-recovery.test.ts` checks declared file error blocks scene start, retry resets state, and an owned once-only async error callback schedules Game.destroy before reporting. `P5_STARTUP_REPORT.md` and raw final/startup samples verify actual atlas/module blocking, reload-to-run, unsupported text canvas, forced Canvas and normal WebGL startup. | **Covered** for observed network/module/graphics failures; malformed atlas/JSON, entry delivery and mid-run WebGL context loss remain **pending** outside this focused recovery claim. No pipeline changes. |
@@ -96,27 +97,115 @@ startup campaigns were not repeated. Full local Chromium, stress, authored and
 extended overtime runs, browser/renderer matrix and long soaks are deferred under
 the owner policy. Balance/audit are unnecessary for this evidence-only change.
 
-## Remaining P5 gate and next bounded action
+## Session 9 — native events and focus-state acceptance
 
-1. **Native events:** use one actual foreground Chromium window with two tabs
-   in that same window; first verify a visibility observer receives native
-   hidden/visible. At most one 30-second check, unchanged 0.5 rate, one brief
-   (1–2 s) switch. Capture platform/browser/renderer/viewport/mode, elapsed and
-   spawn/queue counters immediately before/during the switch and the first
-   advancing frame after return. Require no hidden-time replay/catch-up burst.
-   Also verify manually paused/level-up/time_up states are not auto-dismissed.
-   If the environment cannot deliver native events, leave acceptance pending;
-   do not dispatch synthetic events or overwrite document.hidden as a substitute.
-2. **Consolidated lifecycle:** requires separately scheduled owner authorization
-   under the resource policy. One serial run should cover authored ending,
-   extended overtime/clearing, ten terminal reconstructions, pause/resize/mode
-   switching, pending loader/audio/queue ownership and the required long soak.
-   Record deterministic resource counts around transitions; GC fluctuation alone
-   is not leak evidence. This session does not authorize that future campaign.
-3. **Compatibility:** obtain the supported-browser/device selection and physical
-   older-device access, then record actual renderer/device evidence. No arbitrary
-   new support promise or hardware waiver is made by this report.
+Starting source: clean `b8114cb` on existing `codex/v0.4.3`; runtime/tests from
+Session 8 were unchanged. Read-only recheck confirms [run 38829241556](https://github.com/PDVersion/Arena-Survivor/actions/runs/38829241556)
+completed successfully for **`03965ef`** at **11:40:11 AEDT on 2026-10-16**:
+474 units/56 files, types/lint/build, 93 browser passes/one existing skip,
+zero audit findings. PR #25 remains merged at `54b9b1b`. This is not CI for
+`b8114cb` or this new local test/evidence slice; no remote action is performed.
 
-These gates remain open despite verified Session 6/7 fixes. P6 does not start.
-The successor is [Session 9 / P5](../SESSION_9_PROMPT.md); completed Session 8's
-handoff is retired only with this report, progress and master record committed.
+### Native method and observed result
+
+The installed Playwright source/types explicitly show default focus emulation.
+A new CDP session disabling that override did not restore native visibility:
+the first Session 9 attempt verified both tabs had the same window ID but
+failed the hidden-state precondition in 6.3 s. It demonstrated no game defect.
+The corrected fixture spawns one owned Chromium process with a fresh temporary
+profile and no Playwright launch defaults, then attaches with the installed
+`connectOverCDP(..., { noDefaults: true })` option to its default context.
+This prevents focus/media emulation from being installed in either tab.
+A first external-context attempt stops before navigation in 1.3 s because it
+has no inherited baseURL; constructing the absolute URL fixes that fixture issue.
+These are two recorded setup failures, not successful game checks or automatic
+retries. No native hidden/visible transition occurred in either failed attempt.
+
+The corrected case passes: **one test / 4.4 s (5.1 s including runner overhead),
+one worker, zero automatic retries, 30 s upper bound**, with a single brief
+hidden/visible round trip. The fixture uses the existing read-only test telemetry;
+no production facade, synthetic event dispatch or document visibility override
+is added. Both tabs independently report window ID **862793913**.
+Trusted native events include blur→hidden and focus→visible; an initial focus
+event before blur is retained in the raw record. Assertions require the actual
+hidden/visible precondition before accepting any game evidence.
+
+| Environment / observation | Result |
+| --- | --- |
+| Device / OS | Apple M5 Pro, 48 GiB, Darwin 25.5.0 / macOS |
+| Browser / renderer | Chromium 151.0.7922.34, WebGL, ANGLE Metal Renderer: Apple M5 Pro |
+| Actual viewport / DPR | **1280×657 / 1** inside a 1280×800 native browser window |
+| Delivery / presentation | Vite test mode / Default, existing eco theme, 0.5 gameplay rate |
+| Scenario flags | noContact/noXp/noHazards/noWeapon; light natural arrivals; no combat stress |
+| Hidden event → visible event | **1,330.6 ms** (includes tab-operation overhead around the requested 1,200 ms dwell) |
+| Hidden elapsed / held elapsed | **258.463333 ms / 258.463333 ms**, status paused |
+| Natural spawns hidden / held / first resumed sample | **1 / 1 / 1**; all other source counts unchanged |
+| Gameplay/load queue backlog hidden / held / first resumed sample | **0 / 0 / 0**, no processed gameplay work |
+| First observed advancing rAF sample | **265.956667 ms**, playing; delta **7.493333 ms**, below 250 ms acceptance bound |
+| Page errors | **0** |
+
+The first advancing sample is observed through rAF and published telemetry;
+it is not an instrumented engine step/compositor timestamp. A replay of the
+hidden interval would contribute about 665 ms at the base rate and fail this
+bound. No backlog was seeded: this proves no catch-up in the measured light
+case, not behavior with pending effects, audio voices or a 300-live crowd.
+This native Metal run is correctness evidence, not a performance comparison or
+physical older-device acceptance. There is no minimization/mobile/other-browser
+claim. The observer does not modify game state or event handlers.
+
+Raw capture: [`P5_NATIVE_VISIBILITY.json`](P5_NATIVE_VISIBILITY.json), copied
+verbatim from Playwright's `testInfo.outputPath("native-visibility.json")`.
+The test attaches that file to the result. Future images must also use
+`testInfo.outputPath`; no screenshot is necessary for these event/count assertions.
+All owned tabs/browser/server/temp profile are closed/removed, port 4173 has no
+listener after execution, and unknown/review-port 4213 processes are untouched.
+Final fixture review only reformats code and adds a 2 s forced-termination fallback
+for interrupted child cleanup; the passing gameplay observations are unchanged.
+No additional browser campaign is repeated for that cleanup-only adjustment.
+
+### Deterministic state coverage and final checks
+
+`tests/unit/lifecycle/focus.test.ts` transpiles and executes the actual two
+RunScene handlers, matching the existing lifecycle test convention. Fourteen
+checks across both production themes verify that duplicate events resume only
+the handler's own interruption, paused/level_up/time_up/dead/complete states
+retain object identity and intent, and late events with no run avoid stopped
+engine access. These are state-ownership checks; only playing-run tab events
+were exercised natively. They do not claim audio-device release.
+
+| Session 9 executed check | Result |
+| --- | --- |
+| `npm test -- --run tests/unit/lifecycle/focus.test.ts` | **14 pass / 1 file** |
+| `npm run typecheck` | Pass |
+| `npm test -- --run` | **488 pass / 57 files** |
+| `npm run lint` | Pass |
+| `npm run build` | Pass; existing start-game chunk advisory |
+| `ARENA_NATIVE_VISIBILITY=1 npm run test:e2e -- tests/e2e/native-visibility-v043.spec.ts --headed --workers=1 --retries=0` | **1 pass**, following the two explicit setup corrections above |
+| `git diff --check` and changed-document link review | Pass on final reviewed files |
+
+The native fixture is opt-in and self-launches its owned headed browser. Normal
+headless regression will add one opt-in skip; that skip is not a native pass.
+Runtime imports/test telemetry contracts did not change, so production/startup
+guards were not repeated. Balance/audit are not required for test-only work.
+Full local browser/stress, authored-duration/extended overtime, ten terminal
+cycles, long soaks and device/browser matrices remain deferred, not passed.
+
+## Remaining P5 gate and next meaningful action
+
+1. **Consolidated lifecycle:** schedule a separately owner-authorized serial gate
+   under the resource policy. Cover the authored ending, extended overtime/
+   clearing, ten terminal reconstructions, pause/resize/Default–Low, pending
+   loader/audio/queue ownership and required long soak together. Include native
+   overlay transitions and resumed pending work where needed. Record resource
+   counts and actual WebAudio close completion; GC movement alone is not leakage.
+   This session does not authorize that campaign or waive any requirement.
+2. **Compatibility:** obtain the intended supported browsers/devices and access
+   to representative older integrated-GPU hardware. Record physical evidence;
+   the brief M5 Metal/native-tab result cannot replace it.
+3. Do not rerun the passed light native-tab case or create another inventory-only
+   slice without a new defect, changed source or a specific remaining acceptance
+   requirement. The next useful work requires the authorized consolidated gate
+   and/or available hardware. No P6 or content work while P5 remains open.
+
+P5 remains pending. The successor is [Session 10 / P5](../SESSION_10_PROMPT.md);
+Session 9's handoff is retired with its durable report/progress/master record.

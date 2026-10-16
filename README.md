@@ -17,7 +17,7 @@ consolidated acceptance remains open. P6 and optional content remain gated.
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
 - [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): remaining P5/P6 work and gated C1–C7.
 - [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
-- [Next session — remaining P5 acceptance](build/SESSION_9_PROMPT.md).
+- [Next session — remaining P5 acceptance](build/SESSION_10_PROMPT.md).
 - [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
 - [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
 - [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).

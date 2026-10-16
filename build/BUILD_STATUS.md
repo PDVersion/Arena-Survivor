@@ -41,7 +41,8 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 startup slice (Session 7) | 2026-10-15, `3d1ee2f` | Measured startup and demonstrated graphics/asset/module failure recovery; [report](performance/P5_STARTUP_REPORT.md) |
 | PR #25 CI repair | 2026-10-16, `2086a41` | Portable artifacts/bounded UI-test budgets; matching-head Actions passes; [report](performance/CI_REPAIR_20261016.md) |
 | P5 acceptance inventory (Session 8) | 2026-10-16, local evidence-only slice | Requirement matrix inspected; 474 units/56 files, types/lint/build pass; native visibility probe fails its hidden-state precondition; [report](performance/P5_ACCEPTANCE_REPORT.md) |
-| P5 overall | **Incomplete** | Authored/extended overtime/long soak, ten terminal cycles, native visibility/catch-up, real audio and broader compatibility remain pending; [next prompt](SESSION_9_PROMPT.md) |
+| P5 native-event slice (Session 9) | 2026-10-16, local test/evidence slice | One native same-window Chromium/Metal playing-run round trip passes; 14 deterministic state guards; final 488 units/57 files, types/lint/build; [report](performance/P5_ACCEPTANCE_REPORT.md) |
+| P5 overall | **Incomplete** | Authored/extended overtime/long soak, ten terminal cycles, native overlays/pending work, real audio and broader compatibility remain pending; [next prompt](SESSION_10_PROMPT.md) |
 | P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
 | C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
 
@@ -51,8 +52,11 @@ Read-only Session 8 recheck: PR #25 merged on **2026-10-16 at 11:34:15 AEDT**,
 head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
 `54b9b1b7bae8b9d23d66c57333b066ea129d1035`.
 [Run 38829241556](https://github.com/PDVersion/Arena-Survivor/actions/runs/38829241556)
-on `03965ef` was still in progress at inspection; no success is claimed for it
-or for this later local evidence commit. Session 8 performs no publication.
+on `03965ef` was in progress during Session 8. Session 9 confirms it completed
+successfully on **2026-10-16 at 11:40:11 AEDT**: **474 units / 56 files**,
+types/lint/build, **93 browser passes / one existing skip**, zero audit findings.
+This result covers `03965ef` only; neither later local slice has matching-head CI.
+Session 9 publishes nothing and triggers no workflow.
 
 The owner previously authorized publication of the two P5 commits and CI repair;
 the earlier verified PR #25 checkpoint is `2086a41b0e1888e7689f115514893c18dd905cae`.

@@ -2850,3 +2850,24 @@ so its temporary fixture is removed and native acceptance remains pending.
 Final types, 474 units/56 files, lint/build and whitespace pass. No full browser/
 stress/startup campaign is repeated. PR #25's merge is recorded in BUILD_STATUS;
 this slice stays local. The next handoff is Session 9 / P5, not P6.
+
+
+<a id="v0-4-3-p5-native-events"></a>
+## V0.4.3 — P5 bounded native events / Session 9
+
+Session 9 (2026-10-16) verifies one native same-window Chromium tab round trip
+using a fresh owned browser attached with Playwright noDefaults. This avoids
+its normal focus emulation; two setup failures remain recorded separately.
+Trusted events, matching native window IDs, frozen hidden elapsed/spawns/empty
+queues and a 7.493 ms first observed rAF advancement pass. The 30-second-bounded
+case completes in 4.4 s (5.1 s runner total), one worker/zero automatic retries,
+M5 Pro/48 GiB, native Metal WebGL, Chromium 151.0.7922.34, test/Default,
+1280×657/DPR1. Fourteen deterministic actual-handler tests cover both themes'
+focus ownership and retained paused/level_up/time_up/terminal intent. Final
+488 units/57 files, types/lint/build and whitespace checks pass. No runtime fix,
+production boundary, content, persistence or sprite change. Raw capture and
+limits are in the [acceptance report](performance/P5_ACCEPTANCE_REPORT.md).
+P5's long lifecycle, native overlays/pending work, real audio and broader device/
+browser gate stays open. Session 10 requires an authorized consolidated gate/
+available hardware; another identical light case cannot close it. P6 is not
+started. Publication/merged-head Actions evidence remains in BUILD_STATUS.md.

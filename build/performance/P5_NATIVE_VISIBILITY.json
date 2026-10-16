@@ -1,0 +1,1489 @@
+{
+  "source": "b8114cb plus acceptance fixture only",
+  "browser": "151.0.7922.34",
+  "host": {
+    "cpu": "Apple M5 Pro",
+    "release": "25.5.0",
+    "platform": "darwin",
+    "memoryGiB": 48
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 657
+  },
+  "renderer": {
+    "kind": "WebGL",
+    "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+    "dpr": 1
+  },
+  "mode": "test/default",
+  "windowId": 862793913,
+  "otherWindowId": 862793913,
+  "hidden": {
+    "status": "ready",
+    "scene": "run",
+    "themeId": "eco_guardian",
+    "canvas": {
+      "width": 1600,
+      "height": 900
+    },
+    "arena": {
+      "width": 3600,
+      "height": 2400
+    },
+    "camera": {
+      "scrollX": 1000,
+      "scrollY": 750
+    },
+    "run": {
+      "difficulty": "normal",
+      "status": "paused",
+      "mode": "timed",
+      "elapsedMs": 258.46333333333337,
+      "durationMs": 300000,
+      "kills": 0,
+      "liveEnemies": 1,
+      "level": 1,
+      "xp": 0,
+      "xpToNextLevel": 3,
+      "pendingChoices": 0
+    },
+    "player": {
+      "characterId": "character.starter",
+      "x": 1800,
+      "y": 1200,
+      "radius": 18,
+      "authoredFacing": "right",
+      "moveSpeed": 200,
+      "velocityX": 0,
+      "velocityY": 0,
+      "spriteFrame": 4,
+      "spriteMirrored": false,
+      "health": 100,
+      "invulnerable": false,
+      "maxHealth": 100,
+      "pickupRadius": 80,
+      "damageBonus": 0,
+      "attackSpeedBonus": 0,
+      "critChance": 0
+    },
+    "spawnOrigins": {
+      "live": {
+        "natural": 1,
+        "fragmentation": 0,
+        "baggedWaste": 0,
+        "environment": 0,
+        "benchmark": 0
+      },
+      "spawned": {
+        "natural": 1,
+        "fragmentation": 0,
+        "baggedWaste": 0,
+        "environment": 0,
+        "benchmark": 0
+      }
+    },
+    "combat": {
+      "spriteFramesByRole": {
+        "enemy.swarm_basic": null,
+        "enemy.fast_fragile": 0,
+        "enemy.slow_durable": null,
+        "enemy.death_spawner": null,
+        "enemy.stationary_fragment": null
+      },
+      "weaponId": "weapon.starter",
+      "deliveryKind": "melee",
+      "enemyId": "enemy.swarm_basic",
+      "projectiles": 0,
+      "shotsFired": 0,
+      "meleeStrikes": 0,
+      "meleeHits": 0,
+      "grabberActive": 0,
+      "collectionSweepAttacks": 0,
+      "collectionSweepsTriggered": 0,
+      "collectionSweepHits": 0,
+      "firstMeleeHitAtMs": null,
+      "firstKillAtMs": null,
+      "firstContactAtMs": null,
+      "criticalShots": 0,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "contactHits": 0,
+      "enemyCap": 300,
+      "projectileCap": 192,
+      "projectileSample": null,
+      "roster": {
+        "enemy.swarm_basic": 0,
+        "enemy.fast_fragile": 1,
+        "enemy.slow_durable": 0,
+        "enemy.death_spawner": 0,
+        "enemy.stationary_fragment": 0
+      },
+      "rosterHighWater": {
+        "enemy.swarm_basic": 0,
+        "enemy.fast_fragile": 1,
+        "enemy.slow_durable": 0,
+        "enemy.death_spawner": 0,
+        "enemy.stationary_fragment": 0
+      },
+      "offspringQueued": 0,
+      "offspringSpawned": 0
+    },
+    "progression": {
+      "pickups": 0,
+      "pickupsDropped": 0,
+      "pickupsCollected": 0,
+      "pickupsMerged": 0,
+      "choiceIds": [],
+      "selectedUpgradeIds": [],
+      "skillLevels": {
+        "skill.collection_sweep": 0
+      },
+      "pierceBonus": 0,
+      "projectileCountBonus": 0
+    },
+    "hud": {
+      "health": "100 / 100",
+      "experience": "0 / 3",
+      "level": "1",
+      "time": "5:00",
+      "kills": "0",
+      "enemies": "1"
+    },
+    "lifecycle": {
+      "runGeneration": 1,
+      "terminalOverlay": null,
+      "focusPaused": true
+    },
+    "feedback": {
+      "hitFlashes": 0,
+      "trailsEmitted": 0,
+      "pickupCues": 0,
+      "audioUnlocked": false,
+      "muted": false,
+      "focused": false,
+      "voices": 0,
+      "audioEmitted": 0,
+      "activeVisuals": 0,
+      "visualHighWater": 0,
+      "dropped": 0,
+      "reducedMotion": false
+    },
+    "elites": {
+      "spawned": 0,
+      "defeated": 0,
+      "live": 0,
+      "byRole": {}
+    },
+    "statistics": {
+      "kills": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 0,
+      "totalDamage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "summaryMetrics": [
+        "Cleared: 0",
+        "Peak Waste On Site: 1",
+        "Peak Pollution: 1×",
+        "Highest Critical Chance: 5%",
+        "Highest Overcrit Tier: 0",
+        "Longest Pass-Through: 0",
+        "Largest Clearance Chain: 0"
+      ],
+      "summaryDamage": [
+        "Total Processed: 0",
+        "Direct: 0",
+        "Critical Bonus: 0",
+        "Sorting Momentum: 0",
+        "Compaction: 0",
+        "Cascade: 0",
+        "Other / Remainder: 0"
+      ],
+      "upgradeCounts": {},
+      "summaryUpgrades": []
+    },
+    "impact": {
+      "hitStopGranted": 0,
+      "hitStopDenied": 0,
+      "hitStopSpentMs": 0,
+      "damageAccumulated": 0,
+      "damageFlushed": 0,
+      "pendingNumbers": 0,
+      "killChainDetuneCents": 0,
+      "deathCause": null
+    },
+    "ui": {
+      "pauseOpen": false,
+      "overtimeOpen": false,
+      "terminalTitle": null,
+      "pauseTab": "stats",
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "minimapShrines": 0,
+      "shrineTextResolution": 0,
+      "movementHintVisible": true,
+      "minimapVisible": true,
+      "minimapBounds": {
+        "left": 1226,
+        "top": 660,
+        "width": 196,
+        "height": 132
+      },
+      "cardDescriptions": [],
+      "codexEntries": [
+        {
+          "id": "shrine.spawn_surge",
+          "name": "Landfill Breach",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+0.4"
+            },
+            {
+              "label": "Waste released",
+              "display": "100 over 20s"
+            },
+            {
+              "label": "Return",
+              "display": "×1.5"
+            }
+          ]
+        },
+        {
+          "id": "shrine.greed",
+          "name": "Fast Fashion Boom",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+0.4"
+            },
+            {
+              "label": "Waste arriving",
+              "display": "×1.5"
+            },
+            {
+              "label": "Impact gain",
+              "display": "×1.25"
+            }
+          ]
+        },
+        {
+          "id": "shrine.multiplicity",
+          "name": "Single-Use Boom",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+0.7"
+            },
+            {
+              "label": "Waste arriving",
+              "display": "×2"
+            },
+            {
+              "label": "Impact gain",
+              "display": "×1.5"
+            }
+          ]
+        },
+        {
+          "id": "shrine.duplication",
+          "name": "Overproduction Order",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+1"
+            },
+            {
+              "label": "Duplicates",
+              "display": "Everything on site"
+            },
+            {
+              "label": "Return",
+              "display": "×1.5"
+            }
+          ]
+        }
+      ],
+      "codexSection": "shrines",
+      "codexUpgrades": [
+        {
+          "id": "upgrade.damage",
+          "name": "Reinforced Tools",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.attack_speed",
+          "name": "Rapid Cycling",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.crit_chance",
+          "name": "Precision Sort",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.move_speed",
+          "name": "Field Boots",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.health",
+          "name": "Safety Gear",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.pickup_radius",
+          "name": "Collection Range",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.weapon_range",
+          "name": "Longer Grabber",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 4
+        },
+        {
+          "id": "upgrade.weapon_collection_sweep",
+          "name": "Collection Sweep",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 5
+        },
+        {
+          "id": "upgrade.fracture",
+          "name": "Fragmentation",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 5
+        },
+        {
+          "id": "upgrade.bloodlust",
+          "name": "Cleanup Streak",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 6
+        },
+        {
+          "id": "upgrade.armour",
+          "name": "Protective Kit",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.regeneration",
+          "name": "Field Medic",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.luck",
+          "name": "Sharp Eye",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.world_surge",
+          "name": "Single-Use Surge",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 4
+        },
+        {
+          "id": "upgrade.world_brittle",
+          "name": "Brittle World",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 3
+        }
+      ],
+      "codexSession": [
+        {
+          "label": "Shifts worked",
+          "display": "0"
+        },
+        {
+          "label": "Cleared",
+          "display": "0"
+        },
+        {
+          "label": "Total Processed",
+          "display": "0"
+        },
+        {
+          "label": "Best Level",
+          "display": "1"
+        },
+        {
+          "label": "Best Cleared",
+          "display": "0"
+        },
+        {
+          "label": "Best Total Processed",
+          "display": "0"
+        }
+      ],
+      "statLines": [
+        {
+          "key": "health",
+          "display": "100 / 100"
+        },
+        {
+          "key": "damage",
+          "display": "10"
+        },
+        {
+          "key": "attackRate",
+          "display": "1 /s"
+        },
+        {
+          "key": "critChance",
+          "display": "0%"
+        },
+        {
+          "key": "critDamage",
+          "display": "×2"
+        },
+        {
+          "key": "range",
+          "display": "78"
+        },
+        {
+          "key": "knockback",
+          "display": "10"
+        },
+        {
+          "key": "armourPierce",
+          "display": "0%"
+        },
+        {
+          "key": "moveSpeed",
+          "display": "200"
+        },
+        {
+          "key": "pickupRadius",
+          "display": "80"
+        },
+        {
+          "key": "armour",
+          "display": "0"
+        },
+        {
+          "key": "regeneration",
+          "display": "0 /s"
+        },
+        {
+          "key": "luck",
+          "display": "0"
+        },
+        {
+          "key": "xpMultiplier",
+          "display": "×1"
+        }
+      ]
+    },
+    "crowd": {
+      "indexed": 1,
+      "pairChecks": 1,
+      "pairChecksHighWater": 1,
+      "adjustments": 0,
+      "solidResolutions": 0,
+      "contactShoves": 0,
+      "weaponShoves": 0,
+      "coincidentPairs": 0
+    },
+    "hazards": {
+      "active": 0,
+      "placed": 0,
+      "cleared": 0,
+      "damageDealt": 0,
+      "slowActive": false,
+      "byKind": {
+        "hazard.damage_zone": 0,
+        "hazard.obstacle": 0,
+        "hazard.periodic_burst": 0
+      }
+    },
+    "view": {
+      "worldTextResolution": 4,
+      "logicalWidth": 1600,
+      "logicalHeight": 900,
+      "displayWidth": 1168,
+      "displayHeight": 657,
+      "worldWidth": 800,
+      "worldHeight": 450,
+      "zoom": 2,
+      "visibleEnemies": 0,
+      "peakVisibleEnemies": 0,
+      "spawnRadius": 499
+    },
+    "pacing": {
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "progress": 0.0008615444444444446,
+      "spawnIntervalMs": 999.9750003124974,
+      "baseSpawnIntervalMs": 1000,
+      "liveByRole": {
+        "enemy.swarm_basic": 0,
+        "enemy.fast_fragile": 1,
+        "enemy.slow_durable": 0,
+        "enemy.death_spawner": 0,
+        "enemy.stationary_fragment": 0
+      },
+      "xpEarned": 0,
+      "xpByBucket": [],
+      "bucketMs": 15000,
+      "levelTimestampsMs": [],
+      "batchSize": 1,
+      "eliteChance": 0,
+      "roleWeights": {
+        "enemy.fast_fragile": 99.94830733333333
+      },
+      "milestoneWaves": 0,
+      "waveSpawned": 0,
+      "driftSpawned": 0,
+      "driftReclaimed": 0,
+      "driftLive": 0,
+      "spawnsInsideView": 0
+    },
+    "load": {
+      "enabled": false,
+      "requested": 0,
+      "spawned": 0,
+      "eventBacklog": 0,
+      "eventBacklogHighWater": 0,
+      "processedEffects": 0,
+      "gameplayBacklogHighWater": 0,
+      "processedGameplayEvents": 0,
+      "droppedPresentationCues": 0,
+      "liveHighWater": 1,
+      "trackedHighWater": 1,
+      "clock": "phaser-raw-wall-ms",
+      "frameSamples": 0,
+      "averageFrameMs": 0,
+      "maxFrameMs": 0,
+      "averageSimulationDeltaMs": 0,
+      "excludedFrames": 0,
+      "updateCpuSamples": 0,
+      "averageUpdateCpuMs": 0,
+      "maxUpdateCpuMs": 0
+    },
+    "effects": {
+      "explosionsCommitted": 0,
+      "chainExplosionsCommitted": 0,
+      "fractureQueued": 0,
+      "fractureSpawned": 0,
+      "bloodlustKills": 0,
+      "bloodlustAttackSpeedBonus": 0,
+      "directDamage": 0,
+      "explosionDamage": 0,
+      "chainedExplosionDamage": 0,
+      "eventBacklog": 0,
+      "eventBacklogHighWater": 0,
+      "processedEvents": 0
+    },
+    "shrine": {
+      "id": "shrine.spawn_surge",
+      "x": 0,
+      "y": 0,
+      "inRange": false,
+      "activated": false,
+      "active": false,
+      "scheduled": 0,
+      "spawned": 0,
+      "targetCount": 100,
+      "durationMs": 20000,
+      "rewardMultiplier": 1.5,
+      "enemiesSpawned": 0,
+      "enemiesDefeated": 0,
+      "shrineXpDropped": 0,
+      "ambientXpDropped": 0,
+      "shrineXpCollected": 0,
+      "ambientXpCollected": 0,
+      "feedbackCount": 0,
+      "instances": [],
+      "plannedCount": 5,
+      "revealedCount": 0,
+      "nextAppearAtMs": 12000
+    },
+    "world": {
+      "chaos": 1,
+      "enemySpawnMultiplier": 1,
+      "enemyHealthMultiplier": 1,
+      "enemyDamageMultiplier": 1,
+      "enemyMoveSpeedMultiplier": 1,
+      "threatStep": 0,
+      "xpMultiplier": 1,
+      "eliteChance": 0,
+      "shrineRewardMultiplier": 1,
+      "activations": {},
+      "duplicatedEnemiesQueued": 0,
+      "duplicatedEnemiesSpawned": 0
+    }
+  },
+  "held": {
+    "status": "ready",
+    "scene": "run",
+    "themeId": "eco_guardian",
+    "canvas": {
+      "width": 1600,
+      "height": 900
+    },
+    "arena": {
+      "width": 3600,
+      "height": 2400
+    },
+    "camera": {
+      "scrollX": 1000,
+      "scrollY": 750
+    },
+    "run": {
+      "difficulty": "normal",
+      "status": "paused",
+      "mode": "timed",
+      "elapsedMs": 258.46333333333337,
+      "durationMs": 300000,
+      "kills": 0,
+      "liveEnemies": 1,
+      "level": 1,
+      "xp": 0,
+      "xpToNextLevel": 3,
+      "pendingChoices": 0
+    },
+    "player": {
+      "characterId": "character.starter",
+      "x": 1800,
+      "y": 1200,
+      "radius": 18,
+      "authoredFacing": "right",
+      "moveSpeed": 200,
+      "velocityX": 0,
+      "velocityY": 0,
+      "spriteFrame": 4,
+      "spriteMirrored": false,
+      "health": 100,
+      "invulnerable": false,
+      "maxHealth": 100,
+      "pickupRadius": 80,
+      "damageBonus": 0,
+      "attackSpeedBonus": 0,
+      "critChance": 0
+    },
+    "spawnOrigins": {
+      "live": {
+        "natural": 1,
+        "fragmentation": 0,
+        "baggedWaste": 0,
+        "environment": 0,
+        "benchmark": 0
+      },
+      "spawned": {
+        "natural": 1,
+        "fragmentation": 0,
+        "baggedWaste": 0,
+        "environment": 0,
+        "benchmark": 0
+      }
+    },
+    "combat": {
+      "spriteFramesByRole": {
+        "enemy.swarm_basic": null,
+        "enemy.fast_fragile": 0,
+        "enemy.slow_durable": null,
+        "enemy.death_spawner": null,
+        "enemy.stationary_fragment": null
+      },
+      "weaponId": "weapon.starter",
+      "deliveryKind": "melee",
+      "enemyId": "enemy.swarm_basic",
+      "projectiles": 0,
+      "shotsFired": 0,
+      "meleeStrikes": 0,
+      "meleeHits": 0,
+      "grabberActive": 0,
+      "collectionSweepAttacks": 0,
+      "collectionSweepsTriggered": 0,
+      "collectionSweepHits": 0,
+      "firstMeleeHitAtMs": null,
+      "firstKillAtMs": null,
+      "firstContactAtMs": null,
+      "criticalShots": 0,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "contactHits": 0,
+      "enemyCap": 300,
+      "projectileCap": 192,
+      "projectileSample": null,
+      "roster": {
+        "enemy.swarm_basic": 0,
+        "enemy.fast_fragile": 1,
+        "enemy.slow_durable": 0,
+        "enemy.death_spawner": 0,
+        "enemy.stationary_fragment": 0
+      },
+      "rosterHighWater": {
+        "enemy.swarm_basic": 0,
+        "enemy.fast_fragile": 1,
+        "enemy.slow_durable": 0,
+        "enemy.death_spawner": 0,
+        "enemy.stationary_fragment": 0
+      },
+      "offspringQueued": 0,
+      "offspringSpawned": 0
+    },
+    "progression": {
+      "pickups": 0,
+      "pickupsDropped": 0,
+      "pickupsCollected": 0,
+      "pickupsMerged": 0,
+      "choiceIds": [],
+      "selectedUpgradeIds": [],
+      "skillLevels": {
+        "skill.collection_sweep": 0
+      },
+      "pierceBonus": 0,
+      "projectileCountBonus": 0
+    },
+    "hud": {
+      "health": "100 / 100",
+      "experience": "0 / 3",
+      "level": "1",
+      "time": "5:00",
+      "kills": "0",
+      "enemies": "1"
+    },
+    "lifecycle": {
+      "runGeneration": 1,
+      "terminalOverlay": null,
+      "focusPaused": true
+    },
+    "feedback": {
+      "hitFlashes": 0,
+      "trailsEmitted": 0,
+      "pickupCues": 0,
+      "audioUnlocked": false,
+      "muted": false,
+      "focused": false,
+      "voices": 0,
+      "audioEmitted": 0,
+      "activeVisuals": 0,
+      "visualHighWater": 0,
+      "dropped": 0,
+      "reducedMotion": false
+    },
+    "elites": {
+      "spawned": 0,
+      "defeated": 0,
+      "live": 0,
+      "byRole": {}
+    },
+    "statistics": {
+      "kills": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 0,
+      "totalDamage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "summaryMetrics": [
+        "Cleared: 0",
+        "Peak Waste On Site: 1",
+        "Peak Pollution: 1×",
+        "Highest Critical Chance: 5%",
+        "Highest Overcrit Tier: 0",
+        "Longest Pass-Through: 0",
+        "Largest Clearance Chain: 0"
+      ],
+      "summaryDamage": [
+        "Total Processed: 0",
+        "Direct: 0",
+        "Critical Bonus: 0",
+        "Sorting Momentum: 0",
+        "Compaction: 0",
+        "Cascade: 0",
+        "Other / Remainder: 0"
+      ],
+      "upgradeCounts": {},
+      "summaryUpgrades": []
+    },
+    "impact": {
+      "hitStopGranted": 0,
+      "hitStopDenied": 0,
+      "hitStopSpentMs": 0,
+      "damageAccumulated": 0,
+      "damageFlushed": 0,
+      "pendingNumbers": 0,
+      "killChainDetuneCents": 0,
+      "deathCause": null
+    },
+    "ui": {
+      "pauseOpen": false,
+      "overtimeOpen": false,
+      "terminalTitle": null,
+      "pauseTab": "stats",
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "minimapShrines": 0,
+      "shrineTextResolution": 0,
+      "movementHintVisible": true,
+      "minimapVisible": true,
+      "minimapBounds": {
+        "left": 1226,
+        "top": 660,
+        "width": 196,
+        "height": 132
+      },
+      "cardDescriptions": [],
+      "codexEntries": [
+        {
+          "id": "shrine.spawn_surge",
+          "name": "Landfill Breach",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+0.4"
+            },
+            {
+              "label": "Waste released",
+              "display": "100 over 20s"
+            },
+            {
+              "label": "Return",
+              "display": "×1.5"
+            }
+          ]
+        },
+        {
+          "id": "shrine.greed",
+          "name": "Fast Fashion Boom",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+0.4"
+            },
+            {
+              "label": "Waste arriving",
+              "display": "×1.5"
+            },
+            {
+              "label": "Impact gain",
+              "display": "×1.25"
+            }
+          ]
+        },
+        {
+          "id": "shrine.multiplicity",
+          "name": "Single-Use Boom",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+0.7"
+            },
+            {
+              "label": "Waste arriving",
+              "display": "×2"
+            },
+            {
+              "label": "Impact gain",
+              "display": "×1.5"
+            }
+          ]
+        },
+        {
+          "id": "shrine.duplication",
+          "name": "Overproduction Order",
+          "effects": [
+            {
+              "label": "Pollution",
+              "display": "+1"
+            },
+            {
+              "label": "Duplicates",
+              "display": "Everything on site"
+            },
+            {
+              "label": "Return",
+              "display": "×1.5"
+            }
+          ]
+        }
+      ],
+      "codexSection": "shrines",
+      "codexUpgrades": [
+        {
+          "id": "upgrade.damage",
+          "name": "Reinforced Tools",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.attack_speed",
+          "name": "Rapid Cycling",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.crit_chance",
+          "name": "Precision Sort",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.move_speed",
+          "name": "Field Boots",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.health",
+          "name": "Safety Gear",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.pickup_radius",
+          "name": "Collection Range",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.weapon_range",
+          "name": "Longer Grabber",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 4
+        },
+        {
+          "id": "upgrade.weapon_collection_sweep",
+          "name": "Collection Sweep",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 5
+        },
+        {
+          "id": "upgrade.fracture",
+          "name": "Fragmentation",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 5
+        },
+        {
+          "id": "upgrade.bloodlust",
+          "name": "Cleanup Streak",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 6
+        },
+        {
+          "id": "upgrade.armour",
+          "name": "Protective Kit",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.regeneration",
+          "name": "Field Medic",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.luck",
+          "name": "Sharp Eye",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": null
+        },
+        {
+          "id": "upgrade.world_surge",
+          "name": "Single-Use Surge",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 4
+        },
+        {
+          "id": "upgrade.world_brittle",
+          "name": "Brittle World",
+          "sessionTotal": 0,
+          "bestInRun": 0,
+          "maxPerRun": 3
+        }
+      ],
+      "codexSession": [
+        {
+          "label": "Shifts worked",
+          "display": "0"
+        },
+        {
+          "label": "Cleared",
+          "display": "0"
+        },
+        {
+          "label": "Total Processed",
+          "display": "0"
+        },
+        {
+          "label": "Best Level",
+          "display": "1"
+        },
+        {
+          "label": "Best Cleared",
+          "display": "0"
+        },
+        {
+          "label": "Best Total Processed",
+          "display": "0"
+        }
+      ],
+      "statLines": [
+        {
+          "key": "health",
+          "display": "100 / 100"
+        },
+        {
+          "key": "damage",
+          "display": "10"
+        },
+        {
+          "key": "attackRate",
+          "display": "1 /s"
+        },
+        {
+          "key": "critChance",
+          "display": "0%"
+        },
+        {
+          "key": "critDamage",
+          "display": "×2"
+        },
+        {
+          "key": "range",
+          "display": "78"
+        },
+        {
+          "key": "knockback",
+          "display": "10"
+        },
+        {
+          "key": "armourPierce",
+          "display": "0%"
+        },
+        {
+          "key": "moveSpeed",
+          "display": "200"
+        },
+        {
+          "key": "pickupRadius",
+          "display": "80"
+        },
+        {
+          "key": "armour",
+          "display": "0"
+        },
+        {
+          "key": "regeneration",
+          "display": "0 /s"
+        },
+        {
+          "key": "luck",
+          "display": "0"
+        },
+        {
+          "key": "xpMultiplier",
+          "display": "×1"
+        }
+      ]
+    },
+    "crowd": {
+      "indexed": 1,
+      "pairChecks": 1,
+      "pairChecksHighWater": 1,
+      "adjustments": 0,
+      "solidResolutions": 0,
+      "contactShoves": 0,
+      "weaponShoves": 0,
+      "coincidentPairs": 0
+    },
+    "hazards": {
+      "active": 0,
+      "placed": 0,
+      "cleared": 0,
+      "damageDealt": 0,
+      "slowActive": false,
+      "byKind": {
+        "hazard.damage_zone": 0,
+        "hazard.obstacle": 0,
+        "hazard.periodic_burst": 0
+      }
+    },
+    "view": {
+      "worldTextResolution": 4,
+      "logicalWidth": 1600,
+      "logicalHeight": 900,
+      "displayWidth": 1168,
+      "displayHeight": 657,
+      "worldWidth": 800,
+      "worldHeight": 450,
+      "zoom": 2,
+      "visibleEnemies": 0,
+      "peakVisibleEnemies": 0,
+      "spawnRadius": 499
+    },
+    "pacing": {
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "progress": 0.0008615444444444446,
+      "spawnIntervalMs": 999.9750003124974,
+      "baseSpawnIntervalMs": 1000,
+      "liveByRole": {
+        "enemy.swarm_basic": 0,
+        "enemy.fast_fragile": 1,
+        "enemy.slow_durable": 0,
+        "enemy.death_spawner": 0,
+        "enemy.stationary_fragment": 0
+      },
+      "xpEarned": 0,
+      "xpByBucket": [],
+      "bucketMs": 15000,
+      "levelTimestampsMs": [],
+      "batchSize": 1,
+      "eliteChance": 0,
+      "roleWeights": {
+        "enemy.fast_fragile": 99.94830733333333
+      },
+      "milestoneWaves": 0,
+      "waveSpawned": 0,
+      "driftSpawned": 0,
+      "driftReclaimed": 0,
+      "driftLive": 0,
+      "spawnsInsideView": 0
+    },
+    "load": {
+      "enabled": false,
+      "requested": 0,
+      "spawned": 0,
+      "eventBacklog": 0,
+      "eventBacklogHighWater": 0,
+      "processedEffects": 0,
+      "gameplayBacklogHighWater": 0,
+      "processedGameplayEvents": 0,
+      "droppedPresentationCues": 0,
+      "liveHighWater": 1,
+      "trackedHighWater": 1,
+      "clock": "phaser-raw-wall-ms",
+      "frameSamples": 0,
+      "averageFrameMs": 0,
+      "maxFrameMs": 0,
+      "averageSimulationDeltaMs": 0,
+      "excludedFrames": 0,
+      "updateCpuSamples": 0,
+      "averageUpdateCpuMs": 0,
+      "maxUpdateCpuMs": 0
+    },
+    "effects": {
+      "explosionsCommitted": 0,
+      "chainExplosionsCommitted": 0,
+      "fractureQueued": 0,
+      "fractureSpawned": 0,
+      "bloodlustKills": 0,
+      "bloodlustAttackSpeedBonus": 0,
+      "directDamage": 0,
+      "explosionDamage": 0,
+      "chainedExplosionDamage": 0,
+      "eventBacklog": 0,
+      "eventBacklogHighWater": 0,
+      "processedEvents": 0
+    },
+    "shrine": {
+      "id": "shrine.spawn_surge",
+      "x": 0,
+      "y": 0,
+      "inRange": false,
+      "activated": false,
+      "active": false,
+      "scheduled": 0,
+      "spawned": 0,
+      "targetCount": 100,
+      "durationMs": 20000,
+      "rewardMultiplier": 1.5,
+      "enemiesSpawned": 0,
+      "enemiesDefeated": 0,
+      "shrineXpDropped": 0,
+      "ambientXpDropped": 0,
+      "shrineXpCollected": 0,
+      "ambientXpCollected": 0,
+      "feedbackCount": 0,
+      "instances": [],
+      "plannedCount": 5,
+      "revealedCount": 0,
+      "nextAppearAtMs": 12000
+    },
+    "world": {
+      "chaos": 1,
+      "enemySpawnMultiplier": 1,
+      "enemyHealthMultiplier": 1,
+      "enemyDamageMultiplier": 1,
+      "enemyMoveSpeedMultiplier": 1,
+      "threatStep": 0,
+      "xpMultiplier": 1,
+      "eliteChance": 0,
+      "shrineRewardMultiplier": 1,
+      "activations": {},
+      "duplicatedEnemiesQueued": 0,
+      "duplicatedEnemiesSpawned": 0
+    }
+  },
+  "result": {
+    "before": {
+      "elapsed": 250.14000000000001,
+      "status": "playing",
+      "spawns": {
+        "live": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 0
+        },
+        "spawned": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 0
+        }
+      },
+      "loadBacklog": 0,
+      "gameplayBacklog": 0,
+      "processedEvents": 0,
+      "rate": 0.5
+    },
+    "events": [
+      {
+        "type": "focus",
+        "trusted": true,
+        "at": 1922.2999999523163,
+        "sample": {
+          "elapsed": 258.46333333333337,
+          "status": "playing",
+          "spawns": {
+            "live": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            },
+            "spawned": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            }
+          },
+          "loadBacklog": 0,
+          "gameplayBacklog": 0,
+          "processedEvents": 0,
+          "rate": 0.5
+        }
+      },
+      {
+        "type": "blur",
+        "trusted": true,
+        "at": 1925,
+        "sample": {
+          "elapsed": 258.46333333333337,
+          "status": "paused",
+          "spawns": {
+            "live": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            },
+            "spawned": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            }
+          },
+          "loadBacklog": 0,
+          "gameplayBacklog": 0,
+          "processedEvents": 0,
+          "rate": 0.5
+        }
+      },
+      {
+        "type": "hidden",
+        "trusted": true,
+        "at": 1925.1999998092651,
+        "sample": {
+          "elapsed": 258.46333333333337,
+          "status": "paused",
+          "spawns": {
+            "live": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            },
+            "spawned": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            }
+          },
+          "loadBacklog": 0,
+          "gameplayBacklog": 0,
+          "processedEvents": 0,
+          "rate": 0.5
+        }
+      },
+      {
+        "type": "focus",
+        "trusted": true,
+        "at": 3255.5999999046326,
+        "sample": {
+          "elapsed": 258.46333333333337,
+          "status": "playing",
+          "spawns": {
+            "live": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            },
+            "spawned": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            }
+          },
+          "loadBacklog": 0,
+          "gameplayBacklog": 0,
+          "processedEvents": 0,
+          "rate": 0.5
+        }
+      },
+      {
+        "type": "visible",
+        "trusted": true,
+        "at": 3255.7999999523163,
+        "sample": {
+          "elapsed": 258.46333333333337,
+          "status": "playing",
+          "spawns": {
+            "live": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            },
+            "spawned": {
+              "natural": 1,
+              "fragmentation": 0,
+              "baggedWaste": 0,
+              "environment": 0,
+              "benchmark": 0
+            }
+          },
+          "loadBacklog": 0,
+          "gameplayBacklog": 0,
+          "processedEvents": 0,
+          "rate": 0.5
+        }
+      }
+    ],
+    "firstAdvance": {
+      "elapsed": 265.9566666666667,
+      "status": "playing",
+      "spawns": {
+        "live": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 0
+        },
+        "spawned": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 0
+        }
+      },
+      "loadBacklog": 0,
+      "gameplayBacklog": 0,
+      "processedEvents": 0,
+      "rate": 0.5
+    },
+    "armed": true
+  },
+  "errors": []
+}
