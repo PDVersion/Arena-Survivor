@@ -17,7 +17,7 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| V0.4.3 | Active on `codex/v0.4.3`; checkpoints below | [PR #25](https://github.com/PDVersion/Arena-Survivor/pull/25) open, published through `2086a41` | In progress; [active plan](BUILD_PLAN_V0.4.3.md) |
+| V0.4.3 | Active on `codex/v0.4.3`; checkpoints below | [PR #25](https://github.com/PDVersion/Arena-Survivor/pull/25) merged 2026-10-16 as `54b9b1b`; head `03965ef` | In progress; [active plan](BUILD_PLAN_V0.4.3.md) |
 | V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
@@ -40,14 +40,22 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 lifecycle slice (Session 6) | 2026-10-15, `8b700d9` | Pickup cap/rewards and bounded shutdown/reconstruction; REC-117 resolved; [report](performance/P5_LIFECYCLE_REPORT.md) |
 | P5 startup slice (Session 7) | 2026-10-15, `3d1ee2f` | Measured startup and demonstrated graphics/asset/module failure recovery; [report](performance/P5_STARTUP_REPORT.md) |
 | PR #25 CI repair | 2026-10-16, `2086a41` | Portable artifacts/bounded UI-test budgets; matching-head Actions passes; [report](performance/CI_REPAIR_20261016.md) |
-| P5 overall | **Incomplete** | Consolidated authored/overtime/focus/resume/mode/restart coverage and broader compatibility acceptance remain to be reconciled; [next prompt](SESSION_8_PROMPT.md) |
+| P5 acceptance inventory (Session 8) | 2026-10-16, local evidence-only slice | Requirement matrix inspected; 474 units/56 files, types/lint/build pass; native visibility probe fails its hidden-state precondition; [report](performance/P5_ACCEPTANCE_REPORT.md) |
+| P5 overall | **Incomplete** | Authored/extended overtime/long soak, ten terminal cycles, native visibility/catch-up, real audio and broader compatibility remain pending; [next prompt](SESSION_9_PROMPT.md) |
 | P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
 | C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
 
 ## Latest remote evidence
 
-The owner authorized publication of the two P5 commits and CI repair;
-PR #25 now contains `2086a41b0e1888e7689f115514893c18dd905cae`.
+Read-only Session 8 recheck: PR #25 merged on **2026-10-16 at 11:34:15 AEDT**,
+head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
+`54b9b1b7bae8b9d23d66c57333b066ea129d1035`.
+[Run 38829241556](https://github.com/PDVersion/Arena-Survivor/actions/runs/38829241556)
+on `03965ef` was still in progress at inspection; no success is claimed for it
+or for this later local evidence commit. Session 8 performs no publication.
+
+The owner previously authorized publication of the two P5 commits and CI repair;
+the earlier verified PR #25 checkpoint is `2086a41b0e1888e7689f115514893c18dd905cae`.
 [Actions run 38824954227](https://github.com/PDVersion/Arena-Survivor/actions/runs/38824954227)
 completed successfully on **2026-10-16 at 11:01 AEDT**: types, **474 unit tests
 across 56 files**, lint, build, **93 browser passes / one existing skip** and

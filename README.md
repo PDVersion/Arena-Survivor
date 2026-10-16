@@ -17,7 +17,7 @@ consolidated acceptance remains open. P6 and optional content remain gated.
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
 - [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): remaining P5/P6 work and gated C1–C7.
 - [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
-- [Next session — remaining P5 acceptance](build/SESSION_8_PROMPT.md).
+- [Next session — remaining P5 acceptance](build/SESSION_9_PROMPT.md).
 - [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
 - [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
 - [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).
@@ -191,5 +191,6 @@ the updated base value. See [the balance comparison](build/balance/Q4_OPENING_RE
 
 Q5 repairs the PR browser timing/output failures and patches audited development
 tooling. The current lockfile installs cleanly and audits with zero vulnerabilities
-(REC-113/114), and [the repair head passes Actions](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864). The V0.4.3 checkpoint PR remains draft while P2–P6 readiness is
-unfinished; its latest Actions result is the remote verification authority.
+(REC-113/114), and [the repair head passes Actions](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864). The later V0.4.3 checkpoint PR #25 is merged; P5/P6 readiness remains
+unfinished. [BUILD_STATUS.md](build/BUILD_STATUS.md) records the exact merged and
+verified heads; a checkpoint merge does not close the remaining acceptance gates.

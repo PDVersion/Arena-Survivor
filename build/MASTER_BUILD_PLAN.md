@@ -2833,3 +2833,20 @@ Local evidence: three affected serial browser cases, 474 units/56 files, types,
 lint and build pass. Publication and matching-head Actions verification are
 recorded in [BUILD_STATUS.md](BUILD_STATUS.md). Full evidence and reproduction:
 [CI repair report](performance/CI_REPAIR_20261016.md), REC-114.
+
+
+<a id="v0-4-3-p5-acceptance-inventory"></a>
+## V0.4.3 — P5 acceptance inventory / Session 8
+
+Session 8 (2026-10-16) completes the requirement/evidence inventory in
+[`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
+Inspected short-run decision/endless/clearing/death/restart, pause/resize,
+Default/Low, engine shutdown, queue/XP and boot recovery tests support only their
+bounded claims. Native visibility, authored/extended play, ten terminal cycles,
+long soak, real audio release and broader compatibility remain in the active
+P5 gate. No runtime defect was demonstrated; no runtime/test change is delivered.
+A single headed native-tab probe fails its hidden-state precondition in 6.3 s,
+so its temporary fixture is removed and native acceptance remains pending.
+Final types, 474 units/56 files, lint/build and whitespace pass. No full browser/
+stress/startup campaign is repeated. PR #25's merge is recorded in BUILD_STATUS;
+this slice stays local. The next handoff is Session 9 / P5, not P6.

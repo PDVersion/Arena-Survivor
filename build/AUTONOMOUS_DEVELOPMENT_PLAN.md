@@ -325,14 +325,23 @@ arbitrarily or add a service worker merely to silence the large-chunk warning.
 
 ### Session 8 — P5: remaining lifecycle/compatibility acceptance
 
-The affected Session 6/7 gates do not complete P5. Use
-[SESSION_8_PROMPT.md](SESSION_8_PROMPT.md) to inventory remaining authored/overtime,
-focus/resume, presentation-switching, restart and compatibility evidence. Prefer
+The affected Session 6/7 gates do not complete P5. Session 8 completed the
+[acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
+probe could not reach hidden state. Continue with
+[Session 9 / P5](SESSION_9_PROMPT.md) for remaining authored/overtime,
+focus/resume, restart and compatibility evidence. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
 
-### Session 9 — P6: combined readiness gate and real-device report
+### Session 9 — P5 continuation: native events and remaining acceptance
+
+Use [SESSION_9_PROMPT.md](SESSION_9_PROMPT.md). First establish native tab
+visibility in a real same-window tab setup with one bounded check. Long lifecycle
+and browser/device evidence remain pending and require an authorized consolidated
+campaign. No P6, content or persistence work while P5 remains open.
+
+### After P5 — P6: combined readiness gate and real-device report
 
 **60-minute core:** inspect matching-head Actions evidence and the combined
 software gate; full local browser/stress runs require a separately scheduled

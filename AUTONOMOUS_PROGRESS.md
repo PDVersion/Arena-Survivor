@@ -1,6 +1,6 @@
 # Autonomous progress
 
-Updated: 2026-10-15 (Australia/Sydney).
+Updated: 2026-10-16 (Australia/Sydney).
 
 ## Objective and current state
 
@@ -904,3 +904,45 @@ No runtime changes, local browser/stress suites, performance recordings or new
 CI runs are needed for this cleanup. Original inputs were backed up at
 `/private/tmp/arena-doc-consolidation-20261016/`. Documentation delivery is local;
 this request does not merge/deploy or start the next implementation session.
+
+
+## Session 8 — P5 acceptance inventory (2026-10-16)
+
+- Start/context restoration: **11:33:00 AEDT / 00:33:00 UTC** (rounded down
+  to include initial reading); deadline **13:03:00 AEDT / 02:03:00 UTC**.
+- Latest implementation stop / final verification reserve: **12:43:00 AEDT /
+  01:43:00 UTC**. Maximum 90 minutes; final 20 minutes reserved.
+- Initial checkout: clean `03965ef` on `codex/v0.4.3`; no unrelated edits to back up.
+- Read-only GitHub inspection discovers PR #25 is merged at `03965ef`; its
+  Actions run `38829241556` is in progress. `2086a41` run `38824954227`
+  success is confirmed separately. No publication is authorized this session.
+- Scope: consolidate scenario evidence and one necessary bounded native tab
+  visibility check; no P6/content/persistence/sprite work.
+
+- Acceptance matrix completed: `build/performance/P5_ACCEPTANCE_REPORT.md` maps
+  actual assertions and historical evidence for each requested surface. Existing
+  short ending/overtime, settings UI and synthetic focus coverage is reused only
+  within its scope. Native events, long lifecycle and compatibility stay pending.
+- One temporary native tab-switch fixture (headed Chromium, test/Default,
+  1280×720, one worker/no retries, 45 s upper bound) failed in 6.3 s because the
+  document never became hidden. Renderer was not retained before failure.
+  Initial sandbox server bind failed EPERM before execution; permitted execution
+  reached the unmet precondition. This is neither a game defect nor a pass.
+  Removed the unverified fixture; no runtime/test change or speculative fix.
+- Playwright closed owned browser/server; port 4173 has no remaining listener.
+  Unknown processes and review port 4213 were untouched.
+- Final verification/review began early at approximately **11:37 AEDT /
+  00:37 UTC**, well before the final 20-minute reserve. Types, **474 units / 56
+  files**, lint/build pass; existing chunk advisory only. Whitespace/link/ownership
+  review follows final recording. No new production boundary changed, so no
+  repeated startup/production browser campaign. Full Chromium/stress, authored/
+  extended overtime/long-soak/device checks remain deferred, not passed.
+- Recorded findings in REC-119 continuation; completed inventory in master;
+  active P5 remains open. Retired Session 8 prompt; successor is Session 9 / P5.
+  No P6, content, persistence, sprite generation, balance/dependency change or
+  publication. Local documentation commit only.
+- Final recording checkpoint: **11:40:29 AEDT / 00:40:29 UTC**; elapsed
+  **7 min 29 s** from the conservative 11:33 start. Final software checks and
+  101 local Markdown link targets (zero missing) pass; `git diff --check` passes.
+  This evidence-only session finishes early with the unsupported gates explicitly
+  pending, rather than spending the remaining budget on prohibited long checks.

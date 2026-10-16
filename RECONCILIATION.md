@@ -3288,3 +3288,21 @@ Full local Chromium/stress, authored/overtime/long soak, focus/resume, settings 
 mode switching, production startup/boot guards and additional-browser/hardware
 acceptance are explicitly deferred under the owner resource policy. No current
 CI/device pass is claimed. See the P5 lifecycle report for exact commands/counts.
+
+
+Session 8 acceptance continuation (2026-10-16):
+`build/performance/P5_ACCEPTANCE_REPORT.md` separates actual short browser
+assertions from missing sustained/native acceptance. Existing phase-five blur/
+focus uses synthetic window events; frame-measurement hidden-frame rejection is
+not evidence that gameplay cannot catch up. Phaser's VisibilityHandler emits
+HIDDEN/VISIBLE separately, and its Game/TimeStep already resets delta on resume;
+absence of scene HIDDEN handlers alone is not a demonstrated defect.
+
+One bounded headed Chromium probe could not make document.visibilityState hidden
+by bringing a second automated page forward (6.3 s, one worker/no retries).
+Record this as a failed scenario precondition, not game failure or acceptance.
+Do not replace native evidence with dispatched events or overwritten document
+properties. The temporary unverified fixture was removed. Next native check uses
+actual same-window tabs; long soak, ten terminal cycles, real audio-device release
+and additional browser/physical older-device evidence stay pending. Existing CI
+excludes @stress, so green regression does not close these gates. P5 remains open.
