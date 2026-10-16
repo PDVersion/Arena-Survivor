@@ -4,12 +4,12 @@ Updated: 2026-10-15 (Australia/Sydney).
 
 ## Objective and current state
 
-Smooth browser play on older hardware. **Session 1 / V0.4.3 P0 is complete and
-verified** on `codex/v0.4.3` (`354d725`). The subsequent owner-requested **Q1
-play-test correction is also verified**: player facing/walking, crisp world text,
-common tool offer entries and selected F16 Beginner/Normal/Experienced. Q2, Q3 wrap-up, Q4 opening/stat inspection and
-Session 2 / P1 are now verified; Session 3 / P2 is verified; Session 4 / P3 software gate is verified. Session 5 / P4 affected local gate is verified; Session 6 / P5 lifecycle and Session 7 / P5 startup affected gates are verified; consolidated lifecycle/compatibility acceptance remains pending. Content C1–C7 and other optional features have not started;
-physical older-device acceptance remains pending. P3 establishes scoped burst CPU savings; no frame-rate/device improvement is claimed. Q5 Actions repair is verified; REC-113 audit is resolved. P5–P6 readiness remains gated.
+Current milestone dates/statuses and published CI evidence are consolidated in
+[build/BUILD_STATUS.md](build/BUILD_STATUS.md). Active work is remaining P5
+acceptance; P6/content remain gated. The session records below are historical
+checkpoints, including their then-current delivery constraints and dirty-file
+notes. Those are superseded where the current summary records later evidence
+or the owner's documentation cleanup.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -326,7 +326,7 @@ Report: `build/performance/Q3_PRODUCTION_CHECK.json`. Historical P1 reports stay
 unchanged. No fresh sustained performance improvement claim, balance tuning,
 dependency update, sprite generation or profile migration; balance/audit were
 not rerun. The two-minute opt-in measurement remains unexecuted in Q3. Next remains
-Session 3/P2, using `build/SESSION_3_PROMPT.md`; no automatic new thread is created.
+Session 3/P2, using `build/MASTER_BUILD_PLAN.md#v0-4-3-performance`; no automatic new thread is created.
 
 Final recording/index review checkpoint: **18:45:40 AEDT / 07:45:40 UTC**,
 actual wrap-up elapsed **19 min 26 s**. All Q3 gates pass; final index review
@@ -875,3 +875,32 @@ The eight original plan edits and three untracked session prompts remain
 unstaged. Session 6 required local-only delivery: no push or CI trigger has
 been made. Publishing this repair also publishes the two local P5 commits
 (`8b700d9`, `3d1ee2f`) and requires owner authorization to lift that constraint.
+
+
+## Documentation consolidation — 2026-10-16
+
+Owner authorizes updating planning documents, consolidating date/status banners,
+combining completed build records and retiring completed handoffs. Previously
+unstaged design-review recommendations are adopted in the ongoing roadmap;
+completed milestone plans are consolidated into `build/MASTER_BUILD_PLAN.md`.
+Future recommendations and unreconciled sprite targets remain outside that
+completed record. `build/BUILD_STATUS.md` holds verified Git dates and current
+gates. AGENTS/README and local source links follow the new locations.
+Session 3–6 handoffs are retired; Session 8 covers the actual next open work,
+P5 consolidated acceptance. The roadmap moves future P6 to Session 9.
+
+Owner-authorized publication of `8b700d9`, `3d1ee2f`, `2086a41` is confirmed.
+Matching-head Actions `38824954227` passes: 474 units/56 files, types/lint/build,
+93 browsers/one existing skip and zero audit findings. Remote CI repair is now
+verified. P5 overall, P6 and physical older-device acceptance remain open.
+
+Documentation-only verification passes: 517 local links/catalog sources, 155
+unique master anchors, all 126 architecture nodes/relationships, historical
+code/verification block preservation, unchanged active C1–C7 scope and original
+design-review recommendations, pending P5/P6 gates, `git diff --check` and
+`npm run build`. Production JS/CSS filenames/hashes remain unchanged; the
+existing large-chunk advisory remains. Both TypeScript edits are comments only.
+No runtime changes, local browser/stress suites, performance recordings or new
+CI runs are needed for this cleanup. Original inputs were backed up at
+`/private/tmp/arena-doc-consolidation-20261016/`. Documentation delivery is local;
+this request does not merge/deploy or start the next implementation session.

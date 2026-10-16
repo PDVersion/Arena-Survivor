@@ -14,175 +14,13 @@ first. In particular: **never read a sprite from a system, and never derive a
 radius, hitbox, or separation value from one.** New content added here renders
 as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
-## Execution status
+## Execution authority
 
-**P0 complete on `codex/v0.4.3` (2026-10-12); Q1/Q2/Q3/Q4 and P1 gameplay/software gates verified; P2/P3/P4 verified; P5 lifecycle/startup affected gates verified, consolidated acceptance pending; Q5 CI/audit repair verified (REC-113/114).** The merged readable
-baseline and V0.4.2.1 correction gate are satisfied (`103afa7`). The owner has
-authorized performance P0–P6 from the autonomous roadmap, ahead of content
-growth (REC-100, REC-102). C1–C7 below retain their order; F16 difficulty is
-selected and delivered in Q1, and other optional content remains unselected. Historical status annotations supplied in the working tree
-record the pre-session planning assessment; the execution status here is current.
-
-## Q1 — Player presentation and selected difficulty presets
-
-The owner requested these corrections after P0: correct player facing and smooth
-walking, crisp world/background text, common tool-upgrade availability, and
-Beginner / Normal / Experienced run difficulty. This explicitly selects F16 and
-brings this small play-test correction ahead of P1 (REC-105/106); other optional
-content and the P1–P6 order remain gated. Normal is slightly easier than the
-current baseline; Experienced is harder. Difficulty never changes the gameplay
-clock, visible world, actor radii or technical population caps.
-
-**Commit:** `feat(v0.4.3): correct player presentation and add difficulty presets`
-
-Ownership: this plan and V0.4 sequence; `PLAN.md`, `EDUCATION_PIVOT.md`,
-`THEME_ARCHETYPES.md`, `SAVE_DATA.md`, README, autonomous roadmap/progress and
-reconciliation; core sprite/difficulty contracts and validation; theme-owned
-preset data/copy and eco sprite metadata/upgrade rarity; sprite animation/view
-presentation, menu/run scenes, UI text/settings/HUD, settings/run state,
-`systems/difficulty/**`, pacing simulator/format and `scripts/balance.ts`, test
-bridge, alternate fixture and corresponding units/browser tests. Sprite bitmap,
-raw generation, loader/packing and remaining roster claims are excluded.
-
-- [x] Q1 — reproduce/correct authored facing and frame cadence; render world text
-  at adequate texture resolution; select/snapshot three theme-owned presets;
-  make tool upgrades commonly available; validate menu/run/restart, ledger,
-  readable text, both themes, balance comparisons and per-preset stress.
-
-Short gate: typecheck, targeted sprite/settings/difficulty/content/simulation
-units, `npm run balance -- --difficulty all --build damage-rush`, lint/build,
-focused sprite/difficulty/text/menu browsers, full units/Chromium and serial
-stress for all presets. Inspect player-facing motion/text in the real browser;
-do not infer correct facing from the mirrored boolean alone. Keep the supplied
-seven status annotations outside this phase commit.
-
-Q1 evidence (2026-10-12): 414 units / 48 files, typecheck/lint/build; full
-Chromium regression (75 pass, one existing opt-in skip), four difficulty browser
-cases including next-run settings, and all three serial stress cases pass.
-Actual PNG/browser inspection confirms authored right-facing walks and left-facing
-hit-pose correction; a 136-frame movement trace has no idle flashes/wrong flips.
-World title/hint textures use resolution 4 at 2× camera zoom. See REC-105/106 and
-`AUTONOMOUS_PROGRESS.md` for balance evidence and limitations.
-
-## Q2 — Event readability, roster inspection, opening composition and spawn accounting
-
-Owner-authorized follow-up before P1: crisp event name/prompt textures and spent
-minimap removal; opening Microplastics with sporadic Plastic Bottles from 30 s
-(timer time) ramping later; visible Glass Shards using the existing accepted
-broken-glass frame; standalone sprite inspection/review tool; live/cumulative
-spawn-origin counts. Bagged Waste composition remains unchanged pending owner
-confirmation. This is a narrow exception to the sprite ownership gate: reuse
-accepted art without bitmap edits, new generation or remaining roster claims.
-
-Ownership: plans/progress/README/reconciliation, product/theme/education and
-sprite plan/manifest notes; ShrineActor, EnemyActor, RunScene; theme director/enemy opening reward,
-sprite aliases and copy; core sprite frame alias/role wave switch contracts and
-validation; sprite resolver/runtime frame; spawn accounting and matching HUD/
-pause statistics; standalone `sprite-browser.html`, `src/tools/sprite-browser*`,
-Vite multi-entry configuration; corresponding unit/browser tests and fixtures.
-
-Commit: `fix(v0.4.3): clarify site events and inspect the sprite roster`
-
-- [x] Q2 — affected units/types/lint/build, balance, focused event/minimap/roster/
-  sprite-browser/provenance browsers, serial stress and visual inspection pass.
-
-Q2 gate: 416 units / 49 files, types/lint/build, all-preset balance, 13 focused
-browsers, corrected full Chromium 78 pass / one opt-in skip, three serial stress
-cases, and live event/roster/tool screenshots pass. See REC-107/108.
-
-P1 also owns favicon metadata in `index.html` / `sprite-browser.html`: a
-headed probe confirmed `/favicon.ico` 404s, so explicitly declare an empty icon
-rather than hide resource failures. No bitmap/art generation is involved.
-
-P1 additionally owns `scripts/performance.ts`, `scripts/check-production.ts`, its validation command
-in `package.json`, measurement reports/config and
-bench-only RunScene cap/load options for a sustained capacity sweep. Production
-stays capped at 300; controlled 150/300/450/600 loads measure wall p95/p99/stalls,
-update CPU, visible population, source counts and errors. Repeated software-GPU
-results do not authorize a production cap increase or replace hardware evidence.
-
-## Q3 — Wrap-up corrections and Session 3 handoff
-
-Owner-requested before starting P2: investigate clipped/missing upgrade detail,
-stationary aqua shards, slow timer and detached glass pixels; link sprite browser
-back to the architecture atlas; reconcile documentation and prepare a new-session
-prompt. P2 remains unstarted. Ownership: upgrade selection/description rules and
-RunScene offer call site, level-up overlay layout and corresponding tests;
-sprite browser navigation, architecture snapshot/status, Vite atlas entry,
-production navigation/report-output check, manifest review notes,
-plans/progress/README/reconciliation and `SESSION_3_PROMPT.md`. No bitmap changes,
-clock/fragment tuning, cap increase or optional content is authorized by this correction.
-
-Commit: `fix(v0.4.3): bound upgrade cards and close capped skill offers`
-
-- [x] Q3 — focused upgrade/layout/navigation/roster/clock gate, types/units/lint/
-  build, production check and browser regression; inspect live layout and record
-  findings. Preserve existing status annotations and concurrent atlas/roadmap work.
-
-Q3 gate (2026-10-12): final types/lint/build and **424 units / 50 files** pass;
-13 focused browsers, full Chromium **81 pass / one existing opt-in skip**, final
-strengthened per-card containment/pointer regression and **3 serial stress cases**
-(34.9 s) pass. Built production diagnostics/boot/play/pause/tool/atlas navigation
-passes with zero browser errors. Visual layout and accepted/packed art inspected.
-See REC-111 and the new-session `SESSION_3_PROMPT.md`. No new sustained performance
-comparison was required or claimed by this correction.
-
-## Q4 — One-hit opening Microplastics and starting-stat inspection
-
-Owner-requested 2026-10-13 before P2: compare lowering Microplastics health with
-raising starter tool damage; make ordinary unmodified opening Microplastics die
-to one non-critical hit in all presets, retaining later escalation. Add starting
-stats to the sprite review tool and refresh the affected atlas definition.
-Ownership: eco enemy health/data comments; standalone sprite browser and pure
-stat-inspection helper; corresponding units/browser checks; balance assessment
-script/report and production stat-view check; active plans, product/theme/education notes, progress, reconciliation,
-README and Session 3 handoff, including the discovered audit/readiness blocker. No bitmap, other roster/tuning, clock or cap changes.
-The owner explicitly requests pushing this verified branch and opening one PR
-into main now; this review checkpoint does not mark P2–P6 or V0.4.3 complete.
-
-Commit: `fix(v0.4.3): make opening Microplastics one-hit across difficulties`
-
-- [x] Q4 — compare actual starting damage/armour/health and deterministic pacing;
-  focused one-hit/later-scaling and stat-view checks; types/units/lint/build,
-  full browser regression, serial stress and production exclusion/navigation.
-
-Q4 gameplay gate (2026-10-13): **428 units / 51 files**, types/lint/build,
-final **85 Chromium passes / one existing opt-in skip** (2.7 min), final seven
-focused browser checks, **3 serial stress cases** (32.6 s), production
-exclusion/boot/play/pause/starting stats/atlas navigation and visual review pass.
-All reference builds/presets/counterfactuals are retained in the balance report.
-The first full run was contaminated by live source edits; final code was frozen.
-Death attribution is isolated from opening difficulty, and the stat panel's
-native toggle-event race is fixed. **Audit fails** with 14 advisories on unchanged
-dependencies (REC-113); this does not complete milestone/readiness or approve merge.
-The owner-requested PR is a draft checkpoint. P2 stays next and unstarted.
-
-## Q5 — PR #24 Actions repair
-
-Owner explicitly requests fixing failed Actions checks in the existing PR.
-The two captured failed runs stop at Chromium regressions: short movement,
-bottle-unlock and Collection Sweep waits fail under the slower simulated clock;
-the layout screenshot uses a macOS-only absolute directory. Two level-up paths
-are also flaky on CI. The dependency audit is skipped behind that failure and
-REC-113 still needs remediation. P2 remains unstarted.
-
-Ownership: affected browser specs/helper and test-output handling; patched
-package/lock versions, compatible test/lint/script configuration when necessary;
-CI diagnostic artifacts/workflow handling if needed; active plans, progress,
-README, Session 3 handoff and reconciliation. No gameplay tuning or optional
-feature work. Keep assertions and simulation rate intact; fix bounded scheduling
-assumptions and portable output, then remove audited dependency paths through
-compatible tested updates. Preserve all original local edits.
-
-Commit: `fix(v0.4.3): repair CI timing and dependency audit checks`
-
-- [x] Q5 local — affected slow-runner browser cases, complete unit/type/lint/build,
-  full Chromium and serial stress, simulator/production tooling and npm audit;
-  normal clean install and zero advisories.
-- [x] Q5 remote — repair head `28ecdba` passed [Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864):
-  428 units, 85 browser cases / one existing skip, zero flaky/retried cases and
-  zero audit vulnerabilities. P2 stays unstarted; latest PR head remains the
-  publication verification authority.
+[BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
+Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). The active work
+is remaining P5 acceptance; P6 and optional C1–C7 remain gated. F16 was selected
+and delivered; other optional content still requires owner selection.
 
 ## Performance prerequisites — P0–P6
 
@@ -246,45 +84,6 @@ provisional: desktop p95 ≤20 ms, older device / worst supported 300-load p95
 from test instrumentation. Throttled Chromium is comparative evidence only.
 P0–P6's software gate precedes C1; missing physical hardware leaves acceptance
 pending and must be reported before describing older-device readiness as complete.
-
-P0 evidence: 408 units / 47 files, typecheck/lint/build, 72 Chromium regressions
-(one opt-in skip), serial stress/cleanup/restarts, six warmed 60-second test /
-production recordings and three short instrumented stress recordings all pass.
-See [`performance/P0_BASELINE.md`](./performance/P0_BASELINE.md), REC-103/104.
-These verify the measurement/software gate; provisional throughput and physical
-older-device acceptance remain pending. Production diagnostic scans are P1.
-
-P1 verified 2026-10-12: 420 units / 50 files, types/lint/build, production
-emitted-code/boot/play/pause/tool check, 79 Chromium regressions (one opt-in
-skip), and three serial stress cases pass. Six matched production windows,
-12 software and six local Metal GPU capacity windows are recorded in
-[`performance/P1_REPORT.md`](./performance/P1_REPORT.md) (REC-109/110).
-Production diagnostic work is excluded; frame p95 in the default comparison
-remains 17.2 ms. Local calm 600-live performance shows headroom, but supported
-older-device/mixed-combat cap acceptance remains pending. Production stays 300.
-P2 verified 2026-10-13: 438 units / 52 files, types/lint/build, 13 targeted
-browsers, 88 full Chromium passes / one existing skip, production exclusion and
-three serial stress cases pass. Twenty-four primary warmed ≥60 s windows plus
-three retained exploratory baselines and six short probes establish reduced
-interface calls/allocations, without a meaningful frame-rate gain. Visible-map
-SwiftShader median p95 remains 41.7 ms; physical older-device readiness remains
-pending and production cap stays 300. See [`performance/P2_REPORT.md`](./performance/P2_REPORT.md),
-REC-115. P3 is next; no dependent phase has started.
-
-P3 verified 2026-10-14 after owner pause/resume: 440 units / 52 files,
-typecheck/lint/build, production exclusion/boot/tool check, seven targeted
-browsers, 88 full Chromium passes / one existing opt-in skip, and three serial
-stress cases pass with zero retries. Thirty primary warmed >=60 s windows
-cover dense/distributed 300-live crowds, sustained replenished mixed bursts in
-both production themes/delivery kinds, and matched production play. Six initial
-production windows (including uncontrolled post-pause after data) remain separate.
-Single-pass immutable kill-window construction reduces median active update p95
-4.3→2.9 ms in eco melee and 3.8→2.4 ms in retained projectile bursts; frame p95
-remains 33.4 ms. Ordinary production does not show a speedup (16.9→17.5 ms).
-No global frame/device readiness is claimed. See REC-116 and
-[`performance/P3_REPORT.md`](./performance/P3_REPORT.md). Pre-existing pickup
-retention (250 active / 535 tracked) is REC-117, a P5 gate issue; no lifecycle fix
-is pulled forward. P4–P6 and optional content remain unstarted.
 
 ## Content scope, from PLAN.md
 
@@ -435,67 +234,14 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
+## Next slice — remaining P5 acceptance
 
-P4 accepted 2026-10-15 under the owner's limited-local-browser policy (REC-118).
-Default retains circular enemy minimap markers; Low uses direct theme-owned
-rectangles, with unchanged centres/extents, cadence, essential markers and game
-rules. Twenty-seven serial warmed >=60-second windows compare frozen baseline,
-candidate Default and Low across visible 300-live map, combat bursts and
-production. Low dense-map median wall p95 is 25.1 ms vs Default 41.7 ms (~40%
-lower); baseline dense varies (median 35.4 ms). No universal or physical-device
-speedup is claimed. Types/units/lint/build/production check and six affected
-browser cases (three per theme), one worker/zero retries, pass. Full local
-Chromium/stress is deferred to Actions or the combined multi-session gate per
-owner; no current P4 CI pass is claimed. Report: `performance/P4_REPORT.md`.
-P5 is next and must address REC-117; P5/content work has not started.
-
-
-Session 6 / P5 lifecycle affected gate accepted 2026-10-15. REC-117 is resolved:
-1,040 drops/790 merges retain exactly 250 tracked/live/group/enabled-body pickups,
-then award all 1,040 XP once and release pickup ownership. Both production themes
-pass three bounded stop/start reconstructions with engine/retained-reference
-baselines restored. Paid collection cues retire early only under cap pressure;
-nearest-pair/ties and retained-source attribution stay unchanged for unpaid rewards.
-Types, all units, lint/build and two serial one-worker/zero-retry affected browser
-cases pass. Full-app Chromium/stress, authored/overtime/focus/mode-switching/long
-soaks, production boot/startup and hardware/browser acceptance remain deferred,
-not passed. `performance/P5_LIFECYCLE_REPORT.md` records reproduction, checks and
-limits. P5 overall stays open; Session 7 startup/compatibility is next, followed
-by the combined P6 gate. No push/CI trigger, content, art or persistence work.
-
-
-Session 7 / P5 startup affected gate accepted 2026-10-15. Two reproduced boot
-failures now recover: unavailable canvas contexts fail before Phaser evaluation,
-and a failed declared atlas stops transition instead of using missing art.
-A dynamic Game-start boundary catches dependency fetch/initialization failures;
-owned async loader failure schedules destruction and shows theme-owned safe-text
-reload controls. Atlas/module recovery and actual reload-to-run paths pass.
-This is a demonstrated error boundary, with no claimed loading-speed improvement.
-Bounded production cold/warm/slow-network and separate decode evidence, existing
-production guard, one affected test-mode boot/resize case, 474 units/56 files,
-types/lint/build pass. Remaining P5 lifecycle/broader compatibility acceptance,
-full Chromium/stress and device evidence stay pending; P5 overall remains open.
-No P6/content, push or CI trigger. See `performance/P5_STARTUP_REPORT.md`.
-
-
-## Q5 follow-up — PR #25 CI artifacts and bounded UI-test budgets (2026-10-16)
-
-Owner reports failed Actions. Run `38670385486`, head `d9047c0`, fails two
-P4 screenshot writes to macOS-only `/private/tmp`; the resize/settings/restart
-case is flaky because its cumulative 30-second test budget expires during its
-fourth click. This repair does not start P6 or alter gameplay. Current local
-HEAD `3d1ee2f` also contains the two unpublished P5 slices.
-
-Ownership: `tests/e2e/presentation-v043.spec.ts`, the first scenario in
-`tests/e2e/interface-work.spec.ts`, this plan, `AUTONOMOUS_PROGRESS.md`, REC-114
-and `build/performance/CI_REPAIR_20261016.md`. Use Playwright test-owned artifact
-paths and bounded scenario budgets while retaining every state/cap/resize/XP
-assertion, input action and simulation rate. No forced clicks, retries or runtime
-tuning to mask the CI result. Verify only the three affected browser cases locally,
-one worker/zero retries, plus units/types/lint/build and whitespace. Full CI/stress
-remains deferred under the owner's resource budget. Preserve original plan edits.
-
-- [x] Local CI repair gate — three affected serial cases pass without retries;
-  474 units/56 files, types/lint/build/whitespace pass; five test-owned artifacts.
-- [ ] Remote CI repair gate — only an Actions pass matching a published repair
-  head verifies the PR; prior failed/successful heads are not current evidence.
+Owner-authorized documentation cleanup does not close this gate. Session 8
+uses the existing P5 ownership block, affected lifecycle/boot tests and a new
+`performance/P5_ACCEPTANCE_REPORT.md`. Inventory each outstanding scenario and
+its exact evidence before running anything; a normal CI pass does not imply
+focus/resume, overtime, long-soak, another-browser or physical-device acceptance.
+Prefer deterministic/source checks and a necessary bounded serial browser case.
+Full local Chromium/stress and long soaks remain deferred under AGENTS.md.
+Record untested requirements as pending; do not start P6 before P5 passes.
+The next-session handoff is [SESSION_8_PROMPT.md](SESSION_8_PROMPT.md).

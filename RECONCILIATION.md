@@ -1,11 +1,11 @@
 # Reconciliation Log
 
-Read this file immediately after the current milestone sequence, `build/BUILD_PLAN_V0.4.md`, before beginning any work; then read `build/BUILD_PLAN_V0.3.md` for the underlying architecture and verification conventions. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. Completed plans are preserved as `build/BUILD_PLAN_V0.1.md` and `build/BUILD_PLAN_V0.2.md`.
+Read this file immediately after the current milestone sequence, `build/BUILD_PLAN_V0.4.md`, before beginning any work; then read `build/MASTER_BUILD_PLAN.md#v0-3` for the underlying architecture and verification conventions. It is the project's durable memory: record information here when it should change or constrain how later phases and features are built. Completed plans are consolidated in `build/MASTER_BUILD_PLAN.md`; milestone dates/statuses are summarized in `build/BUILD_STATUS.md`.
 
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active phase: **V0.4.3 P0/Q1/Q2/Q3/Q4 gameplay gates verified on `codex/v0.4.3`; P1/P2/P3/P4 affected software gates verified; P5 lifecycle/startup affected gates verified; consolidated lifecycle/compatibility acceptance pending. F16 is delivered; other content selections remain pending.**
+- Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
 - Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 readiness remain gated.**
 
 ## How to maintain this file
@@ -600,7 +600,7 @@ Context / observation:
 V0.1 completed all six phases, but the generic `BUILD_PLAN.md` filename still looked current and repository instructions pointed every future session to it. The V0.1 deferred list deliberately grouped work from several later milestones, while `PLAN.md` defines a narrower authoritative V0.2 scope.
 
 Decision / solution:
-Preserve the completed milestone as `build/BUILD_PLAN_V0.1.md`, make `build/BUILD_PLAN_V0.2.md` the current implementation source, and update repository/README references. Derive V0.2 from the product plan's V0.2 section: expanded enemies; overcrit, piercing, and on-kill interactions; Chaos, multipliers, shrines, and baseline elites; scalable feedback; and the named statistics. Use V0.1's deferred list only as candidate context. Keep persistence/export, additional weapons, bosses, general curses, elite modifiers, endless mode, and other V0.3 work out.
+Preserve the completed milestone as `build/MASTER_BUILD_PLAN.md#v0-1`, make `build/MASTER_BUILD_PLAN.md#v0-2` the current implementation source, and update repository/README references. Derive V0.2 from the product plan's V0.2 section: expanded enemies; overcrit, piercing, and on-kill interactions; Chaos, multipliers, shrines, and baseline elites; scalable feedback; and the named statistics. Use V0.1's deferred list only as candidate context. Keep persistence/export, additional weapons, bosses, general curses, elite modifiers, endless mode, and other V0.3 work out.
 
 Why:
 Versioned plans retain the evidence and commit history of a completed milestone without making stale instructions appear active. Product scope prevents the broad deferred list from silently expanding V0.2, while seven dependency-ordered phases put provenance and load safety before recursive interaction mechanics.
@@ -1020,7 +1020,7 @@ Context / observation:
 V0.2 completed every named mechanic, but play testing showed the loop reads as flat: `xpRequiredForLevel` is linear (`src/game/systems/xp.ts:20`) while XP income is not; enemies share a physics group with no collider (`src/game/scenes/run-scene.ts:334`); `SPAWN_RADIUS` is 360 against a viewport half-extent of roughly 960, so spawns are visible; the roster fully unlocks within 24 seconds; enemy strength scales with Chaos but not elapsed time; upgrade cards state no values; and Detonation is one fixed 96/15 blast forever. Three defects surfaced alongside those: `eliteChance` is `min(0.4, 0.04p)` so a shrine-free run sees no elites; `selectUpgradeChoices` can re-offer an already-enabled skill, wasting a level-up; and `armour`, `regeneration`, and `luck` are declared and validated but read by no system. The prior `PLAN.md` V0.3 section listed content growth — weapons, bosses, unlocks, persistence, endless mode — none of which addresses these.
 
 Decision / solution:
-Re-sequence rather than expand. `PLAN.md` V0.3 now describes a rebalancing, escalation, and readability milestone; the previous V0.3 content list moves verbatim to a new V0.4 section, gaining weapon evolution. `build/BUILD_PLAN_V0.3.md` is the implementation plan for the new V0.3 in eight phases. `SAVE_DATA.md` moves its export/import UI expectation to V0.4 and records that V0.3 adds only a serializable settings slice behind a marked adapter seam. Completed milestone plans stay immutable except for forward-looking factual errata, so `BUILD_PLAN_V0.2.md` gains one corrected milestone reference and nothing else.
+Re-sequence rather than expand. `PLAN.md` V0.3 now describes a rebalancing, escalation, and readability milestone; the previous V0.3 content list moves verbatim to a new V0.4 section, gaining weapon evolution. `build/MASTER_BUILD_PLAN.md#v0-3` is the implementation plan for the new V0.3 in eight phases. `SAVE_DATA.md` moves its export/import UI expectation to V0.4 and records that V0.3 adds only a serializable settings slice behind a marked adapter seam. Completed milestone plans stay immutable except for forward-looking factual errata, so `MASTER_BUILD_PLAN.md#v0-2` gains one corrected milestone reference and nothing else.
 
 Why:
 Every V0.4 item inherits whatever curve exists when it lands. Tuning four enemy roles, one weapon, and five skills is materially cheaper than tuning them after adding more weapons, bosses, and unlockable pools on top, and a wrong curve would be re-tuned twice. The three defects above are also cheapest to fix before content multiplies the surface they affect.
@@ -1612,7 +1612,7 @@ Context / observation:
 Decision / solution:
 The limit now produces a new `time_up` status that holds the simulation and asks. `endless` lifts the limit entirely and plays until the player actually dies. `clearing` stops new arrivals and keeps every other system running — projectiles, pickups, hazards, on-kill effects — so the run ends on an empty field rather than a freeze-frame. `RunState` carries the mode, so the clock, the HUD, and the director all resolve from one field.
 
-Endless needs nothing from the director: it already resolves from `t = elapsed / duration` with no clamp, and `BUILD_PLAN_V0.3.md` listed `t > 1` as supported. Time-based escalation plateaus at the end of the authored duration rather than growing without bound, which is the right shape — Chaos and the player's own world upgrades are what push an endless run further.
+Endless needs nothing from the director: it already resolves from `t = elapsed / duration` with no clamp, and `MASTER_BUILD_PLAN.md#v0-3` listed `t > 1` as supported. Time-based escalation plateaus at the end of the authored duration rather than growing without bound, which is the right shape — Chaos and the player's own world upgrades are what push an endless run further.
 
 Clearing waits on the causal event backlog as well as the live enemy count. A death-spawner that dies on the last tick still owes its offspring, and ending on an empty set while spawn work was queued would drop enemies the player had just been told they had to clear.
 
@@ -1895,9 +1895,9 @@ Frame time with 300 textured followers is measured in V0.4.1 Phase S1 against th
 - Blocks: None
 
 Context / observation:
-`BUILD_PLAN_V0.4.md` §2 and `SPRITE_PLAN_V0.4.1.md` §7 both specify `config.ts: antialias: true` becomes `pixelArt: true`, on the correct observation that the current setting would blur every sprite. But `pixelArt: true` is not a filtering switch — Phaser expands it to `antialias: false` plus `roundPixels: true` for the entire renderer, which hardens the edge of every `Arc`, `Star`, `Triangle`, and `Rectangle` in the game and snaps all movement to whole pixels.
+`BUILD_PLAN_V0.4.md` §2 and `MASTER_BUILD_PLAN.md#v0-4-1` §7 both specify `config.ts: antialias: true` becomes `pixelArt: true`, on the correct observation that the current setting would blur every sprite. But `pixelArt: true` is not a filtering switch — Phaser expands it to `antialias: false` plus `roundPixels: true` for the entire renderer, which hardens the edge of every `Arc`, `Star`, `Triangle`, and `Rectangle` in the game and snaps all movement to whole pixels.
 
-That is a visible change, in the one PR whose stated acceptance criterion is that a run looks identical. It is also not a transitional cost: `knight-magic` gets no sprite roster at all by design (`SPRITE_PLAN_V0.4.1.md` §1), the floor grid stays procedural (§Scope), and every enemy, shrine, curse, and boss V0.4.2 adds renders as a primitive until someone draws it.
+That is a visible change, in the one PR whose stated acceptance criterion is that a run looks identical. It is also not a transitional cost: `knight-magic` gets no sprite roster at all by design (`MASTER_BUILD_PLAN.md#v0-4-1` §1), the floor grid stays procedural (§Scope), and every enemy, shrine, curse, and boss V0.4.2 adds renders as a primitive until someone draws it.
 
 Decision / solution:
 `config.ts` is left alone. `loadThemeSprites` applies `Phaser.Textures.FilterMode.NEAREST` per texture on load complete, so nearest-neighbour lands exactly where pixel art exists and nowhere else.
@@ -2557,6 +2557,21 @@ older-device support. Commit only deliberate phase changes after verification;
 compare the final index against the saved starting diff when local edits overlap.
 Record actual elapsed time, missing measurements and rerun commands on recovery.
 
+Owner-authorized documentation consolidation (2026-10-16): completed milestone
+plans and verified slices now live in `build/MASTER_BUILD_PLAN.md`; ongoing
+V0.4 sequence, V0.4.3 and gated V0.4.4 plans remain separate.
+`build/BUILD_STATUS.md` replaces scattered date/status annotations, including
+the stale pre-build V0.4.3 banner. Historical phase specs and evidence remain
+traceable; unfinished content and sprite targets remain in ongoing plans.
+AGENTS/README, source comments and the architecture-map source links follow
+the new locations. Completed Session 3–6 handoffs are removed after their
+results are recorded; only the current handoff is maintained.
+The prior instruction to preserve those dirty annotations/prompts is superseded
+by this explicit cleanup request; no runtime or acceptance gate changes follow.
+P5 consolidated acceptance is still next, so Session 8 remains P5 and the
+roadmap's future P6 handoff becomes Session 9. No new reconciliation ID is
+allocated outside V0.4.3's reserved range.
+
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 
 - Status: Accepted
@@ -3039,6 +3054,12 @@ Local repair evidence: three affected cases pass serially with zero retries
 is deferred under the owner policy. Remote repair remains pending publication and
 an Actions pass matching that published head; a local pass does not turn the old
 failed run green. See `build/performance/CI_REPAIR_20261016.md`.
+
+Remote follow-up: owner-authorized push published `2086a41`; matching-head
+[Actions run 38824954227](https://github.com/PDVersion/Arena-Survivor/actions/runs/38824954227)
+passes 474 units/56 files, types/lint/build, 93 browser cases/one existing skip
+and zero audit findings. The PR #25 CI repair is verified, without closing the
+remaining P5/P6 or hardware gates.
 
 ### REC-115 — Hidden maps stop before preparation; HUD caches displayed dependencies
 

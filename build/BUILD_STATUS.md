@@ -1,0 +1,87 @@
+# Build dates and status
+
+Updated **2026-10-16 (Australia/Sydney)**. This file replaces the scattered
+milestone date/status annotations. Git history establishes build/merge dates;
+phase reports establish the scope actually verified. A completed slice is not
+completion of its enclosing milestone, and a branch pass is not a merge.
+
+## Milestone history
+
+| Milestone | Build checkpoint | Merge evidence | State / record |
+| --- | --- | --- | --- |
+| V0.1 | 2026-08-12, `a96802c` (Phase 6) | 2026-08-12, `55b63cf` | Complete; [master](MASTER_BUILD_PLAN.md#v0-1) |
+| V0.2 | 2026-08-14, `0ce157a` (Phase 7) | 2026-08-14, `83951a1` | Complete; [master](MASTER_BUILD_PLAN.md#v0-2) |
+| V0.3 | 2026-08-17, `5d0b4f9` (Phase 10) | 2026-08-17, `74820d8` | Complete; [master](MASTER_BUILD_PLAN.md#v0-3) |
+| V0.3.1 | 2026-08-18–19 corrections; final `a5e63fe` | Corrections retained in the merged baseline `103afa7` | Complete correction series; [master](MASTER_BUILD_PLAN.md#v0-3-post-milestone-corrections-v031) / REC-058–068 |
+| V0.4.0 | 2026-08-19, `1d446c3` | 2026-08-19, `726c016` | Complete optional-sprite seam; [master](MASTER_BUILD_PLAN.md#v0-4-0) |
+| V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
+| V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
+| V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
+| V0.4.3 | Active on `codex/v0.4.3`; checkpoints below | [PR #25](https://github.com/PDVersion/Arena-Survivor/pull/25) open, published through `2086a41` | In progress; [active plan](BUILD_PLAN_V0.4.3.md) |
+| V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
+| V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
+
+V0.4.3's plan was introduced on 2026-09-17 (`6b1e56b`); that is a planning
+date, not its build completion date. The former “scheduled phases not started”
+and “next unbuilt increment” annotations are superseded by the evidence below.
+
+## V0.4.3 verified checkpoints and remaining gates
+
+| Work | Date / commit | Verified scope and limits |
+| --- | --- | --- |
+| P0 measurements | 2026-10-12, `354d725` | Measurement/software gate; [baseline](performance/P0_BASELINE.md) |
+| Q1–Q2 corrections | 2026-10-12, `8d142ed`, `7ff8bbf` | Presentation, selected F16 difficulty, events/roster/inspection; [master](MASTER_BUILD_PLAN.md#v0-4-3-corrections) |
+| P1 | 2026-10-12, `8cd149c` | Production diagnostics guard; [report](performance/P1_REPORT.md) |
+| Q3–Q4 corrections | 2026-10-12–13, `941a065`, `dae5570` | Cards/offer caps, opening health and stat inspection; [master](MASTER_BUILD_PLAN.md#v0-4-3-corrections) |
+| Q5 initial CI/audit repair | 2026-10-13, `28ecdba`, recorded in `6f9ec78` | Matching-head Actions/audit verified; REC-113/114 |
+| P2 | 2026-10-13, `64e77c4` | Reduced repeated interface work; [report](performance/P2_REPORT.md) |
+| P3 | 2026-10-14, `05c1d4e` | Measured burst CPU improvement; [report](performance/P3_REPORT.md) |
+| P4 | 2026-10-15, `d9047c0` | Default/Low affected local gate; [report](performance/P4_REPORT.md) |
+| P5 lifecycle slice (Session 6) | 2026-10-15, `8b700d9` | Pickup cap/rewards and bounded shutdown/reconstruction; REC-117 resolved; [report](performance/P5_LIFECYCLE_REPORT.md) |
+| P5 startup slice (Session 7) | 2026-10-15, `3d1ee2f` | Measured startup and demonstrated graphics/asset/module failure recovery; [report](performance/P5_STARTUP_REPORT.md) |
+| PR #25 CI repair | 2026-10-16, `2086a41` | Portable artifacts/bounded UI-test budgets; matching-head Actions passes; [report](performance/CI_REPAIR_20261016.md) |
+| P5 overall | **Incomplete** | Consolidated authored/overtime/focus/resume/mode/restart coverage and broader compatibility acceptance remain to be reconciled; [next prompt](SESSION_8_PROMPT.md) |
+| P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
+| C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
+
+## Latest remote evidence
+
+The owner authorized publication of the two P5 commits and CI repair;
+PR #25 now contains `2086a41b0e1888e7689f115514893c18dd905cae`.
+[Actions run 38824954227](https://github.com/PDVersion/Arena-Survivor/actions/runs/38824954227)
+completed successfully on **2026-10-16 at 11:01 AEDT**: types, **474 unit tests
+across 56 files**, lint, build, **93 browser passes / one existing skip** and
+audit (**zero vulnerabilities**). This is remote evidence, not a full local run.
+The older failed run on `d9047c0` remains a historical failure.
+
+This pass does not establish long-soak, additional-browser, physical older-device
+or sustained mixed-combat performance acceptance. Such checks remain pending
+unless their scenario-specific reports provide evidence. No P5/P6 gate is closed
+merely by consolidating documents or observing green CI.
+
+## Maintenance and document ownership
+
+- Add future date/status changes here; do not reintroduce banner annotations in
+  individual build plans. Keep phase checklists and acceptance criteria with the
+  corresponding active plan, and measured results with their reports.
+- `MASTER_BUILD_PLAN.md` holds completed implementation/architecture records only.
+  Ongoing/TBC plans, optional proposals and deferred sprite inventory stay separate.
+- `AUTONOMOUS_PROGRESS.md` retains historical session evidence; its old statements
+  about pending publication or preserved edits describe those checkpoints.
+- Completed Session 3–6 prompt files are retired. Their outcomes live in the
+  master, progress and reports; the completed Session 7 slice has its report.
+  Keep only the current handoff, then remove it once its session is complete and
+  its result is durably recorded. Git retains previously tracked prompts.
+- This documentation cleanup adopts the previously uncommitted roadmap design
+  review and status annotations with owner authorization. No runtime scope,
+  optional feature selection, merge or deployment is implied.
+
+## Consolidation verification
+
+The documentation cleanup passes 517 local link/catalog-source checks, 155
+unique explicit master anchors and preservation checks for all 126 architecture
+IDs/relationships, historical code/verification blocks, original design-review
+recommendations and active C1–C7 scope. `npm run build` and whitespace checks
+pass; emitted runtime JS/CSS hashes are unchanged. No local browser/stress suite
+was run for this documentation-only change. The existing chunk-size advisory
+remains. This is a later local documentation checkpoint, not a new remote CI pass.

@@ -8,7 +8,7 @@ did I paste in last time", and "what still needs doing", which are the only thre
 questions that come up during an art pass.
 
 - The prompt and the rules: [`../SPRITE_STYLE_GUIDE.md`](../SPRITE_STYLE_GUIDE.md)
-- The milestone plan: [`../SPRITE_PLAN_V0.4.1.md`](../SPRITE_PLAN_V0.4.1.md)
+- The milestone plan: [`../MASTER_BUILD_PLAN.md#v0-4-1`](../MASTER_BUILD_PLAN.md#v0-4-1)
 - The parallel-stream contract: [`../BUILD_PLAN_V0.4.md`](../BUILD_PLAN_V0.4.md)
 
 **Style version: `1`.** Every accepted sprite records the style version it was

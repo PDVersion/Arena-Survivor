@@ -1,18 +1,20 @@
 # V0.4 — Readable Baseline Before Content Growth
 
+Current milestone dates and statuses: [BUILD_STATUS.md](BUILD_STATUS.md).
+
 V0.4 is now a sequence, not two live parallel streams. The sprite checkpoint
 made five core actors readable and exposed a larger design issue: the camera,
 pace, and abstract projectile still serve the original high-density arcade game
 better than the simpler educational game.
 
-| Increment | What | Plan | Status / branch |
-| --- | --- | --- | --- |
-| **V0.4.0** | Optional-sprite seam | This file's historical contract; REC-071–073 | Merged from `claude/v0.4.0` |
-| **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`SPRITE_PLAN_V0.4.1.md`](./SPRITE_PLAN_V0.4.1.md) | Merged from `codex/v0.4.1` |
-| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) | Merged from `codex/v0.4.2` |
-| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`BUILD_PLAN_V0.4.2.1.md`](./BUILD_PLAN_V0.4.2.1.md) | Merged from `codex/v0.4.2.1` |
-| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) | P0/Q1/Q2/Q3/Q4/P1 verified on `codex/v0.4.3`; P2 next; other content not started |
-| **V0.4.4** | Reconcile and complete the remaining sprite roster | Future plan based on V0.4.2/V0.4.3 content | Gated by REC-078 |
+| Increment | What | Plan |
+| --- | --- | --- |
+| **V0.4.0** | Optional-sprite seam | [Master seam record](MASTER_BUILD_PLAN.md#v0-4-0); REC-071–073 |
+| **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`MASTER_BUILD_PLAN.md#v0-4-1`](./MASTER_BUILD_PLAN.md#v0-4-1) |
+| **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`MASTER_BUILD_PLAN.md#v0-4-2`](./MASTER_BUILD_PLAN.md#v0-4-2) |
+| **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`MASTER_BUILD_PLAN.md#v0-4-2-1`](./MASTER_BUILD_PLAN.md#v0-4-2-1) |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) |
+| **V0.4.4** | Reconcile and complete the remaining sprite roster | [`SPRITE_PLAN_V0.4.4.md`](./SPRITE_PLAN_V0.4.4.md) |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
 REC-090 is preserved as an earlier implementation discovery; the renumbering
@@ -35,52 +37,20 @@ smaller live population feel substantial; it does not require enlarging actor
 art, bodies, or hitboxes, and it does not require lowering the 300-enemy cap
 before performance evidence exists.
 
-## Historical V0.4.0/V0.4.1 contract
+## Completed foundations
 
-V0.4.0 pre-landed the optional sprite contract, theme-owned sprite maps, loader,
-primitive fallback, and follower view so V0.4.1 could add art without changing
-simulation. Three rules remain permanent:
-
-1. A sprite is presentation and nothing else. No system reads it, and no radius,
-   hitbox, mass, range, or separation value is derived from it.
-2. Nearest-neighbour filtering is applied per texture. The global Phaser
-   `pixelArt` flag stays off while primitive fallbacks exist.
-3. An actor keeps its authoritative primitive/body; an optional sprite view
-   follows the full transform and may outlive a defeated actor only as a
-   presentation remnant.
-
-V0.4.1 delivered the reusable pipeline and accepted sheets #1–5: Plastic
-Bottle, the since-replaced Plastic Bag, Glass Bottle, Bagged Waste, and Environment Protector. Rows
-#6–19 remain unclaimed under REC-078 until V0.4.4 reconciles them against the
-post-redirect roster.
-
-## V0.4.2 working protocol
-
-V0.4.2 has one tiny seam phase, three parallel features, and one integration
-phase. [`BUILD_PLAN_V0.4.2.md`](./BUILD_PLAN_V0.4.2.md) owns the exact paths and
-acceptance tests.
-
-1. The core agent lands R0 on `codex/v0.4.2` with neutral camera/pace hooks and a
-   weapon-delivery dispatch boundary.
-2. Three equivalent agents branch from that commit as
-   `codex/v0.4.2-view`, `codex/v0.4.2-pace`, and
-   `codex/v0.4.2-grabber`.
-3. Each agent stays inside its ownership block and produces one focused commit.
-4. The core agent merges all three back into `codex/v0.4.2`, resolves the
-   simulator and engagement-envelope changes, runs the full suite, and records
-   the combined play test.
-5. Only `codex/v0.4.2` opens a pull request into `main`.
-
-This is preferable to three branches editing `RunScene` independently. R0 wires
-one hook per concern first, so the feature agents work in separate modules and
-the final agent integrates behaviour rather than merge conflicts.
+The seam, sprite checkpoint and V0.4.2 delivery/verification records are now
+in [MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-0). The permanent boundary:
+a sprite is presentation only; no system derives hitboxes, radii, mass or
+separation from art. Nearest-neighbour filtering is per texture; global
+`pixelArt` stays off while primitive fallbacks exist (REC-071–073).
 
 ## Reconciliation ranges
 
 The original anchors are preserved. New ranges avoid renumbering published
 entries:
 
-| Increment | Reconciliation IDs |
+| Increment | What | Plan |
 | --- | --- |
 | V0.4.0 seam | REC-071–073 |
 | V0.4.1 sprites | REC-074–089 |
@@ -108,22 +78,12 @@ not a change to game content, balance, or the V0.4.4 sprite gate.
 | --- | --- |
 | `build/SPRITE_*.md`, `build/sprites/**`, `public/sprites/**` | V0.4.1, then V0.4.4 |
 | `src/game/content/themes/*/sprites.ts`, `src/game/systems/sprites/**` | V0.4.1, then V0.4.4; V0.4.2 may only add a generic timing input through R0 |
-| Paths listed in `BUILD_PLAN_V0.4.2.md` R1A/R1B/R1C | The named V0.4.2 feature branch |
+| Paths listed in `MASTER_BUILD_PLAN.md#v0-4-2` R1A/R1B/R1C | The named V0.4.2 feature branch |
 | Content-growth systems, persistence, bosses, curses, and weapon slots | V0.4.3 after V0.4.2 merges |
 | Diagnostic/frame sampling, measured hot paths, presentation/lifecycle work | V0.4.3 P0–P6, within that plan's phase ownership |
 
 Once an increment merges, the next increment may edit its code normally while
 preserving the permanent presentation/simulation boundary above.
-
-After P0, the owner selected a Q1 correction before P1: player facing/walk,
-crisp background text, common tool-upgrade availability and three difficulty
-presets (F16). `BUILD_PLAN_V0.4.3.md` owns that exception and its exact paths.
-It may amend eco sprite presentation metadata; bitmap generation and remaining
-roster work remain gated to V0.4.4. Other optional content is still unselected.
-
-The owner also authorized Q2 event readability, sprite inspection/reuse, opening
-composition and spawn accounting before P1 (REC-107/108). Exact paths and gates
-are in the active plan; new bitmap generation/remaining roster stays gated.
 
 ## Gates
 
@@ -149,19 +109,3 @@ production themes still satisfy their contracts, and every accepted balance
 value remains theme-owned data. A 300-enemy stress test must still pass, but the
 game no longer treats reaching 300 enemies—or filling the screen with effects—as
 a design goal.
-
-Q3 is the owner's wrap-up correction before Session 3/P2: measured upgrade-card
-bounds, filtering early-capped skill offers, atlas/tool navigation and handoff
-documentation. The active increment plan owns its paths; it does not start P2,
-change the half-speed clock, move Glass Shards or authorize bitmap edits.
-
-Q4 is the owner's one-hit opening correction and stat-inspection checkpoint:
-Microplastics health 11→9, with all other role/tool values and later scaling kept.
-Its gameplay gate passes; the owner requests a draft PR now, while P2–P6 remain
-unstarted and the unchanged lockfile's audit blocks release (REC-112/113).
-
-Q5 is the owner's PR #24 Actions correction: portable test artifacts, bounded
-simulation waits and vetted development-tool patches. The audit now reports
-zero vulnerabilities locally and on the verified repair head `28ecdba`:
-[Actions run 38332255864](https://github.com/PDVersion/Arena-Survivor/actions/runs/38332255864) passes all steps (REC-113/114).
-It does not start P2 or change gameplay/balance.
