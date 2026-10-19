@@ -45,7 +45,7 @@ test("pause freezes the half-speed clock and reduced motion preserves the base r
   expect(after - before).toBeGreaterThan(250);
   expect((await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.gameplayRate))).toBe(0.5);
 
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("paused");

@@ -1070,3 +1070,30 @@ this request does not merge/deploy or start the next implementation session.
   **119 local Markdown targets (zero missing)**, ownership and whitespace review
   pass. All software checks were run on the same frozen fixture source. Delivery
   is one local test/evidence commit; no further browser run is needed or left active.
+
+
+## Session 11 — authorized browser compatibility / 2026-10-19
+
+Owner delegates support selection and authorizes tests. Start 01:54:01 UTC / 12:54:01 AEDT; deadline 03:24:01 UTC / 14:24:01 AEDT; final verification reserve starts 03:04:01 UTC. Select current/previous-major desktop Chrome, Edge, Firefox and Safari on vendor-supported OS, keyboard/mouse with WebGL and WebAudio; mobile/touch not accepted. Run available installed Chrome plus pinned Chromium/Firefox/WebKit engine probes serially, one worker, no retries, 15-minute global bound. Physical older integrated-GPU and actual Safari/Edge/previous releases remain evidence requirements, not inferred from engines. No runtime/dependency changes planned.
+
+Session 11 result: 52/52 focused serial browser checks pass in 295,298ms,
+01:58:32 UTC start; installed Chrome155/Metal, Chromium151/SwiftShader,
+Firefox153/generalized Apple renderer, WebKit26.5/Apple GPU. M5 Pro48GiB,
+Darwin25.5.0, headless/test, DPR1/2. Source/raw hashes and environment snapshots
+in P5_COMPATIBILITY_SUMMARY.json; selected policy and remaining branded/platform/
+physical older-device evidence in P5_COMPATIBILITY_REPORT.md. Three interrupted
+attempts (input pulse, erroneous report-backup restart, stale resized canvas click)
+are retained, never accepted or auto-retried. Only tests gain 80ms key holds and
+explicit canvas resize readiness; no runtime/dependency/asset change or defect.
+Final typecheck initially found nullable configFile in the new opt-in guard;
+optional chaining fixes it, four affected environment probes pass in6.6s.
+Final types,488 units/57files,lint,build,diff check pass; existing chunk advisory.
+Full-app/stress/native/long/startup/production browser campaigns/audit/balance/CI
+were not rerun, not claimed passed. PR25/run38829241556 read-only rechecked;
+remote success still only03965ef. Owned4173/browser resources gone;4213 untouched.
+P5 remains open;P6/content not started. Session11 retired into master/report;
+Session12 targets selected missing releases/platforms/physical older hardware.
+Final verification/recording 02:05 UTC /13:05 AEDT (~11min elapsed), within90min
+budget with >20min reserved capacity. No publication/remote mutation.
+
+Final recording timestamp 2026-10-19T02:05:36.870497+00:00; actual elapsed 695.9 seconds. Final 20-minute reserve was preserved; completed early. Reviewed133 changed-document links,52 single-attempt expected results, raw/source hashes; no4173 listener or owned runner remains.

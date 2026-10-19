@@ -2895,3 +2895,28 @@ or fix, no full local regression/stress, no publication or workflow trigger.
 The scoped lifecycle slice passes; P5 overall remains open for broader browser/
 device compatibility with owner-selected scope/hardware. Session 11 stays P5;
 P6/content remain gated and the unchanged campaign is not repeated by default.
+
+
+<a id="v0-4-3-p5-compatibility"></a>
+## V0.4.3 — P5 available-engine compatibility / Session 11
+
+Owner delegated desktop support selection and authorized the missing browser
+checks on 2026-10-19. Selected current/previous-major desktop Chrome/Edge/Firefox/
+Safari on vendor-supported OS, WebGL/WebAudio and keyboard/mouse; mobile/touch
+outside this desktop contract. **52 focused checks pass in 4.9 minutes**, one
+worker/zero retries, installed Chrome155 and pinned Chromium151/Firefox153/
+WebKit26.5 on M5/macOS. Main WebGL and isolated both-theme Canvas lifecycle
+checks cover movement/half-rate/pause, exact overflow rewards/stopped resources,
+settings/resize/short terminal restart, overlays and 300-live map presentation.
+
+Only tests/config/evidence changed: 80ms key holds prevent Phaser JustDown
+loss, and a resize readiness assertion avoids stale canvas click coordinates.
+Interrupted setup attempts remain recorded. Four final capability probes pass
+after a TypeScript nullable guard correction; final 488 units/57files, types/
+lint/build/whitespace pass. No runtime defect/fix, production boundary change,
+long/native campaign repeat, dependency change or remote publication.
+[Compatibility report](performance/P5_COMPATIBILITY_REPORT.md) preserves policy,
+renderer/DPR/source/raw details, fixtures/limits and deferred evidence. Actual
+Safari/Edge, missing branded-release/platform combinations and physical older
+integrated-GPU hardware remain pending; WebKit/software rendering is not their
+acceptance. P5 remains open; P6/content not started. Session12 remains P5.

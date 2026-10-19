@@ -1,0 +1,1422 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node@20/20.20.2/bin/node",
+      "/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "tests/playwright.compatibility.config.ts",
+      "--workers=1",
+      "--retries=0"
+    ],
+    "configFile": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/playwright.compatibility.config.ts",
+    "rootDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 900000,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chrome-installed",
+        "name": "chrome-installed",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../build/performance/P5_COMPATIBILITY_RESULTS.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --mode test --host 127.0.0.1 --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "boot.spec.ts",
+      "file": "boot.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "boots a themed arena and resizes its single canvas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 959,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:43.059Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3be9e5b40a014dc58fa3-582290ee97b5f0055cdf",
+          "file": "boot.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "boots a themed arena and resizes its single canvas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3be9e5b40a014dc58fa3-d31238339f2ec57a806b",
+          "file": "boot.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "boots a themed arena and resizes its single canvas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3be9e5b40a014dc58fa3-3db0a14d8998e02afc7b",
+          "file": "boot.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "boots a themed arena and resizes its single canvas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3be9e5b40a014dc58fa3-639144437936a322af0f",
+          "file": "boot.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "compatibility-environment-v043.spec.ts",
+      "file": "compatibility-environment-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 733,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:44.273Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/compatibility-environment--e9180--for-the-compatibility-gate-chrome-installed/attachments/environment-2289b4e2e07bffc09d30efa3d106ce6335d15300.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-98be208f620fdd27537c",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-009d9db01b8df650575f",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-4c2c4835f1678bbb7622",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-a09da0adf4206c3a718f",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "gameplay-rate.spec.ts",
+      "file": "gameplay-rate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "half speed is wired to the advancing browser simulation clock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2381,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:45.015Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "88e27d6269994e658640-2e9b6bb049b39961371d",
+          "file": "gameplay-rate.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "pause freezes the half-speed clock and reduced motion preserves the base rate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:47.400Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "88e27d6269994e658640-e84b76a1ad47b08340fe",
+          "file": "gameplay-rate.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "half speed is wired to the advancing browser simulation clock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "88e27d6269994e658640-e5b913bedd44a046dad3",
+          "file": "gameplay-rate.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "pause freezes the half-speed clock and reduced motion preserves the base rate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "88e27d6269994e658640-11ee5dbbce7590f97bac",
+          "file": "gameplay-rate.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "half speed is wired to the advancing browser simulation clock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "88e27d6269994e658640-cfa8c95a53f5e5eef543",
+          "file": "gameplay-rate.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "pause freezes the half-speed clock and reduced motion preserves the base rate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "88e27d6269994e658640-2ad8b8696866199951ea",
+          "file": "gameplay-rate.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "half speed is wired to the advancing browser simulation clock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "88e27d6269994e658640-d04446eb2ad5baa264e5",
+          "file": "gameplay-rate.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "pause freezes the half-speed clock and reduced motion preserves the base rate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "88e27d6269994e658640-0f2848a02852093bb890",
+          "file": "gameplay-rate.spec.ts",
+          "line": 36,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "lifecycle-v043.spec.ts",
+      "file": "lifecycle-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "eco-guardian pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4689,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:49.355Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42997b887eca42ecd675-4a28091a2bafc54abb09",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "knight-magic pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4656,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:54.048Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42997b887eca42ecd675-c2e99ff626f272894213",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "eco-guardian pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "42997b887eca42ecd675-01fdfc8866e19fd49fc7",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "knight-magic pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "42997b887eca42ecd675-f356399396c766a99bca",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "eco-guardian pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "42997b887eca42ecd675-c43d3506e2757850960b",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "knight-magic pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "42997b887eca42ecd675-59d9623338bd6653f6e2",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "eco-guardian pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "42997b887eca42ecd675-afd5e4f78091eb0b9f77",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "knight-magic pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "42997b887eca42ecd675-cb0e51474f774520e9b1",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        }
+      ]
+    },
+    {
+      "title": "phase-two.spec.ts",
+      "file": "phase-two.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "movement is normalized and the camera follows the player",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 925,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:58.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-a65a7fd88a8a9c39877e",
+          "file": "phase-two.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "opposing movement inputs cancel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:56:59.648Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-8609685c99b8ff713e5f",
+          "file": "phase-two.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "arena boundaries contain the player body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:57:00.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-86eead1bae9c478e15df",
+          "file": "phase-two.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "pause stops movement and simulation time until resumed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1043,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:57:12.529Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-ab08235c3cd29bac5d49",
+          "file": "phase-two.spec.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "movement is normalized and the camera follows the player",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-0ede3b80abe2df62877f",
+          "file": "phase-two.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "opposing movement inputs cancel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-3a503930074fc90e1f73",
+          "file": "phase-two.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "arena boundaries contain the player body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-66c8847073982fd198e4",
+          "file": "phase-two.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "pause stops movement and simulation time until resumed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-adfa70992f4c893acb10",
+          "file": "phase-two.spec.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "movement is normalized and the camera follows the player",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-ebaf9392c90a3eedf7c3",
+          "file": "phase-two.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "opposing movement inputs cancel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-cc4769ebc7f091369ca6",
+          "file": "phase-two.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "arena boundaries contain the player body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-4567694187ed9d5e22b7",
+          "file": "phase-two.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "pause stops movement and simulation time until resumed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-25970f7f74f9160845dd",
+          "file": "phase-two.spec.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "movement is normalized and the camera follows the player",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-16a54d84abadd7b8aa00",
+          "file": "phase-two.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "opposing movement inputs cancel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-276c420530c61abaeb0e",
+          "file": "phase-two.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "arena boundaries contain the player body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-b3de3fd6cfea8c1b3334",
+          "file": "phase-two.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "pause stops movement and simulation time until resumed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-7fe22bdd48441435c070",
+          "file": "phase-two.spec.ts",
+          "line": 63,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "presentation-v043.spec.ts",
+      "file": "presentation-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Low switches reversibly while paused, resizes, respects map opacity and survives restart",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "interrupted",
+                  "duration": 69050,
+                  "error": {
+                    "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('canvas')\u001b[22m\n\u001b[2m    - locator resolved to <canvas width=\"1600\" height=\"900\"></canvas>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    127 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n",
+                    "stack": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('canvas')\u001b[22m\n\u001b[2m    - locator resolved to <canvas width=\"1600\" height=\"900\"></canvas>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    127 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at clickRow (/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts:7:16)\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts:26:3",
+                    "location": {
+                      "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts",
+                      "column": 16,
+                      "line": 7
+                    },
+                    "snippet": "   5 |   const canvas = page.locator(\"canvas\");\n   6 |   const box = (await canvas.boundingBox())!;\n>  7 |   await canvas.click({ position: { x: 1230 * box.width / 1600, y: (232.5 + 55 * row) * box.height / 900 } });\n     |                ^\n   8 | }\n   9 | async function settings(page: Page) {\n  10 |   await page.keyboard.press(\"Escape\", { delay: 80 });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts",
+                        "column": 16,
+                        "line": 7
+                      },
+                      "message": "Error: locator.click: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('canvas')\u001b[22m\n\u001b[2m    - locator resolved to <canvas width=\"1600\" height=\"900\"></canvas>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    127 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <html lang=\"en\">…</html> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n\n   5 |   const canvas = page.locator(\"canvas\");\n   6 |   const box = (await canvas.boundingBox())!;\n>  7 |   await canvas.click({ position: { x: 1230 * box.width / 1600, y: (232.5 + 55 * row) * box.height / 900 } });\n     |                ^\n   8 | }\n   9 | async function settings(page: Page) {\n  10 |   await page.keyboard.press(\"Escape\", { delay: 80 });\n    at clickRow (/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts:7:16)\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts:26:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:57:13.586Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/presentation-v043-Low-swit-c1e15-pacity-and-survives-restart-chrome-installed/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/presentation-v043-Low-swit-c1e15-pacity-and-survives-restart-chrome-installed/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/presentation-v043-Low-swit-c1e15-pacity-and-survives-restart-chrome-installed/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/presentation-v043.spec.ts",
+                    "column": 16,
+                    "line": 7
+                  }
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-e64c2a2425b026b6f6a3",
+          "file": "presentation-v043.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "title settings carry Low into the next run and level-up hides the map",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-b134feffb2f334cb7706",
+          "file": "presentation-v043.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "dense map keeps the same world and live population with readable Low markers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-cd2c16f18f515adaacb1",
+          "file": "presentation-v043.spec.ts",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "Low switches reversibly while paused, resizes, respects map opacity and survives restart",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-2543ffb9adeb09ede253",
+          "file": "presentation-v043.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "title settings carry Low into the next run and level-up hides the map",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-5719037f60a96d4806a3",
+          "file": "presentation-v043.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "dense map keeps the same world and live population with readable Low markers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-86e2879ab47d0824b0c2",
+          "file": "presentation-v043.spec.ts",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "Low switches reversibly while paused, resizes, respects map opacity and survives restart",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-4cd6432464bb936a5854",
+          "file": "presentation-v043.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "title settings carry Low into the next run and level-up hides the map",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-1eebe24b9ace077d5c26",
+          "file": "presentation-v043.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "dense map keeps the same world and live population with readable Low markers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-c3acb7da0514ae6f9945",
+          "file": "presentation-v043.spec.ts",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "Low switches reversibly while paused, resizes, respects map opacity and survives restart",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-08f973e967f25e531183",
+          "file": "presentation-v043.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "title settings carry Low into the next run and level-up hides the map",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-c80840c3cf642ee57df3",
+          "file": "presentation-v043.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "dense map keeps the same world and live population with readable Low markers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-c944af336e4b54ba8502",
+          "file": "presentation-v043.spec.ts",
+          "line": 73,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T01:56:42.386Z",
+    "duration": 102481.686,
+    "expected": 10,
+    "skipped": 42,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

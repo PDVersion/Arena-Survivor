@@ -162,6 +162,12 @@ hazard, direct-active-destruction and production-throughput limits; it does not
 invent a pass or waive any required criterion.
 
 P5 overall remains open and P6/content remain gated. Next is
-[Session 11 / P5](../SESSION_11_PROMPT.md). Do not repeat this unchanged long
+[Session 11 completed record](../MASTER_BUILD_PLAN.md#v0-4-3-p5-compatibility). Do not repeat this unchanged long
 campaign or create another inventory-only commit without a new defect, changed
 source, selected remaining requirement or available device evidence.
+
+Session 11 follow-up: owner delegated browser support selection and authorized
+the focused desktop engine checks. See [compatibility report](P5_COMPATIBILITY_REPORT.md)
+for selected policy and 52 passes. That resolves the selection prerequisite above;
+actual missing branded/platform/older-device evidence remains pending. Current
+handoff: [Session 12 / P5](../SESSION_12_PROMPT.md). Original campaign limits remain.

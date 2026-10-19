@@ -3368,3 +3368,26 @@ Per-run causal histories remain until stop; no mid-run IDs are evicted. Survival
 controls, muted sustained audio and short one-health contact fixtures make this
 a lifecycle gate, not human survival, hazard soak, audible quality, production
 throughput or older-device acceptance. P5 broader compatibility stays pending.
+
+
+Session 11 compatibility continuation (2026-10-19): owner delegates support
+selection and authorizes missing browser tests. Select current/previous-major
+desktop Chrome/Edge/Firefox/Safari on supported OS; mobile/touch outside current
+keyboard/mouse contract. 52 focused serial passes plus four final capability
+probes add installed Chrome and Firefox/WebKit engine evidence on M5. No runtime
+defect/fix. Actual branded/platform combinations and older integrated-GPU evidence
+remain pending; WebKit is not actual Safari and engine builds are not branded
+stable releases. See `build/performance/P5_COMPATIBILITY_REPORT.md`.
+
+Automation must hold frame-consumed keyboard controls through a frame (80ms in
+these bounded tests): Phaser Key.onUp clears JustDown. After viewport changes,
+wait for actual displayed canvas dimensions before computing pointer coordinates;
+otherwise old1280px coordinates can fall outside the new900px viewport. Neither
+fixture error warrants runtime/input/scale changes. Keep interrupted evidence,
+no automatic retries. Playwright Desktop presets also override user agents;
+clear that override when reporting installed-browser identity, record actual
+browser.version/OS separately, and label generalized GPU strings without inventing
+hardware. Reporter output paths resolve relative to config location; root them
+explicitly and preserve raw artifacts before another run. Source hashes separate
+the accepted52 run from the final nullable-guard-only four-probe rerun. P5/P6
+hardware gates remain intact.

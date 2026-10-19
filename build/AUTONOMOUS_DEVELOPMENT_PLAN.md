@@ -329,7 +329,7 @@ The affected Session 6/7 gates do not complete P5. Session 8 completed the
 [acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
 probe could not reach hidden state. Sessions 9–10 subsequently verify native
 overlays and the scoped consolidated lifecycle campaign. Continue with
-[Session 11 / P5](SESSION_11_PROMPT.md) for remaining compatibility evidence. Prefer
+[Session 12 / P5](SESSION_12_PROMPT.md) for remaining compatibility evidence. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
@@ -350,13 +350,22 @@ authored clock, five-minute endless extension, ten short terminals, native
 paused/level-up/time-up/pending work, quality/resize and actual audio closure.
 See [campaign report](performance/P5_CAMPAIGN_REPORT.md). No runtime defect/fix.
 
-### Session 11 — P5: remaining compatibility and owner-selected evidence
+### Session 11 — P5: selected desktop support and engine evidence
 
-Use [SESSION_11_PROMPT.md](SESSION_11_PROMPT.md). Obtain supported-browser scope
-and representative older integrated-GPU access, or explicit owner gate changes.
-The accepted M5 campaign does not imply another-engine/device or unassisted
-readiness. Do not repeat unchanged accepted checks or create another inventory-
-only commit. P5 stays open; P6/content remain gated.
+Owner delegated support selection and authorized testing. Selected desktop
+Chrome/Edge/Firefox/Safari current/previous-major on vendor-supported OS; 52
+focused checks pass serially across installed Chrome and pinned Chromium/Firefox/
+WebKit. Test-only key-hold/resize-readiness corrections; no runtime fix. See
+[compatibility report](performance/P5_COMPATIBILITY_REPORT.md). Actual branded/
+platform/older physical-device coverage remains open.
+
+### Session 12 — P5: remaining selected targets
+
+Use [SESSION_12_PROMPT.md](SESSION_12_PROMPT.md). Obtain actual Safari/Edge,
+missing branded-release/platform combinations and representative physical older
+integrated-GPU access/captured evidence. No need to reselect the support list.
+Do not rerun accepted unchanged engine/native/long campaigns or create another
+inventory-only commit. P5 stays open; P6/content remain gated.
 
 ### After P5 — P6: combined readiness gate and real-device report
 

@@ -43,7 +43,8 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 acceptance inventory (Session 8) | 2026-10-16, local evidence-only slice | Requirement matrix inspected; 474 units/56 files, types/lint/build pass; native visibility probe fails its hidden-state precondition; [report](performance/P5_ACCEPTANCE_REPORT.md) |
 | P5 native-event slice (Session 9) | 2026-10-16, local test/evidence slice | One native same-window Chromium/Metal playing-run round trip passes; 14 deterministic state guards; final 488 units/57 files, types/lint/build; [report](performance/P5_ACCEPTANCE_REPORT.md) |
 | P5 consolidated lifecycle (Session 10) | 2026-10-19, local test/evidence slice | Owner-authorized 20-minute M5 campaign passes: full authored clock, endless extension, ten short terminals, native overlays/pending work, twelve clean lifecycles, thirteen actual closed AudioContexts; scoped aids/limits in [report](performance/P5_CAMPAIGN_REPORT.md) |
-| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; broader browser/device compatibility remains pending with owner support-scope/hardware access required; [next prompt](SESSION_11_PROMPT.md) |
+| P5 available-engine compatibility (Session 11) | 2026-10-19, local test/evidence slice | 52 serial focused passes across installed Chrome, Chromium, Firefox, WebKit; test timing/readiness fixes; [report](performance/P5_COMPATIBILITY_REPORT.md) |
+| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_12_PROMPT.md) |
 | P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
 | C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
 
