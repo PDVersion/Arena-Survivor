@@ -44,11 +44,20 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 native-event slice (Session 9) | 2026-10-16, local test/evidence slice | One native same-window Chromium/Metal playing-run round trip passes; 14 deterministic state guards; final 488 units/57 files, types/lint/build; [report](performance/P5_ACCEPTANCE_REPORT.md) |
 | P5 consolidated lifecycle (Session 10) | 2026-10-19, local test/evidence slice | Owner-authorized 20-minute M5 campaign passes: full authored clock, endless extension, ten short terminals, native overlays/pending work, twelve clean lifecycles, thirteen actual closed AudioContexts; scoped aids/limits in [report](performance/P5_CAMPAIGN_REPORT.md) |
 | P5 available-engine compatibility (Session 11) | 2026-10-19, local test/evidence slice | 52 serial focused passes across installed Chrome, Chromium, Firefox, WebKit; test timing/readiness fixes; [report](performance/P5_COMPATIBILITY_REPORT.md) |
-| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_12_PROMPT.md) |
-| P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
+| P5 Session12 branded follow-up | 2026-10-19, local evidence slice |26 Edge155/154 passes and two unpatched Firefox158/157 smokes; Safari session blocked; [report](performance/P5_COMPATIBILITY_FOLLOWUP.md) |
+| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_13_PROMPT.md) |
+| P6 | **Preparation authorized** | Owner requests P6 alongside P5; software implementation/result follows in a separate local slice, with no hardware pass |
 | C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
 
 ## Latest remote evidence
+
+PR26 merged2806720 as c6daeb6 on2026-10-19 at03:11:29UTC.
+[Run39189877476](https://github.com/PDVersion/Arena-Survivor/actions/runs/39189877476)
+succeeds on2806720:488units/57files,91 browser passes/two flaky/four skips,
+zero audit findings. This is not later-head local verification or a zero-retry
+remote gate. No new publication/workflow is performed.
+
+### Historical PR25 evidence
 
 Read-only Session 8 recheck: PR #25 merged on **2026-10-16 at 11:34:15 AEDT**,
 head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit

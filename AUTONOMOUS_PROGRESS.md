@@ -1097,3 +1097,22 @@ Final verification/recording 02:05 UTC /13:05 AEDT (~11min elapsed), within90min
 budget with >20min reserved capacity. No publication/remote mutation.
 
 Final recording timestamp 2026-10-19T02:05:36.870497+00:00; actual elapsed 695.9 seconds. Final 20-minute reserve was preserved; completed early. Reviewed133 changed-document links,52 single-attempt expected results, raw/source hashes; no4173 listener or owned runner remains.
+
+
+## Session12 / P5 branded-browser checkpoint — 2026-10-19
+
+Owner requests finishing P5 and beginning P6/remaining V0.4.3. Start09:18:10UTC,
+deadline10:48:10UTC, final20min reserve starts10:28:10UTC. P6 software preparation
+is explicitly authorized, not an acceptance waiver. Owner confirms no older
+machine.26 focused Edge155/154 passes and two unpatched headed Firefox158/157.0.1
+smokes pass (25.038/25.390s), fresh profiles, verified vendor checksums/signatures,
+test eco/Normal/M5/WebGL. Safari26.5.2 still blocks session creation before any
+gameplay assertion. All own apps/images/mounts/drivers/profiles/servers cleaned;
+review4213 untouched. No runtime/asset/tuning/dependency change or defect.
+P5 stays open for remaining browser/platform/physical acceptance. P6 work is the
+following local slice, not a current phase-completion claim. The gate-order
+question for C1–C7 remains unanswered. PR26 merged2806720 as c6daeb6; run39189877476
+succeeds with91 browser passes/two flaky/four skips,488units, zero audit findings.
+No later local CI inference or new publication. Report/matrix/status/master and
+reconciliation updated; Session12 retired into Session13. P5 evidence is a local
+commit; P6 software implementation/results are recorded in their own next commit.

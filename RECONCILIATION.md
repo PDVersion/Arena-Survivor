@@ -3391,3 +3391,19 @@ hardware. Reporter output paths resolve relative to config location; root them
 explicitly and preserve raw artifacts before another run. Source hashes separate
 the accepted52 run from the final nullable-guard-only four-probe rerun. P5/P6
 hardware gates remain intact.
+
+
+Session12 P5 branded-browser continuation (2026-10-19): owner explicitly requests
+P6 software preparation while finishing P5. This changes preparation order, not
+the acceptance facts. No older device is available; missing physical/platform
+and Safari access evidence stays pending. A proposed release-versus-build gate
+classification for C1–C7 has no reply, so content remains blocked.
+
+26 focused checks pass on official stable Edge155/154; two unpatched headed
+Firefox158/157 application smokes pass through official geckodriver0.37.1. Vendor
+checksums and Apple signatures/notarization are verified before isolated tests;
+no system installation or project dependency changes. Actual native-app smoke
+is distinct from patched-engine evidence, full-suite/production performance and
+native visibility acceptance. Safari's own automation setting blocks session
+creation; no gameplay pass is inferred. All owned resources are cleaned up.
+See `build/performance/P5_COMPATIBILITY_FOLLOWUP.md`. No runtime defect/fix.

@@ -2920,3 +2920,17 @@ renderer/DPR/source/raw details, fixtures/limits and deferred evidence. Actual
 Safari/Edge, missing branded-release/platform combinations and physical older
 integrated-GPU hardware remain pending; WebKit/software rendering is not their
 acceptance. P5 remains open; P6/content not started. Session12 remains P5.
+
+
+<a id="v0-4-3-p5-branded"></a>
+## V0.4.3 — P5 branded-browser follow-up / Session12
+
+26 serial focused checks pass across native stable Edge155/154 applications;
+two unpatched headed Firefox158/157.0.1 application smokes pass, on M5/WebGL,
+with vendor checksum/signature verification and fresh owned profiles. Safari26.5.2
+still blocks session creation before gameplay because automation is disabled.
+No runtime/dependency change. [Follow-up report](performance/P5_COMPATIBILITY_FOLLOWUP.md)
+retains exact scopes, raw records and cleanup. Owner confirms no older device;
+P5 remains open for missing browser/platform/device evidence. Native/long accepted
+campaigns were not repeated. P6 software preparation is explicitly authorized,
+not a hardware pass or content gate waiver.

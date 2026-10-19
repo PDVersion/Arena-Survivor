@@ -1,0 +1,10 @@
+{
+  "startedAt": "2026-10-19T09:37:55Z",
+  "boundSeconds": 90,
+  "mode": "test",
+  "observations": [],
+  "result": "blocked",
+  "error": "{\"value\":{\"error\":\"session not created\",\"message\":\"Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.\",\"stacktrace\":\"\"}}",
+  "driverOutput": "",
+  "elapsedMs": 171
+}

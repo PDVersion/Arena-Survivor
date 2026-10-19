@@ -329,7 +329,7 @@ The affected Session 6/7 gates do not complete P5. Session 8 completed the
 [acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
 probe could not reach hidden state. Sessions 9–10 subsequently verify native
 overlays and the scoped consolidated lifecycle campaign. Continue with
-[Session 12 / P5](SESSION_12_PROMPT.md) for remaining compatibility evidence. Prefer
+[Session 12 / P5](SESSION_13_PROMPT.md) for remaining compatibility evidence. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
@@ -359,13 +359,14 @@ WebKit. Test-only key-hold/resize-readiness corrections; no runtime fix. See
 [compatibility report](performance/P5_COMPATIBILITY_REPORT.md). Actual branded/
 platform/older physical-device coverage remains open.
 
-### Session 12 — P5: remaining selected targets
+### Session12 — P5 branded checks / P6 preparation authorized
 
-Use [SESSION_12_PROMPT.md](SESSION_12_PROMPT.md). Obtain actual Safari/Edge,
-missing branded-release/platform combinations and representative physical older
-integrated-GPU access/captured evidence. No need to reselect the support list.
-Do not rerun accepted unchanged engine/native/long campaigns or create another
-inventory-only commit. P5 stays open; P6/content remain gated.
+26 focused Edge155/154 passes and two unpatched Firefox158/157 application
+smokes extend P5; Safari access and physical/platform evidence remain pending.
+Owner confirms no older device and requests P6 software preparation alongside
+remaining P5. See [follow-up](performance/P5_COMPATIBILITY_FOLLOWUP.md).
+P6 software work follows separately; no acceptance waiver or content start.
+Use [Session13](SESSION_13_PROMPT.md) for the next actual slice and gate decision.
 
 ### After P5 — P6: combined readiness gate and real-device report
 

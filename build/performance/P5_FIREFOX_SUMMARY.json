@@ -1,0 +1,111 @@
+{
+  "driver": {
+    "release": "v0.37.1",
+    "url": "https://github.com/mozilla/geckodriver/releases/download/v0.37.1/geckodriver-v0.37.1-macos-aarch64.tar.gz",
+    "sha256": "d02b3f7003f999caf90974a2ef5da0286c05d01cee19112c86846d759fdba4f5",
+    "publishedDigest": "sha256:d02b3f7003f999caf90974a2ef5da0286c05d01cee19112c86846d759fdba4f5"
+  },
+  "browsers": [
+    {
+      "label": "current",
+      "version": "158.0",
+      "url": "https://archive.mozilla.org/pub/firefox/releases/158.0/mac/en-US/Firefox%20158.0.dmg",
+      "sha512": "91a4bc4a84749c0f184a1d4db691e9db17ac18035f90919fa260266ed276a4d1143e9bd3a4cbeb18e576eac9bac75fe304b38a45e3866717211e48ca40a8859f",
+      "sha512Manifest": "https://archive.mozilla.org/pub/firefox/releases/158.0/SHA512SUMS",
+      "dmg": "/private/tmp/arena-firefox/current.dmg",
+      "observed": {
+        "result": "passed",
+        "elapsedMs": 25038,
+        "capabilities": {
+          "acceptInsecureCerts": false,
+          "browserName": "firefox",
+          "browserVersion": "158.0",
+          "moz:accessibilityChecks": false,
+          "moz:buildID": "20261007201254",
+          "moz:geckodriverVersion": "0.37.1",
+          "moz:headless": false,
+          "moz:platformVersion": "25.5.0",
+          "moz:processID": 1745,
+          "moz:profile": "/var/folders/bl/nxx9h0zn7qd_hcm2_r0s776r0000gn/T/rust_mozprofileYU85Be",
+          "moz:shutdownTimeout": 60000,
+          "moz:webdriverClick": true,
+          "moz:windowless": false,
+          "pageLoadStrategy": "normal",
+          "platformName": "mac",
+          "proxy": {},
+          "setWindowRect": true,
+          "strictFileInteractability": false,
+          "timeouts": {
+            "implicit": 0,
+            "pageLoad": 300000,
+            "script": 30000
+          },
+          "unhandledPromptBehavior": "dismiss and notify",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0"
+        },
+        "environment": {
+          "canvasCount": 1,
+          "gpu": "Apple M1, or similar",
+          "renderer": "WebGL",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0",
+          "viewport": {
+            "dpr": 2,
+            "height": 715,
+            "width": 1280
+          }
+        }
+      }
+    },
+    {
+      "label": "previous",
+      "version": "157.0.1",
+      "url": "https://archive.mozilla.org/pub/firefox/releases/157.0.1/mac/en-US/Firefox%20157.0.1.dmg",
+      "sha512": "60d841b8e79e4909cee1055445b7045aa5d0d86a4bcfc4ff2e42f1e4cde543bb70654d795b5dd363c16dad6585f665edf1f087638e841e2ba908219f923b7220",
+      "sha512Manifest": "https://archive.mozilla.org/pub/firefox/releases/157.0.1/SHA512SUMS",
+      "dmg": "/private/tmp/arena-firefox/previous.dmg",
+      "observed": {
+        "result": "passed",
+        "elapsedMs": 25390,
+        "capabilities": {
+          "acceptInsecureCerts": false,
+          "browserName": "firefox",
+          "browserVersion": "157.0.1",
+          "moz:accessibilityChecks": false,
+          "moz:buildID": "20261005135250",
+          "moz:geckodriverVersion": "0.37.1",
+          "moz:headless": false,
+          "moz:platformVersion": "25.5.0",
+          "moz:processID": 1773,
+          "moz:profile": "/var/folders/bl/nxx9h0zn7qd_hcm2_r0s776r0000gn/T/rust_mozprofile91o3sQ",
+          "moz:shutdownTimeout": 60000,
+          "moz:webdriverClick": true,
+          "moz:windowless": false,
+          "pageLoadStrategy": "normal",
+          "platformName": "mac",
+          "proxy": {},
+          "setWindowRect": true,
+          "strictFileInteractability": false,
+          "timeouts": {
+            "implicit": 0,
+            "pageLoad": 300000,
+            "script": 30000
+          },
+          "unhandledPromptBehavior": "dismiss and notify",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:157.0) Gecko/20100101 Firefox/157.0"
+        },
+        "environment": {
+          "canvasCount": 1,
+          "gpu": "Apple M1, or similar",
+          "renderer": "WebGL",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "dpr": 2,
+            "height": 715,
+            "width": 1280
+          }
+        }
+      }
+    }
+  ],
+  "fixtureSha256": "a29a6792755048752bb6e2f89223fa08cca0b4ddc76a5bdee17414834414eb0a"
+}

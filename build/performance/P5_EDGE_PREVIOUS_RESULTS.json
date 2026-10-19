@@ -1,0 +1,648 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node@20/20.20.2/bin/node",
+      "/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "tests/playwright.compatibility.config.ts",
+      "--project=edge-stable",
+      "--workers=1",
+      "--retries=0",
+      "--global-timeout=240000"
+    ],
+    "configFile": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/playwright.compatibility.config.ts",
+    "rootDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 240000,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "edge-stable",
+        "name": "edge-stable",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chrome-installed",
+        "name": "chrome-installed",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../build/performance/P5_EDGE_PREVIOUS_RESULTS.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --mode test --host 127.0.0.1 --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "boot.spec.ts",
+      "file": "boot.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "boots a themed arena and resizes its single canvas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2462,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:35:53.531Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3be9e5b40a014dc58fa3-4492ac0b682fde4ca32e",
+          "file": "boot.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "compatibility-environment-v043.spec.ts",
+      "file": "compatibility-environment-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 454,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:03.937Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/compatibility-environment--e9180--for-the-compatibility-gate-edge-stable/attachments/environment-be8caf0f8df36332068442dfdf03bddca4f29644.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-e1570a65b2250f12c6d7",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "gameplay-rate.spec.ts",
+      "file": "gameplay-rate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "half speed is wired to the advancing browser simulation clock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2323,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:04.401Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "88e27d6269994e658640-89adcfe1b4edd870a825",
+          "file": "gameplay-rate.spec.ts",
+          "line": 18,
+          "column": 1
+        },
+        {
+          "title": "pause freezes the half-speed clock and reduced motion preserves the base rate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1917,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:06.729Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "88e27d6269994e658640-9794c932f6aa7e2014cf",
+          "file": "gameplay-rate.spec.ts",
+          "line": 36,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "lifecycle-v043.spec.ts",
+      "file": "lifecycle-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "eco-guardian pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4372,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:08.658Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42997b887eca42ecd675-51f981d96e858ea4c8e7",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        },
+        {
+          "title": "knight-magic pickup overflow and stopped resources return to baseline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4231,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:13.034Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "42997b887eca42ecd675-fbbc81d49b4afc225457",
+          "file": "lifecycle-v043.spec.ts",
+          "line": 5,
+          "column": 58
+        }
+      ]
+    },
+    {
+      "title": "phase-two.spec.ts",
+      "file": "phase-two.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "movement is normalized and the camera follows the player",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 672,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:17.277Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-ee1919b4d1d4b6da6246",
+          "file": "phase-two.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "opposing movement inputs cancel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:17.953Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-ef6dc324eb12b93dc928",
+          "file": "phase-two.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "arena boundaries contain the player body",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12367,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:18.518Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-debda4fe69ebfb719300",
+          "file": "phase-two.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "pause stops movement and simulation time until resumed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1250,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:30.891Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6ec230b70c7dd8b2a432-187c9318b4abb884dd12",
+          "file": "phase-two.spec.ts",
+          "line": 63,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "presentation-v043.spec.ts",
+      "file": "presentation-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Low switches reversibly while paused, resizes, respects map opacity and survives restart",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22024,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:32.154Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-d211cf602ba7d349fffc",
+          "file": "presentation-v043.spec.ts",
+          "line": 15,
+          "column": 1
+        },
+        {
+          "title": "title settings carry Low into the next run and level-up hides the map",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:36:54.182Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-044258f5dc1334c82de2",
+          "file": "presentation-v043.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "dense map keeps the same world and live population with readable Low markers",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "edge-stable",
+              "projectName": "edge-stable",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T09:37:10.290Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e3050140cb20c556bb3f-ebc6a443f080e3e42379",
+          "file": "presentation-v043.spec.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T09:35:52.896Z",
+    "duration": 79589.01599999999,
+    "expected": 13,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
