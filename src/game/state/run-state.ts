@@ -1,11 +1,12 @@
 import { archetypeIds, type CharacterId, type UpgradeId, type WeaponId } from "../core/archetypes/ids";
 import type { SkillLevels } from "../systems/skills/resolve-skill";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
-import type { UpgradeDefinition } from "../core/archetypes/contracts";
+import type { UpgradeDefinition, WeaponDefinition } from "../core/archetypes/contracts";
 import type { SkillId } from "../core/archetypes/ids";
 import {
   applyUpgrade,
   createWeaponStatModifiers,
+  isUpgradeAvailable,
   type WeaponStatModifiers,
 } from "../systems/upgrades";
 import {
@@ -68,6 +69,8 @@ export interface RunState {
   readonly weaponModifiers: WeaponStatModifiers;
   readonly startingWeaponIds: readonly WeaponId[];
   readonly weaponSlots: readonly WeaponSlotState[];
+  readonly weaponSlotCount: number;
+  readonly ownedWeaponModifiers: Readonly<Partial<Record<WeaponId, WeaponStatModifiers>>>;
   readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly skillLevels: SkillLevels;
   readonly world: WorldState;
@@ -89,6 +92,7 @@ export interface DeathCause {
 }
 
 export interface CreateRunOptions {
+  readonly weaponSlotCount?: number;
   readonly startingWeaponIds?: readonly WeaponId[];
   readonly difficulty?: DifficultyId;
   readonly themeId: string;
@@ -110,6 +114,10 @@ export function createRunState(options: CreateRunOptions): RunState {
 
   const xpCurve = options.xpCurve ?? DEFAULT_XP_CURVE;
   const startingWeaponIds = Object.freeze([...(options.startingWeaponIds ?? [archetypeIds.weapon.starter])]);
+  const weaponSlotCount = options.weaponSlotCount ?? startingWeaponIds.length;
+  if (!Number.isSafeInteger(weaponSlotCount) || weaponSlotCount < 1 || startingWeaponIds.length > weaponSlotCount) {
+    throw new Error("Invalid starting weapon capacity");
+  }
   return {
     difficulty: options.difficulty ?? "normal",
     version: RUN_STATE_VERSION,
@@ -129,6 +137,8 @@ export function createRunState(options: CreateRunOptions): RunState {
     weaponModifiers: createWeaponStatModifiers(),
     startingWeaponIds,
     weaponSlots: createWeaponSlots(startingWeaponIds),
+    weaponSlotCount,
+    ownedWeaponModifiers: Object.freeze({}),
     selectedUpgradeIds: [],
     skillLevels: Object.freeze({}),
     world: createWorldState(),
@@ -252,9 +262,12 @@ export function applyRunUpgrade(
   skillMaxLevel?: (skillId: SkillId) => number,
   /** The offer's rolled tier gain; `1` is a common roll. */
   tierMultiplier = 1,
+  weapons: readonly WeaponDefinition[] = [],
 ): RunState {
   if (state.status !== "level_up" || state.progression.pendingChoices < 1) return state;
-  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel, tierMultiplier);
+  if (!isUpgradeAvailable(upgrade, state.selectedUpgradeIds, state)) return state;
+  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel, tierMultiplier, weapons);
+  if (upgraded === state) return state;
   const progression = consumePendingChoice(upgraded.progression);
   const next: RunState = {
     ...upgraded,
@@ -271,6 +284,7 @@ export function resetRunState(state: RunState): RunState {
   return createRunState({
     difficulty: state.difficulty,
     startingWeaponIds: state.startingWeaponIds,
+    weaponSlotCount: state.weaponSlotCount,
     themeId: state.themeId,
     characterId: state.player.characterId,
     baseStats: state.player.baseStats,

@@ -10,17 +10,18 @@ import type { WeaponStatModifiers } from "../upgrades";
 export function resolveWeaponDefinition(
   definition: WeaponDefinition,
   modifiers: WeaponStatModifiers,
+  owned?: WeaponStatModifiers,
 ): WeaponDefinition {
   if (definition.deliveryKind === "melee") {
     return Object.freeze({
       ...definition,
-      range: definition.range + modifiers.range,
-      reach: definition.reach + modifiers.range,
+      range: definition.range + (modifiers.range + (owned?.range ?? 0)),
+      reach: definition.reach + (modifiers.range + (owned?.range ?? 0)),
     });
   }
   return Object.freeze({
     ...definition,
-    pierce: definition.pierce + modifiers.pierce,
-    projectileCount: definition.projectileCount + modifiers.projectileCount,
+    pierce: definition.pierce + (modifiers.pierce + (owned?.pierce ?? 0)),
+    projectileCount: definition.projectileCount + (modifiers.projectileCount + (owned?.projectileCount ?? 0)),
   });
 }

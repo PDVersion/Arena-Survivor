@@ -1,0 +1,1422 @@
+{
+  "dateSydney": "2026-10-20",
+  "baseCommit": "3b2b927",
+  "uniqueAffectedCasesVerified": 15,
+  "note": "Combined14 pass before adding floating splash numbers; final5 (4 overlapping C1+new terminal case) pass after. No full-app/browser/device CI claim. Source hashes below are final code.",
+  "host": "Known M5 Pro/48GiB macOS host from retained inventory; no physical Windows evidence",
+  "limits": [
+    "Actual navigator.userAgent retains Windows Desktop Chrome profile despite test.use(undefined); it is not physical OS evidence. No separate browser.version was captured this session.",
+    "Actual unmasked renderer is SwiftShader software WebGL, not native M5 GPU or older hardware.",
+    "Explicit-timestamp fixed-actor probes; real XP and keyboard offer choices; scripted 2k-simulation-ms mixed-load rounds; no contact/hazards/audio; XP cap2 in stress.",
+    "Old P5/P6 measurements and portable pack remain bound to their original frozen sources; no recertification by this C1 slice."
+  ],
+  "runs": [
+    {
+      "scope": "preliminary-four",
+      "stats": {
+        "startTime": "2026-10-19T23:21:44.426Z",
+        "duration": 14997.404999999999,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawReportSha256": "9b40a5548fef68addae8893c18ee1302a7c9a92236b70231a790766a7537e1ff",
+      "cases": [
+        {
+          "status": "passed",
+          "durationMs": 1160,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 675,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 6707,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 5544,
+          "retry": 0
+        }
+      ],
+      "observations": [
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "rate": 0.5,
+            "before": {
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "combat": {
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              10000,
+              1400
+            ],
+            "elapsedMs": 0,
+            "kills": 3,
+            "total": 27,
+            "splash": 10.2,
+            "explosion": 0,
+            "breakdownTotal": 27,
+            "enemies": 0,
+            "peak": 3,
+            "backlog": 3,
+            "xp": 3
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "knight-magic",
+            "mode": "test",
+            "seed": 24,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "rate": 0.5,
+            "before": {
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.move_speed",
+                "upgrade.equip_secondary",
+                "upgrade.pierce"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "combat": {
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              10000,
+              1400
+            ],
+            "elapsedMs": 0,
+            "kills": 3,
+            "total": 30,
+            "splash": 12.2,
+            "explosion": 0,
+            "breakdownTotal": 30,
+            "enemies": 0,
+            "peak": 3,
+            "backlog": 3,
+            "xp": 6
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "rate": 0.5,
+            "before": {
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "quality": "default",
+          "final": {
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              3022.0677999928484,
+              2823.067799992848
+            ],
+            "elapsedMs": 2354.216399992849,
+            "kills": 59,
+            "total": 1772.6285714285702,
+            "splash": 35.400000000000006,
+            "explosion": 0,
+            "breakdownTotal": 1772.6285714285702,
+            "enemies": 241,
+            "peak": 300,
+            "backlog": 0,
+            "xp": 2
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "rate": 0.5,
+            "before": {
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "quality": "low",
+          "final": {
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              3020.0549333285644,
+              2815.8499333285636
+            ],
+            "elapsedMs": 2415.2317333285646,
+            "kills": 54,
+            "total": 1728.0948051948042,
+            "splash": 35.400000000000006,
+            "explosion": 0,
+            "breakdownTotal": 1728.0948051948042,
+            "enemies": 246,
+            "peak": 300,
+            "backlog": 0,
+            "xp": 2
+          },
+          "errors": []
+        }
+      ],
+      "specifications": [
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "eco-guardian acquires the cone tool from a real offer and resets it on restart"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "knight-magic acquires the cone tool from a real offer and resets it on restart"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "@stress C1 two tools at 300 mixed actors in default"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "@stress C1 two tools at 300 mixed actors in low"
+        }
+      ]
+    },
+    {
+      "scope": "combined-fourteen-before-number-wiring",
+      "stats": {
+        "startTime": "2026-10-19T23:25:20.938Z",
+        "duration": 26152.209000000003,
+        "expected": 14,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawReportSha256": "6b130e45d333f8bdf883da5854919c4bc2a9363367348983a304f5cc7e9f1ecc",
+      "cases": [
+        {
+          "status": "passed",
+          "durationMs": 682,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 940,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 967,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 1104,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 577,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 2008,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 742,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 2971,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 1112,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 1048,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 6891,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 5676,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 176,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 178,
+          "retry": 0
+        }
+      ],
+      "observations": [
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "owned": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              0,
+              0
+            ],
+            "elapsedMs": 15.578333333333337,
+            "kills": 0,
+            "total": 0,
+            "splash": 0,
+            "explosion": 0,
+            "breakdownTotal": 0,
+            "enemies": 0,
+            "peak": 0,
+            "backlog": 0,
+            "xp": 0
+          },
+          "combat": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              10000,
+              1400
+            ],
+            "elapsedMs": 0,
+            "kills": 3,
+            "total": 27,
+            "splash": 10.2,
+            "explosion": 0,
+            "breakdownTotal": 27,
+            "enemies": 0,
+            "peak": 3,
+            "backlog": 3,
+            "xp": 3
+          },
+          "deadPrimary": {
+            "addedKills": 2,
+            "remainingHealth": [
+              1.0000000000000018
+            ],
+            "addedDamage": 10.100000000000001
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "knight-magic",
+            "mode": "test",
+            "seed": 24,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.move_speed",
+                "upgrade.equip_secondary",
+                "upgrade.pierce"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "owned": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              0,
+              0
+            ],
+            "elapsedMs": 15.388333333333335,
+            "kills": 0,
+            "total": 0,
+            "splash": 0,
+            "explosion": 0,
+            "breakdownTotal": 0,
+            "enemies": 0,
+            "peak": 0,
+            "backlog": 0,
+            "xp": 0
+          },
+          "combat": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              10000,
+              1400
+            ],
+            "elapsedMs": 0,
+            "kills": 3,
+            "total": 30,
+            "splash": 12.2,
+            "explosion": 0,
+            "breakdownTotal": 30,
+            "enemies": 0,
+            "peak": 3,
+            "backlog": 3,
+            "xp": 6
+          },
+          "deadPrimary": null,
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "quality": "default",
+          "final": {
+            "ownRange": 0,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              3024.2749999976168,
+              2820.8499999976175
+            ],
+            "elapsedMs": 2123.4713999976166,
+            "kills": 65,
+            "total": 1809.280519480518,
+            "splash": 36.60000000000001,
+            "explosion": 0,
+            "breakdownTotal": 1809.280519480518,
+            "enemies": 235,
+            "peak": 300,
+            "backlog": 0,
+            "xp": 2
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "quality": "low",
+          "final": {
+            "ownRange": 0,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              3016.8901333333333,
+              2815.775133333334
+            ],
+            "elapsedMs": 2271.4125333333345,
+            "kills": 51,
+            "total": 1710.451948051947,
+            "splash": 35.400000000000006,
+            "explosion": 0,
+            "breakdownTotal": 1710.451948051947,
+            "enemies": 249,
+            "peak": 300,
+            "backlog": 0,
+            "xp": 2
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "renderer": "Canvas",
+            "gameSize": {
+              "width": 800,
+              "height": 450
+            },
+            "themeKey": "eco-guardian"
+          },
+          "noTargetClocks": [
+            0,
+            0
+          ],
+          "pausedShots": 0,
+          "firstClocks": [
+            1000,
+            300
+          ],
+          "firstShots": 2,
+          "heldShots": 2,
+          "secondClocks": [
+            1000,
+            600
+          ],
+          "secondShots": 3,
+          "hit": {
+            "damage": 8,
+            "knockback": 12
+          },
+          "deaths": [
+            {
+              "eventId": "death-1",
+              "kind": "death.committed",
+              "entityId": "enemy-1",
+              "provenance": {
+                "sourceCategory": "weapon",
+                "sourceId": "weapon.fixture_secondary"
+              },
+              "payload": {
+                "enemyId": "enemy.swarm_basic",
+                "damageSource": "direct",
+                "elite": false
+              }
+            }
+          ],
+          "ledger": {
+            "total": 14,
+            "breakdown": 14
+          },
+          "freshSlots": [
+            {
+              "weaponId": "weapon.starter",
+              "nextAttackAtMs": 0
+            }
+          ]
+        },
+        {
+          "environment": {
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "viewport": {
+              "width": 1280,
+              "height": 720
+            },
+            "renderer": "Canvas",
+            "gameSize": {
+              "width": 800,
+              "height": 450
+            },
+            "themeKey": "knight-magic"
+          },
+          "noTargetClocks": [
+            0,
+            0
+          ],
+          "pausedShots": 0,
+          "firstClocks": [
+            1000,
+            300
+          ],
+          "firstShots": 2,
+          "heldShots": 2,
+          "secondClocks": [
+            1000,
+            600
+          ],
+          "secondShots": 3,
+          "hit": {
+            "damage": 8,
+            "knockback": 12
+          },
+          "deaths": [
+            {
+              "eventId": "death-1",
+              "kind": "death.committed",
+              "entityId": "enemy-1",
+              "provenance": {
+                "sourceCategory": "weapon",
+                "sourceId": "weapon.fixture_secondary"
+              },
+              "payload": {
+                "enemyId": "enemy.swarm_basic",
+                "damageSource": "direct",
+                "elite": false
+              }
+            }
+          ],
+          "ledger": {
+            "total": 9,
+            "breakdown": 9
+          },
+          "freshSlots": [
+            {
+              "weaponId": "weapon.starter",
+              "nextAttackAtMs": 0
+            }
+          ]
+        }
+      ],
+      "specifications": [
+        {
+          "file": "grabber-weapon.spec.ts",
+          "title": "the cleanup grabber damages every enemy in its path without creating a projectile"
+        },
+        {
+          "file": "grabber-weapon.spec.ts",
+          "title": "the grabber presentation exposes an extend and retract lifetime"
+        },
+        {
+          "file": "phase-eight-v03.spec.ts",
+          "title": "cards state levels, newness, and resolved before/after values"
+        },
+        {
+          "file": "phase-eight-v03.spec.ts",
+          "title": "a card's stated result matches the pause menu after taking it"
+        },
+        {
+          "file": "phase-eight-v03.spec.ts",
+          "title": "the detail toggle hides numbers without hiding identity"
+        },
+        {
+          "file": "phase-eight-v03.spec.ts",
+          "title": "the pause menu cycles tabs, toggles settings, and never resumes by accident"
+        },
+        {
+          "file": "phase-eight-v03.spec.ts",
+          "title": "both overlays survive a resize"
+        },
+        {
+          "file": "readable-contact-v0421.spec.ts",
+          "title": "Collection Sweep triggers from completed grabber attacks without projectiles"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "eco-guardian acquires the cone tool from a real offer and resets it on restart"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "knight-magic acquires the cone tool from a real offer and resets it on restart"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "@stress C1 two tools at 300 mixed actors in default"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "@stress C1 two tools at 300 mixed actors in low"
+        },
+        {
+          "file": "weapon-slots-v043.spec.ts",
+          "title": "eco-guardian slots schedule independently and projectiles retain their weapon"
+        },
+        {
+          "file": "weapon-slots-v043.spec.ts",
+          "title": "knight-magic slots schedule independently and projectiles retain their weapon"
+        }
+      ]
+    },
+    {
+      "scope": "final-five-after-number-wiring",
+      "stats": {
+        "startTime": "2026-10-19T23:26:55.325Z",
+        "duration": 30031.384,
+        "expected": 5,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawReportSha256": "fbfffbe588eafdb3769822daf714c4371cabcef8ca907dca14ad56b565e3d090",
+      "cases": [
+        {
+          "status": "passed",
+          "durationMs": 14359,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 1156,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 1085,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 6836,
+          "retry": 0
+        },
+        {
+          "status": "passed",
+          "durationMs": 5692,
+          "retry": 0
+        }
+      ],
+      "observations": [
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "damageAccumulated": 0,
+              "damageFlushed": 0,
+              "damagePending": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "owned": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "damageAccumulated": 0,
+            "damageFlushed": 0,
+            "damagePending": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              0,
+              0
+            ],
+            "elapsedMs": 16.14166666666667,
+            "kills": 0,
+            "total": 0,
+            "splash": 0,
+            "explosion": 0,
+            "breakdownTotal": 0,
+            "enemies": 0,
+            "peak": 0,
+            "backlog": 0,
+            "xp": 0
+          },
+          "combat": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "damageAccumulated": 30.6,
+            "damageFlushed": 30.599999999999998,
+            "damagePending": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              10000,
+              1400
+            ],
+            "elapsedMs": 0,
+            "kills": 3,
+            "total": 27,
+            "splash": 10.2,
+            "explosion": 0,
+            "breakdownTotal": 27,
+            "enemies": 0,
+            "peak": 3,
+            "backlog": 3,
+            "xp": 3
+          },
+          "deadPrimary": {
+            "addedKills": 2,
+            "remainingHealth": [
+              1.0000000000000018
+            ],
+            "addedDamage": 10.100000000000001
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "knight-magic",
+            "mode": "test",
+            "seed": 24,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "damageAccumulated": 0,
+              "damageFlushed": 0,
+              "damagePending": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.move_speed",
+                "upgrade.equip_secondary",
+                "upgrade.pierce"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "owned": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "damageAccumulated": 0,
+            "damageFlushed": 0,
+            "damagePending": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              0,
+              0
+            ],
+            "elapsedMs": 15.614999992847444,
+            "kills": 0,
+            "total": 0,
+            "splash": 0,
+            "explosion": 0,
+            "breakdownTotal": 0,
+            "enemies": 0,
+            "peak": 0,
+            "backlog": 0,
+            "xp": 0
+          },
+          "combat": {
+            "ownRange": 14.399999999999999,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "damageAccumulated": 30.6,
+            "damageFlushed": 30.599999999999998,
+            "damagePending": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              10000,
+              1400
+            ],
+            "elapsedMs": 0,
+            "kills": 3,
+            "total": 30,
+            "splash": 12.2,
+            "explosion": 0,
+            "breakdownTotal": 30,
+            "enemies": 0,
+            "peak": 3,
+            "backlog": 3,
+            "xp": 6
+          },
+          "deadPrimary": null,
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "damageAccumulated": 0,
+              "damageFlushed": 0,
+              "damagePending": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "quality": "default",
+          "final": {
+            "ownRange": 0,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "damageAccumulated": 2103.7999999999984,
+            "damageFlushed": 2023.7999999999997,
+            "damagePending": 8,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              3034.0200000071536,
+              2830.2900000071536
+            ],
+            "elapsedMs": 2067.3660000071536,
+            "kills": 58,
+            "total": 1820.9896103896087,
+            "splash": 35.400000000000006,
+            "explosion": 0,
+            "breakdownTotal": 1820.9896103896087,
+            "enemies": 242,
+            "peak": 300,
+            "backlog": 0,
+            "xp": 5
+          },
+          "errors": []
+        },
+        {
+          "environment": {
+            "themeKey": "eco-guardian",
+            "mode": "test",
+            "seed": 5,
+            "renderer": "WebKit WebGL",
+            "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+            "dpr": 1,
+            "width": 1280,
+            "height": 720,
+            "logicalWidth": 1600,
+            "logicalHeight": 900,
+            "rate": 0.5,
+            "before": {
+              "ownRange": 0,
+              "starterOwnRange": 0,
+              "globalRange": 0,
+              "damageAccumulated": 0,
+              "damageFlushed": 0,
+              "damagePending": 0,
+              "status": "level_up",
+              "choiceIndex": 1,
+              "choices": [
+                "upgrade.luck",
+                "upgrade.equip_secondary",
+                "upgrade.crit_chance"
+              ],
+              "slots": [
+                "weapon.starter"
+              ],
+              "clocks": [
+                0
+              ],
+              "elapsedMs": 0,
+              "kills": 0,
+              "total": 0,
+              "splash": 0,
+              "explosion": 0,
+              "breakdownTotal": 0,
+              "enemies": 0,
+              "peak": 0,
+              "backlog": 0,
+              "xp": 0
+            }
+          },
+          "quality": "low",
+          "final": {
+            "ownRange": 0,
+            "starterOwnRange": 0,
+            "globalRange": 0,
+            "damageAccumulated": 2003.7999999999984,
+            "damageFlushed": 2003.7999999999997,
+            "damagePending": 0,
+            "status": "playing",
+            "choiceIndex": -1,
+            "choices": [],
+            "slots": [
+              "weapon.starter",
+              "weapon.secondary"
+            ],
+            "clocks": [
+              3023.281133342869,
+              2819.951133342869
+            ],
+            "elapsedMs": 2256.3765333428687,
+            "kills": 54,
+            "total": 1733.3376623376607,
+            "splash": 35.400000000000006,
+            "explosion": 0,
+            "breakdownTotal": 1733.3376623376607,
+            "enemies": 246,
+            "peak": 300,
+            "backlog": 0,
+            "xp": 2
+          },
+          "errors": []
+        }
+      ],
+      "specifications": [
+        {
+          "file": "phase-nine-v03.spec.ts",
+          "title": "damage numbers aggregate without losing or double-counting damage"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "eco-guardian acquires the cone tool from a real offer and resets it on restart"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "knight-magic acquires the cone tool from a real offer and resets it on restart"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "@stress C1 two tools at 300 mixed actors in default"
+        },
+        {
+          "file": "second-tool-v043.spec.ts",
+          "title": "@stress C1 two tools at 300 mixed actors in low"
+        }
+      ]
+    }
+  ],
+  "finalSourceSha256": {
+    "src/game/content/define-theme.ts": "2d9938ef4266a4c3933ffb83e3defa4565bf13f99ce201d4fd974cb8e4e52f97",
+    "src/game/content/themes/eco-guardian/copy.ts": "e07689968831863baea3d49d3e625e829b6131729bff8b30fe2adc832dec539d",
+    "src/game/content/themes/eco-guardian/index.ts": "417a3172176117ee523d0b694e0c900dac12d73ed9a7e3f0077d8df6e7df1fbd",
+    "src/game/content/themes/eco-guardian/upgrades.ts": "14af11282f49e8a0ade7152df17dc8a08d22111daa70e954fbeffc2507d2afc2",
+    "src/game/content/themes/eco-guardian/weapons.ts": "38da60e2d77fc7d6e70dec750ae633febe8e0ca13af2ee6f924e930ae3c6a98f",
+    "src/game/content/themes/knight-magic/copy.ts": "e1bbdf93ac9357bacea8321c28ffc9c9d7b095946b9baf4ed35cca08a5f71bae",
+    "src/game/content/themes/knight-magic/index.ts": "fb7b02a7b7ec084b36986a84bc65d08547336d17ee83d4bb270f0f75fc915131",
+    "src/game/content/themes/knight-magic/weapons.ts": "04a39bc1bd3daade4ee2f5491adb1627c895c3004a0a8617f529334feace4fa4",
+    "src/game/core/archetypes/contracts.ts": "d6b2262ed4a361712345e375a4112f4be7be3c988247a3396fafc740715e02ba",
+    "src/game/core/archetypes/effects.ts": "e0d902b024d6cdda7a09b51897b209e9880c26ff2567a376b2864c192103b084",
+    "src/game/core/archetypes/ids.ts": "f7822d6ff42b75a346d938f7c1fb58a0a53b978b1a07dc8869a1703a96c0a845",
+    "src/game/entities/cone-attack-actor.ts": "ab30c8128fd88b6ed5106661346dc15551f2f77886d839ce78b6d7c2fd3b63b6",
+    "src/game/entities/projectile-actor.ts": "ee296a68dce21f658c758e23ab6ab9de67220f7ab32443b6078110fe6b686d0a",
+    "src/game/scenes/run-scene.ts": "05644e858edd2df1dc4353af724bc7cdf161ed2bf0c03c5801d1d2a8f9cf670a",
+    "src/game/state/run-state.ts": "c7c541cdaecfc62c5442e494affdb552c4c9869309d28459f8cc2b91ec8da6f7",
+    "src/game/state/statistics.ts": "dfe8529b2c966b61aa317b8958246d9c19e31e7788895af7943ad9efa2cb1934",
+    "src/game/systems/effects/on-kill-effects.ts": "f7c18faa2f5f24461efbec2c4ba99315ceee8054a7200fc9d24734c0fbb50e08",
+    "src/game/systems/simulation/build-models.ts": "2170d7b4af9d8b80bd47859d6c96c8997e0253811f34ecee5bc325375d7e2e83",
+    "src/game/systems/simulation/pacing-simulator.ts": "03737e37bb8e3c87ec4e81aef6fa3d96f5ff21aae05deb2a7866efca5689d93a",
+    "src/game/systems/statistics/run-statistics.ts": "751ec3a79b90671aa9603d6e01bd5e00aaf2e6139a63b79a0de0068e8123d76e",
+    "src/game/systems/upgrades.ts": "13e72f93ba9fcc3c38be8c235a08a54a8c7984af8376191db5127d62f63f8a49",
+    "src/game/systems/upgrades/describe-upgrade.ts": "b4a8564cdb3e099e50d1eb94f158c83de82f1e34d41267c0d61bf5abdf6385d7",
+    "src/game/systems/upgrades/upgrade-tiers.ts": "c4757c96450b085453ee941503b59015c36f64f8cb99b3cea0688aa3665cfc4f",
+    "src/game/systems/weapons/melee-stab.ts": "bd5b699507aeea7119a57b6734ad39dd621a01e18e68fbb20728fa57124ff85a",
+    "src/game/systems/weapons/on-hit-splash.ts": "d653fb9d7498d5e3611d25a01578972490346fb022ef3ca39feac35c1866fa37",
+    "src/game/systems/weapons/resolve-weapon.ts": "93b673d020fa1710028c602d84f17ae23785c59fe4b8e45828b9e2b3b90f10f5",
+    "src/test-support/telemetry-bridge.ts": "b993f0228fc2e0983470f2af66f30b7fff247de3f28a9ed738d838b72dbfa929",
+    "tests/e2e/second-tool-v043.spec.ts": "e85c0b91b2f688182759fbddcdd5027a355251ef83dcd2fee5ae8d13ccb646b5",
+    "tests/fixtures/alternate-theme.ts": "b0121d132b348838b2439a70fa07384a9c9ace78a33716b9cf12baa5aa486171",
+    "tests/unit/content/theme.test.ts": "a8e4613c3c7a9a0444aad45b6540ae418a15194a12ac172f87243ea2ae3de7a4",
+    "tests/unit/statistics/run-statistics.test.ts": "1a93d59c3c1f9f11fde7fc84dff74d040637acb800d406930a6c958288e12081",
+    "tests/unit/ui-selectors/describe-upgrade.test.ts": "6a967a7a4cd59a25746968680987e6084acbf240142cfb66d3adeeee52e6ff31",
+    "tests/unit/upgrades/upgrade-tiers.test.ts": "dc4a8ab6edd04ee2d1bdba04e3eb8fe1982ff12fc6990a8d5a4b54bd51feb86b",
+    "tests/unit/weapons/second-tool.test.ts": "71e189ed838cff22400b4a7b36ab924cf70ead0cbb668b675855d38aea7af92e"
+  },
+  "screenshots": {
+    "test-results/c1-final/second-tool-v043--stress-C-8a9d2--at-300-mixed-actors-in-low-chromium/two-tools-300.png": "b079f3929319c317fb0c47a1fb66a95bb565f1e18536ded2a72a81b81ef4766f",
+    "test-results/c1-final/second-tool-v043--stress-C-aae1c-300-mixed-actors-in-default-chromium/two-tools-300.png": "7e297c648c87293cfdb504c72ba34721269f8221e3f4afbd86b8aa89bfb94abc",
+    "test-results/c1-final/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/cone-and-splash.png": "b6af91d10d276cfeac89703784c206ed980a423f8b39371b9cb0f6a504c28c66",
+    "test-results/c1-final/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/owner-range-offer.png": "04eaf9d5beac377015e51a95e8ce5e326c98b7efc0a00b537922e6b8f4de51ae",
+    "test-results/c1-final/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/tool-offer.png": "0708b614cd9a9150bb1bda6e3c9b04c934901a08ada5e4b0007caae7c4390136",
+    "test-results/c1-final/second-tool-v043-knight-ma-a9c11-er-and-resets-it-on-restart-chromium/cone-and-splash.png": "edbdb4ad1cf1e68754364c1659444f88e5a6009b5c8f7be6513ec43505522ba6",
+    "test-results/c1-final/second-tool-v043-knight-ma-a9c11-er-and-resets-it-on-restart-chromium/owner-range-offer.png": "c89335c15e0895fa7c038b365794b4b344cc474eafaa004f42f634a7928df2bf",
+    "test-results/c1-final/second-tool-v043-knight-ma-a9c11-er-and-resets-it-on-restart-chromium/tool-offer.png": "bebb7ffb0b8574bd24b7c4a16ab0c17c46e09facb6fa4bb77901d7e4d26ce52f"
+  }
+}

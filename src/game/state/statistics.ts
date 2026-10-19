@@ -116,6 +116,7 @@ export function selectRunSummaryValues(
       `${vocabulary.directDamage}: ${formatStatistic(breakdown.direct)}`,
       `${vocabulary.criticalBonusDamage}: ${formatStatistic(breakdown.criticalBonus)}`,
       `${vocabulary.piercingMomentumDamage}: ${formatStatistic(breakdown.piercingMomentum)}`,
+      `${vocabulary.splashDamage}: ${formatStatistic(breakdown.splash)}`,
       `${vocabulary.explosionDamage}: ${formatStatistic(breakdown.explosion)}`,
       `${vocabulary.chainedExplosionDamage}: ${formatStatistic(breakdown.chainedExplosion)}`,
       `${vocabulary.remainderDamage}: ${formatStatistic(breakdown.remainder)}`,

@@ -71,6 +71,7 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 | --- | --- | --- |
 | `character.starter` | Environment Protector | Wandering Knight |
 | `weapon.starter` | Cleanup Grabber | Magic Needle |
+| `weapon.secondary` | Cleanup Vacuum | Runic Fan |
 | `enemy.swarm_basic` | Plastic Bottle | Grunt |
 | `enemy.fast_fragile` | Microplastics (V0.4.2.1; replaces Plastic Bag) | Runner |
 | `enemy.slow_durable` | Glass Bottle | Tank |

@@ -1,10 +1,11 @@
+import type { UpgradeDefinition } from "../../../core/archetypes/contracts";
 import { defineTheme } from "../../define-theme";
 import { characters } from "./characters";
 import { enemies } from "./enemies";
 import { copy } from "./copy";
 import { tokens } from "./tokens";
 import { sprites } from "./sprites";
-import { weapons, weaponSlotCount } from "./weapons";
+import { weapons, weaponSlotCount, weaponAcquisition } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades, upgradeTierTuning } from "./upgrades";
 import { shrines, shrineTuning } from "./shrines";
@@ -31,7 +32,7 @@ export const knightMagicTheme = defineTheme({
   weaponSlotCount,
   enemies,
   pickups,
-  upgrades,
+  upgrades: [...upgrades, weaponAcquisition, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
   shrines,
   skills,
   elites,

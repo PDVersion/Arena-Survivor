@@ -5,7 +5,7 @@ import type {
   UpgradeRarity,
   WorldKey,
 } from "../../core/archetypes/contracts";
-import type { UpgradeId } from "../../core/archetypes/ids";
+import { archetypeIds, type UpgradeId, type WeaponId } from "../../core/archetypes/ids";
 import type { UpgradeTier } from "../../core/archetypes/tiers";
 import { isTiered, tierMultiplier } from "./upgrade-tiers";
 import { selectWorldModifiers } from "../chaos/world-modifiers";
@@ -18,6 +18,7 @@ import {
   skillLevel,
   skillMaxLevel,
 } from "../skills/resolve-skill";
+import { resolveWeaponDefinition } from "../weapons/resolve-weapon";
 import { applyUpgrade, upgradeLevel, type UpgradeableState } from "../upgrades";
 
 /**
@@ -63,14 +64,17 @@ function multiplier(value: number): string {
 export interface StatContext {
   readonly player: { readonly health: number; readonly stats: UpgradeableState["player"]["stats"] };
   readonly weaponModifiers: UpgradeableState["weaponModifiers"];
+  readonly ownedWeaponModifiers?: UpgradeableState["ownedWeaponModifiers"];
 }
 
 /** The player's resolved stats, as shown in the pause menu and diffed by cards. */
 export function selectPlayerStats(
   state: StatContext,
   theme: Pick<ThemeManifest, "weapons" | "copy">,
+  weaponId: WeaponId = archetypeIds.weapon.starter,
 ): readonly StatLine[] {
-  const weapon = theme.weapons[0];
+  const definition = theme.weapons.find((weapon) => weapon.id === weaponId);
+  const weapon = definition ? resolveWeaponDefinition(definition, state.weaponModifiers, state.ownedWeaponModifiers?.[weaponId]) : undefined;
   const stats = state.player.stats;
   const labels = theme.copy.stats;
   const attackRate = weapon ? (1000 / weapon.cooldownMs) * (1 + stats.attackSpeedBonus) : 0;
@@ -78,8 +82,8 @@ export function selectPlayerStats(
 
   const deliveryLines: readonly (readonly [StatKey, number, string])[] = weapon?.deliveryKind === "projectile"
     ? [
-        ["projectiles", weapon.projectileCount + state.weaponModifiers.projectileCount, number(weapon.projectileCount + state.weaponModifiers.projectileCount)],
-        ["pierce", weapon.pierce + state.weaponModifiers.pierce, number(weapon.pierce + state.weaponModifiers.pierce)],
+        ["projectiles", weapon.projectileCount, number(weapon.projectileCount)],
+        ["pierce", weapon.pierce, number(weapon.pierce)],
       ]
     : [];
   const lines: readonly (readonly [StatKey, number, string])[] = [
@@ -89,7 +93,7 @@ export function selectPlayerStats(
     ["critChance", stats.critChance, percent(stats.critChance)],
     ["critDamage", stats.critDamage, multiplier(stats.critDamage)],
     ...deliveryLines,
-    ["range", (weapon?.range ?? 0) + state.weaponModifiers.range, number((weapon?.range ?? 0) + state.weaponModifiers.range)],
+    ["range", (weapon?.range ?? 0), number((weapon?.range ?? 0))],
     ["knockback", weapon?.knockback ?? 0, number(weapon?.knockback ?? 0)],
     ["armourPierce", weapon?.armourPierce ?? 0, percent(weapon?.armourPierce ?? 0)],
     ["moveSpeed", stats.moveSpeed, number(stats.moveSpeed)],
@@ -103,6 +107,16 @@ export function selectPlayerStats(
   return Object.freeze(
     lines.map(([key, value, display]) => Object.freeze({ key, label: labels[key], value, display })),
   );
+}
+
+/** Compact per-tool rows make acquisition and owner-only gains inspectable. */
+export function selectEquippedWeaponStats(
+  state: StatContext & Pick<UpgradeableState, "weaponSlots">,
+  theme: Pick<ThemeManifest, "weapons" | "copy">,
+): readonly StatLine[] {
+  return Object.freeze((state.weaponSlots ?? []).filter((slot) => slot.weaponId !== archetypeIds.weapon.starter).flatMap((slot) =>
+    selectPlayerStats(state, theme, slot.weaponId).filter((line) => ["damage", "attackRate", "range"].includes(line.key))
+      .map((line) => Object.freeze({ ...line, label: `${theme.copy.content[slot.weaponId].name} · ${line.label}` }))));
 }
 
 /** World pressure, as shown in the pause menu. */
@@ -170,7 +184,8 @@ export function describeUpgrade(
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
   const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
-  const level = upgrade.track === "weapon" ? picks + 1 : picks;
+  const acquisition = upgrade.effects.find((effect) => effect.kind === "weapon.equip");
+  const level = upgrade.track === "weapon" && !acquisition ? picks + 1 : picks;
   // An untiered upgrade is described at its authored value however it rolled,
   // so the card can never promise a bonus the application will not deliver.
   const resolvedTier = isTiered(upgrade) ? tier : "common";
@@ -180,10 +195,11 @@ export function describeUpgrade(
     upgrade,
     (skillId) => skillMaxLevel(theme.skills, skillId),
     multiplier,
+    theme.weapons,
   );
 
-  const beforeStats = selectPlayerStats(state, theme);
-  const afterStats = selectPlayerStats(after, theme);
+  const beforeStats = selectPlayerStats(state, theme, upgrade.ownerWeaponId);
+  const afterStats = selectPlayerStats(after, theme, upgrade.ownerWeaponId);
   const lines: UpgradeChangeLine[] = [];
 
   afterStats.forEach((next, index) => {
@@ -203,6 +219,16 @@ export function describeUpgrade(
     lines.push(Object.freeze({ label: next.label, from: previous.display, to: next.display }));
   });
 
+  if (acquisition) {
+    const weapon = theme.weapons.find((entry) => entry.id === acquisition.weaponId);
+    if (weapon) {
+      const stats = selectPlayerStats(after, theme, weapon.id);
+      for (const key of ["damage", "attackRate", "range"] as const) {
+        const line = stats.find((entry) => entry.key === key)!;
+        lines.push({ label: line.label, to: line.display });
+      }
+    }
+  }
   lines.push(...describeSkillChange(state, after, upgrade, theme));
 
   return Object.freeze({
@@ -217,9 +243,9 @@ export function describeUpgrade(
     nextLevel: level + 1,
     maxLevel: upgrade.maxLevel === null
       ? null
-      : upgrade.track === "weapon" ? upgrade.maxLevel + 1 : upgrade.maxLevel,
+      : upgrade.track === "weapon" && !acquisition ? upgrade.maxLevel + 1 : upgrade.maxLevel,
     track: upgrade.track,
-    isNew: upgrade.track === "general" && level === 0,
+    isNew: (upgrade.track === "general" || Boolean(acquisition)) && level === 0,
     lines: Object.freeze(lines),
   });
 }

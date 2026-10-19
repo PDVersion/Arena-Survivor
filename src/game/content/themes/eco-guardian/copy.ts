@@ -54,6 +54,7 @@ export const copy = {
     directDamage: "Direct",
     criticalBonusDamage: "Critical Bonus",
     piercingMomentumDamage: "Sorting Momentum",
+    splashDamage: "Hit splash",
     explosionDamage: "Compaction",
     chainedExplosionDamage: "Cascade",
     remainderDamage: "Other / Remainder",
@@ -121,6 +122,18 @@ export const copy = {
     [archetypeIds.character.starter]: {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",
+    },
+    [archetypeIds.weapon.secondary]: {
+      name: "Cleanup Vacuum",
+      description: "Automatically clear a short cone of up to three targets. Each hit splashes nearby targets.",
+    },
+    [archetypeIds.upgrade.equipSecondary]: {
+      name: "Equip Cleanup Vacuum",
+      description: "Add a second automatic tool in an empty slot. Hits splash up to three neighbours without needing a kill.",
+    },
+    [archetypeIds.upgrade.secondaryRange]: {
+      name: "Longer Vacuum Nozzle",
+      description: "Increase only the second tool's reach. The starter keeps its own range.",
     },
     [archetypeIds.weapon.starter]: {
       name: "Cleanup Grabber",
@@ -204,7 +217,7 @@ export const copy = {
     },
     [archetypeIds.upgrade.damage]: {
       name: "Reinforced Tools",
-      description: "Process more waste with every grab.",
+      description: "Process more waste with every tool.",
     },
     [archetypeIds.upgrade.weaponRange]: {
       name: "Longer Grabber",

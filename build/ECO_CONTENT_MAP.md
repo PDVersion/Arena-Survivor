@@ -15,6 +15,9 @@ and **Parked** is not offered by this theme.
 | --- | --- | --- | --- | --- |
 | `character.starter` | Environment Protector | Character | A field operative clearing an overflowing waste site. | Live |
 | `weapon.starter` | Cleanup Grabber | Melee weapon | A mechanical grabber that extends through every item in its narrow path, then retracts. | Live |
+| `weapon.secondary` | Cleanup Vacuum | Melee cone | Automatically clears up to three targets in a short cone; each hit splashes nearby targets. | V0.4.3 C1 |
+| `upgrade.equip_secondary` | Equip Cleanup Vacuum | Weapon acquisition | Fill the empty second automatic-tool slot through a normal level-up choice. | V0.4.3 C1 |
+| `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum; appears after it is equipped. | V0.4.3 C1 |
 | `upgrade.weapon_range` | Longer Grabber | Weapon track, owned level 1 | Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5. | Live |
 | `upgrade.weapon_collection_sweep` | Collection Sweep | Weapon track, starts unowned | Periodically sweep a wider area at the grabber's jaws. Higher levels trigger more often and add sweeps along extension and retraction. | Live |
 
@@ -72,8 +75,8 @@ when another level would otherwise be meaningless.
 
 | Stable ID | Name | Type | Approved description |
 | --- | --- | --- | --- |
-| `upgrade.damage` | Reinforced Tools | General / offense | Process more waste with every grab. |
-| `upgrade.attack_speed` | Rapid Cycling | General / offense | Cycle the Cleanup Grabber more frequently. |
+| `upgrade.damage` | Reinforced Tools | General / offense | Process more waste with every tool. |
+| `upgrade.attack_speed` | Rapid Cycling | General / offense | Cycle all equipped tools more frequently. |
 | `upgrade.crit_chance` | Precision Sort | General / critical | Increase the chance of a critical separation. |
 | `upgrade.move_speed` | Field Boots | General / gear | Cover the site more quickly. |
 | `upgrade.health` | Safety Gear | General / gear | Increase maximum health and recover by the same amount. |

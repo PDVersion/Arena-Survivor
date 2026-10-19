@@ -1,5 +1,5 @@
 import { critTierMultiplier } from "../../core/combat/crit";
-import type { SkillEffectDefinition } from "../../core/archetypes/contracts";
+import type { SkillEffectDefinition, WeaponDefinition } from "../../core/archetypes/contracts";
 
 /**
  * A coarse model of how a player's damage output grows with level.
@@ -17,6 +17,7 @@ export interface BuildModel {
 }
 
 export interface BuildContext {
+  readonly secondaryWeapon?: WeaponDefinition;
   /** Base weapon damage before any bonus. */
   readonly weaponDamage: number;
   /** Base weapon cooldown in milliseconds. */
@@ -45,7 +46,23 @@ export function expectedCritMultiplier(critChance: number, critDamage: number): 
   return (lower * (1 - fraction) + upper * fraction) * (guaranteed > 0 ? scale ** guaranteed : 1);
 }
 
+function secondaryDps(context: BuildContext, packed: boolean): number {
+  const weapon = context.secondaryWeapon;
+  if (!weapon) return 0;
+  const targetCap = weapon.deliveryKind === "melee" ? weapon.targetCap : 1;
+  const targets = packed ? Math.min(context.liveEnemies, targetCap ?? context.liveEnemies) : Math.min(1, context.liveEnemies);
+  const neighbours = packed && weapon.splash ? Math.min(weapon.splash.targetCap, Math.max(0, context.liveEnemies - 1)) : 0;
+  return weapon.damage * 1000 / weapon.cooldownMs * targets * (1 + neighbours * (weapon.splash?.damageMultiplier ?? 0));
+}
+
 const models: readonly BuildModel[] = [
+  ...[false, true].map((packed): BuildModel => ({
+    id: packed ? "two-tools-packed" : "two-tools-single",
+    description: packed ? "Second tool at level2; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model."
+      : "Second tool at level2; one target in reach, no splash neighbours. Contact-only lower band.",
+    damagePerSecond: (level, context) => (baseDps(context) + (level >= 2 ? secondaryDps(context, packed) : 0)) *
+      expectedCritMultiplier(context.baseCritChance, context.critDamage),
+  })),
   {
     id: "passive",
     description: "Takes no offensive upgrades. The floor of the DPS band.",

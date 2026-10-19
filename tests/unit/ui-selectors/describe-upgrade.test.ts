@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
-import { statKeys, worldKeys } from "../../../src/game/core/archetypes/contracts";
+import { statKeys, worldKeys, type UpgradeDefinition } from "../../../src/game/core/archetypes/contracts";
 import {
   describeUpgrade,
   selectPlayerStats,
@@ -31,6 +31,8 @@ function upgrade(id: string) {
 function state(overrides: Partial<UpgradeableState> = {}): UpgradeableState {
   return {
     player: { health: character.baseStats.maxHealth, stats: { ...character.baseStats } },
+    weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }],
+    weaponSlotCount: 2,
     weaponModifiers: createWeaponStatModifiers(),
     selectedUpgradeIds: [],
     skillLevels: {},
@@ -173,13 +175,14 @@ describe("upgrade descriptions", () => {
   it("never claims a change the upgrade does not make", () => {
     // The anti-drift guarantee: descriptions come from applying the upgrade and
     // diffing, so every stated line must be reproducible by applying it.
-    for (const entry of theme.upgrades) {
-      const before = state();
+    for (const entry of theme.upgrades as readonly UpgradeDefinition[]) {
+      const before = state(entry.ownerWeaponId === archetypeIds.weapon.secondary
+        ? { weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }, { weaponId: archetypeIds.weapon.secondary, nextAttackAtMs: 0 }] } : {});
       const description = describeUpgrade(before, entry, theme);
-      const after = applyUpgrade(before, entry, maxLevelFor);
+      const after = applyUpgrade(before, entry, maxLevelFor, 1, theme.weapons);
 
-      const beforeLines = selectPlayerStats(before, theme);
-      const afterLines = selectPlayerStats(after, theme);
+      const beforeLines = selectPlayerStats(before, theme, entry.ownerWeaponId);
+      const afterLines = selectPlayerStats(after, theme, entry.ownerWeaponId);
       const changed = afterLines
         .filter((line, index) => line.value !== beforeLines[index]!.value)
         .map((line) => line.label);
@@ -198,7 +201,9 @@ describe("upgrade descriptions", () => {
   ])("produces a named, non-empty description for every %s upgrade", (_name, pack) => {
     const packState: UpgradeableState = {
       player: { health: 100, stats: { ...pack.characters[0]!.baseStats } },
-      weaponModifiers: createWeaponStatModifiers(),
+      weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }],
+    weaponSlotCount: 2,
+    weaponModifiers: createWeaponStatModifiers(),
       selectedUpgradeIds: [],
       skillLevels: {},
       world: createWorldState(),
@@ -208,7 +213,7 @@ describe("upgrade descriptions", () => {
       expect(description.name).toBe(pack.copy.content[entry.id]!.name);
       expect(description.summary.length).toBeGreaterThan(0);
       expect(description.maxLevel).toBe(
-        entry.maxLevel === null ? null : entry.track === "weapon" ? entry.maxLevel + 1 : entry.maxLevel,
+        entry.maxLevel === null ? null : entry.track === "weapon" && !entry.effects.some((effect) => effect.kind === "weapon.equip") ? entry.maxLevel + 1 : entry.maxLevel,
       );
     }
   });

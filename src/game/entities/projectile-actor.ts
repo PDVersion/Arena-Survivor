@@ -41,7 +41,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     const colour = Phaser.Display.Color.HexStringToColor(tokens.palette[token]).color;
     super(scene, x, y, definition.projectileRadius, 0, 360, false, colour);
     this.projectileId = projectileId;
-    this.weapon = Object.freeze({ ...definition });
+    this.weapon = Object.freeze({ ...definition, ...(definition.splash ? { splash: Object.freeze({ ...definition.splash }) } : {}) });
     this.baseDamage = damage;
     this.normalDamage = normalDamage;
     this.criticalBonusDamage = criticalBonusDamage;

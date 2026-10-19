@@ -58,6 +58,7 @@ export interface ThemeVocabulary {
   readonly directDamage: string;
   readonly criticalBonusDamage: string;
   readonly piercingMomentumDamage: string;
+  readonly splashDamage: string;
   readonly explosionDamage: string;
   readonly chainedExplosionDamage: string;
   readonly remainderDamage: string;
@@ -344,7 +345,16 @@ export interface CharacterDefinition {
   readonly baseStats: PlayerBaseStats;
 }
 
+export interface OnHitSplashDefinition {
+  readonly radius: number;
+  readonly damageMultiplier: number;
+  readonly targetCap: number;
+}
+
 interface WeaponDefinitionBase {
+  /** Authored beside its weapon; manifest merges these into the offer registry. */
+  readonly upgrades?: readonly UpgradeDefinition[];
+  readonly splash?: OnHitSplashDefinition;
   readonly id: WeaponId;
   readonly damage: number;
   readonly cooldownMs: number;
@@ -378,6 +388,8 @@ export interface ProjectileWeaponDefinition extends WeaponDefinitionBase {
 
 export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
   readonly deliveryKind: "melee";
+  /** Optional forward sector; absent retains the original narrow stab corridor. */
+  readonly arcRadians?: number;
   /** Length of the forward stab from the player's centre. */
   readonly reach: number;
   /** Width of the grabber head's contact corridor. */
@@ -441,6 +453,8 @@ export const upgradeCategories = [
 export type UpgradeCategory = (typeof upgradeCategories)[number];
 
 export interface UpgradeDefinition {
+  /** Own stat gains affect only this equipped weapon. Global cards omit it. */
+  readonly ownerWeaponId?: WeaponId;
   readonly id: UpgradeId;
   readonly effects: readonly UpgradeEffect[];
   /** `null` is a repeatable general stat upgrade with no per-run cap. */

@@ -1168,3 +1168,47 @@ P5/P6 external acceptance remains release-blocking; C1 overall and C2–C7 remai
 open. No push/new PR/merge/deployment/workflow dispatch.
 Final recording timestamp 2026-10-19T23:11:01.933941+00:00; actual elapsed
 405.9seconds (90min maximum, finished early).
+
+
+## Session14 — C1 second tool / 2026-10-20 Sydney
+
+Start2026-10-19 23:15:13UTC (10:15:13AEDT); deadline00:45:13UTC
+(11:45:13AEDT); final20-minute verification/recording reserve starts00:25:13UTC.
+Clean3b2b927 on existingcodex/v0.4.3; read authorities in order and C1/theme/
+product/save boundaries. Read-only GitHub confirms mergedPR26 head2806720 as
+c6daeb6 and successful39189877476 only2806720. No later-head CI claim.
+Exact C1 paths claimed before runtime edits. Owner's gate-order approval remains
+in effect; external browser/device acceptance stays release-blocking.
+
+Session14 final verification/recording: C1 complete locally. Normal level-up
+acquires Cleanup Vacuum/Runic Fan; cone reuses melee contract; owned upgrades
+reside beside definitions and affect their own equipped slot. Shared modifiers/
+tiers/category spread remain; acquisition one-time/common. Separate on-hit
+splash ledger, exact capped kills/XP, owner source and floating-number flush;
+skip targets already killed by previous splash. Pause exposes secondary stats.
+No rate0.5/sprite/enemy tuning/dependency/save/physics teardown change.
+509units/59files,typecheck/lint/build/diff pass. New4-case run passes14.997s;
+combined14 pass26.152s. Review catches missing floating splash-number wiring;
+final affected5 pass30.031s (4 C1 overlap+terminal aggregation), zero retries/
+errors/flakiness;15 unique cases total. Both-theme real-XP/80ms keyboard offer
+selection and owner-only14.4 reach gain; eco27actual/10.2splash/3kills/3XP,
+30.6display intent fully flushed; controlled dead-primary survivor1HP/2kills/
+10.1damage. Default/Low short300-mixed rounds advance>2000sim-ms at0.5,
+peak300/current242/246, backlog0, exact ledger/no page errors.
+Actual rendererSwiftShader WebGL,1600×900FIT displayed1280×720/DPR1/test mode.
+Windows Desktop-profile UA persists despite undefined override; no physical
+Windows/hardware acceptance or separate actual browser.version claim.
+All eight balance models/both themes/three difficulties pass explicit commands;
+initial unsupportedtheme=all request rejected before any simulation. Bands assume
+contact and omit movement/overkill/extra tiered damage purchases.
+Screenshots inspected under testInfo.outputPath; final source hashes verified.
+No full/native/long/startup/performance campaign repeated; full regression and
+remaining P5/P6 external device/browser gate stay explicitly deferred. Build
+marker exclusion inspected without a repeated production/startup browser guard.
+Owned test servers/browsers cleaned,4173 has no listener;4213/unknowns untouched.
+Final verification/recording starts23:24:54UTC, ahead of00:25:13 final20-minute
+reserve. Report/status/checklist/reconciliation/progress/master updated together;
+Session14 retired after recording and Session15 C2 successor written. C2–C7
+remain unstarted; no push/new PR/merge/deploy/workflow dispatch.
+Final review timestamp 2026-10-19T23:33:44.528178+00:00; actual elapsed
+1111.5seconds, within90-minute maximum, finished early.

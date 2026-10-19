@@ -1,0 +1,216 @@
+{
+  "mode": "deterministic coarse simulator, not a browser survival run",
+  "newModels": [
+    "two-tools-single",
+    "two-tools-packed"
+  ],
+  "assumptions": "Acquire at level2; sustained contact; no additional damage picks. Packed is ideal authored direct/splash target-cap contact, without overkill. No cone occupancy or movement simulation. Existing model definitions stay unchanged.",
+  "reports": [
+    {
+      "theme": "eco-guardian",
+      "command": "npm run balance -- --theme eco-guardian --build all --difficulty all --ttk",
+      "stdoutSha256": "a48e51383fd7dac9079c2b7919e6ca0f67c8fad6657d0b70101851f126cf7091",
+      "summaries": [
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 20  \u00b7  kills 437  \u00b7  peak live 300  \u00b7  total xp 511"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 25  \u00b7  kills 615  \u00b7  peak live 275  \u00b7  total xp 963"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 19  \u00b7  kills 363  \u00b7  peak live 300  \u00b7  total xp 418"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 32  \u00b7  kills 867  \u00b7  peak live 24  \u00b7  total xp 2040"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 32  \u00b7  kills 889  \u00b7  peak live 1  \u00b7  total xp 2133"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 32  \u00b7  kills 889  \u00b7  peak live 1  \u00b7  total xp 2133"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 25  \u00b7  kills 603  \u00b7  peak live 287  \u00b7  total xp 970"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty beginner  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 31  \u00b7  kills 821  \u00b7  peak live 76  \u00b7  total xp 1820"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 18  \u00b7  kills 345  \u00b7  peak live 300  \u00b7  total xp 366"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 22  \u00b7  kills 549  \u00b7  peak live 300  \u00b7  total xp 684"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 16  \u00b7  kills 280  \u00b7  peak live 300  \u00b7  total xp 292"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 27  \u00b7  kills 738  \u00b7  peak live 300  \u00b7  total xp 1158"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 27  \u00b7  kills 733  \u00b7  peak live 300  \u00b7  total xp 1141"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 35  \u00b7  kills 1146  \u00b7  peak live 1  \u00b7  total xp 2746"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 21  \u00b7  kills 508  \u00b7  peak live 300  \u00b7  total xp 595"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty normal  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 29  \u00b7  kills 873  \u00b7  peak live 273  \u00b7  total xp 1525"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 18  \u00b7  kills 353  \u00b7  peak live 300  \u00b7  total xp 361"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 22  \u00b7  kills 589  \u00b7  peak live 300  \u00b7  total xp 666"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 16  \u00b7  kills 275  \u00b7  peak live 300  \u00b7  total xp 276"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 26  \u00b7  kills 748  \u00b7  peak live 300  \u00b7  total xp 1044"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 25  \u00b7  kills 727  \u00b7  peak live 300  \u00b7  total xp 990"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 37  \u00b7  kills 1463  \u00b7  peak live 9  \u00b7  total xp 3491"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 21  \u00b7  kills 520  \u00b7  peak live 300  \u00b7  total xp 552"
+        },
+        {
+          "configuration": "theme eco_guardian  \u00b7  difficulty experienced  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 29  \u00b7  kills 921  \u00b7  peak live 300  \u00b7  total xp 1450"
+        }
+      ]
+    },
+    {
+      "theme": "knight-magic",
+      "command": "npm run balance -- --theme knight-magic --build all --difficulty all --ttk",
+      "stdoutSha256": "3a0533e64da69c90663dd43144fc994b9990c1168e685922e5751d0966814b67",
+      "summaries": [
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 19  \u00b7  kills 352  \u00b7  peak live 300  \u00b7  total xp 441"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 26  \u00b7  kills 564  \u00b7  peak live 300  \u00b7  total xp 1063"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 16  \u00b7  kills 259  \u00b7  peak live 300  \u00b7  total xp 295"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 32  \u00b7  kills 793  \u00b7  peak live 96  \u00b7  total xp 2128"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 33  \u00b7  kills 849  \u00b7  peak live 40  \u00b7  total xp 2374"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 34  \u00b7  kills 889  \u00b7  peak live 1  \u00b7  total xp 2575"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 25  \u00b7  kills 520  \u00b7  peak live 300  \u00b7  total xp 911"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty beginner  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 32  \u00b7  kills 809  \u00b7  peak live 81  \u00b7  total xp 2123"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 15  \u00b7  kills 235  \u00b7  peak live 300  \u00b7  total xp 235"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 22  \u00b7  kills 487  \u00b7  peak live 300  \u00b7  total xp 674"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 13  \u00b7  kills 165  \u00b7  peak live 300  \u00b7  total xp 165"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 26  \u00b7  kills 599  \u00b7  peak live 300  \u00b7  total xp 1088"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 25  \u00b7  kills 571  \u00b7  peak live 300  \u00b7  total xp 987"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 37  \u00b7  kills 1146  \u00b7  peak live 29  \u00b7  total xp 3305"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 20  \u00b7  kills 422  \u00b7  peak live 300  \u00b7  total xp 520"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty normal  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 30  \u00b7  kills 822  \u00b7  peak live 300  \u00b7  total xp 1741"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 14  \u00b7  kills 203  \u00b7  peak live 300  \u00b7  total xp 203"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 22  \u00b7  kills 542  \u00b7  peak live 300  \u00b7  total xp 681"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 12  \u00b7  kills 143  \u00b7  peak live 300  \u00b7  total xp 143"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 25  \u00b7  kills 608  \u00b7  peak live 300  \u00b7  total xp 902"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 23  \u00b7  kills 548  \u00b7  peak live 300  \u00b7  total xp 735"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 39  \u00b7  kills 1463  \u00b7  peak live 72  \u00b7  total xp 4120"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 18  \u00b7  kills 345  \u00b7  peak live 300  \u00b7  total xp 391"
+        },
+        {
+          "configuration": "theme knight_magic  \u00b7  difficulty experienced  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "result": "final level 30  \u00b7  kills 905  \u00b7  peak live 300  \u00b7  total xp 1692"
+        }
+      ]
+    }
+  ]
+}

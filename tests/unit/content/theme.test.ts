@@ -94,7 +94,8 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.tokens.palette.player).not.toBe(alternateTheme.tokens.palette.player);
     expect(knightMagicTheme.characters[0]?.id).toBe(alternateTheme.characters[0]?.id);
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
-    expect(knightMagicTheme.weapons).toEqual(alternateTheme.weapons);
+    expect(knightMagicTheme.weapons[0]).toEqual(alternateTheme.weapons[0]);
+    expect(knightMagicTheme.weapons[1]?.id).toBe(archetypeIds.weapon.secondary);
     expect(knightMagicTheme.enemies).toEqual(alternateTheme.enemies);
     expect(knightMagicTheme.shrines).toEqual(alternateTheme.shrines);
     expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);

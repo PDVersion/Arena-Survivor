@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 readiness remain gated.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 external readiness remain release-blocking; owner explicitly permits planned C1–C7 after software checks.**
 
 ## How to maintain this file
 
@@ -2588,6 +2588,34 @@ its first exact-total assertion used fractional armour instead of armour points
 and was corrected in test data, not gameplay. New tool/owned offers/splash and
 C1's combined balance/readability/stress acceptance remain next. See
 `build/content/C1_FOUNDATION_REPORT.md`. No new reconciliation ID is allocated.
+
+Session14 C1 continuation (2026-10-20): the second tool ships through ordinary
+level-up acquisition and the existing melee union (optional cone). Weapon-owned
+entries are authored beside their definitions, merged into the shared registry,
+filtered by equipped owner and resolved into owner-local modifiers; global gains
+and category spread remain intact. Acquisition is one-time and unscaled. Display
+its level0→1 separately from an already-owned weapon track, and inspect secondary
+stats as well as starter stats so an acquisition card's numbers remain verifiable.
+Collection Sweep's trigger belongs only to the weapon that declares its track.
+
+On-hit splash is separate from kill detonation in damage source/ledger. A primary
+hit list can contain an actor killed by a prior splash: skip it before another
+hit/response rather than granting phantom damage. Real Phaser regression leaves
+one health on the surviving controlled target and commits only two kills. Capped
+ledger damage and intended floating-number damage are different authorities;
+wire splash into the existing number aggregator too. Exact eco probe reconciles
+27 actual /10.2 splash, three kills/3XP, and flushes all30.6 intended display
+damage including overkill. Existing causal/death claims and bounded kill response
+remain; no second physics teardown. Frame-bound keyboard offer choices use80ms.
+
+509units/59files, types/lint/build/diff and15 unique affected serial browser cases
+verify C1 locally. Both themes/all build models/three difficulties run balance.
+Contact/packed simulator bands do not model movement/overkill/tiered damage picks;
+short300-actor rounds are not throughput/soak/hardware acceptance. Record the
+actual renderer and separate Desktop-profile Windows UA from physical macOS:
+`test.use(undefined)` did not clear that profile in these runs. P5/P6 external
+release gate remains open, C2 is next, and no matching-head CI/publication is
+inferred. See `build/content/C1_SECOND_TOOL_REPORT.md` and source/result hashes.
 
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 

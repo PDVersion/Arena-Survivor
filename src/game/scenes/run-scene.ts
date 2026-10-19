@@ -88,6 +88,7 @@ import { PauseMenuUi } from "../ui/pause-menu-ui";
 import {
   describeUpgrade,
   selectPlayerStats,
+  selectEquippedWeaponStats,
   selectWorldLines,
 } from "../systems/upgrades/describe-upgrade";
 import {
@@ -158,6 +159,8 @@ import {
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
+import { ConeAttackActor } from "../entities/cone-attack-actor";
+import { selectSplashHits } from "../systems/weapons/on-hit-splash";
 import { recordWeaponAttack } from "../systems/weapons/weapon-loadout";
 import {
   completeCollectionSweepAttack,
@@ -334,7 +337,7 @@ interface MovementKeys {
   readonly right: Phaser.Input.Keyboard.Key;
 }
 
-type DamageSource = "direct" | "explosion" | "chained_explosion";
+type DamageSource = "direct" | "splash" | "explosion" | "chained_explosion";
 interface ExplosionEventPayload {
   readonly x: number;
   readonly y: number;
@@ -562,6 +565,7 @@ export class RunScene extends Phaser.Scene {
 
     this.runState = createRunState({
       difficulty,
+      weaponSlotCount: this.runTheme.weaponSlotCount,
       themeId: this.runTheme.id,
       characterId: selectedCharacter.id,
       baseStats: selectedCharacter.baseStats,
@@ -1850,7 +1854,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || this.runState.status !== "playing" || !this.projectileGroup) return;
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers);
+    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id]);
     const target = weapon.deliveryKind === "melee"
       ? selectMeleeAim(this.player, this.enemies, weapon.reach)
       : findNearestTarget(this.player, this.enemies);
@@ -1875,7 +1879,8 @@ export class RunScene extends Phaser.Scene {
       );
       if (hits.length === 0) return;
       this.activeGrabbers += 1;
-      new GrabberActor(
+      const AttackActor = weapon.arcRadians === undefined ? GrabberActor : ConeAttackActor;
+      new AttackActor(
         this,
         this.player.x,
         this.player.y,
@@ -1889,6 +1894,7 @@ export class RunScene extends Phaser.Scene {
       if (damage.critical) this.criticalShots += 1;
       this.runState = observeRunCrit(this.runState, damage.tier);
       for (const enemy of hits) {
+        if (!enemy.active || enemy.defeated) continue;
         accumulateDamage(
           this.damageNumbers,
           { targetId: enemy.targetId, amount: damage.damage, tier: damage.tier, x: enemy.x, y: enemy.y },
@@ -1901,6 +1907,7 @@ export class RunScene extends Phaser.Scene {
           criticalBonus: damage.bonusDamage,
           piercingMomentum: 0,
         });
+        this.applyOnHitSplash(enemy, weapon, damage.damage, damage.tier);
         this.applyWeaponKnockback(enemy, weapon);
         this.meleeHits += 1;
         this.firstMeleeHitAtMs ??= this.runState.elapsedMs;
@@ -1972,7 +1979,8 @@ export class RunScene extends Phaser.Scene {
     weapon: Extract<ReturnType<typeof resolveWeaponDefinition>, { deliveryKind: "melee" }>,
     damage: ReturnType<typeof rollDamage>,
   ): void {
-    if (!this.runState || !this.player) return;
+    if (!this.runState || !this.player || !weapon.upgrades?.some((upgrade) =>
+      upgrade.effects.some((effect) => effect.kind === "skill.level" && effect.skillId === archetypeIds.skill.collectionSweep))) return;
     const effect = findSkillEffect(
       this.runTheme.skills,
       archetypeIds.skill.collectionSweep,
@@ -2078,9 +2086,26 @@ export class RunScene extends Phaser.Scene {
       criticalBonus: projectile.criticalBonusDamage,
       piercingMomentum: projectile.damage - projectile.baseDamage,
     });
+    this.applyOnHitSplash(enemy, projectile.weapon, projectile.damage, projectile.critTier);
     this.applyWeaponKnockback(enemy, projectile.weapon);
     projectile.registerHit(enemy.targetId);
     this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
+  }
+
+  /** A hit may splash even when it kills; splash never recursively triggers splash. */
+  private applyOnHitSplash(primary: EnemyActor, weapon: WeaponDefinition, rolledDamage: number, tier: number): void {
+    if (!weapon.splash || !this.runState) return;
+    const targets = selectSplashHits(primary, primary.targetId, weapon.splash, this.enemies);
+    for (const enemy of targets) {
+      const amount = rolledDamage * weapon.splash.damageMultiplier;
+      accumulateDamage(this.damageNumbers,
+        { targetId: enemy.targetId, amount, tier, x: enemy.x, y: enemy.y },
+        this.runState.elapsedMs, DAMAGE_NUMBER_WINDOW_MS);
+      this.commitEnemyDamage(enemy, amount, "splash", undefined, {
+        weapon, directBase: 0, criticalBonus: 0, piercingMomentum: 0,
+      });
+    }
+    if (targets.length > 0) this.renderCollectionSweepCue(primary.x, primary.y, weapon.splash.radius);
   }
 
   /** Valid enemy contact nudges the player without turning an enemy into a wall. */
@@ -2160,8 +2185,8 @@ export class RunScene extends Phaser.Scene {
       kind: "death.committed",
       entityId: enemy.targetId,
       provenance: {
-        sourceCategory: damageSource === "direct" ? "weapon" : "skill",
-        sourceId: damageSource === "direct" ? direct?.weapon.id : archetypeIds.skill.onKillExplosion,
+        sourceCategory: damageSource === "direct" || damageSource === "splash" ? "weapon" : "skill",
+        sourceId: damageSource === "direct" || damageSource === "splash" ? direct?.weapon.id : archetypeIds.skill.onKillExplosion,
         parentEventId,
       },
       payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite) },
@@ -2232,7 +2257,7 @@ export class RunScene extends Phaser.Scene {
     );
     const chainLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.chainReaction);
     const chain = chainEffect && chainLevel > 0 ? resolveChain(chainEffect, chainLevel) : undefined;
-    const depth = damageSource === "direct" ? 0 : damageSource === "explosion" ? 1 : 2;
+    const depth = damageSource === "direct" || damageSource === "splash" ? 0 : damageSource === "explosion" ? 1 : 2;
 
     if (
       explosionEffect &&
@@ -2531,6 +2556,8 @@ export class RunScene extends Phaser.Scene {
     const luck = this.runState.player.stats.luck;
     const drawn = selectUpgradeChoices(this.runTheme.upgrades, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
+      weaponSlots: this.runState.weaponSlots,
+      weaponSlotCount: this.runState.weaponSlotCount,
       luck,
       skillLevels: this.runState.skillLevels,
       skills: this.runTheme.skills,
@@ -2587,7 +2614,7 @@ export class RunScene extends Phaser.Scene {
       ? selectRunSummaryValues(runState, this.runTheme.copy.vocabulary, this.runTheme.copy.content)
       : undefined;
     return {
-      stats: runState ? selectPlayerStats(runState, this.runTheme) : [],
+      stats: runState ? [...selectPlayerStats(runState, this.runTheme), ...selectEquippedWeaponStats(runState, this.runTheme)] : [],
       world: runState
         ? [...selectWorldLines(
             runState.world,
@@ -2700,6 +2727,7 @@ export class RunScene extends Phaser.Scene {
       choice,
       (skillId) => skillMaxLevel(this.runTheme.skills, skillId),
       tierMultiplier(this.runTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
+      this.runTheme.weapons,
     );
     this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {
@@ -3061,6 +3089,7 @@ export class RunScene extends Phaser.Scene {
       combat: {
         spriteFramesByRole: Object.fromEntries(this.enemyDefinitions.map((definition) => [definition.id, [...this.enemies].find((enemy) => enemy.definition.id === definition.id)?.view?.frame ?? null])),
         weaponId: this.weaponDefinition?.id ?? null,
+        weaponSlots: this.runState?.weaponSlots ?? [],
         deliveryKind: this.weaponDefinition?.deliveryKind ?? null,
         enemyId: this.enemyDefinition?.id ?? null,
         projectiles: this.projectiles.size,
@@ -3228,7 +3257,7 @@ export class RunScene extends Phaser.Scene {
           getSessionStatistics(this.liveRunContribution()),
         ).map((line) => ({ label: line.label, display: line.display })),
         statLines: this.runState
-          ? selectPlayerStats(this.runState, this.runTheme).map((line) => ({
+          ? [...selectPlayerStats(this.runState, this.runTheme), ...selectEquippedWeaponStats(this.runState, this.runTheme)].map((line) => ({
               key: line.key,
               display: line.display,
             }))

@@ -38,5 +38,10 @@ export interface WorldModifyEffect {
   readonly xpMultiplier?: number;
 }
 
-export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect;
-import type { SkillId } from "./ids";
+export interface EquipWeaponEffect {
+  readonly kind: "weapon.equip";
+  readonly weaponId: WeaponId;
+}
+
+export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect;
+import type { SkillId, WeaponId } from "./ids";

@@ -57,6 +57,7 @@ describe("authoritative run statistics", () => {
       direct: 10,
       criticalBonus: 10,
       piercingMomentum: 5,
+      splash: 0,
       explosion: 7,
       chainedExplosion: 3,
       remainder: 5,

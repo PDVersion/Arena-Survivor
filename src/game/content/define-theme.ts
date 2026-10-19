@@ -7,6 +7,7 @@ import {
   upgradeRarities,
   worldKeys,
   type ThemeManifest,
+  type UpgradeDefinition,
 } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
@@ -47,6 +48,7 @@ const vocabularyKeys = [
   "directDamage",
   "criticalBonusDamage",
   "piercingMomentumDamage",
+  "splashDamage",
   "explosionDamage",
   "chainedExplosionDamage",
   "remainderDamage",
@@ -230,6 +232,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (weapon.critDamage !== undefined && (!Number.isFinite(weapon.critDamage) || weapon.critDamage < 1)) {
       issues.push(`${weapon.id} critDamage must be at least one`);
     }
+    if (weapon.splash && (!Number.isFinite(weapon.splash.radius) || weapon.splash.radius <= 0 ||
+      !Number.isFinite(weapon.splash.damageMultiplier) || weapon.splash.damageMultiplier <= 0 ||
+      !Number.isSafeInteger(weapon.splash.targetCap) || weapon.splash.targetCap < 1)) {
+      issues.push(`${weapon.id} has invalid bounded on-hit splash`);
+    }
     if (weapon.deliveryKind === "projectile") {
       if (!Number.isFinite(weapon.projectileSpeed) || weapon.projectileSpeed <= 0) {
         issues.push(`${weapon.id} projectileSpeed must be greater than zero`);
@@ -251,6 +258,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         issues.push(`${weapon.id} projectile flight cannot reach its declared range`);
       }
     } else {
+      if (weapon.arcRadians !== undefined && (!Number.isFinite(weapon.arcRadians) || weapon.arcRadians <= 0 || weapon.arcRadians > Math.PI)) {
+        issues.push(`${weapon.id} arcRadians must be in (0, pi]`);
+      }
       if (!Number.isFinite(weapon.reach) || weapon.reach <= 0) {
         issues.push(`${weapon.id} reach must be greater than zero`);
       }
@@ -387,10 +397,22 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const upgrade of upgrades) {
     if (upgradeIds.has(upgrade.id)) issues.push(`duplicate upgrade id: ${upgrade.id}`);
     upgradeIds.add(upgrade.id);
+    if (upgrade.ownerWeaponId && (!weaponIds.has(upgrade.ownerWeaponId) ||
+      !weapons.find((weapon) => weapon.id === upgrade.ownerWeaponId)?.upgrades?.some((entry: UpgradeDefinition) => entry === upgrade))) {
+      issues.push(`${upgrade.id} must be authored beside its owning weapon`);
+    }
+    const acquisition = upgrade.effects?.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "weapon.equip") ?? [];
+    if (acquisition.length > 0 && (acquisition.length !== 1 || upgrade.effects.length !== 1 || upgrade.maxLevel !== 1 || upgrade.ownerWeaponId)) {
+      issues.push(`${upgrade.id} acquisition must be a standalone one-time choice`);
+    }
     if (!Array.isArray(upgrade.effects) || upgrade.effects.length === 0) {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
+        if (effect.kind === "weapon.equip") {
+          if (!weaponIds.has(effect.weaponId)) issues.push(`${upgrade.id} references missing weapon: ${effect.weaponId}`);
+          continue;
+        }
         if (effect.kind === "skill.level") {
           if (!Object.values(archetypeIds.skill).includes(effect.skillId)) {
             issues.push(`${upgrade.id} references unsupported skill: ${String(effect.skillId)}`);
@@ -416,6 +438,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
           issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
           continue;
         }
+        if (upgrade.ownerWeaponId && !effect.target.startsWith("weapon.")) {
+          issues.push(`${upgrade.id} owned stat effect must target a weapon`);
+        }
         if (!upgradeStatTargets.includes(effect.target)) {
           issues.push(`${upgrade.id} has unsupported stat target: ${String(effect.target)}`);
         }
@@ -438,6 +463,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (!upgradeCategories.includes(upgrade.category)) {
       issues.push(`${upgrade.id} has an unsupported category: ${String(upgrade.category)}`);
+    }
+  }
+  for (const weapon of weapons) {
+    for (const upgrade of weapon.upgrades ?? []) {
+      if (upgrade.ownerWeaponId !== weapon.id || !upgrades.includes(upgrade)) issues.push(`${weapon.id} owned upgrade registry mismatch`);
     }
   }
   // Upgrade pools are theme-owned. Only the universal damage role is required;

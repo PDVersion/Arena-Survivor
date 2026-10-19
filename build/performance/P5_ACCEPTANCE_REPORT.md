@@ -267,3 +267,10 @@ missing browser/device evidence remains release-blocking. P5 is still pending,
 and no accepted campaign is repeated. C1's runtime foundation is verified in
 `../content/C1_FOUNDATION_REPORT.md`; earlier P5/P6 frozen measurements and the
 portable pack remain evidence for their recorded source, not later runtime.
+
+
+Session14 (2026-10-20): C1's second-tool local gate is verified; see
+`../content/C1_SECOND_TOOL_REPORT.md`. This adds scoped gameplay/owner-upgrade/
+splash and short affected stress evidence, not P5 compatibility/native/long-play
+acceptance. Missing browser/platform/older physical-device evidence remains
+release-blocking. Original source-bound P5/P6 measurements/pack stay historical.

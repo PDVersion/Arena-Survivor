@@ -1,9 +1,11 @@
-import type { SkillDefinition, UpgradeCategory, UpgradeDefinition, UpgradeRarity } from "../core/archetypes/contracts";
-import type { SkillId, UpgradeId } from "../core/archetypes/ids";
+import type { SkillDefinition, UpgradeCategory, UpgradeDefinition, UpgradeRarity, WeaponDefinition } from "../core/archetypes/contracts";
+import type { SkillId, UpgradeId, WeaponId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 import { applyWorldModifier, type WorldState } from "./chaos/world-modifiers";
 import { raiseSkillLevel, skillLevel, skillMaxLevel, type SkillLevels } from "./skills/resolve-skill";
 import { scaleSkillLevels, scaleStatValue } from "./upgrades/upgrade-tiers";
+
+import { equipWeapon, type WeaponSlotState } from "./weapons/weapon-loadout";
 
 export type RandomSource = () => number;
 
@@ -14,6 +16,9 @@ export interface WeaponStatModifiers {
 }
 
 export interface UpgradeableState {
+  readonly weaponSlots?: readonly WeaponSlotState[];
+  readonly weaponSlotCount?: number;
+  readonly ownedWeaponModifiers?: Readonly<Partial<Record<WeaponId, WeaponStatModifiers>>>;
   readonly player: {
     readonly health: number;
     readonly stats: PlayerBaseStats;
@@ -50,9 +55,15 @@ export function upgradeLevel(
 export function isUpgradeAvailable(
   upgrade: UpgradeDefinition,
   selectedUpgradeIds: readonly UpgradeId[],
-  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills">,
+  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills" | "weaponSlots" | "weaponSlotCount">,
 ): boolean {
   if (upgrade.maxLevel !== null && upgradeLevel(selectedUpgradeIds, upgrade.id) >= upgrade.maxLevel) return false;
+  if (upgrade.ownerWeaponId && !context?.weaponSlots?.some((slot) => slot.weaponId === upgrade.ownerWeaponId)) return false;
+  for (const effect of upgrade.effects) {
+    if (effect.kind !== "weapon.equip") continue;
+    if (!context?.weaponSlots || !context.weaponSlotCount || context.weaponSlots.length >= context.weaponSlotCount ||
+      context.weaponSlots.some((slot) => slot.weaponId === effect.weaponId)) return false;
+  }
   // Strong rolls can fill a skill before its pick-count cap. Mixed upgrades
   // remain available while any effect can still change the run.
   const skills = context?.skills;
@@ -90,6 +101,8 @@ export function rarityWeight(rarity: UpgradeRarity, luck = 0): number {
 }
 
 export interface UpgradeSelectionContext {
+  readonly weaponSlots?: readonly WeaponSlotState[];
+  readonly weaponSlotCount?: number;
   readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly luck?: number;
   readonly skillLevels?: SkillLevels;
@@ -167,14 +180,26 @@ export function applyUpgrade<T extends UpgradeableState>(
   upgrade: UpgradeDefinition,
   skillMaxLevel: (skillId: SkillId) => number = () => 1,
   multiplier = 1,
+  weapons: readonly WeaponDefinition[] = [],
 ): T {
+  if (!isUpgradeAvailable(upgrade, state.selectedUpgradeIds, state)) return state;
   const stats = { ...state.player.stats };
   let health = state.player.health;
   const weaponModifiers = { ...state.weaponModifiers };
+  const ownedWeaponModifiers = { ...state.ownedWeaponModifiers };
+  const ownModifiers = upgrade.ownerWeaponId
+    ? { ...(ownedWeaponModifiers[upgrade.ownerWeaponId] ?? createWeaponStatModifiers()) }
+    : weaponModifiers;
+  let weaponSlots = state.weaponSlots;
   let skillLevels = state.skillLevels;
   let world = state.world;
 
   for (const effect of upgrade.effects) {
+    if (effect.kind === "weapon.equip") {
+      if (!weaponSlots || !state.weaponSlotCount) return state;
+      weaponSlots = equipWeapon(weaponSlots, effect.weaponId, state.weaponSlotCount, weapons);
+      continue;
+    }
     if (effect.kind === "skill.level") {
       const steps = scaleSkillLevels(multiplier);
       for (let step = 0; step < steps; step += 1) {
@@ -221,19 +246,22 @@ export function applyUpgrade<T extends UpgradeableState>(
         stats.regeneration += value;
         break;
       case "weapon.pierce":
-        weaponModifiers.pierce += value;
+        ownModifiers.pierce += value;
         break;
       case "weapon.projectileCount":
-        weaponModifiers.projectileCount += value;
+        ownModifiers.projectileCount += value;
         break;
       case "weapon.range":
-        weaponModifiers.range += value;
+        ownModifiers.range += value;
         break;
     }
   }
 
+  if (upgrade.ownerWeaponId) ownedWeaponModifiers[upgrade.ownerWeaponId] = Object.freeze(ownModifiers);
   return {
     ...state,
+    ...(weaponSlots ? { weaponSlots } : {}),
+    ownedWeaponModifiers: Object.freeze(ownedWeaponModifiers),
     player: { ...state.player, health, stats },
     weaponModifiers,
     skillLevels,

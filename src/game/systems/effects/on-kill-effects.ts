@@ -40,9 +40,9 @@ export function selectBloodlust(
 }
 
 export function shouldExplodeOnKill(
-  damageSource: "direct" | "explosion" | "chained_explosion",
+  damageSource: "direct" | "splash" | "explosion" | "chained_explosion",
   explosionEnabled: boolean,
   chainReactionEnabled: boolean,
 ): boolean {
-  return explosionEnabled && (damageSource === "direct" || chainReactionEnabled);
+  return explosionEnabled && (damageSource === "direct" || damageSource === "splash" || chainReactionEnabled);
 }

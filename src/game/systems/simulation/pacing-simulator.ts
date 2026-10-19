@@ -179,6 +179,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     }
 
     const context: BuildContext = {
+      secondaryWeapon: theme.weapons.find((entry) => entry.id !== weapon.id),
       weaponDamage: weapon.damage,
       weaponCooldownMs: weapon.cooldownMs,
       baseCritChance: character.baseStats.critChance,
@@ -278,6 +279,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
       const progress = bucket.endMs / options.durationMs;
       const modifiers = selectWorldModifiers(world, theme.tuning.difficulty, progress);
       const dps = options.build.damagePerSecond(bucket.level, {
+        secondaryWeapon: theme.weapons.find((entry) => entry.id !== weapon.id),
         weaponDamage: weapon.damage,
         weaponCooldownMs: weapon.cooldownMs,
         baseCritChance: character.baseStats.critChance,

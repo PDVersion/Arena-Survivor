@@ -63,6 +63,7 @@ export const alternateTheme = defineTheme({
       directDamage: "Test direct damage",
       criticalBonusDamage: "Test critical bonus",
       piercingMomentumDamage: "Test momentum damage",
+      splashDamage: "Test splash damage",
       explosionDamage: "Test explosion damage",
       chainedExplosionDamage: "Test chained damage",
       remainderDamage: "Test remainder damage",
@@ -177,6 +178,7 @@ export const alternateTheme = defineTheme({
   weapons: [
     {
       id: archetypeIds.weapon.starter,
+      upgrades: [],
       deliveryKind: "projectile",
       damage: 10,
       cooldownMs: 1000,

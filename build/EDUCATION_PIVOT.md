@@ -574,3 +574,13 @@ a claim about environmental persistence. Starting stats in the sprite browser
 come from actual difficulty-resolved theme definitions. A future stat book should
 reuse those definitions/selectors and clearly distinguish authored, starting and
 live modified values; that future feature is not implemented here.
+
+
+## V0.4.3 C1 promotion — bounded second tool
+
+The selected content phase adds a short-cone Cleanup Vacuum beside the unchanged
+starter grabber. Two automatic slots; no manual switching or material matrix.
+Three direct targets and bounded on-hit neighbour splash are authored game rules,
+not sourced factual handling claims. The shared ledger names hit splash separately
+from on-kill detonation. Tool-owned upgrades remain in each theme's weapon data.
+No new enemy material, fact card, persistence or sprite is introduced here.

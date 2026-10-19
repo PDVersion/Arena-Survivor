@@ -311,6 +311,7 @@ export interface ArenaTestSnapshot {
   }>;
   readonly combat?: Readonly<{
     weaponId: string | null;
+    weaponSlots: readonly { readonly weaponId: string; readonly nextAttackAtMs: number }[];
     deliveryKind: "projectile" | "melee" | null;
     enemyId: string | null;
     projectiles: number;

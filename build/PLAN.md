@@ -191,6 +191,17 @@ general upgrade pool.
 The first priority is making this one action legible and satisfying before
 adding more weapons or restoring the parked projectile interaction families.
 
+V0.4.3 C1 adds one contrasting second automatic tool through ordinary level-up
+choices, after the readable starter and software prerequisites. The Cleanup
+Vacuum resolves a short forward cone of at most three primary targets, with
+bounded on-hit splash around each hit. It needs no kill or manual switching.
+Both slots keep independent simulation clocks. Longer Grabber/Collection Sweep
+belong to the grabber; the Vacuum has its own reach track. Shared damage,
+attack-speed and crit gains still improve both. On-hit splash is a separate
+ledger category from on-kill Compaction Burst, which remains parked in eco.
+This is a game mechanic, not a material effectiveness or real-world handling
+claim. New tools use primitives until the V0.4.4 roster/sprite gate.
+
 ---
 
 # Enemy Archetypes

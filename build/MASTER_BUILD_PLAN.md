@@ -2974,3 +2974,40 @@ No full/stress/native/long/startup campaign repeated or later-head CI inferred.
 See [C1 foundation report](content/C1_FOUNDATION_REPORT.md). C1 second tool,
 owned offers, splash, simulator and combined gate remain in the active plan;
 C2–C7 are not started. No new publication or workflow dispatch.
+
+
+<a id="v0-4-3-c1"></a>
+### V0.4.3 C1 — second tool, owned upgrades and on-hit splash (2026-10-20)
+
+Verified local phase on `codex/v0.4.3`, following foundation3b2b927. Ordinary
+level-up offers equip Cleanup Vacuum / Runic Fan in the empty second slot.
+Existing melee/projectile union extended with optional authored sector geometry;
+no parallel delivery system. Both slots fire independently. Weapon-owned offers
+live beside their definitions, require that owner equipped, and apply local
+modifiers while shared upgrades remain shared. Acquisition is one-time/common;
+tier scaling/rounding/floors remain for progression. Pause stats expose both tools.
+
+Bounded non-recursive on-hit splash has its own capped applied-damage ledger
+column, weapon source and floating-number aggregation; on-kill explosion stays
+distinct. Skip primary-list entries already killed by prior splash. The exact
+eco probe records27 actual damage /10.2 splash /three kills /3XP, and flushes
+all30.6 intended display damage, overkill included. A controlled dead-primary
+probe leaves one health rather than gaining a false splash. Theme definitions
+own all ranges, angles, cadence, damage and limits. Rate0.5, XP, caps, sprites,
+persistence/dependencies and Phaser physics shutdown ownership remain unchanged.
+
+Typecheck,509units/59files,lint/build/diff pass.15 unique affected serial browser
+cases verified across the14-case combined gate and final5-case feedback subset;
+zero retries/failures. Both-theme real-XP/keyboard acquisition and owner-card
+choices, restart, bounded300-mixed active combat in Default/Low, prior independent
+clocks/in-flight provenance, cards/pause/resize/grabber/sweep and terminal damage
+flush. Test/SwiftShader WebGL, not hardware compatibility. Actual logical/display
+viewport, explicit fixture aids, partial/preliminary source distinctions, exact
+observations/hash records and reviewed screenshot paths are in
+[C1 report](content/C1_SECOND_TOOL_REPORT.md). Both themes/all eight models/three
+difficulties run through balance; two new contact bands model the second tool.
+
+C1's local gate passes; C2 evolution is next. P5/P6 missing browser/platform/older
+physical integrated-GPU evidence remains release-blocking under owner approval,
+not passed. Old frozen measurements/portable pack do not certify changed source.
+No full/long/native/startup campaign, new publication, dependency or sprite work.
