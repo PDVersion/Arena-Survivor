@@ -1098,21 +1098,39 @@ budget with >20min reserved capacity. No publication/remote mutation.
 
 Final recording timestamp 2026-10-19T02:05:36.870497+00:00; actual elapsed 695.9 seconds. Final 20-minute reserve was preserved; completed early. Reviewed133 changed-document links,52 single-attempt expected results, raw/source hashes; no4173 listener or owned runner remains.
 
+## Session 12 — P5 remaining checks and owner-authorized P6 software work
 
-## Session12 / P5 branded-browser checkpoint — 2026-10-19
+Start 2026-10-19 09:18:10 UTC /20:18:10 AEDT; 90-minute deadline10:48:10 UTC,
+final20-minute reserve begins10:28:10 UTC. Owner requests finishing P5, starting
+P6 and remaining V0.4.3. This supersedes the old no-P6-preparation instruction;
+acceptance is not waived. Owner confirms no older device available. Record
+physical acceptance pending; implement reproducible test support and fix evidenced
+software-test failures before content. No sprites or runtime speculative edits.
+PR26 is merged c6daeb6 (03:11:29UTC), matching-head2806720 run39189877476 succeeds
+with91 passed/two flaky/four skipped and zero audit findings; retries are not a
+clean gate. Native Safari26.5.2 driver preflight (20s bound) fails session creation
+because Allow remote automation is disabled; owned driver exits. Owner says they
+will enable it; wait for completion before another probe. Test support ownership
+added before edits; review4213 remains untouched. Consolidated software gate is
+serial/one worker/zero retries; no accepted long/native/engine campaign rerun.
 
-Owner requests finishing P5 and beginning P6/remaining V0.4.3. Start09:18:10UTC,
-deadline10:48:10UTC, final20min reserve starts10:28:10UTC. P6 software preparation
-is explicitly authorized, not an acceptance waiver. Owner confirms no older
-machine.26 focused Edge155/154 passes and two unpatched headed Firefox158/157.0.1
-smokes pass (25.038/25.390s), fresh profiles, verified vendor checksums/signatures,
-test eco/Normal/M5/WebGL. Safari26.5.2 still blocks session creation before any
-gameplay assertion. All own apps/images/mounts/drivers/profiles/servers cleaned;
-review4213 untouched. No runtime/asset/tuning/dependency change or defect.
-P5 stays open for remaining browser/platform/physical acceptance. P6 work is the
-following local slice, not a current phase-completion claim. The gate-order
-question for C1–C7 remains unanswered. PR26 merged2806720 as c6daeb6; run39189877476
-succeeds with91 browser passes/two flaky/four skips,488units, zero audit findings.
-No later local CI inference or new publication. Report/matrix/status/master and
-reconciliation updated; Session12 retired into Session13. P5 evidence is a local
-commit; P6 software implementation/results are recorded in their own next commit.
+Session12 final recording: P5 adds26 focused Edge155/154 passes and two unpatched
+headed Firefox158/157.0.1 smokes (25.038/25.390s), verified vendor packages and
+fresh profiles. Safari still rejects session creation; no gameplay pass. Owner
+confirms no older device. P5 remains open; the gate-order question has no reply.
+P6 software slice:96 browser/stress passes/six explicit opt-in skips/zero retries,
+488units/57files, types/lint/build/diff and zero-vulnerability audit. Final portable
+pack passes two checks including a real60-second export.18 frozen warmed windows
+at60/150/300 across Default/Low complete in1297.8s: p95 medians Default25.1/25.5/
+41.7ms, Low17.6/24.3/25.0ms, exact counts/cap300, no browser errors or >100ms stalls.
+SwiftShader comparisons do not establish older-device or production readiness.
+Original tool hashes/runtime maps match; no runtime/asset/tuning/dependency change.
+Final verification/recording begins10:27UTC, before the10:28 final20-minute reserve.
+No accepted long/native campaign repeated; no production/startup browser guard
+rerun. Owned apps/images/mounts/profiles/drivers/servers removed;4213 untouched.
+P5 and overall acceptance remain pending; C1–C7 not started without the requested
+gate-order decision. Session12 recorded in master/reports; successor Session13.
+Two reviewed local commits separate P5 evidence and P6 software support; no push,
+new PR, merge, deployment or workflow dispatch.
+
+Final review timestamp 2026-10-19T10:31:52.379609+00:00; actual elapsed 4422.4seconds. P5 checkpoint06f590b committed; P6 source/raw/link checks reviewed for its separate commit. Required gate-order reply remains pending.

@@ -3393,17 +3393,35 @@ the accepted52 run from the final nullable-guard-only four-probe rerun. P5/P6
 hardware gates remain intact.
 
 
-Session12 P5 branded-browser continuation (2026-10-19): owner explicitly requests
-P6 software preparation while finishing P5. This changes preparation order, not
-the acceptance facts. No older device is available; missing physical/platform
-and Safari access evidence stays pending. A proposed release-versus-build gate
-classification for C1–C7 has no reply, so content remains blocked.
+Session12 readiness continuation (2026-10-19): the owner explicitly requests
+starting P6 while finishing P5. This authorizes software preparation/validation
+before physical acceptance, not a fabricated pass. Owner confirms no older
+machine is available. P5's remaining branded/platform/device evidence stays open;
+any move of that evidence from build-blocking to release-blocking needs the
+owner's explicit decision. C1–C7 do not start merely because hardware is absent.
 
-26 focused checks pass on official stable Edge155/154; two unpatched headed
-Firefox158/157 application smokes pass through official geckodriver0.37.1. Vendor
-checksums and Apple signatures/notarization are verified before isolated tests;
-no system installation or project dependency changes. Actual native-app smoke
-is distinct from patched-engine evidence, full-suite/production performance and
-native visibility acceptance. Safari's own automation setting blocks session
-creation; no gameplay pass is inferred. All owned resources are cleaned up.
-See `build/performance/P5_COMPATIBILITY_FOLLOWUP.md`. No runtime defect/fix.
+PR26 merged2806720 as c6daeb6; run39189877476 succeeds with two browser retries.
+The card test's distant natural-arrival/travel prerequisite is not a reliable
+card/stat test; use the existing theme-derived close real-XP arrival fixture.
+Restart keys also need frame-length holds. Eight affected cases and the full
+96-case local browser/stress run now pass without retries; no runtime fix.
+Current/previous-major native Edge155/154 add26 focused macOS passes; native
+Safari's automation-setting block is recorded before any gameplay claim.
+
+Portable device evidence must label its clock source accurately: a wrapper's
+browser rAF is not Phaser rawDelta. Omit unmeasured CPU/GPU fields rather than
+emit zero; distinguish telemetry elapsed differences from actual engine deltas.
+Keep warmup, sampled/paused/hidden counts, quality/population checkpoints and
+source/artifact identity. Export unreviewed evidence, not automatic hardware
+acceptance. The test-mode pack stays outside production dist, serves loopback
+only and preserves all prior aided-fixture/physical-device limits. P6 reports
+and exact final load results own the completed software slice.
+
+Session12 final evidence:26 Edge155/154 passes and two unpatched headed
+Firefox158/157 smokes use verified vendor packages at temporary paths, not system
+installations. All owned browsers/profiles/mounts/servers are cleaned up. Safari's
+setting still blocks session creation. P6's18 frozen warmed windows preserve
+exact60/150/300 live counts/cap300; Default p95 medians25.1/25.5/41.7ms versus
+Low17.6/24.3/25.0ms, no >100ms stalls. Conditional SwiftShader evidence is not
+physical acceptance. No older device exists; no reply to the proposed gate-order
+revision, so content stays blocked and P5/overall acceptance remains open.

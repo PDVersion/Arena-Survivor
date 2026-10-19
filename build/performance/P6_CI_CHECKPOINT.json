@@ -1,0 +1,19 @@
+{
+  "head": "2806720f34f64bf774f38fd30e5d9483900c3e23",
+  "merge": "c6daeb6bc798809c7cf5cfd367cc0153b89837ec",
+  "run": 39189877476,
+  "url": "https://github.com/PDVersion/Arena-Survivor/actions/runs/39189877476",
+  "conclusion": "success with two retried browser failures",
+  "logExtract": [
+    "found 0 vulnerabilities",
+    "^[[2m Test Files ^[[22m ^[[1m^[[32m57 passed^[[39m^[[22m^[[90m (57)^[[39m",
+    "    Expected: \"level_up\"",
+    "    Received: \"playing\"",
+    "    Expected: \"paused\"",
+    "    Received: \"playing\"",
+    "  2 flaky",
+    "  4 skipped",
+    "  91 passed (27.3m)",
+    "found 0 vulnerabilities"
+  ]
+}

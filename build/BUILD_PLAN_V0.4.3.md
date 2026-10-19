@@ -18,8 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). The active work is remaining P5 acceptance and owner-authorized P6 software preparation. No acceptance gate is waived; C1–C7 implementation awaits the required gate/order decision. F16 was selected
-and delivered; other optional content still requires owner selection.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). The active work is remaining P5 acceptance and owner-authorized P6 software preparation (2026-10-19). Physical/browser acceptance remains pending; preparation does not close P5 or start content. F16 was selected and delivered. Owner requests the remaining planned C1–C7; implementation waits for the gate-order decision. Other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -74,10 +73,10 @@ are excluded from these performance phases.
   Test-only survival/focus aids and measurement limits are explicit in
   `performance/P5_CAMPAIGN_REPORT.md`; no runtime fix or broader readiness claim.
 - [x] P5 Session 11 available desktop-engine compatibility — owner delegates support selection; 52 serial focused checks pass in installed Chrome/pinned Chromium/Firefox/WebKit, with four final guard-only probes. Test input/resize readiness corrections only; no runtime defect. See `performance/P5_COMPATIBILITY_REPORT.md`.
-- [x] P5 Session12 branded-browser slice —26 Edge155/154 passes and two unpatched Firefox158/157 smokes; Safari session blocked. See `performance/P5_COMPATIBILITY_FOLLOWUP.md`.
+- [x] P5 Session12 branded follow-up —26 Edge155/154 focused passes and two unpatched headed Firefox158/157.0.1 smokes. Safari session blocked by its setting; no runtime change. See `performance/P5_COMPATIBILITY_FOLLOWUP.md`.
 - [ ] P5 remaining acceptance — selected current/previous-major desktop Chrome/Edge/Firefox/Safari policy; actual branded/platform combinations and representative older integrated-GPU access/evidence remain pending. Preserve all prior aided-campaign limits; no gate waiver. Session 12 stays P5; do not repeat accepted campaigns.
-- [ ] P6 — combined software gate, baseline/final reports and manual device
-  checklist; representative older-device acceptance measured or explicitly pending.
+- [x] P6 software/readiness-tool slice —96 browser/stress passes/six explicit opt-in skips, zero retries;488units, types/lint/build/audit; portable device kit verified;18 warmed Default/Low windows at60/150/300, frozen sources. See `performance/P6_READINESS_REPORT.md`.
+- [ ] P6 overall acceptance / content gate decision —missing browser/platform and physical older-device evidence stays open. Owner confirms no older machine; requested classification as release-blocking while content proceeds remains unanswered. No content started or acceptance waived.
 
 P0's short gate is `npm run typecheck`, `npm test -- --run`, `npm run lint`,
 `npm run build`, serial boot/load/frame-measurement browser tests and the existing
@@ -257,5 +256,8 @@ Session 11 selects the desktop support policy and passes 52 focused engine check
 [`performance/P5_COMPATIBILITY_REPORT.md`](performance/P5_COMPATIBILITY_REPORT.md).
 Actual branded/platform and physical older-device evidence remains pending. Obtain
 access/captured results for the selected targets; support selection need not be repeated.
-Owner explicitly authorizes P6 software preparation alongside remaining P5. C1–C7 stays behind the required gate/order decision; no acceptance waiver or unchanged campaign repeat.
+Owner authorizes P6 software preparation alongside open P5 acceptance. Its verified slice is in
+[`performance/P6_READINESS_REPORT.md`](performance/P6_READINESS_REPORT.md).
+The decision to let C1–C7 proceed with missing evidence remaining release-blocking
+is pending. No accepted campaign is repeated to imply progress.
 The next-session handoff is [SESSION_13_PROMPT.md](SESSION_13_PROMPT.md).

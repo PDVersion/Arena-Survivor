@@ -44,20 +44,22 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 native-event slice (Session 9) | 2026-10-16, local test/evidence slice | One native same-window Chromium/Metal playing-run round trip passes; 14 deterministic state guards; final 488 units/57 files, types/lint/build; [report](performance/P5_ACCEPTANCE_REPORT.md) |
 | P5 consolidated lifecycle (Session 10) | 2026-10-19, local test/evidence slice | Owner-authorized 20-minute M5 campaign passes: full authored clock, endless extension, ten short terminals, native overlays/pending work, twelve clean lifecycles, thirteen actual closed AudioContexts; scoped aids/limits in [report](performance/P5_CAMPAIGN_REPORT.md) |
 | P5 available-engine compatibility (Session 11) | 2026-10-19, local test/evidence slice | 52 serial focused passes across installed Chrome, Chromium, Firefox, WebKit; test timing/readiness fixes; [report](performance/P5_COMPATIBILITY_REPORT.md) |
-| P5 Session12 branded follow-up | 2026-10-19, local evidence slice |26 Edge155/154 passes and two unpatched Firefox158/157 smokes; Safari session blocked; [report](performance/P5_COMPATIBILITY_FOLLOWUP.md) |
+| P5 branded-browser follow-up (Session12) | 2026-10-19, local test/evidence slice | Edge155/154:26 focused passes; Firefox158/157:two unpatched application smokes; native Safari blocked by automation setting, no gameplay assertions; [report](performance/P5_COMPATIBILITY_FOLLOWUP.md) |
 | P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_13_PROMPT.md) |
-| P6 | **Preparation authorized** | Owner requests P6 alongside P5; software implementation/result follows in a separate local slice, with no hardware pass |
-| C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
+| P6 | **Software slice verified; acceptance open** |96 serial browser/stress passes/six opt-in skips/zero retries,488units, verified device pack and18 final warmed windows; software slice verified. Physical/browser acceptance remains pending; [report](performance/P6_READINESS_REPORT.md) |
+| C1–C7 / optional content | **Not started / gate decision pending** | Owner requests remaining milestone work; C1–C7 implementation waits for required gates or explicit order revision. F16 delivered; unrelated optional proposals remain unselected |
 
 ## Latest remote evidence
 
-PR26 merged2806720 as c6daeb6 on2026-10-19 at03:11:29UTC.
+PR #26 merged on2026-10-19 at03:11:29UTC as `c6daeb6`, head `2806720`.
 [Run39189877476](https://github.com/PDVersion/Arena-Survivor/actions/runs/39189877476)
-succeeds on2806720:488units/57files,91 browser passes/two flaky/four skips,
-zero audit findings. This is not later-head local verification or a zero-retry
-remote gate. No new publication/workflow is performed.
+succeeds on that head:488units/57files,91 browser passes/two flaky/four skips,
+zero audit findings. Two retried failures are repaired in the local P6 software
+slice; current local combined run passes96 cases/six explicit opt-in skips with
+zero retries. No matching-head CI result is claimed for subsequent local changes.
+PR26 is merged, not an active PR to update. No new publication/workflow is run.
 
-### Historical PR25 evidence
+### Historical PR25 checkpoints
 
 Read-only Session 8 recheck: PR #25 merged on **2026-10-16 at 11:34:15 AEDT**,
 head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
@@ -66,7 +68,7 @@ head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
 on `03965ef` was in progress during Session 8. Session 9 confirms it completed
 successfully on **2026-10-16 at 11:40:11 AEDT**: **474 units / 56 files**,
 types/lint/build, **93 browser passes / one existing skip**, zero audit findings.
-This result covers `03965ef` only; later local slices have no matching-head CI.
+This result covers `03965ef` only; at that checkpoint later local slices had no matching-head CI.
 Session 9 publishes nothing and triggers no workflow.
 
 The owner previously authorized publication of the two P5 commits and CI repair;

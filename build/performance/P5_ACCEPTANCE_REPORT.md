@@ -1,4 +1,4 @@
-# P5 consolidated acceptance — Sessions 8–11
+# P5 consolidated acceptance — Sessions 8–12
 
 **P5 remains pending.** The scoped Session 10 lifecycle campaign passes;
 Session 11 adds 52 focused Chrome/Chromium/Firefox/WebKit passes; actual branded/platform/older-device coverage remains pending.
@@ -240,13 +240,19 @@ P6/content remain gated. Session 11 result: [completed record](../MASTER_BUILD_P
 
 Owner instructed Codex to determine the browser list using modern browser standards and run the tests. This supersedes the selection/access prerequisite for available local browser testing; it does not provide physical older hardware or waive the gate. Selected current/previous-major desktop Chrome/Edge/Firefox/Safari on vendor-supported OS; mobile/touch outside this desktop contract. **52 focused passes in 4.9 minutes**, plus four final guard-only environment passes; test timing/readiness corrections only. Final 488 units/57 files, types/lint/build/whitespace pass. Full method, interrupted setup attempts, exact renderer/mode and remaining branded/platform/device matrix: [Session 11 report](P5_COMPATIBILITY_REPORT.md). P5 remains open; [Session 12](../SESSION_13_PROMPT.md) seeks missing evidence using the selected policy, without repeating accepted work.
 
+## Session12 — remaining branded checks and P6 software preparation
 
-## Session12 — additional branded applications
+Owner requests finishing P5, beginning P6 and remaining V0.4.3.26 focused
+Edge155/154 checks and two unpatched headed Firefox158/157.0.1 smokes pass;
+Safari26.5.2 blocks driver session creation, so no gameplay/native pass is claimed.
+Exact environment, sources, bounds and cleanup: [branded follow-up](P5_COMPATIBILITY_FOLLOWUP.md).
+Owner confirms no older device is available. P5 remains open for missing releases/
+platforms/Safari access/physical older hardware; the selected list is unchanged.
 
-26 Edge155/154 focused checks and two unpatched headed Firefox158/157.0.1 smokes
-pass on M5/WebGL; Safari26.5.2 rejects session creation before gameplay. Exact
-sources/modes/limits: [follow-up](P5_COMPATIBILITY_FOLLOWUP.md). Owner confirms
-no older device. P5 remains pending for missing branded/platform/physical
-acceptance. P6 software preparation is explicitly authorized, not a gate waiver;
-its implementation/result follows in its own local slice. Content gate-order
-decision has no answer. [Next handoff](../SESSION_13_PROMPT.md).
+P6's [software/readiness-tool slice](P6_READINESS_REPORT.md) is verified:96 full
+local browser/stress passes with six explicit skips and zero retries,488units,
+types/lint/build/audit, portable pack and18 warmed fixed-load windows. This
+explicitly authorized preparation does not pass P5 or silently waive its gate.
+The requested decision on moving missing acceptance to a release gate while
+C1–C7 proceeds has no reply. Content has not started; [Session13](../SESSION_13_PROMPT.md)
+continues from that decision/access, without another unchanged campaign.

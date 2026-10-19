@@ -134,7 +134,7 @@ try {
         if (scenario === "default") {
           // Asset boot is outside this steady-state sample. Production has no writable state hook.
           await page.waitForTimeout(1000);
-          await page.keyboard.press("Enter");
+          await page.keyboard.press("Enter", { delay: 80 });
           if (buildMode === "test") await page.waitForFunction(
             () => window.__ARENA_TEST__?.getSnapshot().run?.status === "playing",
           );
@@ -182,10 +182,10 @@ try {
           Object.assign(window, { __P3_CONTROL__: control });
         }, { fixture: p3, count: loadCount });
         if (quality === "low") {
-          await page.keyboard.press("Escape");
+          await page.keyboard.press("Escape", { delay: 80 });
           await page.waitForTimeout(200);
           for (let tab = 0; tab < 4; tab += 1) {
-            await page.keyboard.press("Tab");
+            await page.keyboard.press("Tab", { delay: 80 });
             await page.waitForTimeout(150);
           }
           const box = await page.locator("canvas").boundingBox();
@@ -193,15 +193,15 @@ try {
           await page.locator("canvas").click({ position: { x: 1230 * box.width / 1600, y: 507.5 * box.height / 900 } });
           if (buildMode === "test") await page.waitForFunction(() =>
             (window.__ARENA_TEST__?.getSnapshot().ui?.settings as { presentationQuality?: string } | undefined)?.presentationQuality === "low");
-          await page.keyboard.press("Escape");
+          await page.keyboard.press("Escape", { delay: 80 });
         }
         // Exercise the real pause/settings pointer path; no writable state hook.
         if (interfaceState !== "visible") {
-          await page.keyboard.press("Escape");
+          await page.keyboard.press("Escape", { delay: 80 });
           await page.waitForTimeout(200);
           if (interfaceState === "hidden") {
             for (let tab = 0; tab < 4; tab += 1) {
-              await page.keyboard.press("Tab");
+              await page.keyboard.press("Tab", { delay: 80 });
               await page.waitForTimeout(250);
             }
             const box = await page.locator("canvas").boundingBox();
@@ -211,7 +211,7 @@ try {
               await page.locator("canvas").click({ position: { x: 1230 * box.width / 1600, y: 387 * box.height / 900 } });
               await page.waitForTimeout(250);
             }
-            await page.keyboard.press("Escape");
+            await page.keyboard.press("Escape", { delay: 80 });
           }
           if (buildMode === "test") await page.waitForFunction((state) => {
             const snapshot = window.__ARENA_TEST__?.getSnapshot();
@@ -238,7 +238,7 @@ try {
               held = next;
               await page.keyboard.down(held);
             }
-            await page.keyboard.press("1");
+            await page.keyboard.press("1", { delay: 80 });
             await page.waitForTimeout(500);
             step += 1;
           }
@@ -355,7 +355,7 @@ try {
             drive = false;
             await patrol;
             if (buildMode === "test" && await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status === "playing")) {
-              await page.keyboard.press("Escape"); // Flush exact rolling quantiles without a writable game hook.
+              await page.keyboard.press("Escape", { delay: 80 }); // Flush exact rolling quantiles without a writable game hook.
             }
             const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
             if (scenario === "capacity" && p3 !== "combat" && (sample.liveMin !== loadCount || sample.liveMax !== loadCount ||

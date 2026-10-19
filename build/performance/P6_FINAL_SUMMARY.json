@@ -1,0 +1,238 @@
+{
+  "measurementSeconds": 1297.8,
+  "frozenSourcesVerified": true,
+  "runtimeMatchesHead": true,
+  "matrix": [
+    {
+      "quality": "default",
+      "load": 60,
+      "repeats": 3,
+      "wallP95MedianMs": 25.099999999998545,
+      "wallP95RangeMs": [
+        25,
+        25.099999999998545
+      ],
+      "wallP99MaxMs": 25.69999999999709,
+      "wallMaxMs": 33.30000000000291,
+      "stallPercentMax": 0,
+      "scriptSecondsMedian": 2.908372,
+      "actualSeconds": [
+        60.00759999995232,
+        60.00939999999999,
+        60.00740000004768
+      ]
+    },
+    {
+      "quality": "default",
+      "load": 150,
+      "repeats": 3,
+      "wallP95MedianMs": 25.5,
+      "wallP95RangeMs": [
+        25.5,
+        25.80000000000291
+      ],
+      "wallP99MaxMs": 33.399999999999636,
+      "wallMaxMs": 50.5,
+      "stallPercentMax": 0,
+      "scriptSecondsMedian": 4.4796629999999995,
+      "actualSeconds": [
+        60.01120000004769,
+        60.00249999985695,
+        60.01839999999999
+      ]
+    },
+    {
+      "quality": "default",
+      "load": 300,
+      "repeats": 3,
+      "wallP95MedianMs": 41.69999999999709,
+      "wallP95RangeMs": [
+        41.60000000000218,
+        41.70000000000073
+      ],
+      "wallP99MaxMs": 42,
+      "wallMaxMs": 66.60000000000582,
+      "stallPercentMax": 0,
+      "scriptSecondsMedian": 6.287939,
+      "actualSeconds": [
+        60.0183,
+        60.01590000004768,
+        60.00340000019074
+      ]
+    },
+    {
+      "quality": "low",
+      "load": 60,
+      "repeats": 3,
+      "wallP95MedianMs": 17.599999999998545,
+      "wallP95RangeMs": [
+        17.599999999998545,
+        25
+      ],
+      "wallP99MaxMs": 25.30000000000291,
+      "wallMaxMs": 41.80000000000291,
+      "stallPercentMax": 0,
+      "scriptSecondsMedian": 1.623997,
+      "actualSeconds": [
+        60.012800000000006,
+        60.019499999856954,
+        60.0138
+      ]
+    },
+    {
+      "quality": "low",
+      "load": 150,
+      "repeats": 3,
+      "wallP95MedianMs": 24.299999999995634,
+      "wallP95RangeMs": [
+        23.200000000000728,
+        25
+      ],
+      "wallP99MaxMs": 25.599999999998545,
+      "wallMaxMs": 45.30000000000291,
+      "stallPercentMax": 0,
+      "scriptSecondsMedian": 1.978931,
+      "actualSeconds": [
+        60.00359999990463,
+        60.01180000004769,
+        60.00559999990463
+      ]
+    },
+    {
+      "quality": "low",
+      "load": 300,
+      "repeats": 3,
+      "wallP95MedianMs": 25,
+      "wallP95RangeMs": [
+        24.700000000004366,
+        25.099999999998545
+      ],
+      "wallP99MaxMs": 26.799999999995634,
+      "wallMaxMs": 65.70000000000437,
+      "stallPercentMax": 0,
+      "scriptSecondsMedian": 3.25792,
+      "actualSeconds": [
+        60.001100000143055,
+        60.002100000000006,
+        60.0044
+      ]
+    }
+  ],
+  "rawSha256": {
+    "build/performance/P6_DEFAULT_FINAL.json": "340bf541fbaa9f84b77d4460ada71ce986c6b09f7eabdb3c0a9da1523fc44f5f",
+    "build/performance/P6_LOW_FINAL.json": "2839860574469d73cf7bfa34c2b7da1b1cbe87583b61937659cc2470a374b43f"
+  },
+  "historicalContext": {
+    "historicalP4Comparisons": [
+      {
+        "source": "build/performance/P4_AFTER_DEFAULT_DENSE.json",
+        "quality": "default",
+        "scenario": "dense",
+        "n": 3,
+        "wallP95MedianMs": 41.70000000000073,
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "revision": "05c1d4e"
+      },
+      {
+        "source": "build/performance/P4_AFTER_DEFAULT_COMBAT.json",
+        "quality": "default",
+        "scenario": "combat",
+        "n": 3,
+        "wallP95MedianMs": 33.400000000001455,
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "revision": "05c1d4e"
+      },
+      {
+        "source": "build/performance/P4_AFTER_DEFAULT_PRODUCTION.json",
+        "quality": "default",
+        "scenario": "production",
+        "n": 3,
+        "wallP95MedianMs": 17.5,
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "revision": "05c1d4e"
+      },
+      {
+        "source": "build/performance/P4_AFTER_LOW_DENSE.json",
+        "quality": "low",
+        "scenario": "dense",
+        "n": 3,
+        "wallP95MedianMs": 25.099999999998545,
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "revision": "05c1d4e"
+      },
+      {
+        "source": "build/performance/P4_AFTER_LOW_COMBAT.json",
+        "quality": "low",
+        "scenario": "combat",
+        "n": 3,
+        "wallP95MedianMs": 33.400000000001455,
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "revision": "05c1d4e"
+      },
+      {
+        "source": "build/performance/P4_AFTER_LOW_PRODUCTION.json",
+        "quality": "low",
+        "scenario": "production",
+        "n": 3,
+        "wallP95MedianMs": 17,
+        "renderer": {
+          "type": "WebGL",
+          "vendor": "Google Inc. (Google)",
+          "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+        },
+        "revision": "05c1d4e"
+      }
+    ],
+    "note": "Historical context only; no new current before-build comparison or physical-device inference."
+  },
+  "hardwareAcceptance": "pending; owner confirms no older device",
+  "contentGateDecision": "pending owner reply",
+  "device": {
+    "cpu": "Apple M5 Pro",
+    "logicalCpus": 18,
+    "memoryBytes": 51539607552,
+    "platform": "darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "node": "v20.20.2"
+  },
+  "browserVersion": "151.0.7922.34",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "devicePixelRatio": 1
+    },
+    "canvas": {
+      "width": 1600,
+      "height": 900
+    },
+    "renderer": {
+      "type": "WebGL",
+      "vendor": "Google Inc. (Google)",
+      "name": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)"
+    },
+    "testInterface": true
+  }
+}

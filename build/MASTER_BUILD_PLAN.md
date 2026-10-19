@@ -2934,3 +2934,21 @@ retains exact scopes, raw records and cleanup. Owner confirms no older device;
 P5 remains open for missing browser/platform/device evidence. Native/long accepted
 campaigns were not repeated. P6 software preparation is explicitly authorized,
 not a hardware pass or content gate waiver.
+
+<a id="v0-4-3-p6-software"></a>
+## V0.4.3 — P6 verified software/readiness-tool slice / Session12
+
+The combined local gate passes96 Chromium/browser/stress cases, six explicit
+opt-in skips, zero retries/flaky cases;488units/57files,types/lint/build/audit
+and whitespace pass. Eight focused cases repair two evidenced CI fixture flakes
+without runtime or assertion changes. The portable instrumented device kit is
+built separately from production and verified with a real60-second export and
+server-boundary case. Clock/CPU scope and manual target checklist are explicit.
+
+18 independent warmed60-second Default/Low windows at60/150/300 actors complete
+in1,297.8s on M5/SwiftShader, with exact populations, no errors or >100ms stalls.
+Median p95 Default25.1/25.5/41.7ms; Low17.6/24.3/25.0ms. Tool/runtime source hashes
+match. No production throughput, native event, continuous-soak or older-device
+acceptance is inferred. [P6 report](performance/P6_READINESS_REPORT.md) retains
+raw results/limits; P5 and overall acceptance remain open. Required owner reply
+on release-versus-build gate classification is pending; C1–C7 has not started.

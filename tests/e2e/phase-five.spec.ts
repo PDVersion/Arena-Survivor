@@ -56,14 +56,14 @@ test("complete overlay freezes at zero and restart resets without navigation", a
     });
 
     if (expectedGeneration === 3) break;
-    await page.keyboard.press("KeyR");
+    await page.keyboard.press("KeyR", { delay: 80 });
     await expect
       .poll(
         () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration),
         { timeout: 10_000 },
       )
       .toBe(expectedGeneration + 1);
-    await page.keyboard.press("Escape");
+    await page.keyboard.press("Escape", { delay: 80 });
     await expect.poll(
       () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status),
     ).toBe("paused");
@@ -79,7 +79,7 @@ test("complete overlay freezes at zero and restart resets without navigation", a
     expect(restarted?.player).toMatchObject({ health: 100, maxHealth: 100, damageBonus: 0 });
     expect(restarted?.progression?.selectedUpgradeIds).toEqual([]);
     expect(restarted?.lifecycle?.terminalOverlay).toBeNull();
-    await page.keyboard.press("Escape");
+    await page.keyboard.press("Escape", { delay: 80 });
   }
 
   expect(await page.evaluate(() => performance.getEntriesByType("navigation").length)).toBe(

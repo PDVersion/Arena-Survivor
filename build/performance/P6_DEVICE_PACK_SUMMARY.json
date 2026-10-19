@@ -1,0 +1,133 @@
+{
+  "schema": "arena-device-evidence-v1",
+  "source": {
+    "schema": "arena-device-pack-v1",
+    "mode": "test",
+    "createdAt": "2026-10-19T09:36:24.221Z",
+    "revision": "2806720f34f64bf774f38fd30e5d9483900c3e23",
+    "sourceDiffSha256": "5312f7eb33a89f6a148793bd84bfe98a4dc94725e0fa0738b0cbf04551aa9473",
+    "pendingFiles": " M AUTONOMOUS_PROGRESS.md\n M build/BUILD_PLAN_V0.4.3.md\n M scripts/performance.ts\n M tests/e2e/phase-eight-v03.spec.ts\n M tests/e2e/phase-five.spec.ts\n M tests/playwright.compatibility.config.ts\n?? build/performance/P5_EDGE_RESULTS.json\n?? build/performance/P5_EDGE_SUMMARY.json\n?? build/performance/P5_SAFARI_PREFLIGHT.json\n?? build/performance/P6_BROWSER_RESULTS.json\n?? build/performance/P6_CI_CHECKPOINT.json\n?? build/performance/P6_DEVICE_CHECKLIST.md\n?? build/performance/P6_DEVICE_PACK_TEST.json\n?? build/performance/P6_READINESS_REPORT.md\n?? scripts/build-device-pack.ts\n?? tests/device-pack/\n?? tests/e2e/device-pack-v043.spec.ts\n?? tests/native/\n?? tests/playwright.device-pack.config.ts\n",
+    "files": {
+      "serve.mjs": "2acf9270b1bc1bc398f59361c56f2094b4f0a5060b51bfadc9971d4c19aa5078",
+      "site/assets/device-DzIQTjGV.js": "e0b60c091a5c814f69672631545fa8dcc7f8acf8fe893802fa19e0ba938c49eb",
+      "site/assets/frame-measurements-BQtKWOZE.js": "9afaf70f42019d32f57b4fa99697984c15042571a712b453c6b13273fcf5d965",
+      "site/assets/game-DoHRHqNx.css": "f1ecb95d4940e38fa33f1d095d8e286253f487829091396b34571ad144accb51",
+      "site/assets/game-sFVTnvAo.js": "ec98c4ea4fa075ed263ff8a6830bd58cdf7a79f6e97a12b7dc4d60f596d88720",
+      "site/assets/install-telemetry-BUhJURoq.js": "3a34adb42f4c2c3e9b0ac281c956526e29a16977e8295b4657cc85a1059a11bf",
+      "site/assets/modulepreload-polyfill-B5Qt9EMX.js": "d2a32840421496e872ade591618d2fa5c33797605d1aec04301717e5a90757d0",
+      "site/assets/start-game-DdQ4Xb0K.js": "f517db46fdddcde897158a206ee73de5cceb7a763f4c4026ae9e47f1f9d1ce16",
+      "site/index.html": "bff0904e317a8f1893b43ee7b575f1a6d1fd4ed3724ad1b04a32b8f0659d8957",
+      "site/sprites/eco-guardian/atlas.json": "b8c736d1fd049eba5c917c8ef3c035947a35afe046736234ae1ba0d530bf2059",
+      "site/sprites/eco-guardian/atlas.png": "b0a2fc9157486c643870936e5b4a23188fc143d28acf357cf17cd77517d74047",
+      "site/sprites/eco-guardian/character_starter.png": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4",
+      "site/sprites/eco-guardian/enemy_death_spawner.png": "e166329eda4a34a32f9c7c023669b0be16ef8bc60c5e8ddecb78dfa6b86c047f",
+      "site/sprites/eco-guardian/enemy_fast_fragile.png": "29f7e15764e963a9fa1d981c27c7e1db1353b6d26bf90426e5cab8a7796e9a3b",
+      "site/sprites/eco-guardian/enemy_slow_durable.png": "e4e764040c76def34334afbbb6ed1f357e4cce21b78f231ade41963a5fdd93ac",
+      "site/sprites/eco-guardian/enemy_swarm_basic.png": "b57bda0060acf056708f151f70ade00ff64f69b384f0a000795982d6219319b7",
+      "site/tests/device-pack/device-check.html": "921c6281f8383486bfa512c2807c556ebe404031227108e5a32fc720a4c37504"
+    },
+    "limitation": "Instrumented browser evidence only; physical hardware claims require actual device and review."
+  },
+  "acceptance": "unreviewed device evidence; no automatic pass",
+  "reason": "60-second window complete",
+  "scenario": "60",
+  "deviceNotes": "M5 verification only; no older-device acceptance",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+  "viewport": {
+    "width": 1240,
+    "height": 648,
+    "dpr": 1
+  },
+  "renderer": "WebGL",
+  "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+  "wallWindowMs": 60098.9,
+  "measurement": {
+    "clock": "browser-raf-wall-ms",
+    "frameSamples": 3140,
+    "averageFrameMs": 19.10834394904459,
+    "maxFrameMs": 75.90000000000146,
+    "excludedFrames": 1,
+    "observedSimulationAdvanceMeanMs": 9.553186305732495,
+    "distribution": {
+      "capacity": 16384,
+      "windowSamples": 3140,
+      "throughSample": 3140,
+      "wall": {
+        "p50Ms": 16.700000000000728,
+        "p95Ms": 25.100000000000364,
+        "p99Ms": 25.80000000000291
+      },
+      "stallsOver100Ms": 0,
+      "stallPercent": 0
+    }
+  },
+  "activeSamples": 3141,
+  "hiddenSamples": 0,
+  "nonPlayingSamples": 0,
+  "observedHidden": false,
+  "qualities": [
+    "default"
+  ],
+  "caveats": [
+    "rAF wall spacing, not GPU timing",
+    "simulation deltas are differences between read-only snapshots, not engine frame deltas",
+    "test instrumentation included",
+    "aided benchmark disables contact/XP/weapons/hazards; ordinary play does not",
+    "resource telemetry is not a heap census or proof of native event handling"
+  ],
+  "rawPath": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/device-pack-verification/device-pack-v043-portable--9da75-d-sample-and-build-identity-chromium/device-result.json",
+  "rawSha256": "7a331542b82cf780c954b6c7eb1171893512a8ca2a2ab6e6c5452bbcc9b8d657",
+  "checkpoints": 60,
+  "endLoad": {
+    "enabled": true,
+    "requested": 60,
+    "spawned": 60,
+    "eventBacklog": 0,
+    "eventBacklogHighWater": 60,
+    "processedEffects": 60,
+    "gameplayBacklogHighWater": 0,
+    "processedGameplayEvents": 0,
+    "droppedPresentationCues": 11,
+    "liveHighWater": 60,
+    "trackedHighWater": 60,
+    "clock": "phaser-raw-wall-ms",
+    "frameSamples": 3662,
+    "averageFrameMs": 19.13356089568542,
+    "maxFrameMs": 75.90000000000146,
+    "averageSimulationDeltaMs": 9.513334243582756,
+    "excludedFrames": 8,
+    "updateCpuSamples": 3662,
+    "averageUpdateCpuMs": 0.1657837271234626,
+    "maxUpdateCpuMs": 6.099999904632568,
+    "distribution": {
+      "capacity": 4096,
+      "windowSamples": 3605,
+      "throughSample": 3605,
+      "wall": {
+        "p50Ms": 16.700000000000728,
+        "p95Ms": 25.100000000000364,
+        "p99Ms": 25.70000000001164
+      },
+      "updateCpu": {
+        "p50Ms": 0.10000014305114746,
+        "p95Ms": 0.2999999523162842,
+        "p99Ms": 0.8999998569488525
+      },
+      "stallsOver100Ms": 0,
+      "stallPercent": 0
+    }
+  },
+  "endRun": {
+    "difficulty": "normal",
+    "status": "playing",
+    "mode": "timed",
+    "elapsedMs": 34868.49833333337,
+    "durationMs": 300000,
+    "kills": 0,
+    "liveEnemies": 60,
+    "level": 1,
+    "xp": 0,
+    "xpToNextLevel": 3,
+    "pendingChoices": 0
+  }
+}

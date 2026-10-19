@@ -8,7 +8,8 @@ recognisable real-world tools, and optional educational depth.
 See [build dates and status](build/BUILD_STATUS.md) for verified checkpoints,
 merge dates, current PR/CI evidence and remaining acceptance limits.
 V0.4.3 is active; P5's affected lifecycle/startup slices are verified and its
-consolidated acceptance remains open. P6 software preparation is owner-authorized; content remains gated.
+device/browser acceptance remains open. P6 software checks and device kit are verified; content
+remains behind the required acceptance decision.
 
 ## Project documents
 
