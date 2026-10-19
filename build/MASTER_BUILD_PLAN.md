@@ -2833,3 +2833,90 @@ Local evidence: three affected serial browser cases, 474 units/56 files, types,
 lint and build pass. Publication and matching-head Actions verification are
 recorded in [BUILD_STATUS.md](BUILD_STATUS.md). Full evidence and reproduction:
 [CI repair report](performance/CI_REPAIR_20261016.md), REC-114.
+
+
+<a id="v0-4-3-p5-acceptance-inventory"></a>
+## V0.4.3 — P5 acceptance inventory / Session 8
+
+Session 8 (2026-10-16) completes the requirement/evidence inventory in
+[`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
+Inspected short-run decision/endless/clearing/death/restart, pause/resize,
+Default/Low, engine shutdown, queue/XP and boot recovery tests support only their
+bounded claims. Native visibility, authored/extended play, ten terminal cycles,
+long soak, real audio release and broader compatibility remain in the active
+P5 gate. No runtime defect was demonstrated; no runtime/test change is delivered.
+A single headed native-tab probe fails its hidden-state precondition in 6.3 s,
+so its temporary fixture is removed and native acceptance remains pending.
+Final types, 474 units/56 files, lint/build and whitespace pass. No full browser/
+stress/startup campaign is repeated. PR #25's merge is recorded in BUILD_STATUS;
+this slice stays local. The next handoff is Session 9 / P5, not P6.
+
+
+<a id="v0-4-3-p5-native-events"></a>
+## V0.4.3 — P5 bounded native events / Session 9
+
+Session 9 (2026-10-16) verifies one native same-window Chromium tab round trip
+using a fresh owned browser attached with Playwright noDefaults. This avoids
+its normal focus emulation; two setup failures remain recorded separately.
+Trusted events, matching native window IDs, frozen hidden elapsed/spawns/empty
+queues and a 7.493 ms first observed rAF advancement pass. The 30-second-bounded
+case completes in 4.4 s (5.1 s runner total), one worker/zero automatic retries,
+M5 Pro/48 GiB, native Metal WebGL, Chromium 151.0.7922.34, test/Default,
+1280×657/DPR1. Fourteen deterministic actual-handler tests cover both themes'
+focus ownership and retained paused/level_up/time_up/terminal intent. Final
+488 units/57 files, types/lint/build and whitespace checks pass. No runtime fix,
+production boundary, content, persistence or sprite change. Raw capture and
+limits are in the [acceptance report](performance/P5_ACCEPTANCE_REPORT.md).
+P5's long lifecycle, native overlays/pending work, real audio and broader device/
+browser gate stays open. Session 10 requires an authorized consolidated gate/
+available hardware; another identical light case cannot close it. P6 is not
+started. Publication/merged-head Actions evidence remains in BUILD_STATUS.md.
+
+
+<a id="v0-4-3-p5-consolidated-lifecycle"></a>
+## V0.4.3 — P5 authorized consolidated lifecycle / Session 10
+
+Owner approval on 2026-10-19 authorizes one serial M5 campaign. The accepted
+case runs 1,200,458 ms, one worker/zero automatic retries, with frozen test-only
+fixture sources and unchanged runtime/assets/dependencies. It reaches exactly
+300,000 simulated ms at rate 0.5, extends endless for five wall-clock minutes,
+then verifies ten short terminal cycles and fresh active play. Twelve create/
+stop baselines, ten quality/resize dispatches, native manual-pause/level-up/time-up
+intent and one pending arrival, ledger/source totals, and thirteen actual closed
+AudioContexts (seven closures with active service voices) pass without page errors.
+
+All 488 units/57 files, types/lint/build, production emitted-marker exclusion,
+source/raw hash validation and whitespace/link review pass. Preflight errors,
+actual M5/Metal/DPR2 environment, survival/focus controls, sampled counter scope,
+short-cycle setup, explicit final stop before Game destruction, and unassisted/
+hazard/physical-device limitations are documented in
+[the campaign report](performance/P5_CAMPAIGN_REPORT.md). No production defect
+or fix, no full local regression/stress, no publication or workflow trigger.
+The scoped lifecycle slice passes; P5 overall remains open for broader browser/
+device compatibility with owner-selected scope/hardware. Session 11 stays P5;
+P6/content remain gated and the unchanged campaign is not repeated by default.
+
+
+<a id="v0-4-3-p5-compatibility"></a>
+## V0.4.3 — P5 available-engine compatibility / Session 11
+
+Owner delegated desktop support selection and authorized the missing browser
+checks on 2026-10-19. Selected current/previous-major desktop Chrome/Edge/Firefox/
+Safari on vendor-supported OS, WebGL/WebAudio and keyboard/mouse; mobile/touch
+outside this desktop contract. **52 focused checks pass in 4.9 minutes**, one
+worker/zero retries, installed Chrome155 and pinned Chromium151/Firefox153/
+WebKit26.5 on M5/macOS. Main WebGL and isolated both-theme Canvas lifecycle
+checks cover movement/half-rate/pause, exact overflow rewards/stopped resources,
+settings/resize/short terminal restart, overlays and 300-live map presentation.
+
+Only tests/config/evidence changed: 80ms key holds prevent Phaser JustDown
+loss, and a resize readiness assertion avoids stale canvas click coordinates.
+Interrupted setup attempts remain recorded. Four final capability probes pass
+after a TypeScript nullable guard correction; final 488 units/57files, types/
+lint/build/whitespace pass. No runtime defect/fix, production boundary change,
+long/native campaign repeat, dependency change or remote publication.
+[Compatibility report](performance/P5_COMPATIBILITY_REPORT.md) preserves policy,
+renderer/DPR/source/raw details, fixtures/limits and deferred evidence. Actual
+Safari/Edge, missing branded-release/platform combinations and physical older
+integrated-GPU hardware remain pending; WebKit/software rendering is not their
+acceptance. P5 remains open; P6/content not started. Session12 remains P5.

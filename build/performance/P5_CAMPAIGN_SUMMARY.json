@@ -1,0 +1,138 @@
+{
+  "source": "e2e8111 + frozen test-only campaign fixture",
+  "fixtureSha256": {
+    "tests/e2e/lifecycle-campaign-v043.spec.ts": "4f16aa2bc6302e922323ef4849e3d5f46db1f8c940bfa810fa2005cabd35ca63",
+    "tests/fixtures/p5-campaign.ts": "39dace49370029b87836a6b4750c9a9e4f8dee6d915581605ea36c4c8b2c430b",
+    "tests/fixtures/p5-campaign.html": "62efa497dffc84a3d5b0d9cabf198a3a2ef3fcb165bae5491a68f30443c0e5b0"
+  },
+  "rawSha256": "d01b5401bc4851e7f1b2d77e9006a89e2bcf56bcacf45d7f5b67203c33a31662",
+  "accepted": true,
+  "elapsedMs": 1200458,
+  "environment": {
+    "label": "environment",
+    "browser": "151.0.7922.34",
+    "host": {
+      "cpu": "Apple M5 Pro",
+      "platform": "darwin",
+      "release": "25.5.0",
+      "memoryGiB": 48
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 657
+    },
+    "dpr": 2,
+    "renderer": "WebGL",
+    "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+    "windowIds": [
+      163985436,
+      163985436
+    ],
+    "mode": "test/default",
+    "survivalAids": [
+      "noContact",
+      "noHazards"
+    ],
+    "authoredDuration": 300000,
+    "rate": 0.5
+  },
+  "authored": {
+    "elapsed": 300000,
+    "duration": 300000,
+    "rate": 0.5,
+    "level": 19,
+    "kills": 366,
+    "xp": 400.2999999999994,
+    "enemies": 300,
+    "pickups": 4,
+    "bodies": 305,
+    "causalIds": 406,
+    "lethalIds": 366
+  },
+  "endless": {
+    "startElapsed": 300014.8766666667,
+    "endElapsed": 450028.355000332,
+    "delta": 150013.4783336653,
+    "endStatus": "playing"
+  },
+  "sampleCount": 40,
+  "peaks": {
+    "enemies": 300,
+    "pickups": 48,
+    "projectiles": 0,
+    "bodies": 348,
+    "display": 677,
+    "timers": 9,
+    "tweens": 18,
+    "causalIds": 406,
+    "lethalIds": 366,
+    "claims": 366
+  },
+  "nativeTransitions": [
+    {
+      "label": "manual-pause-with-pending-spawn",
+      "events": [
+        "blur",
+        "hidden",
+        "visible",
+        "focus"
+      ],
+      "allTrusted": true,
+      "heldStatus": "paused",
+      "heldElapsed": 51.66,
+      "gameplayBacklog": 1
+    },
+    {
+      "label": "level-up-retains-choice",
+      "events": [
+        "blur",
+        "hidden",
+        "visible",
+        "focus"
+      ],
+      "allTrusted": true,
+      "heldStatus": "level_up",
+      "heldElapsed": 92.95666672388712,
+      "gameplayBacklog": 0
+    },
+    {
+      "label": "time-up-retains-decision",
+      "events": [
+        "blur",
+        "focus",
+        "blur",
+        "hidden",
+        "visible",
+        "focus"
+      ],
+      "allTrusted": true,
+      "heldStatus": "time_up",
+      "heldElapsed": 300000,
+      "gameplayBacklog": 0
+    }
+  ],
+  "qualityTransitions": 10,
+  "terminalKinds": {
+    "complete": 4,
+    "clearing": 3,
+    "death": 3
+  },
+  "baselines": 12,
+  "stops": 12,
+  "baselineBodyCounts": [
+    1
+  ],
+  "audioContexts": 13,
+  "audioAllClosedOnce": true,
+  "inFlightServiceClosures": 7,
+  "errors": [],
+  "limitations": [
+    "survival-aided test-mode scene fixture",
+    "native overlays only; sustained phase focus-emulated",
+    "no-contact/no-hazard; muted sustained audio",
+    "one seeded overlay XP reward and benchmark spawn",
+    "short cycles, one-health contact death fixtures",
+    "final explicit scene stop before Game destroy",
+    "no human survival, physical older-device, other-browser or throughput acceptance"
+  ]
+}

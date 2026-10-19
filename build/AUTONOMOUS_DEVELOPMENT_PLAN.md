@@ -325,14 +325,49 @@ arbitrarily or add a service worker merely to silence the large-chunk warning.
 
 ### Session 8 — P5: remaining lifecycle/compatibility acceptance
 
-The affected Session 6/7 gates do not complete P5. Use
-[SESSION_8_PROMPT.md](SESSION_8_PROMPT.md) to inventory remaining authored/overtime,
-focus/resume, presentation-switching, restart and compatibility evidence. Prefer
+The affected Session 6/7 gates do not complete P5. Session 8 completed the
+[acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
+probe could not reach hidden state. Sessions 9–10 subsequently verify native
+overlays and the scoped consolidated lifecycle campaign. Continue with
+[Session 12 / P5](SESSION_12_PROMPT.md) for remaining compatibility evidence. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
 
-### Session 9 — P6: combined readiness gate and real-device report
+### Session 9 — P5 continuation: native events and remaining acceptance
+
+Completed bounded slice: one trusted native same-window tab round trip passes
+on Chromium/Metal, with 7.493 ms first observed advancement after 1.33 s hidden,
+unchanged spawns/empty queues, and 14 deterministic focus-state checks. See the
+[acceptance report](performance/P5_ACCEPTANCE_REPORT.md). No runtime defect or
+change; authored/sustained/native-overlay/audio/device requirements remain open.
+
+### Session 10 — P5: authorized consolidated lifecycle and device evidence
+
+Owner explicitly authorized the consolidated M5 campaign on 2026-10-19. Its
+20-minute ownership window passes within explicit test-only survival/focus aids:
+authored clock, five-minute endless extension, ten short terminals, native
+paused/level-up/time-up/pending work, quality/resize and actual audio closure.
+See [campaign report](performance/P5_CAMPAIGN_REPORT.md). No runtime defect/fix.
+
+### Session 11 — P5: selected desktop support and engine evidence
+
+Owner delegated support selection and authorized testing. Selected desktop
+Chrome/Edge/Firefox/Safari current/previous-major on vendor-supported OS; 52
+focused checks pass serially across installed Chrome and pinned Chromium/Firefox/
+WebKit. Test-only key-hold/resize-readiness corrections; no runtime fix. See
+[compatibility report](performance/P5_COMPATIBILITY_REPORT.md). Actual branded/
+platform/older physical-device coverage remains open.
+
+### Session 12 — P5: remaining selected targets
+
+Use [SESSION_12_PROMPT.md](SESSION_12_PROMPT.md). Obtain actual Safari/Edge,
+missing branded-release/platform combinations and representative physical older
+integrated-GPU access/captured evidence. No need to reselect the support list.
+Do not rerun accepted unchanged engine/native/long campaigns or create another
+inventory-only commit. P5 stays open; P6/content remain gated.
+
+### After P5 — P6: combined readiness gate and real-device report
 
 **60-minute core:** inspect matching-head Actions evidence and the combined
 software gate; full local browser/stress runs require a separately scheduled

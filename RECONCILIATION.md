@@ -3288,3 +3288,106 @@ Full local Chromium/stress, authored/overtime/long soak, focus/resume, settings 
 mode switching, production startup/boot guards and additional-browser/hardware
 acceptance are explicitly deferred under the owner resource policy. No current
 CI/device pass is claimed. See the P5 lifecycle report for exact commands/counts.
+
+
+Session 8 acceptance continuation (2026-10-16):
+`build/performance/P5_ACCEPTANCE_REPORT.md` separates actual short browser
+assertions from missing sustained/native acceptance. Existing phase-five blur/
+focus uses synthetic window events; frame-measurement hidden-frame rejection is
+not evidence that gameplay cannot catch up. Phaser's VisibilityHandler emits
+HIDDEN/VISIBLE separately, and its Game/TimeStep already resets delta on resume;
+absence of scene HIDDEN handlers alone is not a demonstrated defect.
+
+One bounded headed Chromium probe could not make document.visibilityState hidden
+by bringing a second automated page forward (6.3 s, one worker/no retries).
+Record this as a failed scenario precondition, not game failure or acceptance.
+Do not replace native evidence with dispatched events or overwritten document
+properties. The temporary unverified fixture was removed. Next native check uses
+actual same-window tabs; long soak, ten terminal cycles, real audio-device release
+and additional browser/physical older-device evidence stay pending. Existing CI
+excludes @stress, so green regression does not close these gates. P5 remains open.
+
+
+Session 9 native-event continuation (2026-10-16): Playwright's installed
+Chromium adapter installs focus emulation on its own Page CDP session. A second
+session setting it false still leaves the document visible on tab activation;
+that first bounded attempt verifies same-window IDs but fails its precondition.
+Use a fresh owned native Chromium process and attach to the default context with
+`connectOverCDP(..., { noDefaults: true })`; installed types document that it
+omits focus/media overrides. The default context has no inherited baseURL, so
+construct an absolute navigation URL (the first external setup attempt exposes
+that fixture error). Do not alter dependency code, document.hidden or dispatch
+fake events to obtain native acceptance.
+
+The corrected single 30-second-bounded case passes in 4.4 s, zero retries, with
+trusted native blur/hidden/focus/visible and matching window IDs. A 1,330.6 ms
+hidden interval preserves elapsed 258.463 ms, one natural spawn and empty causal/
+load queues. First observed advancing rAF telemetry adds 7.493 ms at rate 0.5;
+there is no catch-up in this light case. Chromium 151.0.7922.34, M5 Pro/48 GiB,
+Darwin 25.5.0, native Metal WebGL, actual viewport 1280×657/DPR1, test/Default.
+Record raw evidence in `build/performance/P5_NATIVE_VISIBILITY.json` and the
+acceptance matrix. This is neither pending-work/combat nor older-device evidence.
+
+Fourteen actual-handler deterministic tests preserve both themes' manual pause,
+level-up, time-up and terminal intent; native overlay paths remain a separate
+acceptance limit. No runtime fix is justified. The opt-in test owns and closes
+its browser/tabs/temp profile and bounds child termination; normal headless CI
+skips it. Do not repeatedly run passed native cases or inventory-only slices:
+next meaningful P5 work is the separately authorized consolidated lifecycle gate
+and actual supported-browser/physical-device evidence. Overall P5 stays open.
+
+
+Session 10 authorized campaign continuation (2026-10-19): the owner explicitly
+approved the previously withheld serial campaign. One frozen-source 20-minute M5
+case passes with no page errors or runtime change: full 300,000 ms authored clock
+at unchanged rate 0.5, five-wall-minute endless extension, ten short terminal
+cycles, twelve fresh/stopped scene baselines and thirteen actual AudioContexts
+closed once with settled promises; seven service closures begin with active
+voices. Sampled peak 300 enemies/348 bodies respects actual actor ownership.
+Detailed scope/raw evidence: `build/performance/P5_CAMPAIGN_REPORT.md`.
+
+The native overlay/pending-work rounds keep focus emulation off and require
+trusted same-window tab events. Native desktop focus loss also correctly stalls
+an active scene, so stable setup/long play explicitly enable focus emulation;
+that sustained phase is not native-focus evidence. Diagnostics record the
+paused/hidden/focused precondition rather than broadening timeouts. Test-only
+reward setup must require playing state: forcing collection while focus-paused
+is an invalid fixture precondition, not proof of an ordinary gameplay XP race.
+
+Nested test pages need a root base URL for unchanged relative sprite/atlas
+paths; otherwise Vite's HTML fallback can masquerade as atlas JSON. Phaser keyup
+clears JustDown, so frame-consumable 80 ms pulses replace instantaneous test
+input. These setup failures are retained in the preflight summary, with zero
+automatic retries; no loader/pipeline or input-system fix is justified.
+
+Phaser SHUTDOWN and DESTROY are distinct. This campaign explicitly stops the
+active scene before Game destruction, preserving REC-020's engine teardown
+ownership; it does not certify direct active-scene removal/destruction. Top-level
+display and sampled object counters are not a recursive/continuous heap census.
+Per-run causal histories remain until stop; no mid-run IDs are evicted. Survival
+controls, muted sustained audio and short one-health contact fixtures make this
+a lifecycle gate, not human survival, hazard soak, audible quality, production
+throughput or older-device acceptance. P5 broader compatibility stays pending.
+
+
+Session 11 compatibility continuation (2026-10-19): owner delegates support
+selection and authorizes missing browser tests. Select current/previous-major
+desktop Chrome/Edge/Firefox/Safari on supported OS; mobile/touch outside current
+keyboard/mouse contract. 52 focused serial passes plus four final capability
+probes add installed Chrome and Firefox/WebKit engine evidence on M5. No runtime
+defect/fix. Actual branded/platform combinations and older integrated-GPU evidence
+remain pending; WebKit is not actual Safari and engine builds are not branded
+stable releases. See `build/performance/P5_COMPATIBILITY_REPORT.md`.
+
+Automation must hold frame-consumed keyboard controls through a frame (80ms in
+these bounded tests): Phaser Key.onUp clears JustDown. After viewport changes,
+wait for actual displayed canvas dimensions before computing pointer coordinates;
+otherwise old1280px coordinates can fall outside the new900px viewport. Neither
+fixture error warrants runtime/input/scale changes. Keep interrupted evidence,
+no automatic retries. Playwright Desktop presets also override user agents;
+clear that override when reporting installed-browser identity, record actual
+browser.version/OS separately, and label generalized GPU strings without inventing
+hardware. Reporter output paths resolve relative to config location; root them
+explicitly and preserve raw artifacts before another run. Source hashes separate
+the accepted52 run from the final nullable-guard-only four-probe rerun. P5/P6
+hardware gates remain intact.

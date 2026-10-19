@@ -1,6 +1,6 @@
 # Autonomous progress
 
-Updated: 2026-10-15 (Australia/Sydney).
+Updated: 2026-10-19 (Australia/Sydney).
 
 ## Objective and current state
 
@@ -904,3 +904,196 @@ No runtime changes, local browser/stress suites, performance recordings or new
 CI runs are needed for this cleanup. Original inputs were backed up at
 `/private/tmp/arena-doc-consolidation-20261016/`. Documentation delivery is local;
 this request does not merge/deploy or start the next implementation session.
+
+
+## Session 8 — P5 acceptance inventory (2026-10-16)
+
+- Start/context restoration: **11:33:00 AEDT / 00:33:00 UTC** (rounded down
+  to include initial reading); deadline **13:03:00 AEDT / 02:03:00 UTC**.
+- Latest implementation stop / final verification reserve: **12:43:00 AEDT /
+  01:43:00 UTC**. Maximum 90 minutes; final 20 minutes reserved.
+- Initial checkout: clean `03965ef` on `codex/v0.4.3`; no unrelated edits to back up.
+- Read-only GitHub inspection discovers PR #25 is merged at `03965ef`; its
+  Actions run `38829241556` is in progress. `2086a41` run `38824954227`
+  success is confirmed separately. No publication is authorized this session.
+- Scope: consolidate scenario evidence and one necessary bounded native tab
+  visibility check; no P6/content/persistence/sprite work.
+
+- Acceptance matrix completed: `build/performance/P5_ACCEPTANCE_REPORT.md` maps
+  actual assertions and historical evidence for each requested surface. Existing
+  short ending/overtime, settings UI and synthetic focus coverage is reused only
+  within its scope. Native events, long lifecycle and compatibility stay pending.
+- One temporary native tab-switch fixture (headed Chromium, test/Default,
+  1280×720, one worker/no retries, 45 s upper bound) failed in 6.3 s because the
+  document never became hidden. Renderer was not retained before failure.
+  Initial sandbox server bind failed EPERM before execution; permitted execution
+  reached the unmet precondition. This is neither a game defect nor a pass.
+  Removed the unverified fixture; no runtime/test change or speculative fix.
+- Playwright closed owned browser/server; port 4173 has no remaining listener.
+  Unknown processes and review port 4213 were untouched.
+- Final verification/review began early at approximately **11:37 AEDT /
+  00:37 UTC**, well before the final 20-minute reserve. Types, **474 units / 56
+  files**, lint/build pass; existing chunk advisory only. Whitespace/link/ownership
+  review follows final recording. No new production boundary changed, so no
+  repeated startup/production browser campaign. Full Chromium/stress, authored/
+  extended overtime/long-soak/device checks remain deferred, not passed.
+- Recorded findings in REC-119 continuation; completed inventory in master;
+  active P5 remains open. Retired Session 8 prompt; successor is Session 9 / P5.
+  No P6, content, persistence, sprite generation, balance/dependency change or
+  publication. Local documentation commit only.
+- Final recording checkpoint: **11:40:29 AEDT / 00:40:29 UTC**; elapsed
+  **7 min 29 s** from the conservative 11:33 start. Final software checks and
+  101 local Markdown link targets (zero missing) pass; `git diff --check` passes.
+  This evidence-only session finishes early with the unsupported gates explicitly
+  pending, rather than spending the remaining budget on prohibited long checks.
+
+
+## Session 9 — P5 native-event acceptance (2026-10-16)
+
+- Start: **12:01:40 AEDT / 01:01:40 UTC**; maximum deadline
+  **13:31:40 AEDT / 02:31:40 UTC**. Final verification/review reserve begins
+  no later than **13:11:40 AEDT / 02:11:40 UTC**.
+- Initial checkout: clean `b8114cb`, existing `codex/v0.4.3`. No unrelated edits.
+- Read required authorities and P5 slice reports. PR #25 remains merged at
+  `03965ef` / `54b9b1b`; read-only run inspection confirms `38829241556` now
+  succeeds on `03965ef`: 474 units/56 files, 93 browsers/one existing skip,
+  types/lint/build and zero audit findings. No new local-head CI claim.
+- Browser plan: one 30-second maximum native same-window two-tab case, one
+  worker/zero retries, one brief hidden/visible round trip. Playwright source
+  installs Emulation.setFocusEmulationEnabled(true); disable that override on
+  both owned tabs and verify browser window IDs before checking native events.
+  No synthetic DOM visibility or focus events; no document.hidden overrides.
+- Native outcome: the first same-window attempt still stays visible with a
+  separate-session emulation reset (6.3 s failure); installed Playwright documents
+  noDefaults for default-context attachment. One external-context setup then
+  stops before navigation on its relative URL (1.3 s). Absolute URL correction
+  yields **1 pass in 4.4 s / 5.1 s total**, zero automatic retries. Only the
+  successful attempt produces a native hidden/visible round trip.
+- Accepted bounded result: actual same-window tabs, trusted blur/hidden/focus/
+  visible; 1,330.6 ms hidden, elapsed held at 258.463333 ms, one natural spawn,
+  queues empty/unchanged, first observed rAF advancement 7.493333 ms at rate 0.5.
+  M5 Pro/48 GiB, Darwin 25.5.0, Chromium 151.0.7922.34, native Metal WebGL,
+  test/Default, actual viewport 1280×657/DPR1. Raw capture preserved verbatim as
+  `build/performance/P5_NATIVE_VISIBILITY.json`. Light no-contact/no-XP/no-hazard/
+  no-weapon case; no sustained combat, pending-work or older-device claim.
+- Added 14 deterministic actual-handler checks across both themes: duplicate
+  focus events, auto-pause ownership, retained paused/level_up/time_up/dead/
+  complete intent and safe late events with no run. Native overlay transitions
+  remain unmeasured; no runtime defect/fix. The native fixture is opt-in, adding
+  one skip to future headless regression; a skip is never a native pass.
+- Final verification/review started early around **12:05:40 AEDT / 01:05:40 UTC**,
+  preserving the deadline's final 20-minute reserve. Targeted 14 units and full
+  **488 units/57 files**, types/lint/build pass; existing chunk advisory only.
+  Final fixture review adds bounded child termination/finally cleanup; no further
+  browser campaign is needed for that cleanup-only adjustment. Final types/lint
+  and document/whitespace/ownership review follow the recording below.
+- The owned browser/tabs/temp profile and server were cleaned up; port 4173 has
+  no listener. Unknown/review-port 4213 processes untouched. No runtime imports/
+  telemetry boundary changes, so production/startup guards were not repeated.
+  Full Chromium/stress, authored/extended overtime, ten terminal cycles, long
+  soaks, real audio and broader device/browser evidence stay deferred, not passed.
+- Updated acceptance matrix, active P5 gate, status, REC-119 continuation and
+  master record. Session 9 handoff retired; Session 10 stays P5 and requires the
+  separately authorized consolidated gate/device access. Do not repeat an
+  unchanged native case or inventory-only slice to imply acceptance progress.
+  No P6/content/persistence/sprites/publication or workflow trigger.
+- Final recording checkpoint: **12:09:41 AEDT / 01:09:41 UTC**; actual elapsed
+  **8 min 01 s**. Final types/lint, 488 units/57 files and build pass; 107 local
+  Markdown targets resolve, preserved raw event/clock/spawn assertions revalidate
+  without another browser, and whitespace/ownership review passes. Local test/
+  evidence commit follows; all runtime/assets/dependencies remain unchanged.
+
+
+## Session 10 — authorized consolidated P5 campaign (2026-10-19)
+
+- Owner explicitly approved: “yes run the campaign lifecycle”, superseding the
+  handoff's requirement for separate authorization. Delivery remains local.
+- Start **12:06:21 AEDT / 01:06:21 UTC**; maximum deadline **13:36:21 AEDT /
+  02:36:21 UTC**; latest verification/review start **13:16:21 AEDT / 02:16:21 UTC**.
+- Clean existing `codex/v0.4.3`, `e2e8111`; no unrelated edits to preserve.
+  Read required authorities/reports; read-only remote confirms PR #25 merged and
+  run `38829241556` passes only `03965ef`, not this later local head.
+- Planned single serial native M5 Chromium campaign: 20-minute continuous scene
+  session spanning a full 300,000 ms authored clock at unchanged 0.5, extended
+  endless mode, short terminal/death/clearing reconstructions, native overlay/
+  queued-work transitions, pause/resize/Default–Low and actual AudioContext close
+  completion. One worker/zero automatic retries; explicit scenario aids/limits
+  recorded. Broad regression/stress/matrix/device campaigns remain outside this
+  authorization. Add only test fixtures/instrumentation unless a defect reproduces.
+- Preflight diagnostics exposed only fixture setup issues: instantaneous keyup
+  clearing Phaser JustDown; nested relative atlas paths without a root base;
+  genuine native focus loss pausing the run; reward setup invoked after focus
+  pause. No ordinary gameplay defect is inferred from direct invalid fixture
+  calls. Frame-visible 80 ms pulses, root base URL and explicit phase focus policy
+  fix the harness. All attempts are retained in P5_CAMPAIGN_PREFLIGHTS.json;
+  full local raw backups are under /private/tmp/arena-p5-campaign-20261019-preflights/.
+  Final accepted preflight: **20.5 s**, one worker/zero automatic retries.
+- Full frozen-source campaign starts about **12:15:05 AEDT / 01:15:05 UTC**;
+  exactly one long invocation passes at **12:35:07 AEDT / 01:35:07 UTC**.
+  Ownership window **1,200,458 ms**, capped at 27 minutes, one worker/zero retries.
+- Full authored **300,000 ms at 0.5**, then **150,013.478 ms** more simulation
+  during five wall-clock minutes of endless play. Ten short cycles pass: four
+  completions, three one-health real contact deaths, three clearings with queued
+  arrivals. The sustained endless run also ends via seeded actual contact death.
+- Native manual-pause/pending-spawn, level_up and time_up rounds use actual same-
+  window trusted events with focus emulation OFF. State/clock/queues stay held;
+  explicit resume releases the pending benchmark spawn once. Stable fixture
+  setup and long play explicitly use focus emulation ON, because unrelated
+  desktop focus changes otherwise legitimately pause the game. No sustained
+  native-event or production-throughput claim.
+- **12** clean create baselines / **12** stopped resource snapshots; baseline
+  one body and zero actor/claim histories. Sampled peaks **300 enemies, 48 pickups,
+  348 bodies, 677 top-level display entries, 9 timers, 18 tweens**. Causal histories
+  grow legitimately within a run (peak sampled 406 IDs) and reset on stop, with
+  no mid-run eviction. Actor/body and terminal damage/XP-source totals reconcile.
+- **13 actual AudioContexts** close exactly once with settled close Promises and
+  state closed; **7 service closures** start with voices active. Long audio muted,
+  short theme-cue probes unmuted/real; no audio quality/physical-device claim.
+- Device: Apple M5 Pro/48 GiB, Darwin 25.5.0, Chromium 151.0.7922.34, native Metal
+  WebGL, initial **1280×657/DPR2**, test eco/Normal. Survival aids noContact/
+  noHazards, scripted movement/real first-offer choices, one seeded XP overlay
+  and benchmark spawn; shortened terminal fixtures. No human survival, hazard
+  soak, heap/GC, direct active-scene destruction or older-device acceptance.
+- Final verification/review began early around **12:35:10 AEDT / 01:35:10 UTC**,
+  preserving the final 20-minute reserve before the 13:36:21 deadline. On frozen
+  source, types, **488 units/57 files**, lint/build pass. Production JS/HTML excludes
+  all campaign/audio observer markers; runtime asset filenames remain unchanged.
+  Three fixture hashes and copied raw SHA-256 validate. No runtime fix or new
+  startup/production browser/full regression/stress/balance/audit/Actions run.
+- Owned browser/tabs/server/profile cleaned up; no port 4173 listener. Unknown
+  processes/review port 4213 untouched. Report/matrix/status/master and REC-119
+  updated; Session 10 retired in the delivery commit, successor Session 11 stays
+  P5 for owner-selected compatibility/physical-device evidence. No push/PR/merge/
+  deployment, P6, content, dependency, persistence or sprite work.
+- Final recording checkpoint **12:38:39 AEDT / 01:38:39 UTC**; actual elapsed
+  **32 min 18 s** from the recorded session start. Final source/raw checks,
+  **119 local Markdown targets (zero missing)**, ownership and whitespace review
+  pass. All software checks were run on the same frozen fixture source. Delivery
+  is one local test/evidence commit; no further browser run is needed or left active.
+
+
+## Session 11 — authorized browser compatibility / 2026-10-19
+
+Owner delegates support selection and authorizes tests. Start 01:54:01 UTC / 12:54:01 AEDT; deadline 03:24:01 UTC / 14:24:01 AEDT; final verification reserve starts 03:04:01 UTC. Select current/previous-major desktop Chrome, Edge, Firefox and Safari on vendor-supported OS, keyboard/mouse with WebGL and WebAudio; mobile/touch not accepted. Run available installed Chrome plus pinned Chromium/Firefox/WebKit engine probes serially, one worker, no retries, 15-minute global bound. Physical older integrated-GPU and actual Safari/Edge/previous releases remain evidence requirements, not inferred from engines. No runtime/dependency changes planned.
+
+Session 11 result: 52/52 focused serial browser checks pass in 295,298ms,
+01:58:32 UTC start; installed Chrome155/Metal, Chromium151/SwiftShader,
+Firefox153/generalized Apple renderer, WebKit26.5/Apple GPU. M5 Pro48GiB,
+Darwin25.5.0, headless/test, DPR1/2. Source/raw hashes and environment snapshots
+in P5_COMPATIBILITY_SUMMARY.json; selected policy and remaining branded/platform/
+physical older-device evidence in P5_COMPATIBILITY_REPORT.md. Three interrupted
+attempts (input pulse, erroneous report-backup restart, stale resized canvas click)
+are retained, never accepted or auto-retried. Only tests gain 80ms key holds and
+explicit canvas resize readiness; no runtime/dependency/asset change or defect.
+Final typecheck initially found nullable configFile in the new opt-in guard;
+optional chaining fixes it, four affected environment probes pass in6.6s.
+Final types,488 units/57files,lint,build,diff check pass; existing chunk advisory.
+Full-app/stress/native/long/startup/production browser campaigns/audit/balance/CI
+were not rerun, not claimed passed. PR25/run38829241556 read-only rechecked;
+remote success still only03965ef. Owned4173/browser resources gone;4213 untouched.
+P5 remains open;P6/content not started. Session11 retired into master/report;
+Session12 targets selected missing releases/platforms/physical older hardware.
+Final verification/recording 02:05 UTC /13:05 AEDT (~11min elapsed), within90min
+budget with >20min reserved capacity. No publication/remote mutation.
+
+Final recording timestamp 2026-10-19T02:05:36.870497+00:00; actual elapsed 695.9 seconds. Final 20-minute reserve was preserved; completed early. Reviewed133 changed-document links,52 single-attempt expected results, raw/source hashes; no4173 listener or owned runner remains.

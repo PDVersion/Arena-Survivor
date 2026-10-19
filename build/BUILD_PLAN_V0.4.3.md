@@ -37,7 +37,7 @@ are excluded from these performance phases.
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
 | P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
-| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. Session 9 exact acceptance dependencies: `tests/e2e/native-visibility-v043.spec.ts`, `tests/unit/lifecycle/focus.test.ts`, `build/performance/P5_NATIVE_VISIBILITY.json`, acceptance report and current/successor handoffs. Session 10 owner-authorized consolidated campaign: `tests/e2e/lifecycle-campaign-v043.spec.ts`, `tests/fixtures/p5-campaign.{html,ts}`, `build/performance/P5_CAMPAIGN*`, acceptance/status/progress/master/reconciliation and successor handoff. Session 11 owner-selected-by-delegation compatibility dependencies: `tests/playwright.compatibility.config.ts`, `tests/e2e/compatibility-environment-v043.spec.ts`, existing boot/phase-two/gameplay-rate/presentation/lifecycle specs (unchanged assertions), `build/performance/P5_COMPATIBILITY*` and acceptance/status/master/progress/reconciliation/handoffs. One bounded serial cross-engine run on available M5; no physical-device inference or P6. Session 10 authorization covered one serial M5 lifecycle campaign only. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
 | P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
 
 - [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
@@ -61,9 +61,21 @@ are excluded from these performance phases.
 - [x] P5 startup affected gate / Session 7 — cold/warm transfer/render/upload/decode
   evidence; WebGL/Canvas, unsupported graphics and declared asset/module network
   failures with retry. See REC-010 continuation and `performance/P5_STARTUP_REPORT.md`.
-- [ ] P5 remaining consolidated acceptance — authored/overtime/focus/resume/long
-  lifecycle checks and broader browser compatibility remain deferred under the
-  owner resource policy. Do not treat those as locally passed or start P6 yet.
+- [x] P5 acceptance inventory / Session 8 — inspected scenario assertions and
+  recorded covered/partial/pending evidence in `performance/P5_ACCEPTANCE_REPORT.md`.
+  Native tab-switch probe did not reach hidden state; no runtime defect reproduced.
+- [x] P5 native-event slice / Session 9 — actual same-window Chromium tabs with
+  focus emulation absent, trusted events, frozen hidden clock/spawns/queues and
+  7.493 ms first observed advancement; 14 both-theme deterministic state guards.
+  This brief light case does not accept native overlays, pending work or long play.
+- [x] P5 owner-authorized consolidated lifecycle / Session 10 — 20-minute M5
+  ownership campaign, authored 300,000 ms at 0.5, five-minute endless extension,
+  ten short terminal cycles, native overlays/pending spawn, ten presentation/
+  resize changes, twelve clean create/stops, thirteen actual closed AudioContexts.
+  Test-only survival/focus aids and measurement limits are explicit in
+  `performance/P5_CAMPAIGN_REPORT.md`; no runtime fix or broader readiness claim.
+- [x] P5 Session 11 available desktop-engine compatibility — owner delegates support selection; 52 serial focused checks pass in installed Chrome/pinned Chromium/Firefox/WebKit, with four final guard-only probes. Test input/resize readiness corrections only; no runtime defect. See `performance/P5_COMPATIBILITY_REPORT.md`.
+- [ ] P5 remaining acceptance — selected current/previous-major desktop Chrome/Edge/Firefox/Safari policy; actual branded/platform combinations and representative older integrated-GPU access/evidence remain pending. Preserve all prior aided-campaign limits; no gate waiver. Session 12 stays P5; do not repeat accepted campaigns.
 - [ ] P6 — combined software gate, baseline/final reports and manual device
   checklist; representative older-device acceptance measured or explicitly pending.
 
@@ -236,12 +248,14 @@ expiring no longer holds the simulation — the boss fight is live play.
 
 ## Next slice — remaining P5 acceptance
 
-Owner-authorized documentation cleanup does not close this gate. Session 8
-uses the existing P5 ownership block, affected lifecycle/boot tests and a new
-`performance/P5_ACCEPTANCE_REPORT.md`. Inventory each outstanding scenario and
-its exact evidence before running anything; a normal CI pass does not imply
-focus/resume, overtime, long-soak, another-browser or physical-device acceptance.
-Prefer deterministic/source checks and a necessary bounded serial browser case.
-Full local Chromium/stress and long soaks remain deferred under AGENTS.md.
-Record untested requirements as pending; do not start P6 before P5 passes.
-The next-session handoff is [SESSION_8_PROMPT.md](SESSION_8_PROMPT.md).
+Sessions 8–11 evidence is in
+[`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
+The owner-authorized consolidated M5 lifecycle campaign passes within its
+explicit test/measurement limits; see
+[`performance/P5_CAMPAIGN_REPORT.md`](performance/P5_CAMPAIGN_REPORT.md).
+Session 11 selects the desktop support policy and passes 52 focused engine checks; see
+[`performance/P5_COMPATIBILITY_REPORT.md`](performance/P5_COMPATIBILITY_REPORT.md).
+Actual branded/platform and physical older-device evidence remains pending. Obtain
+access/captured results for the selected targets; support selection need not be repeated.
+No P6/content or repeat of unchanged accepted checks is authorized here.
+The next-session handoff is [SESSION_12_PROMPT.md](SESSION_12_PROMPT.md).

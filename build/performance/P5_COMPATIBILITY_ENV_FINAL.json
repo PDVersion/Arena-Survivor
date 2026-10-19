@@ -1,0 +1,303 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node@20/20.20.2/bin/node",
+      "/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "tests/playwright.compatibility.config.ts",
+      "compatibility-environment-v043.spec.ts",
+      "--workers=1",
+      "--retries=0"
+    ],
+    "configFile": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/playwright.compatibility.config.ts",
+    "rootDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 900000,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chrome-installed",
+        "name": "chrome-installed",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(?:compatibility-environment-v043|boot|phase-two|gameplay-rate|presentation-v043|lifecycle-v043)\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../build/performance/P5_COMPATIBILITY_RESULTS.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --mode test --host 127.0.0.1 --port 4173 --strictPort",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": false,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "compatibility-environment-v043.spec.ts",
+      "file": "compatibility-environment-v043.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chrome-installed",
+              "projectName": "chrome-installed",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:03:48.609Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/compatibility-environment--e9180--for-the-compatibility-gate-chrome-installed/attachments/environment-2289b4e2e07bffc09d30efa3d106ce6335d15300.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-98be208f620fdd27537c",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1080,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:03:50.173Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/compatibility-environment--e9180--for-the-compatibility-gate-chromium/attachments/environment-5b595bf363fa70ff21d2bdcde5993ddf631704f6.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-009d9db01b8df650575f",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 937,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:03:51.645Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/compatibility-environment--e9180--for-the-compatibility-gate-firefox/attachments/environment-65f7b88fd7a0797a50a6efdf187b7b776955b159.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-4c2c4835f1678bbb7622",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "records actual renderer and audio capabilities for the compatibility gate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 991,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:03:53.376Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "path": "/Users/pdv/Documents/Projects/Arena-Survivor/test-results/compatibility/compatibility-environment--e9180--for-the-compatibility-gate-webkit/attachments/environment-ccaba71b7cf945269bf001bcddd9ceed29242eec.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cab9cf7f2f734b367454-a09da0adf4206c3a718f",
+          "file": "compatibility-environment-v043.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T02:03:47.928Z",
+    "duration": 6639.732,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

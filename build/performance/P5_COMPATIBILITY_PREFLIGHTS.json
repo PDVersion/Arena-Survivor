@@ -1,0 +1,34 @@
+{
+  "initial": {
+    "passed": 11,
+    "failed": 4,
+    "interrupted": 1,
+    "notRun": 36,
+    "durationMinutes": 1.3,
+    "artifactBackup": "/private/tmp/arena-p5-compatibility-initial",
+    "failures": [
+      "pause stayed playing in gameplay-rate",
+      "pause stayed playing in phase-two",
+      "Low did not activate",
+      "settings tab stayed stats"
+    ],
+    "reason": "zero-duration key pulses; Phaser onUp clears _justDown",
+    "rawReport": "initial report overwritten by mistaken second invocation before backup; failure traces and screenshots preserved locally"
+  },
+  "second": {
+    "passed": 3,
+    "interrupted": 1,
+    "notRun": 48,
+    "durationSeconds": 9.7,
+    "reason": "backup script failed on reporter path resolved relative to tests/config; runner mistakenly started before correction. Stopped; not acceptance."
+  },
+  "third": {
+    "passed": 10,
+    "interrupted": 1,
+    "notRun": 41,
+    "durationMinutes": 1.7,
+    "reason": "stale canvas width after viewport resize; x984 click outside 900px viewport",
+    "rawReport": "P5_COMPATIBILITY_RESIZE_ABORT.json",
+    "artifactBackup": "/private/tmp/arena-p5-compatibility-resize"
+  }
+}

@@ -62,7 +62,7 @@ test("arena boundaries contain the player body", async ({ page }) => {
 
 test("pause stops movement and simulation time until resumed", async ({ page }) => {
   await waitForRun(page);
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("paused");
@@ -76,7 +76,7 @@ test("pause stops movement and simulation time until resumed", async ({ page }) 
   expect(stillPaused?.player?.x).toBe(paused?.player?.x);
   expect(stillPaused?.run?.elapsedMs).toBe(paused?.run?.elapsedMs);
 
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await page.keyboard.down("ArrowRight");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().player?.x))
