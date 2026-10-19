@@ -1134,3 +1134,37 @@ Two reviewed local commits separate P5 evidence and P6 software support; no push
 new PR, merge, deployment or workflow dispatch.
 
 Final review timestamp 2026-10-19T10:31:52.379609+00:00; actual elapsed 4422.4seconds. P5 checkpoint06f590b committed; P6 source/raw/link checks reviewed for its separate commit. Required gate-order reply remains pending.
+
+
+## Session13 — C1 foundation / owner gate-order revision (2026-10-20 Sydney)
+
+Start 2026-10-19 23:04:16 UTC (10:04:16 AEDT); deadline 00:34:16 UTC
+(11:34:16 AEDT), final verification/recording reserve starts 00:14:16 UTC.
+Owner explicitly approves C1–C7 proceeding in dependency order with missing
+P5/P6 browser/device acceptance release-blocking rather than build-blocking.
+No missing evidence is passed. Start from clean45f837f on existingcodex/v0.4.3.
+Live read-only GitHub inspection confirms PR26 merged2806720 as c6daeb6 and
+run39189877476 passes only2806720; no later matching-head CI claim.
+Exact C1 foundation paths claimed before runtime edits; no publication authorized.
+
+Session13 final recording: C1 foundation implemented and reviewed; normal game
+still equips only the original starter. Serializable ordered slots, independent
+successful-attack clocks, no catch-up bursts, immutable projectile attack data
+and explicit melee/projectile source ownership preserve ledger/XP/rate and
+Phaser shutdown boundaries. Reset helper retains starting loadout/difficulty.
+495units/58files, typecheck/lint/build/diff pass.11 unique affected browser cases
+pass across the corrected new cases plus9 existing cases; one combined-run eco
+fixture failure used fractional armour rather than points, fixed only test data.
+Final evidence attachment run2pass/0fail/0retry in1.201s. Initial sandbox server
+bind failed; approved bounded execution succeeded. CPU re-read denied; retained
+prior host inventory explicitly distinguished from actual current uname/Canvas/
+profile user agent. No physical Windows/WebGL/native/performance inference.
+Verification/recording began23:07:28UTC, before00:14:16 final20-minute reserve.
+No startup/production guard, full/stress/long/native campaign repeated. All owned
+Playwright/server resources exit; port4173 has no listener,4213 untouched.
+Report/results and completed master record are durable in this same reviewed
+local slice; Session13 prompt retired and Session14 C1 continuation written.
+P5/P6 external acceptance remains release-blocking; C1 overall and C2–C7 remain
+open. No push/new PR/merge/deployment/workflow dispatch.
+Final recording timestamp 2026-10-19T23:11:01.933941+00:00; actual elapsed
+405.9seconds (90min maximum, finished early).

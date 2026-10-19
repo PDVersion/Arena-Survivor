@@ -8,6 +8,15 @@ import { validateTheme } from "../../../src/game/content/define-theme";
 import { alternateTheme } from "../../fixtures/alternate-theme";
 
 describe("theme manifests", () => {
+  it("requires a finite positive authored weapon-slot capacity", () => {
+    for (const capacity of [0, -1, 1.5, Infinity, NaN, Number.MAX_SAFE_INTEGER + 1]) {
+      expect(validateTheme({ ...alternateTheme, weaponSlotCount: capacity }))
+        .toContain("weaponSlotCount must be a positive safe integer");
+    }
+    expect(ecoGuardianTheme.weaponSlotCount).toBe(2);
+    expect(knightMagicTheme.weaponSlotCount).toBe(2);
+  });
+
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],

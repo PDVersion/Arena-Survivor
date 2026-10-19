@@ -2952,3 +2952,25 @@ match. No production throughput, native event, continuous-soak or older-device
 acceptance is inferred. [P6 report](performance/P6_READINESS_REPORT.md) retains
 raw results/limits; P5 and overall acceptance remain open. Required owner reply
 on release-versus-build gate classification is pending; C1–C7 has not started.
+
+
+<a id="v0-4-3-c1-foundation"></a>
+### V0.4.3 C1 foundation — automatic slots and attack ownership (2026-10-20)
+
+Owner explicitly approves planned C1–C7 after verified software checks while
+missing P5/P6 browser/device acceptance remains release-blocking. This is an
+ordering revision, not missing evidence being accepted.
+
+Completed local foundation: theme-owned two-slot capacity, serializable ordered
+loadouts with independent successful-attack clocks and no catch-up bursts;
+restart reconstructs starting slots/clocks and retains difficulty. Actual melee
+and in-flight projectile hits carry their own weapon's armour, knockback and
+lethal source identity. Existing ledger, XP, rate0.5 and shutdown ownership stay
+intact. Normal play still has only its original starter.
+
+Typecheck,495units/58files, lint/build/diff and11 unique affected serial browser
+cases pass (one new-case fixture armour-points correction explicitly recorded).
+No full/stress/native/long/startup campaign repeated or later-head CI inferred.
+See [C1 foundation report](content/C1_FOUNDATION_REPORT.md). C1 second tool,
+owned offers, splash, simulator and combined gate remain in the active plan;
+C2–C7 are not started. No new publication or workflow dispatch.

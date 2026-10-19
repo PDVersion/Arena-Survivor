@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). The active work is remaining P5 acceptance and owner-authorized P6 software preparation (2026-10-19). Physical/browser acceptance remains pending; preparation does not close P5 or start content. F16 was selected and delivered. Owner requests the remaining planned C1–C7; implementation waits for the gate-order decision. Other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance release-blocking rather than build-blocking. P5 and P6 acceptance remain open. C1 is active; F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -36,7 +36,7 @@ are excluded from these performance phases.
 | P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
 | P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. Session 9 exact acceptance dependencies: `tests/e2e/native-visibility-v043.spec.ts`, `tests/unit/lifecycle/focus.test.ts`, `build/performance/P5_NATIVE_VISIBILITY.json`, acceptance report and current/successor handoffs. Session 10 owner-authorized consolidated campaign: `tests/e2e/lifecycle-campaign-v043.spec.ts`, `tests/fixtures/p5-campaign.{html,ts}`, `build/performance/P5_CAMPAIGN*`, acceptance/status/progress/master/reconciliation and successor handoff. Session 12 also owns `tests/native/firefox-compatibility.py`, `build/performance/P5_FIREFOX*` for two bounded unpatched Mozilla application smoke checks, without system installation/dependency changes. Session 12 P5 follow-up adds opt-in Edge executable/report selection in `tests/playwright.compatibility.config.ts`, native Safari driver support in `tests/native/safari-compatibility.py` and `build/performance/P5_{EDGE,SAFARI}*`. Session 11 owner-selected-by-delegation compatibility dependencies: `tests/playwright.compatibility.config.ts`, `tests/e2e/compatibility-environment-v043.spec.ts`, existing boot/phase-two/gameplay-rate/presentation/lifecycle specs (unchanged assertions), `build/performance/P5_COMPATIBILITY*` and acceptance/status/master/progress/reconciliation/handoffs. One bounded serial cross-engine run on available M5; no physical-device inference or P6. Session 10 authorization covered one serial M5 lifecycle campaign only. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
-| P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate. Session 12 exact dependencies: `scripts/build-device-pack.ts`, `tests/device-pack/**`, `tests/e2e/device-pack-v043.spec.ts`, `tests/playwright.device-pack.config.ts`, `tests/e2e/phase-{five,eight-v03}.spec.ts`, `scripts/performance.ts` key-input holds, `tests/native/safari-compatibility.py`, `build/performance/P6*`, P5 acceptance/status/master/progress/reconciliation/handoffs. Owner explicitly requests starting P6 while finishing P5; software preparation may proceed, but no missing physical/browser evidence is marked passed and C1 stays gated. | `test(v0.4.3): verify browser performance readiness` |
+| P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate. Session 12 exact dependencies: `scripts/build-device-pack.ts`, `tests/device-pack/**`, `tests/e2e/device-pack-v043.spec.ts`, `tests/playwright.device-pack.config.ts`, `tests/e2e/phase-{five,eight-v03}.spec.ts`, `scripts/performance.ts` key-input holds, `tests/native/safari-compatibility.py`, `build/performance/P6*`, P5 acceptance/status/master/progress/reconciliation/handoffs. Owner explicitly requests starting P6 while finishing P5; software preparation may proceed, but no missing physical/browser evidence is marked passed and missing acceptance stays open (the later 2026-10-20 content-order revision is below). | `test(v0.4.3): verify browser performance readiness` |
 
 - [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
   hit-stop regression, lint repair, types/units/lint/build and browser boot/load
@@ -76,7 +76,8 @@ are excluded from these performance phases.
 - [x] P5 Session12 branded follow-up —26 Edge155/154 focused passes and two unpatched headed Firefox158/157.0.1 smokes. Safari session blocked by its setting; no runtime change. See `performance/P5_COMPATIBILITY_FOLLOWUP.md`.
 - [ ] P5 remaining acceptance — selected current/previous-major desktop Chrome/Edge/Firefox/Safari policy; actual branded/platform combinations and representative older integrated-GPU access/evidence remain pending. Preserve all prior aided-campaign limits; no gate waiver. Session 12 stays P5; do not repeat accepted campaigns.
 - [x] P6 software/readiness-tool slice —96 browser/stress passes/six explicit opt-in skips, zero retries;488units, types/lint/build/audit; portable device kit verified;18 warmed Default/Low windows at60/150/300, frozen sources. See `performance/P6_READINESS_REPORT.md`.
-- [ ] P6 overall acceptance / content gate decision —missing browser/platform and physical older-device evidence stays open. Owner confirms no older machine; requested classification as release-blocking while content proceeds remains unanswered. No content started or acceptance waived.
+- [ ] P6 overall acceptance — missing browser/platform and physical older-device evidence stays release-blocking. Owner confirms no older machine.
+- [x] Owner content-order revision (2026-10-20) — explicit “yes proceed” permits C1–C7 after verified software checks while missing acceptance remains release-blocking. No evidence is waived.
 
 P0's short gate is `npm run typecheck`, `npm test -- --run`, `npm run lint`,
 `npm run build`, serial boot/load/frame-measurement browser tests and the existing
@@ -120,6 +121,28 @@ pending and must be reported before describing older-device readiness as complet
 Ordered by dependency, and sized so each ends in something playable.
 
 ### C1 — Weapon slots and a second weapon
+
+**Owner gate-order revision — 2026-10-20:** the owner explicitly replied “yes
+proceed” to continuing planned C1–C7 with missing browser/device acceptance
+release-blocking rather than build-blocking. P5 and P6 acceptance stay open;
+software readiness is verified. No additional optional features or sprites are selected.
+
+C1 foundation ownership (claim before edits): `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both production themes' `{weapons,index}.ts`,
+`src/game/state/run-state.ts`, `src/game/systems/weapons/{weapon-loadout,resolve-weapon}.ts`,
+`src/game/entities/projectile-actor.ts`, `src/game/scenes/run-scene.ts`,
+`tests/fixtures/alternate-theme.ts`, `tests/unit/weapons/weapon-loadout.test.ts`,
+`tests/unit/content/theme.test.ts`, `tests/unit/run-state/run-state.test.ts`,
+`tests/e2e/weapon-slots-v043.spec.ts`, and plan/status/master/progress/README/
+`build/content/C1_FOUNDATION*`, acceptance reports/reconciliation/handoffs. This first verified slice establishes
+serializable slot state, independent scheduling and actual hit-source ownership.
+The second tool, owned upgrades, on-hit splash, balance and combined C1 gate
+remain subsequent C1 slices; C2 cannot begin before C1 passes.
+
+- [x] C1 foundation — slot state/resolution, independent clocks and hit ownership.
+- [ ] C1 second tool and weapon-conditioned upgrade offers.
+- [ ] C1 on-hit splash ledger, simulator, balance/readability/affected stress gate.
+
 The delivery-kind union deliberately deferred in REC-051, because its shape
 depended on decisions slots had not made yet. Slots make it decidable: a melee
 weapon declares an arc and a target cap instead of a projectile speed and
@@ -245,7 +268,7 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — remaining P5 acceptance
+## Next slice — C1 second tool; external acceptance remains open
 
 Sessions 8–11 evidence is in
 [`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
@@ -258,6 +281,6 @@ Actual branded/platform and physical older-device evidence remains pending. Obta
 access/captured results for the selected targets; support selection need not be repeated.
 Owner authorizes P6 software preparation alongside open P5 acceptance. Its verified slice is in
 [`performance/P6_READINESS_REPORT.md`](performance/P6_READINESS_REPORT.md).
-The decision to let C1–C7 proceed with missing evidence remaining release-blocking
-is pending. No accepted campaign is repeated to imply progress.
-The next-session handoff is [SESSION_13_PROMPT.md](SESSION_13_PROMPT.md).
+The owner explicitly approves this ordering on 2026-10-20; the missing evidence
+remains release-blocking. C1 foundation is verified; continue its second-tool slice. No accepted campaign is repeated to imply progress.
+The next-session handoff is [SESSION_14_PROMPT.md](SESSION_14_PROMPT.md).

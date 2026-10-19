@@ -158,6 +158,7 @@ import {
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
+import { recordWeaponAttack } from "../systems/weapons/weapon-loadout";
 import {
   completeCollectionSweepAttack,
   createCollectionSweepProgress,
@@ -430,7 +431,6 @@ export class RunScene extends Phaser.Scene {
   private levelTimestampsMs: number[] = [];
   private xpByBucketMs: number[] = [];
   private xpEarnedTotal = 0;
-  private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
   private lastContactKnockbackAtMs = Number.NEGATIVE_INFINITY;
   private invulnerableUntilMs = 0;
@@ -941,7 +941,6 @@ export class RunScene extends Phaser.Scene {
     this.levelTimestampsMs = [];
     this.xpByBucketMs = [];
     this.xpEarnedTotal = 0;
-    this.nextFireAtMs = 0;
     this.lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
     this.lastContactKnockbackAtMs = Number.NEGATIVE_INFINITY;
     this.invulnerableUntilMs = 0;
@@ -1838,19 +1837,20 @@ export class RunScene extends Phaser.Scene {
       testSkillEnabled("closeLoad") &&
       this.loadHarnessSpawned < this.loadHarnessRequested
     ) return;
-    if (
-      !this.player ||
-      !this.runState ||
-      !this.weaponDefinition ||
-      !this.projectileGroup ||
-      this.runState.elapsedMs < this.nextFireAtMs
-    ) {
-      return;
+    if (!this.player || !this.runState || this.runState.status !== "playing" || !this.projectileGroup) return;
+    for (const slot of this.runState.weaponSlots) {
+      if (this.runState.elapsedMs < slot.nextAttackAtMs) continue;
+      const definition = this.runTheme.weapons.find((weapon) => weapon.id === slot.weaponId);
+      if (!definition) throw new Error(`Equipped weapon is unavailable: ${slot.weaponId}`);
+      this.fireWeaponIfReady(definition);
     }
+  }
 
+  private fireWeaponIfReady(definition: WeaponDefinition): void {
+    if (!this.player || !this.runState || this.runState.status !== "playing" || !this.projectileGroup) return;
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const weapon = resolveWeaponDefinition(this.weaponDefinition, this.runState.weaponModifiers);
+    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers);
     const target = weapon.deliveryKind === "melee"
       ? selectMeleeAim(this.player, this.enemies, weapon.reach)
       : findNearestTarget(this.player, this.enemies);
@@ -1896,20 +1896,17 @@ export class RunScene extends Phaser.Scene {
           DAMAGE_NUMBER_WINDOW_MS,
         );
         this.commitEnemyDamage(enemy, damage.damage, "direct", undefined, {
+          weapon,
           directBase: damage.baseDamage,
           criticalBonus: damage.bonusDamage,
           piercingMomentum: 0,
         });
-        this.applyWeaponKnockback(enemy);
+        this.applyWeaponKnockback(enemy, weapon);
         this.meleeHits += 1;
         this.firstMeleeHitAtMs ??= this.runState.elapsedMs;
       }
       this.completeCollectionSweep(baseAngle, weapon, damage);
-      this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
-        weapon.cooldownMs,
-        this.runState.player.stats.attackSpeedBonus,
-        this.bloodlustAttackSpeedBonus,
-      );
+      this.recordWeaponAttack(weapon);
       return;
     }
 
@@ -1954,11 +1951,19 @@ export class RunScene extends Phaser.Scene {
       if (damage.critical) this.criticalShots += 1;
       this.runState = observeRunCrit(this.runState, damage.tier);
     }
-    this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
-      weapon.cooldownMs,
-      this.runState.player.stats.attackSpeedBonus,
-      this.bloodlustAttackSpeedBonus,
-    );
+    this.recordWeaponAttack(weapon);
+  }
+
+  private recordWeaponAttack(weapon: WeaponDefinition): void {
+    if (!this.runState) return;
+    this.runState = {
+      ...this.runState,
+      weaponSlots: recordWeaponAttack(
+        this.runState.weaponSlots, weapon.id, this.runState.elapsedMs,
+        attackCooldownMs(weapon.cooldownMs, this.runState.player.stats.attackSpeedBonus,
+          this.bloodlustAttackSpeedBonus),
+      ),
+    };
   }
 
   /** Complete one committed grabber attack and resolve its optional sweep track. */
@@ -1998,6 +2003,7 @@ export class RunScene extends Phaser.Scene {
           DAMAGE_NUMBER_WINDOW_MS,
         );
         this.commitEnemyDamage(enemy, amount, "direct", undefined, {
+          weapon,
           directBase: damage.baseDamage * effect.damageMultiplier,
           criticalBonus: damage.bonusDamage * effect.damageMultiplier,
           piercingMomentum: 0,
@@ -2067,11 +2073,12 @@ export class RunScene extends Phaser.Scene {
     );
     if (projectile.pierceChainIndex > 0) this.emitFeedback("pierce", enemy.x, enemy.y, "PIERCE");
     this.commitEnemyDamage(enemy, projectile.damage, "direct", undefined, {
+      weapon: projectile.weapon,
       directBase: projectile.normalDamage,
       criticalBonus: projectile.criticalBonusDamage,
       piercingMomentum: projectile.damage - projectile.baseDamage,
     });
-    this.applyWeaponKnockback(enemy);
+    this.applyWeaponKnockback(enemy, projectile.weapon);
     projectile.registerHit(enemy.targetId);
     this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
   }
@@ -2107,10 +2114,10 @@ export class RunScene extends Phaser.Scene {
 
   /**
    * Weapon knockback, scaled by the target's mass so heavy roles shrug it off.
-   * Both production weapons declare `0`, so this is inert until a weapon uses it.
+   * The attack owns its impulse even if its equipped slot changes before impact.
    */
-  private applyWeaponKnockback(enemy: EnemyActor): void {
-    const strength = this.weaponDefinition?.knockback ?? 0;
+  private applyWeaponKnockback(enemy: EnemyActor, weapon: WeaponDefinition): void {
+    const strength = weapon.knockback;
     if (strength <= 0 || !this.player) return;
     const push = knockbackDisplacement(this.player, enemy, strength, enemy.mass);
     enemy.x += push.x;
@@ -2123,14 +2130,14 @@ export class RunScene extends Phaser.Scene {
     damage: number,
     damageSource: DamageSource,
     parentEventId?: string,
-    direct?: Readonly<{ directBase: number; criticalBonus: number; piercingMomentum: number }>,
+    direct?: Readonly<{ weapon: WeaponDefinition; directBase: number; criticalBonus: number; piercingMomentum: number }>,
   ): void {
     if (!this.runState || enemy.defeated) return;
     // Enemy armour is multiplicative and the weapon may ignore a share of it.
     const reduced = reduceByArmour(
       damage,
       enemy.definition.armour,
-      this.weaponDefinition?.armourPierce ?? 0,
+      direct?.weapon.armourPierce ?? 0,
     );
     const appliedDamage = Math.min(enemy.health, Math.max(0, reduced));
     const result = enemy.takeDamage(reduced);
@@ -2139,7 +2146,9 @@ export class RunScene extends Phaser.Scene {
     this.runState = recordRunDamage(this.runState, {
       amount: appliedDamage,
       source: damageSource,
-      ...direct,
+      directBase: direct?.directBase,
+      criticalBonus: direct?.criticalBonus,
+      piercingMomentum: direct?.piercingMomentum,
     });
     if (!result.killed) return;
     this.firstKillAtMs ??= this.runState.elapsedMs;
@@ -2152,7 +2161,7 @@ export class RunScene extends Phaser.Scene {
       entityId: enemy.targetId,
       provenance: {
         sourceCategory: damageSource === "direct" ? "weapon" : "skill",
-        sourceId: damageSource === "direct" ? this.weaponDefinition?.id : archetypeIds.skill.onKillExplosion,
+        sourceId: damageSource === "direct" ? direct?.weapon.id : archetypeIds.skill.onKillExplosion,
         parentEventId,
       },
       payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite) },

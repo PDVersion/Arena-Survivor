@@ -5,6 +5,8 @@ import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-vie
 
 export class ProjectileActor extends Phaser.GameObjects.Arc {
   readonly projectileId: string;
+  /** Attack-time data survives upgrades and future slot replacement. */
+  readonly weapon: ProjectileWeaponDefinition;
   readonly baseDamage: number;
   readonly normalDamage: number;
   readonly criticalBonusDamage: number;
@@ -39,6 +41,7 @@ export class ProjectileActor extends Phaser.GameObjects.Arc {
     const colour = Phaser.Display.Color.HexStringToColor(tokens.palette[token]).color;
     super(scene, x, y, definition.projectileRadius, 0, 360, false, colour);
     this.projectileId = projectileId;
+    this.weapon = Object.freeze({ ...definition });
     this.baseDamage = damage;
     this.normalDamage = normalDamage;
     this.criticalBonusDamage = criticalBonusDamage;

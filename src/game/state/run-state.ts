@@ -1,4 +1,4 @@
-import type { CharacterId, UpgradeId } from "../core/archetypes/ids";
+import { archetypeIds, type CharacterId, type UpgradeId, type WeaponId } from "../core/archetypes/ids";
 import type { SkillLevels } from "../systems/skills/resolve-skill";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
 import type { UpgradeDefinition } from "../core/archetypes/contracts";
@@ -30,6 +30,8 @@ import {
   type DamageRecord,
   type RunStatistics,
 } from "../systems/statistics/run-statistics";
+
+import { createWeaponSlots, type WeaponSlotState } from "../systems/weapons/weapon-loadout";
 
 export const RUN_STATE_VERSION = 1 as const;
 export const DEFAULT_RUN_DURATION_MS = 5 * 60 * 1000;
@@ -64,6 +66,8 @@ export interface RunState {
   readonly player: RunPlayerState;
   readonly progression: ProgressionState;
   readonly weaponModifiers: WeaponStatModifiers;
+  readonly startingWeaponIds: readonly WeaponId[];
+  readonly weaponSlots: readonly WeaponSlotState[];
   readonly selectedUpgradeIds: readonly UpgradeId[];
   readonly skillLevels: SkillLevels;
   readonly world: WorldState;
@@ -85,6 +89,7 @@ export interface DeathCause {
 }
 
 export interface CreateRunOptions {
+  readonly startingWeaponIds?: readonly WeaponId[];
   readonly difficulty?: DifficultyId;
   readonly themeId: string;
   readonly characterId: CharacterId;
@@ -104,6 +109,7 @@ export function createRunState(options: CreateRunOptions): RunState {
   }
 
   const xpCurve = options.xpCurve ?? DEFAULT_XP_CURVE;
+  const startingWeaponIds = Object.freeze([...(options.startingWeaponIds ?? [archetypeIds.weapon.starter])]);
   return {
     difficulty: options.difficulty ?? "normal",
     version: RUN_STATE_VERSION,
@@ -121,6 +127,8 @@ export function createRunState(options: CreateRunOptions): RunState {
     },
     progression: createProgressionState(xpCurve),
     weaponModifiers: createWeaponStatModifiers(),
+    startingWeaponIds,
+    weaponSlots: createWeaponSlots(startingWeaponIds),
     selectedUpgradeIds: [],
     skillLevels: Object.freeze({}),
     world: createWorldState(),
@@ -261,6 +269,8 @@ export function applyRunUpgrade(
 
 export function resetRunState(state: RunState): RunState {
   return createRunState({
+    difficulty: state.difficulty,
+    startingWeaponIds: state.startingWeaponIds,
     themeId: state.themeId,
     characterId: state.player.characterId,
     baseStats: state.player.baseStats,

@@ -70,6 +70,9 @@ V0.4.3 now starts with the browser-performance prerequisite P0–P6, promoted
 from [`AUTONOMOUS_DEVELOPMENT_PLAN.md`](./AUTONOMOUS_DEVELOPMENT_PLAN.md) at the
 owner's Session 1 request (REC-102). Measurement precedes optimization and
 content growth; C1–C7 retain their dependencies and require owner selection.
+On 2026-10-20 the owner explicitly approves planned C1–C7 after the verified
+software gate while missing P5/P6 browser/device evidence remains release-blocking.
+Acceptance is not waived, and other optional content remains unselected.
 The active increment plan owns the exact performance paths, commit subjects,
 verification, and hardware-reporting gates. This is a technical prerequisite,
 not a change to game content, balance, or the V0.4.4 sprite gate.

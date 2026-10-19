@@ -1,6 +1,6 @@
 # P6 — combined software readiness and device follow-up
 
-Work starts under the owner's 2026-10-19 request to finish P5, begin P6 and continue V0.4.3. This explicitly authorizes P6 software preparation alongside unresolved physical/browser evidence; it does not silently pass P5 or waive device acceptance. The owner confirmed no older device is available. Content remains behind the required software/acceptance gate.
+Work starts under the owner's 2026-10-19 request to finish P5, begin P6 and continue V0.4.3. This explicitly authorizes P6 software preparation alongside unresolved physical/browser evidence; it does not silently pass P5 or waive device acceptance. The owner confirmed no older device is available. At that checkpoint content remained behind the required gate; the dated owner revision below now governs implementation order.
 
 ## Baseline and final evidence to retain
 
@@ -99,9 +99,11 @@ own automation setting is enabled. Missing branded/platform combinations and
 physical older integrated-GPU evidence remain pending; the owner confirms no
 older device exists in the workspace. Do not rerun unchanged accepted campaigns.
 
-The owner has been asked whether missing device/browser evidence may remain
-release-blocking while C1–C7 development proceeds after software checks. That
-required gate-order decision has not been received; content has not started.
+Session12 ended with that decision pending. On 2026-10-20 the owner explicitly
+replies “yes proceed”: planned C1–C7 may proceed in dependency order after the
+verified software gate, while missing device/browser evidence remains
+release-blocking. C1 foundation is the first implementation slice; no missing
+acceptance is marked passed.
 No phase/device gate is silently waived. This slice is local; no new push, PR,
 merge, deployment or workflow dispatch. PR26's older matching-head CI remains
 explicitly separate from the later local source.

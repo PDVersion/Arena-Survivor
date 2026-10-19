@@ -473,6 +473,8 @@ export interface ThemeManifest {
   readonly tokens: ThemeTokens;
   readonly characters: readonly CharacterDefinition[];
   readonly weapons: readonly WeaponDefinition[];
+  /** Theme-owned capacity; all equipped slots fire automatically. */
+  readonly weaponSlotCount: number;
   readonly enemies: readonly EnemyDefinition[];
   readonly pickups: readonly PickupDefinition[];
   readonly upgrades: readonly UpgradeDefinition[];

@@ -173,6 +173,7 @@ export const alternateTheme = defineTheme({
       },
     },
   ],
+  weaponSlotCount: 2,
   weapons: [
     {
       id: archetypeIds.weapon.starter,

@@ -4,7 +4,7 @@ import { enemies } from "./enemies";
 import { copy } from "./copy";
 import { tokens } from "./tokens";
 import { sprites } from "./sprites";
-import { weapons } from "./weapons";
+import { weapons, weaponSlotCount } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades, upgradeTierTuning } from "./upgrades";
 import { shrines, shrineTuning } from "./shrines";
@@ -37,6 +37,7 @@ export const ecoGuardianTheme = defineTheme({
   tokens: { ...tokens, sprites },
   characters,
   weapons,
+  weaponSlotCount,
   enemies,
   pickups,
   upgrades,

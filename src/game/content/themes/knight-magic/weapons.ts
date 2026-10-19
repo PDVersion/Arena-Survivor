@@ -20,3 +20,6 @@ export const weapons = [
     presentationToken: "projectile",
   },
 ] as const satisfies readonly WeaponDefinition[];
+
+/** Two automatic tool slots; only the starter is equipped at run creation. */
+export const weaponSlotCount = 2;

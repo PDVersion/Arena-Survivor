@@ -200,6 +200,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required character: ${archetypeIds.character.starter}`);
   }
 
+  if (!Number.isSafeInteger(theme.weaponSlotCount) || theme.weaponSlotCount < 1) {
+    issues.push("weaponSlotCount must be a positive safe integer");
+  }
   const weaponIds = new Set<string>();
   const weapons = Array.isArray(theme.weapons) ? theme.weapons : [];
   if (!Array.isArray(theme.weapons)) issues.push("weapons registry is required");

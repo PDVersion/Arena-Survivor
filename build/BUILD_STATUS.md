@@ -1,6 +1,6 @@
 # Build dates and status
 
-Updated **2026-10-19 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-20 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -45,9 +45,10 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 consolidated lifecycle (Session 10) | 2026-10-19, local test/evidence slice | Owner-authorized 20-minute M5 campaign passes: full authored clock, endless extension, ten short terminals, native overlays/pending work, twelve clean lifecycles, thirteen actual closed AudioContexts; scoped aids/limits in [report](performance/P5_CAMPAIGN_REPORT.md) |
 | P5 available-engine compatibility (Session 11) | 2026-10-19, local test/evidence slice | 52 serial focused passes across installed Chrome, Chromium, Firefox, WebKit; test timing/readiness fixes; [report](performance/P5_COMPATIBILITY_REPORT.md) |
 | P5 branded-browser follow-up (Session12) | 2026-10-19, local test/evidence slice | Edge155/154:26 focused passes; Firefox158/157:two unpatched application smokes; native Safari blocked by automation setting, no gameplay assertions; [report](performance/P5_COMPATIBILITY_FOLLOWUP.md) |
-| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_13_PROMPT.md) |
+| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_14_PROMPT.md) |
 | P6 | **Software slice verified; acceptance open** |96 serial browser/stress passes/six opt-in skips/zero retries,488units, verified device pack and18 final warmed windows; software slice verified. Physical/browser acceptance remains pending; [report](performance/P6_READINESS_REPORT.md) |
-| C1–C7 / optional content | **Not started / gate decision pending** | Owner requests remaining milestone work; C1–C7 implementation waits for required gates or explicit order revision. F16 delivered; unrelated optional proposals remain unselected |
+| C1 foundation | **Verified local slice, 2026-10-20** | Serializable slots, independent attack clocks and attack-owned hit data; [report](content/C1_FOUNDATION_REPORT.md). C1 second tool/owned offers/splash/simulator and combined gate remain pending |
+| C1–C7 / optional content | **C1 active; C2–C7 pending** | Explicit owner gate-order revision permits planned content after verified software checks; missing browser/device acceptance remains release-blocking. F16 delivered; unrelated optional proposals remain unselected |
 
 ## Latest remote evidence
 

@@ -2572,6 +2572,23 @@ P5 consolidated acceptance is still next, so Session 8 remains P5 and the
 roadmap's future P6 handoff becomes Session 9. No new reconciliation ID is
 allocated outside V0.4.3's reserved range.
 
+Session13 continuation (2026-10-20): the owner explicitly replies “yes proceed”
+to continuing planned C1–C7 after the verified software gate with missing
+browser/device evidence release-blocking rather than build-blocking. P5/P6
+acceptance remains open; the device shortfall is neither a pass nor a waiver.
+C1 starts with serializable ordered slots and independent simulation clocks;
+only successful attacks advance their own slot and missed frames never replay
+attacks. Theme-owned capacity is two; current runs still equip only their starter.
+In-flight projectiles retain immutable attack-time weapon data for armour,
+knockback and lethal provenance, so another slot/catalog change cannot lend
+them the starter's stats. Restart reconstructs baseline slots/clocks and retains
+selected difficulty. No second physics teardown, new content, rate or XP change.
+The bounded both-theme actual-actor test proves scheduling and hit ownership;
+its first exact-total assertion used fractional armour instead of armour points
+and was corrected in test data, not gameplay. New tool/owned offers/splash and
+C1's combined balance/readability/stress acceptance remain next. See
+`build/content/C1_FOUNDATION_REPORT.md`. No new reconciliation ID is allocated.
+
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 
 - Status: Accepted

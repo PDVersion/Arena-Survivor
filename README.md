@@ -8,17 +8,18 @@ recognisable real-world tools, and optional educational depth.
 See [build dates and status](build/BUILD_STATUS.md) for verified checkpoints,
 merge dates, current PR/CI evidence and remaining acceptance limits.
 V0.4.3 is active; P5's affected lifecycle/startup slices are verified and its
-device/browser acceptance remains open. P6 software checks and device kit are verified; content
-remains behind the required acceptance decision.
+device/browser acceptance remains release-blocking. P6 software checks and the
+device kit are verified at their recorded sources. Owner-approved C1–C7
+implementation has begun with C1 weapon slots; the second tool is next.
 
 ## Project documents
 
 - [Master build plan — completed work](build/MASTER_BUILD_PLAN.md): consolidated V0.1–V0.4.2.1 implementation/architecture records and verified V0.4.3 slices.
 - [Build dates and status](build/BUILD_STATUS.md): one current milestone/phase summary.
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
-- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): remaining P5/P6 work and gated C1–C7.
+- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): remaining P5/P6 release evidence and active C1–C7 implementation.
 - [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
-- [Next session — remaining P5 acceptance](build/SESSION_13_PROMPT.md).
+- [Next session — C1 second tool; browser/device release gate remains open](build/SESSION_14_PROMPT.md).
 - [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
 - [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
 - [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).

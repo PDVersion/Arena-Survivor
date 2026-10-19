@@ -5,7 +5,9 @@ Session 11 adds 52 focused Chrome/Chromium/Firefox/WebKit passes; actual branded
 No runtime defect was demonstrated. Session 8 delivered the inventory; Session 9
 adds a bounded native-tab acceptance fixture and deterministic focus-state checks.
 Session 10 adds the owner-authorized 20-minute lifecycle campaign. No runtime
-change is delivered. P6, content, persistence and sprite work remain gated.
+change is delivered in those evidence slices. On 2026-10-20 the owner explicitly
+authorizes C1–C7 after the verified software gate, with missing browser/device
+acceptance release-blocking. P5 remains pending; sprites stay outside scope.
 
 ## Session 8 checkpoint and evidence rules
 
@@ -256,3 +258,12 @@ explicitly authorized preparation does not pass P5 or silently waive its gate.
 The requested decision on moving missing acceptance to a release gate while
 C1–C7 proceeds has no reply. Content has not started; [Session13](../SESSION_13_PROMPT.md)
 continues from that decision/access, without another unchanged campaign.
+
+
+## Session13 ordering revision (2026-10-20)
+
+Owner explicitly permits planned C1–C7 after verified software checks while the
+missing browser/device evidence remains release-blocking. P5 is still pending,
+and no accepted campaign is repeated. C1's runtime foundation is verified in
+`../content/C1_FOUNDATION_REPORT.md`; earlier P5/P6 frozen measurements and the
+portable pack remain evidence for their recorded source, not later runtime.
