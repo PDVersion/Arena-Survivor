@@ -327,9 +327,9 @@ arbitrarily or add a service worker merely to silence the large-chunk warning.
 
 The affected Session 6/7 gates do not complete P5. Session 8 completed the
 [acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
-probe could not reach hidden state. Continue with
-[Session 10 / P5](SESSION_10_PROMPT.md) for remaining authored/overtime,
-focus/resume, restart and compatibility evidence. Prefer
+probe could not reach hidden state. Sessions 9–10 subsequently verify native
+overlays and the scoped consolidated lifecycle campaign. Continue with
+[Session 11 / P5](SESSION_11_PROMPT.md) for remaining compatibility evidence. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
@@ -344,12 +344,19 @@ change; authored/sustained/native-overlay/audio/device requirements remain open.
 
 ### Session 10 — P5: authorized consolidated lifecycle and device evidence
 
-Use [SESSION_10_PROMPT.md](SESSION_10_PROMPT.md). Do not repeat the accepted
-light native case or another inventory-only session. Remaining lifecycle work
-requires separately scheduled owner authorization under the resource policy;
-broader compatibility needs selected browsers and physical-device access.
-P5 stays pending until evidence passes or the owner explicitly changes its gate.
-No P6, content or persistence work while it is open.
+Owner explicitly authorized the consolidated M5 campaign on 2026-10-19. Its
+20-minute ownership window passes within explicit test-only survival/focus aids:
+authored clock, five-minute endless extension, ten short terminals, native
+paused/level-up/time-up/pending work, quality/resize and actual audio closure.
+See [campaign report](performance/P5_CAMPAIGN_REPORT.md). No runtime defect/fix.
+
+### Session 11 — P5: remaining compatibility and owner-selected evidence
+
+Use [SESSION_11_PROMPT.md](SESSION_11_PROMPT.md). Obtain supported-browser scope
+and representative older integrated-GPU access, or explicit owner gate changes.
+The accepted M5 campaign does not imply another-engine/device or unassisted
+readiness. Do not repeat unchanged accepted checks or create another inventory-
+only commit. P5 stays open; P6/content remain gated.
 
 ### After P5 — P6: combined readiness gate and real-device report
 

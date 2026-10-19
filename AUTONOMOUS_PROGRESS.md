@@ -1,6 +1,6 @@
 # Autonomous progress
 
-Updated: 2026-10-16 (Australia/Sydney).
+Updated: 2026-10-19 (Australia/Sydney).
 
 ## Objective and current state
 
@@ -1002,3 +1002,71 @@ this request does not merge/deploy or start the next implementation session.
   Markdown targets resolve, preserved raw event/clock/spawn assertions revalidate
   without another browser, and whitespace/ownership review passes. Local test/
   evidence commit follows; all runtime/assets/dependencies remain unchanged.
+
+
+## Session 10 — authorized consolidated P5 campaign (2026-10-19)
+
+- Owner explicitly approved: “yes run the campaign lifecycle”, superseding the
+  handoff's requirement for separate authorization. Delivery remains local.
+- Start **12:06:21 AEDT / 01:06:21 UTC**; maximum deadline **13:36:21 AEDT /
+  02:36:21 UTC**; latest verification/review start **13:16:21 AEDT / 02:16:21 UTC**.
+- Clean existing `codex/v0.4.3`, `e2e8111`; no unrelated edits to preserve.
+  Read required authorities/reports; read-only remote confirms PR #25 merged and
+  run `38829241556` passes only `03965ef`, not this later local head.
+- Planned single serial native M5 Chromium campaign: 20-minute continuous scene
+  session spanning a full 300,000 ms authored clock at unchanged 0.5, extended
+  endless mode, short terminal/death/clearing reconstructions, native overlay/
+  queued-work transitions, pause/resize/Default–Low and actual AudioContext close
+  completion. One worker/zero automatic retries; explicit scenario aids/limits
+  recorded. Broad regression/stress/matrix/device campaigns remain outside this
+  authorization. Add only test fixtures/instrumentation unless a defect reproduces.
+- Preflight diagnostics exposed only fixture setup issues: instantaneous keyup
+  clearing Phaser JustDown; nested relative atlas paths without a root base;
+  genuine native focus loss pausing the run; reward setup invoked after focus
+  pause. No ordinary gameplay defect is inferred from direct invalid fixture
+  calls. Frame-visible 80 ms pulses, root base URL and explicit phase focus policy
+  fix the harness. All attempts are retained in P5_CAMPAIGN_PREFLIGHTS.json;
+  full local raw backups are under /private/tmp/arena-p5-campaign-20261019-preflights/.
+  Final accepted preflight: **20.5 s**, one worker/zero automatic retries.
+- Full frozen-source campaign starts about **12:15:05 AEDT / 01:15:05 UTC**;
+  exactly one long invocation passes at **12:35:07 AEDT / 01:35:07 UTC**.
+  Ownership window **1,200,458 ms**, capped at 27 minutes, one worker/zero retries.
+- Full authored **300,000 ms at 0.5**, then **150,013.478 ms** more simulation
+  during five wall-clock minutes of endless play. Ten short cycles pass: four
+  completions, three one-health real contact deaths, three clearings with queued
+  arrivals. The sustained endless run also ends via seeded actual contact death.
+- Native manual-pause/pending-spawn, level_up and time_up rounds use actual same-
+  window trusted events with focus emulation OFF. State/clock/queues stay held;
+  explicit resume releases the pending benchmark spawn once. Stable fixture
+  setup and long play explicitly use focus emulation ON, because unrelated
+  desktop focus changes otherwise legitimately pause the game. No sustained
+  native-event or production-throughput claim.
+- **12** clean create baselines / **12** stopped resource snapshots; baseline
+  one body and zero actor/claim histories. Sampled peaks **300 enemies, 48 pickups,
+  348 bodies, 677 top-level display entries, 9 timers, 18 tweens**. Causal histories
+  grow legitimately within a run (peak sampled 406 IDs) and reset on stop, with
+  no mid-run eviction. Actor/body and terminal damage/XP-source totals reconcile.
+- **13 actual AudioContexts** close exactly once with settled close Promises and
+  state closed; **7 service closures** start with voices active. Long audio muted,
+  short theme-cue probes unmuted/real; no audio quality/physical-device claim.
+- Device: Apple M5 Pro/48 GiB, Darwin 25.5.0, Chromium 151.0.7922.34, native Metal
+  WebGL, initial **1280×657/DPR2**, test eco/Normal. Survival aids noContact/
+  noHazards, scripted movement/real first-offer choices, one seeded XP overlay
+  and benchmark spawn; shortened terminal fixtures. No human survival, hazard
+  soak, heap/GC, direct active-scene destruction or older-device acceptance.
+- Final verification/review began early around **12:35:10 AEDT / 01:35:10 UTC**,
+  preserving the final 20-minute reserve before the 13:36:21 deadline. On frozen
+  source, types, **488 units/57 files**, lint/build pass. Production JS/HTML excludes
+  all campaign/audio observer markers; runtime asset filenames remain unchanged.
+  Three fixture hashes and copied raw SHA-256 validate. No runtime fix or new
+  startup/production browser/full regression/stress/balance/audit/Actions run.
+- Owned browser/tabs/server/profile cleaned up; no port 4173 listener. Unknown
+  processes/review port 4213 untouched. Report/matrix/status/master and REC-119
+  updated; Session 10 retired in the delivery commit, successor Session 11 stays
+  P5 for owner-selected compatibility/physical-device evidence. No push/PR/merge/
+  deployment, P6, content, dependency, persistence or sprite work.
+- Final recording checkpoint **12:38:39 AEDT / 01:38:39 UTC**; actual elapsed
+  **32 min 18 s** from the recorded session start. Final source/raw checks,
+  **119 local Markdown targets (zero missing)**, ownership and whitespace review
+  pass. All software checks were run on the same frozen fixture source. Delivery
+  is one local test/evidence commit; no further browser run is needed or left active.

@@ -1,6 +1,6 @@
 # Build dates and status
 
-Updated **2026-10-16 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-19 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -42,7 +42,8 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | PR #25 CI repair | 2026-10-16, `2086a41` | Portable artifacts/bounded UI-test budgets; matching-head Actions passes; [report](performance/CI_REPAIR_20261016.md) |
 | P5 acceptance inventory (Session 8) | 2026-10-16, local evidence-only slice | Requirement matrix inspected; 474 units/56 files, types/lint/build pass; native visibility probe fails its hidden-state precondition; [report](performance/P5_ACCEPTANCE_REPORT.md) |
 | P5 native-event slice (Session 9) | 2026-10-16, local test/evidence slice | One native same-window Chromium/Metal playing-run round trip passes; 14 deterministic state guards; final 488 units/57 files, types/lint/build; [report](performance/P5_ACCEPTANCE_REPORT.md) |
-| P5 overall | **Incomplete** | Authored/extended overtime/long soak, ten terminal cycles, native overlays/pending work, real audio and broader compatibility remain pending; [next prompt](SESSION_10_PROMPT.md) |
+| P5 consolidated lifecycle (Session 10) | 2026-10-19, local test/evidence slice | Owner-authorized 20-minute M5 campaign passes: full authored clock, endless extension, ten short terminals, native overlays/pending work, twelve clean lifecycles, thirteen actual closed AudioContexts; scoped aids/limits in [report](performance/P5_CAMPAIGN_REPORT.md) |
+| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; broader browser/device compatibility remains pending with owner support-scope/hardware access required; [next prompt](SESSION_11_PROMPT.md) |
 | P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
 | C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
 
@@ -55,7 +56,7 @@ head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
 on `03965ef` was in progress during Session 8. Session 9 confirms it completed
 successfully on **2026-10-16 at 11:40:11 AEDT**: **474 units / 56 files**,
 types/lint/build, **93 browser passes / one existing skip**, zero audit findings.
-This result covers `03965ef` only; neither later local slice has matching-head CI.
+This result covers `03965ef` only; later local slices have no matching-head CI.
 Session 9 publishes nothing and triggers no workflow.
 
 The owner previously authorized publication of the two P5 commits and CI repair;

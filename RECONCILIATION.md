@@ -3335,3 +3335,36 @@ its browser/tabs/temp profile and bounds child termination; normal headless CI
 skips it. Do not repeatedly run passed native cases or inventory-only slices:
 next meaningful P5 work is the separately authorized consolidated lifecycle gate
 and actual supported-browser/physical-device evidence. Overall P5 stays open.
+
+
+Session 10 authorized campaign continuation (2026-10-19): the owner explicitly
+approved the previously withheld serial campaign. One frozen-source 20-minute M5
+case passes with no page errors or runtime change: full 300,000 ms authored clock
+at unchanged rate 0.5, five-wall-minute endless extension, ten short terminal
+cycles, twelve fresh/stopped scene baselines and thirteen actual AudioContexts
+closed once with settled promises; seven service closures begin with active
+voices. Sampled peak 300 enemies/348 bodies respects actual actor ownership.
+Detailed scope/raw evidence: `build/performance/P5_CAMPAIGN_REPORT.md`.
+
+The native overlay/pending-work rounds keep focus emulation off and require
+trusted same-window tab events. Native desktop focus loss also correctly stalls
+an active scene, so stable setup/long play explicitly enable focus emulation;
+that sustained phase is not native-focus evidence. Diagnostics record the
+paused/hidden/focused precondition rather than broadening timeouts. Test-only
+reward setup must require playing state: forcing collection while focus-paused
+is an invalid fixture precondition, not proof of an ordinary gameplay XP race.
+
+Nested test pages need a root base URL for unchanged relative sprite/atlas
+paths; otherwise Vite's HTML fallback can masquerade as atlas JSON. Phaser keyup
+clears JustDown, so frame-consumable 80 ms pulses replace instantaneous test
+input. These setup failures are retained in the preflight summary, with zero
+automatic retries; no loader/pipeline or input-system fix is justified.
+
+Phaser SHUTDOWN and DESTROY are distinct. This campaign explicitly stops the
+active scene before Game destruction, preserving REC-020's engine teardown
+ownership; it does not certify direct active-scene removal/destruction. Top-level
+display and sampled object counters are not a recursive/continuous heap census.
+Per-run causal histories remain until stop; no mid-run IDs are evicted. Survival
+controls, muted sustained audio and short one-health contact fixtures make this
+a lifecycle gate, not human survival, hazard soak, audible quality, production
+throughput or older-device acceptance. P5 broader compatibility stays pending.

@@ -1,0 +1,2284 @@
+{
+  "preflight": true,
+  "source": "e2e8111 plus test-only campaign fixture",
+  "records": [
+    {
+      "label": "environment",
+      "browser": "151.0.7922.34",
+      "host": {
+        "cpu": "Apple M5 Pro",
+        "platform": "darwin",
+        "release": "25.5.0",
+        "memoryGiB": 48
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 657
+      },
+      "dpr": 2,
+      "renderer": "WebGL",
+      "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "windowIds": [
+        647226345,
+        647226345
+      ],
+      "mode": "test/default",
+      "survivalAids": [
+        "noContact",
+        "noHazards"
+      ],
+      "authoredDuration": 300000,
+      "rate": 0.5
+    },
+    {
+      "label": "manual-pause-with-pending-spawn",
+      "focusEmulation": false,
+      "before": {
+        "wall": 582.7999999523163,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "paused",
+        "mode": "timed",
+        "elapsed": 51.65,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 1,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 2,
+        "pendingBodies": 0,
+        "display": 10,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 1,
+            "backlogHighWater": 1,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 1,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "held": {
+        "wall": 947.9000000953674,
+        "focusPaused": false,
+        "hidden": true,
+        "focused": false,
+        "generation": 1,
+        "status": "paused",
+        "mode": "timed",
+        "elapsed": 51.65,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 1,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 2,
+        "pendingBodies": 0,
+        "display": 10,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 1,
+            "backlogHighWater": 1,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 1,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "after": {
+        "wall": 974,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "paused",
+        "mode": "timed",
+        "elapsed": 51.65,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 1,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 2,
+        "pendingBodies": 0,
+        "display": 10,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 1,
+            "backlogHighWater": 1,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 1,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "events": [
+        {
+          "kind": "blur",
+          "trusted": true,
+          "elapsed": 51.65,
+          "status": "paused"
+        },
+        {
+          "kind": "hidden",
+          "trusted": true,
+          "elapsed": 51.65,
+          "status": "paused"
+        },
+        {
+          "kind": "focus",
+          "trusted": true,
+          "elapsed": 51.65,
+          "status": "paused"
+        },
+        {
+          "kind": "visible",
+          "trusted": true,
+          "elapsed": 51.65,
+          "status": "paused"
+        }
+      ]
+    },
+    {
+      "label": "level-up-retains-choice",
+      "focusEmulation": false,
+      "before": {
+        "wall": 1094.9000000953674,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "level_up",
+        "mode": "timed",
+        "elapsed": 84.89500000000002,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 2,
+        "pickups": 1,
+        "projectiles": 0,
+        "bodies": 4,
+        "pendingBodies": 0,
+        "display": 13,
+        "timers": 0,
+        "tweens": 2,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 1,
+            "processed": 1,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 1,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "held": {
+        "wall": 1457.7999999523163,
+        "focusPaused": false,
+        "hidden": true,
+        "focused": false,
+        "generation": 1,
+        "status": "level_up",
+        "mode": "timed",
+        "elapsed": 84.89500000000002,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 2,
+        "pickups": 1,
+        "projectiles": 0,
+        "bodies": 4,
+        "pendingBodies": 0,
+        "display": 13,
+        "timers": 0,
+        "tweens": 2,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 1,
+            "processed": 1,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 1,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "after": {
+        "wall": 1480,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "level_up",
+        "mode": "timed",
+        "elapsed": 84.89500000000002,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 2,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 3,
+        "pendingBodies": 0,
+        "display": 12,
+        "timers": 0,
+        "tweens": 1,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 1,
+            "processed": 1,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 1,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 1,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "events": [
+        {
+          "kind": "blur",
+          "trusted": true,
+          "elapsed": 84.89500000000002,
+          "status": "level_up"
+        },
+        {
+          "kind": "hidden",
+          "trusted": true,
+          "elapsed": 84.89500000000002,
+          "status": "level_up"
+        },
+        {
+          "kind": "visible",
+          "trusted": true,
+          "elapsed": 84.89500000000002,
+          "status": "level_up"
+        },
+        {
+          "kind": "focus",
+          "trusted": true,
+          "elapsed": 84.89500000000002,
+          "status": "level_up"
+        }
+      ]
+    },
+    {
+      "label": "sustained-focus-policy",
+      "focusEmulation": true,
+      "nativeEvidence": false
+    },
+    {
+      "label": "sustained",
+      "wallElapsedMs": 1005,
+      "wall": 1491.4000000953674,
+      "focusPaused": false,
+      "hidden": false,
+      "focused": true,
+      "generation": 1,
+      "status": "playing",
+      "mode": "timed",
+      "elapsed": 92.49166667143506,
+      "duration": 1500,
+      "rate": 0.5,
+      "health": 100,
+      "level": 2,
+      "kills": 0,
+      "xp": 3,
+      "ambientXp": 3,
+      "shrineXp": 0,
+      "enemies": 2,
+      "pickups": 0,
+      "projectiles": 0,
+      "bodies": 3,
+      "pendingBodies": 0,
+      "display": 11,
+      "timers": 0,
+      "tweens": 1,
+      "postUpdate": 2,
+      "blurListeners": 4,
+      "focusListeners": 3,
+      "queues": {
+        "gameplay": {
+          "backlog": 0,
+          "backlogHighWater": 1,
+          "processed": 1,
+          "rejectedDuplicates": 0
+        },
+        "load": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        }
+      },
+      "claims": 1,
+      "causalIds": 1,
+      "lethalIds": 0,
+      "spawns": {
+        "live": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        },
+        "spawned": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        }
+      },
+      "audio": {
+        "unlocked": true,
+        "muted": true,
+        "focused": true,
+        "voices": 0,
+        "emitted": 1
+      },
+      "quality": "default",
+      "damage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      }
+    },
+    {
+      "label": "sustained",
+      "wallElapsedMs": 3034,
+      "wall": 3519.2999999523163,
+      "focusPaused": false,
+      "hidden": false,
+      "focused": true,
+      "generation": 1,
+      "status": "playing",
+      "mode": "timed",
+      "elapsed": 1090.1666667095824,
+      "duration": 1500,
+      "rate": 0.5,
+      "health": 100,
+      "level": 2,
+      "kills": 0,
+      "xp": 3,
+      "ambientXp": 3,
+      "shrineXp": 0,
+      "enemies": 44,
+      "pickups": 0,
+      "projectiles": 0,
+      "bodies": 45,
+      "pendingBodies": 0,
+      "display": 96,
+      "timers": 0,
+      "tweens": 2,
+      "postUpdate": 2,
+      "blurListeners": 4,
+      "focusListeners": 3,
+      "queues": {
+        "gameplay": {
+          "backlog": 0,
+          "backlogHighWater": 20,
+          "processed": 40,
+          "rejectedDuplicates": 0
+        },
+        "load": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        }
+      },
+      "claims": 1,
+      "causalIds": 40,
+      "lethalIds": 0,
+      "spawns": {
+        "live": {
+          "natural": 43,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        },
+        "spawned": {
+          "natural": 43,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        }
+      },
+      "audio": {
+        "unlocked": true,
+        "muted": true,
+        "focused": true,
+        "voices": 0,
+        "emitted": 1
+      },
+      "quality": "default",
+      "damage": 10,
+      "damageBreakdown": {
+        "direct": 10,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      }
+    },
+    {
+      "label": "authored-time-up",
+      "wall": 4537.700000047684,
+      "focusPaused": false,
+      "hidden": false,
+      "focused": true,
+      "generation": 1,
+      "status": "time_up",
+      "mode": "timed",
+      "elapsed": 1500,
+      "duration": 1500,
+      "rate": 0.5,
+      "health": 100,
+      "level": 2,
+      "kills": 0,
+      "xp": 3,
+      "ambientXp": 3,
+      "shrineXp": 0,
+      "enemies": 44,
+      "pickups": 0,
+      "projectiles": 0,
+      "bodies": 45,
+      "pendingBodies": 0,
+      "display": 97,
+      "timers": 0,
+      "tweens": 2,
+      "postUpdate": 2,
+      "blurListeners": 4,
+      "focusListeners": 3,
+      "queues": {
+        "gameplay": {
+          "backlog": 0,
+          "backlogHighWater": 20,
+          "processed": 40,
+          "rejectedDuplicates": 0
+        },
+        "load": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        }
+      },
+      "claims": 1,
+      "causalIds": 40,
+      "lethalIds": 0,
+      "spawns": {
+        "live": {
+          "natural": 43,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        },
+        "spawned": {
+          "natural": 43,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        }
+      },
+      "audio": {
+        "unlocked": true,
+        "muted": true,
+        "focused": true,
+        "voices": 0,
+        "emitted": 1
+      },
+      "quality": "default",
+      "damage": 10,
+      "damageBreakdown": {
+        "direct": 10,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      }
+    },
+    {
+      "label": "time-up-retains-decision",
+      "focusEmulation": false,
+      "before": {
+        "wall": 4566.599999904633,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "time_up",
+        "mode": "timed",
+        "elapsed": 1500,
+        "duration": 1500,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 44,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 45,
+        "pendingBodies": 0,
+        "display": 97,
+        "timers": 0,
+        "tweens": 2,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 20,
+            "processed": 40,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 40,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 43,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 43,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 10,
+        "damageBreakdown": {
+          "direct": 10,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "held": {
+        "wall": 4933.700000047684,
+        "focusPaused": false,
+        "hidden": true,
+        "focused": false,
+        "generation": 1,
+        "status": "time_up",
+        "mode": "timed",
+        "elapsed": 1500,
+        "duration": 1500,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 44,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 45,
+        "pendingBodies": 0,
+        "display": 97,
+        "timers": 0,
+        "tweens": 2,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 20,
+            "processed": 40,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 40,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 43,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 43,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 10,
+        "damageBreakdown": {
+          "direct": 10,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "after": {
+        "wall": 4955.299999952316,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "time_up",
+        "mode": "timed",
+        "elapsed": 1500,
+        "duration": 1500,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 44,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 45,
+        "pendingBodies": 0,
+        "display": 95,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 20,
+            "processed": 40,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 40,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 43,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 43,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 10,
+        "damageBreakdown": {
+          "direct": 10,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "events": [
+        {
+          "kind": "blur",
+          "trusted": true,
+          "elapsed": 1500,
+          "status": "time_up"
+        },
+        {
+          "kind": "hidden",
+          "trusted": true,
+          "elapsed": 1500,
+          "status": "time_up"
+        },
+        {
+          "kind": "visible",
+          "trusted": true,
+          "elapsed": 1500,
+          "status": "time_up"
+        },
+        {
+          "kind": "focus",
+          "trusted": true,
+          "elapsed": 1500,
+          "status": "time_up"
+        }
+      ]
+    },
+    {
+      "label": "sustained",
+      "wallElapsedMs": 5065,
+      "wall": 5550.200000047684,
+      "focusPaused": false,
+      "hidden": false,
+      "focused": true,
+      "generation": 1,
+      "status": "playing",
+      "mode": "endless",
+      "elapsed": 1782.9366666666679,
+      "duration": 1500,
+      "rate": 0.5,
+      "health": 100,
+      "level": 2,
+      "kills": 0,
+      "xp": 3,
+      "ambientXp": 3,
+      "shrineXp": 0,
+      "enemies": 48,
+      "pickups": 0,
+      "projectiles": 0,
+      "bodies": 49,
+      "pendingBodies": 0,
+      "display": 102,
+      "timers": 0,
+      "tweens": 0,
+      "postUpdate": 2,
+      "blurListeners": 4,
+      "focusListeners": 3,
+      "queues": {
+        "gameplay": {
+          "backlog": 0,
+          "backlogHighWater": 20,
+          "processed": 40,
+          "rejectedDuplicates": 0
+        },
+        "load": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        }
+      },
+      "claims": 1,
+      "causalIds": 40,
+      "lethalIds": 0,
+      "spawns": {
+        "live": {
+          "natural": 47,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        },
+        "spawned": {
+          "natural": 47,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        }
+      },
+      "audio": {
+        "unlocked": true,
+        "muted": true,
+        "focused": true,
+        "voices": 0,
+        "emitted": 1
+      },
+      "quality": "default",
+      "damage": 10,
+      "damageBreakdown": {
+        "direct": 10,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      }
+    },
+    {
+      "label": "extended-endless",
+      "before": {
+        "wall": 5045.299999952316,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "playing",
+        "mode": "endless",
+        "elapsed": 1537.1583333333333,
+        "duration": 1500,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 48,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 49,
+        "pendingBodies": 0,
+        "display": 102,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 20,
+            "processed": 40,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 40,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 47,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 47,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 10,
+        "damageBreakdown": {
+          "direct": 10,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      "after": {
+        "wall": 6558.299999952316,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "playing",
+        "mode": "endless",
+        "elapsed": 2288.2483333333366,
+        "duration": 1500,
+        "rate": 0.5,
+        "health": 100,
+        "level": 2,
+        "kills": 0,
+        "xp": 3,
+        "ambientXp": 3,
+        "shrineXp": 0,
+        "enemies": 57,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 58,
+        "pendingBodies": 0,
+        "display": 123,
+        "timers": 0,
+        "tweens": 3,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 20,
+            "processed": 40,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 1,
+        "causalIds": 40,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 56,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 56,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": true,
+          "muted": true,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 19.09090909090909,
+        "damageBreakdown": {
+          "direct": 19.09090909090909,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      }
+    },
+    {
+      "label": "endless-contact-death",
+      "wall": 6947.599999904633,
+      "focusPaused": false,
+      "hidden": false,
+      "focused": true,
+      "generation": 1,
+      "status": "dead",
+      "mode": "endless",
+      "elapsed": 2444.808333333336,
+      "duration": 1500,
+      "rate": 0.5,
+      "health": 0,
+      "level": 2,
+      "kills": 0,
+      "xp": 3,
+      "ambientXp": 3,
+      "shrineXp": 0,
+      "enemies": 57,
+      "pickups": 0,
+      "projectiles": 0,
+      "bodies": 58,
+      "pendingBodies": 0,
+      "display": 121,
+      "timers": 1,
+      "tweens": 2,
+      "postUpdate": 2,
+      "blurListeners": 4,
+      "focusListeners": 3,
+      "queues": {
+        "gameplay": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        },
+        "load": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        }
+      },
+      "claims": 1,
+      "causalIds": 0,
+      "lethalIds": 0,
+      "spawns": {
+        "live": {
+          "natural": 56,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        },
+        "spawned": {
+          "natural": 56,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 1
+        }
+      },
+      "audio": {
+        "unlocked": false,
+        "muted": false,
+        "focused": true,
+        "voices": 0,
+        "emitted": 2
+      },
+      "quality": "default",
+      "damage": 19.09090909090909,
+      "damageBreakdown": {
+        "direct": 19.09090909090909,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      }
+    },
+    {
+      "label": "terminal-cycle",
+      "cycle": 0,
+      "kind": "complete",
+      "terminal": {
+        "wall": 9934.299999952316,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 2,
+        "status": "complete",
+        "mode": "clearing",
+        "elapsed": 1000,
+        "duration": 1000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 34,
+        "timers": 0,
+        "tweens": 1,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 6
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      }
+    },
+    {
+      "label": "terminal-cycle",
+      "cycle": 1,
+      "kind": "death",
+      "terminal": {
+        "wall": 10390.200000047684,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 3,
+        "status": "dead",
+        "mode": "timed",
+        "elapsed": 137.55500000000004,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 0,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 1,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 2,
+        "pendingBodies": 0,
+        "display": 10,
+        "timers": 1,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 1
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      }
+    },
+    {
+      "label": "terminal-cycle",
+      "cycle": 2,
+      "kind": "clearing",
+      "terminal": {
+        "wall": 19285.400000095367,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 4,
+        "status": "complete",
+        "mode": "clearing",
+        "elapsed": 3510.44,
+        "duration": 1000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 1,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 33,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 1
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 8
+        },
+        "quality": "default",
+        "damage": 28.5,
+        "damageBreakdown": {
+          "direct": 28.5,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      }
+    },
+    {
+      "label": "soak-end",
+      "wallElapsedMs": 18839,
+      "wall": 19326.099999904633,
+      "focusPaused": false,
+      "hidden": false,
+      "focused": true,
+      "generation": 5,
+      "status": "playing",
+      "mode": "timed",
+      "elapsed": 16.664999999999964,
+      "duration": 300000,
+      "rate": 0.5,
+      "health": 100,
+      "level": 1,
+      "kills": 0,
+      "xp": 0,
+      "ambientXp": 0,
+      "shrineXp": 0,
+      "enemies": 1,
+      "pickups": 0,
+      "projectiles": 0,
+      "bodies": 2,
+      "pendingBodies": 0,
+      "display": 9,
+      "timers": 0,
+      "tweens": 0,
+      "postUpdate": 2,
+      "blurListeners": 4,
+      "focusListeners": 3,
+      "queues": {
+        "gameplay": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        },
+        "load": {
+          "backlog": 0,
+          "backlogHighWater": 0,
+          "processed": 0,
+          "rejectedDuplicates": 0
+        }
+      },
+      "claims": 0,
+      "causalIds": 0,
+      "lethalIds": 0,
+      "spawns": {
+        "live": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 0
+        },
+        "spawned": {
+          "natural": 1,
+          "fragmentation": 0,
+          "baggedWaste": 0,
+          "environment": 0,
+          "benchmark": 0
+        }
+      },
+      "audio": {
+        "unlocked": false,
+        "muted": false,
+        "focused": true,
+        "voices": 0,
+        "emitted": 0
+      },
+      "quality": "default",
+      "damage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      }
+    }
+  ],
+  "errors": [],
+  "completed": true,
+  "lifecycle": {
+    "baselines": [
+      {
+        "wall": 402,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 1,
+        "status": "playing",
+        "mode": "timed",
+        "elapsed": 0,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 7,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 0
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      {
+        "wall": 6963.700000047684,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 2,
+        "status": "playing",
+        "mode": "timed",
+        "elapsed": 0,
+        "duration": 1000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 7,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 0
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      {
+        "wall": 9950,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 3,
+        "status": "playing",
+        "mode": "timed",
+        "elapsed": 0,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 1,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 7,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 1,
+            "backlogHighWater": 1,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 0
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      {
+        "wall": 10418.700000047684,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 4,
+        "status": "playing",
+        "mode": "timed",
+        "elapsed": 0,
+        "duration": 1000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 7,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 0
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      },
+      {
+        "wall": 19307.700000047684,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true,
+        "generation": 5,
+        "status": "playing",
+        "mode": "timed",
+        "elapsed": 0,
+        "duration": 300000,
+        "rate": 0.5,
+        "health": 100,
+        "level": 1,
+        "kills": 0,
+        "xp": 0,
+        "ambientXp": 0,
+        "shrineXp": 0,
+        "enemies": 0,
+        "pickups": 0,
+        "projectiles": 0,
+        "bodies": 1,
+        "pendingBodies": 0,
+        "display": 7,
+        "timers": 0,
+        "tweens": 0,
+        "postUpdate": 2,
+        "blurListeners": 4,
+        "focusListeners": 3,
+        "queues": {
+          "gameplay": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          },
+          "load": {
+            "backlog": 0,
+            "backlogHighWater": 0,
+            "processed": 0,
+            "rejectedDuplicates": 0
+          }
+        },
+        "claims": 0,
+        "causalIds": 0,
+        "lethalIds": 0,
+        "spawns": {
+          "live": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          },
+          "spawned": {
+            "natural": 0,
+            "fragmentation": 0,
+            "baggedWaste": 0,
+            "environment": 0,
+            "benchmark": 0
+          }
+        },
+        "audio": {
+          "unlocked": false,
+          "muted": false,
+          "focused": true,
+          "voices": 0,
+          "emitted": 0
+        },
+        "quality": "default",
+        "damage": 0,
+        "damageBreakdown": {
+          "direct": 0,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        }
+      }
+    ],
+    "stops": [
+      {
+        "display": 0,
+        "bodies": 0,
+        "postUpdate": 0,
+        "pickups": 0,
+        "enemies": 0,
+        "feedback": 0,
+        "hazards": 0,
+        "gameplayBacklog": 0,
+        "loadBacklog": 0,
+        "claimed": 0,
+        "blurHandler": false,
+        "focusHandler": false
+      },
+      {
+        "display": 0,
+        "bodies": 0,
+        "postUpdate": 0,
+        "pickups": 0,
+        "enemies": 0,
+        "feedback": 0,
+        "hazards": 0,
+        "gameplayBacklog": 0,
+        "loadBacklog": 0,
+        "claimed": 0,
+        "blurHandler": false,
+        "focusHandler": false
+      },
+      {
+        "display": 0,
+        "bodies": 0,
+        "postUpdate": 0,
+        "pickups": 0,
+        "enemies": 0,
+        "feedback": 0,
+        "hazards": 0,
+        "gameplayBacklog": 0,
+        "loadBacklog": 0,
+        "claimed": 0,
+        "blurHandler": false,
+        "focusHandler": false
+      },
+      {
+        "display": 0,
+        "bodies": 0,
+        "postUpdate": 0,
+        "pickups": 0,
+        "enemies": 0,
+        "feedback": 0,
+        "hazards": 0,
+        "gameplayBacklog": 0,
+        "loadBacklog": 0,
+        "claimed": 0,
+        "blurHandler": false,
+        "focusHandler": false
+      },
+      {
+        "display": 0,
+        "bodies": 0,
+        "postUpdate": 0,
+        "pickups": 0,
+        "enemies": 0,
+        "feedback": 0,
+        "hazards": 0,
+        "gameplayBacklog": 0,
+        "loadBacklog": 0,
+        "claimed": 0,
+        "blurHandler": false,
+        "focusHandler": false
+      }
+    ],
+    "audio": [
+      {
+        "stateAtClose": "running",
+        "settled": true,
+        "stateAfter": "closed",
+        "voicesAtClose": 0
+      },
+      {
+        "stateAtClose": "running",
+        "settled": true,
+        "stateAfter": "closed",
+        "voicesAtClose": 1
+      },
+      {
+        "stateAtClose": "running",
+        "settled": true,
+        "stateAfter": "closed",
+        "voicesAtClose": 0
+      },
+      {
+        "stateAtClose": "running",
+        "settled": true,
+        "stateAfter": "closed",
+        "voicesAtClose": 1
+      }
+    ]
+  },
+  "audio": [
+    {
+      "created": 301,
+      "closeCalls": 1,
+      "settled": true,
+      "before": "running",
+      "after": "closed",
+      "nodes": 0,
+      "ended": 0
+    },
+    {
+      "created": 459.7999999523163,
+      "closeCalls": 1,
+      "settled": true,
+      "before": "running",
+      "after": "closed",
+      "nodes": 2,
+      "ended": 2
+    },
+    {
+      "created": 7008.799999952316,
+      "closeCalls": 1,
+      "settled": true,
+      "before": "running",
+      "after": "closed",
+      "nodes": 6,
+      "ended": 5
+    },
+    {
+      "created": 10000.099999904633,
+      "closeCalls": 1,
+      "settled": true,
+      "before": "running",
+      "after": "closed",
+      "nodes": 1,
+      "ended": 1
+    },
+    {
+      "created": 10479.599999904633,
+      "closeCalls": 1,
+      "settled": true,
+      "before": "running",
+      "after": "closed",
+      "nodes": 8,
+      "ended": 7
+    }
+  ],
+  "elapsedMs": 18855
+}

@@ -2871,3 +2871,27 @@ P5's long lifecycle, native overlays/pending work, real audio and broader device
 browser gate stays open. Session 10 requires an authorized consolidated gate/
 available hardware; another identical light case cannot close it. P6 is not
 started. Publication/merged-head Actions evidence remains in BUILD_STATUS.md.
+
+
+<a id="v0-4-3-p5-consolidated-lifecycle"></a>
+## V0.4.3 — P5 authorized consolidated lifecycle / Session 10
+
+Owner approval on 2026-10-19 authorizes one serial M5 campaign. The accepted
+case runs 1,200,458 ms, one worker/zero automatic retries, with frozen test-only
+fixture sources and unchanged runtime/assets/dependencies. It reaches exactly
+300,000 simulated ms at rate 0.5, extends endless for five wall-clock minutes,
+then verifies ten short terminal cycles and fresh active play. Twelve create/
+stop baselines, ten quality/resize dispatches, native manual-pause/level-up/time-up
+intent and one pending arrival, ledger/source totals, and thirteen actual closed
+AudioContexts (seven closures with active service voices) pass without page errors.
+
+All 488 units/57 files, types/lint/build, production emitted-marker exclusion,
+source/raw hash validation and whitespace/link review pass. Preflight errors,
+actual M5/Metal/DPR2 environment, survival/focus controls, sampled counter scope,
+short-cycle setup, explicit final stop before Game destruction, and unassisted/
+hazard/physical-device limitations are documented in
+[the campaign report](performance/P5_CAMPAIGN_REPORT.md). No production defect
+or fix, no full local regression/stress, no publication or workflow trigger.
+The scoped lifecycle slice passes; P5 overall remains open for broader browser/
+device compatibility with owner-selected scope/hardware. Session 11 stays P5;
+P6/content remain gated and the unchanged campaign is not repeated by default.

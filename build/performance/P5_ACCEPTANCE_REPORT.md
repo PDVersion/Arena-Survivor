@@ -1,10 +1,11 @@
-# P5 consolidated acceptance — Sessions 8–9
+# P5 consolidated acceptance — Sessions 8–10
 
-**P5 remains pending.** This evidence inventory is complete; it does not close
-sustained lifecycle, native overlay/pending-work or broader compatibility acceptance.
+**P5 remains pending.** The scoped Session 10 lifecycle campaign passes;
+broader browser/device compatibility remains pending.
 No runtime defect was demonstrated. Session 8 delivered the inventory; Session 9
 adds a bounded native-tab acceptance fixture and deterministic focus-state checks.
-No runtime change is delivered. P6, content, persistence and sprite work remain gated.
+Session 10 adds the owner-authorized 20-minute lifecycle campaign. No runtime
+change is delivered. P6, content, persistence and sprite work remain gated.
 
 ## Session 8 checkpoint and evidence rules
 
@@ -37,19 +38,19 @@ this session's execution.
 
 | Requirement | Actual inspected evidence | Status and remaining limit |
 | --- | --- | --- |
-| Authored-duration playable run and ending | `tests/unit/run-state/run-state.test.ts` asserts a 300,000 ms initial run, held `time_up`, terminal guards, death and reset. `tests/e2e/phase-five.spec.ts` completes 700 ms runs and checks zero clock, overlay and clean restart. `tests/e2e/phase-nine-v03.spec.ts` checks terminal damage flush/ledger in a 6,000 ms fixture and known-attacker death. Existing `2086a41` CI covers these short browser paths. | **Partial** — no uninterrupted authored five-simulated-minute / approximately ten-wall-minute playthrough at 0.5 rate. Rule duration and shortened endings do not substitute for it. |
+| Authored-duration playable run and ending | Session 10 `lifecycle-campaign-v043.spec.ts` reaches exactly 300,000 ms at unchanged rate 0.5, then holds the actual time-up decision; existing units/short endings remain complementary. | **Covered for aided lifecycle** — no-contact/no-hazard, seeded overlay XP/arrival, scripted movement and real upgrade choices. Unassisted human survival, natural pacing and hazard soak are not claimed. |
 | Timer decision held until choice | `tests/e2e/overtime.spec.ts`, “the timer ends in a decision rather than an ending”: 1,500 ms duration, `time_up`, timed mode, absent terminal overlay, unchanged elapsed after 500 wall ms. Run-state units freeze non-playing states. | **Covered** for the shortened timer decision; existing CI, current units. |
-| Endless / overtime continuation and escalation | `overtime.spec.ts` chooses Digit1, advances >1,000 simulated ms, asserts arrivals/count-up; separate >1,500 ms sample asserts health/threat escalation. Run-state units advance both endless and clearing past duration. | **Partial** — short mechanics covered by existing CI/current units; extended overtime stability and ownership are pending. |
-| Clearing, pending arrivals and terminal restart | `overtime.spec.ts` chooses Digit2 on a 2,000 ms fixture, checks natural arrivals stop, field reaches zero, terminal title/overlay, decision closes and restart returns to timed. `RunScene.isFieldClear` requires no enemies and no causal backlog; clearing update suppresses natural/milestone arrivals while other systems run. | **Partial** — shortened integration covered; no dedicated terminal ownership sample with outstanding spawner work, nor sustained clearing soak. No deletion of queued enemies is proposed. |
-| Death and terminal presentation | `phase-three.spec.ts` contact fixture asserts dead/zero health, zero velocity/projectiles and dead overlay. `phase-nine-v03.spec.ts` known enemy attribution and terminal flush reconcile damage. `enterTerminalState` has terminalShown guard, snapshots then clears queues, destroys feedback/audio and pauses physics. | **Partial** — short death/terminal behavior covered; repeated death→restart ownership baseline and long-play terminal resources remain pending. |
-| Pause and resize, unchanged simulation/world | `gameplay-rate.spec.ts` freezes clock for 500 wall ms at rate 0.5; `boot.spec.ts` and `phase-five.spec.ts` verify fixed logical/world view and coherent HUD on resize. `interface-work.spec.ts` covers opacity, overlays, resize and terminal restart. | **Covered** for bounded wiring in existing CI; sustained pause/resize ownership remains part of the pending lifecycle campaign. |
-| Default/Low reversible changes and reconstruction | `presentation-v043.spec.ts` clicks the actual pause settings, switches Low→Default→Low, resizes, checks frozen player/statistics/clock, opacity/reduced motion, terminal restart and next-run setting; title/level-up and dense 300-enemy cases add UI wiring. `tests/unit/ui/presentation-quality.test.ts` checks both themes, immutable inputs and seeded pacing equivalence. P4 report has six both-theme bounded cases and measurements. | **Covered** for bounded UI/presentation isolation; sustained settings churn is pending. Session 6 direct fixture setter is not UI-switching evidence. |
-| Window blur/focus | Existing `phase-five.spec.ts` synthetic event wiring remains distinct. Session 9 `tests/e2e/native-visibility-v043.spec.ts` records trusted blur/focus plus hidden/visible from same-window tabs without focus emulation. `tests/unit/lifecycle/focus.test.ts` executes actual handlers against both themes: automatic pause/resume ownership, duplicate events, preserved paused/level_up/time_up/dead/complete states and late events without engine access. | **Covered** for one native playing-run round trip and deterministic state guards; native overlay/window-minimize/device combinations and sustained transitions are not claimed. |
-| Native visibility loss/resume without catch-up | Session 9 bounded case and `P5_NATIVE_VISIBILITY.json`: matching native window IDs, trusted hidden/visible, 1,330.6 ms hidden interval, unchanged elapsed/spawns/empty queues; first observed advancing rAF sample adds 7.493 ms at unchanged 0.5 rate. Phaser retains loop ownership; no runtime handler change. | **Covered** for this brief macOS Chromium/Metal playing-run case only. Empty queues/light load do not establish recovery with pending work or sustained combat; overlay guards are deterministic, not native overlay acceptance. |
+| Endless / overtime continuation and escalation | Session 10 continues for five wall-clock minutes, advancing another 150,013.478 simulated ms past the authored limit at live populations up to 300. Existing overtime tests verify escalation/arrival rules. | **Covered for the scoped extension** — infinite-endless memory/performance and unassisted difficulty remain outside this evidence. |
+| Clearing, pending arrivals and terminal restart | Existing overtime test verifies natural arrivals stop; Session 10 adds three short clearing cycles with genuine queued spawn work that is released and fought before completion, then runtime reconstruction. | **Covered for bounded clearing/queue lifecycle** — shortened fixtures, not three authored-length clearings. |
+| Death and terminal presentation | Existing contact/death-attribution and ledger tests plus Session 10 sustained-endless contact death and three short one-health real-overlap deaths. Terminal accounting/queues/audio and reconstruction assertions pass. | **Covered for tested terminal lifecycle** — one-health setup is explicit; no human survival/difficulty claim. |
+| Pause and resize, unchanged simulation/world | Existing UI/world-view/half-rate checks plus ten Session 10 paused quality dispatch/native window-bound changes; paused elapsed stays fixed and subsequent active ownership remains valid. | **Covered for scoped sustained lifecycle** — new dispatches use the actual scene setting method; existing P4 pointer/UI tests supply control-surface coverage. |
+| Default/Low reversible changes and reconstruction | Existing P4 presentation isolation/UI/seeded model tests plus ten Session 10 Default↔Low changes with pause/resize, and twelve stable scene create/stop baselines. | **Covered for scoped campaign** — no new throughput/readability or older-device claim. |
+| Window blur/focus | Sessions 9–10 same-window native tab checks record trusted blur/hidden/visible/focus with focus emulation absent during those rounds. Session 10 manual-pause, level-up and time-up intent remains held. Fourteen both-theme deterministic focus ownership tests remain in the 488-unit suite. | **Covered for bounded native playing/overlay paths** — sustained phase explicitly uses focus emulation; window-minimize/mobile/other-device combinations remain untested. |
+| Native visibility loss/resume without catch-up | Session 9 light playing-run first observed delta 7.493 ms remains valid. Session 10 native manual-pause preserves one queued spawn through hide/show, then explicit resume releases it once; level-up/time-up remain held. | **Covered for these bounded paths** — no synthetic events/visibility overrides; long sustained phase is not native-focus evidence or a production frame-time campaign. |
 | Bounded pickup/resource reconstruction | `tests/e2e/lifecycle-v043.spec.ts` and `P5_LIFECYCLE_REPORT.md`: both themes × three idle Canvas stop/start reconstructions; 1,040 drops, 790 merges, 250 tracked/live/group/enabled bodies, exact 1,040 XP once, post-update removal and zero stopped resource/listener references. `tests/unit/lifecycle/pickup-lifecycle.test.ts` preserves ties/provenance/fractions/paid-cue races. | **Covered** for the cap-pressure/idle stop-start slice; update is disabled, so this is not authored gameplay or terminal restart coverage. Existing CI/current units. |
-| Repeated terminal restart and long soak | `phase-five.spec.ts` checks three shortened completions / two restarts without navigation, fresh health/level/XP/upgrades. `phase-six-v03.spec.ts` resets hazards/escalation. Session 6 separately verifies stopped engine ownership. | **Partial** — ten end-to-end terminal/restart cycles and 20–30-minute sustained lifecycle soak remain pending. These distinct tests cannot be added together to claim ten terminal cycles. |
+| Repeated terminal restart and long soak | Session 10 owner-authorized 1,200,458 ms ownership window spans full authored clock, five-minute endless extension, ten short terminal cycles and fresh active play. Twelve create baselines and twelve stops pass. | **Covered for the scoped 20-minute campaign** — includes brief native/choice/pause intervals and short cycles; no heap/GC, infinite-play or ten authored-length-run claim. |
 | Async loader failure and game destruction | `tests/unit/boot/boot-recovery.test.ts` checks declared file error blocks scene start, retry resets state, and an owned once-only async error callback schedules Game.destroy before reporting. `P5_STARTUP_REPORT.md` and raw final/startup samples verify actual atlas/module blocking, reload-to-run, unsupported text canvas, forced Canvas and normal WebGL startup. | **Covered** for observed network/module/graphics failures; malformed atlas/JSON, entry delivery and mid-run WebGL context loss remain **pending** outside this focused recovery claim. No pipeline changes. |
-| Audio cleanup | `tests/unit/lifecycle/shutdown.test.ts` calls actual shutdown repeatedly and verifies AudioContext close called once, unlocked=false/voices=0. `AudioFeedbackService.destroy` clears the context reference; terminal and shutdown call it. Session 6 engine fixture disables Phaser audio and does not prove physical WebAudio closure. | **Partial** — deterministic ownership covered; pending close-promise completion, native device resources/in-flight voice behavior through real focus/terminal cycles. No audible acceptance claim. |
+| Audio cleanup | Session 10 delegates to actual native AudioContext/oscillator/close APIs: all thirteen observed contexts close exactly once, their promises settle and state is closed; seven service closures begin with active voices and terminal voices become zero. Existing deterministic shutdown tests remain. | **Covered for browser WebAudio lifecycle** — sustained play muted; no audible quality, physical audio-device release, mobile policy or heap claim. |
 | Causal queue cleanup / exact rewards | `tests/unit/lifecycle/shutdown.test.ts` seeds both queues/claim sets, runs actual shutdown twice, rejects any physics/time/tween teardown access, and proves backlog/claims released without altering run data. Pickup units cover exact-once fractional rewards and provenance. `tests/e2e/load-harness.spec.ts` drains 80 scripted events; Session 6 seeds pending work before real scene stop. | **Covered** for tested stop/queue and XP ownership; long-run backlog/deduplication growth remains pending, no mid-run claim eviction. |
 | Browser / renderer / viewport compatibility | Session 7 report: macOS Apple M5 Pro/48 GiB, Chromium 151.0.7922.34 SwiftShader WebGL and forced Canvas; 1280×720/DPR1 default and 900×600 failure/slow-network probes. Existing Linux Chromium CI broadens OS correctness, not browser engines or devices. | **Partial** — one engine with two rendering paths/limited sizes; Firefox/WebKit, mobile/touch, native GPU/context-loss matrix and physical older integrated-GPU evidence remain pending. Emulation/software GPU never becomes older-device acceptance. |
 
@@ -190,22 +191,47 @@ guards were not repeated. Balance/audit are not required for test-only work.
 Full local browser/stress, authored-duration/extended overtime, ten terminal
 cycles, long soaks and device/browser matrices remain deferred, not passed.
 
+## Session 10 — authorized consolidated lifecycle result
+
+On 2026-10-19 the owner explicitly authorized the serial campaign, superseding
+the prior Session 10 handoff's absence of approval. The new opt-in campaign
+passes **once**, one worker/zero automatic retries, after documented bounded
+preflight corrections. **1,200,458 ms**, authored clock exactly **300,000 ms** at
+rate **0.5**, a five-wall-minute endless extension, ten short terminal cycles,
+native paused/level-up/time-up transitions, deferred spawn work, ten paused
+presentation/resize changes, twelve clean create/stop baselines and thirteen
+actual closed AudioContexts are recorded. No runtime defect or fix.
+
+Full method, setup failures, limits and checks:
+[Session 10 campaign report](P5_CAMPAIGN_REPORT.md),
+[raw capture](P5_CAMPAIGN_RESULTS.json),
+[derived summary and hashes](P5_CAMPAIGN_SUMMARY.json).
+
+The sustained test uses no-contact/no-hazard survival controls, scripted movement,
+first-offer application and explicitly labelled focus emulation. Native overlay
+rounds turn that emulation off and require trusted real tab events. It is not
+unassisted survival, hazard soak, production throughput, direct active-scene
+removal/destruction or physical-device acceptance. Causal histories are retained
+per run and reset at stop; no mid-run identity eviction or heap/GC claim is made.
+The final scene is explicitly stopped before Game destruction. See the report
+for the distinction between top-level display counts and a recursive object census.
+
+Final source checks: **488 units/57 files**, types/lint/build, production emitted-
+code exclusion, unchanged fixture hashes, raw-result validation and whitespace/
+local-document links pass. Full local regression/stress, new startup campaigns,
+balance/audit and Actions were not run. The owned browser/server/profile are
+cleaned up; unrelated processes/review port 4213 remain untouched.
+
 ## Remaining P5 gate and next meaningful action
 
-1. **Consolidated lifecycle:** schedule a separately owner-authorized serial gate
-   under the resource policy. Cover the authored ending, extended overtime/
-   clearing, ten terminal reconstructions, pause/resize/Default–Low, pending
-   loader/audio/queue ownership and required long soak together. Include native
-   overlay transitions and resumed pending work where needed. Record resource
-   counts and actual WebAudio close completion; GC movement alone is not leakage.
-   This session does not authorize that campaign or waive any requirement.
-2. **Compatibility:** obtain the intended supported browsers/devices and access
-   to representative older integrated-GPU hardware. Record physical evidence;
-   the brief M5 Metal/native-tab result cannot replace it.
-3. Do not rerun the passed light native-tab case or create another inventory-only
-   slice without a new defect, changed source or a specific remaining acceptance
-   requirement. The next useful work requires the authorized consolidated gate
-   and/or available hardware. No P6 or content work while P5 remains open.
+The scoped lifecycle campaign is now covered. **P5 overall remains open** for
+broader browser/device compatibility and its required acceptance boundaries.
+The next useful work requires owner-selected supported browsers and representative
+older integrated-GPU access, or an explicit owner gate change. Current M5/Metal,
+Canvas and Chromium/Linux evidence cannot imply that acceptance.
 
-P5 remains pending. The successor is [Session 10 / P5](../SESSION_10_PROMPT.md);
-Session 9's handoff is retired with its durable report/progress/master record.
+Do not repeat the unchanged long campaign, native case or another inventory-only
+slice absent a reproduced defect, changed source or selected missing requirement.
+Preserve the unassisted/hazard, direct-active-destruction and production-performance
+limitations rather than silently converting a fixture pass into broader readiness.
+P6/content remain gated. Successor: [Session 11 / P5](../SESSION_11_PROMPT.md).

@@ -1,0 +1,85 @@
+{
+  "localRawBackup": "/private/tmp/arena-p5-campaign-20261019-preflights",
+  "automaticRetries": 0,
+  "attempts": [
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_1.json",
+      "completed": false,
+      "failure": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"p\u001b[7mlaying\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"p\u001b[7maused\u001b[27m\"\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at waitStatus (/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:55:124)\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:97:48",
+      "errors": [
+        "Unexpected token '<', \"<!doctype \"... is not valid JSON"
+      ],
+      "finalState": null,
+      "notes": "Historical setup diagnostic; not long-campaign acceptance"
+    },
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_2.json",
+      "completed": false,
+      "failure": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"Unexpected token '<', \\\"<!doctype \\\"... is not valid JSON\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:178:20",
+      "errors": [
+        "Unexpected token '<', \"<!doctype \"... is not valid JSON"
+      ],
+      "finalState": null,
+      "notes": "Historical setup diagnostic; not long-campaign acceptance"
+    },
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_3.json",
+      "completed": false,
+      "failure": "Error: Authored clock missed its bounded deadline\n    at file:///Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:131:94\n    at /Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1644:9\n    at /Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1133:11\n    at TimeoutManager.withRunnable (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:403:14)\n    at TestInfoImpl._runWithTimeout (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1131:7)\n    at /Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1642:7\n    at WorkerMain._runTest (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1615:5)\n    at WorkerMain.runTestGroup (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1510:9)\n    at process.<anonymous> (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/common/index.js:1997:25)",
+      "errors": [],
+      "finalState": null,
+      "notes": "Historical setup diagnostic; not long-campaign acceptance"
+    },
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_4.json",
+      "completed": false,
+      "failure": "Error: Authored clock missed its bounded deadline\n    at file:///Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:133:94\n    at /Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1644:9\n    at /Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1133:11\n    at TimeoutManager.withRunnable (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:403:14)\n    at TestInfoImpl._runWithTimeout (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1131:7)\n    at /Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1642:7\n    at WorkerMain._runTest (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1615:5)\n    at WorkerMain.runTestGroup (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/worker/workerProcessEntry.js:1510:9)\n    at process.<anonymous> (/Users/pdv/Documents/Projects/Arena-Survivor/node_modules/playwright/lib/common/index.js:1997:25)",
+      "errors": [],
+      "finalState": {
+        "status": "playing",
+        "elapsed": 1234.5483334930743,
+        "focusPaused": false,
+        "hidden": false,
+        "focused": true
+      },
+      "notes": "Historical setup diagnostic; not long-campaign acceptance"
+    },
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_5.json",
+      "completed": false,
+      "failure": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"level_up\"\u001b[39m\nReceived: \u001b[31m\"paused\"\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at waitStatus (/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:57:124)\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/lifecycle-campaign-v043.spec.ts:105:64",
+      "errors": [],
+      "finalState": {
+        "status": "paused",
+        "elapsed": 86.55880000000003,
+        "focusPaused": true,
+        "hidden": false,
+        "focused": false
+      },
+      "notes": "Historical setup diagnostic; not long-campaign acceptance"
+    },
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_FINAL.json",
+      "completed": true,
+      "failure": null,
+      "errors": [],
+      "finalState": null,
+      "notes": "Final accepted preflight"
+    },
+    {
+      "artifact": "P5_CAMPAIGN_PREFLIGHT_PASS.json",
+      "completed": true,
+      "failure": null,
+      "errors": [],
+      "finalState": null,
+      "notes": "Historical setup diagnostic; not long-campaign acceptance"
+    }
+  ],
+  "notes": [
+    "Keyboard pulses need frame-visible delay: Phaser clears JustDown at keyup.",
+    "Nested fixture needs base href=/ for unchanged relative atlas paths.",
+    "Native desktop focus loss correctly pauses active run; do not invent synthetic acceptance.",
+    "Stable phase setup and sustained play explicitly enable focus emulation; native overlay rounds explicitly disable it.",
+    "One earlier preliminary pass lacked final clearing/stop checks; final accepted preflight covers them."
+  ]
+}
