@@ -3137,3 +3137,51 @@ Aided/test/software-renderer checks do not imply sustained throughput/survival.
 Full/native/long/startup campaigns deferred, external checks temporarily waived/
 unverified. Local only; remoteCI39189877476 covers2806720, never this source.
 Session17 retired after recording; Session18 continues C5, C5–C7 remain unbuilt.
+
+
+<a id="v0-4-3-c5"></a>
+### V0.4.3 C5 — unique boss encounters and live final fight (2026-10-20)
+
+Both themes author unique mini50%/final100% enemies, primitive presentation,
+current/max health rows and fixed-circle simulation warnings/pulses. Real actors
+share cap300/hash/targeting/armour/capped damage/lethal/on-kill/XP; no elite rolls,
+children or duplication. Due capacity work remains due; commit spawn identity
+only on success and reset it on reconstruction. No queued/live actor is deleted
+to admit a boss. Attack state/cues at most two, one pulse per warning/no catch-up.
+
+Production time limit enters live boss_fight with retained activePhase through
+pause/focus/level-up; movement/combat/XP continue. Shared pressure selector caps
+timed boss/clearing at1 consistently across world/director/hazards/elite chance/
+HUD/pause. Only endless escalates further. Final lethal pays/removes normally,
+then existing held decision offers endless or clearing, which still waits on
+causal backlog. If a lethal commits during level_up, keep the earned choice and
+open time_up immediately after it without one frame of resumed physics; actual
+coordinator regressions lock this. Pure generic helpers opt in; normal production
+and test scenes enable bosses; explicit atTimeUp legacy fixtures alone bypass.
+
+Active Session18 ownership (claimed2026-10-20 before edits): core archetypes
+ids/contracts; content define-theme validation; both themes enemies/bodies/copy;
+state run-state/statistics; systems/bosses/**; systems/simulation/pacing-simulator/format-report; scenes/run-scene; ui/boss-health-ui/hud;
+test-support/telemetry-bridge; deterministic bosses/run-state/focus/interface/content/separation/simulation/shutdown units;
+tests/e2e/bosses-v043.spec.ts and affected overtime fixture; content C5 report/results,
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP, C3 report successor link, status/progress/master/
+reconciliation and session successor. No persistence/dependencies/sprites.
+
+583units/64files,typecheck/lint/build/diff pass;22 new deterministic cases. Four
+real-scene both-theme×ending cases plus two legacy ending checks pass serially,
+zero retries. Initial4 only fail final fixture global polling after prior game
+assertions; corrected4pass8.5s. Legacy2pass12.7s, final durable4capturepass8.2s
+in dedicated test output after list reporter discarded inline body. Six unique
+cases, no new campaign. Mini300HP/300actual weapon damage; final1800/1800 and
+50rawXPonce, pulse100→71.2 then dodge, exact ids/cue cleanup and queued clearing,
+endless escalation and restart0. Readable resized health/warnings inspected.
+60 coarse pacing/TTK scenarios include bosses only from authored milestones;
+missing values are dashed. Simulator omits encounters/attacks/movement and is no
+human survival/balance acceptance. [C5 report](content/C5_REPORT.md), source/build/
+image hashes and raw evidence in [results](content/C5_RESULTS.json).
+
+Full/stress/native/long/startup campaigns deferred; external actual Safari/browserOS/
+older physical-device checks remain temporarily waived/unverified. Source-bound
+P5/P6 evidence/kit does not certify this changed runtime. No dependencies/save/
+sprite/global XP/rate or second physics teardown. Local-only; remote39189877476
+covers2806720 only. Session18 retired after record; Session19 continues C6.

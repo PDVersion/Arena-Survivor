@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C4 verified and C5 next.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C5 verified and C6 next.**
 
 ## How to maintain this file
 
@@ -1643,6 +1643,31 @@ Seventeen browser assertions poll for `complete` once the duration expires, and 
 
 Revisit when:
 Endless needs its own escalation curve past `t = 1`, or a run can be abandoned from the decision rather than only resolved.
+
+C5 continuation2026-10-20: the production duration now enters live boss_fight,
+with one unique capped final enemy instead of the held decision. The same enemy
+path owns hit/armour/capped ledger/lethal/on-kill/reward claims. Mini at50% and
+final at100% are authored theme capabilities, never ambient roles or duplicates;
+only successful capped creation consumes a milestone. Do not delete queued or
+live work to admit the encounter. Each boss has one fixed-position warning and
+one simulation pulse; no catch-up loop/wall timer. At most two state/cue entries.
+
+Stored activePhase and a shared active predicate preserve combat and intended
+resume through pause/focus/level-up. If a final lethal occurs while an earned
+choice is open, retain that choice, then open the held victory decision without
+resuming physics even for one frame. Actual scene-method regressions lock this.
+After normal final lethal accounting, existing endless/clearing options resume;
+clearing still waits on causal backlog. Generic pure run helpers opt in, normal
+production/test RunScene enables authored bosses, only explicit atTimeUp legacy
+fixtures bypass them. Test-mode is never a blanket boss exemption.
+
+Timed boss/clearing pressure must plateau consistently in actual world, director,
+hazards, elite chance and HUD/pause values; selected endless alone escalates past1.
+TTK omits bosses before their milestones and displays absent values as a dash,
+not zero.583units/64files and six unique bounded serial browser cases verify
+C5 rules/wiring, not survival/native/throughput or device acceptance. Persist raw
+report attachments before later Playwright runs clean output; final dedicated
+capture is in build/content/C5_RESULTS.json. See C5_REPORT for exact aids/limits.
 
 ### REC-065 — Rarity said two things at once; the roll is now separate
 

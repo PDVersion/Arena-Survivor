@@ -614,3 +614,13 @@ cost so the voluntary bargain stays readable under the three-line limit.
 C4 implementation boundary2026-10-20: elite family names describe authored game
 modifiers over existing material roles. Split/shield/acceleration adds no factual
 environmental claim, material/tool effectiveness table or new educational surface.
+
+
+### V0.4.3 C5 — bounded fictional encounters
+
+Compacted Waste and Dumping Colossus are readable mini/final encounter fiction,
+not persistence estimates, disposal advice or a promoted layered-material system.
+They use the same tool damage path as existing waste actors. Their marked circle
+teaches the immediate game action: move clear before the pulse. No knowledge
+question, content-source claim, type effectiveness, material layer or sprite
+inventory is added. Boss values and labels remain theme-owned.

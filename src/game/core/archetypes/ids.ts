@@ -13,6 +13,8 @@ export const archetypeIds = {
     slowDurable: "enemy.slow_durable",
     deathSpawner: "enemy.death_spawner",
     stationaryFragment: "enemy.stationary_fragment",
+    miniBoss: "enemy.mini_boss",
+    finalBoss: "enemy.final_boss",
   },
   pickup: {
     experience: "pickup.experience",

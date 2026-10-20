@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
 import { themeRegistry } from "../../../src/game/content/theme-registry";
-import { createRunState, type RunState } from "../../../src/game/state/run-state";
+import { createRunState, isRunActive, type RunState } from "../../../src/game/state/run-state";
 import { selectHudValues } from "../../../src/game/state/statistics";
 import { SpawnStatistics } from "../../../src/game/systems/statistics/spawn-statistics";
 import type { HudExtras } from "../../../src/game/ui/hud";
@@ -102,7 +102,7 @@ const minimapMethod = declaration("src/game/scenes/run-scene.ts", "updateMinimap
 const minimapCode = ts.transpileModule(`function updateMinimap() ${minimapMethod.slice(minimapMethod.indexOf("{"))}`, {
   compilerOptions: { target: ts.ScriptTarget.ES2022 },
 }).outputText;
-const updateMinimap = new Function(`${minimapCode}; return updateMinimap;`)();
+const updateMinimap = new Function("isRunActive", `${minimapCode}; return updateMinimap;`)(isRunActive);
 
 it("hidden minimaps never iterate or prepare actor collections", () => {
   const touched = new Proxy({}, { get: () => { throw new Error("Hidden map actor scan"); } });

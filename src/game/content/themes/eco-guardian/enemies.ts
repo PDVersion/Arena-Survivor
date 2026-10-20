@@ -131,4 +131,20 @@ export const enemies = [
     geometry: "triangle",
     presentationToken: "enemyTank",
   },
+  {
+    id: archetypeIds.enemy.miniBoss,
+    maxHealth: 240, moveSpeed: 60, contactDamage: 12, contactCooldownMs: 1000,
+    radius: 26, displayDiameter: 64, xpReward: 18, armour: 0,
+    geometry: "hexagon", presentationToken: "enemyTank",
+    boss: { kind: "mini", appearAt: 0.5,
+      attack: { telegraphMs: 1200, recoveryMs: 2200, radius: 90, damage: 18 } },
+  },
+  {
+    id: archetypeIds.enemy.finalBoss,
+    maxHealth: 1200, moveSpeed: 55, contactDamage: 16, contactCooldownMs: 1000,
+    radius: 32, displayDiameter: 90, xpReward: 40, armour: 0,
+    geometry: "hexagon", presentationToken: "enemySpawner",
+    boss: { kind: "final", appearAt: 1,
+      attack: { telegraphMs: 1400, recoveryMs: 1800, radius: 120, damage: 24 } },
+  },
 ] as const satisfies readonly EnemyDefinition[];

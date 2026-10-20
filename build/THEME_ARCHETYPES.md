@@ -286,3 +286,14 @@ Both packs author four elite definitions: baseline plus split/shield/acceleratio
 Eco Dispersing/Wrapped/Rolling Waste correspond to Splitting/Warded/Charging Elite.
 Copy catalog owns names/descriptions, elites.ts owns finite mechanics and markers.
 Identity is inherited, not inferred from sprite/tint. See content/C4_REPORT.md.
+
+
+### V0.4.3 C5 — unique encounter capabilities
+
+Enemy definitions may carry one unique mini/final boss capability with normalized
+arrival and simulation warning/recovery/radius/damage. It is excluded from ambient
+roles, random elites, duplication and descendant relationships. Stable mini/final
+IDs map to Compacted Waste/Dumping Colossus or Runic Sentinel/Chaos Warden. All
+combat/body/display/reward values are explicit theme data; primitive shape and
+health bars observe combat state and never determine it. Exactly one of each kind
+can be authored; no boss art is claimed by this phase.

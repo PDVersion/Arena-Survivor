@@ -298,6 +298,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
       });
       const seconds: Record<string, number> = {};
       for (const enemy of theme.enemies) {
+        if (enemy.boss && progress < enemy.boss.appearAt) continue;
         // Armour is multiplicative, exactly as the scene applies it.
         const effective = enemy.maxHealth * modifiers.enemyHealthMultiplier * (1 + enemy.armour / 100);
         seconds[enemy.id] = dps > 0 ? effective / dps : Number.POSITIVE_INFINITY;

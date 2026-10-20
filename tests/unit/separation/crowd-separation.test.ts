@@ -169,13 +169,12 @@ describe("crowd density", () => {
     const largest = Math.max(
       ...theme.tuning.bodies.roles.map((role) => {
         const enemy = theme.enemies.find((entry) => entry.id === role.enemyId)!;
-        return enemy.radius * role.separationScale;
+        return enemy.radius * role.separationScale * ("boss" in enemy ? 1 : theme.elites[0]!.radiusMultiplier);
       }),
     );
-    const elite = theme.elites[0]!.radiusMultiplier;
 
     // Elites included: a cell smaller than the largest body's diameter lets an
     // overlapping pair fall in non-adjacent cells and never be resolved.
-    expect(theme.tuning.bodies.cellSize).toBeGreaterThanOrEqual(largest * elite * 2);
+    expect(theme.tuning.bodies.cellSize).toBeGreaterThanOrEqual(largest * 2);
   });
 });

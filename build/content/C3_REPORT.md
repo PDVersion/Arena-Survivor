@@ -141,4 +141,4 @@ PR26 remains merged2806720 as c6daeb6;39189877476 succeeds only2806720, no later
 matching-head CI claim. No push/PR/merge/deploy/workflow dispatch.
 
 Implementation/tests/checklist/status/reconciliation/progress/master belong to
-one reviewed local C3 commit. [Session17 handoff](../SESSION_17_PROMPT.md) continues C4.
+one reviewed local C3 commit. [Completed C4 record](../MASTER_BUILD_PLAN.md#v0-4-3-c4) retains the successor result.

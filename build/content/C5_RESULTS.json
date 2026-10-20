@@ -1,0 +1,985 @@
+{
+  "sourceBase": "b0ff7e9",
+  "recordedAtUtc": "2026-10-20T01:01:52.830747+00:00",
+  "sourceSha256": {
+    "src/game/content/define-theme.ts": "fcff618482d5b71ff63e4a7f8ff72b215d2cd922470156a62a87a0cc36fb0880",
+    "src/game/content/themes/eco-guardian/bodies.ts": "1c08896b11097a074fa3a1a2d6c154cfecf5a5c9778aa0713841aca6f4e8080f",
+    "src/game/content/themes/eco-guardian/copy.ts": "4eef62423a6706423048170739e4b884fd0afa97186fc07edb2b6cb0b70e552b",
+    "src/game/content/themes/eco-guardian/enemies.ts": "b9eb134fa7b2bdf97b2381c922baf6abd246f1fc3a9c9c8748b2b0f86576b424",
+    "src/game/content/themes/knight-magic/bodies.ts": "e8db03f001a309a5ad32294f34b8864be5001ea64632f4e842c9b2309b174291",
+    "src/game/content/themes/knight-magic/copy.ts": "b48e2806a56815a30e9d5a9cc450e6335922f765344974e7a77b8f59b634beac",
+    "src/game/content/themes/knight-magic/enemies.ts": "24dbaba70071b42c9e70ab267ef9c023bd464bcc70430b921982cf5e8ac4e94a",
+    "src/game/core/archetypes/contracts.ts": "74fed5a0448b20dfeaeb672993704b71e3144e31bfcbacd65fabf3470e78b349",
+    "src/game/core/archetypes/ids.ts": "08914a3d0851bf444c555f1b99665af427f5597a09136bd4ed7099c9e127ee64",
+    "src/game/scenes/run-scene.ts": "7b6ea8c767414e23fafe63508b1853b6e2ff2f6604ff3791d6e5f04f15b43cc3",
+    "src/game/state/run-state.ts": "632aabef82c8ecbe52801a4ab0a5a8e1577e3ea83d08ec518dd37d24ca086e99",
+    "src/game/state/statistics.ts": "ce9809563ac987d3624fab9013431fd5e6340dac3ff63b6bd98bd29446d96e84",
+    "src/game/systems/bosses/bosses.ts": "4d9858e9cde8041d85e31f8888fcaf4a73e054753280edb8c6a666f173ad2954",
+    "src/game/systems/simulation/format-report.ts": "15e65b7342c89259b393746f6d23c29eb1d159f9cb908b800eaff597f493798b",
+    "src/game/systems/simulation/pacing-simulator.ts": "44fabf075701dc1fec5bbbd8a350b17ee480f8844af0ee723014fddaf2ce6da3",
+    "src/game/ui/boss-health-ui.ts": "6f4fab9f77b7b516956864134dd0da9f46f9d3485c3ab37511b6b6a85c56f196",
+    "src/game/ui/hud.ts": "865c6cca7afc4d4e1b275cb982a17b79a0f0c2f5bcda67b309d390f9f613ebb8",
+    "src/test-support/telemetry-bridge.ts": "33e9f71b2671e65a62f01a1072e0ba65bbdb4ed5dc86795891b6b73a7345940b",
+    "tests/e2e/bosses-v043.spec.ts": "4d1928e55c5c9900c6b8ccdc6c214d9a55dc4e6e3a744b535c15fca209522679",
+    "tests/e2e/overtime.spec.ts": "aae49f19d896ba859865e6eb1550e4979f3ded1fe7359facb3979544e6d06b2c",
+    "tests/unit/bosses/bosses.test.ts": "ba76d91643f60e9156fd403b57ff02fa2d717966b9b9fb8d4b23629cd6a44d8f",
+    "tests/unit/content/theme.test.ts": "087fdbff35e77f7d317ce9020f5980bfa178e5c5cd51ecd85168ec5da4ab885f",
+    "tests/unit/lifecycle/focus.test.ts": "245dc918601c126fb815f6fe685887c98da81a56c215f8d25f0e489a05191822",
+    "tests/unit/lifecycle/shutdown.test.ts": "76a7c5b8bc92370aa1c713d4a6fd00f38e9e22c91a65fd908f105ee880dd39da",
+    "tests/unit/separation/crowd-separation.test.ts": "35e2a68058505e9dacafa05c217332885406a6898e726ee22882f54744ba00f8",
+    "tests/unit/ui/interface-work.test.ts": "93707c9036ededc49ab10104802ea7d27197e99fb2ef112b6a2d19708578e594"
+  },
+  "sourceTreeSha256": "50b088cd6af7213708cfab07bc45b3753c384d020151657161fd1b3c5b51244c",
+  "software": {
+    "units": 583,
+    "files": 64,
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "diffCheck": "pass",
+    "productionMarkerExclusion": "pass: no __C5__, __ARENA_TEST__, alternate_test, atTimeUp in compiled HTML/JS"
+  },
+  "browserAttempts": [
+    {
+      "purpose": "initial four cases",
+      "outcome": "four failed only at final fixture polling of uninstalled global; prior game assertions passed",
+      "retries": 0
+    },
+    {
+      "purpose": "fixture-owned restart observation",
+      "outcome": "four pass",
+      "durationSeconds": 8.5,
+      "retries": 0
+    },
+    {
+      "purpose": "two affected legacy ending fixtures",
+      "outcome": "two pass",
+      "durationSeconds": 12.7,
+      "retries": 0
+    },
+    {
+      "purpose": "durable raw/image capture after evidence writer fix; same four acceptance cases",
+      "outcome": "four pass",
+      "durationSeconds": 8.2,
+      "retries": 0
+    }
+  ],
+  "uniqueAffectedBrowserCases": 6,
+  "finalBrowserEvidence": [
+    {
+      "observations": {
+        "capacity": {
+          "live": 1,
+          "spawned": []
+        },
+        "mini": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss"
+          ],
+          "health": 300,
+          "max": 300
+        },
+        "miniKill": {
+          "kills": 1,
+          "damage": 300,
+          "defeated": true
+        },
+        "final": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "status": "boss_fight",
+          "decision": false,
+          "health": 1800,
+          "max": 1800
+        },
+        "warning": {
+          "x": 1850,
+          "y": 1200,
+          "releaseAtMs": 303200,
+          "health": 100,
+          "unchanged": true
+        },
+        "beforePulse": 100,
+        "hit": {
+          "health": 71.2,
+          "pulses": 1,
+          "damage": 28.799999999999997
+        },
+        "pause": {
+          "status": "paused",
+          "frozen": true
+        },
+        "resume": "boss_fight",
+        "levelUp": "level_up",
+        "afterChoice": "boss_fight",
+        "dodge": {
+          "before": 71.2,
+          "after": 71.2,
+          "pulses": 2
+        },
+        "duplication": {
+          "count": 1,
+          "backlog": 0
+        },
+        "pressure": {
+          "actual": 10,
+          "hud": 10,
+          "pause": "10",
+          "progress": 1,
+          "elapsed": 306400,
+          "duration": 300000
+        },
+        "finalKill": {
+          "kills": 1,
+          "damage": 1800,
+          "defeated": true,
+          "expectedHealth": 1800,
+          "xp": 50,
+          "expectedXp": 50,
+          "duplicateAdded": 0,
+          "status": "time_up",
+          "decision": true,
+          "live": 0,
+          "warnings": 0,
+          "cues": 0
+        },
+        "held": true,
+        "chosen": {
+          "status": "playing",
+          "mode": "clearing"
+        },
+        "pending": {
+          "live": 1,
+          "status": "playing",
+          "backlog": 0
+        },
+        "end": {
+          "status": "complete",
+          "mode": "clearing",
+          "live": 0,
+          "backlog": 0,
+          "elapsed": 312700,
+          "bossIds": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "pressure": 1
+        }
+      },
+      "environment": {
+        "browserUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "mode": "test",
+        "rate": 0.5
+      },
+      "browser": "151.0.7922.34",
+      "errors": [],
+      "artifactPath": "test-results/c5-final/bosses-v043-eco-guardian-u-696d8-nd-hand-victory-to-clearing-chromium/evidence.json",
+      "artifactSha256": "b77b721f87d7449720100afa6abb735951257bda65bd0d4536968c685ea8e6da"
+    },
+    {
+      "observations": {
+        "capacity": {
+          "live": 1,
+          "spawned": []
+        },
+        "mini": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss"
+          ],
+          "health": 300,
+          "max": 300
+        },
+        "miniKill": {
+          "kills": 1,
+          "damage": 300,
+          "defeated": true
+        },
+        "final": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "status": "boss_fight",
+          "decision": false,
+          "health": 1800,
+          "max": 1800
+        },
+        "warning": {
+          "x": 1850,
+          "y": 1200,
+          "releaseAtMs": 303200,
+          "health": 100,
+          "unchanged": true
+        },
+        "beforePulse": 100,
+        "hit": {
+          "health": 71.2,
+          "pulses": 1,
+          "damage": 28.799999999999997
+        },
+        "pause": {
+          "status": "paused",
+          "frozen": true
+        },
+        "resume": "boss_fight",
+        "levelUp": "level_up",
+        "afterChoice": "boss_fight",
+        "dodge": {
+          "before": 71.2,
+          "after": 71.2,
+          "pulses": 2
+        },
+        "duplication": {
+          "count": 1,
+          "backlog": 0
+        },
+        "pressure": {
+          "actual": 10,
+          "hud": 10,
+          "pause": "10",
+          "progress": 1,
+          "elapsed": 306400,
+          "duration": 300000
+        },
+        "finalKill": {
+          "kills": 1,
+          "damage": 1800,
+          "defeated": true,
+          "expectedHealth": 1800,
+          "xp": 50,
+          "expectedXp": 50,
+          "duplicateAdded": 0,
+          "status": "time_up",
+          "decision": true,
+          "live": 0,
+          "warnings": 0,
+          "cues": 0
+        },
+        "held": true,
+        "chosen": {
+          "status": "playing",
+          "mode": "endless"
+        },
+        "pending": {
+          "live": 1,
+          "status": "playing",
+          "backlog": 0
+        },
+        "end": {
+          "status": "playing",
+          "mode": "endless",
+          "live": 1,
+          "backlog": 0,
+          "elapsed": 312700,
+          "bossIds": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "pressure": 1.0423333333333333
+        }
+      },
+      "environment": {
+        "browserUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "mode": "test",
+        "rate": 0.5
+      },
+      "browser": "151.0.7922.34",
+      "errors": [],
+      "artifactPath": "test-results/c5-final/bosses-v043-eco-guardian-u-f4e47-and-hand-victory-to-endless-chromium/evidence.json",
+      "artifactSha256": "f83ebc73806faa0dc11b0ef30be6cef67ecf4a3d1d325e89536b1a100b505752"
+    },
+    {
+      "observations": {
+        "capacity": {
+          "live": 1,
+          "spawned": []
+        },
+        "mini": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss"
+          ],
+          "health": 300,
+          "max": 300
+        },
+        "miniKill": {
+          "kills": 1,
+          "damage": 300,
+          "defeated": true
+        },
+        "final": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "status": "boss_fight",
+          "decision": false,
+          "health": 1800,
+          "max": 1800
+        },
+        "warning": {
+          "x": 1850,
+          "y": 1200,
+          "releaseAtMs": 303200,
+          "health": 100,
+          "unchanged": true
+        },
+        "beforePulse": 100,
+        "hit": {
+          "health": 71.2,
+          "pulses": 1,
+          "damage": 28.799999999999997
+        },
+        "pause": {
+          "status": "paused",
+          "frozen": true
+        },
+        "resume": "boss_fight",
+        "levelUp": "level_up",
+        "afterChoice": "boss_fight",
+        "dodge": {
+          "before": 71.2,
+          "after": 71.2,
+          "pulses": 2
+        },
+        "duplication": {
+          "count": 1,
+          "backlog": 0
+        },
+        "pressure": {
+          "actual": 10,
+          "hud": 10,
+          "pause": "10",
+          "progress": 1,
+          "elapsed": 306400,
+          "duration": 300000
+        },
+        "finalKill": {
+          "kills": 1,
+          "damage": 1800,
+          "defeated": true,
+          "expectedHealth": 1800,
+          "xp": 50,
+          "expectedXp": 50,
+          "duplicateAdded": 0,
+          "status": "time_up",
+          "decision": true,
+          "live": 0,
+          "warnings": 0,
+          "cues": 0
+        },
+        "held": true,
+        "chosen": {
+          "status": "playing",
+          "mode": "clearing"
+        },
+        "pending": {
+          "live": 1,
+          "status": "playing",
+          "backlog": 0
+        },
+        "end": {
+          "status": "complete",
+          "mode": "clearing",
+          "live": 0,
+          "backlog": 0,
+          "elapsed": 312700,
+          "bossIds": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "pressure": 1
+        }
+      },
+      "environment": {
+        "browserUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "mode": "test",
+        "rate": 0.5
+      },
+      "browser": "151.0.7922.34",
+      "errors": [],
+      "artifactPath": "test-results/c5-final/bosses-v043-knight-magic-u-50495-nd-hand-victory-to-clearing-chromium/evidence.json",
+      "artifactSha256": "b77b721f87d7449720100afa6abb735951257bda65bd0d4536968c685ea8e6da"
+    },
+    {
+      "observations": {
+        "capacity": {
+          "live": 1,
+          "spawned": []
+        },
+        "mini": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss"
+          ],
+          "health": 300,
+          "max": 300
+        },
+        "miniKill": {
+          "kills": 1,
+          "damage": 300,
+          "defeated": true
+        },
+        "final": {
+          "count": 1,
+          "ids": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "status": "boss_fight",
+          "decision": false,
+          "health": 1800,
+          "max": 1800
+        },
+        "warning": {
+          "x": 1850,
+          "y": 1200,
+          "releaseAtMs": 303200,
+          "health": 100,
+          "unchanged": true
+        },
+        "beforePulse": 100,
+        "hit": {
+          "health": 71.2,
+          "pulses": 1,
+          "damage": 28.799999999999997
+        },
+        "pause": {
+          "status": "paused",
+          "frozen": true
+        },
+        "resume": "boss_fight",
+        "levelUp": "level_up",
+        "afterChoice": "boss_fight",
+        "dodge": {
+          "before": 71.2,
+          "after": 71.2,
+          "pulses": 2
+        },
+        "duplication": {
+          "count": 1,
+          "backlog": 0
+        },
+        "pressure": {
+          "actual": 10,
+          "hud": 10,
+          "pause": "10",
+          "progress": 1,
+          "elapsed": 306400,
+          "duration": 300000
+        },
+        "finalKill": {
+          "kills": 1,
+          "damage": 1800,
+          "defeated": true,
+          "expectedHealth": 1800,
+          "xp": 50,
+          "expectedXp": 50,
+          "duplicateAdded": 0,
+          "status": "time_up",
+          "decision": true,
+          "live": 0,
+          "warnings": 0,
+          "cues": 0
+        },
+        "held": true,
+        "chosen": {
+          "status": "playing",
+          "mode": "endless"
+        },
+        "pending": {
+          "live": 1,
+          "status": "playing",
+          "backlog": 0
+        },
+        "end": {
+          "status": "playing",
+          "mode": "endless",
+          "live": 1,
+          "backlog": 0,
+          "elapsed": 312700,
+          "bossIds": [
+            "enemy.mini_boss",
+            "enemy.final_boss"
+          ],
+          "pressure": 1.0423333333333333
+        }
+      },
+      "environment": {
+        "browserUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "dpr": 1,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "mode": "test",
+        "rate": 0.5
+      },
+      "browser": "151.0.7922.34",
+      "errors": [],
+      "artifactPath": "test-results/c5-final/bosses-v043-knight-magic-u-cbb75-and-hand-victory-to-endless-chromium/evidence.json",
+      "artifactSha256": "f83ebc73806faa0dc11b0ef30be6cef67ecf4a3d1d325e89536b1a100b505752"
+    }
+  ],
+  "imageSha256": {
+    "test-results/c5-final/bosses-v043-eco-guardian-u-696d8-nd-hand-victory-to-clearing-chromium/boss-warning-health.png": "c6ad032aff11432068405285b94361385f350d2209f810709c87ca5cd2a9ddd8",
+    "test-results/c5-final/bosses-v043-eco-guardian-u-f4e47-and-hand-victory-to-endless-chromium/boss-warning-health.png": "236860b124fa9f26ea073a38a1f61dc661bec30d12c07bbe59a1618f80f186b5",
+    "test-results/c5-final/bosses-v043-knight-magic-u-50495-nd-hand-victory-to-clearing-chromium/boss-warning-health.png": "3d339918f8ae62e25bea67ff7b808a2977af7d3d34baa82abe0e201ef1da8ad9",
+    "test-results/c5-final/bosses-v043-knight-magic-u-cbb75-and-hand-victory-to-endless-chromium/boss-warning-health.png": "3d339918f8ae62e25bea67ff7b808a2977af7d3d34baa82abe0e201ef1da8ad9"
+  },
+  "balance": {
+    "eco": {
+      "command": "npm run balance -- --theme eco-guardian --build all --difficulty all --ttk",
+      "rawOutputSha256": "142969a4c3b0121cbb192174ef43f9835d986af843ed429a995f0fb733a5b0a5",
+      "scenarios": [
+        {
+          "header": "eco-guardian --build all --difficulty all --ttk",
+          "summary": null,
+          "miniEncounter": null,
+          "finalEncounter": null
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build evolved-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 21  \u00b7  kills 485  \u00b7  peak live 300  \u00b7  total xp 579",
+          "miniEncounter": "50%       16     24.5      0.77s      0.34s       5.1s       1.0s      0.77s       9.2s          \u2014",
+          "finalEncounter": "100%      21     24.5      0.92s      0.41s       6.2s       1.2s      0.93s      11.0s      55.1s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build evolved-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 30  \u00b7  kills 773  \u00b7  peak live 117  \u00b7  total xp 1603",
+          "miniEncounter": "50%       16     70.7      0.27s      0.12s       1.8s      0.35s      0.27s       3.2s          \u2014",
+          "finalEncounter": "100%      30      106      0.21s      0.10s       1.4s      0.28s      0.21s       2.5s      12.7s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 20  \u00b7  kills 437  \u00b7  peak live 300  \u00b7  total xp 511",
+          "miniEncounter": "50%       15       20      0.94s      0.42s       6.3s       1.2s      0.95s      11.3s          \u2014",
+          "finalEncounter": "100%      20       20       1.1s      0.51s       7.6s       1.5s       1.1s      13.5s      67.5s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 25  \u00b7  kills 615  \u00b7  peak live 275  \u00b7  total xp 963",
+          "miniEncounter": "50%       16     50.9      0.37s      0.17s       2.5s      0.49s      0.37s       4.4s          \u2014",
+          "finalEncounter": "100%      25     50.9      0.44s      0.20s       3.0s      0.58s      0.45s       5.3s      26.5s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 19  \u00b7  kills 363  \u00b7  peak live 300  \u00b7  total xp 418",
+          "miniEncounter": "50%       15       14       1.3s      0.60s       9.0s       1.8s       1.4s      16.1s          \u2014",
+          "finalEncounter": "100%      19       14       1.6s      0.72s      10.8s       2.1s       1.6s      19.3s      96.4s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 32  \u00b7  kills 867  \u00b7  peak live 24  \u00b7  total xp 2040",
+          "miniEncounter": "50%       16     66.5      0.28s      0.13s       1.9s      0.37s      0.28s       3.4s          \u2014",
+          "finalEncounter": "100%      32      123      0.18s      0.08s       1.2s      0.24s      0.19s       2.2s      11.0s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 32  \u00b7  kills 889  \u00b7  peak live 1  \u00b7  total xp 2133",
+          "miniEncounter": "50%       16     60.7      0.31s      0.14s       2.1s      0.41s      0.31s       3.7s          \u2014",
+          "finalEncounter": "100%      32      174      0.13s      0.06s      0.87s      0.17s      0.13s       1.6s       7.8s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 32  \u00b7  kills 889  \u00b7  peak live 1  \u00b7  total xp 2133",
+          "miniEncounter": "50%       16      202      0.09s      0.04s      0.62s      0.12s      0.09s       1.1s          \u2014",
+          "finalEncounter": "100%      32      847      0.03s      0.01s      0.18s      0.04s      0.03s      0.32s       1.6s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 25  \u00b7  kills 603  \u00b7  peak live 287  \u00b7  total xp 970",
+          "miniEncounter": "50%       16     13.3       1.4s      0.63s       9.4s       1.9s       1.4s      16.9s          \u2014",
+          "finalEncounter": "100%      25     13.3       1.7s      0.76s      11.3s       2.2s       1.7s      20.3s       101s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty beginner  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 31  \u00b7  kills 821  \u00b7  peak live 76  \u00b7  total xp 1820",
+          "miniEncounter": "50%       16     38.5      0.49s      0.22s       3.3s      0.64s      0.49s       5.8s          \u2014",
+          "finalEncounter": "100%      31      180      0.13s      0.06s      0.84s      0.17s      0.13s       1.5s       7.5s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build evolved-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 19  \u00b7  kills 391  \u00b7  peak live 300  \u00b7  total xp 415",
+          "miniEncounter": "50%       14     18.4       1.3s      0.58s       8.7s       1.7s       1.3s      15.5s          \u2014",
+          "finalEncounter": "100%      19     18.4       1.6s      0.70s      10.4s       2.0s       1.6s      18.6s      93.1s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build evolved-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 27  \u00b7  kills 771  \u00b7  peak live 300  \u00b7  total xp 1245",
+          "miniEncounter": "50%       18     79.8      0.30s      0.13s       2.0s      0.39s      0.30s       3.6s          \u2014",
+          "finalEncounter": "100%      27     79.8      0.36s      0.16s       2.4s      0.47s      0.36s       4.3s      21.4s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 18  \u00b7  kills 345  \u00b7  peak live 300  \u00b7  total xp 366",
+          "miniEncounter": "50%       14       15       1.6s      0.71s      10.6s       2.1s       1.6s      19.0s          \u2014",
+          "finalEncounter": "100%      18       15       1.9s      0.85s      12.8s       2.5s       1.9s      22.8s       114s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 22  \u00b7  kills 549  \u00b7  peak live 300  \u00b7  total xp 684",
+          "miniEncounter": "50%       16     38.2      0.62s      0.28s       4.2s      0.82s      0.63s       7.5s          \u2014",
+          "finalEncounter": "100%      22     38.2      0.75s      0.34s       5.0s      0.99s      0.75s       9.0s      44.8s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 16  \u00b7  kills 280  \u00b7  peak live 300  \u00b7  total xp 292",
+          "miniEncounter": "50%       13     10.5       2.3s       1.0s      15.2s       3.0s       2.3s      27.1s          \u2014",
+          "finalEncounter": "100%      16     10.5       2.7s       1.2s      18.2s       3.6s       2.7s      32.6s       163s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 27  \u00b7  kills 738  \u00b7  peak live 300  \u00b7  total xp 1158",
+          "miniEncounter": "50%       18     55.1      0.43s      0.19s       2.9s      0.57s      0.43s       5.2s          \u2014",
+          "finalEncounter": "100%      27     78.8      0.36s      0.16s       2.4s      0.48s      0.36s       4.3s      21.7s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 27  \u00b7  kills 733  \u00b7  peak live 300  \u00b7  total xp 1141",
+          "miniEncounter": "50%       18     51.8      0.46s      0.21s       3.1s      0.61s      0.46s       5.5s          \u2014",
+          "finalEncounter": "100%      27     97.2      0.29s      0.13s       2.0s      0.39s      0.30s       3.5s      17.6s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 35  \u00b7  kills 1146  \u00b7  peak live 1  \u00b7  total xp 2746",
+          "miniEncounter": "50%       18      151      0.16s      0.07s       1.1s      0.21s      0.16s       1.9s          \u2014",
+          "finalEncounter": "100%      35      635      0.04s      0.02s      0.30s      0.06s      0.05s      0.54s       2.7s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 21  \u00b7  kills 508  \u00b7  peak live 300  \u00b7  total xp 595",
+          "miniEncounter": "50%       17       10       2.4s       1.1s      16.0s       3.1s       2.4s      28.5s          \u2014",
+          "finalEncounter": "100%      21       10       2.9s       1.3s      19.2s       3.8s       2.9s      34.2s       171s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty normal  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 29  \u00b7  kills 873  \u00b7  peak live 273  \u00b7  total xp 1525",
+          "miniEncounter": "50%       16     45.5      0.52s      0.24s       3.5s      0.69s      0.53s       6.3s          \u2014",
+          "finalEncounter": "100%      29      142      0.20s      0.09s       1.4s      0.27s      0.20s       2.4s      12.1s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build evolved-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 19  \u00b7  kills 397  \u00b7  peak live 300  \u00b7  total xp 414",
+          "miniEncounter": "50%       15     18.4       1.5s      0.67s      10.1s       2.0s       1.5s      18.0s          \u2014",
+          "finalEncounter": "100%      19     18.4       1.8s      0.81s      12.1s       2.4s       1.8s      21.6s       108s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build evolved-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 27  \u00b7  kills 800  \u00b7  peak live 300  \u00b7  total xp 1154",
+          "miniEncounter": "50%       18     79.8      0.34s      0.16s       2.3s      0.45s      0.35s       4.1s          \u2014",
+          "finalEncounter": "100%      27     79.8      0.41s      0.19s       2.8s      0.55s      0.42s       5.0s      24.8s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 18  \u00b7  kills 353  \u00b7  peak live 300  \u00b7  total xp 361",
+          "miniEncounter": "50%       14       15       1.8s      0.82s      12.3s       2.4s       1.8s      22.0s          \u2014",
+          "finalEncounter": "100%      18       15       2.2s      0.99s      14.8s       2.9s       2.2s      26.4s       132s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 22  \u00b7  kills 589  \u00b7  peak live 300  \u00b7  total xp 666",
+          "miniEncounter": "50%       16     38.2      0.72s      0.32s       4.8s      0.95s      0.73s       8.6s          \u2014",
+          "finalEncounter": "100%      22     38.2      0.86s      0.39s       5.8s       1.1s      0.87s      10.4s      51.9s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 16  \u00b7  kills 275  \u00b7  peak live 300  \u00b7  total xp 276",
+          "miniEncounter": "50%       13     10.5       2.6s       1.2s      17.6s       3.5s       2.6s      31.4s          \u2014",
+          "finalEncounter": "100%      16     10.5       3.1s       1.4s      21.1s       4.1s       3.2s      37.7s       189s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 26  \u00b7  kills 748  \u00b7  peak live 300  \u00b7  total xp 1044",
+          "miniEncounter": "50%       19     57.8      0.48s      0.21s       3.2s      0.63s      0.48s       5.7s          \u2014",
+          "finalEncounter": "100%      26     76.1      0.43s      0.20s       2.9s      0.57s      0.44s       5.2s      26.0s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 25  \u00b7  kills 727  \u00b7  peak live 300  \u00b7  total xp 990",
+          "miniEncounter": "50%       18     51.8      0.53s      0.24s       3.6s      0.70s      0.54s       6.4s          \u2014",
+          "finalEncounter": "100%      25       85      0.39s      0.17s       2.6s      0.51s      0.39s       4.7s      23.3s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 37  \u00b7  kills 1463  \u00b7  peak live 9  \u00b7  total xp 3491",
+          "miniEncounter": "50%       19      151      0.18s      0.08s       1.2s      0.24s      0.18s       2.2s          \u2014",
+          "finalEncounter": "100%      37      809      0.04s      0.02s      0.27s      0.05s      0.04s      0.49s       2.4s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 21  \u00b7  kills 520  \u00b7  peak live 300  \u00b7  total xp 552",
+          "miniEncounter": "50%       16       10       2.8s       1.2s      18.5s       3.6s       2.8s      33.0s          \u2014",
+          "finalEncounter": "100%      21       10       3.3s       1.5s      22.2s       4.4s       3.3s      39.6s       198s"
+        },
+        {
+          "header": "eco_guardian  \u00b7  difficulty experienced  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 29  \u00b7  kills 921  \u00b7  peak live 300  \u00b7  total xp 1450",
+          "miniEncounter": "50%       17       63      0.44s      0.20s       2.9s      0.58s      0.44s       5.2s          \u2014",
+          "finalEncounter": "100%      29      142      0.23s      0.10s       1.6s      0.31s      0.23s       2.8s      14.0s"
+        }
+      ]
+    },
+    "knight": {
+      "command": "npm run balance -- --theme knight-magic --build all --difficulty all --ttk",
+      "rawOutputSha256": "8c8247693f7e4613a6860383f277c9c584a9c1f67a8352fde4301e91912f48e4",
+      "scenarios": [
+        {
+          "header": "knight-magic --build all --difficulty all --ttk",
+          "summary": null,
+          "miniEncounter": null,
+          "finalEncounter": null
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build evolved-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 21  \u00b7  kills 411  \u00b7  peak live 300  \u00b7  total xp 550",
+          "miniEncounter": "50%       14     24.5      0.77s      0.38s       4.3s       2.1s      0.77s       9.2s          \u2014",
+          "finalEncounter": "100%      21     24.5      0.92s      0.46s       5.1s       2.5s      0.93s      11.0s      55.1s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build evolved-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 31  \u00b7  kills 725  \u00b7  peak live 165  \u00b7  total xp 1789",
+          "miniEncounter": "50%       17     70.7      0.27s      0.13s       1.5s      0.73s      0.27s       3.2s          \u2014",
+          "finalEncounter": "100%      31      106      0.21s      0.11s       1.2s      0.58s      0.21s       2.5s      12.7s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 19  \u00b7  kills 352  \u00b7  peak live 300  \u00b7  total xp 441",
+          "miniEncounter": "50%       14       20      0.94s      0.47s       5.3s       2.6s      0.95s      11.3s          \u2014",
+          "finalEncounter": "100%      19       20       1.1s      0.56s       6.3s       3.1s       1.1s      13.5s      67.5s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 26  \u00b7  kills 564  \u00b7  peak live 300  \u00b7  total xp 1063",
+          "miniEncounter": "50%       17     50.9      0.37s      0.18s       2.1s       1.0s      0.37s       4.4s          \u2014",
+          "finalEncounter": "100%      26     50.9      0.44s      0.22s       2.5s       1.2s      0.45s       5.3s      26.5s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 16  \u00b7  kills 259  \u00b7  peak live 300  \u00b7  total xp 295",
+          "miniEncounter": "50%       13       14       1.3s      0.67s       7.5s       3.7s       1.4s      16.1s          \u2014",
+          "finalEncounter": "100%      16       14       1.6s      0.80s       9.0s       4.4s       1.6s      19.3s      96.4s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 32  \u00b7  kills 793  \u00b7  peak live 96  \u00b7  total xp 2128",
+          "miniEncounter": "50%       17       70      0.27s      0.13s       1.5s      0.74s      0.27s       3.2s          \u2014",
+          "finalEncounter": "100%      32      123      0.18s      0.09s       1.0s      0.51s      0.19s       2.2s      11.0s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 33  \u00b7  kills 849  \u00b7  peak live 40  \u00b7  total xp 2374",
+          "miniEncounter": "50%       17     64.1      0.29s      0.15s       1.6s      0.80s      0.29s       3.5s          \u2014",
+          "finalEncounter": "100%      33      185      0.12s      0.06s      0.68s      0.33s      0.12s       1.5s       7.3s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 34  \u00b7  kills 889  \u00b7  peak live 1  \u00b7  total xp 2575",
+          "miniEncounter": "50%       17      202      0.09s      0.05s      0.52s      0.26s      0.09s       1.1s          \u2014",
+          "finalEncounter": "100%      34      847      0.03s      0.01s      0.15s      0.07s      0.03s      0.32s       1.6s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 25  \u00b7  kills 520  \u00b7  peak live 300  \u00b7  total xp 911",
+          "miniEncounter": "50%       17     13.3       1.4s      0.70s       7.9s       3.9s       1.4s      16.9s          \u2014",
+          "finalEncounter": "100%      25     13.3       1.7s      0.84s       9.4s       4.6s       1.7s      20.3s       101s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty beginner  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 32  \u00b7  kills 809  \u00b7  peak live 81  \u00b7  total xp 2123",
+          "miniEncounter": "50%       17       42      0.45s      0.22s       2.5s       1.2s      0.45s       5.4s          \u2014",
+          "finalEncounter": "100%      32      200      0.11s      0.06s      0.63s      0.31s      0.11s       1.4s       6.8s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build evolved-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 17  \u00b7  kills 289  \u00b7  peak live 300  \u00b7  total xp 312",
+          "miniEncounter": "50%       12     18.4       1.3s      0.65s       7.2s       3.6s       1.3s      15.5s          \u2014",
+          "finalEncounter": "100%      17     18.4       1.6s      0.78s       8.7s       4.3s       1.6s      18.6s      93.1s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build evolved-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 28  \u00b7  kills 679  \u00b7  peak live 300  \u00b7  total xp 1336",
+          "miniEncounter": "50%       18     79.8      0.30s      0.15s       1.7s      0.82s      0.30s       3.6s          \u2014",
+          "finalEncounter": "100%      28     79.8      0.36s      0.18s       2.0s      0.98s      0.36s       4.3s      21.4s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 15  \u00b7  kills 235  \u00b7  peak live 300  \u00b7  total xp 235",
+          "miniEncounter": "50%       11       15       1.6s      0.79s       8.9s       4.4s       1.6s      19.0s          \u2014",
+          "finalEncounter": "100%      15       15       1.9s      0.95s      10.6s       5.2s       1.9s      22.8s       114s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 22  \u00b7  kills 487  \u00b7  peak live 300  \u00b7  total xp 674",
+          "miniEncounter": "50%       15     38.2      0.62s      0.31s       3.5s       1.7s      0.63s       7.5s          \u2014",
+          "finalEncounter": "100%      22     38.2      0.75s      0.37s       4.2s       2.1s      0.75s       9.0s      44.8s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 13  \u00b7  kills 165  \u00b7  peak live 300  \u00b7  total xp 165",
+          "miniEncounter": "50%       10     10.5       2.3s       1.1s      12.7s       6.2s       2.3s      27.1s          \u2014",
+          "finalEncounter": "100%      13     10.5       2.7s       1.4s      15.2s       7.5s       2.7s      32.6s       163s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 26  \u00b7  kills 599  \u00b7  peak live 300  \u00b7  total xp 1088",
+          "miniEncounter": "50%       17     52.5      0.45s      0.23s       2.5s       1.2s      0.46s       5.4s          \u2014",
+          "finalEncounter": "100%      26     76.1      0.37s      0.19s       2.1s       1.0s      0.38s       4.5s      22.5s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 25  \u00b7  kills 571  \u00b7  peak live 300  \u00b7  total xp 987",
+          "miniEncounter": "50%       15       42      0.57s      0.28s       3.2s       1.6s      0.57s       6.8s          \u2014",
+          "finalEncounter": "100%      25       85      0.34s      0.17s       1.9s      0.92s      0.34s       4.0s      20.1s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 37  \u00b7  kills 1146  \u00b7  peak live 29  \u00b7  total xp 3305",
+          "miniEncounter": "50%       19      151      0.16s      0.08s      0.88s      0.43s      0.16s       1.9s          \u2014",
+          "finalEncounter": "100%      37      809      0.04s      0.02s      0.20s      0.10s      0.04s      0.42s       2.1s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 20  \u00b7  kills 422  \u00b7  peak live 300  \u00b7  total xp 520",
+          "miniEncounter": "50%       14       10       2.4s       1.2s      13.3s       6.5s       2.4s      28.5s          \u2014",
+          "finalEncounter": "100%      20       10       2.9s       1.4s      16.0s       7.8s       2.9s      34.2s       171s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty normal  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 30  \u00b7  kills 822  \u00b7  peak live 300  \u00b7  total xp 1741",
+          "miniEncounter": "50%       16     53.4      0.44s      0.22s       2.5s       1.2s      0.45s       5.3s          \u2014",
+          "finalEncounter": "100%      30      142      0.20s      0.10s       1.1s      0.55s      0.20s       2.4s      12.1s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build evolved-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 15  \u00b7  kills 240  \u00b7  peak live 300  \u00b7  total xp 240",
+          "miniEncounter": "50%       11     18.4       1.5s      0.75s       8.4s       4.1s       1.5s      18.0s          \u2014",
+          "finalEncounter": "100%      15     18.4       1.8s      0.90s      10.1s       4.9s       1.8s      21.6s       108s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build evolved-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 28  \u00b7  kills 748  \u00b7  peak live 300  \u00b7  total xp 1281",
+          "miniEncounter": "50%       19     79.8      0.34s      0.17s       1.9s      0.95s      0.35s       4.1s          \u2014",
+          "finalEncounter": "100%      28     79.8      0.41s      0.21s       2.3s       1.1s      0.42s       5.0s      24.8s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build two-tools-single  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 14  \u00b7  kills 203  \u00b7  peak live 300  \u00b7  total xp 203",
+          "miniEncounter": "50%       10       15       1.8s      0.92s      10.3s       5.0s       1.8s      22.0s          \u2014",
+          "finalEncounter": "100%      14       15       2.2s       1.1s      12.3s       6.1s       2.2s      26.4s       132s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build two-tools-packed  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 22  \u00b7  kills 542  \u00b7  peak live 300  \u00b7  total xp 681",
+          "miniEncounter": "50%       16     38.2      0.72s      0.36s       4.0s       2.0s      0.73s       8.6s          \u2014",
+          "finalEncounter": "100%      22     38.2      0.86s      0.43s       4.8s       2.4s      0.87s      10.4s      51.9s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build passive  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 12  \u00b7  kills 143  \u00b7  peak live 300  \u00b7  total xp 143",
+          "miniEncounter": "50%        9     10.5       2.6s       1.3s      14.7s       7.2s       2.6s      31.4s          \u2014",
+          "finalEncounter": "100%      12     10.5       3.1s       1.6s      17.6s       8.6s       3.2s      37.7s       189s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build damage-rush  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 25  \u00b7  kills 608  \u00b7  peak live 300  \u00b7  total xp 902",
+          "miniEncounter": "50%       15     47.3      0.58s      0.29s       3.3s       1.6s      0.59s       7.0s          \u2014",
+          "finalEncounter": "100%      25     73.5      0.45s      0.22s       2.5s       1.2s      0.45s       5.4s      26.9s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build crit  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 23  \u00b7  kills 548  \u00b7  peak live 300  \u00b7  total xp 735",
+          "miniEncounter": "50%       13     36.3      0.76s      0.38s       4.2s       2.1s      0.76s       9.1s          \u2014",
+          "finalEncounter": "100%      23     73.6      0.45s      0.22s       2.5s       1.2s      0.45s       5.4s      26.9s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build spread  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 39  \u00b7  kills 1463  \u00b7  peak live 72  \u00b7  total xp 4120",
+          "miniEncounter": "50%       19      151      0.18s      0.09s       1.0s      0.50s      0.18s       2.2s          \u2014",
+          "finalEncounter": "100%      39      809      0.04s      0.02s      0.23s      0.11s      0.04s      0.49s       2.4s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build collection-sweep  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 18  \u00b7  kills 345  \u00b7  peak live 300  \u00b7  total xp 391",
+          "miniEncounter": "50%       12       10       2.8s       1.4s      15.4s       7.6s       2.8s      33.0s          \u2014",
+          "finalEncounter": "100%      18       10       3.3s       1.6s      18.5s       9.1s       3.3s      39.6s       198s"
+        },
+        {
+          "header": "knight_magic  \u00b7  difficulty experienced  \u00b7  build explosion  \u00b7  5:00 simulated / 10:00 real at 0.50x  \u00b7  chaos x1.0",
+          "summary": "final level 30  \u00b7  kills 905  \u00b7  peak live 300  \u00b7  total xp 1692",
+          "miniEncounter": "50%       17     77.2      0.36s      0.18s       2.0s      0.98s      0.36s       4.3s          \u2014",
+          "finalEncounter": "100%      30      142      0.23s      0.12s       1.3s      0.64s      0.23s       2.8s      14.0s"
+        }
+      ]
+    }
+  },
+  "compiledSha256": {
+    "dist/assets/combat-DP5YJCqn.js": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0",
+    "dist/assets/game-CrFUq4W9.js": "d7d3d9177eda1e2f92a3d6bfa0d61181cc6208ef1187b06337a078988c890561",
+    "dist/assets/game-DoHRHqNx.css": "f1ecb95d4940e38fa33f1d095d8e286253f487829091396b34571ad144accb51",
+    "dist/assets/index-DRyWk_9X.js": "7ab3394b6a5bb30862cbfd5f2e10ee4646a0d1c2879284d1372a363ea3151eab",
+    "dist/assets/sprites-DJSgj8Uk.css": "802e1c8c03202c60f20a0e1f8b17d20708078735a426b52788dc8cd5422d14e9",
+    "dist/assets/sprites-wZj0IYb7.js": "c026e06d6036e2196cf94a75c35204e23206e96ba7352f6c6f3db4c812c24d4b",
+    "dist/assets/start-game-DwYRsXvU.js": "b75a61286cda0ffe4af46ea1426b2d8234c788686d066a4d23df4a6de6b437c8"
+  },
+  "scope": {
+    "host": {
+      "machine": "arm64",
+      "os": "macOS-26.5.2-arm64-arm-64bit",
+      "retainedHardware": "M5 Pro /48GiB; no new hardware census"
+    },
+    "initialViewport": "1280x720/DPR1",
+    "screenshotViewport": "1000x700/DPR1",
+    "logicalView": "1600x900 FIT",
+    "mode": "test/Normal/Default",
+    "renderer": "SwiftShader Vulkan WebGL",
+    "nativeFocus": false,
+    "scripted": [
+      "clock jumps",
+      "actor/player placement",
+      "paused physics",
+      "1000 damageBonus build",
+      "actual weapon hit callback for projectile",
+      "direct actual pause/focus/choice coordinators",
+      "ordinary queued spawn with0.375 source reward"
+    ],
+    "bypasses": "noAmbient/noContact/noHazards/noWeapon (automatic weapon loop only); explicit actual weapon call still delivers kills; noAudio; XP cap2",
+    "notCertified": [
+      "unassisted survival",
+      "full authored browser run",
+      "natural boss travel",
+      "human pacing/offer selection",
+      "300-live mixed sustained combat with bosses",
+      "native events",
+      "audible audio",
+      "physical GPU throughput",
+      "other browsers/devices"
+    ]
+  }
+}

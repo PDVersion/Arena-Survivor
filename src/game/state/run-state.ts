@@ -37,7 +37,8 @@ import { createWeaponSlots, type WeaponSlotState } from "../systems/weapons/weap
 export const RUN_STATE_VERSION = 1 as const;
 export const DEFAULT_RUN_DURATION_MS = 5 * 60 * 1000;
 
-export type RunStatus = "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
+export type ActiveRunStatus = "playing" | "boss_fight";
+export type RunStatus = "boss_fight" | "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
 
 /**
  * What the clock means for this run.
@@ -61,6 +62,9 @@ export interface RunState {
   readonly version: typeof RUN_STATE_VERSION;
   readonly themeId: string;
   readonly status: RunStatus;
+  readonly activePhase: ActiveRunStatus;
+  readonly finalBossEnabled: boolean;
+  readonly finalBossDefeated: boolean;
   readonly elapsedMs: number;
   readonly durationMs: number;
   readonly mode: RunMode;
@@ -92,6 +96,7 @@ export interface DeathCause {
 }
 
 export interface CreateRunOptions {
+  readonly finalBossEnabled?: boolean;
   readonly weaponSlotCount?: number;
   readonly startingWeaponIds?: readonly WeaponId[];
   readonly difficulty?: DifficultyId;
@@ -123,6 +128,9 @@ export function createRunState(options: CreateRunOptions): RunState {
     version: RUN_STATE_VERSION,
     themeId: options.themeId,
     status: "playing",
+    activePhase: "playing",
+    finalBossEnabled: options.finalBossEnabled ?? false,
+    finalBossDefeated: false,
     elapsedMs: 0,
     durationMs,
     mode: "timed",
@@ -146,13 +154,30 @@ export function createRunState(options: CreateRunOptions): RunState {
   };
 }
 
+/** Timed boss fights and clearing plateau; only selected endless keeps escalating. */
+export function runEscalationProgress(state: Pick<RunState, "elapsedMs" | "durationMs" | "mode">): number {
+  const progress = Math.max(0, state.elapsedMs / state.durationMs);
+  return state.mode === "endless" ? progress : Math.min(1, progress);
+}
+
+/** Every live simulation path shares this predicate, including boss combat. */
+export function isRunActive(state: Readonly<{ status: RunStatus }> | undefined): boolean {
+  return state?.status === "playing" || state?.status === "boss_fight";
+}
+
+/** Only a committed unique final-boss lethal opens the held decision. */
+export function defeatFinalBoss(state: RunState): RunState {
+  if (!state.finalBossEnabled || state.finalBossDefeated || state.activePhase !== "boss_fight" || state.status === "dead" || state.status === "complete") return state;
+  return { ...state, finalBossDefeated: true, status: isRunActive(state) ? "time_up" : state.status };
+}
+
 export function advanceRunState(state: RunState, deltaMs: number): RunState {
-  if (state.status !== "playing" || deltaMs <= 0) return state;
+  if (!isRunActive(state) || deltaMs <= 0) return state;
   if (!Number.isFinite(deltaMs)) throw new Error("Run delta must be finite");
 
   // Past the limit the clock keeps running rather than freezing, so overtime is
   // measurable and the director keeps escalating from `t > 1`.
-  if (state.mode !== "timed") {
+  if (state.mode !== "timed" || state.activePhase === "boss_fight") {
     return { ...state, elapsedMs: state.elapsedMs + deltaMs };
   }
 
@@ -160,7 +185,8 @@ export function advanceRunState(state: RunState, deltaMs: number): RunState {
   return {
     ...state,
     elapsedMs,
-    status: elapsedMs >= state.durationMs ? "time_up" : "playing",
+    status: elapsedMs >= state.durationMs ? (state.finalBossEnabled ? "boss_fight" : "time_up") : "playing",
+    activePhase: elapsedMs >= state.durationMs && state.finalBossEnabled ? "boss_fight" : "playing",
   };
 }
 
@@ -173,7 +199,7 @@ export function advanceRunState(state: RunState, deltaMs: number): RunState {
  */
 export function chooseRunMode(state: RunState, mode: Exclude<RunMode, "timed">): RunState {
   if (state.status !== "time_up") return state;
-  return { ...state, mode, status: "playing" };
+  return { ...state, mode, status: "playing", activePhase: "playing" };
 }
 
 /** End a run that has run out of things to do rather than out of time. */
@@ -185,6 +211,7 @@ export function completeRun(state: RunState): RunState {
 export function setRunStatus(state: RunState, status: RunStatus): RunState {
   if (state.status === "dead" || state.status === "complete") return state;
   if (state.status === "level_up") return state;
+  if (status === "playing") status = state.finalBossDefeated && state.mode === "timed" ? "time_up" : state.activePhase;
   if (status === state.status) return state;
   return { ...state, status };
 }
@@ -194,7 +221,7 @@ export function damageRunPlayer(
   damage: number,
   cause?: Omit<DeathCause, "atMs">,
 ): RunState {
-  if (state.status !== "playing" || damage <= 0) return state;
+  if (!isRunActive(state) || damage <= 0) return state;
   const health = Math.max(0, state.player.health - damage);
   const died = health === 0;
   return {
@@ -207,7 +234,7 @@ export function damageRunPlayer(
 
 /** Health per second on the simulation clock, so it pauses with the run. */
 export function regenerateRunPlayer(state: RunState, deltaMs: number): RunState {
-  if (state.status !== "playing") return state;
+  if (!isRunActive(state)) return state;
   const perSecond = state.player.stats.regeneration;
   if (perSecond <= 0 || state.player.health >= state.player.stats.maxHealth) return state;
   const health = Math.min(
@@ -242,7 +269,7 @@ export function observeRunPierce(state: RunState, chain: number): RunState {
 }
 
 export function awardRunExperience(state: RunState, amount: number): RunState {
-  if (state.status !== "playing") return state;
+  if (!isRunActive(state)) return state;
   const result = awardExperience(
     state.progression,
     amount,
@@ -273,7 +300,7 @@ export function applyRunUpgrade(
   const next: RunState = {
     ...upgraded,
     progression,
-    status: progression.pendingChoices > 0 ? "level_up" : "playing",
+    status: progression.pendingChoices > 0 ? "level_up" : state.finalBossDefeated && state.mode === "timed" ? "time_up" : state.activePhase,
     // Tallied at the same commit point as `selectedUpgradeIds` so the two can
     // never disagree about what was taken.
     statistics: recordUpgradeSelection(upgraded.statistics, upgrade.id),
@@ -283,6 +310,7 @@ export function applyRunUpgrade(
 
 export function resetRunState(state: RunState): RunState {
   return createRunState({
+    finalBossEnabled: state.finalBossEnabled,
     difficulty: state.difficulty,
     startingWeaponIds: state.startingWeaponIds,
     weaponSlotCount: state.weaponSlotCount,

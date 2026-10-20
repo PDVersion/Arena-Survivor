@@ -127,3 +127,13 @@ Dispersing Waste splits into two same-role copies once per lineage; Wrapped Wast
 halves damage above half health; Rolling Waste accelerates over three simulation
 seconds. These are game modifiers on material roles, not new material identities
 or environmental effectiveness claims. Markers2/◇/» remain visible over actor art.
+
+
+### V0.4.3 C5 — bounded fictional encounters
+
+Compacted Waste and Dumping Colossus are readable mini/final encounter fiction,
+not persistence estimates, disposal advice or a promoted layered-material system.
+They use the same tool damage path as existing waste actors. Their marked circle
+teaches the immediate game action: move clear before the pulse. No knowledge
+question, content-source claim, type effectiveness, material layer or sprite
+inventory is added. Boss values and labels remain theme-owned.

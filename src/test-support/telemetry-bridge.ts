@@ -4,6 +4,7 @@ import type { DifficultyId } from "../game/core/archetypes/difficulty";
 import type { RunSettings } from "../game/state/settings-state";
 
 export interface ArenaTestSnapshot {
+  readonly bosses?: Readonly<{ spawnedIds: readonly string[]; live: readonly Readonly<{ id: string; name: string; health: number; maxHealth: number }>[]; pulses: number; damageToPlayer: number; warnings: readonly Readonly<{ enemyId: string; x: number; y: number; releaseAtMs: number }>[] }>;
   readonly spawnOrigins?: Readonly<{ live: SpawnCounts; spawned: SpawnCounts }>;
   readonly status: "booting" | "ready" | "failed";
   readonly scene: string | null;
@@ -13,7 +14,7 @@ export interface ArenaTestSnapshot {
   readonly camera?: Readonly<{ scrollX: number; scrollY: number }>;
   readonly run?: Readonly<{
     difficulty: DifficultyId;
-    status: "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
+    status: "boss_fight" | "playing" | "paused" | "level_up" | "time_up" | "dead" | "complete";
     /** How the clock is being treated: `timed`, `endless`, or `clearing`. */
     mode: "timed" | "endless" | "clearing";
     elapsedMs: number;

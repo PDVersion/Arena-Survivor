@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { advanceBossAttack, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
+import { BossHealthUi } from "../ui/boss-health-ui";
 import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
 import { activeTheme } from "../content/active-theme";
 import { isDifficultyId } from "../core/archetypes/difficulty";
@@ -24,6 +26,9 @@ import type { EnemySpawnSource } from "../entities/enemy-actor";
 import { createInitialProfile } from "../state/profile-state";
 import {
   advanceRunState,
+  isRunActive,
+  runEscalationProgress,
+  defeatFinalBoss,
   applyRunUpgrade,
   chooseRunMode,
   completeRun,
@@ -310,13 +315,15 @@ function testShrineLayout(): string | null {
  * expires; their subject is restart, world reset, or terminal accounting, not
  * the decision itself. `complete` ends the run on the last tick, which is
  * exactly what V0.3 did, so those paths keep measuring what they measured.
+ * C5 also bypasses unique bosses for these explicit legacy fixture requests.
+ * Normal test-mode runs exercise the same bosses as production.
  * `endless` and `clearing` answer the decision instead, for the path whose
  * subject *is* the decision.
  */
-function testOvertimeChoice(): OvertimeChoice | "complete" | null {
+function testOvertimeChoice(): OvertimeChoice | "complete" | "decision" | null {
   if (import.meta.env.MODE !== "test") return null;
   const value = new URLSearchParams(window.location.search).get("atTimeUp");
-  if (value === "endless" || value === "clearing" || value === "complete") return value;
+  if (value === "endless" || value === "clearing" || value === "complete" || value === "decision") return value;
   return null;
 }
 
@@ -366,6 +373,12 @@ export class RunScene extends Phaser.Scene {
   private projectiles = new Set<ProjectileActor>();
   private pickups = new Set<PickupActor>();
   private enemyDefinition?: EnemyDefinition;
+  private bossHealthUi?: BossHealthUi;
+  private spawnedBossIds = new Set<string>();
+  private bossAttacks = new Map<EnemyActor, BossAttackState>();
+  private bossCues = new Map<EnemyActor, Phaser.GameObjects.Graphics>();
+  private bossPulses = 0;
+  private bossDamage = 0;
   private enemyDefinitions: readonly EnemyDefinition[] = [];
   private weaponDefinition?: WeaponDefinition;
   private pickupDefinition?: PickupDefinition;
@@ -565,6 +578,7 @@ export class RunScene extends Phaser.Scene {
 
     this.runState = createRunState({
       difficulty,
+      finalBossEnabled: this.runTheme.enemies.some((enemy) => enemy.boss?.kind === "final") && testOvertimeChoice() === null,
       weaponSlotCount: this.runTheme.weaponSlotCount,
       themeId: this.runTheme.id,
       characterId: selectedCharacter.id,
@@ -679,6 +693,7 @@ export class RunScene extends Phaser.Scene {
     this.levelUpUi = new LevelUpChoiceUi(this, this.runTheme);
     this.pauseMenu = new PauseMenuUi(this, this.runTheme);
     this.hud = new Hud(this, this.runTheme);
+    this.bossHealthUi = new BossHealthUi(this, this.runTheme);
     this.runEndOverlay = new RunEndOverlay(this, this.runTheme);
     this.overtimeUi = new OvertimeChoiceUi(this, this.runTheme);
     this.minimap = new MinimapUi(
@@ -704,7 +719,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !this.pauseKey) return;
     const updateCpuStartedAt = this.frameMeasurements ? performance.now() : undefined;
     const wallDelta = delta;
-    const startedPlaying = this.runState.status === "playing";
+    const startedPlaying = isRunActive(this.runState);
     this.lastFrameMs = delta;
 
     // Hit-stop and the death moment slow the mapping from wall time to
@@ -743,7 +758,10 @@ export class RunScene extends Phaser.Scene {
     if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
     if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
-    if (this.runState.status === "playing") {
+    if (isRunActive(this.runState)) {
+      this.releaseBossMilestones();
+      this.updateBossAttacks();
+      if (!isRunActive(this.runState)) { this.publishTelemetry(); return; }
       const movementInput = this.readMovementInput();
       this.updateMovementHint(movementInput, wallDelta);
       this.player.move(
@@ -788,6 +806,7 @@ export class RunScene extends Phaser.Scene {
     }
 
     this.hud?.update(this.runState, this.hudExtras());
+    this.bossHealthUi?.update(this.bossHealthValues());
     this.updateMinimap();
     this.drawBodyDebug();
     this.publishTelemetry();
@@ -795,7 +814,7 @@ export class RunScene extends Phaser.Scene {
       wallFrameMs: this.game.loop.rawDelta,
       simulationDeltaMs: delta,
       updateCpuMs: updateCpuStartedAt === undefined ? undefined : performance.now() - updateCpuStartedAt,
-      active: startedPlaying && this.runState.status === "playing" &&
+      active: startedPlaying && isRunActive(this.runState) &&
         !preparingRepresentativeLoad && timeScale === this.runTheme.tuning.pace.gameplayRate &&
         !document.hidden && !this.focusPaused,
     });
@@ -813,6 +832,12 @@ export class RunScene extends Phaser.Scene {
     window.removeEventListener("keydown", this.handleRestartKey);
     document.removeEventListener("visibilitychange", this.handleMeasurementVisibility);
     this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
+    this.bossHealthUi?.destroy();
+    this.bossHealthUi = undefined;
+    for (const cue of this.bossCues.values()) cue.destroy();
+    this.bossCues.clear();
+    this.bossAttacks.clear();
+    this.spawnedBossIds.clear();
     this.hud?.destroy();
     this.levelUpUi?.hide();
     this.pauseMenu?.hide();
@@ -864,6 +889,12 @@ export class RunScene extends Phaser.Scene {
   }
 
   private resetTransientRuntime(): void {
+    this.spawnedBossIds = new Set();
+    this.bossAttacks = new Map();
+    this.bossCues = new Map();
+    this.bossPulses = 0;
+    this.bossDamage = 0;
+    this.bossHealthUi = undefined;
     this.enemyCapacity = testEnemyCapacity();
     this.spawnStatistics = new SpawnStatistics();
     this.player = undefined;
@@ -1039,6 +1070,7 @@ export class RunScene extends Phaser.Scene {
 
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
+    const ordinaryDefinitions = this.enemyDefinitions.filter((enemy) => !enemy.boss);
     const capacity = Math.max(0, this.enemyCapacity - this.enemies.size);
     this.loadEventQueue.process(Math.min(12, capacity), (event) => {
       const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
@@ -1047,7 +1079,7 @@ export class RunScene extends Phaser.Scene {
       const definition = requestedRole
         ? this.enemyDefinitions.find(({ id }) => id === requestedRole)
         : representative
-        ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
+        ? ordinaryDefinitions[(sequence - 1) % ordinaryDefinitions.length]
         : this.enemyDefinition;
       const closeAngle = testSkillEnabled("lineLoad") ? 0 : sequence * GOLDEN_ANGLE;
       const closeDistance = this.weaponDefinition?.deliveryKind === "melee"
@@ -1074,7 +1106,7 @@ export class RunScene extends Phaser.Scene {
     if (selection === null) return;
     const definitions = selection === "broodmother"
       ? this.enemyDefinitions.filter((definition) => definition.id === archetypeIds.enemy.deathSpawner)
-      : this.enemyDefinitions;
+      : this.enemyDefinitions.filter((enemy) => !enemy.boss);
     for (const definition of definitions) {
       this.enqueueSpawnRequest(definition.id, "ambient", 1, undefined, undefined, "roster");
     }
@@ -1195,7 +1227,7 @@ export class RunScene extends Phaser.Scene {
     if (testSkillEnabled("noHazards")) return;
     const nowMs = this.runState.elapsedMs;
     const tuning = this.runTheme.tuning.hazards;
-    const progress = runProgress(nowMs, this.runState.durationMs);
+    const progress = runEscalationProgress(this.runState);
 
     if (nowMs >= this.nextHazardAtMs && this.hazards.size < tuning.maxActive) {
       this.placeHazard(nowMs);
@@ -1562,7 +1594,7 @@ export class RunScene extends Phaser.Scene {
       this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
     }
     const livingSnapshot = definition.effectKind === "duplicate_living"
-      ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated)
+      ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated && !enemy.definition.boss)
       : [];
     this.runState = {
       ...this.runState,
@@ -1631,11 +1663,11 @@ export class RunScene extends Phaser.Scene {
     // Only an endless run is allowed past `1`. A clearing run also outlives the
     // duration, but it has no arrivals and is meant to be finishable, so
     // escalating it would punish the player for choosing to tidy up.
-    const progress = runProgress(runState.elapsedMs, runState.durationMs);
+    const progress = runEscalationProgress(runState);
     return selectWorldModifiers(
       runState.world,
       this.runTheme.tuning.difficulty,
-      runState.mode === "endless" ? progress : Math.min(1, progress),
+      progress,
     );
   }
 
@@ -1645,7 +1677,7 @@ export class RunScene extends Phaser.Scene {
     const world = this.worldModifiers();
     return resolveDirectorPlan(
       this.runTheme.tuning.director,
-      runProgress(this.runState.elapsedMs, this.runState.durationMs),
+      runEscalationProgress(this.runState),
       world,
     );
   }
@@ -1658,7 +1690,7 @@ export class RunScene extends Phaser.Scene {
    */
   private releaseMilestoneWaves(): void {
     if (!this.runState || testSkillEnabled("noAmbient")) return;
-    const progress = runProgress(this.runState.elapsedMs, this.runState.durationMs);
+    const progress = Math.min(1, runProgress(this.runState.elapsedMs, this.runState.durationMs));
     const crossed = crossedUnlocks(this.runTheme.tuning.director, this.lastDirectorProgress, progress);
     this.lastDirectorProgress = progress;
     if (crossed.length === 0) return;
@@ -1780,14 +1812,14 @@ export class RunScene extends Phaser.Scene {
     const worldModifiers = this.worldModifiers();
     const directorEliteChance = resolveEliteChance(
       this.runTheme.tuning.director,
-      runProgress(this.runState.elapsedMs, this.runState.durationMs),
+      runEscalationProgress(this.runState),
       worldModifiers.eliteChance,
     );
     const elite = selectElite(
       this.runTheme.elites,
       testSkillEnabled("forceElite") ? 1 : directorEliteChance * this.luckScale(),
       this.eliteRandom,
-      eliteOverride,
+      definition.boss ? false : eliteOverride,
     );
     // Tougher spawns are worth more. The share applies to the world health
     // multiplier only: elite reward is already an explicit multiplier, so
@@ -1839,6 +1871,58 @@ export class RunScene extends Phaser.Scene {
     return true;
   }
 
+  private releaseBossMilestones(): void {
+    if (!this.runState?.finalBossEnabled || !this.player || this.runState.mode !== "timed") return;
+    for (const definition of dueBosses(this.enemyDefinitions, runProgress(this.runState.elapsedMs, this.runState.durationMs), this.spawnedBossIds)) {
+      // One capped attempt per due authored definition; failure stays due.
+      if (!this.spawnEnemy(definition.id, 1, definition, undefined, false)) break;
+      this.spawnedBossIds.add(definition.id);
+      const enemy = [...this.enemies].find((actor) => actor.definition.id === definition.id);
+      if (!enemy || !definition.boss) continue;
+      this.bossAttacks.set(enemy, createBossAttack(this.runState.elapsedMs, definition.boss));
+      const cue = this.add.graphics().setDepth(15);
+      this.bossCues.set(enemy, cue);
+      enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
+        cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy);
+      });
+      this.announceWave(this.runTheme.copy.content[definition.id].name);
+    }
+  }
+
+  private bossHealthValues() {
+    return [...this.bossAttacks.keys()].filter((enemy) => enemy.active && !enemy.defeated).map((enemy) => ({
+      id: enemy.targetId, name: this.runTheme.copy.content[enemy.definition.id].name,
+      health: enemy.health, maxHealth: enemy.maxHealth,
+    }));
+  }
+
+  private updateBossAttacks(): void {
+    if (!this.runState || !this.player || !isRunActive(this.runState)) return;
+    for (const [enemy, state] of this.bossAttacks) {
+      const definition = enemy.definition.boss;
+      if (!enemy.active || enemy.defeated || !definition) continue;
+      const result = advanceBossAttack(state, definition, this.runState.elapsedMs, enemy,
+        { x: this.player.x, y: this.player.y, radius: this.player.definition.radius });
+      this.bossAttacks.set(enemy, result.state);
+      const cue = this.bossCues.get(enemy);
+      cue?.clear();
+      if (result.state.warning && cue) {
+        const colour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.critical).color;
+        cue.fillStyle(colour, 0.16).fillCircle(result.state.warning.x, result.state.warning.y, definition.attack.radius);
+        cue.lineStyle(3, colour, 1).strokeCircle(result.state.warning.x, result.state.warning.y, definition.attack.radius);
+      }
+      if (result.released) this.bossPulses += 1;
+      if (result.damage > 0) {
+        const damage = reduceByArmour(result.damage * (enemy.contactDamage / enemy.definition.contactDamage), this.runState.player.stats.armour);
+        const healthBefore = this.runState.player.health;
+        this.runState = damageRunPlayer(this.runState, damage, { sourceId: enemy.definition.id, elite: false });
+        this.bossDamage += healthBefore - this.runState.player.health;
+        this.player.flashDamage(this.runTheme.tokens.palette.critical);
+        if (this.runState.status === "dead") { this.enterTerminalState(); break; }
+      }
+    }
+  }
+
   private fireIfReady(): void {
     if (testSkillEnabled("noWeapon")) return;
     if (
@@ -1846,7 +1930,7 @@ export class RunScene extends Phaser.Scene {
       testSkillEnabled("closeLoad") &&
       this.loadHarnessSpawned < this.loadHarnessRequested
     ) return;
-    if (!this.player || !this.runState || this.runState.status !== "playing" || !this.projectileGroup) return;
+    if (!this.player || !this.runState || !isRunActive(this.runState) || !this.projectileGroup) return;
     for (const slot of this.runState.weaponSlots) {
       if (this.runState.elapsedMs < slot.nextAttackAtMs) continue;
       const definition = this.runTheme.weapons.find((weapon) => weapon.id === slot.weaponId);
@@ -1856,7 +1940,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private fireWeaponIfReady(definition: WeaponDefinition): void {
-    if (!this.player || !this.runState || this.runState.status !== "playing" || !this.projectileGroup) return;
+    if (!this.player || !this.runState || !isRunActive(this.runState) || !this.projectileGroup) return;
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
     const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id]);
@@ -2252,6 +2336,10 @@ export class RunScene extends Phaser.Scene {
     }
     enemy.releaseDeathView();
     enemy.destroy();
+    if (enemy.definition.boss?.kind === "final") {
+      this.runState = defeatFinalBoss(this.runState);
+      if (this.runState.status === "time_up") this.showOvertimeChoice();
+    }
   }
 
   private enqueueConfiguredOnKillEffects(
@@ -2603,7 +2691,7 @@ export class RunScene extends Phaser.Scene {
         ? selectWorldModifiers(
             runState.world,
             this.runTheme.tuning.difficulty,
-            runProgress(runState.elapsedMs, runState.durationMs),
+            runEscalationProgress(runState),
           ).threatStep
         : 0,
       killChain: runState?.statistics.recentKillTimesMs.length ?? 0,
@@ -2638,7 +2726,7 @@ export class RunScene extends Phaser.Scene {
         ? [...selectWorldLines(
             runState.world,
             this.runTheme,
-            runProgress(runState.elapsedMs, runState.durationMs),
+            runEscalationProgress(runState),
           ), { label: `${this.runTheme.copy.spawnOrigins.live} / ${this.runTheme.copy.spawnOrigins.total}`, display: "" }, ...spawnOrigins.map((origin) => ({
             label: this.runTheme.copy.spawnOrigins[origin],
             display: `${this.spawnStatistics.live[origin]} / ${this.spawnStatistics.spawned[origin]}`,
@@ -2682,7 +2770,7 @@ export class RunScene extends Phaser.Scene {
 
   private updateMinimap(): void {
     if (!this.minimap || !this.player) return;
-    this.minimap.setOverlayHidden(this.runState?.status !== "playing");
+    this.minimap.setOverlayHidden(!isRunActive(this.runState));
     if (!this.minimap.visible) return;
     const view = this.minimapView;
     view.player.x = this.player.x;
@@ -2756,7 +2844,8 @@ export class RunScene extends Phaser.Scene {
       this.currentChoices = [];
       this.currentOffers = [];
       this.levelUpUi?.hide();
-      this.physics.world.resume();
+      if (this.runState.status === "time_up") this.showOvertimeChoice();
+      else if (isRunActive(this.runState)) this.physics.world.resume();
     }
     this.publishTelemetry();
   }
@@ -2824,7 +2913,7 @@ export class RunScene extends Phaser.Scene {
       this.enterTerminalState();
       return;
     }
-    if (forced) {
+    if (forced && forced !== "decision") {
       this.resolveOvertimeChoice(forced);
       return;
     }
@@ -2899,7 +2988,7 @@ export class RunScene extends Phaser.Scene {
 
   private handleGameBlur(): void {
     this.frameMeasurements?.interrupt();
-    if (!this.runState || this.runState.status !== "playing") return;
+    if (!this.runState || !isRunActive(this.runState)) return;
     this.runState = setRunStatus(this.runState, "paused");
     this.player?.stop();
     this.physics.world.pause();
@@ -2983,7 +3072,7 @@ export class RunScene extends Phaser.Scene {
 
   private togglePause(): void {
     if (!this.runState || !this.player) return;
-    if (this.runState.status === "playing") {
+    if (isRunActive(this.runState)) {
       this.runState = setRunStatus(this.runState, "paused");
       this.player.stop();
       this.physics.world.pause();
@@ -3033,7 +3122,7 @@ export class RunScene extends Phaser.Scene {
 
   private publishTelemetry(): void {
     if (import.meta.env.MODE !== "test") return;
-    const frameMeasurements = this.frameMeasurements?.snapshot(this.runState?.status !== "playing");
+    const frameMeasurements = this.frameMeasurements?.snapshot(!isRunActive(this.runState));
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
     const hud = this.runState ? selectHudValues(this.runState) : undefined;
@@ -3058,6 +3147,12 @@ export class RunScene extends Phaser.Scene {
     ).length;
     this.peakVisibleEnemies = Math.max(this.peakVisibleEnemies, visibleEnemies);
     updateTestTelemetry({
+      bosses: {
+        spawnedIds: [...this.spawnedBossIds],
+        live: this.bossHealthValues(),
+        pulses: this.bossPulses, damageToPlayer: this.bossDamage,
+        warnings: [...this.bossAttacks].filter(([, state]) => state.warning).map(([enemy, state]) => ({ enemyId: enemy.definition.id, ...state.warning! })),
+      },
       status: "ready",
       scene: this.scene.key,
       themeId: this.runTheme.id,

@@ -292,6 +292,17 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
   if (!Array.isArray(theme.enemies)) issues.push("enemies registry is required");
   for (const enemy of enemies) {
+    if (enemy.boss) {
+      const { kind, appearAt, attack } = enemy.boss;
+      if (!["mini", "final"].includes(kind) || !Number.isFinite(appearAt) || appearAt <= 0 || appearAt > 1 || (kind === "final" && appearAt !== 1)) issues.push(`${enemy.id} invalid boss milestone`);
+      if (!attack || typeof attack !== "object" || Array.isArray(attack)) issues.push(`${enemy.id} boss attack is required`);
+      else for (const value of [attack.telegraphMs, attack.recoveryMs, attack.radius, attack.damage]) {
+        if (!Number.isFinite(value) || value <= 0) issues.push(`${enemy.id} boss attack values must be finite and positive`);
+      }
+      if (enemy.fragmentInto || (enemy.deathSpawns?.length ?? 0) > 0) issues.push(`${enemy.id} unique boss cannot create descendants`);
+      if (enemies.filter((candidate) => candidate.boss?.kind === kind).length !== 1) issues.push(`${enemy.id} boss kind must be unique`);
+      if (theme.tuning.director.roles.some((role) => role.enemyId === enemy.id)) issues.push(`${enemy.id} boss cannot be an ambient director role`);
+    }
     if (enemyIds.has(enemy.id)) issues.push(`duplicate enemy id: ${enemy.id}`);
     enemyIds.add(enemy.id);
     if (!Number.isFinite(enemy.maxHealth) || enemy.maxHealth <= 0) {
@@ -336,7 +347,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
   }
-  for (const requiredId of Object.values(archetypeIds.enemy)) {
+  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss)) {
     if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
   }
   for (const enemy of enemies) {

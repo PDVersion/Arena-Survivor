@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
-import { createRunState, setRunStatus } from "../../../src/game/state/run-state";
+import { advanceRunState, createRunState, isRunActive, setRunStatus } from "../../../src/game/state/run-state";
 import { themeRegistry } from "../../../src/game/content/theme-registry";
 
 // Exercise actual scene event handlers without DOM/renderer emulation. Native
@@ -18,7 +18,7 @@ function visit(node: ts.Node): void {
 visit(source);
 if (methods.length !== 2) throw new Error("Missing focus handlers");
 const code = ts.transpileModule(`class Handlers { ${methods.join("\n")} }`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
-const Handlers = new Function("setRunStatus", `${code}; return Handlers;`)(setRunStatus);
+const Handlers = new Function("setRunStatus", "isRunActive", `${code}; return Handlers;`)(setRunStatus, isRunActive);
 
 function fixture(theme: (typeof themeRegistry)[number]["theme"]) {
   const runState = createRunState({ themeId: theme.id, characterId: theme.characters[0]!.id, baseStats: theme.characters[0]!.baseStats });
@@ -48,6 +48,16 @@ for (const { theme } of themeRegistry) describe(`${theme.id} focus state ownersh
     expect(scene.focusPaused).toBe(false);
     expect(scene.physics.world.resume).toHaveBeenCalledOnce();
     expect(scene.audioFeedback.setFocused.mock.calls).toEqual([[false], [true]]);
+  });
+
+  it("resumes its own live boss interruption to the boss phase", () => {
+    const scene = fixture(theme);
+    const enabled = { ...scene.runState, finalBossEnabled: true };
+    scene.runState = advanceRunState(enabled, enabled.durationMs);
+    const boss = scene.runState;
+    scene.handleGameBlur(); expect(scene.runState.status).toBe("paused");
+    scene.handleGameFocus(); expect(scene.runState).toEqual(boss);
+    expect(scene.runState.status).toBe("boss_fight");
   });
 
   for (const status of ["paused", "level_up", "time_up", "dead", "complete"] as const) {

@@ -1339,3 +1339,50 @@ report/status/checklist/master/reconciliation/progress;Session17retired after
 recording,Session18/C5successor current. No push/PR/merge/deploy/dispatch.
 Final review timestamp2026-10-20T00:35:28.339111+00:00;actual elapsed425.3seconds, within90minute
 maximum, finished early. C5–C7 remain unbuilt.
+
+
+## Session18 — C5 bosses /2026-10-20 Sydney
+
+Start00:36:56UTC (11:36:56AEDT); deadline02:06:56UTC; final20-minute reserve
+starts01:46:56UTC. C4 b0ff7e9 verified/clean. Required authority order and C4
+reports/current handoff read; C5 ownership claimed before edits. Parent inspected
+remote evidence;39189877476 covers2806720 only. Local only, no publication.
+
+Verification/recording began00:57:45UTC, before01:46:56final20-minute reserve.
+C5 complete locally: both-theme unique mini50%/final100%, real capped actors,
+fixed simulation warning/pulse, healthrows, live boss_fight and retained activePhase.
+Final normal lethal/XP/removal opens existing endless/clearing; queued work retained,
+ordinary duplication/elite inheritance intact. Shared timed/clearing pressure1 aligns
+world/director/hazard/elite/HUD/pause, selected endless alone exceeds1. Boss cue/state
+at most2 and cleared on death/stop; no second physics teardown. If queued lethal
+arrives during level_up, preserve choice then hold physics into immediate decision;
+actual-method regression covers no intervening resume. Generic helper opt-in,
+normal production/test enable, only explicit atTimeUp legacy fixtures bypass.
+583units/64files,types/lint/build/diff pass;22 new deterministic cases. Six unique
+affected serial browser cases verified cumulatively, zero automatic retries. Initial
+4case attempts fail only final fixture polling uninstalled global after all earlier
+game assertions; corrected fixture-owned read-only restart observation passes4/8.5s.
+Two affected legacy ending cases pass12.7s. List reporter body was ephemeral and
+later suite cleared default images; final4case dedicated durable capture passes8.2s,
+raw JSON/source/build/image hashes retained in C5_RESULTS. No acceptance expansion.
+Mini300HP/300capped weapon damage, final1800/1800 and50rawXPonce, duplicate lethal
+adds0; warning harmless100HP, pulse28.8actual to71.2, next pulse dodged. Pause/focus/
+level choice retain boss_fight; duplication leaves one. Actual/HUD/pause threat10
+at306400/300000ms. Final kill retires cues and holds decision; pending ordinary
+spawn survives, clearing fights it to complete/backlog0, endless resumes escalation,
+restart playing/clock0/noIDs. Both-theme resized screenshots visually reviewed.
+ActualChromium151.0.7922.34/SwiftShader VulkanWebGL/testNormalDefault/rate0.5,
+FIT1600x9001280x720DPR1, images1000x700; M5host/Windows preset UA distinguished.
+Pausedphysics/scriptedclock/position/highdamagebuild/noambient/contact/hazards/audio
+and actual coordinator/weapon-hit aids are explicit; no human/full authored/native/
+300boss sustained throughput/device acceptance.60coarse pacing/TTK scenarios pass,
+ambient totals unchanged, bosses appear in TTK only from milestones (absent dash,
+not zero); simulator omits actual encounters/pattern/movement/survival. KnownPhaser
+chunk advisory unchanged. Full/stress/native/long/startup campaigns deferred;
+external actualSafari/browserOS/older physicalGPU checks temporarily waived/unverified,
+no new hardware evidence. Historical P5/P6 reports/kit source-bound. Compiled test
+marker exclusion passes. Owned browser/server clean,4173 no listener;4213/unknowns
+untouched. Local C5 implementation/tests/status/checklist/REC064/progress/master/report
+and Session19/C6 handoff in one reviewed commit; Session18 retired after result.
+Parent reviewed runtime/report/screenshots; no push/PR/merge/deploy/dispatch.
+Final review2026-10-20T01:02:36.244158+00:00, actual elapsed1540.2s, within90minmaximum.

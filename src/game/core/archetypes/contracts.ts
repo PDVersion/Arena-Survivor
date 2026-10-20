@@ -411,7 +411,15 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
 /** Theme-owned weapon data with delivery-specific fields kept type-safe. */
 export type WeaponDefinition = ProjectileWeaponDefinition | MeleeWeaponDefinition;
 
+export interface BossDefinition {
+  readonly kind: "mini" | "final";
+  /** Normalized authored progress; unique encounter, not an ambient role. */
+  readonly appearAt: number;
+  readonly attack: Readonly<{ telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
+}
+
 export interface EnemyDefinition {
+  readonly boss?: BossDefinition;
   readonly id: EnemyId;
   readonly maxHealth: number;
   readonly moveSpeed: number;

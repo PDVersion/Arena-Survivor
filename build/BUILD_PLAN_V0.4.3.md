@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C4 are verified; C5 is next. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C5 are verified; C6 is next. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -165,7 +165,7 @@ C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
 15 unique affected serial browser cases (final feedback subset5), both themes/
 all models/all difficulties balance. Completed record and exact limits are in
 [master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
-[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5–C7 remain unstarted. The subsequent owner
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5 is verified; C6–C7 remain unstarted. The subsequent owner
 waiver supersedes the missing P5/P6 external checks' release-blocking classification.
 
 The delivery-kind union deliberately deferred in REC-051, because its shape
@@ -257,7 +257,7 @@ unique affected serial browser cases verified (initial7pass40.1s, final C3 subse
 pass12.4s after visible-reward ordering correction and fixture XP correction).
 Both themes/ten models/three difficulties/baseline+combined world fixture balance
 (120scenarios; baseline output identical to C2). See [report](content/C3_REPORT.md)
-and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4 verified below; C5–C7 are next in dependency order.
+and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4/C5 verified below; C6–C7 are next in dependency order.
 
 ### C4 — Elite modifiers ✅
 
@@ -267,11 +267,19 @@ simulation-age acceleration and readable markers.561units/63files and six unique
 affected serial browser cases pass; see [report](content/C4_REPORT.md) and
 [completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c4). C5 is next.
 
-### C5 — Mini-boss and final boss
+### C5 — Mini-boss and final boss ✅
+
 A boss is an enemy with a health bar, a telegraphed pattern, and a director
 milestone that spawns exactly one. The final boss replaces the end-of-timer
 prompt: it spawns where the decision used to appear, and REC-064's choice moves
 to after the kill rather than being removed. See "Decisions settled before C1".
+
+- [x] Unique capped mini/final milestones, theme-owned enemy and warning pattern.
+- [x] Live boss phase, retained pause/level intent and after-kill endless/clearing.
+- [x] Exact capped ledger/reward/reset, readable health/telegraph and affected checks.
+- [x]583units/64files, six unique affected serial browser cases,60 coarse TTK scenarios;
+  broader campaigns deferred, external checks waived/unverified. [Report](content/C5_REPORT.md),
+  [completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c5).
 
 ### C6 — Persistence, unlocks, and advanced statistics
 The first real slice of `SAVE_DATA.md`. The session statistics slice from REC-062
@@ -354,9 +362,9 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — C5 mini-boss and final boss
+## Next slice — C6 persistence, unlocks and advanced statistics
 
-C1–C4 local gates pass. Continue C5 after reading its settled director/endless/clearing
-rules. [Session18 handoff](SESSION_18_PROMPT.md) is current. Temporary external
-browser/device waiver remains waived/unverified. No repeat broad/native/long
-campaign, new publication, dependency or sprite scope.
+C1–C5 local gates pass. Read SAVE_DATA before claiming exact C6 ownership;
+[Session19 handoff](SESSION_19_PROMPT.md) is current. Temporary external actual
+Safari/browserOS/older physical-device waiver remains waived/unverified, never
+passed. No full/native/long campaign or publication is authorized by completion.

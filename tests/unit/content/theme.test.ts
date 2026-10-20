@@ -80,7 +80,7 @@ describe("theme manifests", () => {
 
     // Glass is the highest health in the roster and among the lowest harm:
     // effectively permanent, but chemically inert.
-    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.map((e) => e.maxHealth)));
+    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.filter((e) => !("boss" in e)).map((e) => e.maxHealth)));
     expect(glass?.contactDamage).toBeLessThan(bottle!.contactDamage);
   });
 
@@ -96,7 +96,7 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
     expect(knightMagicTheme.weapons[0]).toEqual(alternateTheme.weapons[0]);
     expect(knightMagicTheme.weapons[1]?.id).toBe(archetypeIds.weapon.secondary);
-    expect(knightMagicTheme.enemies).toEqual(alternateTheme.enemies);
+    expect(knightMagicTheme.enemies.filter((enemy) => !("boss" in enemy))).toEqual(alternateTheme.enemies);
     expect(knightMagicTheme.shrines.filter((shrine) => shrine.id !== archetypeIds.shrine.escalation)).toEqual(alternateTheme.shrines);
     expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);
     expect(currentShrine.name).not.toBe(alternateShrine.name);

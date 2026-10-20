@@ -1469,3 +1469,15 @@ shrine arrives at86% authored duration using existing placement/interaction.
 This bounded C3 adds these choices, not every illustrative shrine/curse example
 above; no Blood Altar/forced legendary encounter, knowledge question, boss,
 persistence or sprite work is introduced.
+
+
+### V0.4.3 C5 — readable boss climax
+
+One unique mini threat arrives at half the authored duration; one final threat
+arrives at its limit. Both use ordinary enemy combat plus a harmless fixed-circle
+warning and one pulse. The final fight stays live past the timer; defeating the
+boss opens the existing choice to continue endlessly or stop arrivals and clear
+remaining enemies/causal work. Pausing or earning a level does not discard the
+fight's intent. Unique bosses are not copied by duplication sites and never
+become ordinary random arrivals. Both themes own their fiction/tuning; these
+primitive encounters add no sprite or layered-material knowledge system.
