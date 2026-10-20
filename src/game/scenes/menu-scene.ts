@@ -1,3 +1,4 @@
+import { describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
@@ -43,6 +44,11 @@ export class MenuScene extends Phaser.Scene {
         color: palette.text, fontFamily: "Georgia, serif", fontSize: "22px",
       }).setOrigin(0.5).setAlpha(0.75),
     ];
+
+    const saveStatus = getProfileStatus();
+    if (saveStatus.mode !== "saved") children.push(addUiText(this, centreX, viewport.top + 700, saveStatus.message, {
+      color: palette.text, fontFamily: "Georgia, serif", fontSize: "17px", align: "center", wordWrap: { width: 720 },
+    }).setOrigin(0.5));
 
     this.difficultyBounds = [];
     this.difficultyButtons.clear();
@@ -170,7 +176,7 @@ export class MenuScene extends Phaser.Scene {
       upgrades: [],
       codex: selectShrineCodex(activeTheme),
       codexUpgrades: selectUpgradeCodex(activeTheme, session),
-      codexSession: selectSessionCodex(activeTheme, session),
+      codexSession: [...selectSessionCodex(activeTheme, session), ...describeProfile(activeTheme)],
       settings: getSessionSettings(),
     };
   }

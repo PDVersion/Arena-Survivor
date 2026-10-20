@@ -121,3 +121,15 @@ creation; changing the session selection affects the next run. No storage adapte
 or migration is introduced here. Future profile/import validation must allow
 only those IDs and supply `normal` for older settings without the field, while
 retaining the ordinary backup/confirmation requirements above.
+
+## V0.4.3 C6 implementation checkpoint /2026-10-20
+
+Browser-local schema2 now retains six settings, terminal-only lifetime statistics,
+completed/death counts, longest run and stable identity/unlock IDs. Both themes
+unlock the existing secondary tool after one finished run and bloodlust after25
+finished-run kills, affecting the next run only. These are the planned mechanical
+content unlocks, distinct from exploratory educational cosmetic feats. No permanent
+stat bonus, active-run suspension, sprite or new factual content is added.
+Corrupt storage is preserved; denied/quota storage falls back to memory with visible
+warnings. Schema1 migration is deterministic. C7 portable export/import/preview/
+explicit backup recovery remains next; use the same validated profile model.

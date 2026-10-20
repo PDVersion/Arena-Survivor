@@ -13,6 +13,7 @@ export const alternateTheme = defineTheme({
   id: "alternate_test",
   schemaVersion: 1,
   copy: {
+    profile: { saved: "Stored", memory: "Memory only", blocked: "Preserved unreadable save", browserSave: "Save", completedRuns: "Completed", deaths: "Deaths", longestRun: "Duration", unlocked: "Unlocked", locked: "Locked", finishedRuns: "runs", lifetimeKills: "kills", unlockedPrefix: "Unlocked" },
     spawnOrigins: { live: "Live sources", total: "Spawn totals", natural: "Natural", fragmentation: "Split", baggedWaste: "Offspring", environment: "Events", benchmark: "Fixture" },
     difficulty: {
       label: "Pressure", nextRun: "Next pressure", hint: "Choose a pressure",

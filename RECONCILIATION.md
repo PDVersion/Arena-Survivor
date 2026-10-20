@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C5 verified and C6 next.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C6 verified and C7 next.**
 
 ## How to maintain this file
 
@@ -1588,6 +1588,26 @@ Future guardrail:
 
 Revisit when:
 Persistence lands and this slice needs a codec and migrations, or lifetime statistics need to outlive the page.
+
+C6 continuation2026-10-20: the existing module statistics now hydrate from validated
+schema2 and persist only finished contributions guarded by terminalShown. Never save
+the live-run overlay. Six settings persist at explicit changes; no active-run snapshot.
+Schema1 migration is pure/deterministic. Browser-storage getter can throw, not only
+setItem; catch acquisition/read/write and keep in-memory play with visible warning.
+Malformed current bytes stay untouched and must never replace a known-good backup.
+Ordinary valid replacement backs up previous raw source first. The later C7 recovery
+flow must quarantine corrupt current separately before any explicit replacement.
+
+Theme-owned milestones unlock secondary after1finished run and bloodlust after25
+finished-run kills; snapshot offers at run creation. Existing acquisition/evolution
+fixtures must search that actual entitled pool, not the full authoring catalog; the
+first two eco seed precondition failures demonstrated that mismatch. Imported unknown
+well-formed IDs stay preserved, unavailable selected character uses runtime fallback.
+Durable aggregates alone saturate at1e15 to prevent valid ceiling saves crashing a
+future terminal contribution; actual run damage/XP remains exact. Both-theme rules,
+reload and actual short terminal verify wiring.10unique bounded serial browser cases,
+595units/65files and final software pass; see build/content/C6_REPORT.md. C7 remains
+next; temporary external acceptance waiver is not evidence of a hardware/browser pass.
 
 ### REC-063 — The game opens on a title screen, and test mode skips it
 

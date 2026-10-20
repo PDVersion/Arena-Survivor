@@ -1,16 +1,12 @@
-/**
- * Session settings.
- *
- * Shaped for `build/SAVE_DATA.md` so a persistence adapter can store it
- * unchanged, but held in memory for V0.3: the plan defers persistence to V0.4.
- * It lives at module scope rather than on the scene so a restart keeps the
- * player's choices, which is what "session" means to them.
+/** Serializable preferences hydrated by the C6 profile service before boot.
+ * Module state supports existing scene consumers; subscribers persist explicit
+ * changes through the adapter. No frame-level storage access lives here.
  */
 
 import { difficultyIds, type DifficultyId } from "../core/archetypes/difficulty";
 
 export interface RunSettings {
-  /** Presentation only; retained for this browser session, including restarts. */
+  /** Presentation only; persisted by the profile service, including restarts. */
   readonly presentationQuality: "default" | "low";
   /** Chosen before play; changing it during play affects the next run. */
   readonly difficulty: DifficultyId;
@@ -82,6 +78,7 @@ export function getSessionSettings(): RunSettings {
 
 export function updateSessionSettings(next: RunSettings): RunSettings {
   sessionSettings = next;
+  for (const listener of settingsListeners) listener();
   return sessionSettings;
 }
 
@@ -90,3 +87,7 @@ export function resetSessionSettings(overrides: Partial<RunSettings> = {}): RunS
   sessionSettings = createSettings(overrides);
   return sessionSettings;
 }
+
+const settingsListeners = new Set<() => void>();
+export function subscribeSettings(listener: () => void): () => void { settingsListeners.add(listener); return () => settingsListeners.delete(listener); }
+export function hydrateSessionSettings(settings: RunSettings): void { sessionSettings = createSettings(settings); }

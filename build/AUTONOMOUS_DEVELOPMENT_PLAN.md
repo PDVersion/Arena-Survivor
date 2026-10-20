@@ -330,7 +330,7 @@ The affected Session 6/7 gates do not complete P5. Session 8 completed the
 probe could not reach hidden state. Sessions 9–10 subsequently verify native
 overlays and the scoped consolidated lifecycle campaign. Session15 explicitly
 temporarily waives the outstanding external browser/device checks; continue
-[current C6 work](SESSION_19_PROMPT.md). Historical evidence stays source-bound. Prefer
+[current C7 work](SESSION_20_PROMPT.md). Historical evidence stays source-bound. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
@@ -376,7 +376,7 @@ On 2026-10-20 the owner explicitly approves planned C1–C7 after verified softw
 checks, with missing browser/device evidence release-blocking. C1 is verified locally, including the second tool, owner-only progression,
 on-hit splash and the combined affected gate. Session15 verifies C2 evolution;
 Session16 verifies C3 shrines/curses; continue C4 using
-[SESSION_19_PROMPT.md](SESSION_19_PROMPT.md). Owner explicitly
+[SESSION_20_PROMPT.md](SESSION_20_PROMPT.md). Owner explicitly
 temporarily waives missing actual Safari/browser-OS/older physical-device checks;
 waived/unverified, never passed. Historical measurements remain source-bound.
 No optional/sprite scope is added.

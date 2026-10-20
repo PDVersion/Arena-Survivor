@@ -716,6 +716,14 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
 
   issues.push(...validateTuning(theme, enemyIds, hazardIds, shrineIds));
 
+  const unlockIds = new Set<string>();
+  for (const grant of theme.unlocks ?? []) {
+    if (!["weapon", "upgrade"].includes(grant.kind) || !["runsPlayed", "totalKills"].includes(grant.metric) || !Number.isSafeInteger(grant.required) || grant.required < 1) issues.push("unlock requires a positive integer milestone");
+    if (unlockIds.has(grant.id)) issues.push("duplicate unlock grant");
+    unlockIds.add(grant.id);
+    const exists = grant.kind === "weapon" ? theme.weapons.some((entry) => entry.id === grant.id) : theme.upgrades.some((entry) => entry.id === grant.id);
+    if (!exists || grant.id === "weapon.starter") issues.push("unlock must reference available non-starter content");
+  }
   return issues;
 }
 

@@ -1,19 +1,10 @@
 import type { UpgradeId } from "../core/archetypes/ids";
 import type { RunStatistics } from "../systems/statistics/run-statistics";
 
-/**
- * Statistics that outlive a single run.
- *
- * Shaped for the "lifetime and best-run statistics" payload field in
- * `build/SAVE_DATA.md`, but held in memory for now: that document defers the
- * persistence adapter, codecs, and migrations to V0.4, and this follows the
- * settings slice in living at module scope so a restart keeps it — which is
- * what "session" means to a player who just pressed R.
- *
- * Only *finished* runs are folded in here. The run in progress is merged on
- * read, so the Field Guide counts what the player has actually taken rather
- * than what they took before the current run started. Folding a live run in
- * would either double-count it at the terminal state or lag behind it.
+/** Lifetime statistics hydrated by the C6 profile service.
+ * Only finished runs are folded into stored totals. A live contribution is a
+ * computed read overlay, never a durable write; the terminal coordinator commits
+ * once. The profile service owns storage and durable aggregate safety limits.
  */
 
 export interface UpgradeSessionRecord {
@@ -113,3 +104,5 @@ export function resetSessionStatistics(): SessionStatistics {
   sessionStatistics = createSessionStatistics();
   return sessionStatistics;
 }
+
+export function hydrateSessionStatistics(statistics: SessionStatistics): void { sessionStatistics = statistics; }

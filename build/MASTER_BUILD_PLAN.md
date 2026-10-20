@@ -31,6 +31,7 @@ consolidation; duplicate plan files are removed rather than maintained in parall
 - [V0.4.3 — Verified PR #25 CI repair](#v0-4-3-ci-repair)
 - [V0.4.3 — C2 same-slot evolution](#v0-4-3-c2)
 - [V0.4.3 — C3 shrines and curses](#v0-4-3-c3)
+- [V0.4.3 — C6 local profile and unlocks](#v0-4-3-c6)
 
 <a id="v0-1"></a>
 ## V0.1 — First playable
@@ -3185,3 +3186,51 @@ older physical-device checks remain temporarily waived/unverified. Source-bound
 P5/P6 evidence/kit does not certify this changed runtime. No dependencies/save/
 sprite/global XP/rate or second physics teardown. Local-only; remote39189877476
 covers2806720 only. Session18 retired after record; Session19 continues C6.
+
+<a id="v0-4-3-c6"></a>
+### V0.4.3 C6 — local profile, unlocks and lifetime records (2026-10-20)
+
+Schema2 persists all six settings, stable theme/character identity, unknown compatible
+unlock IDs, lifetime totals/bests/upgrade counts, completed/dead counts, longest run
+and version/timestamps. Pure schema1 migration supplies deterministic epoch/defaults.
+Strict bounded validation rejects unsafe keys, unsupported schemas, invalid numeric/
+setting/reference shapes, duplicate IDs and excessive collections/nesting; immutable
+validated snapshots are the storage and future portable-save model.
+
+Boot restores before game construction. Browser-storage getter/read/write/quota failures
+keep play available in memory with themed title/terminal warnings. Corrupt current data
+and any known-good backup remain untouched. Ordinary successful writes preserve the
+previous valid source as backup, then replace current; no active-frame or suspended-run
+serialization. TerminalShown guards one finished contribution, live Field Guide overlays
+are never persisted. Durable aggregates saturate at1e15 while actual run values remain exact.
+
+Both themes grant the secondary tool after one finished run and bloodlust after25
+finished-run kills. Runs snapshot their entitled offer pool; acquisition/evolution still
+use existing conditions/caps/weighting and never gain a bypass query. New unlocks appear
+on the terminal summary and next run; Field Guide shows lifetime labels/locked requirements.
+Unknown IDs survive storage and unavailable selected characters use starter only at runtime.
+
+Session19 ownership (2026-10-20, claimed before edits):
+`src/main.ts`, `src/game/state/{profile-state,settings-state,session-statistics}.ts`,
+`src/game/systems/persistence/**`, `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both themes' `{index,unlocks,copy}.ts`,
+`src/game/scenes/{menu-scene,run-scene}.ts`, `src/game/ui/{pause-menu-ui,run-end-overlay}.ts`,
+`src/game/systems/codex/describe-shrine.ts`, `tests/fixtures/alternate-theme.ts`, affected profile/statistics/content units, `tests/unit/boot/boot-recovery.test.ts`,
+`tests/unit/persistence/**`, `tests/e2e/{profile-persistence-v043,second-tool-v043}.spec.ts`,
+active plan/status/master/progress/reconciliation, SAVE_DATA/PLAN/THEME_ARCHETYPES,
+C6 report/results/current and successor handoffs. No C7 codec/import/export yet.
+
+595units/65files,types/lint/build/diff and production marker exclusion pass.10unique
+necessary serial browser cases verified cumulatively: both-theme profile/settings/reload,
+denied/corrupt startup, actual short terminal exactly-once/reload, four acquisition/evolution
+cases and death/new-unlock/warning layout. Initial two eco failures were fixture seed selection
+using full theme pool rather than snapshotted entitled pool; corrected cases pass. A boot
+recovery unit fixture also needed the new initialization dependency supplied. Final five
+persistence cases pass8.0s; separate death layout1.2s. Raw/source/image hashes and exact
+limits are in [C6 report](content/C6_REPORT.md)/[results](content/C6_RESULTS.json).
+
+No C7 codec/import/export/recovery UI yet; no active-run save, new content art, global
+combat/XP/rate or physics teardown. Broad/stress/native/long/hardware campaigns deferred;
+missing actualSafari/browserOS/older physical-device checks remain temporarily waived and
+unverified. Historical P5/P6 evidence/device pack stays source-bound. Local-only, remote
+39189877476 covers2806720 only. Session19 retired after durable record; Session20 is C7.

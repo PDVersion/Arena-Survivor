@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C5 are verified; C6 is next. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C6 are verified; C7 is next. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -165,7 +165,7 @@ C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
 15 unique affected serial browser cases (final feedback subset5), both themes/
 all models/all difficulties balance. Completed record and exact limits are in
 [master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
-[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5 is verified; C6–C7 remain unstarted. The subsequent owner
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5/C6 are verified; C7 remains unstarted. The subsequent owner
 waiver supersedes the missing P5/P6 external checks' release-blocking classification.
 
 The delivery-kind union deliberately deferred in REC-051, because its shape
@@ -257,7 +257,7 @@ unique affected serial browser cases verified (initial7pass40.1s, final C3 subse
 pass12.4s after visible-reward ordering correction and fixture XP correction).
 Both themes/ten models/three difficulties/baseline+combined world fixture balance
 (120scenarios; baseline output identical to C2). See [report](content/C3_REPORT.md)
-and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4/C5 verified below; C6–C7 are next in dependency order.
+and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4/C5 verified below; C6 verified below; C7 follows.
 
 ### C4 — Elite modifiers ✅
 
@@ -281,7 +281,17 @@ to after the kill rather than being removed. See "Decisions settled before C1".
   broader campaigns deferred, external checks waived/unverified. [Report](content/C5_REPORT.md),
   [completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c5).
 
-### C6 — Persistence, unlocks, and advanced statistics
+### C6 — Persistence, unlocks, and advanced statistics ✅
+
+- [x] Validated schema2, deterministic schema1 migration and safe local adapter.
+- [x] Durable settings/terminal-only lifetime totals and theme-owned next-run unlocks.
+- [x] Readable requirements/new rewards/failure warnings, affected browsers/software.
+
+595units/65files, types/lint/build/diff pass;10 unique affected serial browser cases
+verified cumulatively, including final five-case persistence capture and death-layout
+check. [Report](content/C6_REPORT.md), [completed ownership](MASTER_BUILD_PLAN.md#v0-4-3-c6).
+C7 follows; missing external device/browser checks remain waived/unverified.
+
 The first real slice of `SAVE_DATA.md`. The session statistics slice from REC-062
 is already shaped for the payload's lifetime-statistics field, so this is mostly
 adapter and migration work rather than new modelling.
@@ -362,9 +372,9 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — C6 persistence, unlocks and advanced statistics
+## Next slice — C7 portable save
 
-C1–C5 local gates pass. Read SAVE_DATA before claiming exact C6 ownership;
-[Session19 handoff](SESSION_19_PROMPT.md) is current. Temporary external actual
-Safari/browserOS/older physical-device waiver remains waived/unverified, never
-passed. No full/native/long campaign or publication is authorized by completion.
+C1–C6 local gates pass. C7 owns encoded export/import with validation, preview,
+backup and migration through the same validated profile/service. [Session20 handoff](SESSION_20_PROMPT.md)
+is current. External actual Safari/browserOS/older physical-device checks remain
+waived/unverified; no new publication, dependency, sprite or broad campaign scope.

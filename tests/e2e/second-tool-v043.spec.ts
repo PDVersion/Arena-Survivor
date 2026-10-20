@@ -49,6 +49,12 @@ async function setup(page: Page, themeKey: string) {
       "/src/game/systems/sprites/load-sprites.ts", "/src/game/state/settings-state.ts", "/src/game/config.ts"];
     const [{ default: Phaser }, { RunScene }, { themeRegistry }, upgrades, { loadThemeSprites }, settings, { createGameConfig }] = await Promise.all(paths.map((path) => import(path)));
     const theme = themeRegistry.find((entry: { key: string }) => entry.key === themeKey).theme;
+    const persistencePath = "/src/game/systems/persistence/profile-service.ts";
+    const statsPath = "/src/game/systems/statistics/run-statistics.ts";
+    const persistence = await import(persistencePath);
+    const stats = await import(statsPath);
+    persistence.initializeProfile(theme);
+    persistence.recordProfileFinishedRun(theme, { status: "complete", elapsedMs: 1000, level: 1, statistics: stats.createRunStatistics() });
     const parent = document.createElement("div");
     Object.assign(parent.style, { position: "fixed", inset: "0", zIndex: "9999" });
     parent.id = "c1-tool-root";
@@ -83,7 +89,7 @@ async function setup(page: Page, themeKey: string) {
     const offer = (upgradeId: string) => {
       let chosen = -1;
       for (let seed = 1; seed <= 1000; seed++) {
-        const choices = upgrades.selectUpgradeChoices(scene.runTheme.upgrades, 3, upgrades.createSeededRandom(seed),
+        const choices = upgrades.selectUpgradeChoices(scene.runUpgradePool, 3, upgrades.createSeededRandom(seed),
           { ...scene.runState, luck: scene.runState.player.stats.luck, skills: scene.runTheme.skills });
         if (choices.some((choice: { id: string }) => choice.id === upgradeId)) { chosen = seed; break; }
       }

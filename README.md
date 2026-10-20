@@ -21,7 +21,7 @@ evolution plus C3 shrines/curses; C4 elite modifiers is next.
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
 - [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): P5/P6 evidence/waiver and active C1–C7 implementation.
 - [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
-- [Next session — C6 persistence and unlocks](build/SESSION_19_PROMPT.md).
+- [Next session — C7 portable save](build/SESSION_20_PROMPT.md).
 - [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
 - [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
 - [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).

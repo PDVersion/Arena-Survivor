@@ -2,6 +2,8 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { ThemeCopy } from "../../../core/archetypes/contracts";
 
 export const copy = {
+  profile: { saved: "Progress saved in this browser.", memory: "Browser storage unavailable. Progress remains in memory; keep this tab open.", blocked: "Saved progress could not be read. It has been preserved; new progress stays in memory.", browserSave: "Browser save", completedRuns: "Completed runs", deaths: "Deaths", longestRun: "Longest run", unlocked: "Unlocked", locked: "Locked", finishedRuns: "finished runs", lifetimeKills: "lifetime kills", unlockedPrefix: "Unlocked" },
+
   eliteVariants: {
     "elite.split": { name: "Splitting Elite", description: "Splits into two copies once per lineage; copies retain their elite identity." },
     "elite.shield": { name: "Warded Elite", description: "Takes half damage above half health; the shield then breaks." },
@@ -108,11 +110,11 @@ export const copy = {
     duplicates: "Duplicates",
     duplicatesValue: "Every monster present",
     upgrades: "Relics",
-    session: "Session",
-    sessionTotal: "This session",
+    session: "Lifetime",
+    sessionTotal: "Lifetime total",
     bestInRun: "Best run",
     maxPerRun: "Per run",
-    runsPlayed: "Runs played",
+    runsPlayed: "Finished runs",
     best: "Best",
   },
   tiers: {

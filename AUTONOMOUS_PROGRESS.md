@@ -1386,3 +1386,59 @@ untouched. Local C5 implementation/tests/status/checklist/REC064/progress/master
 and Session19/C6 handoff in one reviewed commit; Session18 retired after result.
 Parent reviewed runtime/report/screenshots; no push/PR/merge/deploy/dispatch.
 Final review2026-10-20T01:02:36.244158+00:00, actual elapsed1540.2s, within90minmaximum.
+
+
+## Session19 — C6 durable profile /2026-10-20 Sydney
+
+Phase started2026-10-20 01:03:01UTC after verified C5 commit5da2ed3. Original
+owner-wide start00:28:23/deadline01:58:23/final20reserve01:38:23UTC; preparatory
+read-only audit ran in parallel while C4/C5 remained ordered. C6 sole-editor ownership
+claimed before runtime edits. Initial implementation/verification reached01:08UTC,
+then usage interruption prevented completion. Owner resumed05:41:29UTC with a new
+90minute deadline07:11:29/final20reserve06:51:29; no browser/process kept running
+through the interruption. Completed tool outputs recovered without repeating them.
+
+C6 schema2 persists all six settings, identity/unlocks, existing lifetime/best/
+upgrade totals, completion/death counts and longest run. Strict immutable bounded
+validation and deterministic schema1 migration preserve unknown compatible IDs.
+Initialize before Phaser; throwing storage getter/read/write/quota stays playable
+in memory with themed title/terminal warning. Corrupt current and good backup stay
+untouched. Ordinary valid writes preserve previous raw valid source. No active-run
+save; terminalShown commits once, computed live Field Guide overlay never persisted.
+Durable aggregates alone saturate1e15 so valid ceiling profiles can finish another
+run safely; actual run damage/XP remains unchanged and module totals rehydrate.
+
+Both themes unlock secondary after1finishedrun and bloodlust after25finishedkills.
+Offer pool snapshots entitlement at next run; normal owner/slot/tier/caps/weighting
+unchanged. Requirements/lifetime labels and named terminal rewards readable. C7
+codec/portable import/export/recovery UI remains next; no optional features/sprites.
+
+595units/65files/types/lint/build/diff pass.12new deterministic cases include exact
+reload/unknown IDs/schema1/future/unsafe/nonfinite/duplicate/settings/corrupt/denied/
+actual quota and durable ceiling. Boot-recovery extraction fixture initially needed
+initializeProfile dependency injection; original assertion retained.10unique affected
+serial browser cases cumulatively pass,1worker/0retries/30s bound. Initial7cases
+pass5/fail2eco fixture offer prerequisites: seedhelper searched full theme catalog
+rather than actual entitled pool; corrected2pass8.9s. Actualterminal/corrupt2pass5.1s;
+final5persistencecasespass8.0s with durable raw JSON; death/unlocks/warning layout
+1casepass1.2s after moving cause below new reward text. Both Knight acq/evolution
+passed initially; no broad campaign is inferred from these scoped tests.
+
+Exact595unit/finalsoftware and raw/source/compiled/image hashes in C6_REPORT/results.
+Actual short1000ms legacy complete ending/noAmbient/noContact/noHazards/noXp shows
+one completed contribution/secondary reward and no duplicate after150ms/reload.
+Both-theme servicefixtures seed25kills/123.25damage/level5/1234ms, mutedLowExperienced,
+then exactreload. Not survival/authored-duration/throughput/hardware acceptance.
+Browser151.0.7922.34,1280x720DPR1/FIT1600x900,test,rate0.5; Windows UA preset never
+physical Windows. New profile renderer string not separately captured; existing
+C1/C2 WebGLrequest and explicit Canvas deathlayout are scoped honestly. New complete,
+deniedstorage and death+2unlock+warning images visually inspected, no overlap.
+Production marker exclusion passes; known Phaser bundle advisory remains. Full/
+stress/native/long/production campaigns deferred, actualSafari/browserOS/olderphysical
+GPU checks temporarily waived/unverified. Historical P5/P6 evidence/kit source-bound.
+Owned resources cleaned,4173 no listener; review4213/unknowns untouched. Local-only,
+remote39189877476 covers2806720 only. Session20 C7 successor current; Session19
+retired with completed master slice after actual result recorded. Parent review
+before local phase commit; no publication/dispatch.
+Final parent-reviewed checks 2026-10-20T05:44:52.500054+00:00; resumed elapsed 203.5s, total wall elapsed 16911.5s includes usage interruption. Verification/recording ended well before resumed final20reserve.
+Staged diff review caught recording-script path-variable collision overwriting one unit file after checks. Restored exact HEAD plus intended schema2 assertion; verified two-line diff and reran all software checks595/65 pass. Corrected recorder uses distinct names. Final hashes refreshed 2026-10-20T05:45:40.181031+00:00, resumed elapsed 251.2s; runtime/browser evidence unchanged.

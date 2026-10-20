@@ -1,3 +1,4 @@
+import { unlocks } from "./unlocks";
 import type { UpgradeDefinition } from "../../../core/archetypes/contracts";
 import { defineTheme } from "../../define-theme";
 import { characters } from "./characters";
@@ -24,6 +25,7 @@ import { pace } from "./pace";
 export const knightMagicTheme = defineTheme({
   id: "knight_magic",
   schemaVersion: 1,
+  unlocks,
   copy,
   // Sprites are merged in here rather than authored in `tokens.ts`, so the
   // sprite roster and the palette stay in separate files.

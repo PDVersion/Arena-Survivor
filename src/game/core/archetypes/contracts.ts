@@ -111,6 +111,7 @@ export const worldKeys = [
 export type WorldKey = (typeof worldKeys)[number];
 
 export interface ThemeCopy {
+  readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
   readonly eliteVariants?: Readonly<Partial<Record<EliteId, ContentCopy>>>;
   readonly spawnOrigins: Readonly<{ live: string; total: string; natural: string; fragmentation: string; baggedWaste: string; environment: string; benchmark: string }>;
   readonly difficulty: Readonly<{
@@ -506,6 +507,7 @@ export interface ShrineDefinition {
 }
 
 export interface ThemeManifest {
+  readonly unlocks?: readonly { readonly kind: "weapon" | "upgrade"; readonly id: WeaponId | UpgradeId; readonly metric: "runsPlayed" | "totalKills"; readonly required: number }[];
   readonly id: string;
   readonly schemaVersion: 1;
   readonly copy: ThemeCopy;

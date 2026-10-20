@@ -12,6 +12,8 @@ export class RunEndOverlay {
   private restartCallback?: () => void;
   private restartBounds?: Phaser.Geom.Rectangle;
   private shownTitle?: string;
+  private newUnlocks: readonly string[] = [];
+  private saveWarning?: string;
 
   /** The heading currently on screen, so a test can read which ending it is. */
   get title(): string | undefined {
@@ -23,7 +25,9 @@ export class RunEndOverlay {
     this.theme = theme;
   }
 
-  show(state: RunState, onRestart: () => void): void {
+  show(state: RunState, onRestart: () => void, newUnlocks: readonly string[] = this.newUnlocks, saveWarning: string | undefined = this.saveWarning): void {
+    this.saveWarning = saveWarning;
+    this.newUnlocks = newUnlocks;
     const status = state.status;
     if (status !== "dead" && status !== "complete") return;
     this.hide();
@@ -57,7 +61,7 @@ export class RunEndOverlay {
       fontStyle: "bold",
       align: "center",
     }).setOrigin(0.5);
-    const detail = addUiText(this.scene, width / 2, top + 90, message, {
+    const detail = addUiText(this.scene, width / 2, top + 90, newUnlocks.length ? `${message}\n${this.theme.copy.profile.unlockedPrefix}: ${newUnlocks.map((id) => this.theme.copy.content[id as keyof typeof this.theme.copy.content]?.name ?? id).join(", ")}` : message, {
       color: palette.text,
       fontFamily: "Georgia, serif",
       fontSize: "20px",
@@ -65,7 +69,7 @@ export class RunEndOverlay {
       wordWrap: { width: Math.min(580, width - 80) },
     }).setOrigin(0.5);
     const causeText = summary.deathCause
-      ? addUiText(this.scene, width / 2, top + 116, summary.deathCause, {
+      ? addUiText(this.scene, width / 2, top + (newUnlocks.length ? 126 : 116), summary.deathCause, {
           color: palette.critical,
           fontFamily: "Georgia, serif",
           fontSize: "18px",
@@ -125,6 +129,9 @@ export class RunEndOverlay {
     this.restartBounds = new Phaser.Geom.Rectangle(width / 2 - 130, buttonY - 28, 260, 56);
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
     const parts = [panel, heading, detail, summaryTitle, metrics, damage, upgrades, button, action];
+    if (saveWarning) parts.push(addUiText(this.scene, width / 2, buttonY - 68, saveWarning, {
+      color: palette.text, fontFamily: "Georgia, serif", fontSize: "15px", align: "center", wordWrap: { width: Math.min(780, width - 96) },
+    }).setOrigin(0.5));
     if (causeText) parts.splice(3, 0, causeText);
     this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, parts))
       .setDepth(1100);

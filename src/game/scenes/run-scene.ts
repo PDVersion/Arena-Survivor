@@ -23,7 +23,7 @@ import { ProjectileActor } from "../entities/projectile-actor";
 import { GrabberActor } from "../entities/grabber-actor";
 import { ShrineActor } from "../entities/shrine-actor";
 import type { EnemySpawnSource } from "../entities/enemy-actor";
-import { createInitialProfile } from "../state/profile-state";
+import { ensureProfile, selectRunUpgradePool, recordProfileFinishedRun, describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import {
   advanceRunState,
   isRunActive,
@@ -124,7 +124,6 @@ import {
 } from "../systems/codex/describe-shrine";
 import {
   getSessionStatistics,
-  recordFinishedRun,
   type RunContribution,
 } from "../state/session-statistics";
 import {
@@ -354,6 +353,7 @@ interface ExplosionEventPayload {
 }
 
 export class RunScene extends Phaser.Scene {
+  private runUpgradePool: ThemeManifest["upgrades"] = [];
   private runTheme: ThemeManifest = activeTheme;
   private enemyCapacity = V02_SPAWN_LIMITS.maxAlive;
   private spawnStatistics = new SpawnStatistics();
@@ -542,15 +542,9 @@ export class RunScene extends Phaser.Scene {
     );
     if (!starter) throw new Error("The active theme has no starter character");
 
-    const profile = createInitialProfile({
-      activeThemeId: this.runTheme.id,
-      contentSchemaVersion: this.runTheme.schemaVersion,
-      starterCharacterId: starter.id,
-    });
-    const selectedCharacter = this.runTheme.characters.find(
-      (character) => character.id === profile.selectedCharacterId,
-    );
-    if (!selectedCharacter) throw new Error("The selected character is unavailable");
+    const profile = ensureProfile(this.runTheme);
+    const selectedCharacter = this.runTheme.characters.find((character) => character.id === profile.selectedCharacterId) ?? starter;
+    this.runUpgradePool = selectRunUpgradePool(this.runTheme);
     this.enemyDefinitions = this.runTheme.enemies;
     this.enemyDefinition = this.enemyDefinitions.find(
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
@@ -2660,7 +2654,7 @@ export class RunScene extends Phaser.Scene {
     this.player?.stop();
     this.physics.world.pause();
     const luck = this.runState.player.stats.luck;
-    const drawn = selectUpgradeChoices(this.runTheme.upgrades, 3, this.upgradeRandom, {
+    const drawn = selectUpgradeChoices(this.runUpgradePool, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
       world: this.runState.world,
       weaponSlots: this.runState.weaponSlots,
@@ -2735,7 +2729,7 @@ export class RunScene extends Phaser.Scene {
       upgrades: summary?.upgrades ?? [],
       codex: selectShrineCodex(this.runTheme),
       codexUpgrades: selectUpgradeCodex(this.runTheme, session),
-      codexSession: selectSessionCodex(this.runTheme, session),
+      codexSession: [...selectSessionCodex(this.runTheme, session), ...describeProfile(this.runTheme)],
       settings: getSessionSettings(),
     };
   }
@@ -2956,11 +2950,12 @@ export class RunScene extends Phaser.Scene {
     this.activeExplosionCues = 0;
     this.audioFeedback.destroy();
     this.physics.world.pause();
-    recordFinishedRun({
+    const newUnlocks = recordProfileFinishedRun(this.runTheme, {
+      status: this.runState.status, elapsedMs: this.runState.elapsedMs,
       level: this.runState.progression.level,
       statistics: this.runState.statistics,
     });
-    this.runEndOverlay?.show(this.runState, () => this.restartRun());
+    this.runEndOverlay?.show(this.runState, () => this.restartRun(), newUnlocks, getProfileStatus().mode === "saved" ? undefined : getProfileStatus().message);
   }
 
   private restartRun(): void {
