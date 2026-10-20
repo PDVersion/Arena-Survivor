@@ -2,6 +2,11 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { ThemeCopy } from "../../../core/archetypes/contracts";
 
 export const copy = {
+  eliteVariants: {
+    "elite.split": { name: "Dispersing Waste", description: "Splits into two copies once per lineage; copies retain their elite identity." },
+    "elite.shield": { name: "Wrapped Waste", description: "Takes half damage above half health; the shield then breaks." },
+    "elite.acceleration": { name: "Rolling Waste", description: "Accelerates to one and a half speed over three simulation seconds." },
+  },
   spawnOrigins: { live: "Live origins", total: "Total spawned", natural: "Natural", fragmentation: "Fragments", baggedWaste: "Released", environment: "Site effects", benchmark: "Test load" },
   difficulty: {
     label: "Difficulty",

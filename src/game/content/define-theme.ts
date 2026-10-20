@@ -638,6 +638,12 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     })) {
       if (!Number.isFinite(value) || value <= 1) issues.push(`${elite.id} ${key} must be greater than one`);
     }
+    if (elite.split && (!Number.isInteger(elite.split.childCount) || elite.split.childCount < 1 || elite.split.childCount > 2 ||
+      !Number.isInteger(elite.split.maxDepth) || elite.split.maxDepth < 1 || elite.split.maxDepth > 1 || !Number.isFinite(elite.split.rewardMultiplier) || elite.split.rewardMultiplier <= 0 || elite.split.rewardMultiplier > 1)) issues.push(`${elite.id} split must have bounded children, one generation and a positive reward share`);
+    if (elite.shield && (!Number.isFinite(elite.shield.damageMultiplier) || elite.shield.damageMultiplier <= 0 || elite.shield.damageMultiplier >= 1 ||
+      !Number.isFinite(elite.shield.untilHealthFraction) || elite.shield.untilHealthFraction <= 0 || elite.shield.untilHealthFraction >= 1)) issues.push(`${elite.id} shield must have finite non-immune reduction and a break threshold`);
+    if (elite.acceleration && (!Number.isFinite(elite.acceleration.durationMs) || elite.acceleration.durationMs <= 0 ||
+      !Number.isFinite(elite.acceleration.maxSpeedMultiplier) || elite.acceleration.maxSpeedMultiplier <= 1)) issues.push(`${elite.id} acceleration must have a finite positive duration and speed gain`);
     if (!(elite.presentationToken in theme.tokens.palette)) issues.push(`${elite.id} references missing presentation token: ${elite.presentationToken}`);
   }
   if (!eliteIdsFound.has(eliteIds.baseline)) {

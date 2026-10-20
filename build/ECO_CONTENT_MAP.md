@@ -120,3 +120,10 @@ wording review, never a second executable ruleset.
 All multipliers and effects come from shrine/curse definitions. These are game
 risk/reward choices, not educational fact cards. Restart clears the contracts;
 accepted contract names remain visible in the run's equipment/upgrade tally.
+
+## V0.4.3 elite variants
+
+Dispersing Waste splits into two same-role copies once per lineage; Wrapped Waste
+halves damage above half health; Rolling Waste accelerates over three simulation
+seconds. These are game modifiers on material roles, not new material identities
+or environmental effectiveness claims. Markers2/◇/» remain visible over actor art.

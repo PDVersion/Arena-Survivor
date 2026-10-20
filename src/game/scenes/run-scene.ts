@@ -5,7 +5,7 @@ import { isDifficultyId } from "../core/archetypes/difficulty";
 import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
 import { addWorldText, UI_SCALE } from "../ui/ui-text";
 import { archetypeIds } from "../core/archetypes/ids";
-import { eliteIds, type FeedbackCategory } from "../core/archetypes/categories";
+import { type EliteId, type FeedbackCategory } from "../core/archetypes/categories";
 import type {
   EnemyDefinition,
   PickupDefinition,
@@ -150,7 +150,7 @@ import {
   requestHitStop,
   type HitStopState,
 } from "../systems/feedback/impact";
-import { shouldSpawnElite } from "../systems/elites/elites";
+import { eliteIncomingDamage, eliteSplitCount, selectElite } from "../systems/elites/elites";
 import { configureRunCamera } from "../systems/view/configure-run-camera";
 import {
   expectedRealDurationMs,
@@ -750,7 +750,7 @@ export class RunScene extends Phaser.Scene {
         movementInput,
         this.runState.player.stats.moveSpeed * this.hazardSlow,
       );
-      this.updateEnemies();
+      this.updateEnemies(delta);
       this.rebuildEnemyIndex();
       this.resolveCrowd();
       this.updateHazards();
@@ -1086,23 +1086,24 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" = "offspring",
+    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" | "elite_split" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
-    elite?: boolean,
+    elite?: boolean | EliteId,
     movement: WaveMovement = "chase",
+    eliteSplitDepth = 0,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
       eventId: `spawn-${this.eventSequence}`,
       kind: "spawn.requested",
       provenance: {
-        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
+        sourceCategory: reason === "offspring" || reason === "elite_split" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
         sourceId: spawnSource,
         parentEventId,
-        effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
+        effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : reason === "elite_split" ? "elite.split" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement, eliteSplitDepth },
     });
   }
 
@@ -1116,13 +1117,14 @@ export class RunScene extends Phaser.Scene {
     });
     if (capacity <= 0 || remaining <= 0) return;
     this.eventQueue.processMatching(remaining, (event) => event.kind === "spawn.requested", (event) => {
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean; movement?: WaveMovement };
+      if (capacity <= 0) return false;
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean | EliteId; eliteSplitDepth?: number; movement?: WaveMovement };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
       if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement,
         payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
-          payload.reason === "duplication" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural")) {
+          payload.reason === "duplication" || payload.reason === "elite_split" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural", payload.eliteSplitDepth)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1307,13 +1309,13 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
-  private updateEnemies(): void {
+  private updateEnemies(deltaMs: number): void {
     if (!this.player) return;
     const target = new Phaser.Math.Vector2(this.player.x, this.player.y);
     const obstacles = this.activeObstacles();
     for (const enemy of this.enemies) {
       if (!enemy.active || enemy.defeated) continue;
-      enemy.advance(target);
+      enemy.advance(target, deltaMs);
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
       if (obstacles.length > 0 && enemy.movement === "chase") {
@@ -1575,7 +1577,7 @@ export class RunScene extends Phaser.Scene {
     if (definition.effectKind === "duplicate_living") {
       const rewardMultiplier = definition.rewardMultiplier * this.worldModifiers().shrineRewardMultiplier;
       for (const enemy of livingSnapshot) {
-        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, Boolean(enemy.elite));
+        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, enemy.elite?.id ?? false, "chase", enemy.eliteSplitDepth);
         this.duplicatedEnemiesQueued += 1;
       }
     }
@@ -1740,10 +1742,11 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
     requestedPoint?: Readonly<{ x: number; y: number }>,
-    eliteOverride?: boolean,
+    eliteOverride?: boolean | EliteId,
     angleRadians?: number,
     movement: WaveMovement = "chase",
     origin: SpawnOrigin = spawnSource === "ambient" ? "natural" : "environment",
+    eliteSplitDepth = 0,
   ): boolean {
     if (
       !this.player ||
@@ -1775,17 +1778,17 @@ export class RunScene extends Phaser.Scene {
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = this.worldModifiers();
-    const eliteDefinition = this.runTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
       this.runTheme.tuning.director,
       runProgress(this.runState.elapsedMs, this.runState.durationMs),
       worldModifiers.eliteChance,
     );
-    const elite = eliteDefinition && shouldSpawnElite(
+    const elite = selectElite(
+      this.runTheme.elites,
       testSkillEnabled("forceElite") ? 1 : directorEliteChance * this.luckScale(),
       this.eliteRandom,
       eliteOverride,
-    ) ? eliteDefinition : undefined;
+    );
     // Tougher spawns are worth more. The share applies to the world health
     // multiplier only: elite reward is already an explicit multiplier, so
     // folding elite health in here would pay for the same thing twice.
@@ -1814,6 +1817,8 @@ export class RunScene extends Phaser.Scene {
         eliteMassMultiplier: this.runTheme.tuning.bodies.eliteMassMultiplier,
       },
     );
+    enemy.eliteSplitDepth = eliteSplitDepth;
+    enemy.sourceRewardMultiplier = rewardMultiplier;
     if (movement === "drift") this.driftSpawned += 1;
     const spawnStatistics = this.spawnStatistics;
     spawnStatistics.add(enemy.targetId, origin);
@@ -1822,7 +1827,7 @@ export class RunScene extends Phaser.Scene {
     if (elite) {
       this.eliteSpawned += 1;
       this.eliteSpawnedByRole[definition.id] = (this.eliteSpawnedByRole[definition.id] ?? 0) + 1;
-      this.emitFeedback("elite", enemy.x, enemy.y, "ELITE");
+      this.emitFeedback("elite", enemy.x, enemy.y, elite.name ?? "ELITE");
     }
     if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
@@ -2159,11 +2164,11 @@ export class RunScene extends Phaser.Scene {
   ): void {
     if (!this.runState || enemy.defeated) return;
     // Enemy armour is multiplicative and the weapon may ignore a share of it.
-    const reduced = reduceByArmour(
+    const reduced = eliteIncomingDamage(enemy.elite, enemy.health, enemy.maxHealth, reduceByArmour(
       damage,
       enemy.definition.armour,
       direct?.weapon.armourPierce ?? 0,
-    );
+    ));
     const appliedDamage = Math.min(enemy.health, Math.max(0, reduced));
     const result = enemy.takeDamage(reduced);
     if (!result.applied) return;
@@ -2189,8 +2194,17 @@ export class RunScene extends Phaser.Scene {
         sourceId: damageSource === "direct" || damageSource === "splash" ? direct?.weapon.id : archetypeIds.skill.onKillExplosion,
         parentEventId,
       },
-      payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite) },
+      payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite), eliteId: enemy.elite?.id },
     });
+    const splitCount = eliteSplitCount(enemy.elite, enemy.eliteSplitDepth);
+    if (splitCount > 0 && this.eventQueue.claimEffect(enemy.targetId, "elite.split")) {
+      for (let index = 0; index < splitCount; index += 1) {
+        this.enqueueSpawnRequest(enemy.definition.id, enemy.spawnSource,
+          enemy.sourceRewardMultiplier * (enemy.elite?.split?.rewardMultiplier ?? 1),
+          enemy.targetId, deathEventId, "elite_split", { x: enemy.x, y: enemy.y }, enemy.elite?.id,
+          enemy.movement, enemy.eliteSplitDepth + 1);
+      }
+    }
     const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
       deathSpawns.length > 0 &&
@@ -2206,7 +2220,9 @@ export class RunScene extends Phaser.Scene {
             spawn.parentEventId,
             "offspring",
             { x: enemy.x, y: enemy.y },
-            Boolean(enemy.elite),
+            enemy.elite?.id ?? false,
+            "chase",
+            enemy.eliteSplitDepth,
           );
           this.offspringQueued += 1;
         }
@@ -2314,7 +2330,9 @@ export class RunScene extends Phaser.Scene {
           deathEventId,
           "fracture",
           { x: enemy.x + (index === 0 ? -8 : 8), y: enemy.y },
-          Boolean(enemy.elite),
+          enemy.elite?.id ?? false,
+          "chase",
+          enemy.eliteSplitDepth,
         );
         this.fractureQueued += 1;
       }

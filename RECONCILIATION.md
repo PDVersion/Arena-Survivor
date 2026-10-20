@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C3 verified and C4 next.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C4 verified and C5 next.**
 
 ## How to maintain this file
 
@@ -898,6 +898,22 @@ Unit tests lock deterministic chance boundaries and inheritance precedence. Brow
 
 Revisit when:
 Elite variants, role-specific elite tuning, descendant mutation, or elite-exclusive drops enter scope.
+
+C4 continuation2026-10-20: baseline becomes a four-member registry. The existing
+elite chance is unchanged; a second deterministic draw chooses the family. Preserve
+exact EliteId (legacybooleantrue means baseline), split depth, and original source
+reward through causal requests. Split adds two same-role children at depth1 with
+half source reward each; depth1 cannot split. Role offspring/fracture remain their
+existing finite role graph, retaining variant/depth but existing chase defaults.
+Shield resolution precedes capped ledger; floating numbers remain attack intent.
+Acceleration age uses only playing simulation delta and leaves stationary roles0.
+New marker text/listeners are presentation-owned and destroyed with actor.
+
+A capacity1/two-request browser regression reproduced silent loss of the second
+request in the existing spawn lane. Returnfalse once its remaining capacity is
+exhausted to retain it using the queue's existing contract. Actual-method unit and
+both-theme scene regressions prove retention, exact source/depth/reward and24event
+budget. No enlarged cap or second physics teardown. See build/content/C4_REPORT.md.
 
 ### REC-038 — Combat feedback is bounded and never authoritative
 

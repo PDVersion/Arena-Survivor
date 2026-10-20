@@ -610,3 +610,7 @@ numeric effects are theme-owned game fiction, not environmental facts or
 material-effectiveness claims. No Knowledge Shrine/question or new enemy/material
 identity is introduced. The detail card prioritizes the actual reward and primary
 cost so the voluntary bargain stays readable under the three-line limit.
+
+C4 implementation boundary2026-10-20: elite family names describe authored game
+modifiers over existing material roles. Split/shield/acceleration adds no factual
+environmental claim, material/tool effectiveness table or new educational surface.

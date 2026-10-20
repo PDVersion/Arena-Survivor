@@ -5,6 +5,8 @@ import type { ContentId, ShrineId } from "../core/archetypes/ids";
 import type { BodyRoleTuning, WaveMovement } from "../core/archetypes/tuning";
 import { createSpriteView, type SpriteView } from "../systems/sprites/sprite-view";
 
+import { eliteSpeedMultiplier } from "../systems/elites/elites";
+
 export type EnemySpawnSource = "ambient" | ShrineId | ContentId;
 
 export class EnemyActor extends Phaser.GameObjects.Arc {
@@ -15,7 +17,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   health: number;
   /** Max health at spawn, after world and elite multipliers. */
   readonly maxHealth: number;
-  readonly moveSpeed: number;
+  private readonly baseMoveSpeed: number;
+  get moveSpeed(): number { return this.baseMoveSpeed * eliteSpeedMultiplier(this.elite, this.ageMs); }
   readonly contactDamage: number;
   readonly elite?: EliteDefinition;
   readonly movement: WaveMovement;
@@ -26,8 +29,12 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   defeated = false;
   /** Present only when this pack has a sprite for the role. */
   readonly view?: SpriteView;
+  readonly eliteMarker?: Phaser.GameObjects.Text;
   private readonly baseColour: number;
   private launched = false;
+  private ageMs = 0;
+  eliteSplitDepth = 0;
+  sourceRewardMultiplier = 1;
 
   constructor(
     scene: Phaser.Scene,
@@ -62,9 +69,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.definition = definition;
     this.health = definition.maxHealth * modifiers.healthMultiplier;
     this.maxHealth = this.health;
-    // Snapshotted at spawn: an enemy never accelerates mid-life, which would be
-    // both confusing to read and a statistics hazard.
-    this.moveSpeed = definition.moveSpeed * (modifiers.moveSpeedMultiplier ?? 1);
+    // World speed snapshots at spawn; only an authored elite acceleration ramps later.
+    this.baseMoveSpeed = definition.moveSpeed * (modifiers.moveSpeedMultiplier ?? 1);
     this.contactDamage = definition.contactDamage * modifiers.damageMultiplier;
     this.elite = elite;
     this.spawnSource = spawnSource;
@@ -88,6 +94,19 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       this.setStrokeStyle(5, eliteColour, 1).setDepth(25);
     }
     if (!elite) this.setDepth(20);
+    if (elite?.marker) {
+      this.eliteMarker = scene.add.text(x, y - this.displayDiameter / 2, elite.marker,
+        { fontSize: "12px", color: tokens.palette[elite.presentationToken], backgroundColor: tokens.palette.background, padding: { x: 2, y: 0 } }).setOrigin(0.5, 1).setDepth(45);
+      const follow = () => {
+        this.eliteMarker?.setPosition(this.x, this.y - this.displayDiameter / 2);
+        if (elite.shield) this.eliteMarker?.setVisible(this.health > this.maxHealth * elite.shield.untilHealthFraction);
+      };
+      scene.events.on(Phaser.Scenes.Events.POST_UPDATE, follow);
+      this.once(Phaser.GameObjects.Events.DESTROY, () => {
+        scene.events.off(Phaser.Scenes.Events.POST_UPDATE, follow);
+        this.eliteMarker?.destroy();
+      });
+    }
     // Display size is authored beside the radius; neither is inferred from art.
     this.view = createSpriteView(this, tokens, definition.id, {
       diameter: this.displayDiameter,
@@ -111,13 +130,17 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
    * player's position when it first moves and then holds that heading, so it
    * sweeps past as an obstacle rather than pursuing.
    */
-  advance(target: Phaser.Math.Vector2): void {
+  advance(target: Phaser.Math.Vector2, deltaMs = 0): void {
+    this.ageMs += Math.max(0, deltaMs);
     if (this.moveSpeed <= 0) {
       this.arcadeBody.setVelocity(0, 0);
       return;
     }
     if (this.movement === "drift") {
-      if (this.launched) return;
+      if (this.launched) {
+        this.arcadeBody.velocity.normalize().scale(this.moveSpeed);
+        return;
+      }
       this.launched = true;
     }
     this.chase(target);

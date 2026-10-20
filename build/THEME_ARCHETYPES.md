@@ -279,3 +279,10 @@ Curses do not add actors, timers, queues, inherited source rewards or profiles.
 The new shrine uses the existing world-multiplier actor/arrival/guide path.
 Both production themes remain complete; a small alternate fixture may omit this
 optional new shrine and provide an empty curse registry.
+
+### V0.4.3 C4 elite family
+
+Both packs author four elite definitions: baseline plus split/shield/acceleration.
+Eco Dispersing/Wrapped/Rolling Waste correspond to Splitting/Warded/Charging Elite.
+Copy catalog owns names/descriptions, elites.ts owns finite mechanics and markers.
+Identity is inherited, not inferred from sprite/tint. See content/C4_REPORT.md.

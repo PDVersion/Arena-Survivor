@@ -3101,4 +3101,39 @@ build/image hashes. External browser/device checks remain temporarily waived/
 unverified under owner revision; old P5/P6 results/kit remain source-bound.
 No full/native/long/startup campaign, publication or dependency change. Owned
 resources cleaned and4213 untouched. Session16 retired after recording;
-Session17 continues C4 elite modifiers. C4–C7 remain unbuilt.
+Session17 continues C4 elite modifiers; its completed record follows.
+
+
+<a id="v0-4-3-c4"></a>
+### V0.4.3 C4 — bounded elite family (2026-10-20)
+
+Baseline elite chance remains; successful rolls choose baseline/split/shield/
+acceleration. Both themes own tuning and copy; exact variant IDs inherit without
+reroll across duplication, role offspring and Fragmentation. One split generation
+(two same-role children) retains lineage depth and half source reward per child;
+elite/world multipliers apply once. Shield halves damage above half health before
+actual capped ledger; acceleration ramps×1→1.5 over3000 simulation-ms and freezes
+outside playing. Theme markers2/◇/» follow sprite/primitive actors and clean up
+on destruction; Phaser teardown remains engine-owned. Existing chase defaults for
+non-split descendants remain, split movement inherits.
+
+Reproduced capacity defect drops the second queued split when one slot is free.
+Returnfalse from the existing causal lane at capacity, retaining work; deterministic
+actual-method tests lock pending identity/reward/depth and24-event budget. Browser
+probe records failedpending0 before fix and correctedpending1→0 after space frees.
+No speculative lifecycle change.
+
+`src/game/core/archetypes/{categories,contracts}.ts`, `src/game/content/define-theme.ts`, both themes’ `elites.ts`/`copy.ts`, `src/game/systems/elites/elites.ts`, `src/game/entities/enemy-actor.ts`, narrow spawn/death/damage/movement/telemetry wiring in `src/game/scenes/run-scene.ts`, `tests/unit/elites/**`, affected content fixtures/tests, `tests/e2e/elite-family-v043.spec.ts`, and C4 reports plus governing plan/status/master/progress/reconciliation/theme/content-map/handoff/README records. No later phase scope.
+
+561units/63files,typecheck/lint/build/diff pass;14new deterministic cases. Six unique
+affected serial browser cases verify rules/wiring/existing interactions, zero
+retries. Final expanded both-theme probe includes100parent→200child burst, depth1,
+300kills, cap≤300, empty queues. Shield ledger1then2, raw taggedXP7.5 exactly,
+zero-reward fracture children, duplication/offspring IDs and paused acceleration.
+Screenshots reviewed under testInfo.outputPath; source/build/image hashes in
+[C4 results](content/C4_RESULTS.json), limits and attempts in [report](content/C4_REPORT.md).
+60baseline balance scenarios complete; simulator does not model elite families.
+Aided/test/software-renderer checks do not imply sustained throughput/survival.
+Full/native/long/startup campaigns deferred, external checks temporarily waived/
+unverified. Local only; remoteCI39189877476 covers2806720, never this source.
+Session17 retired after recording; Session18 continues C5, C5–C7 remain unbuilt.

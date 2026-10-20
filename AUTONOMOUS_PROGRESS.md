@@ -1304,3 +1304,38 @@ implementation/tests/report/status/checklist/reconciliation/progress/master in o
 reviewed commit. Retired Session16 after recording; Session17/C4 successor written.
 No push/newPR/merge/deploy/dispatch or later-head CI claim. C4–C7 unbuilt.
 Final review timestamp2026-10-20T00:23:38.527581+00:00; actual elapsed611.5seconds, within90-minute maximum, finished early.
+
+
+## Session17 — C4 elite family /2026-10-20 Sydney
+
+Start00:28:23UTC; deadline01:58:23UTC; final20-minute reserve01:38:23UTC.
+Existing05f8860/codex/v0.4.3 clean. Authorities and C4/product/theme/content/save boundaries read in order. Exact C4 runtime/test ownership claimed before edits. Local only; external Safari/browser-OS/older-device waiver remains waived/unverified.
+
+Session17 verification/recording begins00:33UTC, ahead of01:38:23reserve.
+C4 complete: both-theme split/shield/acceleration and exact variant/depth
+inheritance, bounded source rewards, simulation-only acceleration and readable
+markers. Reproduced silent dropped pending spawn at capacity1; returnfalse retains
+it in existing lane. Actual-method deterministic retention/24eventbudget tests,
+both-theme scene cap regression and100parent→200child burst prove finite work.
+Final561units/63files,types/lint/build/diff. Six unique affected serial browser
+cases cumulatively verified; initial2pass1.962s, capacity1fail1.332s, combined6pass
+24.193s, expanded2pass and final theme-marker2pass3.475s. All zero retries.
+Actual shield losses/ledger1then2; parent3.75+children3.75taggedXPexact, duplicate
+lethal adds0. Duplication/offspring/fracture retain all variants/depth1; fragments0XP.
+Speed104→130,paused130→156. Burst300kills/peak200/backlog0; scripted pausedphysics
+checks are not throughput/survival. Initial sandbox server failed beforebrowser;
+two unit import fixture paths corrected, no additional game defect.
+ActualChromium151.0.7922.34/SwiftShaderWebGL/testNormalDefault/rate0.5,FIT1600x900
+at1280x720/DPR1,Darwin25.5.0arm64/M5Pro48GiBretained; WindowsUA is preset only.
+NoAmbient/noContact/noHazards/noAudio,scripted damage/spawns/status/age/RNG; limits
+explicit in C4_REPORT. Screenshots under testInfo.outputPath reviewed; final
+source/build/image hashes retained.60baseline balance scenarios pass; simulator
+does not model elite families. Known Phaser chunk warning remains.
+Full/native/long/startup campaigns deferred;compiledfixturemarker exclusion
+inspected. Owner external waiver remains waived/unverified; historical P5/P6
+measurements/device pack source-bound. Owned resources cleaned,4173no listener,
+4213/unknowns untouched. Local-only phase commit includes implementation/tests/
+report/status/checklist/master/reconciliation/progress;Session17retired after
+recording,Session18/C5successor current. No push/PR/merge/deploy/dispatch.
+Final review timestamp2026-10-20T00:35:28.339111+00:00;actual elapsed425.3seconds, within90minute
+maximum, finished early. C5–C7 remain unbuilt.

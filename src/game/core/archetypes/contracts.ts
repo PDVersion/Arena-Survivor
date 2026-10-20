@@ -111,6 +111,7 @@ export const worldKeys = [
 export type WorldKey = (typeof worldKeys)[number];
 
 export interface ThemeCopy {
+  readonly eliteVariants?: Readonly<Partial<Record<EliteId, ContentCopy>>>;
   readonly spawnOrigins: Readonly<{ live: string; total: string; natural: string; fragmentation: string; baggedWaste: string; environment: string; benchmark: string }>;
   readonly difficulty: Readonly<{
     label: string;
@@ -329,6 +330,12 @@ export type SkillEffectDefinition =
     }>;
 
 export interface EliteDefinition {
+  readonly marker?: string;
+  readonly name?: string;
+  readonly description?: string;
+  readonly split?: Readonly<{ childCount: number; maxDepth: number; rewardMultiplier: number }>;
+  readonly shield?: Readonly<{ damageMultiplier: number; untilHealthFraction: number }>;
+  readonly acceleration?: Readonly<{ durationMs: number; maxSpeedMultiplier: number }>;
   readonly id: EliteId;
   readonly healthMultiplier: number;
   readonly damageMultiplier: number;
