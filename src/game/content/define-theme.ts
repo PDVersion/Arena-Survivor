@@ -93,6 +93,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   const issues: string[] = [];
 
   if (!theme.id.trim()) issues.push("theme id is required");
+  for (const key of ["manageSave", "title", "description", "exportSave", "copyCode", "codeLabel", "fileLabel", "previewImport", "confirmImport", "cancel", "close", "restoreBackup", "resetProgress", "confirmRestore", "confirmReset", "previewTitle", "importAction", "restoreAction", "resetAction", "runs", "kills", "bestLevel", "weapons", "upgrades", "theme", "difficulty", "saved", "exported", "copied", "manualCopy", "cancelled", "error", "confirmationHint", "fileTooLarge", "warnTheme", "warnContentVersion", "warnUnavailable", "warnCharacterFallback"] as const) {
+    if (!theme.copy.saveManager?.[key]?.trim()) issues.push(`saveManager.${key} copy is required`);
+  }
   if (!theme.copy.gameTitle.trim()) issues.push("game title is required");
   if (!theme.copy.arenaName.trim()) issues.push("arena name is required");
   if (!theme.copy.bootStatus.trim()) issues.push("boot status copy is required");

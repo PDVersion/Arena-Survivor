@@ -761,3 +761,13 @@ again. Current C1–C7, F1–F20, SAVE_DATA and the active plans govern what rem
 10. **Per-enemy invulnerability windows**, revisited alongside the above.
 
 ---
+
+
+## 2026-10-20 selected C1–C7 checkpoint
+
+Planned C1–C7 local gates are verified; C7 delivers the bounded F7 portable-save
+flow following C6 persistence/unlocks. Completed records are in MASTER_BUILD_PLAN
+and individual content reports. This does not select R01–R06 or other optional
+proposals, start V0.4.4, or turn temporarily waived external browser/device evidence
+into a pass. Session21 retains owner delivery/acceptance decisions; no remote
+publication or additional broad campaign is authorized.

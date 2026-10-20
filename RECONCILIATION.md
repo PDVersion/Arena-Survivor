@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C6 verified and C7 next.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C7 local gates verified; delivery remains local.**
 
 ## How to maintain this file
 
@@ -346,6 +346,27 @@ Run/profile unit tests require JSON round trips, clean reset, terminal-state imm
 
 Revisit when:
 Phase 3 adds death/health mutation, Phase 5 adds restart and statistics, or suspended runs/persistence enter scope.
+
+C7 continuation /2026-10-20:
+The portable codec uses the same schema2 validation/migration as local storage,
+canonical sorted-object UTF-8 JSON, unpadded Base64URL and SHA-256 over its encoded
+payload line. Strict350KiB/256KiB bounds and semantic validation precede any mutation.
+Preview is an immutable opaque token; cancellation has no writes. Explicit confirm
+backs up valid progress before one current-key replacement, then publishes memory.
+localStorage has no multi-key transaction; a failed current write may refresh the
+valid backup, never current progress. Corrupt source is quarantined separately and
+never replaces a known-good backup. Reset/restore also need explicit confirmation.
+
+Review reproduced loss of another tab's newer save written before preview: cached
+memory would become backup while newer storage was overwritten. Preparation now
+rejects uncached storage bytes; confirmation detects post-preview changes. Ordinary
+settings/terminal writes also block on uncached bytes, retain local memory and warn
+to reload. These checks are not atomic cross-tab CAS. Regression tests cover both
+stale timing windows, quota/backup/current/quarantine failures and post-write-only
+hydration. Unknown IDs retain saved identity with warnings/runtime fallback; schema1
+migration is deterministic.655units/67files and five bounded serial browser cases
+verify the slice; see build/content/C7_REPORT.md. No active-run persistence or new
+hardware evidence follows.
 
 ### REC-013 — Manifest validation must defend against malformed runtime data
 

@@ -54,7 +54,8 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | C4 elite family | **Verified local phase,2026-10-20** | Both-theme split/shield/acceleration with inherited identity and finite causal work;561units/63files,six unique affected browser cases; [report](content/C4_REPORT.md) |
 | C5 bosses | **Verified local phase,2026-10-20** | Unique capped mini/final, live boss_fight and post-kill endless/clearing,583units/64files, six unique affected serial browser cases and60 coarse TTK scenarios; [report](content/C5_REPORT.md) |
 | C6 local profile | **Verified local phase,2026-10-20** | Schema2 local persistence, terminal lifetime stats, two theme-owned unlocks,595units/65files,10 unique affected serial browser cases; [report](content/C6_REPORT.md) |
-| C1–C7 / optional content | **C1–C6 verified; C7 pending** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
+| C7 portable saves | **Verified local phase,2026-10-20** | Canonical codec, preview/backup/recovery/reset,655units/67files and five affected serial browser cases; [report](content/C7_REPORT.md) |
+| C1–C7 / optional content | **C1–C7 local gates verified** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
 
 ## Latest remote evidence
 

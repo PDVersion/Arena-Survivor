@@ -3234,3 +3234,43 @@ combat/XP/rate or physics teardown. Broad/stress/native/long/hardware campaigns 
 missing actualSafari/browserOS/older physical-device checks remain temporarily waived and
 unverified. Historical P5/P6 evidence/device pack stays source-bound. Local-only, remote
 39189877476 covers2806720 only. Session19 retired after durable record; Session20 is C7.
+
+
+<a id="v0-4-3-c7"></a>
+## V0.4.3 C7 — portable saves and explicit recovery /2026-10-20
+
+Session20 resumed ownership (2026-10-20, claimed before edits; C6 verified at
+0776c95): root owns `src/game/systems/persistence/profile-service.ts`,
+`tests/unit/persistence/profile-replacement.test.ts`, `README.md`,
+`AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, `build/{BUILD_STATUS,MASTER_BUILD_PLAN,
+AUTONOMOUS_DEVELOPMENT_PLAN,PLAN,SAVE_DATA,THEME_ARCHETYPES}.md`,
+`build/content/C7_{REPORT,RESULTS}.*`, the C6 report successor-link correction and current/successor handoffs.
+Codec agent owns `src/game/systems/persistence/save-codec.ts` and
+`tests/unit/persistence/save-codec.test.ts`. UI agent owns
+`src/game/ui/{save-manager-ui,pause-menu-ui}.ts`, `src/game/scenes/menu-scene.ts`,
+`src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both
+themes' `copy.ts`, `tests/fixtures/alternate-theme.ts`, `src/style.css` and
+`tests/e2e/save-portability-v043.spec.ts`. Parallel implementation follows the
+verified C6 gate; one reviewed C7 commit follows combined verification.
+
+Canonical three-line schema2 export, native SHA-256/Base64URL, strict shared
+bounds/validation/schema1 migration and unknown stable-ID preservation. Title
+Settings alone opens native save management; file/paste share preview and explicit
+confirmation, backup/restore/reset. Native focus/input ownership, selectable clipboard
+fallback, text-only rendering and download/dialog cleanup are verified. Candidate
+snapshots are immutable; backup/quarantine precede one current-key write and only
+then hydration/publication. Pre/post-preview and ordinary-save cross-tab guards
+preserve newer external bytes; compare-before-write is not cross-tab CAS.
+
+655units/67files (45codec+15transaction new cases), types/lint/build/diff and static
+production marker exclusion pass. Five unique affected serial Chromium cases pass
+once/4.4s, one worker/zero retries: title export/download/clipboard/input, both-theme
+file/paste/cancel/import/reload, invalid/oversize preservation and confirmed restore/
+reset. See [C7 report](content/C7_REPORT.md)/[results](content/C7_RESULTS.json) for
+source/compiled/raw/image hashes, attempts, exact aid/environment limits and bounds.
+No pacing/dependency change; balance/audit not repeated. Full/stress/native/long/
+production campaigns deferred; actual Safari/browserOS/older physical GPU checks
+remain temporarily waived/unverified. Historical P5/P6 reports/kit are source-bound.
+No sprites/active-run save/second physics teardown or remote publication. C1–C7 local
+implementation complete; Session20 retires after this durable record and Session21
+retains local delivery/remaining acceptance decisions.

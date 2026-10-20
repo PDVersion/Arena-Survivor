@@ -61,3 +61,33 @@ body,
   cursor: pointer;
 }
 .boot-failure button:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+
+.save-manager {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 1.4rem;
+  border: 2px solid var(--save-accent);
+  border-radius: 0.5rem;
+  color: var(--save-text);
+  background: var(--save-background);
+  font: 1rem/1.5 Georgia, "Times New Roman", serif;
+}
+.save-manager::backdrop { background: rgb(0 0 0 / 75%); }
+.save-manager h2 { margin: 0 0 0.6rem; color: var(--save-accent); }
+.save-manager p { margin: 0.6rem 0; }
+.save-manager label { display: grid; gap: 0.3rem; margin: 0.8rem 0; }
+.save-manager textarea { width: 100%; resize: vertical; min-height: 5rem; padding: 0.55rem; font: 0.8rem/1.4 monospace; }
+.save-manager input, .save-manager textarea { color: var(--save-text); background: transparent; border: 1px solid var(--save-accent); border-radius: 0.25rem; }
+.save-manager button { padding: 0.5rem 0.7rem; color: var(--save-text); background: transparent; border: 1px solid var(--save-accent); border-radius: 0.3rem; font: inherit; cursor: pointer; }
+.save-manager button:disabled { opacity: 0.55; cursor: wait; }
+.save-manager :focus-visible { outline: 3px solid var(--save-accent); outline-offset: 3px; }
+.save-manager-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 0.75rem 0; }
+.save-manager-maintenance { margin-top: 1.5rem; border-top: 1px solid var(--save-accent); padding-top: 1rem; }
+.save-manager-preview { margin: 1rem 0; padding: 0.8rem; border: 1px solid var(--save-accent); overflow-wrap: anywhere; }
+.save-manager-preview h3 { margin-top: 0; }
+.save-manager-preview dl { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1rem; }
+.save-manager-preview dd { margin: 0; text-align: right; }
+.save-manager-error { color: var(--save-critical); overflow-wrap: anywhere; }
+.save-manager-storage { opacity: 0.8; }
+@media (max-width: 420px) { .save-manager { padding: 0.8rem; } .save-manager-preview dl { grid-template-columns: 1fr; } .save-manager-preview dd { text-align: left; } }

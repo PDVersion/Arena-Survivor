@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C6 are verified; C7 is next. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; remaining delivery/acceptance decisions are below. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -165,7 +165,7 @@ C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
 15 unique affected serial browser cases (final feedback subset5), both themes/
 all models/all difficulties balance. Completed record and exact limits are in
 [master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
-[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5/C6 are verified; C7 remains unstarted. The subsequent owner
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5–C7 are verified below. The subsequent owner
 waiver supersedes the missing P5/P6 external checks' release-blocking classification.
 
 The delivery-kind union deliberately deferred in REC-051, because its shape
@@ -257,7 +257,7 @@ unique affected serial browser cases verified (initial7pass40.1s, final C3 subse
 pass12.4s after visible-reward ordering correction and fixture XP correction).
 Both themes/ten models/three difficulties/baseline+combined world fixture balance
 (120scenarios; baseline output identical to C2). See [report](content/C3_REPORT.md)
-and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4/C5 verified below; C6 verified below; C7 follows.
+and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4–C7 are verified below.
 
 ### C4 — Elite modifiers ✅
 
@@ -265,7 +265,7 @@ Verified Session17: split/shield/acceleration family in both themes, exact inher
 identity/depth and source rewards, bounded pending work, shield-capped ledger,
 simulation-age acceleration and readable markers.561units/63files and six unique
 affected serial browser cases pass; see [report](content/C4_REPORT.md) and
-[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c4). C5 is next.
+[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c4). C5–C7 are verified below.
 
 ### C5 — Mini-boss and final boss ✅
 
@@ -290,13 +290,19 @@ to after the kill rather than being removed. See "Decisions settled before C1".
 595units/65files, types/lint/build/diff pass;10 unique affected serial browser cases
 verified cumulatively, including final five-case persistence capture and death-layout
 check. [Report](content/C6_REPORT.md), [completed ownership](MASTER_BUILD_PLAN.md#v0-4-3-c6).
-C7 follows; missing external device/browser checks remain waived/unverified.
+C7 is verified below; missing external device/browser checks remain waived/unverified.
 
 The first real slice of `SAVE_DATA.md`. The session statistics slice from REC-062
 is already shaped for the payload's lifetime-statistics field, so this is mostly
 adapter and migration work rather than new modelling.
 
-### C7 — Save export and import
+### C7 — Save export and import ✅
+- [x] Canonical codec, strict shared validation/migration and unknown-ID preservation.
+- [x] Title-only export/file/paste preview, explicit backup/recovery/reset and stale checks.
+- [x]655units/67files, five unique serial browser cases, types/lint/build/diff and production marker exclusion.
+
+See [report](content/C7_REPORT.md), [results](content/C7_RESULTS.json) and
+[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c7).
 Encoded text export, import with validation, preview, backup, and migration.
 `SAVE_DATA.md` §"Verification required when implemented" is the acceptance list.
 
@@ -372,9 +378,11 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — C7 portable save
+## Next step — owner delivery and remaining acceptance disposition
 
-C1–C6 local gates pass. C7 owns encoded export/import with validation, preview,
-backup and migration through the same validated profile/service. [Session20 handoff](SESSION_20_PROMPT.md)
-is current. External actual Safari/browserOS/older physical-device checks remain
-waived/unverified; no new publication, dependency, sprite or broad campaign scope.
+C1–C7 local gates pass. No further content, dependencies, sprites or optional work
+is selected. [Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
+local-only delivery. External actual Safari/browserOS/older physical-device checks
+remain temporarily waived/unverified, not passed. No current-head remote CI is
+inferred from run39189877476 on2806720. A later owner-approved delivery/check campaign
+must use these changed sources; regenerate the historical device pack if needed.

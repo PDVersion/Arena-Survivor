@@ -11,8 +11,9 @@ V0.4.3 is active; P5's affected lifecycle/startup slices are verified and its
 outstanding device/browser checks are temporarily waived by explicit owner decision
 (2026-10-20), with missing evidence still unverified. P6 software checks and the
 device kit are verified at their recorded sources. Owner-approved C1–C7
-implementation has completed C1 weapon slots/second tool/hit splash and C2
-evolution plus C3 shrines/curses; C4 elite modifiers is next.
+implementation has completed C1–C7: multiple tools/evolution, shrines/curses, elite
+families, bosses, local profiles/unlocks and portable saves. These are local verified
+phases; no later remote CI or merge is implied.
 
 ## Project documents
 
@@ -21,7 +22,7 @@ evolution plus C3 shrines/curses; C4 elite modifiers is next.
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
 - [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): P5/P6 evidence/waiver and active C1–C7 implementation.
 - [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
-- [Next session — C7 portable save](build/SESSION_20_PROMPT.md).
+- [Next session — delivery and acceptance disposition](build/SESSION_21_PROMPT.md).
 - [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
 - [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
 - [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).
@@ -176,8 +177,8 @@ For a manual smoke test, verify movement, combat, XP collection, upgrade choices
 
 - Visuals and sounds are generated placeholders; audio uses theme-defined synthesized cues.
 - Balance values, the five-second kill-chain window, and the 300/192 entity budgets are provisional pending broader hardware and playtesting. `npm run balance -- --ttk` is the instrument for revisiting them.
-- Profile persistence, save export/import, weapon slots, additional weapons, bosses, and advanced elite variants remain V0.4 work. Settings are session-only until the persistence adapter lands.
-- The production bundle currently includes Phaser in the initial chunk, so Vite reports its large-chunk advisory during builds.
+- Local profiles/settings/unlocks and portable saves are implemented. Use title Settings → Manage Save to export, preview an import, restore a backup or reset. Active runs are not saved. External browser/device acceptance remains waived and unverified.
+- The Phaser gameplay chunk remains large, so Vite reports its chunk-size advisory during builds.
 
 The [architecture atlas](build/ARCHITECTURE_MAP.html) and
 [sprite browser](sprite-browser.html) link to one another and are separate built

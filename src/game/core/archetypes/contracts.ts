@@ -110,8 +110,50 @@ export const worldKeys = [
 ] as const;
 export type WorldKey = (typeof worldKeys)[number];
 
+export interface SaveManagerCopy {
+  readonly manageSave: string;
+  readonly title: string;
+  readonly description: string;
+  readonly exportSave: string;
+  readonly copyCode: string;
+  readonly codeLabel: string;
+  readonly fileLabel: string;
+  readonly previewImport: string;
+  readonly confirmImport: string;
+  readonly cancel: string;
+  readonly close: string;
+  readonly restoreBackup: string;
+  readonly resetProgress: string;
+  readonly confirmRestore: string;
+  readonly confirmReset: string;
+  readonly previewTitle: string;
+  readonly importAction: string;
+  readonly restoreAction: string;
+  readonly resetAction: string;
+  readonly runs: string;
+  readonly kills: string;
+  readonly bestLevel: string;
+  readonly weapons: string;
+  readonly upgrades: string;
+  readonly theme: string;
+  readonly difficulty: string;
+  readonly saved: string;
+  readonly exported: string;
+  readonly copied: string;
+  readonly manualCopy: string;
+  readonly cancelled: string;
+  readonly error: string;
+  readonly confirmationHint: string;
+  readonly fileTooLarge: string;
+  readonly warnTheme: string;
+  readonly warnContentVersion: string;
+  readonly warnUnavailable: string;
+  readonly warnCharacterFallback: string;
+}
+
 export interface ThemeCopy {
-  readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
+  readonly saveManager: SaveManagerCopy;
+  readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly changedElsewhere: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
   readonly eliteVariants?: Readonly<Partial<Record<EliteId, ContentCopy>>>;
   readonly spawnOrigins: Readonly<{ live: string; total: string; natural: string; fragmentation: string; baggedWaste: string; environment: string; benchmark: string }>;
   readonly difficulty: Readonly<{

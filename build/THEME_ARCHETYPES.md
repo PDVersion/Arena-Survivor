@@ -307,5 +307,18 @@ finished-run kills, affecting the next run only. These are the planned mechanica
 content unlocks, distinct from exploratory educational cosmetic feats. No permanent
 stat bonus, active-run suspension, sprite or new factual content is added.
 Corrupt storage is preserved; denied/quota storage falls back to memory with visible
-warnings. Schema1 migration is deterministic. C7 portable export/import/preview/
-explicit backup recovery remains next; use the same validated profile model.
+warnings. Schema1 migration is deterministic. C7 portable export/import/preview and
+explicit backup recovery are implemented through the same validated profile model.
+
+
+### V0.4.3 C7 — portable progress
+
+Title Settings → Manage Save exports the complete implemented profile to encoded
+text/download, or previews a file/pasted save before explicit confirmation. Both
+themes supply labels/warnings; stable IDs retain identity across display-name
+changes. Unknown valid IDs remain saved and warn about unavailable selection.
+Backup restore and reset each need confirmation. No save management is offered
+during a live run; no transient simulation objects or suspended run are persisted.
+Current progress is preserved on cancellation/invalid input/storage failure, and
+corrupt source is quarantined without replacing a good backup. See SAVE_DATA.md
+for exact format, bounds, storage transaction limits and accepted schema migration.

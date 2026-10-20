@@ -22,6 +22,6 @@ Browser151.0.7922.34, test mode, viewport1280×720/DPR1, logical1600×900FIT, re
 
 The main boot boundary changed only to restore the profile before Game construction; affected denied/corrupt startup and existing deterministic recovery checks pass. No repeated broad production/startup campaign; static production marker exclusion is verified. No dependency upgrades, sprites, combat/XP/rate tuning, causal/cap changes or second physics teardown. Owned browser/server resources cleaned,4173 no listener; review4213/unknown processes untouched.
 
-C7 is next: canonical encoded text export/import using this same validated model, checksum/size validation, preview, cancellation, explicit backup-before-replacement, stale revision/storage comparison, recovery/reset and migrations. [Session20 handoff](../SESSION_20_PROMPT.md).
+Successor C7 delivers canonical encoded text export/import using this same validated model, checksum/size validation, preview, cancellation, explicit backup-before-replacement, stale revision/storage comparison, recovery/reset and migrations. [Completed C7 record](../MASTER_BUILD_PLAN.md#v0-4-3-c7).
 
 Staged diff review caught a temporary recording-script variable collision overwriting one unit file after checks. Restored its exact baseline plus intended schema2 assertion, verified the two-line diff, reran all final software checks successfully and refreshed hashes with distinct variables. Runtime and captured browser evidence were unchanged; no extra browser rerun followed.

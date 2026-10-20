@@ -1442,3 +1442,60 @@ retired with completed master slice after actual result recorded. Parent review
 before local phase commit; no publication/dispatch.
 Final parent-reviewed checks 2026-10-20T05:44:52.500054+00:00; resumed elapsed 203.5s, total wall elapsed 16911.5s includes usage interruption. Verification/recording ended well before resumed final20reserve.
 Staged diff review caught recording-script path-variable collision overwriting one unit file after checks. Restored exact HEAD plus intended schema2 assertion; verified two-line diff and reran all software checks595/65 pass. Corrected recorder uses distinct names. Final hashes refreshed 2026-10-20T05:45:40.181031+00:00, resumed elapsed 251.2s; runtime/browser evidence unchanged.
+
+
+## Session20 resumed — finish C6 then C7 /2026-10-20 Sydney
+
+Owner resumes after the usage interruption at05:41:29UTC. New deadline07:11:29UTC,
+final20-minute reserve06:51:29UTC. Existing C4 b0ff7e9/C5 5da2ed3 retained; no branch
+reset/recreation or publication. Required authority/status/currentownership/SAVE_DATA
+and actual Git/PR/Actions read. PR26 remains merged2806720 as c6daeb6; success
+39189877476 covers2806720 only. The interruption's wall time is separately retained
+in C6's record, not counted as active work or hidden by a later-head CI claim.
+
+C6 resumed review/checks completes in local0776c95:595units65files,10 unique scoped
+browsers, exact terminal-only lifetime totals/settings/unlocks, corruption/quota
+warnings and readable death+new-unlock layout. Parent reviewed report/runtime/images.
+C7 begins05:46:14UTC only after C6 gate/commit. Exact paths claimed; codec, nativeDOM
+UI/e2e and replacement service implemented in parallel with disjoint ownership.
+
+C7 delivers exact three-line canonical Base64URL/SHA256 export, file/paste same
+validated schema2 preview, explicit backup/restore/reset confirmation and reload.
+Unknown IDs preserved/warned, schema1 pure migration retained, no active-run save.
+Immutable token and localrevision/storage checks prevent stale replacements;
+review reproduced external save loss before preview, fixed preparation/ordinary
+writes as well as post-preview check. Changed external bytes are preserved, local
+changes stay in memory with a reload warning. Backup/quarantine precedes one current
+write; memory/settings/statistics publish only after success. Multi-key transaction/
+atomic cross-tab CAS is not claimed; corrupt original quarantined, good backup kept.
+
+Final typecheck/all655units67files/lint/build/diff pass;45 new codec+15 transaction
+cases. Initial44/45codec fixture treated a legitimate CRLF as malformed; changed to
+embeddedCR then45/45. Initial combined typecheck caught testtextarea cast, corrected
+before browsers. Five unique serial browser cases pass once4.4s/zero retries/one
+worker,30s each/180s global bound. Actual title download945bytes equals textarea
+and actual clipboard, explicit denial collaborator gives selectedmanualcode, Enter
+staysmenu/threeactions. Boththeme file/paste previews equal, cancellation keepsbytes,
+confirmbackup/reload exactcandidate inclunknownweapon. Invalid/oversize unchanged;
+restore/reset separatelyconfirmed/recoverable. No page errors/browserfailure/rerun.
+
+Boththeme images readable with internal scrolling; confirmation/warnings belowfold
+were exercised. Export image afterEnterguard intentionally no longer shows code;
+retained download/assertions establish equivalence. ActualChromium151.0.7922.34,
+SwiftShaderVulkan/title,test1280x720DPR1→900x650; otherfixturecases nativeDOM/noGPU
+claim. RetainedM5Pro48GiBDarwin,WindowsUA preset is notphysicalWindows. No native
+visibility/permission/hardware/survival/throughput claim. OwnedDOM/downloadURLs/
+browser/server cleaned,4173 no listener;4213/unknowns untouched. All8production
+HTML/JS exclude testmarkers; existing Phaserchunk1642.10kB/384.43gzip advisory.
+Source/raw/compiled/image/export hashes durably in C7_RESULTS, reports/master/status/
+checklist/REC012/SAVE_DATA/product/theme/progress in same reviewed local phase commit.
+
+No pacing/dependency change so balance/audit not repeated. Full/stress/native/long/
+production browsers deferred, actualSafari/browserOS/olderphysicalGPU temporarily
+waived/unverified. Historical P5/P6 evidence/pack remains source-bound; regenerate
+before later current-source device check. No optional scope, sprites, rate/XP/caps
+or second physics teardown. C1–C7 local gates complete. Session20 retired only after
+actual report/results/master recorded; Session21 retains delivery/acceptance choices.
+Final source review/check recording 2026-10-20T05:55:53.985376+00:00; resumed actual elapsed
+865.0s, C7 elapsed580.0s.
+Finished before the reserved final20 window; no remote publication authorized.

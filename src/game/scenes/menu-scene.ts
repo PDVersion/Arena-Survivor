@@ -1,3 +1,4 @@
+import { SaveManagerUi } from "../ui/save-manager-ui";
 import { describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
@@ -19,6 +20,7 @@ type MenuAction = "start" | "info" | "settings";
 export class MenuScene extends Phaser.Scene {
   private bounds: { readonly action: MenuAction; readonly rect: Phaser.Geom.Rectangle }[] = [];
   private overlay?: PauseMenuUi;
+  private saveManager?: SaveManagerUi;
   private menuContainer?: Phaser.GameObjects.Container;
   private difficultyBounds: { id: DifficultyId; rect: Phaser.Geom.Rectangle }[] = [];
   private difficultyButtons = new Map<DifficultyId, { button: Phaser.GameObjects.Rectangle; label: Phaser.GameObjects.Text }>();
@@ -101,6 +103,7 @@ export class MenuScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
       this.input.keyboard?.off(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.handleKey, this);
       this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointer, this);
+      this.saveManager?.destroy(); this.saveManager = undefined;
       this.overlay?.hide();
     });
     this.publishTelemetry();
@@ -119,6 +122,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private handleKey(event: KeyboardEvent): void {
+    if (this.saveManager) return;
     if (event.code === "Escape" && this.overlay?.isOpen) {
       this.overlay.hide();
       this.menuContainer?.setVisible(true);
@@ -143,7 +147,7 @@ export class MenuScene extends Phaser.Scene {
   }
 
   private handlePointer(pointer: Phaser.Input.Pointer): void {
-    if (this.overlay?.isOpen) return;
+    if (this.saveManager || this.overlay?.isOpen) return;
     const point = uiPointer(this, pointer);
     const difficulty = this.difficultyBounds.find((entry) => entry.rect.contains(point.x, point.y));
     if (difficulty) this.chooseDifficulty(difficulty.id);
@@ -155,8 +159,25 @@ export class MenuScene extends Phaser.Scene {
 
   private openOverlay(tab: PauseTab): void {
     this.menuContainer?.setVisible(false);
-    this.overlay?.show(this.infoView(), (key) => this.applySetting(key), { tab, menuContext: true });
+    this.overlay?.show(this.infoView(), (key) => this.applySetting(key), { tab, menuContext: true, onManageSave: () => this.openSaveManager() });
     this.publishTelemetry();
+  }
+
+  private openSaveManager(): void {
+    if (this.saveManager) return;
+    const inputEnabled = this.input.enabled;
+    const keyboardEnabled = this.input.keyboard?.enabled;
+    this.input.enabled = false;
+    if (this.input.keyboard) this.input.keyboard.enabled = false;
+    this.saveManager = new SaveManagerUi(activeTheme, () => {
+      this.saveManager = undefined;
+      this.input.enabled = inputEnabled;
+      if (this.input.keyboard && keyboardEnabled !== undefined) this.input.keyboard.enabled = keyboardEnabled;
+      this.refreshDifficulty();
+      this.overlay?.refresh(this.infoView());
+      this.publishTelemetry();
+    });
+    this.saveManager.show();
   }
 
   private infoView() {
