@@ -43,5 +43,14 @@ export interface EquipWeaponEffect {
   readonly weaponId: WeaponId;
 }
 
-export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect;
-import type { SkillId, WeaponId } from "./ids";
+/** A pick-count condition; quality gains never substitute for earned picks. */
+export interface EvolveWeaponEffect {
+  readonly kind: "weapon.evolve";
+  readonly fromWeaponId: WeaponId;
+  readonly weaponId: WeaponId;
+  readonly requiredUpgradeId: UpgradeId;
+  readonly requiredPicks: number;
+}
+
+export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect | EvolveWeaponEffect;
+import type { SkillId, UpgradeId, WeaponId } from "./ids";

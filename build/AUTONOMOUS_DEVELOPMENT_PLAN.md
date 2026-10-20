@@ -328,8 +328,9 @@ arbitrarily or add a service worker merely to silence the large-chunk warning.
 The affected Session 6/7 gates do not complete P5. Session 8 completed the
 [acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
 probe could not reach hidden state. Sessions 9–10 subsequently verify native
-overlays and the scoped consolidated lifecycle campaign. Continue with
-[Session 15 / C2 continuation](SESSION_15_PROMPT.md) for remaining compatibility evidence. Prefer
+overlays and the scoped consolidated lifecycle campaign. Session15 explicitly
+temporarily waives the outstanding external browser/device checks; continue
+[current C3 work](SESSION_16_PROMPT.md). Historical evidence stays source-bound. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
@@ -373,9 +374,11 @@ release/platform acceptance remains pending, not passed.
 
 On 2026-10-20 the owner explicitly approves planned C1–C7 after verified software
 checks, with missing browser/device evidence release-blocking. C1 is verified locally, including the second tool, owner-only progression,
-on-hit splash and the combined affected gate. Continue C2 evolution using
-[SESSION_15_PROMPT.md](SESSION_15_PROMPT.md). The selected support
-list and missing evidence remain unchanged. No optional/sprite scope is added.
+on-hit splash and the combined affected gate. Session15 verifies C2 evolution;
+continue C3 using [SESSION_16_PROMPT.md](SESSION_16_PROMPT.md). Owner explicitly
+temporarily waives missing actual Safari/browser-OS/older physical-device checks;
+waived/unverified, never passed. Historical measurements remain source-bound.
+No optional/sprite scope is added.
 
 ### After P5 — P6: combined readiness gate and real-device report
 

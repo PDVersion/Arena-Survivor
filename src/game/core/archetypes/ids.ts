@@ -5,6 +5,7 @@ export const archetypeIds = {
   weapon: {
     starter: "weapon.starter",
     secondary: "weapon.secondary",
+    secondaryEvolved: "weapon.secondary_evolved",
   },
   enemy: {
     swarmBasic: "enemy.swarm_basic",
@@ -56,6 +57,7 @@ export const archetypeIds = {
     luck: "upgrade.luck",
     equipSecondary: "upgrade.equip_secondary",
     secondaryRange: "upgrade.secondary_range",
+    evolveSecondary: "upgrade.evolve_secondary",
     weaponRange: "upgrade.weapon_range",
     weaponCollectionSweep: "upgrade.weapon_collection_sweep",
   },

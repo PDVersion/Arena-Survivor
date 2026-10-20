@@ -123,6 +123,14 @@ export const copy = {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",
     },
+    [archetypeIds.weapon.secondaryEvolved]: {
+      name: "Cyclone Vacuum",
+      description: "A wider automatic cone with stronger hits and nearby splash.",
+    },
+    [archetypeIds.upgrade.evolveSecondary]: {
+      name: "Evolve to Cyclone Vacuum",
+      description: "After four reach upgrades, replace Cleanup Vacuum in its slot. Keep earned reach; gain a wider cone, four targets, faster cycling and stronger splash.",
+    },
     [archetypeIds.weapon.secondary]: {
       name: "Cleanup Vacuum",
       description: "Automatically clear a short cone of up to three targets. Each hit splashes nearby targets.",

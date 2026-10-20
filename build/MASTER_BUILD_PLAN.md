@@ -29,6 +29,7 @@ consolidation; duplicate plan files are removed rather than maintained in parall
 - [V0.4.3 — Completed P0–P4 performance slices](#v0-4-3-performance)
 - [V0.4.3 — Verified P5 lifecycle and startup slices](#v0-4-3-p5-slices)
 - [V0.4.3 — Verified PR #25 CI repair](#v0-4-3-ci-repair)
+- [V0.4.3 — C2 same-slot evolution](#v0-4-3-c2)
 
 <a id="v0-1"></a>
 ## V0.1 — First playable
@@ -3011,3 +3012,45 @@ C1's local gate passes; C2 evolution is next. P5/P6 missing browser/platform/old
 physical integrated-GPU evidence remains release-blocking under owner approval,
 not passed. Old frozen measurements/portable pack do not certify changed source.
 No full/long/native/startup campaign, new publication, dependency or sprite work.
+
+
+<a id="v0-4-3-c2"></a>
+### V0.4.3 C2 — same-slot weapon evolution (2026-10-20)
+
+Owner explicitly temporarily waives outstanding actual Safari, missing selected
+browser/OS combinations and older physical integrated-GPU checks. They are waived/
+unverified, never passed, superseding the earlier release-blocking classification
+for now. Prior reports remain source/scenario-bound; no support certification or
+new campaign/publication is inferred. C1/C2 local gates pass; C3 is next.
+
+Theme-owned standalone evolution choice unlocks after four actual secondary reach
+picks. Tier quality keeps earned gains without counting extra picks. New Cyclone
+Vacuum/Runic Tempest definitions replace the source in its ordered slot, preserving
+capacity, other slots and next attack clock. Transfer exact local modifiers once,
+retain global gains/selected/tallied IDs, remove obsolete offers, reject stale or
+duplicate choice without spending pending credit, and reset to the starting loadout.
+Definitions/copy use the existing cone/splash presentation and bounded damage path;
+no XP/rate0.5/enemy tuning, dependency, persistence, sprite or physics teardown edit.
+
+Ownership: core ids/effects, theme validation and both themes' weapons/index/copy,
+upgrade application/eligibility/tiers/description, weapon-loadout replacement,
+build-models/pacing-simulator, deterministic evolution and affected selector/tier
+units, existing second-tool browser fixture, reports and governing documentation.
+No production test control is introduced. A replacement keeps immutable launch
+snapshots and exact actual weapon provenance through the existing attack path.
+
+527units/60files,typecheck/lint/build/diff pass;18 new deterministic cases.
+Initial8 browsers:7pass/1fixture assertion failure in25.055s. Three-target eco
+combat has no splash lethal; correct to four targets, no runtime fix. Two corrected
+evolution cases pass14.6s; after final player-copy shortening only those two pass
+14.5s. Eight unique affected cases verified, all serial/one worker/zero retries.
+Both themes take actual XP/80ms keyboard offers into evolution, retain57.6 earned
+reach and1400clock, record36/40actual damage with19.8/21.8splash,4kills and4/8XP,
+direct/splash evolved provenance. Short Low300-mixed rounds keep cap/ledger and
+drain queues; aided/test/software-renderer scope is explicit. Screenshots reviewed
+under testInfo.outputPath. Ten models/both themes/three difficulties run balance,
+with ideal contact/earliest level7 bands, no survival/offer-frequency inference.
+See [C2 report](content/C2_REPORT.md) and exact source/result/build hashes.
+Full/native/long/startup campaigns deferred; marker exclusion inspected without
+repeating startup browsers. Owned server/browser resources cleaned,4213 untouched.
+Session15 prompt retired after this durable record; Session16 continues C3.

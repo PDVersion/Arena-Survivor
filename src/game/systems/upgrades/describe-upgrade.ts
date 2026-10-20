@@ -184,7 +184,8 @@ export function describeUpgrade(
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
   const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
-  const acquisition = upgrade.effects.find((effect) => effect.kind === "weapon.equip");
+  const acquisition = upgrade.effects.find((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
+  const evolution = upgrade.effects.find((effect) => effect.kind === "weapon.evolve");
   const level = upgrade.track === "weapon" && !acquisition ? picks + 1 : picks;
   // An untiered upgrade is described at its authored value however it rolled,
   // so the card can never promise a bonus the application will not deliver.
@@ -198,8 +199,8 @@ export function describeUpgrade(
     theme.weapons,
   );
 
-  const beforeStats = selectPlayerStats(state, theme, upgrade.ownerWeaponId);
-  const afterStats = selectPlayerStats(after, theme, upgrade.ownerWeaponId);
+  const beforeStats = selectPlayerStats(state, theme, evolution?.fromWeaponId ?? upgrade.ownerWeaponId);
+  const afterStats = selectPlayerStats(after, theme, evolution?.weaponId ?? upgrade.ownerWeaponId);
   const lines: UpgradeChangeLine[] = [];
 
   afterStats.forEach((next, index) => {
@@ -219,7 +220,7 @@ export function describeUpgrade(
     lines.push(Object.freeze({ label: next.label, from: previous.display, to: next.display }));
   });
 
-  if (acquisition) {
+  if (acquisition && !evolution) {
     const weapon = theme.weapons.find((entry) => entry.id === acquisition.weaponId);
     if (weapon) {
       const stats = selectPlayerStats(after, theme, weapon.id);

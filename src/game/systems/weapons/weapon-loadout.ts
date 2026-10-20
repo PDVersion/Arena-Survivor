@@ -43,3 +43,16 @@ export function recordWeaponAttack(
     ? Object.freeze({ ...entry, nextAttackAtMs: nowMs + cooldownMs })
     : entry));
 }
+
+/** Replacement keeps position and earned cooldown; it grants no free attack. */
+export function replaceWeapon(
+  slots: readonly WeaponSlotState[],
+  fromWeaponId: WeaponId,
+  weaponId: WeaponId,
+  definitions: readonly WeaponDefinition[],
+): readonly WeaponSlotState[] {
+  if (!definitions.some((weapon) => weapon.id === weaponId)) throw new Error(`Unknown weapon: ${weaponId}`);
+  if (!slots.some((slot) => slot.weaponId === fromWeaponId) || slots.some((slot) => slot.weaponId === weaponId)) return slots;
+  return Object.freeze(slots.map((slot) => slot.weaponId === fromWeaponId
+    ? Object.freeze({ ...slot, weaponId }) : slot));
+}

@@ -123,6 +123,14 @@ export const copy = {
       name: "Wandering Knight",
       description: "A lone champion entering the Ember Court.",
     },
+    [archetypeIds.weapon.secondaryEvolved]: {
+      name: "Runic Tempest",
+      description: "A wider automatic cone with stronger hits and nearby splash.",
+    },
+    [archetypeIds.upgrade.evolveSecondary]: {
+      name: "Evolve to Runic Tempest",
+      description: "After four reach upgrades, replace Runic Fan in its slot. Keep earned reach; gain a wider cone, four targets, faster cycling and stronger splash.",
+    },
     [archetypeIds.weapon.secondary]: {
       name: "Runic Fan",
       description: "Automatically clear a short cone of up to three targets. Each hit splashes nearby targets.",

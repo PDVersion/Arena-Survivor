@@ -18,6 +18,9 @@ export interface BuildModel {
 
 export interface BuildContext {
   readonly secondaryWeapon?: WeaponDefinition;
+  readonly evolvedWeapon?: WeaponDefinition;
+  /** Earliest level after acquisition, prerequisite picks and the evolution choice. */
+  readonly evolutionLevel?: number;
   /** Base weapon damage before any bonus. */
   readonly weaponDamage: number;
   /** Base weapon cooldown in milliseconds. */
@@ -46,8 +49,7 @@ export function expectedCritMultiplier(critChance: number, critDamage: number): 
   return (lower * (1 - fraction) + upper * fraction) * (guaranteed > 0 ? scale ** guaranteed : 1);
 }
 
-function secondaryDps(context: BuildContext, packed: boolean): number {
-  const weapon = context.secondaryWeapon;
+function secondaryDps(context: BuildContext, packed: boolean, weapon = context.secondaryWeapon): number {
   if (!weapon) return 0;
   const targetCap = weapon.deliveryKind === "melee" ? weapon.targetCap : 1;
   const targets = packed ? Math.min(context.liveEnemies, targetCap ?? context.liveEnemies) : Math.min(1, context.liveEnemies);
@@ -56,6 +58,15 @@ function secondaryDps(context: BuildContext, packed: boolean): number {
 }
 
 const models: readonly BuildModel[] = [
+  ...[false, true].map((packed): BuildModel => ({
+    id: packed ? "evolved-packed" : "evolved-single",
+    description: "Acquires second tool at level2, buys required reach picks, then evolves. Authored contact band, no movement/overkill/offer-frequency model.",
+    damagePerSecond: (level, context) => {
+      const weapon = context.evolutionLevel && level >= context.evolutionLevel ? context.evolvedWeapon : context.secondaryWeapon;
+      return (baseDps(context) + (level >= 2 ? secondaryDps(context, packed, weapon) : 0)) *
+        expectedCritMultiplier(context.baseCritChance, context.critDamage);
+    },
+  })),
   ...[false, true].map((packed): BuildModel => ({
     id: packed ? "two-tools-packed" : "two-tools-single",
     description: packed ? "Second tool at level2; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model."

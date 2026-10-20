@@ -1,0 +1,4000 @@
+{
+  "baselineCommit": "10b7883",
+  "branch": "codex/v0.4.3",
+  "sourceEvidence": "Final source hashes match final two evolution cases. Initial eight predates four-target fixture correction and player-copy shortening; type-only import/style cleanup did not change emitted behavior. Six existing cases passed in that initial run; eight unique cases verified cumulatively, not twelve distinct cases.",
+  "host": {
+    "os": "Darwin25.5.0 arm64 (uname observed)",
+    "hardware": "M5 Pro/48GiB retained prior inventory, not re-measured",
+    "renderer": "actual captures report ANGLE Vulkan SwiftShader WebGL; not physical older-GPU evidence",
+    "userAgent": "Desktop preset Windows UA on macOS; actual browser.version separately captured for evolution cases"
+  },
+  "verification": {
+    "typecheck": "pass",
+    "units": 527,
+    "unitFiles": 60,
+    "lint": "pass",
+    "build": "pass, known Phaser chunk warning",
+    "diffCheck": "pass",
+    "productionMarkerExclusion": "compiled JS/entry HTML excludes C1 fixture/telemetry/alternate fixture; no repeated browser startup guard",
+    "automaticRetries": 0,
+    "uniqueAffectedBrowserCases": 8
+  },
+  "runs": [
+    {
+      "label": "initial-eight",
+      "stats": {
+        "startTime": "2026-10-20T00:02:09.323Z",
+        "duration": 25055.404,
+        "expected": 7,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "rawSha256": "83a745be7f892b35e1318793b25b577cb80675533900c58bf4f1b544c95aed14",
+      "cases": [
+        {
+          "title": "eco-guardian acquires the cone tool from a real offer and resets it on restart",
+          "status": "passed",
+          "durationMs": 1404,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "seed": 5,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.luck",
+                    "upgrade.equip_secondary",
+                    "upgrade.crit_chance"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                }
+              },
+              "owned": {
+                "ownRange": 14.399999999999999,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  0,
+                  0
+                ],
+                "elapsedMs": 15.818333333333332,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 14.399999999999999,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 30.6,
+                "damageFlushed": 30.599999999999998,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 0,
+                "kills": 3,
+                "total": 27,
+                "splash": 10.2,
+                "explosion": 0,
+                "breakdownTotal": 27,
+                "enemies": 0,
+                "peak": 3,
+                "backlog": 3,
+                "xp": 3
+              },
+              "deadPrimary": {
+                "addedKills": 2,
+                "remainingHealth": [
+                  1.0000000000000018
+                ],
+                "addedDamage": 10.100000000000001
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "knight-magic acquires the cone tool from a real offer and resets it on restart",
+          "status": "passed",
+          "durationMs": 1061,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "knight-magic",
+                "mode": "test",
+                "seed": 24,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.move_speed",
+                    "upgrade.equip_secondary",
+                    "upgrade.pierce"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                }
+              },
+              "owned": {
+                "ownRange": 14.399999999999999,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  0,
+                  0
+                ],
+                "elapsedMs": 16.169999995231635,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 14.399999999999999,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 30.6,
+                "damageFlushed": 30.599999999999998,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 0,
+                "kills": 3,
+                "total": 30,
+                "splash": 12.2,
+                "explosion": 0,
+                "breakdownTotal": 30,
+                "enemies": 0,
+                "peak": 3,
+                "backlog": 3,
+                "xp": 6
+              },
+              "deadPrimary": null,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "@stress C1 two tools at 300 mixed actors in default",
+          "status": "passed",
+          "durationMs": 6856,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "seed": 5,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.luck",
+                    "upgrade.equip_secondary",
+                    "upgrade.crit_chance"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                }
+              },
+              "quality": "default",
+              "final": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 2113.7999999999984,
+                "damageFlushed": 2033.8,
+                "damagePending": 8,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  3023.8383333333354,
+                  2821.798333333335
+                ],
+                "elapsedMs": 2104.7051333333357,
+                "kills": 61,
+                "total": 1829.21818181818,
+                "splash": 34.2,
+                "explosion": 0,
+                "breakdownTotal": 1829.21818181818,
+                "enemies": 239,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 5
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "@stress C1 two tools at 300 mixed actors in low",
+          "status": "passed",
+          "durationMs": 5685,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "seed": 5,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.luck",
+                    "upgrade.equip_secondary",
+                    "upgrade.crit_chance"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                }
+              },
+              "quality": "low",
+              "final": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 2033.7999999999984,
+                "damageFlushed": 2033.7999999999997,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  3027.6449999904635,
+                  2825.1849999904634
+                ],
+                "elapsedMs": 2247.2417999904633,
+                "kills": 54,
+                "total": 1749.519480519479,
+                "splash": 35.400000000000006,
+                "explosion": 0,
+                "breakdownTotal": 1749.519480519479,
+                "enemies": 246,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 2
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "eco-guardian evolves from ordinary offers in the same slot with exact hit ownership",
+          "status": "failed",
+          "durationMs": 1518,
+          "retry": 0,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/second-tool-v043.spec.ts:306:82",
+            "location": {
+              "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/second-tool-v043.spec.ts",
+              "column": 82,
+              "line": 306
+            },
+            "snippet": "  304 |     expect(combat.deathSources).toHaveLength(3);\n  305 |     expect(combat.deathSources.every((entry) => entry.sourceId === \"weapon.secondary_evolved\")).toBe(true);\n> 306 |     expect(combat.deathSources.some((entry) => entry.damageSource === \"splash\")).toBe(true);\n      |                                                                                  ^\n  307 |     await page.screenshot({ path: testInfo.outputPath(\"evolved-cone.png\") });\n  308 |     // Short affected load only: actual evolved definition and both independent clocks.\n  309 |     await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.stress(\"low\"));"
+          },
+          "observations": []
+        },
+        {
+          "title": "knight-magic evolves from ordinary offers in the same slot with exact hit ownership",
+          "status": "passed",
+          "durationMs": 6908,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "knight-magic",
+                "mode": "test",
+                "seed": 24,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.move_speed",
+                    "upgrade.equip_secondary",
+                    "upgrade.pierce"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                },
+                "actualBrowserVersion": "151.0.7922.34"
+              },
+              "before": {
+                "ownRange": 57.599999999999994,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "level_up",
+                "choiceIndex": -1,
+                "choices": [
+                  "upgrade.move_speed",
+                  "upgrade.evolve_secondary",
+                  "upgrade.pierce"
+                ],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 38.71499999999999,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "after": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 47.03833333333332,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 41.4,
+                "damageFlushed": 41.4,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1200
+                ],
+                "elapsedMs": 0,
+                "kills": 3,
+                "total": 30,
+                "splash": 11.799999999999999,
+                "explosion": 0,
+                "breakdownTotal": 30,
+                "enemies": 0,
+                "peak": 3,
+                "backlog": 3,
+                "xp": 6
+              },
+              "load": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 229.7999999999999,
+                "damageFlushed": 229.7999999999999,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  3019.546666666667,
+                  2414.2416666666677
+                ],
+                "elapsedMs": 2366.756666666666,
+                "kills": 12,
+                "total": 189.39999999999998,
+                "splash": 93.99999999999997,
+                "explosion": 0,
+                "breakdownTotal": 189.39999999999998,
+                "enemies": 291,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 0
+              },
+              "reset": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter"
+                ],
+                "clocks": [
+                  0
+                ],
+                "elapsedMs": 0,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "eco-guardian slots schedule independently and projectiles retain their weapon",
+          "status": "passed",
+          "durationMs": 180,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "viewport": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "renderer": "Canvas",
+                "gameSize": {
+                  "width": 800,
+                  "height": 450
+                },
+                "themeKey": "eco-guardian"
+              },
+              "noTargetClocks": [
+                0,
+                0
+              ],
+              "pausedShots": 0,
+              "firstClocks": [
+                1000,
+                300
+              ],
+              "firstShots": 2,
+              "heldShots": 2,
+              "secondClocks": [
+                1000,
+                600
+              ],
+              "secondShots": 3,
+              "hit": {
+                "damage": 8,
+                "knockback": 12
+              },
+              "deaths": [
+                {
+                  "eventId": "death-1",
+                  "kind": "death.committed",
+                  "entityId": "enemy-1",
+                  "provenance": {
+                    "sourceCategory": "weapon",
+                    "sourceId": "weapon.fixture_secondary"
+                  },
+                  "payload": {
+                    "enemyId": "enemy.swarm_basic",
+                    "damageSource": "direct",
+                    "elite": false
+                  }
+                }
+              ],
+              "ledger": {
+                "total": 14,
+                "breakdown": 14
+              },
+              "freshSlots": [
+                {
+                  "weaponId": "weapon.starter",
+                  "nextAttackAtMs": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "knight-magic slots schedule independently and projectiles retain their weapon",
+          "status": "passed",
+          "durationMs": 171,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "viewport": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "renderer": "Canvas",
+                "gameSize": {
+                  "width": 800,
+                  "height": 450
+                },
+                "themeKey": "knight-magic"
+              },
+              "noTargetClocks": [
+                0,
+                0
+              ],
+              "pausedShots": 0,
+              "firstClocks": [
+                1000,
+                300
+              ],
+              "firstShots": 2,
+              "heldShots": 2,
+              "secondClocks": [
+                1000,
+                600
+              ],
+              "secondShots": 3,
+              "hit": {
+                "damage": 8,
+                "knockback": 12
+              },
+              "deaths": [
+                {
+                  "eventId": "death-1",
+                  "kind": "death.committed",
+                  "entityId": "enemy-1",
+                  "provenance": {
+                    "sourceCategory": "weapon",
+                    "sourceId": "weapon.fixture_secondary"
+                  },
+                  "payload": {
+                    "enemyId": "enemy.swarm_basic",
+                    "damageSource": "direct",
+                    "elite": false
+                  }
+                }
+              ],
+              "ledger": {
+                "total": 9,
+                "breakdown": 9
+              },
+              "freshSlots": [
+                {
+                  "weaponId": "weapon.starter",
+                  "nextAttackAtMs": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "corrected-four-target-subset",
+      "stats": {
+        "startTime": "2026-10-20T00:02:48.296Z",
+        "duration": 14562.324999999999,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawSha256": "83c234943c13ba4e863068ffb9b89d9c611d2d73043c77603526cec4efdecbd7",
+      "cases": [
+        {
+          "title": "eco-guardian evolves from ordinary offers in the same slot with exact hit ownership",
+          "status": "passed",
+          "durationMs": 6998,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "seed": 5,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.luck",
+                    "upgrade.equip_secondary",
+                    "upgrade.crit_chance"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                },
+                "actualBrowserVersion": "151.0.7922.34"
+              },
+              "before": {
+                "ownRange": 57.599999999999994,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "level_up",
+                "choiceIndex": -1,
+                "choices": [
+                  "upgrade.luck",
+                  "upgrade.evolve_secondary",
+                  "upgrade.crit_chance"
+                ],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 36.60500000000001,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "after": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 44.92000000000002,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 48.6,
+                "damageFlushed": 48.599999999999994,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1200
+                ],
+                "elapsedMs": 0,
+                "kills": 4,
+                "total": 36,
+                "splash": 19.8,
+                "explosion": 0,
+                "breakdownTotal": 36,
+                "enemies": 0,
+                "peak": 4,
+                "backlog": 4,
+                "xp": 4
+              },
+              "load": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 2266.9999999999977,
+                "damageFlushed": 2266.999999999999,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  3018.6848666666674,
+                  2411.619866666667
+                ],
+                "elapsedMs": 2334.0848666666675,
+                "kills": 71,
+                "total": 1941.9467532467515,
+                "splash": 93.25714285714281,
+                "explosion": 0,
+                "breakdownTotal": 1941.9467532467515,
+                "enemies": 233,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 3
+              },
+              "reset": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter"
+                ],
+                "clocks": [
+                  0
+                ],
+                "elapsedMs": 0,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "knight-magic evolves from ordinary offers in the same slot with exact hit ownership",
+          "status": "passed",
+          "durationMs": 6754,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "knight-magic",
+                "mode": "test",
+                "seed": 24,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.move_speed",
+                    "upgrade.equip_secondary",
+                    "upgrade.pierce"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                },
+                "actualBrowserVersion": "151.0.7922.34"
+              },
+              "before": {
+                "ownRange": 57.599999999999994,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "level_up",
+                "choiceIndex": -1,
+                "choices": [
+                  "upgrade.move_speed",
+                  "upgrade.evolve_secondary",
+                  "upgrade.pierce"
+                ],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 39.48166667381922,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "after": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 47.33666667381924,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 52.2,
+                "damageFlushed": 52.2,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1200
+                ],
+                "elapsedMs": 0,
+                "kills": 4,
+                "total": 40,
+                "splash": 21.8,
+                "explosion": 0,
+                "breakdownTotal": 40,
+                "enemies": 0,
+                "peak": 4,
+                "backlog": 4,
+                "xp": 8
+              },
+              "load": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 220.7999999999999,
+                "damageFlushed": 220.79999999999995,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  3019.3083333333348,
+                  2412.973333333334
+                ],
+                "elapsedMs": 2358.3583333333345,
+                "kills": 10,
+                "total": 196.39999999999998,
+                "splash": 96.59999999999997,
+                "explosion": 0,
+                "breakdownTotal": 196.39999999999998,
+                "enemies": 294,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 0
+              },
+              "reset": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter"
+                ],
+                "clocks": [
+                  0
+                ],
+                "elapsedMs": 0,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "final-player-copy-subset",
+      "stats": {
+        "startTime": "2026-10-20T00:04:42.909Z",
+        "duration": 14501.211000000001,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawSha256": "e8c2e80b897e2c2a03c49880ebc9b75fdd9280a162314c2259c0aff7e9353986",
+      "cases": [
+        {
+          "title": "eco-guardian evolves from ordinary offers in the same slot with exact hit ownership",
+          "status": "passed",
+          "durationMs": 6974,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "seed": 5,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.luck",
+                    "upgrade.equip_secondary",
+                    "upgrade.crit_chance"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                },
+                "actualBrowserVersion": "151.0.7922.34"
+              },
+              "before": {
+                "ownRange": 57.599999999999994,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "level_up",
+                "choiceIndex": -1,
+                "choices": [
+                  "upgrade.luck",
+                  "upgrade.evolve_secondary",
+                  "upgrade.crit_chance"
+                ],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 37.02166666666665,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "after": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 45.31333333333332,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 48.6,
+                "damageFlushed": 48.599999999999994,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1200
+                ],
+                "elapsedMs": 0,
+                "kills": 4,
+                "total": 36,
+                "splash": 19.8,
+                "explosion": 0,
+                "breakdownTotal": 36,
+                "enemies": 0,
+                "peak": 4,
+                "backlog": 4,
+                "xp": 4
+              },
+              "load": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 2166.9999999999977,
+                "damageFlushed": 2167,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  3017.9954000000002,
+                  2411.6907999999994
+                ],
+                "elapsedMs": 2332.6004000000003,
+                "kills": 67,
+                "total": 1856.837662337661,
+                "splash": 99.48571428571424,
+                "explosion": 0,
+                "breakdownTotal": 1856.837662337661,
+                "enemies": 237,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 2
+              },
+              "reset": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter"
+                ],
+                "clocks": [
+                  0
+                ],
+                "elapsedMs": 0,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "knight-magic evolves from ordinary offers in the same slot with exact hit ownership",
+          "status": "passed",
+          "durationMs": 6816,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "knight-magic",
+                "mode": "test",
+                "seed": 24,
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+                "dpr": 1,
+                "width": 1280,
+                "height": 720,
+                "logicalWidth": 1600,
+                "logicalHeight": 900,
+                "rate": 0.5,
+                "before": {
+                  "ownRange": 0,
+                  "starterOwnRange": 0,
+                  "globalRange": 0,
+                  "evolvedRange": 0,
+                  "selected": [],
+                  "deathSources": [],
+                  "damageAccumulated": 0,
+                  "damageFlushed": 0,
+                  "damagePending": 0,
+                  "status": "level_up",
+                  "choiceIndex": 1,
+                  "choices": [
+                    "upgrade.move_speed",
+                    "upgrade.equip_secondary",
+                    "upgrade.pierce"
+                  ],
+                  "slots": [
+                    "weapon.starter"
+                  ],
+                  "clocks": [
+                    0
+                  ],
+                  "elapsedMs": 0,
+                  "kills": 0,
+                  "total": 0,
+                  "splash": 0,
+                  "explosion": 0,
+                  "breakdownTotal": 0,
+                  "enemies": 0,
+                  "peak": 0,
+                  "backlog": 0,
+                  "xp": 0
+                },
+                "actualBrowserVersion": "151.0.7922.34"
+              },
+              "before": {
+                "ownRange": 57.599999999999994,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "level_up",
+                "choiceIndex": -1,
+                "choices": [
+                  "upgrade.move_speed",
+                  "upgrade.evolve_secondary",
+                  "upgrade.pierce"
+                ],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 38.445000004768374,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "after": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1400
+                ],
+                "elapsedMs": 46.76000000476836,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "combat": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  }
+                ],
+                "damageAccumulated": 52.2,
+                "damageFlushed": 52.2,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  10000,
+                  1200
+                ],
+                "elapsedMs": 0,
+                "kills": 4,
+                "total": 40,
+                "splash": 21.8,
+                "explosion": 0,
+                "breakdownTotal": 40,
+                "enemies": 0,
+                "peak": 4,
+                "backlog": 4,
+                "xp": 8
+              },
+              "load": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 57.599999999999994,
+                "selected": [
+                  "upgrade.equip_secondary",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.secondary_range",
+                  "upgrade.evolve_secondary"
+                ],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 240.59999999999988,
+                "damageFlushed": 240.59999999999997,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter",
+                  "weapon.secondary_evolved"
+                ],
+                "clocks": [
+                  3017.8933333333334,
+                  2413.7333333333345
+                ],
+                "elapsedMs": 2387.293333333333,
+                "kills": 12,
+                "total": 205.59999999999997,
+                "splash": 103.99999999999996,
+                "explosion": 0,
+                "breakdownTotal": 205.59999999999997,
+                "enemies": 292,
+                "peak": 300,
+                "backlog": 0,
+                "xp": 0
+              },
+              "reset": {
+                "ownRange": 0,
+                "starterOwnRange": 0,
+                "globalRange": 0,
+                "evolvedRange": 0,
+                "selected": [],
+                "deathSources": [
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.starter",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "splash"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  },
+                  {
+                    "sourceId": "weapon.secondary_evolved",
+                    "damageSource": "direct"
+                  }
+                ],
+                "damageAccumulated": 0,
+                "damageFlushed": 0,
+                "damagePending": 0,
+                "status": "playing",
+                "choiceIndex": -1,
+                "choices": [],
+                "slots": [
+                  "weapon.starter"
+                ],
+                "clocks": [
+                  0
+                ],
+                "elapsedMs": 0,
+                "kills": 0,
+                "total": 0,
+                "splash": 0,
+                "explosion": 0,
+                "breakdownTotal": 0,
+                "enemies": 0,
+                "peak": 0,
+                "backlog": 0,
+                "xp": 0
+              },
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "finalSourceHashes": {
+    "package-lock.json": "6ff695696f6b4a1d2699dade03f95a16514ce640b0024298089aaf22f05d7a4d",
+    "package.json": "c85647a4f0edcaa4f133e6138521518360fea8f93cfefd042198b23d9dadaa54",
+    "playwright.config.ts": "9e1755793c75733b20a1e84e4c413204b48c1a7ab53495a54e4590302b461ed9",
+    "src/game/content/define-theme.ts": "b20d87e52941d137f497ffb6c190ea977cd11f31da6ddc2001d6c0a9e830dc08",
+    "src/game/content/themes/eco-guardian/copy.ts": "f75e0618e2896f681e6f692c839532eb1d692dd4e562c8bbeab051b8a94f9a75",
+    "src/game/content/themes/eco-guardian/index.ts": "6086348b26e400cada57093f7ca79b5e618b12ec39129069144e28ad4cc621e1",
+    "src/game/content/themes/eco-guardian/weapons.ts": "0863bdb467613c1bdbe3a9eaaa27424e29aae1c624796512d97a019b1a6b19c2",
+    "src/game/content/themes/knight-magic/copy.ts": "089194836a3295974395b3dad83258b8acba5dd4f613ed3d48be17213eae3bfa",
+    "src/game/content/themes/knight-magic/index.ts": "40b31f3e245de74fd3213299dbc413deff69a2b765137cab42f037c6b21fa348",
+    "src/game/content/themes/knight-magic/weapons.ts": "22768c056b0e79c402eb866882d54beec71fcd002c99397b3ddda0c5a63e644c",
+    "src/game/core/archetypes/effects.ts": "7be909f00881ebe8d9d9048a6c424d4e597534727f11fb55d89fb27023518493",
+    "src/game/core/archetypes/ids.ts": "d1735ec8b8a6da884c2ab37871dd9f897e3664b6f58336e6467a468251ab637b",
+    "src/game/entities/cone-attack-actor.ts": "ab30c8128fd88b6ed5106661346dc15551f2f77886d839ce78b6d7c2fd3b63b6",
+    "src/game/entities/projectile-actor.ts": "ee296a68dce21f658c758e23ab6ab9de67220f7ab32443b6078110fe6b686d0a",
+    "src/game/scenes/run-scene.ts": "05644e858edd2df1dc4353af724bc7cdf161ed2bf0c03c5801d1d2a8f9cf670a",
+    "src/game/state/run-state.ts": "c7c541cdaecfc62c5442e494affdb552c4c9869309d28459f8cc2b91ec8da6f7",
+    "src/game/systems/simulation/build-models.ts": "ecd8de74f099ff6db30c51f13404accfd5a247946cf9f120fafbccf0066e7922",
+    "src/game/systems/simulation/pacing-simulator.ts": "92fd2eb49df2205d3cd4bb3442d2db2f7a29e48ba8d4bbc516f35adad786340c",
+    "src/game/systems/upgrades.ts": "5ee2d1beb7355f1d1b27fb1a5cf2038ce8f9adf1b9e09d6de32a6dc4cf342a1d",
+    "src/game/systems/upgrades/describe-upgrade.ts": "28257c621187930559c4550718d9745b90ccc3933032284687af9b218e9d522e",
+    "src/game/systems/upgrades/upgrade-tiers.ts": "87dce2c8c97e16c953318c21a4fbd50c231d41196777c82215b5c7552efb49c8",
+    "src/game/systems/weapons/weapon-loadout.ts": "7a43b60f5359e8611657cc3b7d1e5ce04496f3135cd6d1a3989385325fc22814",
+    "tests/e2e/second-tool-v043.spec.ts": "fd48db0970660419420bff6d7f5932267325b37ab94678015b1d44c8fce82209",
+    "tests/unit/ui-selectors/describe-upgrade.test.ts": "e8e042a688c51237b330dbf1bf8789c431355e2ea24388669970b382c014043b",
+    "tests/unit/upgrades/upgrade-tiers.test.ts": "5bbbb77e25b23b95e31c671997f9d13e9203bc10aedc91cdc49597224fb5ad37",
+    "tests/unit/weapons/weapon-evolution.test.ts": "fd3fb7edb76c2efc18da435cdeaa6a96df321bd7ae16280ce2acf18a2fabb0d2"
+  },
+  "sourceTreeSha256": "7cec675713b254039f37b1f572ae742322a8d90635b9a94288eead694d0e2be4",
+  "screenshots": {
+    "test-results/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/evolution-offer.png": "e38c11f45b496d8007e95ea1b03e53e5c3b83965576ffa887cd6fb79aaf61d6c",
+    "test-results/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/evolved-cone.png": "c8c9852ba2b315d1e185eed15e5b0cb5f0f0e72fff55c866786725699289198f",
+    "test-results/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/evolved-load.png": "2c8436c1970dad22624480e3e2920a16abd60104ed7023fbd9eec2296e2cae22",
+    "test-results/second-tool-v043-knight-ma-2478a-ot-with-exact-hit-ownership-chromium/evolution-offer.png": "6b4ef9b64dfcfdded652b7651eafca6339f34323476f2b07d13da0024d0a361c",
+    "test-results/second-tool-v043-knight-ma-2478a-ot-with-exact-hit-ownership-chromium/evolved-cone.png": "c200c8b6089d753926d8a62ae30bd458c0baa2378457f19ec22f5160d8cc21fd",
+    "test-results/second-tool-v043-knight-ma-2478a-ot-with-exact-hit-ownership-chromium/evolved-load.png": "7d0e2bfb0f512008a0c1bcf8d7bdbd18790d89cf07da06ac3ffd2f5fad69f311"
+  },
+  "compiledArtifacts": {
+    "dist/assets/combat-DP5YJCqn.js": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0",
+    "dist/assets/game-C07hUO1a.js": "62feef378e5894614f5568d35039c01538cf12674d6ecbf607a41a0e8e8b4e63",
+    "dist/assets/index-Cl4plRh2.js": "bf1cb739c2d0656bd5578acbbdc340f1240072ed491dcd4536b3e284abcc8a59",
+    "dist/assets/sprites-DiZyDZr3.js": "739beeaaa1176d16ad59673f3aff5e3b63db3c553ec8d1849134a9b1ec3c582d",
+    "dist/assets/start-game-D69KQ_j3.js": "fe822c1678ad2d2f02c33b21e5bb473da3796cb31bb8b845285403b00c1844c8",
+    "dist/index.html": "584ea3358f91bcc35ed1336254b09b05bcd2be6025aaf2c14e85766878d62540",
+    "dist/sprite-browser.html": "7499b2a87bfe3b6d31c2fb0682c219ebd990ce4a8d574b15e37ebfefd5bd815b"
+  },
+  "deferred": "Full browser/stress/native/long/startup campaigns not repeated. Outstanding actual Safari/missing browser-OS/older physical-device checks temporarily waived by explicit owner, unverified not passed. Historical source-bound P5/P6 evidence/device kit does not certify C2."
+}

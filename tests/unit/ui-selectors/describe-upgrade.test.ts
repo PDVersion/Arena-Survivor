@@ -213,7 +213,7 @@ describe("upgrade descriptions", () => {
       expect(description.name).toBe(pack.copy.content[entry.id]!.name);
       expect(description.summary.length).toBeGreaterThan(0);
       expect(description.maxLevel).toBe(
-        entry.maxLevel === null ? null : entry.track === "weapon" && !entry.effects.some((effect) => effect.kind === "weapon.equip") ? entry.maxLevel + 1 : entry.maxLevel,
+        entry.maxLevel === null ? null : entry.track === "weapon" && !entry.effects.some((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve") ? entry.maxLevel + 1 : entry.maxLevel,
       );
     }
   });

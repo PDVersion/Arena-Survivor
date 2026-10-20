@@ -5,7 +5,7 @@ import { applyWorldModifier, type WorldState } from "./chaos/world-modifiers";
 import { raiseSkillLevel, skillLevel, skillMaxLevel, type SkillLevels } from "./skills/resolve-skill";
 import { scaleSkillLevels, scaleStatValue } from "./upgrades/upgrade-tiers";
 
-import { equipWeapon, type WeaponSlotState } from "./weapons/weapon-loadout";
+import { equipWeapon, replaceWeapon, type WeaponSlotState } from "./weapons/weapon-loadout";
 
 export type RandomSource = () => number;
 
@@ -60,6 +60,11 @@ export function isUpgradeAvailable(
   if (upgrade.maxLevel !== null && upgradeLevel(selectedUpgradeIds, upgrade.id) >= upgrade.maxLevel) return false;
   if (upgrade.ownerWeaponId && !context?.weaponSlots?.some((slot) => slot.weaponId === upgrade.ownerWeaponId)) return false;
   for (const effect of upgrade.effects) {
+    if (effect.kind === "weapon.evolve") {
+      if (!context?.weaponSlots?.some((slot) => slot.weaponId === effect.fromWeaponId) ||
+        context.weaponSlots.some((slot) => slot.weaponId === effect.weaponId) ||
+        upgradeLevel(selectedUpgradeIds, effect.requiredUpgradeId) < effect.requiredPicks) return false;
+    }
     if (effect.kind !== "weapon.equip") continue;
     if (!context?.weaponSlots || !context.weaponSlotCount || context.weaponSlots.length >= context.weaponSlotCount ||
       context.weaponSlots.some((slot) => slot.weaponId === effect.weaponId)) return false;
@@ -195,6 +200,18 @@ export function applyUpgrade<T extends UpgradeableState>(
   let world = state.world;
 
   for (const effect of upgrade.effects) {
+    if (effect.kind === "weapon.evolve") {
+      if (!weaponSlots) return state;
+      const replacement = replaceWeapon(weaponSlots, effect.fromWeaponId, effect.weaponId, weapons);
+      if (replacement === weaponSlots) return state;
+      weaponSlots = replacement;
+      // Keep the exact earned tier gains, without replaying picks or touching globals.
+      if (ownedWeaponModifiers[effect.fromWeaponId]) {
+        ownedWeaponModifiers[effect.weaponId] = ownedWeaponModifiers[effect.fromWeaponId];
+        delete ownedWeaponModifiers[effect.fromWeaponId];
+      }
+      continue;
+    }
     if (effect.kind === "weapon.equip") {
       if (!weaponSlots || !state.weaponSlotCount) return state;
       weaponSlots = equipWeapon(weaponSlots, effect.weaponId, state.weaponSlotCount, weapons);

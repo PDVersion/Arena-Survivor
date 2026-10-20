@@ -246,3 +246,18 @@ difficulty using the game's resolver, labels stats through theme copy and reads
 physics/stats from definitions, never sprites. Its starting values exclude
 time/pressure/elites/upgrades; future live stat-book selectors must preserve that
 distinction. The secondary pack's roster balance is unchanged.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.

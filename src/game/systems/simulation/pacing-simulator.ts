@@ -95,6 +95,8 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     ?.effects?.find((effect) => effect.kind === "collection_sweep");
   if (!weapon || !character) throw new Error("The theme is missing required simulation content");
 
+  const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
+    .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
   const world = chaosWorldState(chaos);
   const random = createSeededRandom(options.seed ?? SIMULATION_SEED);
 
@@ -179,7 +181,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     }
 
     const context: BuildContext = {
-      secondaryWeapon: theme.weapons.find((entry) => entry.id !== weapon.id),
+      secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
+      evolvedWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondaryEvolved),
+      evolutionLevel: evolution?.kind === "weapon.evolve" ? 3 + evolution.requiredPicks : undefined,
       weaponDamage: weapon.damage,
       weaponCooldownMs: weapon.cooldownMs,
       baseCritChance: character.baseStats.critChance,
@@ -272,6 +276,8 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
   const theme = resolveDifficultyTheme(options.theme, options.difficulty ?? "normal");
   const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter)!;
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
+  const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
+    .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
   const world = chaosWorldState(options.chaos ?? 1);
 
   return Object.freeze(
@@ -279,7 +285,9 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
       const progress = bucket.endMs / options.durationMs;
       const modifiers = selectWorldModifiers(world, theme.tuning.difficulty, progress);
       const dps = options.build.damagePerSecond(bucket.level, {
-        secondaryWeapon: theme.weapons.find((entry) => entry.id !== weapon.id),
+        secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
+        evolvedWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondaryEvolved),
+        evolutionLevel: evolution?.kind === "weapon.evolve" ? 3 + evolution.requiredPicks : undefined,
         weaponDamage: weapon.damage,
         weaponCooldownMs: weapon.cooldownMs,
         baseCritChance: character.baseStats.critChance,

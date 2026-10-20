@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 external readiness remain release-blocking; owner explicitly permits planned C1–C7 after software checks.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1/C2 verified and C3 next.**
 
 ## How to maintain this file
 
@@ -2616,6 +2616,34 @@ actual renderer and separate Desktop-profile Windows UA from physical macOS:
 `test.use(undefined)` did not clear that profile in these runs. P5/P6 external
 release gate remains open, C2 is next, and no matching-head CI/publication is
 inferred. See `build/content/C1_SECOND_TOOL_REPORT.md` and source/result hashes.
+
+Session15 C2 / owner revision (2026-10-20): owner explicitly says “yes waive
+those checks for now and continue with build for c2”. Outstanding actual Safari,
+missing selected browser/OS combinations and older physical integrated-GPU checks
+are temporarily waived, superseding their release-blocking classification. This
+is a gate disposition, not evidence, permanent support certification, or permission
+to re-run broad campaigns. Preserve prior source hashes/scenario limits; revisit
+support claims against this waiver when external access or owner scope changes.
+
+Evolution is a standalone unscaled normal-draw choice after four actual picks
+of the secondary-owned reach track. Tier quality scales earned gains, not the
+pick counter. Source/target/prerequisite references and attainable positive pick
+counts validate in each theme. A new definition replaces the old ID in the same
+ordered slot, preserving its clock and capacity; transfer exact local modifiers
+once, keep globals and selected/tallied IDs intact, then exclude obsolete owner/
+acquisition/evolution cards. Restart reconstructs original starting state. No
+free attack or catch-up. Both themes author the wider four-target cone and bounded
+splash with existing presentation; no sprite, persistence or delivery abstraction.
+
+527units/60files and eight unique affected serial browser cases verify C2. Initial
+8-case run has7passes/1fixture failure: three eco targets die from direct hits,
+so expecting a splash kill is invalid. Four-target corrected evolution subset
+passes both themes with direct/splash evolved provenance,36/40 actual damage,
+4kills,4/8XP. No runtime fix follows that fixture error. Short300-actor rounds
+preserve ledger/cap and independent clocks; not throughput/soak/device evidence.
+All ten models/both themes/three difficulties run balance; ideal contact bands
+assume earliest evolution at level7 and omit offer frequency/movement/overkill.
+See `build/content/C2_REPORT.md`. C3 is next; local only, no matching-head CI claim.
 
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 

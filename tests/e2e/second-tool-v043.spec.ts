@@ -19,6 +19,9 @@ interface ToolSnapshot {
   ownRange: number;
   starterOwnRange: number;
   globalRange: number;
+  evolvedRange: number;
+  selected: readonly string[];
+  deathSources: readonly { sourceId: string; damageSource: string }[];
   damageAccumulated: number;
   damageFlushed: number;
   damagePending: number;
@@ -27,6 +30,8 @@ interface ToolFixture {
   snapshot(): ToolSnapshot;
   combat(): ToolSnapshot;
   offerOwned(): void;
+  offerEvolution(): void;
+  armClock(): void;
   deadPrimaryProbe(): { addedKills: number; remainingHealth: readonly number[]; addedDamage: number };
   restart(): void;
   stress(quality: string): void;
@@ -69,6 +74,12 @@ async function setup(page: Page, themeKey: string) {
     try {
       scene = await Promise.race([first, new Promise<never>((_, reject) => { timeout = setTimeout(() => reject(new Error("C1 fixture failed to start")), 8000); })]);
     } finally { clearTimeout(timeout); }
+    const deathSources: { sourceId: string; damageSource: string }[] = [];
+    const enqueue = scene.eventQueue.enqueue.bind(scene.eventQueue);
+    scene.eventQueue.enqueue = (event: { kind: string; provenance: { sourceId: string }; payload: { damageSource: string } }) => {
+      if (event.kind === "death.committed") deathSources.push({ sourceId: event.provenance.sourceId, damageSource: event.payload.damageSource });
+      return enqueue(event);
+    };
     const offer = (upgradeId: string) => {
       let chosen = -1;
       for (let seed = 1; seed <= 1000; seed++) {
@@ -87,6 +98,9 @@ async function setup(page: Page, themeKey: string) {
       ownRange: scene.runState.ownedWeaponModifiers["weapon.secondary"]?.range ?? 0,
       starterOwnRange: scene.runState.ownedWeaponModifiers["weapon.starter"]?.range ?? 0,
       globalRange: scene.runState.weaponModifiers.range,
+      evolvedRange: scene.runState.ownedWeaponModifiers["weapon.secondary_evolved"]?.range ?? 0,
+      selected: scene.runState.selectedUpgradeIds,
+      deathSources: [...deathSources],
       damageAccumulated: scene.damageNumbers.accumulated, damageFlushed: scene.damageNumbers.flushed,
       damagePending: scene.damageNumbers.pending.size,
       status: scene.runState.status,
@@ -106,6 +120,11 @@ async function setup(page: Page, themeKey: string) {
         const url = new URL(location.href); url.searchParams.delete("xpLevelCap"); history.replaceState(null, "", url);
         offer("upgrade.secondary_range");
       },
+      offerEvolution() { offer("upgrade.evolve_secondary"); },
+      armClock() {
+        scene.runState = { ...scene.runState, weaponSlots: scene.runState.weaponSlots.map((slot: { weaponId: string; nextAttackAtMs: number }) => ({ ...slot,
+          nextAttackAtMs: slot.weaponId === "weapon.secondary" ? 1400 : 10000 })) };
+      },
       combat() {
         scene.physics.world.pause();
         scene.runState = { ...scene.runState, elapsedMs: 0, player: { ...scene.runState.player,
@@ -113,7 +132,9 @@ async function setup(page: Page, themeKey: string) {
           weaponSlots: scene.runState.weaponSlots.map((slot: { weaponId: string }) => ({ ...slot,
             nextAttackAtMs: slot.weaponId === "weapon.starter" ? 10000 : 0 })) };
         const definition = theme.enemies.find((entry: { id: string }) => entry.id === "enemy.fast_fragile");
-        for (const [dx, dy] of [[60, 0], [61, 2], [62, -2]]) {
+        const positions = [[60, 0], [61, 2], [62, -2]];
+        if (scene.runState.weaponSlots.some((slot: { weaponId: string }) => slot.weaponId === "weapon.secondary_evolved")) positions.push([63, 1]);
+        for (const [dx, dy] of positions) {
           scene.spawnEnemy("ambient", 1, definition, { x: scene.player.x + dx, y: scene.player.y + dy }, false);
         }
         scene.fireIfReady();
@@ -136,6 +157,8 @@ async function setup(page: Page, themeKey: string) {
       },
       restart() { activePlay = false; scene.scene.stop("run"); scene.scene.start("run"); },
       stress(quality) {
+        const url = new URL(location.href); url.searchParams.set("xpLevelCap", String(scene.runState.progression.level)); history.replaceState(null, "", url);
+        scene.runState = { ...scene.runState, weaponSlots: scene.runState.weaponSlots.map((slot: { weaponId: string; nextAttackAtMs: number }) => ({ ...slot, nextAttackAtMs: 0 })) };
         if (settings.getSessionSettings().presentationQuality !== quality) scene.applySetting("presentationQuality");
         for (let i = 0; i < 300; i++) {
           const definition = theme.enemies[i % theme.enemies.length];
@@ -237,5 +260,70 @@ for (const quality of ["default", "low"]) test(`@stress C1 two tools at 300 mixe
     expect(errors).toEqual([]);
     await page.screenshot({ path: testInfo.outputPath("two-tools-300.png") });
     await testInfo.attach("stress-observations", { body: JSON.stringify({ environment, quality, final, errors }, null, 2), contentType: "application/json" });
+  } finally { await page.evaluate(() => window.__C1_TOOL_FIXTURE__?.cleanup()); }
+});
+
+
+for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} evolves from ordinary offers in the same slot with exact hit ownership`, async ({ page, browser }, testInfo) => {
+  test.setTimeout(40_000);
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  try {
+    const environment = { ...await setup(page, themeKey), actualBrowserVersion: browser.version() };
+    await equip(page);
+    for (let pick = 0; pick < 4; pick++) {
+      await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.offerOwned());
+      const offered = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot());
+      expect(offered.choices).not.toContain("upgrade.evolve_secondary");
+      const index = offered.choices.indexOf("upgrade.secondary_range");
+      expect(index).toBeGreaterThanOrEqual(0);
+      await page.keyboard.press(String(index + 1), { delay: 80 });
+      await expect.poll(() => page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot().status)).toBe("playing");
+    }
+    await page.evaluate(() => { window.__C1_TOOL_FIXTURE__!.armClock(); window.__C1_TOOL_FIXTURE__!.offerEvolution(); });
+    const before = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot());
+    const index = before.choices.indexOf("upgrade.evolve_secondary");
+    expect(index).toBeGreaterThanOrEqual(0);
+    expect(before.choices).not.toContain("upgrade.secondary_range");
+    await page.screenshot({ path: testInfo.outputPath("evolution-offer.png") });
+    await page.keyboard.press(String(index + 1), { delay: 80 });
+    await expect.poll(() => page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot().status)).toBe("playing");
+    const after = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot());
+    expect(after.slots).toEqual(["weapon.starter", "weapon.secondary_evolved"]);
+    expect(after.clocks).toEqual(before.clocks);
+    expect(after.ownRange).toBe(0);
+    expect(after.evolvedRange).toBe(before.ownRange);
+    expect(after.globalRange).toBe(0);
+    expect(after.selected.filter((id) => id === "upgrade.secondary_range")).toHaveLength(4);
+    expect(after.selected.filter((id) => id === "upgrade.evolve_secondary")).toHaveLength(1);
+    const combat = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.combat());
+    expect(combat.clocks).toEqual([10000, 1200]);
+    expect(combat.total).toBeCloseTo(themeKey === "eco-guardian" ? 36 : 40, 10);
+    expect(combat.kills).toBe(4);
+    expect(combat.xp).toBe(themeKey === "eco-guardian" ? 4 : 8);
+    expect(combat.breakdownTotal).toBeCloseTo(combat.total, 10);
+    expect(combat.explosion).toBe(0);
+    expect(combat.deathSources).toHaveLength(4);
+    expect(combat.deathSources.every((entry) => entry.sourceId === "weapon.secondary_evolved")).toBe(true);
+    expect(combat.deathSources.some((entry) => entry.damageSource === "splash")).toBe(true);
+    await page.screenshot({ path: testInfo.outputPath("evolved-cone.png") });
+    // Short affected load only: actual evolved definition and both independent clocks.
+    await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.stress("low"));
+    await expect.poll(() => page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot().elapsedMs), { timeout: 15000 }).toBeGreaterThanOrEqual(2000);
+    const load = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot());
+    expect(load.peak).toBe(300);
+    expect(load.enemies).toBeLessThanOrEqual(300);
+    expect(load.splash).toBeGreaterThan(combat.splash);
+    expect(load.breakdownTotal).toBeCloseTo(load.total, 8);
+    expect(load.clocks.every((clock) => clock > 0)).toBe(true);
+    await page.screenshot({ path: testInfo.outputPath("evolved-load.png") });
+    await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.restart());
+    await expect.poll(() => page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot().slots)).toEqual(["weapon.starter"]);
+    const reset = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot());
+    expect(reset.clocks).toEqual([0]);
+    expect(reset.evolvedRange).toBe(0);
+    expect(reset.selected).toEqual([]);
+    expect(errors).toEqual([]);
+    await testInfo.attach("evolution-observations", { body: JSON.stringify({ environment, before, after, combat, load, reset, errors }, null, 2), contentType: "application/json" });
   } finally { await page.evaluate(() => window.__C1_TOOL_FIXTURE__?.cleanup()); }
 });

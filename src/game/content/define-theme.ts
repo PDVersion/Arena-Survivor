@@ -401,7 +401,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       !weapons.find((weapon) => weapon.id === upgrade.ownerWeaponId)?.upgrades?.some((entry: UpgradeDefinition) => entry === upgrade))) {
       issues.push(`${upgrade.id} must be authored beside its owning weapon`);
     }
-    const acquisition = upgrade.effects?.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "weapon.equip") ?? [];
+    const acquisition = Array.isArray(upgrade.effects) ? upgrade.effects.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve") : [];
     if (acquisition.length > 0 && (acquisition.length !== 1 || upgrade.effects.length !== 1 || upgrade.maxLevel !== 1 || upgrade.ownerWeaponId)) {
       issues.push(`${upgrade.id} acquisition must be a standalone one-time choice`);
     }
@@ -409,6 +409,18 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
+        if (effect.kind === "weapon.evolve") {
+          const prerequisite = upgrades.find((entry) => entry.id === effect.requiredUpgradeId);
+          if (!weaponIds.has(effect.weaponId) || !weaponIds.has(effect.fromWeaponId) || effect.weaponId === effect.fromWeaponId) {
+            issues.push(`${upgrade.id} evolution requires distinct known weapons`);
+          }
+          if (!Number.isSafeInteger(effect.requiredPicks) || effect.requiredPicks < 1 ||
+            !prerequisite || prerequisite.ownerWeaponId !== effect.fromWeaponId ||
+            prerequisite.maxLevel === null || effect.requiredPicks > prerequisite.maxLevel) {
+            issues.push(`${upgrade.id} evolution requires an attainable source-owned pick condition`);
+          }
+          continue;
+        }
         if (effect.kind === "weapon.equip") {
           if (!weaponIds.has(effect.weaponId)) issues.push(`${upgrade.id} references missing weapon: ${effect.weaponId}`);
           continue;

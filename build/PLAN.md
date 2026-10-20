@@ -1435,3 +1435,18 @@ non-critical starter hits deal 12 / 10 / 10. Only this role's health changes;
 time, Pollution and elite scaling still apply to later or modified enemies.
 This is a playability override to the earlier persistence-derived health model,
 not an environmental measurement. See REC-112 and `balance/Q4_OPENING_REPORT.md`.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.

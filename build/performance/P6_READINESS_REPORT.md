@@ -1,5 +1,13 @@
 # P6 — combined software readiness and device follow-up
 
+**Current disposition — Session15,2026-10-20:** owner explicitly temporarily
+waives the outstanding actual Safari, missing selected browser/OS combinations
+and older physical integrated-GPU checks. They are waived/unverified, never
+passed; their prior release-blocking classification is superseded for now.
+Historical evidence below retains its source/scenario bounds. C2 is verified
+locally; see [C2 report](../content/C2_REPORT.md). No external campaign rerun.
+Earlier dated pending/no-waiver statements describe those checkpoints.
+
 Work starts under the owner's 2026-10-19 request to finish P5, begin P6 and continue V0.4.3. This explicitly authorizes P6 software preparation alongside unresolved physical/browser evidence; it does not silently pass P5 or waive device acceptance. The owner confirmed no older device is available. At that checkpoint content remained behind the required gate; the dated owner revision below now governs implementation order.
 
 ## Baseline and final evidence to retain
@@ -91,7 +99,7 @@ hashes and both recordings' runtime source maps match; production runtime,
 assets, tuning and dependencies are unchanged. Later Firefox-only test support
 is separately source-hashed with its application results.
 
-## Acceptance still open
+## Historical pending acceptance — superseded by Session15 waiver
 
 **The P6 software/readiness-tool slice is verified. P5 and overall device/browser
 acceptance remain open.** Native Safari cannot create a driver session until its

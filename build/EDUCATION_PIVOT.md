@@ -584,3 +584,18 @@ Three direct targets and bounded on-hit neighbour splash are authored game rules
 not sourced factual handling claims. The shared ledger names hit splash separately
 from on-kill detonation. Tool-owned upgrades remain in each theme's weapon data.
 No new enemy material, fact card, persistence or sprite is introduced here.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.

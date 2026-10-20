@@ -72,7 +72,9 @@ owner's Session 1 request (REC-102). Measurement precedes optimization and
 content growth; C1–C7 retain their dependencies and require owner selection.
 On 2026-10-20 the owner explicitly approves planned C1–C7 after the verified
 software gate while missing P5/P6 browser/device evidence remains release-blocking.
-Acceptance is not waived, and other optional content remains unselected.
+Session15 explicitly temporarily waives the outstanding actual Safari, missing
+browser/OS combinations and older physical integrated-GPU checks. They remain
+waived/unverified, never passed; other optional content remains unselected.
 The active increment plan owns the exact performance paths, commit subjects,
 verification, and hardware-reporting gates. This is a technical prerequisite,
 not a change to game content, balance, or the V0.4.4 sprite gate.
@@ -99,7 +101,8 @@ preserving the permanent presentation/simulation boundary above.
   settle stable IDs, subjects, sizes, and frame roles.
 - V0.4.3 content C1 does not start before the P0–P6 software gate passes and
   optional content is selected. Older-device acceptance requires device evidence;
-  absent hardware remains explicitly pending, never inferred from throttling.
+  absent hardware is never inferred from throttling. Session15 temporarily waives
+  the outstanding external checks by explicit owner decision, without new evidence.
 - Any build phase that changes product direction must update `PLAN.md`,
   `EDUCATION_PIVOT.md`, `THEME_ARCHETYPES.md`, and reconciliation in the same
   phase rather than leaving contradictory authorities.

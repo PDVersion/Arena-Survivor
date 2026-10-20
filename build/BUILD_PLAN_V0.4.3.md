@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance release-blocking rather than build-blocking. P5 and P6 acceptance remain open. C1 is verified; C2 is next. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1 and C2 are verified; C3 is next. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -50,9 +50,7 @@ are excluded from these performance phases.
 - [x] P4 — measured Default/Low enemy minimap geometry; affected local gate accepted;
   simulation, visible world and telegraphs remain equivalent. Read `SAVE_DATA.md`
   before serializable settings; presentation budgets stay theme-owned.
-- [ ] P5 — sustained play/restarts/focus and cold/warm startup evidence; fix only
-  demonstrated lifecycle/boot issues, keeping cleanup bounded. Session 6's affected
-  lifecycle gate is accepted below; this overall checkbox remains open.
+- [x] P5 — recorded lifecycle/startup/software slices verified; outstanding external checks temporarily waived by owner in Session15. This closes the current gate by explicit disposition, not by new physical/browser evidence.
 - [x] P5 lifecycle slice / Session 6 — REC-117 overflow tracking, paid-collect-cue
   reward race and stopped-scene references; both-theme deterministic coverage and
   bounded serial Phaser collection/stop/start ownership checks (REC-119).
@@ -74,10 +72,11 @@ are excluded from these performance phases.
   `performance/P5_CAMPAIGN_REPORT.md`; no runtime fix or broader readiness claim.
 - [x] P5 Session 11 available desktop-engine compatibility — owner delegates support selection; 52 serial focused checks pass in installed Chrome/pinned Chromium/Firefox/WebKit, with four final guard-only probes. Test input/resize readiness corrections only; no runtime defect. See `performance/P5_COMPATIBILITY_REPORT.md`.
 - [x] P5 Session12 branded follow-up —26 Edge155/154 focused passes and two unpatched headed Firefox158/157.0.1 smokes. Safari session blocked by its setting; no runtime change. See `performance/P5_COMPATIBILITY_FOLLOWUP.md`.
-- [ ] P5 remaining acceptance — selected current/previous-major desktop Chrome/Edge/Firefox/Safari policy; actual branded/platform combinations and representative older integrated-GPU access/evidence remain pending. Preserve all prior aided-campaign limits; no gate waiver. Session 12 stays P5; do not repeat accepted campaigns.
+- [x] P5 remaining external check disposition — Session15 owner temporarily waives missing actual Safari, selected browser/OS combinations and representative older integrated-GPU checks. Waived/unverified, never passed; prior source/aided-campaign limits remain. No repeated campaign.
 - [x] P6 software/readiness-tool slice —96 browser/stress passes/six explicit opt-in skips, zero retries;488units, types/lint/build/audit; portable device kit verified;18 warmed Default/Low windows at60/150/300, frozen sources. See `performance/P6_READINESS_REPORT.md`.
-- [ ] P6 overall acceptance — missing browser/platform and physical older-device evidence stays release-blocking. Owner confirms no older machine.
-- [x] Owner content-order revision (2026-10-20) — explicit “yes proceed” permits C1–C7 after verified software checks while missing acceptance remains release-blocking. No evidence is waived.
+- [x] P6 external check disposition — Session15 owner temporarily waives the same missing browser/platform/physical checks. Software verified; external checks waived, not accepted evidence. No older machine is available.
+- [x] Owner content-order revision (2026-10-20) — explicit “yes proceed” permits C1–C7 after verified software checks while missing acceptance remains release-blocking. No evidence was waived by that initial revision; the later explicit Session15
+  temporary external-check waiver supersedes its release classification.
 
 P0's short gate is `npm run typecheck`, `npm test -- --run`, `npm run lint`,
 `npm run build`, serial boot/load/frame-measurement browser tests and the existing
@@ -125,7 +124,9 @@ Ordered by dependency, and sized so each ends in something playable.
 **Owner gate-order revision — 2026-10-20:** the owner explicitly replied “yes
 proceed” to continuing planned C1–C7 with missing browser/device acceptance
 release-blocking rather than build-blocking. P5 and P6 acceptance stay open;
-software readiness is verified. No additional optional features or sprites are selected.
+software readiness is verified. This historical ordering note is superseded by
+Session15's explicit temporary external-check waiver below. No additional
+optional features or sprites are selected.
 
 C1 foundation ownership (claim before edits): `src/game/core/archetypes/contracts.ts`,
 `src/game/content/define-theme.ts`, both production themes' `{weapons,index}.ts`,
@@ -164,8 +165,8 @@ C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
 15 unique affected serial browser cases (final feedback subset5), both themes/
 all models/all difficulties balance. Completed record and exact limits are in
 [master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
-[report](content/C1_SECOND_TOOL_REPORT.md). C2–C7 remain unstarted; missing
-P5/P6 physical/browser evidence remains release-blocking.
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3–C7 remain unstarted. The subsequent owner
+waiver supersedes the missing P5/P6 external checks' release-blocking classification.
 
 The delivery-kind union deliberately deferred in REC-051, because its shape
 depended on decisions slots had not made yet. Slots make it decidable: a melee
@@ -192,8 +193,37 @@ until it is equipped and present afterwards; the pacing simulator's build models
 cover both.
 
 ### C2 — Weapon evolution
+
+Session15 ownership (2026-10-20, claimed before edits):
+`src/game/core/archetypes/{ids,effects}.ts`, `src/game/content/define-theme.ts`,
+both themes' `{weapons,index,copy}.ts`, `src/game/systems/upgrades.ts`,
+`src/game/systems/upgrades/{describe-upgrade,upgrade-tiers}.ts`,
+`src/game/systems/weapons/weapon-loadout.ts`,
+`src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`tests/unit/weapons/weapon-evolution.test.ts`, affected content/tier/selector/simulation units,
+`tests/e2e/second-tool-v043.spec.ts`, `build/content/C2*`, `build/BUILD_PLAN_V0.4.md`, plan/status/master/progress/
+reconciliation/README/roadmap, product/theme/education/content map, P5 acceptance and
+P6 readiness reports/current handoff. No persistence, sprite, physics or dependency edits.
+
+- [x] Theme-owned evolution choice after four secondary-reach picks; replacement
+  preserves slot position/capacity/clock and transfers local gains to the new ID.
+- [x] Condition, stale/idempotent choice, reset, preview and combat/provenance rules.
+- [x] Both-theme bounded browser/readability, affected load, balance and software gate.
+
+Owner revision (2026-10-20): “yes waive those checks for now and continue with
+build for c2” temporarily waives the outstanding actual Safari, missing selected
+browser/OS combinations and older physical integrated-GPU acceptance checks.
+They are waived/unverified, never passed. This supersedes their release-blocking
+classification for now, without changing support evidence, historical results or
+other phase verification. No new browser/device campaign is authorized or needed.
+
 An evolved weapon is a new definition unlocked by a condition, not a mutated one.
 Upgrade tiers (REC-065) are the natural trigger surface.
+
+C2 verified locally2026-10-20:527units/60files, types/lint/build/diff;
+eight unique affected browser cases verified, corrected evolution subset2
+passes14.6s and final player-copy subset2 passes14.5s, one worker/zero retries. Both themes/ten models/three difficulties
+balance. See [report](content/C2_REPORT.md) and [master](MASTER_BUILD_PLAN.md#v0-4-3-c2).
 
 ### C3 — Shrines and curses
 A curse is the inverse of a shrine: pressure the player accepts for a reward,
@@ -292,19 +322,11 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — C2 evolution; external acceptance remains open
+## Next slice — C3 shrines and curses
 
-Sessions 8–11 evidence is in
-[`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
-The owner-authorized consolidated M5 lifecycle campaign passes within its
-explicit test/measurement limits; see
-[`performance/P5_CAMPAIGN_REPORT.md`](performance/P5_CAMPAIGN_REPORT.md).
-Session 11 selects the desktop support policy and passes 52 focused engine checks; see
-[`performance/P5_COMPATIBILITY_REPORT.md`](performance/P5_COMPATIBILITY_REPORT.md).
-Actual branded/platform and physical older-device evidence remains pending. Obtain
-access/captured results for the selected targets; support selection need not be repeated.
-Owner authorizes P6 software preparation alongside open P5 acceptance. Its verified slice is in
-[`performance/P6_READINESS_REPORT.md`](performance/P6_READINESS_REPORT.md).
-The owner explicitly approves this ordering on 2026-10-20; the missing evidence
-remains release-blocking. C1 is verified locally; continue C2 evolution in the same slot. No accepted campaign is repeated to imply progress.
-The next-session handoff is [SESSION_15_PROMPT.md](SESSION_15_PROMPT.md).
+C1/C2 local gates pass. Continue planned C3 in dependency order using the existing
+world model. [Session16 handoff](SESSION_16_PROMPT.md) is current. Owner temporarily
+waives missing actual Safari/browser-OS/older-device checks; preserve their
+unverified status and historical source bounds. No repeat native/long/device
+campaign, new publication, dependencies or sprites is implied. Review support
+claims against the recorded waiver rather than implying broad certification.

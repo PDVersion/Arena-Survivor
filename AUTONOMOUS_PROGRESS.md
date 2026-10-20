@@ -1212,3 +1212,47 @@ Session14 retired after recording and Session15 C2 successor written. C2–C7
 remain unstarted; no push/new PR/merge/deploy/workflow dispatch.
 Final review timestamp 2026-10-19T23:33:44.528178+00:00; actual elapsed
 1111.5seconds, within90-minute maximum, finished early.
+
+
+## Session15 — C2 evolution / temporary owner compatibility waiver
+
+Start2026-10-19 23:59:35UTC (2026-10-20 10:59:35AEDT); deadline2026-10-20
+01:29:35UTC; final20-minute reserve starts01:09:35UTC. Clean10b7883 on existing
+codex/v0.4.3. Authorities read in order; C1 verified. Read-only GitHub confirms
+PR26 merged2806720 as c6daeb6,39189877476 succeeds only2806720.
+Owner explicitly temporarily waives missing actual Safari, browser/OS combinations
+and older integrated-GPU checks; no missing evidence becomes passed. Proceed C2,
+local only, exact ownership claimed before runtime edits.
+
+
+Session15 verification/recording began00:03:27UTC, ahead of01:09:35 final20-minute
+reserve. C2 complete: four earned owner-reach picks unlock normal-draw same-slot
+Cyclone Vacuum/Runic Tempest; exact clocks/local tier gains/history retained,
+globals shared, stale choices no-op, reset restores baseline. Both-theme bounded
+cone/splash definitions and existing attack/provenance/presentation path used.
+No rate0.5/XP/enemy/dependency/persistence/sprite/physics teardown changes.
+Final527units/60files,types/lint/build/diff pass;18new deterministic cases.
+Initial8 serial browsers:7pass/1fixture failure25.055s, no automatic retries.
+Three eco targets have no splash lethal: correct only fixture to four targets;
+two evolution cases pass14.6s, then final simplified player-copy subset2pass14.5s.
+Eight unique affected cases verified cumulatively. Both-theme actual XP/80ms
+keyboard choices,57.6earned reach/1400clock retained;36/40actual damage,
+19.8/21.8splash,4kills/4/8XP, evolved direct+splash lethal sources. Short Low300
+mixed rounds peak300/current237/292, advance>2000sim-ms, exact ledger/backlog0.
+Test aids/software renderer/scenario limits and initial synchronous4-death backlog
+are explicit; no survival/native/audio/throughput/physical-device inference.
+Actual Chromium151.0.7922.34/SwiftShader WebGL/test Normal/FIT1600x900 displayed
+1280x720/DPR1/Darwin25.5.0arm64; Desktop Windows UA does not mean Windows hardware.
+Screenshots visually reviewed under testInfo.outputPath. Final source/tree/image/
+compiled hashes recorded. All60 balance model/theme/difficulty scenarios pass;
+CLI raw output retained after separate /tmp structured collector fails root loading
+(twice, no code/config patch). Bands assume earliest level7/ideal contact, not
+movement/overkill/offer frequency/survival. Known Phaser build warning persists.
+Owner temporary waiver recorded across current authorities/matrix/status; missing
+actual Safari/browser-OS/older-device checks are waived/unverified, never passed.
+Other broad/startup/long/full campaigns deferred; marker exclusion inspected.
+Owned servers/browsers cleaned,4173 no listener; unknowns/review4213 untouched.
+Local-only C2 implementation/tests/status/master/reconciliation/progress commit;
+Session15 retired after durable completed record, Session16/C3 successor written.
+No push/newPR/merge/deploy/dispatch; no matching-head CI claim beyond2806720.
+Final review timestamp2026-10-20T00:07:30.048213+00:00; actual elapsed475.0seconds, within90-minute maximum, finished early.

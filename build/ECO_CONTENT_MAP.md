@@ -15,6 +15,8 @@ and **Parked** is not offered by this theme.
 | --- | --- | --- | --- | --- |
 | `character.starter` | Environment Protector | Character | A field operative clearing an overflowing waste site. | Live |
 | `weapon.starter` | Cleanup Grabber | Melee weapon | A mechanical grabber that extends through every item in its narrow path, then retracts. | Live |
+| `weapon.secondary_evolved` | Cyclone Vacuum | Evolved melee cone | Replace Cleanup Vacuum after four owned reach picks; wider four-target cone and stronger nearby splash, keeping earned reach. | V0.4.3 C2 |
+| `upgrade.evolve_secondary` | Evolve to Cyclone Vacuum | Evolution choice | One normal level-up choice; replaces in the same slot, no extra slot. | V0.4.3 C2 |
 | `weapon.secondary` | Cleanup Vacuum | Melee cone | Automatically clears up to three targets in a short cone; each hit splashes nearby targets. | V0.4.3 C1 |
 | `upgrade.equip_secondary` | Equip Cleanup Vacuum | Weapon acquisition | Fill the empty second automatic-tool slot through a normal level-up choice. | V0.4.3 C1 |
 | `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum; appears after it is equipped. | V0.4.3 C1 |
