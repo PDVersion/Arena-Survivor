@@ -244,7 +244,7 @@ Do not repeat the unchanged long campaign, native case or another inventory-only
 slice absent a reproduced defect, changed source or selected missing requirement.
 Preserve the unassisted/hazard, direct-active-destruction and production-performance
 limitations rather than silently converting a fixture pass into broader readiness.
-P6/content remain gated. Session 11 result: [completed record](../MASTER_BUILD_PLAN.md#v0-4-3-p5-compatibility); current successor is [current C3 handoff](../SESSION_16_PROMPT.md).
+P6/content remain gated. Session 11 result: [completed record](../MASTER_BUILD_PLAN.md#v0-4-3-p5-compatibility); current successor is [checkpoint status](../BUILD_STATUS.md).
 
 ## Session 11 — delegated support selection and executed engine matrix
 

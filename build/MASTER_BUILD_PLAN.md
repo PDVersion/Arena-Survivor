@@ -30,6 +30,7 @@ consolidation; duplicate plan files are removed rather than maintained in parall
 - [V0.4.3 — Verified P5 lifecycle and startup slices](#v0-4-3-p5-slices)
 - [V0.4.3 — Verified PR #25 CI repair](#v0-4-3-ci-repair)
 - [V0.4.3 — C2 same-slot evolution](#v0-4-3-c2)
+- [V0.4.3 — C3 shrines and curses](#v0-4-3-c3)
 
 <a id="v0-1"></a>
 ## V0.1 — First playable
@@ -3054,3 +3055,50 @@ See [C2 report](content/C2_REPORT.md) and exact source/result/build hashes.
 Full/native/long/startup campaigns deferred; marker exclusion inspected without
 repeating startup browsers. Owned server/browser resources cleaned,4213 untouched.
 Session15 prompt retired after this durable record; Session16 continues C3.
+
+
+<a id="v0-4-3-c3"></a>
+### V0.4.3 C3 — additional shrine and run-local curses (2026-10-20)
+
+Add Unmanaged Dump/Shrine of Defiance as sixth scheduled shrine at86% progress:
++1.2Chaos and×1.4XP product through the existing world-multiplier actor, placement,
+interaction, guide and spent/reset paths. Two one-time normal-level-up curses:
+Overflow Contract/Frenzy Pact (×1.3arrival/×1.2XP products) and Contamination Pact/
+Doom Pact (+0.8Chaos/×1.25XP product). Both themes own definitions/offers/copy.
+Curse acceptance records stable IDs separately from shrine activations, composes
+existing world products exactly once, stays untiered, rejects stale choices without
+spending pending credit, and clears on restart. No actors/timers/queues/profile
+adapter, new enemy tuning, sprite/delivery or physics teardown change.
+
+Screenshot review reproduces a hidden numeric reward: the existing three-row
+card detail cap truncates XP after secondary pressure effects. Prioritize resolved
+XP/Chaos/arrivals for curse descriptions only; retain all other lines/order.
+Actual rendered-text and deterministic regression verify visible reward. A test
+expected×1.5 after an accepted arrival curse but omitted the existing Chaos bonus;
+correct expected×1.8, not gameplay coefficients. Reverse product-order tests use
+floating tolerance, preserving fractional XP without artificial rounding.
+
+Ownership: core IDs/contracts/effects; theme validation and both themes' shrines/
+curses/index/copy; world-modifiers, upgrades/tiers/describer, run state and narrow
+scene wiring; simulator initial-world fixture and balance CLI; alternate fixture,
+world/content/tier units plus20 C3 rule cases and bounded browser fixture; reports
+and governing records. Existing shrine/upgrade tests keep meaningful assertions
+with new baseline metadata, optional role and all-role Chaos5.4.
+
+547units/61files,typecheck/lint/build/diff pass. Initial7 browsers pass40.098s;
+visual correction followed by2fixture expectation failures, corrected final2pass
+12.4s. Seven unique affected cases verified, all serial/one worker/zero retries.
+Both themes use real XP/seeded eligible draw/80ms keyboard and E activation,
+repeat refusal, tagged0.375XP→1.18125once, pause/resize and reset. Short requested
+300-mixed active intervals stay≤cap300/current278/300, backlog0; scripted clock/
+travel/aids and software renderer limits explicit. Existing natural shortened
+arrival/placement/guide and retained Duplication cases also pass.
+
+120 coarse balance scenarios compare60 baseline (raw output identical to C2)
+with60 all-C3-choices-at-start fixtures, not human survival/offer-frequency/
+throughput evidence. See [C3 report](content/C3_REPORT.md) and exact source/result/
+build/image hashes. External browser/device checks remain temporarily waived/
+unverified under owner revision; old P5/P6 results/kit remain source-bound.
+No full/native/long/startup campaign, publication or dependency change. Owned
+resources cleaned and4213 untouched. Session16 retired after recording;
+Session17 continues C4 elite modifiers. C4–C7 remain unbuilt.

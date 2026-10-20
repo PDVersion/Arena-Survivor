@@ -40,6 +40,14 @@ export const shrines = [
     enemySpawnMultiplier: 1, xpMultiplier: 1,
     presentationToken: "shrine",
   },
+  {
+    id: archetypeIds.shrine.escalation,
+    radius: 24, interactionRadius: 120,
+    spawnCount: 0, spawnDurationMs: 0, rewardMultiplier: 1,
+    effectKind: "world_multiplier", chaosIncrease: 1.2,
+    enemySpawnMultiplier: 1, xpMultiplier: 1.4,
+    presentationToken: "shrine",
+  },
 ] as const satisfies readonly ShrineDefinition[];
 
 /**
@@ -72,5 +80,6 @@ export const shrineTuning = {
     { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.34 },
     { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.52 },
     { shrineId: archetypeIds.shrine.duplication, appearAt: 0.72 },
+    { shrineId: archetypeIds.shrine.escalation, appearAt: 0.86 },
   ],
 } as const satisfies ShrinesTuning;

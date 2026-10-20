@@ -1256,3 +1256,51 @@ Local-only C2 implementation/tests/status/master/reconciliation/progress commit;
 Session15 retired after durable completed record, Session16/C3 successor written.
 No push/newPR/merge/deploy/dispatch; no matching-head CI claim beyond2806720.
 Final review timestamp2026-10-20T00:07:30.048213+00:00; actual elapsed475.0seconds, within90-minute maximum, finished early.
+
+
+## Session16 — C3 shrines and curses /2026-10-20 Sydney
+
+Start00:13:27UTC (11:13:27AEDT); deadline01:43:27UTC; final20-minute reserve
+starts01:23:27UTC. Clean d113617, existingcodex/v0.4.3. Required authority order,
+C2 record and C3/product/theme/content/save boundaries read. Read-only GitHub
+confirms mergedPR26 head2806720 as c6daeb6 and39189877476 succeeds only2806720.
+Temporary owner external-browser/device waiver remains explicit, never a pass.
+C3 paths claimed before edits; local only. Add one scheduled world-pressure/XP
+shrine and two one-time run-local level-up curses using existing world products.
+
+
+Session16 verification/recording begins00:19:07UTC, ahead of01:23:27 final20-minute
+reserve. C3 complete locally: sixth scheduled world-multiplier shrine and two
+one-time run-local level-up curses per production theme. Stable curse catalog/
+accepted IDs compose existing pressure/reward products, no new actor/timer/queue;
+existing source reward and XP collection remain separate and fractional.
+Screenshots reproduce hidden numeric XP under card's three-line cap: prioritize
+resolved XP/Chaos/arrivals for curse lines only. Deterministic/actual rendered-text
+regressions and final both-theme images verify visibility. One browser follow-up
+expects1.5 instead of1.8 after arrival curse, omitting existing Chaos XP curve;
+correct fixture and add composed-preview assertion, no runtime tuning fix.
+Final547units/61files,types/lint/build/diff pass.20 new deterministic cases.
+Initial7 browsers pass40.098s under150s cap; intermediate2 fixture failures
+982/874ms; corrected final2pass12.4s under90s cap, zero automatic retries.
+Seven unique affected cases verified cumulatively. Real XP/seeded draw/80ms
+keyboard, E activation/repeat refusal, scheduled scripted clock258000/travel,
+fractional tagged0.375→1.18125once/duplicate0, pause1000x700resize/restart.
+Combined worldChaos3/spawnproduct1.3/XPproduct2.1, resolvedspawn1.95/XP3.15.
+Brief requested300mixed active intervals current278eco/300knight≤cap300,
+backlog0, elapsed259037/259523ms; no sampled peak/throughput claim. Existing
+shortened natural six-shrine arrivals/placement/guide and retained duplication
+also pass. No contact/hazards/audio, scripted fixtures/XP cap and software-renderer
+limits explicit. ActualChromium151.0.7922.34/SwiftShader WebGL/testNormal/rate0.5,
+FIT1600x900initial1280x720/DPR1,Darwin25.5.0arm64; Desktop Windows UA is not
+Windows hardware. Final source/tree/build/image hashes recorded; images reviewed.
+120balance scenarios pass, baseline raw output matches C2 exactly; combined C3
+fixture assumes choices at start, no travel/offer frequency/survival inference.
+Known Phaser chunk warning persists; no dependencies/persistence/sprites/physics
+teardown or global tuning. Full/stress/native/long/startup campaigns deferred;
+compiled marker exclusion inspected. Temporary external browser/device waiver
+remains waived/unverified. Historical P5/P6 measurements/device kit source-bound.
+Owned servers/browsers cleaned,4173 no listener;4213/unknowns untouched. Local C3
+implementation/tests/report/status/checklist/reconciliation/progress/master in one
+reviewed commit. Retired Session16 after recording; Session17/C4 successor written.
+No push/newPR/merge/deploy/dispatch or later-head CI claim. C4–C7 unbuilt.
+Final review timestamp2026-10-20T00:23:38.527581+00:00; actual elapsed611.5seconds, within90-minute maximum, finished early.

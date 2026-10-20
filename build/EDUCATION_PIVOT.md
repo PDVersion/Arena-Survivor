@@ -599,3 +599,14 @@ as extra picks toward the condition. No paired-equipment subsystem, environmenta
 fact/material-effectiveness claim, persistence or sprite generation is introduced.
 The education document's earlier max-level/paired-item example remains exploratory;
 this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — readable, voluntary pressure choices
+
+Unmanaged Dump adds a spatial Pollution/XP bargain. Overflow Contract and
+Contamination Pact are one-time normal level-up choices for more arrivals or
+more Pollution in exchange for XP, lasting only for that run. Their names and
+numeric effects are theme-owned game fiction, not environmental facts or
+material-effectiveness claims. No Knowledge Shrine/question or new enemy/material
+identity is introduced. The detail card prioritizes the actual reward and primary
+cost so the voluntary bargain stays readable under the three-line limit.

@@ -180,7 +180,7 @@ export interface UpgradeDescription {
 export function describeUpgrade(
   state: UpgradeableState,
   upgrade: UpgradeDefinition,
-  theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning">,
+  theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning" | "curses">,
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
   const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
@@ -197,6 +197,7 @@ export function describeUpgrade(
     (skillId) => skillMaxLevel(theme.skills, skillId),
     multiplier,
     theme.weapons,
+    theme.curses,
   );
 
   const beforeStats = selectPlayerStats(state, theme, evolution?.fromWeaponId ?? upgrade.ownerWeaponId);
@@ -214,8 +215,14 @@ export function describeUpgrade(
 
   const beforeWorld = selectWorldLines(state.world, theme);
   const afterWorld = selectWorldLines(after.world, theme);
-  afterWorld.forEach((next, index) => {
-    const previous = beforeWorld[index];
+  // The card shows only three detail rows: keep a curse's reward and primary
+  // costs visible before its secondary pressure effects.
+  const worldOrder: readonly WorldKey[] = ["xpGain", "chaos", "enemySpawn", "enemyHealth", "enemyDamage", "eliteChance", "threat"];
+  const orderedWorld = upgrade.effects.some((effect) => effect.kind === "curse.accept")
+    ? [...afterWorld].sort((a, b) => worldOrder.indexOf(a.key) - worldOrder.indexOf(b.key))
+    : afterWorld;
+  orderedWorld.forEach((next) => {
+    const previous = beforeWorld.find((line) => line.key === next.key);
     if (!previous || previous.value === next.value) return;
     lines.push(Object.freeze({ label: next.label, from: previous.display, to: next.display }));
   });

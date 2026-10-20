@@ -8,6 +8,7 @@ import { sprites } from "./sprites";
 import { weapons, weaponSlotCount, weaponAcquisition, weaponEvolution } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades, upgradeTierTuning } from "./upgrades";
+import { curses, curseOffers } from "./curses";
 import { shrines, shrineTuning } from "./shrines";
 import { skills } from "./skills";
 import { elites } from "./elites";
@@ -32,8 +33,9 @@ export const knightMagicTheme = defineTheme({
   weaponSlotCount,
   enemies,
   pickups,
-  upgrades: [...upgrades, weaponAcquisition, weaponEvolution, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
+  upgrades: [...upgrades, ...curseOffers, weaponAcquisition, weaponEvolution, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
   shrines,
+  curses,
   skills,
   elites,
   hazards,

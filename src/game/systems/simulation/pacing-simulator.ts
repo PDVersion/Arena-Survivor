@@ -33,6 +33,8 @@ export interface PacingOptions {
   readonly bucketMs?: number;
   /** Chaos the run is assumed to sit at. `1` is a shrine-free run. */
   readonly chaos?: number;
+  /** Explicit immutable world fixture; no automatic shrine travel/choice model. */
+  readonly initialWorld?: WorldState;
   readonly seed?: number;
 }
 
@@ -80,7 +82,7 @@ function chaosWorldState(chaos: number): WorldState {
 export function simulatePacing(options: PacingOptions): PacingReport {
   const stepMs = options.stepMs ?? DEFAULT_STEP_MS;
   const bucketMs = options.bucketMs ?? DEFAULT_BUCKET_MS;
-  const chaos = options.chaos ?? 1;
+  const chaos = options.initialWorld?.chaos ?? options.chaos ?? 1;
   if (!Number.isFinite(options.durationMs) || options.durationMs <= 0) {
     throw new Error("Run duration must be greater than zero");
   }
@@ -97,7 +99,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
   const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
     .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
-  const world = chaosWorldState(chaos);
+  const world = options.initialWorld ?? chaosWorldState(chaos);
   const random = createSeededRandom(options.seed ?? SIMULATION_SEED);
 
   let progression: ProgressionState = createProgressionState(tuning.progression.xpCurve);
@@ -278,7 +280,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
   const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
     .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
-  const world = chaosWorldState(options.chaos ?? 1);
+  const world = options.initialWorld ?? chaosWorldState(options.chaos ?? 1);
 
   return Object.freeze(
     report.buckets.map((bucket) => {

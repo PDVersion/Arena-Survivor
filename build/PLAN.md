@@ -1450,3 +1450,22 @@ as extra picks toward the condition. No paired-equipment subsystem, environmenta
 fact/material-effectiveness claim, persistence or sprite generation is introduced.
 The education document's earlier max-level/paired-item example remains exploratory;
 this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — voluntary world bargains
+
+One additional scheduled shrine is Unmanaged Dump / Shrine of Defiance. It
+raises Pollution/Chaos and the run's XP product through the existing world model.
+Two one-time level-up curses offer arrival pressure or Pollution/Chaos pressure
+for XP: Overflow Contract / Frenzy Pact and Contamination Pact / Doom Pact.
+Acceptance lasts for the current run; walking past a shrine or choosing another
+card declines it. Restart clears all accepted curses and world products.
+
+Curse definitions own their pressure/reward values; normal upgrade entries refer
+to their stable IDs. Cards show resolved XP reward and primary pressure first,
+because only three detail rows fit. Other pressure effects remain inspectable
+through the world stats; chosen bargains remain in the upgrade tally. The sixth
+shrine arrives at86% authored duration using existing placement/interaction.
+This bounded C3 adds these choices, not every illustrative shrine/curse example
+above; no Blood Altar/forced legendary encounter, knowledge question, boss,
+persistence or sprite work is introduced.

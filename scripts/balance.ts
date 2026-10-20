@@ -17,7 +17,11 @@ import { buildModels, findBuildModel } from "../src/game/systems/simulation/buil
 import { formatPacingReport, formatTimeToKill } from "../src/game/systems/simulation/format-report";
 import { simulatePacing, timeToKillTable } from "../src/game/systems/simulation/pacing-simulator";
 
+import { archetypeIds } from "../src/game/core/archetypes/ids";
+import { acceptCurse, applyWorldChoice, createWorldState } from "../src/game/systems/chaos/world-modifiers";
+
 interface Options {
+  readonly world: "baseline" | "c3";
   readonly difficulty: DifficultyId | "all";
   readonly build: string;
   readonly minutes: number;
@@ -40,7 +44,10 @@ function parseArgs(argv: readonly string[]): Options {
   if (!Number.isFinite(chaos) || chaos < 1) throw new Error("--chaos must be at least 1");
   const difficulty = values.get("difficulty") ?? "normal";
   if (difficulty !== "all" && !isDifficultyId(difficulty)) throw new Error("--difficulty must be beginner, normal, experienced or all");
+  const world = values.get("world") ?? "baseline";
+  if (world !== "baseline" && world !== "c3") throw new Error("--world must be baseline or c3");
   return {
+    world,
     difficulty,
     build: values.get("build") ?? "all",
     minutes,
@@ -60,6 +67,15 @@ function main(): void {
     throw new Error(`Unknown theme: ${options.theme}. Known themes: ${known}`);
   }
 
+  let initialWorld = createWorldState();
+  if (options.world === "c3") {
+    const shrine = theme.shrines.find((entry) => entry.id === archetypeIds.shrine.escalation);
+    if (!shrine || theme.curses.length === 0) throw new Error("Theme lacks C3 world choices");
+    initialWorld = applyWorldChoice(initialWorld, { ...shrine, shrineId: shrine.id });
+    for (const curse of theme.curses) initialWorld = acceptCurse(initialWorld, curse);
+    process.stdout.write("C3 world fixture: new shrine and both curses applied at start; no traversal/offer-frequency/survival model.\n");
+  }
+
   const models =
     options.build === "all"
       ? buildModels
@@ -77,6 +93,7 @@ function main(): void {
         build,
         durationMs: options.minutes * 60_000,
         chaos: options.chaos,
+        ...(options.world === "c3" ? { initialWorld } : {}),
       };
       const report = simulatePacing(pacingOptions);
       process.stdout.write(`\n${build.description}\n`);

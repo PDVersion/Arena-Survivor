@@ -261,3 +261,21 @@ as extra picks toward the condition. No paired-equipment subsystem, environmenta
 fact/material-effectiveness claim, persistence or sprite generation is introduced.
 The education document's earlier max-level/paired-item example remains exploratory;
 this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — shrine and curse catalog
+
+| Stable role | Eco | Knight/magic |
+| --- | --- | --- |
+| `shrine.escalation` | Unmanaged Dump | Shrine of Defiance |
+| `curse.frenzy` | Overflow Contract | Frenzy Pact |
+| `curse.escalation` | Contamination Pact | Doom Pact |
+
+Each theme now owns `curses.ts` beside shrines/upgrades. A curse is a run-local,
+one-time world bargain; its normal level-up offer uses `curse.accept` and records
+stable accepted IDs separately from shrine activations. Shared world resolution
+composes Chaos additions and spawn/XP products, retaining fractional rewards.
+Curses do not add actors, timers, queues, inherited source rewards or profiles.
+The new shrine uses the existing world-multiplier actor/arrival/guide path.
+Both production themes remain complete; a small alternate fixture may omit this
+optional new shrine and provide an empty curse registry.

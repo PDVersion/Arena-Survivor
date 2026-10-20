@@ -1,6 +1,7 @@
 import type {
   CharacterId,
   ContentId,
+  CurseId,
   EnemyId,
   HazardId,
   PickupId,
@@ -466,6 +467,15 @@ export interface UpgradeDefinition {
   readonly presentationToken: keyof Pick<ThemePalette, "accent" | "critical" | "overcritical" | "shrine">;
 }
 
+/** Run-local voluntary world bargain, accepted once through a level-up choice. */
+export interface CurseDefinition {
+  readonly id: CurseId;
+  readonly chaosIncrease: number;
+  readonly enemySpawnMultiplier: number;
+  readonly xpMultiplier: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "shrine">;
+}
+
 export interface ShrineDefinition {
   readonly id: ShrineId;
   readonly radius: number;
@@ -493,6 +503,7 @@ export interface ThemeManifest {
   readonly pickups: readonly PickupDefinition[];
   readonly upgrades: readonly UpgradeDefinition[];
   readonly shrines: readonly ShrineDefinition[];
+  readonly curses: readonly CurseDefinition[];
   readonly skills: readonly SkillDefinition[];
   readonly elites: readonly EliteDefinition[];
   readonly hazards: readonly HazardDefinition[];

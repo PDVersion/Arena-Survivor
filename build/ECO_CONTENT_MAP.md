@@ -107,3 +107,16 @@ World Effects, Shrines, and Hazards. Names/descriptions come from theme copy;
 levels, values, caps, discovered state, and relationships come from live theme
 definitions and session statistics. This document supplies structure and
 wording review, never a second executable ruleset.
+
+
+## V0.4.3 C3 — sites and run-local contracts
+
+| Stable ID | Name | Decision / wording |
+| --- | --- | --- |
+| `shrine.escalation` | Unmanaged Dump | Raise Pollution for the rest of this run in exchange for more impact credit. One scheduled site at86% progress; activation is voluntary. |
+| `curse.frenzy` / `upgrade.accept_frenzy` | Overflow Contract | Accept more arrivals for more impact credit for the rest of this run. Once per run, chosen at level-up. |
+| `curse.escalation` / `upgrade.accept_escalation` | Contamination Pact | Raise Pollution for more impact credit for the rest of this run. Once per run, chosen at level-up. |
+
+All multipliers and effects come from shrine/curse definitions. These are game
+risk/reward choices, not educational fact cards. Restart clears the contracts;
+accepted contract names remain visible in the run's equipment/upgrade tally.

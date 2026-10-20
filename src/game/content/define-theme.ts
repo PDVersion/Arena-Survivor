@@ -391,6 +391,22 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required pickup: ${archetypeIds.pickup.experience}`);
   }
 
+  const curseIds = new Set<string>();
+  const curses = Array.isArray(theme.curses) ? theme.curses : [];
+  if (!Array.isArray(theme.curses)) issues.push("curses registry is required");
+  for (const curse of curses) {
+    if (curseIds.has(curse.id)) issues.push(`duplicate curse id: ${curse.id}`);
+    curseIds.add(curse.id);
+    if (!Object.values(archetypeIds.curse).includes(curse.id)) issues.push(`unsupported curse id: ${curse.id}`);
+    if (!Number.isFinite(curse.chaosIncrease) || curse.chaosIncrease < 0 ||
+      !Number.isFinite(curse.enemySpawnMultiplier) || curse.enemySpawnMultiplier < 1 ||
+      (curse.chaosIncrease === 0 && curse.enemySpawnMultiplier === 1) ||
+      !Number.isFinite(curse.xpMultiplier) || curse.xpMultiplier <= 1) {
+      issues.push(`${curse.id} requires finite positive pressure and XP reward`);
+    }
+    if (!(curse.presentationToken in theme.tokens.palette)) issues.push(`${curse.id} references missing presentation token`);
+  }
+
   const upgradeIds = new Set<string>();
   const upgrades = Array.isArray(theme.upgrades) ? theme.upgrades : [];
   if (!Array.isArray(theme.upgrades)) issues.push("upgrades registry is required");
@@ -401,6 +417,10 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       !weapons.find((weapon) => weapon.id === upgrade.ownerWeaponId)?.upgrades?.some((entry: UpgradeDefinition) => entry === upgrade))) {
       issues.push(`${upgrade.id} must be authored beside its owning weapon`);
     }
+    const curseEffects = Array.isArray(upgrade.effects) ? upgrade.effects.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "curse.accept") : [];
+    if (curseEffects.length && (curseEffects.length !== 1 || upgrade.effects.length !== 1 || upgrade.maxLevel !== 1 || upgrade.ownerWeaponId)) {
+      issues.push(`${upgrade.id} curse must be a standalone one-time choice`);
+    }
     const acquisition = Array.isArray(upgrade.effects) ? upgrade.effects.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve") : [];
     if (acquisition.length > 0 && (acquisition.length !== 1 || upgrade.effects.length !== 1 || upgrade.maxLevel !== 1 || upgrade.ownerWeaponId)) {
       issues.push(`${upgrade.id} acquisition must be a standalone one-time choice`);
@@ -409,6 +429,10 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
+        if (effect.kind === "curse.accept") {
+          if (!curseIds.has(effect.curseId)) issues.push(`${upgrade.id} references missing curse: ${effect.curseId}`);
+          continue;
+        }
         if (effect.kind === "weapon.evolve") {
           const prerequisite = upgrades.find((entry) => entry.id === effect.requiredUpgradeId);
           if (!weaponIds.has(effect.weaponId) || !weaponIds.has(effect.fromWeaponId) || effect.weaponId === effect.fromWeaponId) {
@@ -513,7 +537,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!shrineIds.has(archetypeIds.shrine.spawnSurge)) {
     issues.push(`missing required shrine: ${archetypeIds.shrine.spawnSurge}`);
   }
-  for (const requiredId of Object.values(archetypeIds.shrine)) {
+  for (const requiredId of [archetypeIds.shrine.spawnSurge, archetypeIds.shrine.greed, archetypeIds.shrine.multiplicity, archetypeIds.shrine.duplication]) {
     if (!shrineIds.has(requiredId)) issues.push(`missing required shrine: ${requiredId}`);
   }
 
@@ -667,6 +691,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     ...pickupIds,
     ...upgradeIds,
     ...shrineIds,
+    ...curseIds,
     ...skillIds,
     ...hazardIds,
   ]);

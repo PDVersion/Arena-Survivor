@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1 and C2 are verified; C3 is next. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C3 are verified; C4 is next. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -165,7 +165,7 @@ C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
 15 unique affected serial browser cases (final feedback subset5), both themes/
 all models/all difficulties balance. Completed record and exact limits are in
 [master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
-[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3–C7 remain unstarted. The subsequent owner
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4–C7 remain unstarted. The subsequent owner
 waiver supersedes the missing P5/P6 external checks' release-blocking classification.
 
 The delivery-kind union deliberately deferred in REC-051, because its shape
@@ -226,9 +226,38 @@ passes14.6s and final player-copy subset2 passes14.5s, one worker/zero retries. 
 balance. See [report](content/C2_REPORT.md) and [master](MASTER_BUILD_PLAN.md#v0-4-3-c2).
 
 ### C3 — Shrines and curses
+
+Session16 ownership (2026-10-20, claimed before edits):
+`src/game/core/archetypes/{ids,contracts,effects}.ts`, `src/game/content/define-theme.ts`,
+both production themes' `{shrines,curses,index,copy}.ts`,
+`src/game/systems/chaos/world-modifiers.ts`, `src/game/systems/upgrades.ts`,
+`src/game/systems/upgrades/{upgrade-tiers,describe-upgrade}.ts`,
+`src/game/state/run-state.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/systems/simulation/pacing-simulator.ts`, `scripts/balance.ts`,
+`tests/fixtures/alternate-theme.ts`, affected world/content/shrine/tier/selector units,
+`tests/unit/chaos/curses.test.ts`, `tests/e2e/shrines-curses-v043.spec.ts`,
+`tests/e2e/{phase-five-v02,shrine-arrivals}.spec.ts` if catalog-size assertions change,
+`build/content/C3*`, status/plan/master/progress/reconciliation/README/roadmap,
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP and current/successor handoffs.
+Retirement link-only dependencies: `build/content/C2_REPORT.md`,
+`build/performance/P5_ACCEPTANCE_REPORT.md`; preserve their historical evidence.
+
+- [x] Add scheduled pressure-for-XP shrine in both themes through existing world model.
+- [x] Add two one-time level-up curses, run-local acceptance/provenance/reset,
+  clear real-number offer preview and no repeat/tier-scaled bargain.
+- [x] Validate definitions/references/composition and preserve exact XP/caps/causal work.
+- [x] Both-theme affected browsers/readability, pacing and final software gate.
+
 A curse is the inverse of a shrine: pressure the player accepts for a reward,
 but persistent and chosen at a different moment. Both resolve through the world
 model from REC-035, which already takes any number of contributors.
+
+C3 verified locally2026-10-20:547units/61files, types/lint/build/diff; seven
+unique affected serial browser cases verified (initial7pass40.1s, final C3 subset2
+pass12.4s after visible-reward ordering correction and fixture XP correction).
+Both themes/ten models/three difficulties/baseline+combined world fixture balance
+(120scenarios; baseline output identical to C2). See [report](content/C3_REPORT.md)
+and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4–C7 are next in dependency order.
 
 ### C4 — Elite modifiers
 One baseline elite becomes a small family — an elite that splits, one that
@@ -322,11 +351,10 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — C3 shrines and curses
+## Next slice — C4 elite modifiers
 
-C1/C2 local gates pass. Continue planned C3 in dependency order using the existing
-world model. [Session16 handoff](SESSION_16_PROMPT.md) is current. Owner temporarily
-waives missing actual Safari/browser-OS/older-device checks; preserve their
-unverified status and historical source bounds. No repeat native/long/device
-campaign, new publication, dependencies or sprites is implied. Review support
-claims against the recorded waiver rather than implying broad certification.
+C1–C3 local gates pass. Continue the planned elite family while preserving
+REC-037 inheritance and exact causal/reward rules. [Session17 handoff](SESSION_17_PROMPT.md)
+is current. The temporary owner waiver for missing actual Safari/browser-OS/
+older physical-device checks remains waived/unverified, never a pass. No repeat
+broad/native/long campaign, new publication, dependency or sprite scope.

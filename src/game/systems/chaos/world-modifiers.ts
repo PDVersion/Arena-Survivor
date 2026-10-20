@@ -1,4 +1,5 @@
-import type { ShrineId } from "../../core/archetypes/ids";
+import type { CurseDefinition } from "../../core/archetypes/contracts";
+import type { CurseId, ShrineId } from "../../core/archetypes/ids";
 import type { DifficultyTuning } from "../../core/archetypes/tuning";
 import { resolveModifiers } from "../modifiers/resolve-modifiers";
 
@@ -26,6 +27,7 @@ export interface WorldState {
   readonly chaos: number;
   readonly enemySpawnMultiplier: number;
   readonly xpMultiplier: number;
+  readonly acceptedCurseIds: readonly CurseId[];
   readonly shrineActivations: Readonly<Partial<Record<ShrineId, number>>>;
 }
 
@@ -43,7 +45,7 @@ export interface WorldModifierSelection {
 }
 
 export function createWorldState(): WorldState {
-  return Object.freeze({ chaos: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, shrineActivations: Object.freeze({}) });
+  return Object.freeze({ chaos: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, acceptedCurseIds: Object.freeze([]), shrineActivations: Object.freeze({}) });
 }
 
 /** World pressure from any source. Shrines and dangerous upgrades share it. */
@@ -57,6 +59,13 @@ export function applyWorldModifier(
     enemySpawnMultiplier: state.enemySpawnMultiplier * choice.enemySpawnMultiplier,
     xpMultiplier: state.xpMultiplier * choice.xpMultiplier,
   });
+}
+
+/** Exact-once run ownership; no actor, timer or additional simulation queue. */
+export function acceptCurse(state: WorldState, curse: CurseDefinition): WorldState {
+  if (state.acceptedCurseIds.includes(curse.id)) return state;
+  return Object.freeze({ ...applyWorldModifier(state, curse),
+    acceptedCurseIds: Object.freeze([...state.acceptedCurseIds, curse.id]) });
 }
 
 export function applyWorldChoice(

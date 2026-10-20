@@ -123,6 +123,11 @@ export const copy = {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",
     },
+    [archetypeIds.shrine.escalation]: { name: "Unmanaged Dump", description: "Raise world pressure for the rest of this run in exchange for more XP." },
+    [archetypeIds.curse.frenzy]: { name: "Overflow Contract", description: "Accept more arrivals in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.upgrade.acceptFrenzy]: { name: "Overflow Contract", description: "Accept more arrivals in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.curse.escalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.upgrade.acceptEscalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
     [archetypeIds.weapon.secondaryEvolved]: {
       name: "Cyclone Vacuum",
       description: "A wider automatic cone with stronger hits and nearby splash.",

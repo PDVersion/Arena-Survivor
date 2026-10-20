@@ -1,0 +1,3967 @@
+{
+  "baselineCommit": "d113617",
+  "branch": "codex/v0.4.3",
+  "sourceEvidence": "Final hashes match corrected two C3 cases. Initial seven predates only curse detail ordering/test regression and fixture XP expectation correction. Five existing cases passed before that curse-only ordering change; seven unique cases verified cumulatively, not eleven distinct cases or a full suite.",
+  "host": {
+    "os": "Darwin25.5.0 arm64 (uname observed)",
+    "hardware": "M5 Pro/48GiB retained prior inventory, not re-measured",
+    "renderer": "captured ANGLE Vulkan SwiftShader WebGL, not physical hardware acceptance",
+    "viewport": "Initial1280x720/DPR1,1600x900FIT; pause/load screenshots after requested1000x700 resize. No separately measured post-resize canvas dimensions.",
+    "userAgent": "Desktop Windows preset on macOS; actual browser.version captured separately"
+  },
+  "verification": {
+    "typecheck": "pass",
+    "units": 547,
+    "unitFiles": 61,
+    "lint": "pass",
+    "build": "pass, known Phaser size warning",
+    "diffCheck": "pass",
+    "productionMarkerExclusion": "compiled JS/entry HTML only; no repeated browser startup guard",
+    "automaticRetries": 0,
+    "uniqueAffectedBrowserCases": 7
+  },
+  "runs": [
+    {
+      "label": "initial-seven",
+      "stats": {
+        "startTime": "2026-10-20T00:17:31.308Z",
+        "duration": 40098.467000000004,
+        "expected": 7,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawSha256": "f8ddd726a27f5501ad836acfb667e17ffa4e2392b1d539ee31e3af45a15e5885",
+      "cases": [
+        {
+          "title": "Chaos resolves two Multiplicity shrines through one world model",
+          "status": "passed",
+          "durationMs": 1199,
+          "retry": 0,
+          "observations": []
+        },
+        {
+          "title": "all shrine roles activate exactly once and Duplication retains every copy",
+          "status": "passed",
+          "durationMs": 464,
+          "retry": 0,
+          "observations": []
+        },
+        {
+          "title": "world multipliers restart to a clean 1.0x state",
+          "status": "passed",
+          "durationMs": 2502,
+          "retry": 0,
+          "observations": []
+        },
+        {
+          "title": "shrines arrive across the run rather than all at the start",
+          "status": "passed",
+          "durationMs": 21430,
+          "retry": 0,
+          "observations": []
+        },
+        {
+          "title": "the codex states what every shrine does",
+          "status": "passed",
+          "durationMs": 1213,
+          "retry": 0,
+          "observations": []
+        },
+        {
+          "title": "eco-guardian chooses run-local curses and activates the new scheduled shrine once",
+          "status": "passed",
+          "durationMs": 6090,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "rate": 0.5,
+                "dpr": 1,
+                "viewport": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "logical": {
+                  "width": 1600,
+                  "height": 900
+                },
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36"
+              },
+              "actualBrowserVersion": "151.0.7922.34",
+              "accepted": [
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.2,
+                    "acceptedCurseIds": [
+                      "curse.frenzy"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "enemyHealthMultiplier": 1,
+                    "enemyDamageMultiplier": 1,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.2,
+                    "eliteChance": 0,
+                    "shrineRewardMultiplier": 1
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy"
+                  ],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Landfill Breach",
+                      "description": "Open a buried cell for a surge of waste and a greater return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Fast Fashion Boom",
+                      "description": "Accept a permanent rise in output for permanently better returns.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Single-Use Boom",
+                      "description": "Double the incoming waste and the value of clearing it.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Overproduction Order",
+                      "description": "Duplicate everything currently on site for a richer return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Everything on site"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Unmanaged Dump",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Overflow Contract \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                },
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.5,
+                    "acceptedCurseIds": [
+                      "curse.frenzy",
+                      "curse.escalation"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.56,
+                    "enemyHealthMultiplier": 1.1600000000000001,
+                    "enemyDamageMultiplier": 1.12,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.7999999999999998,
+                    "eliteChance": 0.032,
+                    "shrineRewardMultiplier": 1.1600000000000001
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy",
+                    "upgrade.accept_escalation"
+                  ],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Landfill Breach",
+                      "description": "Open a buried cell for a surge of waste and a greater return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Fast Fashion Boom",
+                      "description": "Accept a permanent rise in output for permanently better returns.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Single-Use Boom",
+                      "description": "Double the incoming waste and the value of clearing it.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Overproduction Order",
+                      "description": "Duplicate everything currently on site for a richer return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Everything on site"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Unmanaged Dump",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Overflow Contract \u00d71",
+                    "Contamination Pact \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                }
+              ],
+              "arrived": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 1.5,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.56,
+                  "enemyHealthMultiplier": 1.624,
+                  "enemyDamageMultiplier": 1.2992000000000004,
+                  "enemyMoveSpeedMultiplier": 1.04,
+                  "threatStep": 8,
+                  "xpMultiplier": 1.7999999999999998,
+                  "eliteChance": 0.032,
+                  "shrineRewardMultiplier": 1.1600000000000001
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": false,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Overflow Contract \u00d71",
+                  "Contamination Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "activated": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.04,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Overflow Contract \u00d71",
+                  "Contamination Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "claim": {
+                "raw": 0.375,
+                "expected": 1.18125,
+                "actual": 1.1812500000000004,
+                "duplicateDelta": 0,
+                "claimed": true,
+                "source": "shrine.spawn_surge"
+              },
+              "load": {
+                "status": "playing",
+                "elapsedMs": 259509.94666666698,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.04,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Overflow Contract \u00d71",
+                  "Contamination Pact \u00d71"
+                ],
+                "enemies": 284,
+                "cap": 300,
+                "backlog": 0
+              },
+              "reset": {
+                "status": "playing",
+                "elapsedMs": 0,
+                "world": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "xpMultiplier": 1,
+                  "acceptedCurseIds": [],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "enemyHealthMultiplier": 1,
+                  "enemyDamageMultiplier": 1,
+                  "enemyMoveSpeedMultiplier": 1,
+                  "threatStep": 0,
+                  "xpMultiplier": 1,
+                  "eliteChance": 0,
+                  "shrineRewardMultiplier": 1
+                },
+                "pending": 0,
+                "selected": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "knight-magic chooses run-local curses and activates the new scheduled shrine once",
+          "status": "passed",
+          "durationMs": 6155,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "knight-magic",
+                "mode": "test",
+                "rate": 0.5,
+                "dpr": 1,
+                "viewport": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "logical": {
+                  "width": 1600,
+                  "height": 900
+                },
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36"
+              },
+              "actualBrowserVersion": "151.0.7922.34",
+              "accepted": [
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.2,
+                    "acceptedCurseIds": [
+                      "curse.frenzy"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "enemyHealthMultiplier": 1,
+                    "enemyDamageMultiplier": 1,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.2,
+                    "eliteChance": 0,
+                    "shrineRewardMultiplier": 1
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy"
+                  ],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Shrine of the Horde",
+                      "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Horde released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Shrine of Greed",
+                      "description": "Trade lasting danger for greater power.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Shrine of Multiplicity",
+                      "description": "Multiply both the horde and its rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Shrine of Duplication",
+                      "description": "Copy every living foe for richer rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Every monster present"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Shrine of Defiance",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Frenzy Pact \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                },
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.5,
+                    "acceptedCurseIds": [
+                      "curse.frenzy",
+                      "curse.escalation"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.56,
+                    "enemyHealthMultiplier": 1.1600000000000001,
+                    "enemyDamageMultiplier": 1.12,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.7999999999999998,
+                    "eliteChance": 0.032,
+                    "shrineRewardMultiplier": 1.1600000000000001
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy",
+                    "upgrade.accept_escalation"
+                  ],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Shrine of the Horde",
+                      "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Horde released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Shrine of Greed",
+                      "description": "Trade lasting danger for greater power.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Shrine of Multiplicity",
+                      "description": "Multiply both the horde and its rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Shrine of Duplication",
+                      "description": "Copy every living foe for richer rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Every monster present"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Shrine of Defiance",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Frenzy Pact \u00d71",
+                    "Doom Pact \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                }
+              ],
+              "arrived": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 1.5,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.56,
+                  "enemyHealthMultiplier": 1.624,
+                  "enemyDamageMultiplier": 1.2992000000000004,
+                  "enemyMoveSpeedMultiplier": 1.08,
+                  "threatStep": 8,
+                  "xpMultiplier": 1.7999999999999998,
+                  "eliteChance": 0.032,
+                  "shrineRewardMultiplier": 1.1600000000000001
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": false,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Frenzy Pact \u00d71",
+                  "Doom Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "activated": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.08,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Frenzy Pact \u00d71",
+                  "Doom Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "claim": {
+                "raw": 0.375,
+                "expected": 1.18125,
+                "actual": 1.1812500000000004,
+                "duplicateDelta": 0,
+                "claimed": true,
+                "source": "shrine.spawn_surge"
+              },
+              "load": {
+                "status": "playing",
+                "elapsedMs": 259539.20166666686,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.08,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Frenzy Pact \u00d71",
+                  "Doom Pact \u00d71"
+                ],
+                "enemies": 300,
+                "cap": 300,
+                "backlog": 0
+              },
+              "reset": {
+                "status": "playing",
+                "elapsedMs": 0,
+                "world": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "xpMultiplier": 1,
+                  "acceptedCurseIds": [],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "enemyHealthMultiplier": 1,
+                  "enemyDamageMultiplier": 1,
+                  "enemyMoveSpeedMultiplier": 1,
+                  "threatStep": 0,
+                  "xpMultiplier": 1,
+                  "eliteChance": 0,
+                  "shrineRewardMultiplier": 1
+                },
+                "pending": 0,
+                "selected": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "visible-reward-subset-with-wrong-fixture-expectation",
+      "stats": {
+        "startTime": "2026-10-20T00:18:51.693Z",
+        "duration": 3006.466,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "rawSha256": "d8b39585e8fec60eb73e70a97621f83362dd47474eaeaf6740fec6cb4a60063f",
+      "cases": [
+        {
+          "title": "eco-guardian chooses run-local curses and activates the new scheduled shrine once",
+          "status": "failed",
+          "durationMs": 982,
+          "retry": 0,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u00d71.\u001b[7m5\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"\u00d71.\u001b[7m8\u001b[27m\"\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u00d71.\u001b[7m5\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"\u00d71.\u001b[7m8\u001b[27m\"\u001b[39m\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/shrines-curses-v043.spec.ts:136:25",
+            "location": {
+              "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/shrines-curses-v043.spec.ts",
+              "column": 25,
+              "line": 136
+            },
+            "snippet": "  134 |       expect(description.tier).toBe(\"common\");\n  135 |       const reward = description.lines[0]!;\n> 136 |       expect(reward.to).toBe(id === \"upgrade.accept_frenzy\" ? \"\u00d71.2\" : \"\u00d71.5\");\n      |                         ^\n  137 |       expect(offer.cardTexts.some((text) => text.startsWith(`${reward.label}   ${reward.from}  \u2192  ${reward.to}`))).toBe(true);\n  138 |       await page.screenshot({ path: testInfo.outputPath(`${id}-offer.png`) });\n  139 |       await page.keyboard.press(String(index + 1), { delay: 80 });"
+          },
+          "observations": []
+        },
+        {
+          "title": "knight-magic chooses run-local curses and activates the new scheduled shrine once",
+          "status": "failed",
+          "durationMs": 874,
+          "retry": 0,
+          "error": {
+            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u00d71.\u001b[7m5\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"\u00d71.\u001b[7m8\u001b[27m\"\u001b[39m",
+            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u00d71.\u001b[7m5\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"\u00d71.\u001b[7m8\u001b[27m\"\u001b[39m\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/shrines-curses-v043.spec.ts:136:25",
+            "location": {
+              "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/shrines-curses-v043.spec.ts",
+              "column": 25,
+              "line": 136
+            },
+            "snippet": "  134 |       expect(description.tier).toBe(\"common\");\n  135 |       const reward = description.lines[0]!;\n> 136 |       expect(reward.to).toBe(id === \"upgrade.accept_frenzy\" ? \"\u00d71.2\" : \"\u00d71.5\");\n      |                         ^\n  137 |       expect(offer.cardTexts.some((text) => text.startsWith(`${reward.label}   ${reward.from}  \u2192  ${reward.to}`))).toBe(true);\n  138 |       await page.screenshot({ path: testInfo.outputPath(`${id}-offer.png`) });\n  139 |       await page.keyboard.press(String(index + 1), { delay: 80 });"
+          },
+          "observations": []
+        }
+      ]
+    },
+    {
+      "label": "corrected-final-two",
+      "stats": {
+        "startTime": "2026-10-20T00:19:34.807Z",
+        "duration": 12430.826000000001,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "rawSha256": "c26be1e6194702a1196718e16682b196fc2d63e147b9200a94b79bc0da9ea0c5",
+      "cases": [
+        {
+          "title": "eco-guardian chooses run-local curses and activates the new scheduled shrine once",
+          "status": "passed",
+          "durationMs": 5480,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "eco-guardian",
+                "mode": "test",
+                "rate": 0.5,
+                "dpr": 1,
+                "viewport": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "logical": {
+                  "width": 1600,
+                  "height": 900
+                },
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36"
+              },
+              "actualBrowserVersion": "151.0.7922.34",
+              "accepted": [
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.2,
+                    "acceptedCurseIds": [
+                      "curse.frenzy"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "enemyHealthMultiplier": 1,
+                    "enemyDamageMultiplier": 1,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.2,
+                    "eliteChance": 0,
+                    "shrineRewardMultiplier": 1
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy"
+                  ],
+                  "cardTexts": [],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Landfill Breach",
+                      "description": "Open a buried cell for a surge of waste and a greater return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Fast Fashion Boom",
+                      "description": "Accept a permanent rise in output for permanently better returns.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Single-Use Boom",
+                      "description": "Double the incoming waste and the value of clearing it.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Overproduction Order",
+                      "description": "Duplicate everything currently on site for a richer return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Everything on site"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Unmanaged Dump",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Overflow Contract \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                },
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.5,
+                    "acceptedCurseIds": [
+                      "curse.frenzy",
+                      "curse.escalation"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.56,
+                    "enemyHealthMultiplier": 1.1600000000000001,
+                    "enemyDamageMultiplier": 1.12,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.7999999999999998,
+                    "eliteChance": 0.032,
+                    "shrineRewardMultiplier": 1.1600000000000001
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy",
+                    "upgrade.accept_escalation"
+                  ],
+                  "cardTexts": [],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Landfill Breach",
+                      "description": "Open a buried cell for a surge of waste and a greater return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Fast Fashion Boom",
+                      "description": "Accept a permanent rise in output for permanently better returns.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Single-Use Boom",
+                      "description": "Double the incoming waste and the value of clearing it.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Waste arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Overproduction Order",
+                      "description": "Duplicate everything currently on site for a richer return.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Everything on site"
+                        },
+                        {
+                          "label": "Return",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Unmanaged Dump",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Pollution",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Impact gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Overflow Contract \u00d71",
+                    "Contamination Pact \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                }
+              ],
+              "arrived": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 1.5,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.56,
+                  "enemyHealthMultiplier": 1.624,
+                  "enemyDamageMultiplier": 1.2992000000000004,
+                  "enemyMoveSpeedMultiplier": 1.04,
+                  "threatStep": 8,
+                  "xpMultiplier": 1.7999999999999998,
+                  "eliteChance": 0.032,
+                  "shrineRewardMultiplier": 1.1600000000000001
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": false,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Overflow Contract \u00d71",
+                  "Contamination Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "activated": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.04,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Overflow Contract \u00d71",
+                  "Contamination Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "claim": {
+                "raw": 0.375,
+                "expected": 1.18125,
+                "actual": 1.1812500000000004,
+                "duplicateDelta": 0,
+                "claimed": true,
+                "source": "shrine.spawn_surge"
+              },
+              "load": {
+                "status": "playing",
+                "elapsedMs": 259037.11333333372,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.04,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Overflow Contract \u00d71",
+                  "Contamination Pact \u00d71"
+                ],
+                "enemies": 278,
+                "cap": 300,
+                "backlog": 0
+              },
+              "reset": {
+                "status": "playing",
+                "elapsedMs": 0,
+                "world": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "xpMultiplier": 1,
+                  "acceptedCurseIds": [],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "enemyHealthMultiplier": 1,
+                  "enemyDamageMultiplier": 1,
+                  "enemyMoveSpeedMultiplier": 1,
+                  "threatStep": 0,
+                  "xpMultiplier": 1,
+                  "eliteChance": 0,
+                  "shrineRewardMultiplier": 1
+                },
+                "pending": 0,
+                "selected": [],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Landfill Breach",
+                    "description": "Open a buried cell for a surge of waste and a greater return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Fast Fashion Boom",
+                    "description": "Accept a permanent rise in output for permanently better returns.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Single-Use Boom",
+                    "description": "Double the incoming waste and the value of clearing it.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Waste arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Overproduction Order",
+                    "description": "Duplicate everything currently on site for a richer return.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Everything on site"
+                      },
+                      {
+                        "label": "Return",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Unmanaged Dump",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Pollution",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Impact gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "errors": []
+            }
+          ]
+        },
+        {
+          "title": "knight-magic chooses run-local curses and activates the new scheduled shrine once",
+          "status": "passed",
+          "durationMs": 6071,
+          "retry": 0,
+          "observations": [
+            {
+              "environment": {
+                "themeKey": "knight-magic",
+                "mode": "test",
+                "rate": 0.5,
+                "dpr": 1,
+                "viewport": {
+                  "width": 1280,
+                  "height": 720
+                },
+                "logical": {
+                  "width": 1600,
+                  "height": 900
+                },
+                "renderer": "WebKit WebGL",
+                "unmaskedRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36"
+              },
+              "actualBrowserVersion": "151.0.7922.34",
+              "accepted": [
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.2,
+                    "acceptedCurseIds": [
+                      "curse.frenzy"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1,
+                    "enemySpawnMultiplier": 1.3,
+                    "enemyHealthMultiplier": 1,
+                    "enemyDamageMultiplier": 1,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.2,
+                    "eliteChance": 0,
+                    "shrineRewardMultiplier": 1
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy"
+                  ],
+                  "cardTexts": [],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Shrine of the Horde",
+                      "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Horde released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Shrine of Greed",
+                      "description": "Trade lasting danger for greater power.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Shrine of Multiplicity",
+                      "description": "Multiply both the horde and its rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Shrine of Duplication",
+                      "description": "Copy every living foe for richer rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Every monster present"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Shrine of Defiance",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Frenzy Pact \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                },
+                {
+                  "status": "playing",
+                  "elapsedMs": 0,
+                  "world": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.3,
+                    "xpMultiplier": 1.5,
+                    "acceptedCurseIds": [
+                      "curse.frenzy",
+                      "curse.escalation"
+                    ],
+                    "shrineActivations": {}
+                  },
+                  "resolved": {
+                    "chaos": 1.8,
+                    "enemySpawnMultiplier": 1.56,
+                    "enemyHealthMultiplier": 1.1600000000000001,
+                    "enemyDamageMultiplier": 1.12,
+                    "enemyMoveSpeedMultiplier": 1,
+                    "threatStep": 0,
+                    "xpMultiplier": 1.7999999999999998,
+                    "eliteChance": 0.032,
+                    "shrineRewardMultiplier": 1.1600000000000001
+                  },
+                  "pending": 0,
+                  "selected": [
+                    "upgrade.accept_frenzy",
+                    "upgrade.accept_escalation"
+                  ],
+                  "cardTexts": [],
+                  "choices": [],
+                  "descriptions": [],
+                  "shrines": [],
+                  "guide": [
+                    {
+                      "id": "shrine.spawn_surge",
+                      "name": "Shrine of the Horde",
+                      "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Horde released",
+                          "display": "100 over 20s"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.greed",
+                      "name": "Shrine of Greed",
+                      "description": "Trade lasting danger for greater power.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.4"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d71.5"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.25"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.multiplicity",
+                      "name": "Shrine of Multiplicity",
+                      "description": "Multiply both the horde and its rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+0.7"
+                        },
+                        {
+                          "label": "Foes arriving",
+                          "display": "\u00d72"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.duplication",
+                      "name": "Shrine of Duplication",
+                      "description": "Copy every living foe for richer rewards.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1"
+                        },
+                        {
+                          "label": "Duplicates",
+                          "display": "Every monster present"
+                        },
+                        {
+                          "label": "Bounty",
+                          "display": "\u00d71.5"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "shrine.escalation",
+                      "name": "Shrine of Defiance",
+                      "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                      "effects": [
+                        {
+                          "label": "Chaos",
+                          "display": "+1.2"
+                        },
+                        {
+                          "label": "Power gain",
+                          "display": "\u00d71.4"
+                        }
+                      ]
+                    }
+                  ],
+                  "summary": [
+                    "Frenzy Pact \u00d71",
+                    "Doom Pact \u00d71"
+                  ],
+                  "enemies": 0,
+                  "cap": 300,
+                  "backlog": 0
+                }
+              ],
+              "arrived": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 1.5,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1.8,
+                  "enemySpawnMultiplier": 1.56,
+                  "enemyHealthMultiplier": 1.624,
+                  "enemyDamageMultiplier": 1.2992000000000004,
+                  "enemyMoveSpeedMultiplier": 1.08,
+                  "threatStep": 8,
+                  "xpMultiplier": 1.7999999999999998,
+                  "eliteChance": 0.032,
+                  "shrineRewardMultiplier": 1.1600000000000001
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": false,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Frenzy Pact \u00d71",
+                  "Doom Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "activated": {
+                "status": "playing",
+                "elapsedMs": 258000,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.08,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Frenzy Pact \u00d71",
+                  "Doom Pact \u00d71"
+                ],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "claim": {
+                "raw": 0.375,
+                "expected": 1.18125,
+                "actual": 1.1812500000000004,
+                "duplicateDelta": 0,
+                "claimed": true,
+                "source": "shrine.spawn_surge"
+              },
+              "load": {
+                "status": "playing",
+                "elapsedMs": 259523.31333333376,
+                "world": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.3,
+                  "xpMultiplier": 2.0999999999999996,
+                  "acceptedCurseIds": [
+                    "curse.frenzy",
+                    "curse.escalation"
+                  ],
+                  "shrineActivations": {
+                    "shrine.escalation": 1
+                  }
+                },
+                "resolved": {
+                  "chaos": 3,
+                  "enemySpawnMultiplier": 1.9500000000000002,
+                  "enemyHealthMultiplier": 1.9599999999999997,
+                  "enemyDamageMultiplier": 1.5080000000000002,
+                  "enemyMoveSpeedMultiplier": 1.08,
+                  "threatStep": 8,
+                  "xpMultiplier": 3.1499999999999995,
+                  "eliteChance": 0.08,
+                  "shrineRewardMultiplier": 1.4
+                },
+                "pending": 0,
+                "selected": [
+                  "upgrade.accept_frenzy",
+                  "upgrade.accept_escalation"
+                ],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "activated": false,
+                    "x": 1293.9167192693496,
+                    "y": 1698.5288400587385
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "activated": false,
+                    "x": 1790.5513885784337,
+                    "y": 160
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2765.1093392341113,
+                    "y": 1354.0892730497837
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "activated": false,
+                    "x": 2414.0656618171747,
+                    "y": 2040.8738400225002
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "activated": false,
+                    "x": 2241.807077238185,
+                    "y": 590.4038855150538
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "activated": true,
+                    "x": 683.1797122590353,
+                    "y": 619.6389448976225
+                  }
+                ],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [
+                  "Frenzy Pact \u00d71",
+                  "Doom Pact \u00d71"
+                ],
+                "enemies": 300,
+                "cap": 300,
+                "backlog": 0
+              },
+              "reset": {
+                "status": "playing",
+                "elapsedMs": 0,
+                "world": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "xpMultiplier": 1,
+                  "acceptedCurseIds": [],
+                  "shrineActivations": {}
+                },
+                "resolved": {
+                  "chaos": 1,
+                  "enemySpawnMultiplier": 1,
+                  "enemyHealthMultiplier": 1,
+                  "enemyDamageMultiplier": 1,
+                  "enemyMoveSpeedMultiplier": 1,
+                  "threatStep": 0,
+                  "xpMultiplier": 1,
+                  "eliteChance": 0,
+                  "shrineRewardMultiplier": 1
+                },
+                "pending": 0,
+                "selected": [],
+                "cardTexts": [],
+                "choices": [],
+                "descriptions": [],
+                "shrines": [],
+                "guide": [
+                  {
+                    "id": "shrine.spawn_surge",
+                    "name": "Shrine of the Horde",
+                    "description": "Invite a dangerous swarm in exchange for greater rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Horde released",
+                        "display": "100 over 20s"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.greed",
+                    "name": "Shrine of Greed",
+                    "description": "Trade lasting danger for greater power.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.4"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d71.5"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.25"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.multiplicity",
+                    "name": "Shrine of Multiplicity",
+                    "description": "Multiply both the horde and its rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+0.7"
+                      },
+                      {
+                        "label": "Foes arriving",
+                        "display": "\u00d72"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.duplication",
+                    "name": "Shrine of Duplication",
+                    "description": "Copy every living foe for richer rewards.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1"
+                      },
+                      {
+                        "label": "Duplicates",
+                        "display": "Every monster present"
+                      },
+                      {
+                        "label": "Bounty",
+                        "display": "\u00d71.5"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "shrine.escalation",
+                    "name": "Shrine of Defiance",
+                    "description": "Raise world pressure for the rest of this run in exchange for more XP.",
+                    "effects": [
+                      {
+                        "label": "Chaos",
+                        "display": "+1.2"
+                      },
+                      {
+                        "label": "Power gain",
+                        "display": "\u00d71.4"
+                      }
+                    ]
+                  }
+                ],
+                "summary": [],
+                "enemies": 0,
+                "cap": 300,
+                "backlog": 0
+              },
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "finalSourceHashes": {
+    "package-lock.json": "6ff695696f6b4a1d2699dade03f95a16514ce640b0024298089aaf22f05d7a4d",
+    "package.json": "c85647a4f0edcaa4f133e6138521518360fea8f93cfefd042198b23d9dadaa54",
+    "playwright.config.ts": "9e1755793c75733b20a1e84e4c413204b48c1a7ab53495a54e4590302b461ed9",
+    "scripts/balance.ts": "72f8f830c56b476be2a643ae7b249009b4666825ac62063072d44a88d3b5c0da",
+    "src/game/content/define-theme.ts": "4243032a7b1f11ad4793de2fca02f65743f66984cee3296428b97feffc1b8da9",
+    "src/game/content/themes/eco-guardian/copy.ts": "0039ebec27c0d0ff80992b9a250bde8a20a4283f5bf13a887b8b0825ea375d4e",
+    "src/game/content/themes/eco-guardian/curses.ts": "72cb815932ed8573dec824ca4c8272c237e53960f1c278c8f8c2dbaf87da56fa",
+    "src/game/content/themes/eco-guardian/index.ts": "71a1dd5666de4ff4586ce12c47c2c54a742a4155a1617e87b93519bf8559c78b",
+    "src/game/content/themes/eco-guardian/shrines.ts": "0df2a3a7d3bb1364c9dd6f391afd334dc36283a05daab33ff35046c160178e33",
+    "src/game/content/themes/knight-magic/copy.ts": "eb97ef47cf64f54f0cac57ec50f2ff80102a9971b48ce78a890e11cf9fb4def5",
+    "src/game/content/themes/knight-magic/curses.ts": "72cb815932ed8573dec824ca4c8272c237e53960f1c278c8f8c2dbaf87da56fa",
+    "src/game/content/themes/knight-magic/index.ts": "e70deffefe43c64324d0bb095571bdd9a98c540023b2f08c0b16c83caf0c85c6",
+    "src/game/content/themes/knight-magic/shrines.ts": "f1dcb82b96bb15bea3224d30a10b8b74ae87bebdd8affbb72c8a9a439a618a85",
+    "src/game/core/archetypes/contracts.ts": "add2e43f816b5c7b8eb816a377db36d9bddc5c7a036ad0f945af2ab420f22c57",
+    "src/game/core/archetypes/effects.ts": "9733c90de4f94588a24ec495530e712ad498e6015053cef80609a2e2626cf4b4",
+    "src/game/core/archetypes/ids.ts": "af650a55862b2f1f2ac066aac3c1f4b8e61ca25b4d86944693de26c233fca596",
+    "src/game/entities/shrine-actor.ts": "510924695ecadcd08348e17d3760b6259be64660a4cfb376418f3d9f1ac08398",
+    "src/game/scenes/run-scene.ts": "f1276d8a68dd7650a17032b97d9204e29c8c3c7f88072f1e50ac41c0223ef4e9",
+    "src/game/state/run-state.ts": "e16c9becb7e42f5fc743a874b0bed1d1aab742a9be67c1cfb0d72bfea44ad4d7",
+    "src/game/systems/chaos/world-modifiers.ts": "accf1d0f762df054e8dc4da3e1464970822dde072e6b3ca55efcd92e6f450d80",
+    "src/game/systems/codex/describe-shrine.ts": "46208ecf479f2c62bc0d0721256f10fa37a923bc44747d78bd5ec88e6e7f30db",
+    "src/game/systems/shrines/shrine-placement.ts": "8646fa44d76dfabe7962060453ab914ae9f8135bb4b7da393afcfcdc26159f4c",
+    "src/game/systems/simulation/pacing-simulator.ts": "8076c4cabbd17c3aeafc0f1e01f92dfa1acf953540d0ba1365e6d9f43daff882",
+    "src/game/systems/upgrades.ts": "00b0d309d17af31b43f9bc3506d404fd954e2f942716628edcba9f0f491a9ff1",
+    "src/game/systems/upgrades/describe-upgrade.ts": "84a33db084debbf3b60493a770df1b22ce2b67ee04d641009c93c11a24fe837d",
+    "src/game/systems/upgrades/upgrade-tiers.ts": "9870f5c21ed0e9d0d39182fbae69a24dae780211a9f63f52101af7f2a4fcd2ee",
+    "src/game/ui/level-up-choice-ui.ts": "46dfc0351d20d78c25dace43cef63fdead01ff1803ac9451f43a11b9fe2309b1",
+    "tests/e2e/phase-five-v02.spec.ts": "3f6de1a690988d21d42d719f455d4513cfe2f11b28c3dd2bcf8cfb24489decb3",
+    "tests/e2e/shrines-curses-v043.spec.ts": "3a51738a3cff4264abe1aeaefbdca9d7b3c643d79c4af2c5271113efe3ee72e1",
+    "tests/fixtures/alternate-theme.ts": "3ec9f424a4327c77928db790c9f180eb68506caabfec12d9beb6f18f9648f572",
+    "tests/unit/chaos/curses.test.ts": "ce0a710e698a596c23a2e6f0f9765fa12041b2d0430f531e19002020ac7978a9",
+    "tests/unit/chaos/world-modifiers.test.ts": "47826c1224287ac8bdc7f11e552346d3e065b97eeed912a16c827eea38daea9b",
+    "tests/unit/content/theme.test.ts": "8f48b579ff42d0ef005f9da1894b7294547c42a0584eb1fb945b072f96d65eb2",
+    "tests/unit/upgrades/upgrade-tiers.test.ts": "39f9945cf539d6c92372bbbbec0940291cc24842224f95f08b2840c6808a6c0a"
+  },
+  "sourceTreeSha256": "195ca040ad11ae74d9e63ebbdd0ff226e184fecef794b2820c89415027e48db7",
+  "screenshots": {
+    "test-results/shrines-curses-v043-eco-gu-302aa-e-new-scheduled-shrine-once-chromium/cursed-load.png": "5dc44935456b5d1a35b880573619fec85ecb8e2ff3549332eaa50ddefe425b1b",
+    "test-results/shrines-curses-v043-eco-gu-302aa-e-new-scheduled-shrine-once-chromium/cursed-pause.png": "e0f5249eb09eaf09ec2345b336988ce26bac7fe9e3e8ad89245578c4dea035a2",
+    "test-results/shrines-curses-v043-eco-gu-302aa-e-new-scheduled-shrine-once-chromium/new-shrine.png": "8c426f36bd52270c5f1f6697f6693dc5c003d92bd7bfd82047fe7df913baaabb",
+    "test-results/shrines-curses-v043-eco-gu-302aa-e-new-scheduled-shrine-once-chromium/upgrade.accept_escalation-offer.png": "1372c0cb454cb1daa89b663064c1f6f66844a74e693d5ebb46ec91b1d582c1d5",
+    "test-results/shrines-curses-v043-eco-gu-302aa-e-new-scheduled-shrine-once-chromium/upgrade.accept_frenzy-offer.png": "892c42607b8472a1085f7e66ee79a1a2654beab1e56bcd7551c079472336ce08",
+    "test-results/shrines-curses-v043-knight-c8a24-e-new-scheduled-shrine-once-chromium/cursed-load.png": "6da69678a0492d06b575fbe849516df0c7a935c3143cf7fc6b789d32e06fa6cd",
+    "test-results/shrines-curses-v043-knight-c8a24-e-new-scheduled-shrine-once-chromium/cursed-pause.png": "26bbd9517090020f034cbda0bcf37ffce34aad113f600906f2f9bf6c0fd7fc2a",
+    "test-results/shrines-curses-v043-knight-c8a24-e-new-scheduled-shrine-once-chromium/new-shrine.png": "6c43bea27c4224578855ed6be40e999789b7bdaa4698908c320b87d6343d83fb",
+    "test-results/shrines-curses-v043-knight-c8a24-e-new-scheduled-shrine-once-chromium/upgrade.accept_escalation-offer.png": "90c1ad325610d452e004b48f20f0713dbbb41c1952c6a00972e7236ab72cfd8a",
+    "test-results/shrines-curses-v043-knight-c8a24-e-new-scheduled-shrine-once-chromium/upgrade.accept_frenzy-offer.png": "c4acf7155de69d04bf4a0d1eb1ac504dfed1a79485ba639e2a4dd545a7b8b8bd"
+  },
+  "compiledArtifacts": {
+    "dist/assets/combat-DP5YJCqn.js": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0",
+    "dist/assets/game-Dl_UCXLU.js": "1456969174129addee658b9bf409dbd77b3876f51987fa826bfb859e570ca3a4",
+    "dist/assets/index-BJNiwVO6.js": "36f446d4edf8f2ef8806e1a4da2ce05b6bf628fdf6515886d5e5016e59342133",
+    "dist/assets/sprites-BItYKarT.js": "4196399e2d5a1b6a9cfc16fdb8eee6b2e4763d18004c1405501a5cfe3abbf6dd",
+    "dist/assets/start-game-DUb5T6JI.js": "3153e4feca828063a5c13f50bc162cf2e544c554e966b0456ed591d9e260f29e",
+    "dist/index.html": "5919f1d60fc3e0662371968112063329992b90bd1d7fe18364d9afc62b2fb267",
+    "dist/sprite-browser.html": "9d32bc034bbb488270bff837c4b19a88b8af373ec7bc9a0d6ac1fa3c6b313046"
+  },
+  "deferred": "Full stress/native/long/startup/production browser campaigns not repeated. Actual Safari/missing browser-OS/older physical-device checks temporarily waived/unverified. Historical P5/P6 measurements/device kit do not certify changed source."
+}

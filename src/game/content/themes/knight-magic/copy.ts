@@ -123,6 +123,11 @@ export const copy = {
       name: "Wandering Knight",
       description: "A lone champion entering the Ember Court.",
     },
+    [archetypeIds.shrine.escalation]: { name: "Shrine of Defiance", description: "Raise world pressure for the rest of this run in exchange for more XP." },
+    [archetypeIds.curse.frenzy]: { name: "Frenzy Pact", description: "Accept more arrivals in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.upgrade.acceptFrenzy]: { name: "Frenzy Pact", description: "Accept more arrivals in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.curse.escalation]: { name: "Doom Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.upgrade.acceptEscalation]: { name: "Doom Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
     [archetypeIds.weapon.secondaryEvolved]: {
       name: "Runic Tempest",
       description: "A wider automatic cone with stronger hits and nearby splash.",

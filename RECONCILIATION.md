@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1/C2 verified and C3 next.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C3 verified and C4 next.**
 
 ## How to maintain this file
 
@@ -2644,6 +2644,36 @@ preserve ledger/cap and independent clocks; not throughput/soak/device evidence.
 All ten models/both themes/three difficulties run balance; ideal contact bands
 assume earliest evolution at level7 and omit offer frequency/movement/overkill.
 See `build/content/C2_REPORT.md`. C3 is next; local only, no matching-head CI claim.
+
+Session16 C3 continuation (2026-10-20): add one optional sixth shrine at86%
+progress and two one-time normal-level-up curses in each production theme. New
+curse catalog entries own finite pressure/reward; offers reference stable curse
+IDs. Run world state retains accepted IDs separately from shrine activations,
+using existing additive Chaos and multiplicative spawn/XP products. Acceptance
+is idempotent even with stale pick history; one successful choice/tally, no tier
+scaling, no new actor/timer/queue, and reset clears it. Keep source rewards
+separate from world XP at actual collection. Do not round fractional rewards to
+force order-independent IEEE products; deterministic tests compare within tolerance.
+
+Actual screenshots reveal the card's three-row detail cap can hide a curse's XP
+reward after secondary pressure lines. Prioritize resolved XP, Chaos and arrivals
+for curse choices in the existing description selector, retaining all detail lines
+and leaving other upgrades' ordering unchanged. Actual rendered-text regression
+and both-theme screenshots verify the numeric reward. One follow-up fixture
+expected ×1.5 instead of ×1.8 after an accepted arrival curse: it omitted the
+existing Chaos XP curve; correct the fixture, not runtime coefficients.
+
+547units/61files and seven unique serial browser cases verify C3 locally; initial
+seven pass40.1s, final two pass12.4s after the visibility fix. Two intervening
+fixture assertion failures are retained, zero automatic retries. Both-theme real
+XP/80ms keyboard choices and E shrine activation, repeat refusal, fractional
+0.375 source XP→1.18125 once, pause/resize/reset and brief300-mixed load preserve
+cap/world/queues. A scripted clock jump/travel in the C3 cases is distinct from
+the existing shortened natural-arrival case, which also passes all six placements.
+120 coarse balance scenarios compare baseline versus all C3 choices at start;
+baseline raw output matches C2 exactly. These are model bands, not survival or
+hardware evidence. Source-bound scope and temporary external waiver remain.
+See `build/content/C3_REPORT.md`; C4 next, local only, no later-head CI inferred.
 
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 

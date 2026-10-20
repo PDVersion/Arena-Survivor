@@ -52,5 +52,10 @@ export interface EvolveWeaponEffect {
   readonly requiredPicks: number;
 }
 
-export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect | EvolveWeaponEffect;
-import type { SkillId, UpgradeId, WeaponId } from "./ids";
+export interface AcceptCurseEffect {
+  readonly kind: "curse.accept";
+  readonly curseId: CurseId;
+}
+
+export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect | EvolveWeaponEffect | AcceptCurseEffect;
+import type { CurseId, SkillId, UpgradeId, WeaponId } from "./ids";

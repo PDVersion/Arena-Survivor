@@ -2556,6 +2556,7 @@ export class RunScene extends Phaser.Scene {
     const luck = this.runState.player.stats.luck;
     const drawn = selectUpgradeChoices(this.runTheme.upgrades, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
+      world: this.runState.world,
       weaponSlots: this.runState.weaponSlots,
       weaponSlotCount: this.runState.weaponSlotCount,
       luck,
@@ -2728,6 +2729,7 @@ export class RunScene extends Phaser.Scene {
       (skillId) => skillMaxLevel(this.runTheme.skills, skillId),
       tierMultiplier(this.runTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
       this.runTheme.weapons,
+      this.runTheme.curses,
     );
     this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {

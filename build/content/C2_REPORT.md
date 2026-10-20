@@ -126,4 +126,4 @@ untouched. PR26 remains merged2806720 as c6daeb6, Actions39189877476 succeeds
 only2806720; no later-head CI claim, push, PR, merge, deploy or dispatch.
 
 Status/checklist/waiver/reconciliation/progress/master are recorded in the same
-reviewed local C2 commit. [Session16 handoff](../SESSION_16_PROMPT.md) continues C3.
+reviewed local C2 commit. [Completed C3 record](../MASTER_BUILD_PLAN.md#v0-4-3-c3) retains Session16's result; the current handoff is linked from BUILD_STATUS.

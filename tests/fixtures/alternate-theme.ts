@@ -242,6 +242,7 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.upgrade.worldSurge, effects: [{ kind: "world.modify", enemySpawnMultiplier: 1.5, xpMultiplier: 1.25 }], maxLevel: 4, track: "general", rarity: "rare", category: "world", presentationToken: "accent" },
     { id: archetypeIds.upgrade.worldBrittle, effects: [{ kind: "stat.add", target: "player.damageBonus", value: 1 }], maxLevel: 3, track: "general", rarity: "epic", category: "world", presentationToken: "accent" },
   ],
+  curses: [],
   shrines: [
     {
       id: archetypeIds.shrine.spawnSurge,

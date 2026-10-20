@@ -50,7 +50,8 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | C1 foundation | **Verified local slice, 2026-10-20** | Serializable slots, independent attack clocks and attack-owned hit data; [report](content/C1_FOUNDATION_REPORT.md). Foundation retained; the completed C1 gate is recorded below |
 | C1 second-tool gate | **Verified local phase, 2026-10-20** | Cleanup Vacuum/Runic Fan, owner-only upgrades, hit splash/ledger/number flush, simulator and bounded gameplay/readability/stress;509units/59files and15 unique affected browser cases. [Report](content/C1_SECOND_TOOL_REPORT.md) |
 | C2 evolution | **Verified local phase, 2026-10-20** | Same-slot Cyclone Vacuum/Runic Tempest after four reach picks, exact clock/modifier carryover;527units/60files, eight unique affected browser cases; [report](content/C2_REPORT.md) |
-| C1–C7 / optional content | **C1/C2 verified; C3–C7 pending** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
+| C3 shrines/curses | **Verified local phase, 2026-10-20** | One scheduled shrine and two run-local one-time curses per theme; visible resolved reward/cost, exact fractional XP/reset;547units/61files, seven unique affected browser cases and120 balance scenarios. [Report](content/C3_REPORT.md) |
+| C1–C7 / optional content | **C1–C3 verified; C4–C7 pending** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
 
 ## Latest remote evidence
 

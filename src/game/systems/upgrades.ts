@@ -1,7 +1,7 @@
-import type { SkillDefinition, UpgradeCategory, UpgradeDefinition, UpgradeRarity, WeaponDefinition } from "../core/archetypes/contracts";
+import type { CurseDefinition, SkillDefinition, UpgradeCategory, UpgradeDefinition, UpgradeRarity, WeaponDefinition } from "../core/archetypes/contracts";
 import type { SkillId, UpgradeId, WeaponId } from "../core/archetypes/ids";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
-import { applyWorldModifier, type WorldState } from "./chaos/world-modifiers";
+import { acceptCurse, applyWorldModifier, type WorldState } from "./chaos/world-modifiers";
 import { raiseSkillLevel, skillLevel, skillMaxLevel, type SkillLevels } from "./skills/resolve-skill";
 import { scaleSkillLevels, scaleStatValue } from "./upgrades/upgrade-tiers";
 
@@ -55,11 +55,14 @@ export function upgradeLevel(
 export function isUpgradeAvailable(
   upgrade: UpgradeDefinition,
   selectedUpgradeIds: readonly UpgradeId[],
-  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills" | "weaponSlots" | "weaponSlotCount">,
+  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills" | "weaponSlots" | "weaponSlotCount" | "world">,
 ): boolean {
   if (upgrade.maxLevel !== null && upgradeLevel(selectedUpgradeIds, upgrade.id) >= upgrade.maxLevel) return false;
   if (upgrade.ownerWeaponId && !context?.weaponSlots?.some((slot) => slot.weaponId === upgrade.ownerWeaponId)) return false;
   for (const effect of upgrade.effects) {
+    if (effect.kind === "curse.accept") {
+      if (context?.world?.acceptedCurseIds.includes(effect.curseId)) return false;
+    }
     if (effect.kind === "weapon.evolve") {
       if (!context?.weaponSlots?.some((slot) => slot.weaponId === effect.fromWeaponId) ||
         context.weaponSlots.some((slot) => slot.weaponId === effect.weaponId) ||
@@ -106,6 +109,7 @@ export function rarityWeight(rarity: UpgradeRarity, luck = 0): number {
 }
 
 export interface UpgradeSelectionContext {
+  readonly world?: WorldState;
   readonly weaponSlots?: readonly WeaponSlotState[];
   readonly weaponSlotCount?: number;
   readonly selectedUpgradeIds: readonly UpgradeId[];
@@ -186,6 +190,7 @@ export function applyUpgrade<T extends UpgradeableState>(
   skillMaxLevel: (skillId: SkillId) => number = () => 1,
   multiplier = 1,
   weapons: readonly WeaponDefinition[] = [],
+  curses: readonly CurseDefinition[] = [],
 ): T {
   if (!isUpgradeAvailable(upgrade, state.selectedUpgradeIds, state)) return state;
   const stats = { ...state.player.stats };
@@ -200,6 +205,12 @@ export function applyUpgrade<T extends UpgradeableState>(
   let world = state.world;
 
   for (const effect of upgrade.effects) {
+    if (effect.kind === "curse.accept") {
+      const curse = curses.find((entry) => entry.id === effect.curseId);
+      if (!curse) return state;
+      world = acceptCurse(world, curse);
+      continue;
+    }
     if (effect.kind === "weapon.evolve") {
       if (!weaponSlots) return state;
       const replacement = replaceWeapon(weaponSlots, effect.fromWeaponId, effect.weaponId, weapons);

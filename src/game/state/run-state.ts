@@ -1,7 +1,7 @@
 import { archetypeIds, type CharacterId, type UpgradeId, type WeaponId } from "../core/archetypes/ids";
 import type { SkillLevels } from "../systems/skills/resolve-skill";
 import type { PlayerBaseStats } from "../core/stats/player-stats";
-import type { UpgradeDefinition, WeaponDefinition } from "../core/archetypes/contracts";
+import type { CurseDefinition, UpgradeDefinition, WeaponDefinition } from "../core/archetypes/contracts";
 import type { SkillId } from "../core/archetypes/ids";
 import {
   applyUpgrade,
@@ -263,10 +263,11 @@ export function applyRunUpgrade(
   /** The offer's rolled tier gain; `1` is a common roll. */
   tierMultiplier = 1,
   weapons: readonly WeaponDefinition[] = [],
+  curses: readonly CurseDefinition[] = [],
 ): RunState {
   if (state.status !== "level_up" || state.progression.pendingChoices < 1) return state;
   if (!isUpgradeAvailable(upgrade, state.selectedUpgradeIds, state)) return state;
-  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel, tierMultiplier, weapons);
+  const upgraded = applyUpgrade(state, upgrade, skillMaxLevel, tierMultiplier, weapons, curses);
   if (upgraded === state) return state;
   const progression = consumePendingChoice(upgraded.progression);
   const next: RunState = {
