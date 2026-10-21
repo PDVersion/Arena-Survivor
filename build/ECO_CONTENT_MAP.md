@@ -137,3 +137,22 @@ They use the same tool damage path as existing waste actors. Their marked circle
 teaches the immediate game action: move clear before the pulse. No knowledge
 question, content-source claim, type effectiveness, material layer or sprite
 inventory is added. Boss values and labels remain theme-owned.
+
+## Australian rubbish candidate roster — planned 2026-10-21
+
+The [readable gameplay roadmap](READABLE_GAMEPLAY_ROADMAP.md#enemy-candidates-and-their-distinct-decisions)
+contains the complete candidate decision table and separate sourced rankings.
+**Cigarette Butts → Packets/Wrappers → Aluminium Can** is the proposed prototype
+order, one verified behaviour at a time after Q6/G1. These names are not live
+content, stable IDs, approved sprite subjects or a commitment to ship all three.
+
+Plastic bags, coffee cups, food containers/utensils, >5mm plastic pieces and other
+soft plastics are candidate reserves, not renamed existing roles. Rubble,
+organics, cardboard and scrap belong to later suitable sites; ash/hazardous waste
+remain deferred industrial/containment subjects. The existing five-role material
+map above stays authoritative until a verified owning phase updates it.
+
+G1 evaluates current health/armour, speed/harm, rewards and arrival mix against
+corrected tools. Changes require before/after balance evidence; no spawn shares
+are copied from tonnes or survey percentages. The historical C1/C2 fixed-cap
+wording remains subject to the pending Q6 owner-track capacity correction.

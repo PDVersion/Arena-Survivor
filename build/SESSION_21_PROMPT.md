@@ -70,3 +70,20 @@ authorizes draft PR delivery now, leaving Q6 open. No new optional content or
 sprite generation. Delivery checks pass655units/67files, types/lint/build; audit
 fails one high Vite finding. No upgrade/bypass is made; keep draft status and
 report actual current-head CI. Browser regression runs in PR Actions.
+
+## Follow-on planning recorded 2026-10-21
+
+The owner subsequently requests the ranked genre ideas in a few phases and
+Australian rubbish candidates with current-enemy rebalance where needed. Read
+READABLE_GAMEPLAY_ROADMAP after the current authorities. Q6 remains the immediate
+task; G1 re-runs the captured baseline after corrected tools and selects necessary
+theme tuning, then G2–G4 follow their own implementation ownership/gates. No new
+enemy/stat/art implementation occurred in this planning amendment. Preserve
+existing uncommitted Session21 changes and source-bound acceptance limits.
+
+## Successor handoff
+
+PR27 has merged and the owner requests a main planning claim plus G1 start
+instructions. Use [PHASE_G1_PROMPT.md](PHASE_G1_PROMPT.md) as the current combined
+Q6-prerequisite/G1 handoff, on `codex/readable-gameplay-g1`. This older prompt
+retains Q6's historical context; it is not evidence that the correction passed.

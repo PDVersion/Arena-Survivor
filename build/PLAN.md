@@ -22,6 +22,28 @@ product goal. The camera should make a modest population feel present, and a
 technical ceiling such as 300 enemies should remain available without requiring
 the design to fill it.
 
+## Readable cleanup priorities — owner planning direction 2026-10-21
+
+The [four-phase readable gameplay roadmap](READABLE_GAMEPLAY_ROADMAP.md) adds the
+survivor-genre findings and Australian rubbish evidence to the product direction.
+Prioritize readable tool actions, visible power growth, material-specific decisions,
+voluntary risk/reward, gradual introductions and pressure/relief. Existing tools,
+evolution, events, bosses and persistence are foundations to refine, not rebuild.
+
+After the active Q6 correction gate: **G1** measure/rebalance the current roster
+against corrected tools; **G2** prototype recognizable outdoor litter one role at
+a time; **G3** refine encounter rhythm, useful destinations and optional escalation;
+**G4** improve mastery goals, results and optional Field Guide discovery. These are
+planned follow-on phases, not implemented content or new V0.4.3 completion claims.
+
+Use the roadmap's separate waste-tonnage and surveyed-litter-count rankings for
+context. Neither becomes spawn probability, hit points or harm. Cigarette Butts,
+Packets/Wrappers and Aluminium Can are leading prototypes; the remaining items
+are candidates, with heavy/industrial waste reserved for later appropriate sites.
+Preserve current material-family IDs and finite fragment relationships. Optional
+facts never gate play. Detailed gates, candidate decisions and deferrals live in
+the roadmap; Q6 remains the next implementation task.
+
 ## Three run difficulty levels — selected after V0.4.3 P0
 
 Choose Beginner, Normal or Experienced before starting. Normal is the default,
@@ -259,9 +281,11 @@ Create durable obstacles inside the swarm.
 
 # Swarm Design
 
-Enemy density should be one of the most important mechanics.
-
-The game should eventually support hundreds of enemies on screen.
+The readable eco game prioritizes identifiable materials and meaningful tool
+interactions. Crowd density is one pressure/reward lever; hundreds of enemies are
+a supported technical ceiling, not a required on-screen population. The original
+high-density interactions below remain historical design context and apply only
+where the active theme offers those capabilities.
 
 Enemy count is not only a difficulty metric.
 
@@ -275,10 +299,10 @@ It is also:
 - A build-enabler
 - A score metric
 
-Example end-game target:
+Current technical ceiling, not a gameplay target:
 
 ```text
-Peak Enemies Alive: 300+
+Peak Enemies Alive: at most 300 under the current actor budget
 ```
 
 ---

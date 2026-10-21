@@ -787,3 +787,33 @@ the V0.4.3 PR before Q6 implementation. Publish a draft with completed C1–C7 a
 selected planning; Q6 stays open. Fresh local delivery software checks pass but
 audit reports a high finding in Vite6.4.3; no dependency change/bypass is selected.
 PR Actions must verify the actual delivered head. No merge/deployment is authorized.
+
+## 2026-10-21 genre priorities and Australian rubbish roadmap
+
+The latest detailed follow-on is [READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md).
+It supersedes the older optional-menu recommendation order for these selected
+planning priorities, without selecting every F13–F20 example. Do not rebuild
+verified C1–C7. Q6 remains the immediate correction; then G1 current-roster
+rebalance → G2 outdoor prototypes → G3 encounters/sites → G4 mastery/results.
+
+Existing-roster rebalancing is owner-requested where evidence requires it, after
+corrected tool feedback/cap progression. The planning baseline and source identity
+are in [content/READABLE_ROSTER_BASELINE.md](content/READABLE_ROSTER_BASELINE.md).
+120 model scenarios execute; this is not new runtime acceptance. Exclude parked
+eco projectile/kill-detonation models from representative conclusions.
+
+The new roadmap separates waste tonnes from surveyed litter counts, reviews all
+supplied categories, and prioritizes cigarette clusters, wrapper gusts and a
+telegraphed rolling can as candidate decisions. Heavy/industrial categories remain
+later site ideas. New candidates need their owning implementation phase and gates,
+not automatic import of the entire survey or an extra resource/crafting system.
+Keep current art gates, stable material IDs, source-aware facts, optional reading,
+serial local-browser budget and external evidence limitations.
+
+## G1 claim and start handoff
+
+Owner2026-10-21 authorizes publishing the planning claim to main. G1 is claimed
+to Codex on `codex/readable-gameplay-g1` under the roadmap's exact ownership;
+[PHASE_G1_PROMPT.md](PHASE_G1_PROMPT.md) first completes/verifies the open Q6
+prerequisite, then implements G1. No gameplay phase starts in this delivery turn.
+G2–G4 remain future; PR27's merged checkpoint is not Q6/G1 acceptance.

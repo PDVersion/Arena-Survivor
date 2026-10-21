@@ -449,6 +449,23 @@ GHSA-587h-7wmj-h5pm). Vite remains6.4.3; suggested6.4.4 is outside its exact pin
 No dependency change or audit bypass is made. Full browser regression is deferred
 to PR Actions; report its actual matching head/status, never a historical pass.
 
+## Planned follow-on after Q6 — readable gameplay and rubbish roster
+
+Owner direction2026-10-21 is recorded in
+[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md). Q6 remains first and
+unchanged. Follow-on G1 measures/rebalances current enemies against corrected
+tools, G2 trials outdoor litter behaviour, G3 refines encounters/sites, G4 adds
+mastery goals using existing surfaces. New candidates are not current runtime
+content. Assign the appropriate milestone/branch and exact phase ownership before
+implementation; do not silently expand this increment or reopen completed C1–C7.
+
+The [planning baseline](content/READABLE_ROSTER_BASELINE.md) executes120 model
+scenarios with no tuning changes. Parked eco projectile/explosion builds are
+labelled nonrepresentative. This does not pass Q6/G1 or certify new balance,
+browser/device performance or current-head CI. Existing acceptance/delivery
+restrictions remain; the owner request authorizes planning and necessary measured
+roster rebalancing in its proper phase, not wholesale optional content/art.
+
 
 ## PR27 CI repair — owner-authorized scope
 
@@ -489,3 +506,13 @@ modifiers after tagged enemies spawn; move it after exact spawn-time reward
 assertions, then assert surge activation1/scheduled100. Three affected cases
 pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
 current-head full Actions remains unverified until its own run completes.
+
+## Post-merge correction handoff and G1 claim
+
+PR27 merged the completed checkpoint as9837158. The owner now requests the
+readable-gameplay plan/claim on main plus a G1 start prompt. Q6 remains open with
+its existing checklist; the next implementation uses the follow-on
+`codex/readable-gameplay-g1` branch and separate Q6/G1 verified commits rather
+than reopening the merged milestone branch. [G1 ownership](READABLE_GAMEPLAY_ROADMAP.md)
+and [start prompt](PHASE_G1_PROMPT.md) own continuation. Old draft/local-only
+statements above describe historical delivery checkpoints, not this new request.

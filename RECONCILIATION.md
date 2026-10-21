@@ -3650,6 +3650,48 @@ historical snapshots. Leave this visible as a draft-delivery blocker rather than
 silently upgrading dependencies or weakening CI. PR Actions will provide current-
 head browser/audit evidence; no merge/deployment/manual dispatch is authorized.
 
+## REC-101 continuation — genre priorities and Australian rubbish evidence
+
+- Status: Accepted as planning direction; runtime phases unstarted
+- Date: 2026-10-21
+- Affects: readable gameplay roadmap, future roster/rebalance/site/guide phases
+- Blocks: G1 tuning until Q6's existing correction gate passes
+
+The owner asks to add the ranked survivor-game ideas to planning in a few phases,
+consider two Australian rubbish rankings for enemies, and rebalance current
+enemies as required. Preserve Session21/Q6 and the C1–C7 verified foundations.
+The [four-phase roadmap](build/READABLE_GAMEPLAY_ROADMAP.md) now owns Q6 → G1
+existing-roster balance → G2 small outdoor roster → G3 rhythm/optional sites →
+G4 mastery/results/optional guide. Milestone/branch placement is TBC; no runtime
+phase is started or completed here. This continuation uses REC-101's ideation
+scope rather than consuming reserved V0.4.4 sprite IDs.
+
+Source review confirms the supplied DCCEEW FY2024–25 generation and Clean Up
+Australia FY25 surveyed-litter tables. Tonnes, counted items and site sampling
+are separate measures; neither is a spawn distribution, health or harm scale.
+Plastic material prevalence does not imply bottles are the most counted item.
+Hard fragments >5mm are not the Microplastics identity. Preserve current IDs and
+finite material relationships; the retired fast Plastic Bag is not restored.
+Persistence/toxicity/tool-handling claims require separate sources. Outdoor
+cigarette/wrapper/can behaviours are candidates; rubble/ash/hazardous categories
+are later suitable-site/containment ideas, not routine outdoor chasers.
+
+120 unchanged-source model scenarios execute across two themes, three presets,
+ten models and baseline/C3 fixtures. The CLI's `spread` model multiplies by
+projectiles and `explosion` assumes kill detonation even for eco, where those
+capabilities are parked. Do not accept their outputs as attainable eco builds.
+Contact-only versus packed bands also omit movement, damage taken, pickup travel,
+offer frequency and overkill; cap peaks alone prove neither unplayability nor
+performance. Re-run after Q6, review Glass health/armour, role shares, child/reward
+budgets and power payoffs, then change theme values only where justified. Full
+source identity/limits: [baseline report](build/content/READABLE_ROSTER_BASELINE.md).
+
+Future guardrail: one candidate/gated slice at a time, existing Field Guide and
+profile services, no quiz gate or new economy by implication. New persisted IDs
+require SAVE_DATA review; sprites wait for the settled implemented subset. The
+planning session changes no runtime stats, saves or assets and claims no new
+browser/device/CI acceptance. Local modifications from Session21 remain intact.
+
 
 PR27 CI repair continuation of REC-114/REC-113: owner explicitly authorizes fixing
 failed Actions. C3 seed search must use runUpgradePool after C6 filters unlocks.
@@ -3684,3 +3726,16 @@ current-head full Actions remains unverified until its own run completes.
 Spawn-time rewards are immutable; never compare a mixed-modifier cohort against
 one later world multiplier. Preserve exact assertions by controlling the fixture
 world until its reward checks finish, not by loosening numeric tolerances.
+
+## REC-101 continuation — main planning claim and G1 handoff
+
+Owner2026-10-21 explicitly requests publication to main as a claim and a prompt
+for G1. Remote inspection confirms PR27 merged c735cb8 as9837158 with successful
+head CI39535388393. Publish only the planning amendment/claim/handoff on top;
+Q6/G1 implementation and G2–G4/art remain unstarted. G1 is claimed to Codex on
+`codex/readable-gameplay-g1`, under the roadmap's bounded ownership. The successor
+[PHASE_G1_PROMPT](build/PHASE_G1_PROMPT.md) authorizes doing Q6 first if still open,
+then G1 after verification, with separate phase commits. Do not treat a claim,
+main publication or prior milestone CI as a completed gameplay gate. The current
+request supersedes older local-only/draft-only delivery restrictions for this
+planning publication; it does not authorize merging subsequent gameplay changes.

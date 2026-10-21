@@ -334,3 +334,21 @@ regression; splash caps are a separate authored mechanic. The reusable contract
 must validate both Cleanup Vacuum/Cyclone Vacuum and Runic Fan/Runic Tempest while
 keeping themed identity out of systems. No new stable IDs, save schema, materials
 or sprites are selected by this planning decision.
+
+## Readable roster roadmap — 2026-10-21 planning boundary
+
+[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md) owns the staged candidate
+assessment and G1–G4 gates. Existing Plastic Bottle, Microplastics, Glass Bottle,
+Bagged Waste and stationary Glass Shards keep their stable IDs and finite material
+relationships. No current role is renamed to match a survey ranking. Plastic Bag
+remains retired as the identity of `enemy.fast_fragile`; a future bag is a distinct
+candidate, not restoration of that mapping. Hard-plastic pieces >5mm must not be
+labelled Microplastics merely to reuse a role.
+
+New candidate names are editorial proposals only; reserve neutral IDs and reusable
+capabilities with both-theme validation at implementation. Gust drift, rolling
+commitment/recovery and clustered litter must be data/capability driven, not themed
+string branches in systems. Balance stats, weights, cues and timings stay theme
+owned. Prevalence, persistence, mass and fictional contact harm are separate axes.
+Read SAVE_DATA before any persisted ID/discovery/unlock change. Prototype primitives
+before V0.4.4 acceptance; no new sprite claims or collision-from-art derivation.

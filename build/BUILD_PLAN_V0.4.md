@@ -125,3 +125,26 @@ accepted; later steps/evolution tuning remain unimplemented and need balance
 verification. Owner subsequently authorizes a draft delivery PR before these
 corrections; Q6 stays open and V0.4.4 generation remains gated.
 Historical scoped passes and the temporary external-check waiver remain intact.
+
+## Planned gameplay follow-on — 2026-10-21
+
+The owner requests a phased adoption of the genre priorities, Australian rubbish
+candidates and any required current-enemy rebalance. Detailed scope/evidence/gates
+are in [READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md): Q6 first, then
+G1 existing-roster balance, G2 bounded outdoor variety, G3 rhythm/sites, G4 mastery.
+G1–G4 are planned follow-ons with milestone/branch placement TBC, not reopened
+C1–C7 phases or runtime work started by this documentation amendment. Preserve
+Q6 priority, existing delivery decisions and performance evidence limits.
+
+Reconcile V0.4.4 against the settled implemented subset; future candidates do not
+authorize art or indefinitely block the current roster. Construction/industrial
+waste ideas are deferred, rather than added wholesale to the outdoor swarm.
+
+## G1 claim publication
+
+Owner2026-10-21 requests the plan on main as a claim and a prompt to begin G1.
+PR27 has merged the preceding checkpoint; the readable-gameplay roadmap now owns
+G1's bounded paths and `codex/readable-gameplay-g1` branch. Start with
+[PHASE_G1_PROMPT.md](PHASE_G1_PROMPT.md), completing/verifying Q6 first. G1 is
+claimed, not started/completed. G2–G4 remain planned and V0.4.4 stays gated by
+the settled implemented roster. This documentation publication changes no gameplay.

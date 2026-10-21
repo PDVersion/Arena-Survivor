@@ -210,11 +210,23 @@ Instead of inventing enemy stats and then attaching a fact, **derive the stats f
 
 ### Plastic is the baseline
 
-The generic grunt is a **plastic bottle**, and everything else is measured against it. That is not just convenient — it is accurate. Plastic dominates real litter counts and is the most pervasive waste material, so the most common enemy being plastic is a true statement about the world, delivered by the enemy that shows up most.
+The **plastic bottle** remains the game's numerical baseline, not a claim that
+bottles are the most commonly counted litter item. The verified FY25 litter
+survey ranks cigarette butts first; plastic beverage bottles are fifth. Plastic
+material prevalence and individual-item prevalence are different measures. The
+current opening is Microplastics under REC-112, not a bottle-only opening. See the
+[Australian evidence and roster roadmap](READABLE_GAMEPLAY_ROADMAP.md).
 
 Plastic also comes in enormous variety, which gives the roster room to grow — bottles, bags, films, foams, fragments, textiles — all one type, all mechanically different.
 
 ### Log-scaled persistence
+
+2026-10-21 evidence boundary: the legacy persistence values below are historical
+modelling inputs/exploratory estimates, not newly verified facts. The supplied
+waste and litter datasets do not validate decay times, toxicity, contact damage
+or tool effectiveness. Keep accepted material ordering and REC-112's opening
+exception while rebalancing; do not derive HP from prevalence or publish these
+point estimates without the separate sourcing review in section6.
 
 Literal persistence is unplayable: glass outlasts a banana peel by roughly a factor of twenty million. So health is derived on a **log scale, normalized to the plastic bottle**:
 
@@ -635,3 +647,25 @@ carryover tuning need theme data and balance verification in Q6; growth must not
 be lost at evolution. Clarify pulse/cone feedback and investigate player pose
 alignment before further sprite generation. No new information surface, factual
 content, material identity or progression category is introduced here.
+
+## Australian rubbish and readable gameplay — 2026-10-21 planning amendment
+
+The [four-phase roadmap](READABLE_GAMEPLAY_ROADMAP.md) records the owner-requested
+priorities, source review, candidate roster and phase gates. The promotion here is
+planning direction, not implementation of the broader six-type/knowledge systems.
+Waste generation uses tonnes; surveyed litter uses item counts and a site sample.
+Neither measures combat harm. The >5mm hard-fragment row does not describe the
+existing Microplastics identity. Keep period/region/metric/denominator/source/review
+date with eventual facts; retain the two separate rankings.
+
+Outdoor prototypes prioritize Cigarette Butts, Packets/Wrappers and Aluminium Can,
+one proved decision at a time. Rubble/organics/cardboard/scrap are later site
+candidates; ash and hazardous waste remain industrial/containment candidates.
+New movement/attacks are fictional game behaviour. In particular, the legacy
+cigarette-on-death contamination idea is not selected: successful cleanup should
+not automatically create a harmful patch. Hazardous material is not ordinary
+vacuumable rubbish. Real handling claims require separate evidence and context.
+
+The existing guide is the only reference framework. Optional explanations follow
+recognizable interactions; no reading/quiz gate or new effectiveness matrix is
+introduced. Q6 remains first, followed by measured G1 rebalancing before growth.

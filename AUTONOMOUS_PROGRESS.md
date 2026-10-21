@@ -8,8 +8,13 @@ Current milestone dates/statuses and published CI evidence are consolidated in
 [build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
 verified through C7 `88f220b`. Next is the open
 Session21 Q6 correction gate: player motion, cone feedback and owner-selected
-vacuum target-cap progression. Remaining external checks are temporarily waived/
-unverified; delivery stays local. The session records below are historical
+vacuum target-cap progression. The owner's subsequent genre/rubbish request is
+recorded in [the four-phase roadmap](build/READABLE_GAMEPLAY_ROADMAP.md): G1–G4
+follow Q6, with current-enemy rebalancing measured against corrected tools.
+G1 is now claimed to Codex on `codex/readable-gameplay-g1`; the owner authorizes
+publishing the plan/claim/start prompt to main. No follow-on runtime implementation
+has started. PR27 has merged as9837158; Q6 remains open. Remaining external checks
+are temporarily waived/unverified. The session records below are historical
 checkpoints, including their then-current delivery constraints and dirty-file
 notes. Those are superseded where the current summary records later evidence
 or the owner's documentation cleanup.
@@ -1556,6 +1561,33 @@ will disclose audit/Q6 and retain external checks waived/unverified. Full local
 browser/stress/native/long campaigns are not repeated; PR Actions owns current-head
 browser regression. No merge/deployment/manual workflow dispatch authorized.
 
+## Genre priorities and Australian rubbish planning — 2026-10-21
+
+Owner asks for phased planning plus rubbish enemy candidates and current-enemy
+rebalance where required. Preserved all pre-existing Session21/Q6 edits. Added
+READABLE_GAMEPLAY_ROADMAP with four ordered phases, all18 ranked priorities,
+separate primary-source-verified weight/item-count tables, all supplied rubbish
+categories assessed, bounded candidate decisions and per-phase ownership/gates.
+Aligned PLAN/education/theme/content maps and current entry points/handoff.
+
+Q6 remains first. G1 evaluates corrected tools and the current roster; G2 prototypes
+outdoor litter one role at a time; G3 refines existing events/bosses and useful
+destinations; G4 improves results/unlocks/optional guide. Heavy/industrial waste
+stays contextual/deferred. No runtime, sprite, profile or tuning value changed.
+
+Read-only balance baseline:120 model scenarios (both themes × three presets × ten
+models × baseline/C3), all invocations complete. Source identity and compact
+results retained in build/content/READABLE_ROSTER_BASELINE.{md,json}. Parked eco
+projectile/explosion models are not representative build evidence; movement/
+survival/offer-frequency/overkill limitations remain explicit. Rebalancing is
+planned after Q6, not falsely recorded as implemented. No local browser/stress,
+new device evidence, publication or current-head CI claim. Verification:22 added local links resolve;120 unique scenario records and all18
+priorities/four phase headings validate;282 runtime/test/asset hashes are unchanged.
+`npm run build` and `git diff --check` pass; the existing bundle-size advisory
+remains. No browser suite is required for this documentation-only amendment.
+A concurrent Session21 draft-delivery documentation commit was observed and its
+new disposition/audit notes preserved; this session creates no commit or PR.
+
 
 ## PR27 owner-authorized CI repair
 
@@ -1593,3 +1625,21 @@ current-head full Actions remains unverified until its own run completes.
 At02:51:24UTC, elapsed78m38s; reserve/final review window is active. Publish the
 verified follow-up with full CI pending; do not infer a pass before03:02:46UTC
 session deadline. Pre-existing roadmap edits remain preserved unstaged.
+
+## Planning claim publication and G1 prompt — 2026-10-21
+
+Owner requests publication to main as a claim and G1 start instructions. Verified
+PR27 merged as9837158, headc735cb8; head CI39535388393 succeeds. Created isolated
+`codex/readable-gameplay-claim` from origin/main with all existing roadmap edits
+preserved. Added PHASE_G1_PROMPT and explicit Codex G1 ownership/branch in the
+roadmap. Q6 remains required and unimplemented; the prompt completes it before
+G1 tuning. No gameplay edits or new enemy/art work in this delivery.
+
+Publish the reviewed documentation-only commit by fast-forward to main; do not
+force push or include another branch's unmerged gameplay. Verification/publication
+results will be recorded in the final delivery response. Pre-publication checks
+pass:15 documentation-only paths,9 local links in new roadmap/handoff/report,
+120 unique scenario records, G1/Q6 claim assertions, production build and
+whitespace. Existing bundle-size advisory remains; no local browser suite is
+needed for this documentation-only publication. Older delivery statements above
+retain historical meaning; no later gameplay merge is authorized here.

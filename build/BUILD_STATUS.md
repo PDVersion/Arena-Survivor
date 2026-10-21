@@ -17,7 +17,7 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| V0.4.3 | Active on `codex/v0.4.3`; checkpoints below | [PR #25](https://github.com/PDVersion/Arena-Survivor/pull/25) merged 2026-10-16 as `54b9b1b`; head `03965ef` | In progress; [active plan](BUILD_PLAN_V0.4.3.md) |
+| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 remains open; [plan](BUILD_PLAN_V0.4.3.md) |
 | V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
@@ -73,6 +73,33 @@ Audit fails with one high finding in pinned Vite6.4.3 (three launch-editor
 advisories); dependency pin unchanged, no bypass. Browser regression is deferred
 to PR CI; current-head CI is pending at this recording checkpoint. No merge or
 deployment is authorized.
+
+## Readable gameplay planning amendment — 2026-10-21
+
+[Four-phase roadmap](READABLE_GAMEPLAY_ROADMAP.md) records owner-requested genre
+priorities, verified Australian waste/litter context, candidate enemies and measured
+rebalance requirements. Q6 remains next; G1–G4 are planned, not implemented or
+assigned a new milestone. No enemy stats or live roster changed in this amendment.
+The [baseline](content/READABLE_ROSTER_BASELINE.md) runs120 deterministic model
+scenarios across both themes/presets/world fixtures; parked eco models are clearly
+excluded from representative acceptance. This documentation amendment passes22
+added local-link checks,120-record validation, runtime/test/asset hash preservation,
+production build and whitespace checks. Existing bundle-size advisory remains;
+no browser suite was run and no new browser/device/CI pass is claimed.
+
+## Planning claim and next implementation — 2026-10-21
+
+Owner explicitly requests publishing the planning amendment to main as a claim.
+G1 is claimed to Codex on future `codex/readable-gameplay-g1`, with Q6 still its
+first prerequisite. [Ownership/gates](READABLE_GAMEPLAY_ROADMAP.md#phase-g1--reliable-power-growth-and-existing-roster-rebalance)
+and [start prompt](PHASE_G1_PROMPT.md) are durable. No Q6/G1 code is implemented
+or verified by this publication; G2–G4 and new art remain future work.
+
+PR27 is verified merged at2026-10-21T04:35:26Z as `9837158`, head `c735cb8`.
+Its [head CI39535388393](https://github.com/PDVersion/Arena-Survivor/actions/runs/39535388393)
+completed successfully. This evidence covers that milestone head only, not the
+new documentation claim or future gameplay changes. Later repair notes below
+remain historical checkpoints rather than current blockers.
 
 ## Latest remote evidence
 
