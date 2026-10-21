@@ -322,3 +322,15 @@ during a live run; no transient simulation objects or suspended run are persiste
 Current progress is preserved on cancellation/invalid input/storage failure, and
 corrupt source is quarantined without replacing a good backup. See SAVE_DATA.md
 for exact format, bounds, storage transaction limits and accepted schema migration.
+
+### Session21 selected correction — owner-track target capacity
+
+Q6 will extend vacuum primary-target capacity through its own weapon progression;
+the current three-target/four-target evolved definitions remain the implemented
+baseline until that gate passes. A modest early cap is retained. Exact integer
+steps, finite ceiling and evolution tuning belong to theme weapon data and need
+balance verification. Earned capacity must survive same-slot evolution without
+regression; splash caps are a separate authored mechanic. The reusable contract
+must validate both Cleanup Vacuum/Cyclone Vacuum and Runic Fan/Runic Tempest while
+keeping themed identity out of systems. No new stable IDs, save schema, materials
+or sprites are selected by this planning decision.

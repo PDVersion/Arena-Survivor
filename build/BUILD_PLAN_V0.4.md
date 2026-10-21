@@ -115,3 +115,13 @@ production themes still satisfy their contracts, and every accepted balance
 value remains theme-owned data. A 300-enemy stress test must still pass, but the
 game no longer treats reaching 300 enemies—or filling the screen with effects—as
 a design goal.
+
+## Session21 correction priority
+
+C1–C7 local gates pass at C7 `88f220b`; the active V0.4.3 plan now tracks open Q6:
+player motion/alignment, cone feedback matching actual pulses, and owner-selected
+vacuum primary-target growth through weapon upgrades. Modest early caps are
+accepted; later steps/evolution tuning remain unimplemented and need balance
+verification. Owner subsequently authorizes a draft delivery PR before these
+corrections; Q6 stays open and V0.4.4 generation remains gated.
+Historical scoped passes and the temporary external-check waiver remain intact.

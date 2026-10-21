@@ -771,3 +771,19 @@ and individual content reports. This does not select R01–R06 or other optional
 proposals, start V0.4.4, or turn temporarily waived external browser/device evidence
 into a pass. Session21 retains owner delivery/acceptance decisions; no remote
 publication or additional broad campaign is authorized.
+
+## Session21 selected correction follow-up
+
+The next local work is Q6 in BUILD_PLAN_V0.4.3: diagnose/correct player pose motion,
+make cone feedback correspond to actual pulses/hits, and implement owner-selected
+vacuum primary-target growth with its own weapon upgrades. Retain a modest early
+cap; exact later integer steps/ceiling and evolution tuning need theme-owned data
+and balance validation. Planning is updated; runtime implementation/verification
+remains open. This supersedes delivery as the immediate next priority, preserving
+local-only delivery and the temporarily waived/unverified external checks.
+
+Session21 delivery revision: owner explicitly authorizes wrapping up and creating
+the V0.4.3 PR before Q6 implementation. Publish a draft with completed C1–C7 and
+selected planning; Q6 stays open. Fresh local delivery software checks pass but
+audit reports a high finding in Vite6.4.3; no dependency change/bypass is selected.
+PR Actions must verify the actual delivered head. No merge/deployment is authorized.

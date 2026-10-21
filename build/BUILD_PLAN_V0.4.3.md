@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; remaining delivery/acceptance decisions are below. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; Session21 identifies player-motion/cone-feedback corrections and selects vacuum target-cap growth for the next bounded correction gate below. These corrections remain unimplemented. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -378,11 +378,73 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next step — owner delivery and remaining acceptance disposition
+## Next step — Q6 player motion, cone feedback and vacuum progression
 
-C1–C7 local gates pass. No further content, dependencies, sprites or optional work
-is selected. [Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
-local-only delivery. External actual Safari/browserOS/older physical-device checks
+Session21 documentation ownership (claimed before edits):
+`build/{BUILD_PLAN_V0.4,BUILD_PLAN_V0.4.3,BUILD_STATUS,SESSION_21_PROMPT,PLAN,THEME_ARCHETYPES,EDUCATION_PIVOT,AUTONOMOUS_DEVELOPMENT_PLAN}.md`,
+`AUTONOMOUS_PROGRESS.md` and `RECONCILIATION.md`. This cycle records review and
+owner direction only; no runtime/assets/tests are edited. The subsequent owner
+request to wrap up and create the V0.4.3 PR authorizes committing these selected
+planning changes and publishing the existing branch. Claim exact runtime/test
+ownership before implementing Q6.
+
+C1–C7 local gates pass at C7 `88f220b`. Owner reports continuing player-sprite
+jitter and enemies inside the visible vacuum cone receiving no hit. The next
+local correction gate remains open. The later owner request authorizes a draft
+PR for completed work before Q6; it does not complete Q6 or start V0.4.4:
+
+- [ ] Reproduce player movement against a fixed actor/body anchor. Inspect walk,
+  idle and hit transitions in both horizontal directions and diagonal movement.
+  Independent per-pose bounding-box centring is a candidate cause, not a proved
+  live diagnosis. Correct presentation without changing physics or hand-editing
+  generated art; preserve facing, rate0.5 and Phaser shutdown ownership.
+- [ ] Reconcile the visible cone with actual pulse timing, origin and hit selection.
+  Current drawing and collision share resolved reach/angle; no separate-radius
+  defect was established. Damage resolves once at firing, while a stationary cone
+  fades for280ms. A target entering the fade is not a new hit. Verify base/upgraded/
+  evolved boundaries and make actual affected targets/pulse timing readable.
+- [ ] Implement owner-selected vacuum primary-target growth with its own weapon
+  upgrade progression. A small early target limit is accepted; it must increase
+  at later weapon levels rather than stay at three until evolution. Use the
+  existing owner-track model, not automatic growth with unrelated player levels.
+  Exact thresholds/increments/ceiling and evolution carryover need theme-owned
+  tuning and balance verification; they are not settled or implemented here.
+  Keep finite integer caps and deterministic target ordering. Preserve independent
+  clocks, direct/splash provenance and exact XP; growth does not remove caps or
+  automatically increase splash targets. Both production themes must satisfy the
+  generic contract. Evolution must retain earned growth without reducing it.
+- [ ] Add affected deterministic coverage for cap steps, boundaries, evolution/
+  reset and attack ownership; run typecheck, affected units, lint, build and diff
+  checks. Use `npm run balance` for the changed pacing, including packed targets.
+  Run only necessary serial browser cases, one worker/zero automatic retries,
+  with declared bounds and images under testInfo.outputPath; inspect motion and
+  cone-hit correspondence. Record deferred broad/stress/native/long checks.
+- [ ] Record implementation, actual verification, remaining limits and reconciliation
+  together in one reviewed local correction commit. Keep C1–C7 historical passes
+  intact; Q6 is open until its own gate passes.
+
+Read-only Session21 review reran25 animation/melee/second-tool units across3files:
+all pass. This does not verify the reported motion/cone behavior or the proposed
+cap progression. No new browser campaign or runtime fix occurred.
+
+## Delivery and remaining acceptance disposition
+
+No unrelated content, dependencies, new sprites or optional work is selected.
+[Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
+authorized draft PR delivery. Q6 and the newly observed high-severity Vite audit
+finding remain open; no merge or deployment is authorized. External actual
+Safari/browserOS/older physical-device checks
 remain temporarily waived/unverified, not passed. No current-head remote CI is
-inferred from run39189877476 on2806720. A later owner-approved delivery/check campaign
+inferred from run39189877476 on2806720 or merge CI39193504359 on c6daeb6.
+A later owner-approved delivery/check campaign
 must use these changed sources; regenerate the historical device pack if needed.
+
+Session21 delivery ownership extends the same10 documentation paths plus Git/PR
+metadata. Owner explicitly requests “wrap this up and create PR for t4.3”, resolved
+as existing `codex/v0.4.3`. Commit the selected planning decisions separately from
+the completed phase commits and publish a draft PR into main. Local delivery
+checks:655units/67files, typecheck, lint and build pass; audit fails with one high
+Vite finding (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw,
+GHSA-587h-7wmj-h5pm). Vite remains6.4.3; suggested6.4.4 is outside its exact pin.
+No dependency change or audit bypass is made. Full browser regression is deferred
+to PR Actions; report its actual matching head/status, never a historical pass.

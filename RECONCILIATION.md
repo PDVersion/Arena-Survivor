@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C7 local gates verified; delivery remains local.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C7 local gates verified; Session21 authorizes draft PR delivery with Q6 and a new Vite audit finding open.**
 
 ## How to maintain this file
 
@@ -3610,3 +3610,42 @@ exact60/150/300 live counts/cap300; Default p95 medians25.1/25.5/41.7ms versus
 Low17.6/24.3/25.0ms, no >100ms stalls. Conditional SwiftShader evidence is not
 physical acceptance. No older device exists; no reply to the proposed gate-order
 revision, so content stays blocked and P5/overall acceptance remains open.
+
+## Session21 Q6 follow-up — motion acceptance and weapon target progression
+
+Continuation of REC-105 (player presentation) and REC-102 Session14/15 (C1/C2);
+no new ID is allocated from V0.4.4's reserved range. Status: open correction gate
+in BUILD_PLAN_V0.4.3; C1–C7 historical local verification remains intact.
+
+Observation: owner reports continuing player jitter and enemies in the drawn
+vacuum cone not hit. The pipeline independently centres each pose's bounds, so
+shared body/foot alignment needs a fixed-anchor motion check; still a hypothesis,
+not a live reproduction. Drawing/hits use the same resolved reach/angle. Direct
+hits resolve once at firing with nearest-target caps3/4(base/evolved), while the
+cue remains stationary and fades280ms. Occupying its fade does not cause a hit.
+Passing flip/cadence or hit-total tests does not prove motion/cone correspondence.
+
+Owner decision2026-10-21: a modest early vacuum cap is acceptable; enemies hit
+should increase as the weapon levels up. Plan growth through its own upgrade
+track, preserving finite integer caps and deterministic ties. Exact thresholds,
+increments/ceiling and evolution tuning remain open until theme data/balance
+validation. Earned growth must survive evolution without a reduction. Do not
+silently remove caps or grow splash targets; preserve independent clocks, rate0.5,
+XP and damage-source provenance. Planning only; no runtime implementation yet.
+
+Review verification:25 affected units/3files pass; no new browser campaign.
+Read-only remote inspection finds merge CI39193504359 successful on c6daeb6;
+older39189877476 covers2806720. Neither certifies local C7 head88f220b or Q6.
+No publication or additional acceptance waiver. Keep source-bound P5/P6 evidence
+and actual Safari/platform/older-device gaps explicitly waived/unverified.
+
+Session21 delivery disposition: the later explicit owner request authorizes a
+commit of selected planning decisions, push and draft V0.4.3 PR now; this
+supersedes local-only delivery and the recommendation to fix Q6 before PR creation.
+Q6 remains open, not waived or implemented. Fresh delivery units655/67, types,
+lint/build pass. Audit now reports one high Vite finding across three launch-editor
+advisories (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw, GHSA-587h-7wmj-h5pm),
+with6.4.4 suggested outside the exact6.4.3 pin. Earlier zero-audit results are
+historical snapshots. Leave this visible as a draft-delivery blocker rather than
+silently upgrading dependencies or weakening CI. PR Actions will provide current-
+head browser/audit evidence; no merge/deployment/manual dispatch is authorized.

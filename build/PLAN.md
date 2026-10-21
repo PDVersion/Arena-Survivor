@@ -1506,3 +1506,17 @@ during a live run; no transient simulation objects or suspended run are persiste
 Current progress is preserved on cancellation/invalid input/storage failure, and
 corrupt source is quarantined without replacing a good backup. See SAVE_DATA.md
 for exact format, bounds, storage transaction limits and accepted schema migration.
+
+## Session21 selected correction — vacuum target progression
+
+The C1/C2 descriptions above record the shipped local baseline: three primary
+vacuum targets, four after evolution. Owner accepts a modest cap at early weapon
+levels and selects increasing primary targets through the vacuum's own upgrade
+progression. This replaces the fixed-cap design intent for the next Q6 correction;
+it is not implemented yet. Exact level thresholds, increments, finite ceiling and
+evolution tuning remain subject to theme-owned data and `npm run balance`.
+Earned growth must survive evolution without a reduction. Shared damage/speed/crit,
+independent clocks and bounded splash stay separate; unrelated player level-ups
+do not automatically level this tool. The visible cone must communicate actual
+pulse timing/affected targets, and player pose alignment remains a separate open
+presentation correction. See BUILD_PLAN_V0.4.3 Q6 for verification and scope.

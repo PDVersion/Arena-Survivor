@@ -624,3 +624,14 @@ They use the same tool damage path as existing waste actors. Their marked circle
 teaches the immediate game action: move clear before the pulse. No knowledge
 question, content-source claim, type effectiveness, material layer or sprite
 inventory is added. Boss values and labels remain theme-owned.
+
+### Session21 selected correction — vacuum progression and feedback
+
+Owner selects increasing vacuum primary-target capacity as its own weapon upgrades
+advance, retaining a modest early cap. This is a planned game rule, not an
+educational/material-effectiveness claim. The C1/C2 three/four-target descriptions
+above remain the implemented baseline. Exact steps, finite ceiling and evolution
+carryover tuning need theme data and balance verification in Q6; growth must not
+be lost at evolution. Clarify pulse/cone feedback and investigate player pose
+alignment before further sprite generation. No new information surface, factual
+content, material identity or progression category is introduced here.

@@ -1,4 +1,4 @@
-# Session21 / V0.4.3 — local C1–C7 complete; delivery and acceptance disposition
+# Session21 / V0.4.3 — Q6 motion, cone feedback and vacuum progression pending
 
 Continue existing `/Users/pdv/Documents/Projects/Arena-Survivor`, `codex/v0.4.3`.
 Read AGENTS authorities in order, status/progress, active plan, completed C4–C7
@@ -6,7 +6,7 @@ master records/reports/results and SAVE_DATA. Inspect Git/PR/Actions; never rese
 recreate this checkout, or infer matching-head CI from a historical run.
 
 C4 b0ff7e9, C5 5da2ed3 and C6 0776c95 are local verified phases; the following C7
-commit records portable saves. C1–C7 local gates pass. Final655units/67files,
+commit `88f220b` records portable saves. C1–C7 local gates pass. Final655units/67files,
 typecheck/lint/build/diff and static production marker exclusion pass. Five unique
 C7 serial browser cases pass once/4.4s, one worker/zero retries: actual title export/
 download/clipboard/input guard, both-theme file/paste/cancel/import/backup/reload,
@@ -24,9 +24,11 @@ progress; compare-before-write is not cross-tab CAS. Corrupt current bytes are
 quarantined without replacing a good backup. No active-run suspension or new
 progression categories. See SAVE_DATA for failure and transaction semantics.
 
-Delivery remains local: no push, new PR, merge, deployment or workflow dispatch is
-authorized. Existing PR26 merged2806720 as c6daeb6; run39189877476 passes2806720,
-not these later local phases. An owner-selected delivery step must inspect actual
+Owner now authorizes committing planning updates, pushing the existing branch
+and creating a draft V0.4.3 PR into main. Merge, deployment and separate manual
+workflow dispatch remain unauthorized. Existing PR26 merged2806720 as c6daeb6; run39189877476 passes2806720,
+not these later local phases. Merge CI39193504359 passes c6daeb6 only;
+neither covers current local HEAD. An owner-selected delivery step must inspect actual
 current state and get current-head checks through authorized delivery. No optional
 features, dependency upgrades, content expansion or V0.4.4 sprite generation are
 selected merely because C7 finished.
@@ -46,3 +48,25 @@ leave4213/unknowns alone. Images under testInfo.outputPath. Up to90min, record s
 deadline/elapsed and reserve final20min. Update checks/status/reconciliation/progress
 with actual completed work in the same reviewed local commit; do not manufacture
 another evidence-only commit or silently waive/expand remaining acceptance.
+
+## Current owner direction and next open work
+
+Session21 review/planning is recorded; Q6 implementation remains open. Owner reports
+player motion still glitches and the visible vacuum cone suggests hits that do not
+occur. Diagnose fixed body/pose alignment before asserting an art/runtime cause.
+Cone geometry shares resolved reach/angle with hits, but current attacks apply once,
+cap direct hits at3(base)/4(evolved), and leave a stationary280ms fading cue.
+
+Owner accepts the small early enemy limit and selects growth in enemies hit as
+the vacuum levels up. Plan it through the vacuum's own upgrade track; exact
+thresholds/increments/finite ceiling and evolution tuning remain to be balanced.
+Do not apply growth on unrelated player level-ups, remove caps, grow splash caps
+implicitly or lose earned capacity at evolution. See Q6 in BUILD_PLAN_V0.4.3 for
+full scope/gate; claim runtime/test ownership before edits. No runtime fix yet.
+
+Read-only review reran25 affected units/3files, all pass; no new browser evidence.
+Planning documents reflect this owner selection. The later owner request
+authorizes draft PR delivery now, leaving Q6 open. No new optional content or
+sprite generation. Delivery checks pass655units/67files, types/lint/build; audit
+fails one high Vite finding. No upgrade/bypass is made; keep draft status and
+report actual current-head CI. Browser regression runs in PR Actions.

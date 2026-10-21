@@ -1,12 +1,15 @@
 # Autonomous progress
 
-Updated: 2026-10-19 (Australia/Sydney).
+Updated: 2026-10-21 (Australia/Sydney).
 
 ## Objective and current state
 
 Current milestone dates/statuses and published CI evidence are consolidated in
-[build/BUILD_STATUS.md](build/BUILD_STATUS.md). Active work is remaining P5
-acceptance; P6/content remain gated. The session records below are historical
+[build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
+verified through C7 `88f220b`. Next is the open
+Session21 Q6 correction gate: player motion, cone feedback and owner-selected
+vacuum target-cap progression. Remaining external checks are temporarily waived/
+unverified; delivery stays local. The session records below are historical
 checkpoints, including their then-current delivery constraints and dirty-file
 notes. Those are superseded where the current summary records later evidence
 or the owner's documentation cleanup.
@@ -1499,3 +1502,56 @@ actual report/results/master recorded; Session21 retains delivery/acceptance cho
 Final source review/check recording 2026-10-20T05:55:53.985376+00:00; resumed actual elapsed
 865.0s, C7 elapsed580.0s.
 Finished before the reserved final20 window; no remote publication authorized.
+
+## Session21 — read-only assessment and owner-selected correction planning
+
+Documentation cycle start2026-10-21T00:05:11UTC /11:05:11AEDT; maximum deadline
+01:35:11UTC /12:35:11AEDT, final20reserve01:15:11UTC /12:15:11AEDT.
+Exact documentation ownership is in the active plan's Q6 section, claimed before
+edits. No runtime/assets/test edits or standalone evidence-only commit.
+
+Reviewed authorities, C4–C7 records/reports/results/SAVE_DATA, player animation,
+sprite pipeline and actual vacuum hit/presentation wiring. Checkout clean at
+88f220b before documentation changes, ten commits ahead of local tracking ref.
+Read-only GitHub PR/Actions inspection confirms PR26 merged; merge run39193504359
+passes c6daeb6, historical run39189877476 passes2806720. Neither covers current HEAD.
+
+Owner reports ongoing player glitching and visible cone occupants not hit.
+Per-pose centring is a candidate alignment cause, not a reproduced live defect.
+Cone/hits share resolved reach/angle, but direct hits are capped3/4(base/evolved)
+and resolve once; the stationary280ms fade does not apply further damage.
+Owner accepts a modest early cap and selects increasing vacuum primary targets
+with weapon-level progression. Record owner-track interpretation; thresholds,
+increments/ceiling and evolution carryover tuning remain open, not implemented.
+Keep finite caps, independent clocks, rate0.5, exact XP and direct/splash provenance.
+
+Read-only review:25units/3files pass for sprite-animation, melee-stab and second-tool.
+No browser campaign/full-suite/build rerun is claimed for this planning change.
+Active plan/status/handoff/product/theme/education/roadmap/reconciliation updated.
+Q6 must claim exact runtime paths and verify before committing its implementation.
+No push/PR/merge/deployment/dispatch; waived external evidence stays unverified;
+V0.4.4 generation and unrelated optional features remain unselected.
+
+Documentation validation checkpoint2026-10-21T00:06:34UTC /11:06:34AEDT;
+elapsed83seconds from the documentation-cycle start, before the reserved window.
+Whitespace/diff checks and planning-consistency checks pass across10 Markdown
+paths; Q6 stays open and no runtime/assets/tests changed. Changes remain local
+and uncommitted for the subsequent reviewed correction commit.
+
+### Session21 authorized draft delivery
+
+Owner now requests wrapping up and creating the V0.4.3 PR. Delivery-cycle start
+2026-10-21T00:27:54UTC /11:27:54AEDT; deadline01:57:54UTC /12:57:54AEDT;
+final20reserve01:37:54UTC /12:37:54AEDT. Same10 documentation paths plus Git/PR
+metadata claimed before delivery edits. This explicit authorization supersedes
+prior local-only delivery and allows committing the selected planning changes;
+Q6 runtime changes remain unimplemented and no phase is falsely completed.
+
+Fetched remote refs without reset/recreation: main=c6daeb6, branch has10 unpublished
+commits since the merged checkpoint. No open PR at preflight. Fresh local checks:
+655units/67files, typecheck, lint and build pass. Existing bundle advisory remains.
+Audit fails one high Vite finding across three launch-editor advisories; suggested
+6.4.4 lies outside exact6.4.3 pin. No dependency upgrade or audit bypass. Draft PR
+will disclose audit/Q6 and retain external checks waived/unverified. Full local
+browser/stress/native/long campaigns are not repeated; PR Actions owns current-head
+browser regression. No merge/deployment/manual workflow dispatch authorized.

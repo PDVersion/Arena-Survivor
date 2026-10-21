@@ -1,6 +1,6 @@
 # Build dates and status
 
-Updated **2026-10-20 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-21 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -57,6 +57,23 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | C7 portable saves | **Verified local phase,2026-10-20** | Canonical codec, preview/backup/recovery/reset,655units/67files and five affected serial browser cases; [report](content/C7_REPORT.md) |
 | C1–C7 / optional content | **C1–C7 local gates verified** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
 
+## Session21 correction disposition
+
+C7 is committed locally as `88f220b`; clean branch review found ten commits ahead
+of the local origin tracking ref. C1–C7 scoped local gates remain verified.
+Q6 is the next open correction gate in [the active plan](BUILD_PLAN_V0.4.3.md#next-step--q6-player-motion-cone-feedback-and-vacuum-progression):
+player-motion/alignment diagnosis, truthful cone feedback, and owner-selected
+vacuum primary-target growth with weapon upgrades. Modest early caps are accepted;
+exact later cap steps/evolution tuning remain undecided and unimplemented.
+Read-only review reran25 affected units/3files, all pass; no new browser evidence,
+runtime correction or completion claim. Owner subsequently requests delivery:
+publish existing completed work and selected planning in a draft V0.4.3 PR,
+leaving Q6 open. Fresh delivery checks pass655units/67files, types/lint/build.
+Audit fails with one high finding in pinned Vite6.4.3 (three launch-editor
+advisories); dependency pin unchanged, no bypass. Browser regression is deferred
+to PR CI; current-head CI is pending at this recording checkpoint. No merge or
+deployment is authorized.
+
 ## Latest remote evidence
 
 PR #26 merged on2026-10-19 at03:11:29UTC as `c6daeb6`, head `2806720`.
@@ -65,6 +82,9 @@ succeeds on that head:488units/57files,91 browser passes/two flaky/four skips,
 zero audit findings. Two retried failures are repaired in the local P6 software
 slice; current local combined run passes96 cases/six explicit opt-in skips with
 zero retries. No matching-head CI result is claimed for subsequent local changes.
+Read-only Session21 GitHub inspection also finds successful merge CI
+[run39193504359](https://github.com/PDVersion/Arena-Survivor/actions/runs/39193504359)
+on `c6daeb6`. Neither run covers local C7 `88f220b` or the pending Q6 corrections.
 PR26 is merged, not an active PR to update. No new publication/workflow is run.
 
 ### Historical PR25 checkpoints
