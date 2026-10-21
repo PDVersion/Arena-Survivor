@@ -1573,3 +1573,11 @@ all serial/zero retries. EPERM server setup precedes authorized browser rerun.
 Report:build/performance/PR27_CI_REPAIR.md. No gameplay/Q6/device acceptance changes.
 At01:36:01UTC recording checkpoint elapsed3m15s; full PR Actions verification
 follows push and is not yet a pass. No merge/deployment.
+
+
+PR27 first repair remote result:39528406842 on a87f57f passes116cases/6skips,
+no flaky tests. Only C3's later load poll fails:258–275simulation-ms/10s versus
+1000ms required. Extend that poll to the existing90s simulation budget/120s test
+bound, retaining every assertion. Two affected cases pass once12.5s, one worker/
+zero retries; types/affected lint/diff pass. No new browser campaign or gameplay
+change. Publish this narrow follow-up and await its matching-head full Actions.

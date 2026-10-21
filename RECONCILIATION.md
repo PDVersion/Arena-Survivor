@@ -3663,3 +3663,12 @@ No audit bypass, retry/skip increase or gameplay change. Local655units/67files,
 types/lint/build/diff/audit0 and7unique serial affected browser cases verified;
 [repair report](build/performance/PR27_CI_REPAIR.md) records failures and limits.
 Remote current-head confirmation pending; Q6 and device waiver remain unchanged.
+
+
+PR27 continuation: fixing an early fixture precondition can expose later CI-only
+wall-time assumptions. Run39528406842 passes116cases/no flaky tests; the two C3
+cases now reach their final300-actor poll, advancing258–275simulation-ms/10s.
+Keep the1000ms work and exact world/reward/cap/reset assertions, using the same
+90-second progress budget as other simulation gates. Both affected cases pass
+locally12.5s/zero retries; full remote confirmation remains pending. No runtime
+defect, performance win or new device evidence is inferred from the wait repair.

@@ -467,3 +467,10 @@ Local repair gate passes as recorded in performance/PR27_CI_REPAIR.md:655units/
 67files, types/lint/build/diff/audit0, seven unique affected serial browser cases
 verified cumulatively/zero retries. Full current-head PR Actions must confirm
 after push. Q6 stays open; pre-existing roadmap edits remain unstaged.
+
+
+PR27 repair continuation: run39528406842 on a87f57f passes116browser cases/6skips/
+no flaky tests; only both C3 cases fail a later dense-load wall-time assumption
+(258–275simulation-ms/10s, target1000ms). Use the same bounded90s progress/120s
+test budget there, preserving all assertions. Two affected serial cases pass12.5s
+locally/zero retries; types/affected lint/diff pass. Remote confirmation pending.

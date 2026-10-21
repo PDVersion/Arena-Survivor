@@ -30,7 +30,7 @@ interface WorldFixture {
 declare global { interface Window { __C3_WORLD__?: WorldFixture } }
 
 for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} chooses run-local curses and activates the new scheduled shrine once`, async ({ page, browser }, testInfo) => {
-  test.setTimeout(35_000);
+  test.setTimeout(120_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   try {
@@ -169,7 +169,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} choos
     await page.screenshot({ path: testInfo.outputPath("cursed-pause.png") });
     await page.keyboard.press("Escape", { delay: 80 });
     await page.evaluate(() => window.__C3_WORLD__!.load());
-    await expect.poll(() => page.evaluate(() => window.__C3_WORLD__!.snapshot().elapsedMs), { timeout: 10000 }).toBeGreaterThan(259000);
+    // Verify the same simulated work without assuming software-runner throughput.
+    await expect.poll(() => page.evaluate(() => window.__C3_WORLD__!.snapshot().elapsedMs), { timeout: 90_000 }).toBeGreaterThan(259000);
     const load = await page.evaluate(() => window.__C3_WORLD__!.snapshot());
     expect(load.world).toEqual(activated.world); expect(load.enemies).toBeLessThanOrEqual(load.cap); expect(load.cap).toBe(300);
     await page.screenshot({ path: testInfo.outputPath("cursed-load.png") });

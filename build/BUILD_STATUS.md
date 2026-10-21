@@ -151,3 +151,10 @@ with zero retries; one reproduced shrine assertion failure is retained in the
 [repair report](performance/PR27_CI_REPAIR.md). Full current-head Actions is pending
 at this checkpoint; no historical run is claimed. Q6 stays open. Existing dirty
 roadmap planning is preserved unstaged. No merge/deployment/device acceptance.
+
+
+PR27 repair follow-up: run39528406842 on a87f57f has116browser passes/6skips and
+no flaky tests; both C3 dense-load polls fail their10-second wall budget after
+reaching258–275simulation-ms. The same90-second progress budget fixes that next
+fixture limit; both affected cases pass12.5s locally/zero retries, types/lint/diff
+pass. All earlier repaired cases pass remotely. Final current-head CI is pending.

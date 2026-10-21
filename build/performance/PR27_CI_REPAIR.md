@@ -48,3 +48,20 @@ The separate prior local audit already identifies Vite6.4.3 launch-editor adviso
 No Q6 motion/cone/cap progression, save schema, sprites or new device acceptance.
 Actual Safari/platform/older-device evidence remains temporarily waived/unverified.
 P5/P6 measurements/device pack remain source-bound. No merge or deployment.
+
+
+## Matching-head continuation — a87f57f / run39528406842
+
+The first repair run passes116browser cases with6explicit skips and no flaky
+tests, but both C3 cases now reach a later dense-load poll and fail. They advance
+only258–275 simulation-ms in10 wall-seconds, below the unchanged1000ms target.
+The seed-pool, shrine, frame-input, profile and evolved-tool corrections all pass.
+Audit is again skipped because the browser step fails; local audit remains0.
+
+Apply the same existing90-second simulation-progress budget and120-second test
+bound to the two C3 cases. Keep the259000 elapsed target,300cap, unchanged world,
+reward and reset assertions. No new skip/retry/renderer/gameplay change.
+Two affected cases pass once locally in12.5s, one worker/zero retries; final types,
+affected lint and diff checks pass. Full software/build/audit gates from a87f57f
+remain valid for this test-timeout-only follow-up. Current-head remote CI must run
+again; report its final result in the PR without manufacturing an evidence commit.
