@@ -13,6 +13,7 @@ export const archetypeIds = {
     slowDurable: "enemy.slow_durable",
     deathSpawner: "enemy.death_spawner",
     stationaryFragment: "enemy.stationary_fragment",
+    clusterFodder: "enemy.cluster_fodder",
     miniBoss: "enemy.mini_boss",
     finalBoss: "enemy.final_boss",
   },

@@ -167,6 +167,10 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.clusterFodder]: {
+      name: "Ashling",
+      description: "A slow, weak enemy that approaches in small groups. Clear a lane through them.",
+    },
     [archetypeIds.character.starter]: {
       name: "Wandering Knight",
       description: "A lone champion entering the Ember Court.",

@@ -556,3 +556,11 @@ roadmap's bounded gate, with its separate local phase commit and
 C1–C7. This supersedes the earlier next-G1 wording. G2–G4 and new sprites remain
 unstarted; claim the owner-selected next scope before implementation. Broad/
 external evidence limits and the absence of gameplay merge authorization persist.
+
+## G2A continuation — 2026-10-22
+
+Owner now authorizes G2 prompt/plan/review and implementation. First candidate
+is locally kept on `codex/readable-gameplay-g2` from G154e9b2f. Exact authority:
+[BUILD_PLAN_G2](BUILD_PLAN_G2.md), [G2A_REPORT](content/G2A_REPORT.md). G2 remains
+in progress; next is separately claimed/reviewed G2B. No old phase, sprite work,
+main merge or deferred hardware/browser acceptance is reopened by this result.

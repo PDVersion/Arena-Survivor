@@ -6,6 +6,7 @@ import {
   upgradeCategories,
   upgradeRarities,
   worldKeys,
+  type EnemyPrimitivePart,
   type ThemeManifest,
   type UpgradeDefinition,
 } from "../core/archetypes/contracts";
@@ -322,6 +323,16 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (enemyIds.has(enemy.id)) issues.push(`duplicate enemy id: ${enemy.id}`);
     enemyIds.add(enemy.id);
+    if (enemy.arrivalCluster && (!Number.isSafeInteger(enemy.arrivalCluster.count) || enemy.arrivalCluster.count < 1 ||
+      !Number.isFinite(enemy.arrivalCluster.spacing) || enemy.arrivalCluster.spacing < enemy.radius * 2)) {
+      issues.push(`${enemy.id} arrival cluster needs finite count and body-separated spacing`);
+    }
+    if (enemy.primitiveParts && (enemy.primitiveParts.length < 1 || enemy.primitiveParts.length > 8 || enemy.primitiveParts.some((part: EnemyPrimitivePart) =>
+      !Number.isFinite(part.x) || !Number.isFinite(part.y) || !Number.isFinite(part.rotation) ||
+      !Number.isFinite(part.width) || part.width <= 0 || !Number.isFinite(part.height) || part.height <= 0 ||
+      Math.abs(part.x) + part.width / 2 > 0.5 || Math.abs(part.y) + part.height / 2 > 0.5 || !(part.token in theme.tokens.palette)))) {
+      issues.push(`${enemy.id} primitive parts must be bounded valid presentation data`);
+    }
     if (!Number.isFinite(enemy.maxHealth) || enemy.maxHealth <= 0) {
       issues.push(`${enemy.id} maxHealth must be greater than zero`);
     }
@@ -949,6 +960,9 @@ function validateTuning(
           issues.push(`${role.enemyId} director unlockAt must be within [0, 1)`);
         }
         if (role.unlockAt === 0) hasOpeningRole = true;
+        if (role.introductionCount !== undefined && (!Number.isSafeInteger(role.introductionCount) || role.introductionCount < 1 || role.milestoneWave === false)) {
+          issues.push(`${role.enemyId} introduction count must be a finite enabled milestone`);
+        }
         if (!Number.isFinite(role.baseWeight) || role.baseWeight <= 0) {
           issues.push(`${role.enemyId} director baseWeight must be greater than zero`);
         }

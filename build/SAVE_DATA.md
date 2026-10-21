@@ -145,3 +145,11 @@ stat bonus, active-run suspension, sprite or new factual content is added.
 Corrupt storage is preserved; denied/quota storage falls back to memory with visible
 warnings. Schema1 migration is deterministic. C7 portable export/import/preview/
 explicit backup recovery remains next; use the same validated profile model.
+
+## G2A compatibility note — 2026-10-22
+
+New neutral enemy ID `enemy.cluster_fodder` adds content only. No existing ID,
+schema2 field, profile adapter, unlock or discovery record is changed. Current
+portable unknown-ID preservation remains; no migration is required for this
+addition. G2A reruns affected profile/codec/replacement units as part of its278
+unit gate. This does not imply implementation of saved discoveries or new fields.

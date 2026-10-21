@@ -29,6 +29,7 @@ export const director = {
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+
     // The baseline swarm, thinning as a share as heavier roles arrive.
     {
       enemyId: archetypeIds.enemy.swarmBasic,
@@ -65,5 +66,7 @@ export const director = {
       weightGrowth: 2.6,
       chaosWeightBias: 0.5,
     },
+    { enemyId: archetypeIds.enemy.clusterFodder, waveMovement: "chase", unlockAt: 0.25,
+      introductionCount: 3, baseWeight: 2, weightGrowth: 0.5, chaosWeightBias: 0 },
   ],
 } as const satisfies DirectorTuning;

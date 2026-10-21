@@ -1,3 +1,4 @@
+import { arrivalClusterCount } from "../director/arrival-cluster";
 import type { EnemyDefinition, ThemeManifest } from "../../core/archetypes/contracts";
 import { archetypeIds } from "../../core/archetypes/ids";
 import { awardExperience, createProgressionState, type ProgressionState } from "../xp";
@@ -175,6 +176,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
         const enemyId = selectRole(plan.weights, random);
         const definition = theme.enemies.find((entry) => entry.id === enemyId);
         if (!definition) continue;
+        const admitted = arrivalClusterCount(definition, V02_SPAWN_LIMITS.maxAlive - liveCount());
         const effectiveHealth = definition.maxHealth * modifiers.enemyHealthMultiplier * (1 + definition.armour / 100);
         const effectiveReward = definition.xpReward * (1 +
           (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare);
@@ -183,16 +185,16 @@ export function simulatePacing(options: PacingOptions): PacingReport {
         const cohortId = `${definition.id}:${effectiveHealth}:${effectiveReward}`;
         const existing = live.get(cohortId);
         if (existing) {
-          existing.count += 1;
+          existing.count += admitted;
         } else {
           live.set(cohortId, {
             definition,
-            count: 1,
+            count: admitted,
             effectiveHealth,
             effectiveReward,
           });
         }
-        bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + 1;
+        bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + admitted;
       }
       nextSpawnAtMs = elapsedMs + plan.intervalMs;
     }

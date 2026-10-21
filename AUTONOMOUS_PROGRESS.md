@@ -1,6 +1,6 @@
 # Autonomous progress
 
-Updated: 2026-10-21 (Australia/Sydney).
+Updated: 2026-10-22 (Australia/Sydney).
 
 ## Objective and current state
 
@@ -10,7 +10,7 @@ verified through C7 `88f220b`. PR27 merged as9837158; the main planning claim is
 c200b21. On `codex/readable-gameplay-g1`, Q6 is verified and committed44585dd;
 G1 now passes its own bounded local gate. See [G1 report](build/content/G1_REPORT.md)
 for the two Glass tuning changes, model corrections,187units/21files, serial
-contact check and scenario evidence. G2–G4 and sprites remain unstarted. Broad
+contact check and scenario evidence. G2 is now in progress: G2A kept locally; G2B/Can/G3/G4 and sprites remain unstarted. Broad
 regression/stress/soak/native/device checks are deferred; existing external checks
 remain temporarily waived/unverified. This session creates local phase commits;
 no push/PR/merge is authorized by the older planning publication. Older session
@@ -1671,3 +1671,20 @@ Full-app/stress/soak/native/device campaigns remain deferred; actual Safari/
 browser-OS/older device evidence waived/unverified. Prompt retired after durable
 result; G2–G4/art not started. Next handoff is selected G2 work on a separately
 claimed branch/scope; no implied publication/merge of these gameplay commits.
+
+## G2A — prompt reviewed, candidate implemented/kept 2026-10-22
+
+Owner requests a G2 prompt/plan, review and start of work. Created/reviewed
+build/PHASE_G2_PROMPT.md and BUILD_PLAN_G2.md before code. New branch
+codex/readable-gameplay-g2 from verified local G154e9b2f; clean initial checkout.
+Neutral weak-group role maps to Cigarette Butts/Ashling. Three individual actors,
+three-member retained introduction at25%, sparse later groups, primitive-only
+presentation. No automatic harmful patch, recursive group expansion, new saved
+field, generated sprite, global tuning/cap/rate change. Trial speed revised50→64
+against the existing approach envelope; old assertions stay meaningful.
+278units/29files, types/lint/build,240before/after scenarios and4final serial
+mixed-roster Canvas cases2.0s/no retries pass. Final source/results, fixture
+failures, reward/mix trade-offs and waived/deferred evidence are in G2A_REPORT.
+Keep the first candidate; G2 overall remains in progress. G2B wrapper gust/
+interception requires a fresh bounded claim/prompt review; Can/G3/G4/art unstarted.
+Owned resources cleaned up. No push/PR/merge or broad/device acceptance inferred.

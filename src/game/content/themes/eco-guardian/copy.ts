@@ -167,6 +167,10 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.clusterFodder]: {
+      name: "Cigarette Butts",
+      description: "Slow groups of weak litter. Clear a lane or catch several in one tool action.",
+    },
     [archetypeIds.character.starter]: {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",

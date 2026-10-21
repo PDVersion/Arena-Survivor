@@ -466,7 +466,21 @@ export interface BossDefinition {
   readonly attack: Readonly<{ telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
 }
 
+export interface EnemyPrimitivePart {
+  /** Normalized to authored display diameter; never used by physics. */
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  readonly rotation: number;
+  readonly token: keyof ThemePalette;
+}
+
 export interface EnemyDefinition {
+  /** Only natural director selections expand a group; causal spawns never do. */
+  readonly arrivalCluster?: Readonly<{ count: number; spacing: number }>;
+  /** Optional code-native presentation; sprites still take precedence. */
+  readonly primitiveParts?: readonly EnemyPrimitivePart[];
   readonly boss?: BossDefinition;
   readonly id: EnemyId;
   readonly maxHealth: number;

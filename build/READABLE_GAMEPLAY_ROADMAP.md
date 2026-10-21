@@ -1,6 +1,6 @@
 # Readable cleanup gameplay — four-phase roadmap
 
-Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6 verified in44585dd; G1 verified locally. G2–G4 planned/unstarted.**
+Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6 verified in44585dd; G1 verified locally. G2 in progress (G2A kept); G3–G4 planned/unstarted.**
 The owner requests the ranked survivor-game ideas in a few phases, consideration
 of Australian rubbish data as enemy candidates, and rebalancing existing enemies
 where required. Implementation evidence and limits are in [G1_REPORT](content/G1_REPORT.md).
@@ -345,3 +345,21 @@ next-G1 checkpoints cannot be mistaken for the final handoff. No phase is reopen
 G1 final evidence-only dependency: normalize trailing spaces/terminal blank lines
 in `build/content/Q6/*.txt` while reviewing generated report whitespace. This
 preserves every Q6 captured value and source identity; no prerequisite code changes.
+
+## G2A — selected, reviewed and kept 2026-10-22
+
+The owner explicitly requests a G2 prompt/plan, its review and implementation.
+[Reviewed plan](BUILD_PLAN_G2.md) and [start prompt/handoff](PHASE_G2_PROMPT.md)
+claim exact paths before edits. Branch `codex/readable-gameplay-g2` starts on
+local G154e9b2f, not a new main/merge claim. First candidate only: neutral
+`enemy.cluster_fodder` → Cigarette Butts/Ashling, slow groups of three independent
+weak actors; readable primitives, low-pressure first introduction and sparse
+later natural groups. [G2A_REPORT](content/G2A_REPORT.md) records **keep**, actual
+checks, balance trade-offs and limits. G2A complete locally; G2 remains in progress.
+
+278units/29files, types/lint/build,120fresh before+120after scenarios and4bounded
+serial mixed-roster browser cases pass. Whole-branch whitespace includes new
+files. No new art, saved fields, factual claims, cap/rate/body changes. Broad
+stress/native/device acceptance deferred/waived, never newly passed. Next G2B
+wrapper interception needs a fresh bounded ownership/prompt review; Can/G3/G4
+remain unstarted. Earlier unstarted-G2 checkpoints above are historical.

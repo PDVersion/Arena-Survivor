@@ -71,8 +71,8 @@ describe("role composition", () => {
     expect(Object.keys(shares(0.099))).toHaveLength(1);
     expect(Object.keys(shares(0.1))).toHaveLength(2);
     expect(Object.keys(shares(0.2))).toHaveLength(2);
-    expect(Object.keys(shares(0.4))).toHaveLength(3);
-    expect(Object.keys(shares(0.45))).toHaveLength(4);
+    expect(Object.keys(shares(0.4))).toHaveLength(4);
+    expect(Object.keys(shares(0.45))).toHaveLength(5);
   });
 
   it("produces the documented five-minute shape from the curves", () => {
@@ -82,10 +82,11 @@ describe("role composition", () => {
       [archetypeIds.enemy.fastFragile]: 88,
     });
     expect(shares(1)).toMatchObject({
-      [archetypeIds.enemy.swarmBasic]: 45,
-      [archetypeIds.enemy.fastFragile]: 30,
+      [archetypeIds.enemy.swarmBasic]: 44,
+      [archetypeIds.enemy.fastFragile]: 29,
       [archetypeIds.enemy.slowDurable]: 11,
-      [archetypeIds.enemy.deathSpawner]: 14,
+      [archetypeIds.enemy.deathSpawner]: 13,
+      [archetypeIds.enemy.clusterFodder]: 2,
     });
   });
 
@@ -152,7 +153,7 @@ describe("elite escalation", () => {
 describe("milestone waves", () => {
   it("fires once when progress crosses a role unlock", () => {
     expect(crossedUnlocks(tuning, 0.09, 0.11)).toEqual([]);
-    expect(crossedUnlocks(tuning, 0.21, 0.3)).toEqual([]);
+    expect(crossedUnlocks(tuning, 0.21, 0.3).map((r) => r.enemyId)).toEqual([archetypeIds.enemy.clusterFodder]);
     expect(crossedUnlocks(tuning, 0.39, 0.46).map((role) => role.enemyId)).toEqual([
       archetypeIds.enemy.slowDurable,
       archetypeIds.enemy.deathSpawner,

@@ -58,6 +58,8 @@ export type WaveMovement = "chase" | "drift";
 export interface DirectorRoleTuning {
   /** False allows a quiet unlock without a burst/announcement. */
   readonly milestoneWave?: boolean;
+  /** A small first introduction instead of the general milestone burst. */
+  readonly introductionCount?: number;
   readonly enemyId: EnemyId;
   /** Movement used by this role's milestone wave. Ambient spawns always chase. */
   readonly waveMovement: WaveMovement;

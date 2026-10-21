@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { EnemyPrimitiveView } from "./enemy-primitive-view";
 import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
@@ -29,6 +30,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   defeated = false;
   /** Present only when this pack has a sprite for the role. */
   readonly view?: SpriteView;
+  readonly primitiveView?: EnemyPrimitiveView;
   readonly eliteMarker?: Phaser.GameObjects.Text;
   private readonly baseColour: number;
   private launched = false;
@@ -112,6 +114,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       diameter: this.displayDiameter,
       animateMovement: true,
     });
+    if (!this.view && definition.primitiveParts) this.primitiveView = new EnemyPrimitiveView(this, definition.primitiveParts, tokens);
   }
 
   /** Stable identity for the shared spatial index and targeting. */
@@ -175,6 +178,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       // A fill colour does nothing to a texture, so a sprite tints instead.
       if (this.view) {
         this.view.flash(0xffffff, 70);
+      } else if (this.primitiveView) {
+        this.primitiveView.flash(0xffffff, 70);
       } else {
         this.setFillStyle(0xffffff);
         this.scene.time.delayedCall(70, () => {

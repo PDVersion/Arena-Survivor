@@ -1,6 +1,6 @@
 # Build dates and status
 
-Updated **2026-10-21 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-22 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -215,3 +215,14 @@ all120 before/after scenarios plus36sensitivity cases pass. Fresh Q6 capture120
 is kept separately. [G1_REPORT](content/G1_REPORT.md) owns source/values/limits.
 G1 locally complete; G2–G4/new sprites unstarted. No new remote CI/main merge,
 full stress/native/device acceptance; external evidence waived/unverified.
+
+## G2A — candidate kept locally 2026-10-22
+
+Owner requests prompt/plan, review and start of G2. On `codex/readable-gameplay-g2`
+from local G154e9b2f, G2A introduces weak three-member Cigarette Butt/Ashling groups
+with finite retained introduction and code-native primitives. **Keep**, not full
+G2 completion.278units/29files, types/lint/build/whitespace,240before/after model
+scenarios and4serial Chromium Canvas cases2.0s/no retries pass.
+[Report](content/G2A_REPORT.md) binds source/limits. G2B wrapper interception is
+next under a fresh claim; Can/G3/G4/art unstarted. Broad stress/native/device
+checks remain deferred; external checks waived/unverified. No push/merge/CI pass.

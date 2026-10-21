@@ -3800,3 +3800,38 @@ records exact values, isolated/packed limits and body/camera/rate/save preservat
 Owned test resources cleaned up; broad stress/soak/native/device checks deferred;
 actual Safari/browser-OS/older-device checks waived/unverified. G1 locally complete;
 G2–G4/new art unstarted, no gameplay merge authorization from planning publication.
+
+## REC-101 continuation — G2A individual weak arrival groups
+
+Accepted/keep2026-10-22. Owner explicitly requests a G2 prompt, its review and
+implementation. Reviewed BUILD_PLAN_G2 before edits. Neutral enemy.cluster_fodder
+maps to Cigarette Butts/Ashling;3individuals,6HP/64speed/3harm/1XP, radius10,
+display28 and34-unit arc spacing. Initial50speed violates the existing16s
+maximum-ring approach band;64 satisfies it without weakening the check.
+
+Group admission belongs only to natural director selection, not spawnEnemy.
+Otherwise introduction/split/duplication would recursively multiply requests.
+At25% use a theme-authored3-member milestone count instead of the general~19.
+Capture formation angles in retained causal requests; resolve off-screen safety
+against current view at admission. Capacity truncates ordinary natural batches,
+while causal requests stay queued. Keep the existing24-event processing budget.
+One shared count helper lets ambient simulation model the actual per-roll actor
+counts; roll shares and actor shares differ. Model still omits intro/geometry/
+survival/elites/children/bosses, so never infer those passes from pacing output.
+
+Generic theme-authored primitive parts follow position/rotation/scale/alpha/depth,
+flash and source destruction, with sprite precedence and no body feedback. Body
+radius remains definition-owned. Low/reduced-motion preserve essential parts.
+No generated art, environmental harm/persistence claim, contamination-on-cleanup,
+material ID remap, save schema/field or new unlock/discovery is introduced.
+Existing material families and rewards stay unchanged.
+
+278units/29files, types/lint/build/whole-branch whitespace,240before/after scenarios
+and4serial Chromium Canvas mixed-roster cases pass. Intro capacity1 retains2→1→0
+requests; three exact lethals pay3.15XP/18.81actual health at25%Normal. Duplicate
+lethals add nothing; natural group plus independent outsiders verifies cone3
+versus Grabber1 while outsiders survive. Earlier noXp flag and undrained final
+death-event fixtures were corrected, not product XP/retention rules weakened.
+[G2A_REPORT](build/content/G2A_REPORT.md) binds final sources, images, trade-offs
+and limitations. G2A kept; G2 remains in progress with G2B next under a new claim.
+Broad stress/native/device evidence deferred/waived, never newly passed; no merge.

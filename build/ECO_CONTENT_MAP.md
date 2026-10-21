@@ -37,6 +37,7 @@ Collection Sweep level wording:
 
 | Stable role | Eco name | Identity and behavior | Can create | Status |
 | --- | --- | --- | --- | --- |
+| `enemy.cluster_fodder` | Cigarette Butts | Slow weak individuals in spaced groups; clear a lane or use a cone. | Nothing | G2A local keep |
 | `enemy.swarm_basic` | Plastic Bottle | Common moving plastic waste; the baseline crowd role. | Microplastics through Fragmentation | Live |
 | `enemy.fast_fragile` | Microplastics | Small, fast, multicolour shards and pieces of plastic waste. This replaces Plastic Bag. | Nothing | Live |
 | `enemy.slow_durable` | Glass Bottle | Slow, durable glass waste. | Glass Shards through Fragmentation | Live |
@@ -183,3 +184,18 @@ cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
 [G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
 retains all scenarios and records the bounded local gate and its limits. G1 is
 locally complete; G2–G4 and sprite generation remain unstarted.
+
+## G2A weak groups — kept locally 2026-10-22
+
+`enemy.cluster_fodder` maps to eco Cigarette Butts and knight Ashling. Individual
+weak actors approach slowly in groups of three; clear a narrow lane or catch the
+group in a cone. First introduction at25% is three retained requests, then sparse
+natural groups.6HP/64speed/3harm/1XP are game tuning, unrelated to surveyed item
+percentages or factual toxicity/persistence. Visible pale/orange primitive parts
+and separate20px bodies replace neither Microplastics nor any material family.
+No post-cleanup contamination patch, new art, saved discovery or effectiveness
+matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
+
+[Reviewed plan](BUILD_PLAN_G2.md), [candidate report](content/G2A_REPORT.md).
+G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
+a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.

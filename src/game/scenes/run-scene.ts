@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { arrivalClusterAngles, introductionCount } from "../systems/director/arrival-cluster";
 import { advanceBossAttack, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
 import { BossHealthUi } from "../ui/boss-health-ui";
 import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
@@ -57,7 +58,6 @@ import {
 import { createDeathSpawns } from "../systems/spawning";
 import {
   crossedUnlocks,
-  enemiesInWave,
   resolveDirectorPlan,
   runProgress,
   selectRole,
@@ -1117,6 +1117,7 @@ export class RunScene extends Phaser.Scene {
     elite?: boolean | EliteId,
     movement: WaveMovement = "chase",
     eliteSplitDepth = 0,
+    angleRadians?: number,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
@@ -1129,7 +1130,7 @@ export class RunScene extends Phaser.Scene {
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : reason === "elite_split" ? "elite.split" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement, eliteSplitDepth },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement, eliteSplitDepth, angleRadians },
     });
   }
 
@@ -1144,11 +1145,11 @@ export class RunScene extends Phaser.Scene {
     if (capacity <= 0 || remaining <= 0) return;
     this.eventQueue.processMatching(remaining, (event) => event.kind === "spawn.requested", (event) => {
       if (capacity <= 0) return false;
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean | EliteId; eliteSplitDepth?: number; movement?: WaveMovement };
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean | EliteId; eliteSplitDepth?: number; movement?: WaveMovement; angleRadians?: number };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement,
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, payload.angleRadians, payload.movement,
         payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
           payload.reason === "duplication" || payload.reason === "elite_split" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural", payload.eliteSplitDepth)) {
         capacity -= 1;
@@ -1689,8 +1690,13 @@ export class RunScene extends Phaser.Scene {
     this.lastDirectorProgress = progress;
     if (crossed.length === 0) return;
 
-    const burst = enemiesInWave(this.runTheme.tuning.director, progress);
     for (const role of crossed) {
+      const burst = introductionCount(role, this.runTheme.tuning.director, progress);
+      const definition = this.enemyDefinitions.find((enemy) => enemy.id === role.enemyId);
+      const angles = definition?.arrivalCluster ? arrivalClusterAngles(
+        { arrivalCluster: { ...definition.arrivalCluster, count: burst } }, burst,
+        this.spawnSequence * GOLDEN_ANGLE, testSpawnRadius() ?? offScreenSpawnRadius(this.viewRect(), this.runTheme.tuning.director.spawnMargin),
+      ) : undefined;
       this.milestoneWaves += 1;
       for (let index = 0; index < burst; index += 1) {
         this.enqueueSpawnRequest(
@@ -1703,6 +1709,8 @@ export class RunScene extends Phaser.Scene {
           undefined,
           undefined,
           role.waveMovement,
+          0,
+          angles?.[index],
         );
       }
       this.announceWave(this.runTheme.copy.content[role.enemyId]?.name ?? role.enemyId);
@@ -1756,7 +1764,11 @@ export class RunScene extends Phaser.Scene {
       const spread = plan.batchSize === 1
         ? 0
         : (index / (plan.batchSize - 1) - 0.5) * this.runTheme.tuning.director.batchSpreadRadians;
-      this.spawnEnemy("ambient", 1, definition, undefined, undefined, arc + spread);
+      const view = this.viewRect();
+      const radius = testSpawnRadius() ?? offScreenSpawnRadius(view, this.runTheme.tuning.director.spawnMargin);
+      for (const angle of arrivalClusterAngles(definition, this.enemyCapacity - this.enemies.size, arc + spread, radius)) {
+        this.spawnEnemy("ambient", 1, definition, undefined, undefined, angle);
+      }
     }
 
     this.spawnIntervalMs = plan.intervalMs;

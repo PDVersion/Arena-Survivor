@@ -101,4 +101,15 @@ export const enemies = [
     boss: { kind: "final", appearAt: 1,
       attack: { telegraphMs: 1400, recoveryMs: 1800, radius: 120, damage: 24 } },
   },
+  {
+    // G2A authored weak-cluster game tuning; no persistence/harm fact is implied.
+    id: archetypeIds.enemy.clusterFodder,
+    maxHealth: 6, moveSpeed: 64, contactDamage: 3, contactCooldownMs: 1000,
+    radius: 10, displayDiameter: 28, xpReward: 1, armour: 0,
+    geometry: "circle", presentationToken: "enemyFast",
+    arrivalCluster: { count: 3, spacing: 34 },
+    primitiveParts: [{ x: 0, y: 0, width: 0.6, height: 0.6, rotation: 0.78, token: "enemySpawner" },
+      { x: 0, y: 0, width: 0.22, height: 0.6, rotation: 0.78, token: "critical" }],
+  },
+
 ] as const satisfies readonly EnemyDefinition[];

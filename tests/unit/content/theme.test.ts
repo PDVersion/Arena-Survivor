@@ -96,7 +96,8 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
     expect(knightMagicTheme.weapons[0]).toEqual(alternateTheme.weapons[0]);
     expect(knightMagicTheme.weapons[1]?.id).toBe(archetypeIds.weapon.secondary);
-    expect(knightMagicTheme.enemies.filter((enemy) => !("boss" in enemy))).toEqual(alternateTheme.enemies);
+    expect(knightMagicTheme.enemies.filter((enemy) => !("boss" in enemy) && enemy.id !== archetypeIds.enemy.clusterFodder))
+      .toEqual(alternateTheme.enemies.filter((enemy) => enemy.id !== archetypeIds.enemy.clusterFodder));
     expect(knightMagicTheme.shrines.filter((shrine) => shrine.id !== archetypeIds.shrine.escalation)).toEqual(alternateTheme.shrines);
     expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);
     expect(currentShrine.name).not.toBe(alternateShrine.name);

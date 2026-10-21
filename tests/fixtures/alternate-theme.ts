@@ -235,6 +235,7 @@ export const alternateTheme = defineTheme({
     },
   ],
   enemies: [
+
     {
       id: archetypeIds.enemy.swarmBasic,
       maxHealth: 20,
@@ -253,6 +254,9 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 70, contactDamage: 20, contactCooldownMs: 1000, radius: 22, displayDiameter: 44, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank", fragmentInto: archetypeIds.enemy.fastFragile },
     { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 80, contactDamage: 12, contactCooldownMs: 1000, radius: 25, displayDiameter: 50, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawns: [{ enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 }] },
     { id: archetypeIds.enemy.stationaryFragment, maxHealth: 18, moveSpeed: 0, contactDamage: 7, contactCooldownMs: 1000, radius: 12, displayDiameter: 24, xpReward: 0, armour: 12, geometry: "triangle", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.clusterFodder, maxHealth: 6, moveSpeed: 64, contactDamage: 3, contactCooldownMs: 1000,
+      radius: 10, displayDiameter: 28, xpReward: 1, armour: 0, geometry: "circle", presentationToken: "enemyFast",
+      arrivalCluster: { count: 3, spacing: 34 } },
   ],
   pickups: [
     {
@@ -393,6 +397,7 @@ export const alternateTheme = defineTheme({
       contactKnockbackImpulse: 18,
       contactKnockbackCooldownMs: 350,
       roles: [
+        { enemyId: archetypeIds.enemy.clusterFodder, separationScale: 0.9, mass: 0.6 },
         { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6 },
         { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1 },
         { enemyId: archetypeIds.enemy.slowDurable, separationScale: 1, mass: 4 },
