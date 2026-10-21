@@ -3649,3 +3649,17 @@ with6.4.4 suggested outside the exact6.4.3 pin. Earlier zero-audit results are
 historical snapshots. Leave this visible as a draft-delivery blocker rather than
 silently upgrading dependencies or weakening CI. PR Actions will provide current-
 head browser/audit evidence; no merge/deployment/manual dispatch is authorized.
+
+
+PR27 CI repair continuation of REC-114/REC-113: owner explicitly authorizes fixing
+failed Actions. C3 seed search must use runUpgradePool after C6 filters unlocks.
+Frame-consumed keys stay down until observed, released in finally; resending E
+can select another adjacent shrine. Space after E also legitimately activates
+another shrine, so assert surge exactly-once independently of global feedback;
+feedback equals all activated instances. Slow software-runner simulation requires
+bounded progress waits, not assumed wall throughput; keep exact elapsed/population/
+reward assertions. Vite6.4.4 narrowly resolves the new launch-editor audit finding.
+No audit bypass, retry/skip increase or gameplay change. Local655units/67files,
+types/lint/build/diff/audit0 and7unique serial affected browser cases verified;
+[repair report](build/performance/PR27_CI_REPAIR.md) records failures and limits.
+Remote current-head confirmation pending; Q6 and device waiver remain unchanged.

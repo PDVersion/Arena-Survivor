@@ -32,10 +32,11 @@ test("denied and corrupt storage preserve gameplay startup and source", async ({
   await page.screenshot({ path: testInfo.outputPath("storage-denied.png") });
 });
 test("actual short terminal commits once and reload retains earned tool", async ({ page, browser }, testInfo) => {
-  test.setTimeout(30000);
+  test.setTimeout(120_000);
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/?runDurationMs=1000&noAmbient&noContact&noHazards&noXp&atTimeUp=complete");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("complete");
+  // Wait for simulation progress, which can run much slower than wall time on CI.
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 90_000 }).toBe("complete");
   const first = await page.evaluate(async () => { const path = "/src/game/systems/persistence/profile-service.ts"; return (await import(path)).getProfile(); });
   expect(first.statistics.runsPlayed).toBe(1); expect(first.completedRuns).toBe(1); expect(first.unlockedWeaponIds).toContain("weapon.secondary");
   await page.screenshot({ path: testInfo.outputPath("actual-terminal-unlock.png") });

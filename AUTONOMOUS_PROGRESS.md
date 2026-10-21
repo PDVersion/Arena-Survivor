@@ -1555,3 +1555,21 @@ Audit fails one high Vite finding across three launch-editor advisories; suggest
 will disclose audit/Q6 and retain external checks waived/unverified. Full local
 browser/stress/native/long campaigns are not repeated; PR Actions owns current-head
 browser regression. No merge/deployment/manual workflow dispatch authorized.
+
+
+## PR27 owner-authorized CI repair
+
+Start2026-10-21T01:32:46UTC /12:32:46AEDT; deadline03:02:46UTC, final20reserve02:42:46UTC.
+Claim in active plan covers7dependency/test paths, repair report and only appended
+repair sections in shared documents. Saved pre-existing diff before edits; all
+genre/roster roadmap changes/untracked reports remain unstaged.
+
+Failed39521650366 on5511e86:6browser failures/1flaky/111pass/6skip; audit skipped.
+Fixed C3 seed pool, frame-consumed input, shrine feedback scope and bounded
+simulation-progress waits; patched only Vite6.4.3→6.4.4. Local655units/67files,
+types/lint/build/diff pass, audit0. Seven unique affected browser cases pass
+cumulatively:6pass/1reproduced shrine failure36.6s, corrected shrine1pass7.5s,
+all serial/zero retries. EPERM server setup precedes authorized browser rerun.
+Report:build/performance/PR27_CI_REPAIR.md. No gameplay/Q6/device acceptance changes.
+At01:36:01UTC recording checkpoint elapsed3m15s; full PR Actions verification
+follows push and is not yet a pass. No merge/deployment.

@@ -271,7 +271,7 @@ for (const quality of ["default", "low"]) test(`@stress C1 two tools at 300 mixe
 
 
 for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} evolves from ordinary offers in the same slot with exact hit ownership`, async ({ page, browser }, testInfo) => {
-  test.setTimeout(40_000);
+  test.setTimeout(120_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   try {
@@ -315,7 +315,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} evolv
     await page.screenshot({ path: testInfo.outputPath("evolved-cone.png") });
     // Short affected load only: actual evolved definition and both independent clocks.
     await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.stress("low"));
-    await expect.poll(() => page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot().elapsedMs), { timeout: 15000 }).toBeGreaterThanOrEqual(2000);
+    // The software-rendered CI runner needs a simulation-progress budget, not a throughput assertion.
+    await expect.poll(() => page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot().elapsedMs), { timeout: 90_000 }).toBeGreaterThanOrEqual(2000);
     const load = await page.evaluate(() => window.__C1_TOOL_FIXTURE__!.snapshot());
     expect(load.peak).toBe(300);
     expect(load.enemies).toBeLessThanOrEqual(300);

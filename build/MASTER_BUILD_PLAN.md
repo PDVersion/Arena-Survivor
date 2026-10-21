@@ -3274,3 +3274,14 @@ remain temporarily waived/unverified. Historical P5/P6 reports/kit are source-bo
 No sprites/active-run save/second physics teardown or remote publication. C1–C7 local
 implementation complete; Session20 retires after this durable record and Session21
 retains local delivery/remaining acceptance decisions.
+
+
+## V0.4.3 — PR27 CI repair local verification
+
+Owner-authorized narrow repair of C3 seed-pool mismatch, frame-consumed input,
+single-shrine versus global feedback assertions, and runner simulation-progress
+budgets. Vite6.4.4 resolves the new audit finding.655units/67files, types/lint/
+build/diff/audit0 and7unique affected serial browser cases pass cumulatively.
+See [repair report](performance/PR27_CI_REPAIR.md) for retained failed attempts,
+exact scope and limits. Full current-head remote CI is pending at this checkpoint;
+no milestone/Q6 or missing external acceptance is marked complete.

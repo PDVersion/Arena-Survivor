@@ -448,3 +448,22 @@ Vite finding (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw,
 GHSA-587h-7wmj-h5pm). Vite remains6.4.3; suggested6.4.4 is outside its exact pin.
 No dependency change or audit bypass is made. Full browser regression is deferred
 to PR Actions; report its actual matching head/status, never a historical pass.
+
+
+## PR27 CI repair — owner-authorized scope
+
+Owner requests fixing failed Actions checks. Start2026-10-21T01:32:46UTC
+/12:32:46AEDT; deadline03:02:46UTC /14:02:46AEDT; final20reserve02:42:46UTC.
+Claim before edits: package.json/package-lock.json; tests/e2e/{frame-measurements,
+phase-six,profile-persistence-v043,second-tool-v043,shrines-curses-v043}.spec.ts;
+build/performance/PR27_CI_REPAIR.md and repair-only appended sections of this plan,
+BUILD_STATUS, MASTER_BUILD_PLAN, AUTONOMOUS_PROGRESS and RECONCILIATION. Preserve
+all pre-existing genre/roster roadmap edits and untracked reports unstaged.
+No production gameplay, Q6, sprites or tuning changes are selected. Run affected
+browsers serially/one worker/zero retries with bounded waits and owned cleanup;
+full regression stays in Actions. Apply only the necessary Vite audit patch.
+
+Local repair gate passes as recorded in performance/PR27_CI_REPAIR.md:655units/
+67files, types/lint/build/diff/audit0, seven unique affected serial browser cases
+verified cumulatively/zero retries. Full current-head PR Actions must confirm
+after push. Q6 stays open; pre-existing roadmap edits remain unstaged.

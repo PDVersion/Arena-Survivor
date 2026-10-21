@@ -76,7 +76,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} choos
           if (scene.runState.status !== "playing") throw new Error("Offer fixture requires playing state");
           let chosen = -1;
           for (let seed = 1; seed <= 5000; seed++) {
-            const choices = upgrades.selectUpgradeChoices(scene.runTheme.upgrades, 3, upgrades.createSeededRandom(seed),
+            const choices = upgrades.selectUpgradeChoices(scene.runUpgradePool, 3, upgrades.createSeededRandom(seed),
               { ...scene.runState, luck: scene.runState.player.stats.luck, skills: theme.skills });
             if (choices.some((c: { id: string }) => c.id === id)) { chosen = seed; break; }
           }

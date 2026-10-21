@@ -139,3 +139,15 @@ recommendations and active C1–C7 scope. `npm run build` and whitespace checks
 pass; emitted runtime JS/CSS hashes are unchanged. No local browser/stress suite
 was run for this documentation-only change. The existing chunk-size advisory
 remains. This is a later local documentation checkpoint, not a new remote CI pass.
+
+
+## PR27 CI repair — local gate verified, remote confirmation pending
+
+Owner authorizes fixing failed Actions. Failed run39521650366 on5511e86 has
+6browser failures/1flaky; audit was skipped. Narrow fixture/input/simulation-budget
+repairs and Vite6.4.4 audit patch pass655units/67files, types/lint/build/diff and
+audit0findings. Seven unique affected browser cases pass cumulatively, serially
+with zero retries; one reproduced shrine assertion failure is retained in the
+[repair report](performance/PR27_CI_REPAIR.md). Full current-head Actions is pending
+at this checkpoint; no historical run is claimed. Q6 stays open. Existing dirty
+roadmap planning is preserved unstaged. No merge/deployment/device acceptance.
