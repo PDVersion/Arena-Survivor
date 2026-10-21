@@ -352,3 +352,15 @@ string branches in systems. Balance stats, weights, cues and timings stay theme
 owned. Prevalence, persistence, mass and fictional contact harm are separate axes.
 Read SAVE_DATA before any persisted ID/discovery/unlock change. Prototype primitives
 before V0.4.4 acceptance; no new sprite claims or collision-from-art derivation.
+
+## Q6 implemented correction — 2026-10-21
+
+The second tool's own four reach picks each add one primary target, independent
+of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
+adds its authored extra target (8). Splash remains finite and unchanged. The
+short filled cue marks a single pulse, followed by a faint historical outline
+and selected-hit rings; entering the fade causes no new damage. Frame-specific
+presentation anchors align player poses without editing accepted art or bodies.
+This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
+fact, effectiveness matrix, persisted state or new sprite is added.
+[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.

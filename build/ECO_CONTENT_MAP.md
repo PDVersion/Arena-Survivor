@@ -15,11 +15,11 @@ and **Parked** is not offered by this theme.
 | --- | --- | --- | --- | --- |
 | `character.starter` | Environment Protector | Character | A field operative clearing an overflowing waste site. | Live |
 | `weapon.starter` | Cleanup Grabber | Melee weapon | A mechanical grabber that extends through every item in its narrow path, then retracts. | Live |
-| `weapon.secondary_evolved` | Cyclone Vacuum | Evolved melee cone | Replace Cleanup Vacuum after four owned reach picks; wider four-target cone and stronger nearby splash, keeping earned reach. | V0.4.3 C2 |
+| `weapon.secondary_evolved` | Cyclone Vacuum | Evolved melee cone | Replace Cleanup Vacuum after four owned reach picks; wider cone and stronger nearby splash, keeping earned reach/capacity and adding one target. | V0.4.3 C2 |
 | `upgrade.evolve_secondary` | Evolve to Cyclone Vacuum | Evolution choice | One normal level-up choice; replaces in the same slot, no extra slot. | V0.4.3 C2 |
-| `weapon.secondary` | Cleanup Vacuum | Melee cone | Automatically clears up to three targets in a short cone; each hit splashes nearby targets. | V0.4.3 C1 |
+| `weapon.secondary` | Cleanup Vacuum | Melee cone | Pulses a short cone, starting with three targets and growing to seven; each selected hit splashes nearby targets. | V0.4.3 C1 |
 | `upgrade.equip_secondary` | Equip Cleanup Vacuum | Weapon acquisition | Fill the empty second automatic-tool slot through a normal level-up choice. | V0.4.3 C1 |
-| `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum; appears after it is equipped. | V0.4.3 C1 |
+| `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum and add one primary target per pick; appears after it is equipped. | V0.4.3 C1 |
 | `upgrade.weapon_range` | Longer Grabber | Weapon track, owned level 1 | Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5. | Live |
 | `upgrade.weapon_collection_sweep` | Collection Sweep | Weapon track, starts unowned | Periodically sweep a wider area at the grabber's jaws. Higher levels trigger more often and add sweeps along extension and retraction. | Live |
 
@@ -156,3 +156,15 @@ G1 evaluates current health/armour, speed/harm, rewards and arrival mix against
 corrected tools. Changes require before/after balance evidence; no spawn shares
 are copied from tonnes or survey percentages. The historical C1/C2 fixed-cap
 wording remains subject to the pending Q6 owner-track capacity correction.
+
+## Q6 implemented correction — 2026-10-21
+
+The second tool's own four reach picks each add one primary target, independent
+of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
+adds its authored extra target (8). Splash remains finite and unchanged. The
+short filled cue marks a single pulse, followed by a faint historical outline
+and selected-hit rings; entering the fade causes no new damage. Frame-specific
+presentation anchors align player poses without editing accepted art or bodies.
+This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
+fact, effectiveness matrix, persisted state or new sprite is added.
+[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.

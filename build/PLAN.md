@@ -215,7 +215,7 @@ adding more weapons or restoring the parked projectile interaction families.
 
 V0.4.3 C1 adds one contrasting second automatic tool through ordinary level-up
 choices, after the readable starter and software prerequisites. The Cleanup
-Vacuum resolves a short forward cone of at most three primary targets, with
+Vacuum starts with a short forward cone of three primary targets, growing through its own track, with
 bounded on-hit splash around each hit. It needs no kill or manual switching.
 Both slots keep independent simulation clocks. Longer Grabber/Collection Sweep
 belong to the grabber; the Vacuum has its own reach track. Shared damage,
@@ -1544,3 +1544,15 @@ independent clocks and bounded splash stay separate; unrelated player level-ups
 do not automatically level this tool. The visible cone must communicate actual
 pulse timing/affected targets, and player pose alignment remains a separate open
 presentation correction. See BUILD_PLAN_V0.4.3 Q6 for verification and scope.
+
+## Q6 implemented correction — 2026-10-21
+
+The second tool's own four reach picks each add one primary target, independent
+of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
+adds its authored extra target (8). Splash remains finite and unchanged. The
+short filled cue marks a single pulse, followed by a faint historical outline
+and selected-hit rings; entering the fade causes no new damage. Frame-specific
+presentation anchors align player poses without editing accepted art or bodies.
+This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
+fact, effectiveness matrix, persisted state or new sprite is added.
+[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.

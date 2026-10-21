@@ -65,6 +65,7 @@ export interface StatContext {
   readonly player: { readonly health: number; readonly stats: UpgradeableState["player"]["stats"] };
   readonly weaponModifiers: UpgradeableState["weaponModifiers"];
   readonly ownedWeaponModifiers?: UpgradeableState["ownedWeaponModifiers"];
+  readonly selectedUpgradeIds?: UpgradeableState["selectedUpgradeIds"];
 }
 
 /** The player's resolved stats, as shown in the pause menu and diffed by cards. */
@@ -74,7 +75,7 @@ export function selectPlayerStats(
   weaponId: WeaponId = archetypeIds.weapon.starter,
 ): readonly StatLine[] {
   const definition = theme.weapons.find((weapon) => weapon.id === weaponId);
-  const weapon = definition ? resolveWeaponDefinition(definition, state.weaponModifiers, state.ownedWeaponModifiers?.[weaponId]) : undefined;
+  const weapon = definition ? resolveWeaponDefinition(definition, state.weaponModifiers, state.ownedWeaponModifiers?.[weaponId], state.selectedUpgradeIds) : undefined;
   const stats = state.player.stats;
   const labels = theme.copy.stats;
   const attackRate = weapon ? (1000 / weapon.cooldownMs) * (1 + stats.attackSpeedBonus) : 0;
@@ -85,7 +86,8 @@ export function selectPlayerStats(
         ["projectiles", weapon.projectileCount, number(weapon.projectileCount)],
         ["pierce", weapon.pierce, number(weapon.pierce)],
       ]
-    : [];
+    : weapon?.deliveryKind === "melee" && weapon.targetCap !== null
+    ? [["primaryTargets", weapon.targetCap, number(weapon.targetCap)]] : [];
   const lines: readonly (readonly [StatKey, number, string])[] = [
     ["health", state.player.health, `${Math.ceil(state.player.health)} / ${Math.ceil(stats.maxHealth)}`],
     ["damage", damage, number(damage)],
@@ -115,7 +117,7 @@ export function selectEquippedWeaponStats(
   theme: Pick<ThemeManifest, "weapons" | "copy">,
 ): readonly StatLine[] {
   return Object.freeze((state.weaponSlots ?? []).filter((slot) => slot.weaponId !== archetypeIds.weapon.starter).flatMap((slot) =>
-    selectPlayerStats(state, theme, slot.weaponId).filter((line) => ["damage", "attackRate", "range"].includes(line.key))
+    selectPlayerStats(state, theme, slot.weaponId).filter((line) => ["damage", "attackRate", "primaryTargets", "range"].includes(line.key))
       .map((line) => Object.freeze({ ...line, label: `${theme.copy.content[slot.weaponId].name} · ${line.label}` }))));
 }
 

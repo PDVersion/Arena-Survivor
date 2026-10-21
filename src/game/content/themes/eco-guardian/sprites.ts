@@ -54,6 +54,11 @@ export const sprites = {
     states: { idle: 3, move: 3, hit: 3, death: 3 },
   },
   [archetypeIds.character.starter]: {
+    // Centre of the hood's upper silhouette, measured in accepted 48px frames.
+    // y compensates the one-pixel top shift; idle/walk/hit share a fixed anchor.
+    frameAnchors: [{ x: 25.5, y: 24 }, { x: 26, y: 25 }, { x: 25, y: 24 },
+      { x: 26.5, y: 24 }, { x: 25, y: 24 }, { x: 28, y: 24 },
+      { x: 28, y: 25 }, { x: 24, y: 25 }],
     authoredFacing: "right",
     stateFacing: { hit: "left" },
     walkAnimation: { frames: [0, 1, 2, 1], distancePerFrame: 20 },

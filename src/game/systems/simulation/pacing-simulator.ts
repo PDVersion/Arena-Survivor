@@ -295,6 +295,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
         baseCritChance: character.baseStats.critChance,
         critDamage: character.baseStats.critDamage,
         liveEnemies: bucket.liveEnemies,
+        collectionSweep: theme.skills?.find((entry) => entry.id === archetypeIds.skill.collectionSweep)?.effects?.find((effect) => effect.kind === "collection_sweep"),
       });
       const seconds: Record<string, number> = {};
       for (const enemy of theme.enemies) {

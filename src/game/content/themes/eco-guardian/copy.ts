@@ -124,6 +124,7 @@ export const copy = {
     projectiles: "Charges",
     pierce: "Pass-through",
     range: "Range",
+    primaryTargets: "Primary targets",
     knockback: "Knockback",
     armourPierce: "Armour pierce",
     moveSpeed: "Move speed",
@@ -177,7 +178,7 @@ export const copy = {
     [archetypeIds.upgrade.acceptEscalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
     [archetypeIds.weapon.secondaryEvolved]: {
       name: "Cyclone Vacuum",
-      description: "A wider automatic cone with stronger hits and nearby splash.",
+      description: "A wider automatic pulse with stronger hits, one extra primary target and nearby splash. Keeps earned capacity.",
     },
     [archetypeIds.upgrade.evolveSecondary]: {
       name: "Evolve to Cyclone Vacuum",
@@ -185,7 +186,7 @@ export const copy = {
     },
     [archetypeIds.weapon.secondary]: {
       name: "Cleanup Vacuum",
-      description: "Automatically clear a short cone of up to three targets. Each hit splashes nearby targets.",
+      description: "Pulse a short cone, starting at three targets. Owned reach upgrades add targets; each selected hit splashes nearby targets.",
     },
     [archetypeIds.upgrade.equipSecondary]: {
       name: "Equip Cleanup Vacuum",
@@ -193,7 +194,7 @@ export const copy = {
     },
     [archetypeIds.upgrade.secondaryRange]: {
       name: "Longer Vacuum Nozzle",
-      description: "Increase only the second tool's reach. The starter keeps its own range.",
+      description: "Increase the second tool's reach and primary-target capacity. Each pick adds one target, up to four additional targets.",
     },
     [archetypeIds.weapon.starter]: {
       name: "Cleanup Grabber",

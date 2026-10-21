@@ -273,6 +273,20 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       if (weapon.targetCap !== null && (!Number.isInteger(weapon.targetCap) || weapon.targetCap < 1)) {
         issues.push(`${weapon.id} targetCap must be a positive integer`);
       }
+      if (weapon.targetGrowth) {
+        const growth = weapon.targetGrowth;
+        const track = theme.upgrades.find((entry) => entry.id === growth.upgradeId);
+        const sourceOwner = track?.ownerWeaponId;
+        const evolutionSource = theme.upgrades.flatMap((entry) => entry.effects).some((effect) =>
+          effect.kind === "weapon.evolve" && effect.weaponId === weapon.id && effect.fromWeaponId === sourceOwner);
+        if (weapon.targetCap === null || !Number.isSafeInteger(growth.perPick) || growth.perPick < 1 ||
+          !Number.isSafeInteger(growth.maxPicks) || growth.maxPicks < 1 ||
+          !Number.isSafeInteger((weapon.targetCap ?? 0) + growth.perPick * growth.maxPicks) ||
+          !track || !sourceOwner || (sourceOwner !== weapon.id && !evolutionSource) ||
+          track.maxLevel === null || growth.maxPicks > track.maxLevel) {
+          issues.push(`${weapon.id} target growth needs a finite attainable owned track`);
+        }
+      }
       if (!Number.isFinite(weapon.extendMs) || weapon.extendMs <= 0) {
         issues.push(`${weapon.id} extendMs must be greater than zero`);
       }
@@ -804,6 +818,11 @@ function validateSprites(
     }
     if (sprite.authoredFacing !== undefined && sprite.authoredFacing !== "left" && sprite.authoredFacing !== "right") {
       issues.push(`sprites.${contentId} authored facing is invalid`);
+    }
+    if (sprite.frameAnchors && (sprite.frameAnchors.length !== sprite.frames || sprite.frameAnchors.some((anchor) =>
+      !Number.isFinite(anchor.x) || !Number.isFinite(anchor.y) || anchor.x < 0 || anchor.x > sprite.frameWidth ||
+      anchor.y < 0 || anchor.y > sprite.frameHeight))) {
+      issues.push(`sprites.${contentId} frame anchors must cover the sheet within frame bounds`);
     }
     if (sprite.walkAnimation) {
       if (!Number.isFinite(sprite.walkAnimation.distancePerFrame) || sprite.walkAnimation.distancePerFrame <= 0 ||

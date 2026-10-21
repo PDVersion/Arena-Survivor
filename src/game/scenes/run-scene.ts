@@ -1937,7 +1937,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !isRunActive(this.runState) || !this.projectileGroup) return;
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id]);
+    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id], this.runState.selectedUpgradeIds);
     const target = weapon.deliveryKind === "melee"
       ? selectMeleeAim(this.player, this.enemies, weapon.reach)
       : findNearestTarget(this.player, this.enemies);
@@ -1962,15 +1962,16 @@ export class RunScene extends Phaser.Scene {
       );
       if (hits.length === 0) return;
       this.activeGrabbers += 1;
-      const AttackActor = weapon.arcRadians === undefined ? GrabberActor : ConeAttackActor;
-      new AttackActor(
+      const onComplete = () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); };
+      if (weapon.arcRadians !== undefined) new ConeAttackActor(this, this.player.x, this.player.y, baseAngle, weapon, this.runTheme.tokens, onComplete, hits);
+      else new GrabberActor(
         this,
         this.player.x,
         this.player.y,
         baseAngle,
         weapon,
         this.runTheme.tokens,
-        () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); },
+        onComplete,
       );
       this.meleeStrikes += 1;
       this.shotsFired += 1;

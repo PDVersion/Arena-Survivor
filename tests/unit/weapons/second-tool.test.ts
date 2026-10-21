@@ -71,7 +71,7 @@ describe.each([ecoGuardianTheme, knightMagicTheme])("second tool in $id", (theme
     expect(applyRunUpgrade(equipped, integerUpgrade, undefined, 1.4, theme.weapons).ownedWeaponModifiers[secondary.id]?.pierce).toBe(1);
     expect(applyRunUpgrade(equipped, integerUpgrade, undefined, 2.2, theme.weapons).ownedWeaponModifiers[secondary.id]?.pierce).toBe(2);
     const rows = selectEquippedWeaponStats(equipped, theme);
-    expect(rows.map((row) => row.key)).toEqual(["damage", "attackRate", "range"]);
+    expect(rows.map((row) => row.key)).toEqual(["damage", "attackRate", "primaryTargets", "range"]);
     expect(rows.every((row) => row.label.startsWith(theme.copy.content[secondary.id].name))).toBe(true);
     expect(rows.find((row) => row.key === "range")?.value).toBe(secondary.range);
   });

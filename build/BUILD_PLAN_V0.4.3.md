@@ -393,17 +393,17 @@ jitter and enemies inside the visible vacuum cone receiving no hit. The next
 local correction gate remains open. The later owner request authorizes a draft
 PR for completed work before Q6; it does not complete Q6 or start V0.4.4:
 
-- [ ] Reproduce player movement against a fixed actor/body anchor. Inspect walk,
+- [x] Reproduce player movement against a fixed actor/body anchor. Inspect walk,
   idle and hit transitions in both horizontal directions and diagonal movement.
   Independent per-pose bounding-box centring is a candidate cause, not a proved
   live diagnosis. Correct presentation without changing physics or hand-editing
   generated art; preserve facing, rate0.5 and Phaser shutdown ownership.
-- [ ] Reconcile the visible cone with actual pulse timing, origin and hit selection.
+- [x] Reconcile the visible cone with actual pulse timing, origin and hit selection.
   Current drawing and collision share resolved reach/angle; no separate-radius
   defect was established. Damage resolves once at firing, while a stationary cone
   fades for280ms. A target entering the fade is not a new hit. Verify base/upgraded/
   evolved boundaries and make actual affected targets/pulse timing readable.
-- [ ] Implement owner-selected vacuum primary-target growth with its own weapon
+- [x] Implement owner-selected vacuum primary-target growth with its own weapon
   upgrade progression. A small early target limit is accepted; it must increase
   at later weapon levels rather than stay at three until evolution. Use the
   existing owner-track model, not automatic growth with unrelated player levels.
@@ -413,13 +413,13 @@ PR for completed work before Q6; it does not complete Q6 or start V0.4.4:
   clocks, direct/splash provenance and exact XP; growth does not remove caps or
   automatically increase splash targets. Both production themes must satisfy the
   generic contract. Evolution must retain earned growth without reducing it.
-- [ ] Add affected deterministic coverage for cap steps, boundaries, evolution/
+- [x] Add affected deterministic coverage for cap steps, boundaries, evolution/
   reset and attack ownership; run typecheck, affected units, lint, build and diff
   checks. Use `npm run balance` for the changed pacing, including packed targets.
   Run only necessary serial browser cases, one worker/zero automatic retries,
   with declared bounds and images under testInfo.outputPath; inspect motion and
   cone-hit correspondence. Record deferred broad/stress/native/long checks.
-- [ ] Record implementation, actual verification, remaining limits and reconciliation
+- [x] Record implementation, actual verification, remaining limits and reconciliation
   together in one reviewed local correction commit. Keep C1–C7 historical passes
   intact; Q6 is open until its own gate passes.
 
@@ -516,3 +516,34 @@ its existing checklist; the next implementation uses the follow-on
 than reopening the merged milestone branch. [G1 ownership](READABLE_GAMEPLAY_ROADMAP.md)
 and [start prompt](PHASE_G1_PROMPT.md) own continuation. Old draft/local-only
 statements above describe historical delivery checkpoints, not this new request.
+
+## Q6 implementation claim — 2026-10-21
+
+On `codex/readable-gameplay-g1` from main `c200b21`, claim the exact prerequisite
+paths before edits: `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both themes' `{weapons,copy}.ts`, eco
+`sprites.ts`, `src/game/systems/sprites/{sprite-view,sprite-animation}.ts`,
+`src/game/systems/weapons/resolve-weapon.ts`,
+`src/game/systems/upgrades/describe-upgrade.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/entities/cone-attack-actor.ts`,
+`src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`tests/unit/weapons/{weapon-target-growth,weapon-evolution,second-tool}.test.ts`,
+`tests/unit/sprites/sprite-animation.test.ts`, `tests/unit/content/theme.test.ts`,
+`tests/e2e/q6-readability.spec.ts`, `tests/fixtures/alternate-theme.ts` only if a
+required copy contract changes, `build/content/Q6*`, this plan,
+`build/{BUILD_STATUS,PLAN,THEME_ARCHETYPES,EDUCATION_PIVOT,ECO_CONTENT_MAP}.md`,
+`AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`.
+No generated pixels, pipeline/atlas, bodies or save state changes. Diagnose the
+fixed-anchor trace first. Capacity will resolve from actual owned-track pick
+history, with finite theme-authored steps; unrelated levels/tiers cannot add
+capacity. Record evidence before accepting the precise growth values.
+
+### Q6 local gate accepted — 2026-10-21
+
+The implementation claim above is complete. [Q6_REPORT](content/Q6_REPORT.md)
+records fixed-anchor diagnosis/correction, truthful one-shot cue and3→7→8 owned
+capacity.146units/16files, typecheck/lint/build/diff and2bounded serial Canvas
+browser cases pass;120balance scenarios recorded. Full/browser-device campaigns
+remain deferred; external checks waived/unverified. Q6 is closed locally; G1
+is next on the same branch, with its own claim, report and verified commit.
+The unchecked/open language in Session21/delivery sections is historical.

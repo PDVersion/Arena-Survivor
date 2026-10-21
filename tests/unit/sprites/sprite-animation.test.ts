@@ -71,3 +71,17 @@ describe("sprite animation state", () => {
     expect(advancePlayerMovementFrame(state, 200, true, 20).frame).toBe(1);
   });
 });
+
+it("keeps authored anchors fixed when mirroring a pose, with unchanged legacy origins", async () => {
+  const { resolveFrameOrigin } = await import("../../../src/game/systems/sprites/sprite-animation");
+  const { ecoGuardianTheme } = await import("../../../src/game/content/themes/eco-guardian");
+  const definition = ecoGuardianTheme.tokens.sprites!["character.starter"]!;
+  for (const [frame, anchor] of definition.frameAnchors!.entries()) {
+    const direct = resolveFrameOrigin(definition, frame, false);
+    const mirrored = resolveFrameOrigin(definition, frame, true);
+    expect(direct.x * definition.frameWidth).toBe(anchor.x);
+    expect((1 - mirrored.x) * definition.frameWidth).toBeCloseTo(anchor.x);
+    expect(direct.y).toBe(mirrored.y);
+  }
+  expect(resolveFrameOrigin({ ...definition, frameAnchors: undefined }, 0, true)).toEqual({ x: 0.5, y: 0.5 });
+});

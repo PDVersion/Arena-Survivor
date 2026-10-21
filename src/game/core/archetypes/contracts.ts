@@ -87,6 +87,7 @@ export const statKeys = [
   "projectiles",
   "pierce",
   "range",
+  "primaryTargets",
   "knockback",
   "armourPierce",
   "moveSpeed",
@@ -251,6 +252,8 @@ export type SpriteState = (typeof spriteStates)[number];
 /** Where a sprite sheet lives and how it is cut. Optional per theme. */
 export interface SpriteDefinition {
   /** Actual facing of the authored pixels; never inferred by gameplay. */
+  /** Authored pixel anchors; presentation only, never fed back to bodies. */
+  readonly frameAnchors?: readonly Readonly<{ x: number; y: number }>[];
   readonly authoredFacing?: "left" | "right";
   readonly stateFacing?: Readonly<Partial<Record<SpriteState, "left" | "right">>>;
   readonly walkAnimation?: Readonly<{
@@ -447,6 +450,8 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
   readonly width: number;
   /** `null` resolves every target in the corridor, near to far. */
   readonly targetCap: number | null;
+  /** Capacity steps earned only by picks of this weapon-owned track. */
+  readonly targetGrowth?: Readonly<{ upgradeId: UpgradeId; perPick: number; maxPicks: number }>;
   readonly extendMs: number;
   readonly retractMs: number;
 }

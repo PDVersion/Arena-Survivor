@@ -49,9 +49,10 @@ export function expectedCritMultiplier(critChance: number, critDamage: number): 
   return (lower * (1 - fraction) + upper * fraction) * (guaranteed > 0 ? scale ** guaranteed : 1);
 }
 
-function secondaryDps(context: BuildContext, packed: boolean, weapon = context.secondaryWeapon): number {
+function secondaryDps(context: BuildContext, packed: boolean, level: number, weapon = context.secondaryWeapon): number {
   if (!weapon) return 0;
-  const targetCap = weapon.deliveryKind === "melee" ? weapon.targetCap : 1;
+  const targetCap = weapon.deliveryKind === "melee" ? weapon.targetCap === null ? null : weapon.targetCap +
+    (weapon.targetGrowth ? Math.min(weapon.targetGrowth.maxPicks, Math.max(0, level - 2)) * weapon.targetGrowth.perPick : 0) : 1;
   const targets = packed ? Math.min(context.liveEnemies, targetCap ?? context.liveEnemies) : Math.min(1, context.liveEnemies);
   const neighbours = packed && weapon.splash ? Math.min(weapon.splash.targetCap, Math.max(0, context.liveEnemies - 1)) : 0;
   return weapon.damage * 1000 / weapon.cooldownMs * targets * (1 + neighbours * (weapon.splash?.damageMultiplier ?? 0));
@@ -60,18 +61,18 @@ function secondaryDps(context: BuildContext, packed: boolean, weapon = context.s
 const models: readonly BuildModel[] = [
   ...[false, true].map((packed): BuildModel => ({
     id: packed ? "evolved-packed" : "evolved-single",
-    description: "Acquires second tool at level2, buys required reach picks, then evolves. Authored contact band, no movement/overkill/offer-frequency model.",
+    description: "Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.",
     damagePerSecond: (level, context) => {
       const weapon = context.evolutionLevel && level >= context.evolutionLevel ? context.evolvedWeapon : context.secondaryWeapon;
-      return (baseDps(context) + (level >= 2 ? secondaryDps(context, packed, weapon) : 0)) *
+      return (baseDps(context) + (level >= 2 ? secondaryDps(context, packed, level, weapon) : 0)) *
         expectedCritMultiplier(context.baseCritChance, context.critDamage);
     },
   })),
   ...[false, true].map((packed): BuildModel => ({
     id: packed ? "two-tools-packed" : "two-tools-single",
-    description: packed ? "Second tool at level2; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model."
+    description: packed ? "Second tool at level2, then owned track picks; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model."
       : "Second tool at level2; one target in reach, no splash neighbours. Contact-only lower band.",
-    damagePerSecond: (level, context) => (baseDps(context) + (level >= 2 ? secondaryDps(context, packed) : 0)) *
+    damagePerSecond: (level, context) => (baseDps(context) + (level >= 2 ? secondaryDps(context, packed, level) : 0)) *
       expectedCritMultiplier(context.baseCritChance, context.critDamage),
   })),
   {

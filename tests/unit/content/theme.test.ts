@@ -294,3 +294,13 @@ describe("theme manifests", () => {
     ]));
   });
 });
+
+
+it("rejects incomplete/nonfinite/out-of-frame presentation anchors", () => {
+  const sprite = ecoGuardianTheme.tokens.sprites![archetypeIds.character.starter]!;
+  for (const frameAnchors of [[], [{ x: NaN, y: 0 }], Array(8).fill({ x: 49, y: 0 })]) {
+    expect(validateTheme({ ...ecoGuardianTheme, tokens: { ...ecoGuardianTheme.tokens, sprites: {
+      ...ecoGuardianTheme.tokens.sprites, [archetypeIds.character.starter]: { ...sprite, frameAnchors },
+    } } }).join()).toContain("frame anchors must cover the sheet within frame bounds");
+  }
+});

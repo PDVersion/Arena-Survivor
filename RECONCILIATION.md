@@ -3739,3 +3739,29 @@ then G1 after verification, with separate phase commits. Do not treat a claim,
 main publication or prior milestone CI as a completed gameplay gate. The current
 request supersedes older local-only/draft-only delivery restrictions for this
 planning publication; it does not authorize merging subsequent gameplay changes.
+
+## REC-105 / REC-102 continuation — Q6 fixed anchors and finite owner capacity
+
+Accepted/resolved local Q6 gate2026-10-21, on `codex/readable-gameplay-g1`.
+Fixed-body pose inspection measures upper-hood centres25.5/26/25/25/28px in
+walk0/1/2/idle4/hit5; the hit pose's opposite facing compounds the visible shift.
+Authored per-frame anchors, mirrored with the rendered frame, keep that feature
+fixed. This is a presentation correction, never a body/pipeline/generated-pixel
+change. A175-frame completed-Arcade trace covers both directions/diagonals/idle/hit.
+The incomplete-input NaN fixture failure is not a game movement diagnosis.
+
+Cone damage still resolves once at firing. Filled/nozzle cue ends at80simulation-ms;
+a faint outline/selected-hit rings remain during200ms retraction at the captured
+origin. A fade entrant takes no damage. Target growth resolves from actual owned
+reach-pick history, theme +1 per pick/four max,3→7 then evolved8. Tiered reach is
+retained, but quality/other levels never add capacity. Same history survives
+replacement/reset; splash stays3 and clocks/provenance stay independent. New
+capacity rows use the same resolver as combat/card/pause. Validate finite attainable
+owned references, including evolution source, rather than infer levels from range.
+
+146units/16files, types/lint/build/diff, two final bounded serial Canvas cases and
+120balance scenarios pass; [report](build/content/Q6_REPORT.md) binds source/limits.
+Packed gains support bounded capacity payoff, not survival/performance. G1 still
+must assess health+armour and existing role budgets. Broad native/stress/device
+checks deferred; actual Safari/browser-OS/older-device evidence waived/unverified.
+This closes the preceding Session21 Q6 correction gate without reopening C1–C7.

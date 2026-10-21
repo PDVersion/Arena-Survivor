@@ -17,7 +17,7 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 remains open; [plan](BUILD_PLAN_V0.4.3.md) |
+| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](BUILD_PLAN_V0.4.3.md) |
 | V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
@@ -194,3 +194,12 @@ modifiers after tagged enemies spawn; move it after exact spawn-time reward
 assertions, then assert surge activation1/scheduled100. Three affected cases
 pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
 current-head full Actions remains unverified until its own run completes.
+
+## Q6 prerequisite — local gate accepted 2026-10-21
+
+On `codex/readable-gameplay-g1`, fixed player presentation anchors, pulse/hit
+correspondence and owner-track capacity3→7/evolved8 are verified.146units/16files,
+types/lint/build/diff,2serial Chromium Canvas cases and120model scenarios pass.
+[Report](content/Q6_REPORT.md) preserves exact source and limits. G1 is next;
+no new main merge/CI/device pass is claimed. Historical pending-Q6 entries above
+are superseded by this record; external checks remain waived/unverified.

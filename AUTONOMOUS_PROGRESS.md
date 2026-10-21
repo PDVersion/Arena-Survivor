@@ -6,7 +6,7 @@ Updated: 2026-10-21 (Australia/Sydney).
 
 Current milestone dates/statuses and published CI evidence are consolidated in
 [build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
-verified through C7 `88f220b`. Next is the open
+verified through C7 `88f220b`. Historical next was the
 Session21 Q6 correction gate: player motion, cone feedback and owner-selected
 vacuum target-cap progression. The owner's subsequent genre/rubbish request is
 recorded in [the four-phase roadmap](build/READABLE_GAMEPLAY_ROADMAP.md): G1–G4
@@ -1643,3 +1643,17 @@ pass:15 documentation-only paths,9 local links in new roadmap/handoff/report,
 whitespace. Existing bundle-size advisory remains; no local browser suite is
 needed for this documentation-only publication. Older delivery statements above
 retain historical meaning; no later gameplay merge is authorized here.
+
+## Q6 prerequisite — verified 2026-10-21
+
+Recovered clean main c200b21, refreshed origin/main, confirmed PR27 merged9837158
+with successful head CI39535388393; created `codex/readable-gameplay-g1`. Claimed
+exact paths before edits. Corrected measured hood-anchor shifts through per-frame
+presentation metadata, truthfully separated a cone pulse from its fade, and added
+finite owner-track primary targets3→7/evolved8 in both themes. No body/art/save
+changes.146units/16files, types/lint/build/diff, final2serial Canvas browser cases
+(5.3s/no retries), four both-theme/all-preset baseline/C3 commands120scenarios pass.
+Early motion fixture failures/limits are in build/content/Q6_REPORT.md. Games and
+test server cleaned up; broad stress/soak/device checks deferred, existing external
+checks waived/unverified. Q6 gate passes; G1 baseline/assessment is next. Nothing
+pushed/merged by this local phase. Exact source digest: Q6/results.json.
