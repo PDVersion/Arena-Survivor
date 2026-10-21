@@ -86,3 +86,45 @@ The first candidate is complete; G2 remains in progress. Next is G2B wrapper
 interception, which needs a fresh exact claim/prompt review before implementation.
 The `v044` suffix in the bounded test filename is only a fixture filename; it
 neither starts nor accepts the V0.4.4 sprite milestone. No generated art is owned.
+
+## G2B scope and prompt review — claimed 2026-10-22 before code
+
+Owner now requests completing the G2 plan, then reporting G3 readiness. Implement
+G2B and verify/commit it before claiming G2C. Exact additional ownership:
+`src/game/systems/enemies/committed-motion.ts`, `src/game/entities/enemy-motion-cue.ts`,
+`tests/unit/enemies/committed-motion.test.ts`, `tests/e2e/g2-motion.spec.ts`;
+reuse G2A contracts/validation, both-theme enemies/director/bodies/copy, actor,
+run-scene enemy movement/avoidance only, alternate fixture/content tests and
+G2 evidence/planning/status/reconciliation paths. No simulator algorithm change.
+
+Reviewed prompt: add neutral `enemy.gust_drifter` (Packets / Wrappers; Paper Wisp).
+Approach at80, enter a stationary900ms directional warning within150world units,
+commit to a heading offset0.8radians from the captured player bearing, travel900ms
+at2.5×base speed, stop1300ms, then approach/repeat. Reusable motion capability
+contains all thresholds/timing/offset/speed in theme data. Presentation observes
+state; a persistent essential arrow/ring survives Low/reduced-motion. Stats trial:
+12HP/0armour,5harm,2XP,radius12/display34. Introduce one at0.32, natural weight3,
+growth0.5. Approach trigger is inside the camera's225world-unit vertical half-view;
+no off-screen launch. First hint uses existing wave announcement/catalog copy.
+
+Self-review: this is intermittent crossing/interception, not continuous pursuit;
+heading locks at warning entry (never tracks during warning/travel). Zero delta
+freezes motion; large deltas advance at most one phase so warning/recovery cannot
+be skipped. Existing target/contact/XP/cap/causal semantics remain. Actor-local
+state resets on construction. Skip obstacle steering during commitment so it
+cannot silently re-aim; recovery remains contactable/targetable. Existing drift
+waves keep their behaviour for roles without the capability. No save fields or
+sprites. Balance model does not simulate these movement or interception costs.
+
+Gate: deterministic phase/heading/reset/invalid-definition checks; current G2
+short suite + difficulty/weapons/persistence, types/lint/build/whitespace;120
+before/after ambient cases and four balance CLI commands; four bounded serial
+both-theme Default/Low+reduced-motion browser cases for phase cue, mixed target,
+exact-once XP/death and clean destruction. Keep/revise/drop then phase commit.
+
+- [x] G2B implementation and deterministic motion checks.
+- [x] G2B balance, bounded visual evidence and software gate.
+- [x] G2B decision/report/status/reconciliation and phase commit.
+
+G2B accepted **keep**: [report](content/G2B_REPORT.md). Ready for the separately
+claimed/reviewed G2C Can candidate; G2 overall remains open.

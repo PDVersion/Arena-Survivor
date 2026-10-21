@@ -165,3 +165,12 @@ is locally kept on `codex/readable-gameplay-g2` from G154e9b2f. Exact authority:
 [BUILD_PLAN_G2](BUILD_PLAN_G2.md), [G2A_REPORT](content/G2A_REPORT.md). G2 remains
 in progress; next is separately claimed/reviewed G2B. No old phase, sprite work,
 main merge or deferred hardware/browser acceptance is reopened by this result.
+
+## G2B local continuation — 2026-10-22
+
+Wrapper/Paper Wisp interception is **kept** after its separate local gate:
+282units/30files, types/lint/build,120before+120after ambient cases/four balance
+commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
+[Report](content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
+G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
+broad/native/device evidence remains deferred/waived/unverified. No push/merge.

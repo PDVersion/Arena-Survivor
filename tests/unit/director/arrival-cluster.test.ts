@@ -19,5 +19,5 @@ it("introduces just three once at its own threshold, independent of later natura
   const role = roles.find((r) => r.enemyId === ids.enemy.clusterFodder)!;
   expect(introductionCount(role, theme.tuning.director, .25)).toBe(3);
   expect(crossedUnlocks(theme.tuning.director, .25, .25)).toEqual([]);
-  expect(crossedUnlocks(theme.tuning.director, .25, .39)).toEqual([]);
+  expect(crossedUnlocks(theme.tuning.director, .25, .39).some((role) => role.enemyId === ids.enemy.clusterFodder)).toBe(false);
 });

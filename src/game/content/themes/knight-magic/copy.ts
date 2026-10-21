@@ -167,6 +167,10 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.gustDrifter]: {
+      name: "Paper Wisp",
+      description: "Watch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.",
+    },
     [archetypeIds.enemy.clusterFodder]: {
       name: "Ashling",
       description: "A slow, weak enemy that approaches in small groups. Clear a lane through them.",

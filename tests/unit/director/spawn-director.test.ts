@@ -71,8 +71,8 @@ describe("role composition", () => {
     expect(Object.keys(shares(0.099))).toHaveLength(1);
     expect(Object.keys(shares(0.1))).toHaveLength(2);
     expect(Object.keys(shares(0.2))).toHaveLength(2);
-    expect(Object.keys(shares(0.4))).toHaveLength(4);
-    expect(Object.keys(shares(0.45))).toHaveLength(5);
+    expect(Object.keys(shares(0.4))).toHaveLength(5);
+    expect(Object.keys(shares(0.45))).toHaveLength(6);
   });
 
   it("produces the documented five-minute shape from the curves", () => {
@@ -82,11 +82,12 @@ describe("role composition", () => {
       [archetypeIds.enemy.fastFragile]: 88,
     });
     expect(shares(1)).toMatchObject({
-      [archetypeIds.enemy.swarmBasic]: 44,
-      [archetypeIds.enemy.fastFragile]: 29,
+      [archetypeIds.enemy.swarmBasic]: 43,
+      [archetypeIds.enemy.fastFragile]: 28,
       [archetypeIds.enemy.slowDurable]: 11,
       [archetypeIds.enemy.deathSpawner]: 13,
       [archetypeIds.enemy.clusterFodder]: 2,
+      [archetypeIds.enemy.gustDrifter]: 3,
     });
   });
 

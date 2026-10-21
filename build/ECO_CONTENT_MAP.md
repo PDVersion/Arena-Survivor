@@ -199,3 +199,14 @@ matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
 [Reviewed plan](BUILD_PLAN_G2.md), [candidate report](content/G2A_REPORT.md).
 G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
 a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
+
+## G2B wrapper role — local keep 2026-10-22
+
+`enemy.gust_drifter`: eco Packets / Wrappers; knight Paper Wisp. One introduction
+at32% and sparse later arrivals. Approach → visible fixed-bearing warning → short
+oblique gust → stationary recovery gives an interception choice. Generic capability,
+theme-owned timings/stats/essential cue, code-native packet silhouette. Fictional
+movement/harm, no real handling/abundance claim, automatic waste patch, new guide
+surface, sprite or save field. Existing material families/IDs unchanged.
+[G2B_REPORT](content/G2B_REPORT.md) records keep and measured limits. Can next;
+G2 in progress, G3/G4/art unstarted. Historical earlier status remains historical.

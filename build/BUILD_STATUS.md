@@ -226,3 +226,12 @@ scenarios and4serial Chromium Canvas cases2.0s/no retries pass.
 [Report](content/G2A_REPORT.md) binds source/limits. G2B wrapper interception is
 next under a fresh claim; Can/G3/G4/art unstarted. Broad stress/native/device
 checks remain deferred; external checks waived/unverified. No push/merge/CI pass.
+
+## G2B local continuation — 2026-10-22
+
+Wrapper/Paper Wisp interception is **kept** after its separate local gate:
+282units/30files, types/lint/build,120before+120after ambient cases/four balance
+commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
+[Report](content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
+G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
+broad/native/device evidence remains deferred/waived/unverified. No push/merge.

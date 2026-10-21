@@ -14,6 +14,7 @@ export const archetypeIds = {
     deathSpawner: "enemy.death_spawner",
     stationaryFragment: "enemy.stationary_fragment",
     clusterFodder: "enemy.cluster_fodder",
+    gustDrifter: "enemy.gust_drifter",
     miniBoss: "enemy.mini_boss",
     finalBoss: "enemy.final_boss",
   },

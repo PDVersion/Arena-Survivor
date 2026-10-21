@@ -153,3 +153,9 @@ schema2 field, profile adapter, unlock or discovery record is changed. Current
 portable unknown-ID preservation remains; no migration is required for this
 addition. G2A reruns affected profile/codec/replacement units as part of its278
 unit gate. This does not imply implementation of saved discoveries or new fields.
+
+## G2B compatibility — 2026-10-22
+
+`enemy.gust_drifter` is an additive content ID with actor-local transient motion.
+No saved ID remap, schema/field/migration/profile/unlock/discovery change. Existing
+unknown-ID portable round trips still pass in the affected persistence suite.

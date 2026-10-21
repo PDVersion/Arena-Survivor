@@ -29,6 +29,8 @@ export const director = {
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+    { enemyId: archetypeIds.enemy.gustDrifter, waveMovement: "chase", unlockAt: 0.32,
+      introductionCount: 1, baseWeight: 3, weightGrowth: 0.5, chaosWeightBias: 0 },
 
     // The baseline swarm, thinning as a share as heavier roles arrive.
     {

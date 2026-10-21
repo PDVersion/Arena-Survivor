@@ -3835,3 +3835,22 @@ death-event fixtures were corrected, not product XP/retention rules weakened.
 [G2A_REPORT](build/content/G2A_REPORT.md) binds final sources, images, trade-offs
 and limitations. G2A kept; G2 remains in progress with G2B next under a new claim.
 Broad stress/native/device evidence deferred/waived, never newly passed; no merge.
+
+## REC-101 continuation — G2B fixed-bearing interception
+
+G2B kept locally2026-10-22 after reviewed exact ownership. Generic committed
+motion captures bearing when a nearby enemy begins warning, not at offscreen
+spawn or at launch. Re-aiming during warning/travel contradicts the visible arrow;
+obstacle steering therefore applies only during approach. Positive durations,
+range/speed/cue and bounded angle are theme-validated. One transition per update
+prevents long-frame warning/recovery erasure; zero delta freezes state. All phases
+remain ordinary contactable/targetable enemies with existing caps/source/XP.
+
+Essential arrow/ring reads gameplay state, never drives physics, and survives
+Low/reduced-motion. Actor destruction removes the view and cue scene hooks.
+Arrow shortens during travel and disappears in recovery. No sprite/body coupling,
+new save field or factual environmental claim. G2B_REPORT binds282units/30files,
+software/fourCLI/240scenario and4serial browser passes plus trade-offs/limits.
+The observer initially read removed physics after death; fix observer, not actor
+cleanup. The aided integration does not prove natural survival or device speed.
+G2B complete, G2C requires a new claim before edits; G3/art remain unstarted.

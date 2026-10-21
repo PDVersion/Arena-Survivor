@@ -55,3 +55,14 @@ Next candidate is G2B Packets/Wrappers: write/review a bounded prompt and exact
 ownership for telegraphed gust → drift → recovery/interception before editing.
 Reuse this phase's source/body/reward constraints; do not add the Can, G3 or art
 as part of that claim. Keep any remaining natural-play/device limits explicit.
+
+## Active G2B prompt — reviewed before implementation
+
+Execute the G2B exact claim and reviewed timings in BUILD_PLAN_G2. Capture G2A
+baseline, add generic committed motion plus always-visible essential cues, and
+complete its candidate gate before G2C. Owner's latest instruction authorizes
+finishing G2 sequentially. G3 begins only after G2 readiness; do not start it here.
+
+G2B instructions retired after its durable keep/report. Next: claim/review G2C,
+reuse the motion capability with straight roll/past-position/recovery, verify and
+commit separately. Do not start G3 until the complete G2 disposition is recorded.

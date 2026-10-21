@@ -1345,7 +1345,7 @@ export class RunScene extends Phaser.Scene {
       enemy.advance(target, deltaMs);
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
-      if (obstacles.length > 0 && enemy.movement === "chase") {
+      if (obstacles.length > 0 && enemy.movement === "chase" && enemy.motionState.phase === "approach") {
         const body = enemy.arcadeBody;
         let velocity = { x: body.velocity.x, y: body.velocity.y };
         for (const obstacle of obstacles) {

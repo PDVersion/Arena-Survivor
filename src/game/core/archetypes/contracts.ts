@@ -476,7 +476,20 @@ export interface EnemyPrimitivePart {
   readonly token: keyof ThemePalette;
 }
 
+/** Timed approach → fixed-bearing warning → travel → stationary recovery. */
+export interface CommittedMotionDefinition {
+  readonly triggerRange: number;
+  readonly telegraphMs: number;
+  readonly travelMs: number;
+  readonly recoveryMs: number;
+  readonly speedMultiplier: number;
+  readonly aimOffsetRadians: number;
+  readonly cueToken: keyof ThemePalette;
+  readonly cueWidth: number;
+}
+
 export interface EnemyDefinition {
+  readonly committedMotion?: CommittedMotionDefinition;
   /** Only natural director selections expand a group; causal spawns never do. */
   readonly arrivalCluster?: Readonly<{ count: number; spacing: number }>;
   /** Optional code-native presentation; sprites still take precedence. */

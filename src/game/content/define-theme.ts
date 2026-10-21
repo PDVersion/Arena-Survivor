@@ -323,6 +323,14 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (enemyIds.has(enemy.id)) issues.push(`duplicate enemy id: ${enemy.id}`);
     enemyIds.add(enemy.id);
+    if (enemy.committedMotion) {
+      const motion = enemy.committedMotion;
+      if ([motion.triggerRange, motion.telegraphMs, motion.travelMs, motion.recoveryMs, motion.speedMultiplier, motion.cueWidth]
+        .some((value) => !Number.isFinite(value) || value <= 0) || !Number.isFinite(motion.aimOffsetRadians) ||
+        Math.abs(motion.aimOffsetRadians) > Math.PI || !(motion.cueToken in theme.tokens.palette) || enemy.moveSpeed <= 0 || enemy.boss) {
+        issues.push(`${enemy.id} committed motion needs finite positive timings/range/speed/cue and a bounded bearing`);
+      }
+    }
     if (enemy.arrivalCluster && (!Number.isSafeInteger(enemy.arrivalCluster.count) || enemy.arrivalCluster.count < 1 ||
       !Number.isFinite(enemy.arrivalCluster.spacing) || enemy.arrivalCluster.spacing < enemy.radius * 2)) {
       issues.push(`${enemy.id} arrival cluster needs finite count and body-separated spacing`);

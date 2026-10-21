@@ -167,6 +167,10 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.gustDrifter]: {
+      name: "Packets / Wrappers",
+      description: "Watch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.",
+    },
     [archetypeIds.enemy.clusterFodder]: {
       name: "Cigarette Butts",
       description: "Slow groups of weak litter. Clear a lane or catch several in one tool action.",

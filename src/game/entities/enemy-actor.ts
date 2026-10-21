@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { advanceCommittedMotion, createMotionState } from "../systems/enemies/committed-motion";
+import { EnemyMotionCue } from "./enemy-motion-cue";
 import { EnemyPrimitiveView } from "./enemy-primitive-view";
 import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
@@ -33,6 +35,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly primitiveView?: EnemyPrimitiveView;
   readonly eliteMarker?: Phaser.GameObjects.Text;
   private readonly baseColour: number;
+  readonly motionCue?: EnemyMotionCue;
+  motionState = createMotionState();
   private launched = false;
   private ageMs = 0;
   eliteSplitDepth = 0;
@@ -115,6 +119,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       animateMovement: true,
     });
     if (!this.view && definition.primitiveParts) this.primitiveView = new EnemyPrimitiveView(this, definition.primitiveParts, tokens);
+    if (definition.committedMotion) this.motionCue = new EnemyMotionCue(this, tokens);
   }
 
   /** Stable identity for the shared spatial index and targeting. */
@@ -137,6 +142,16 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.ageMs += Math.max(0, deltaMs);
     if (this.moveSpeed <= 0) {
       this.arcadeBody.setVelocity(0, 0);
+      return;
+    }
+    if (this.definition.committedMotion) {
+      this.motionState = advanceCommittedMotion(this.motionState, this.definition.committedMotion, deltaMs, this, target);
+      const state = this.motionState;
+      if (state.phase === "approach") this.chase(target);
+      else if (state.phase === "travel") {
+        const speed = this.moveSpeed * this.definition.committedMotion.speedMultiplier;
+        this.arcadeBody.setVelocity(state.headingX * speed, state.headingY * speed);
+      } else this.arcadeBody.setVelocity(0, 0);
       return;
     }
     if (this.movement === "drift") {

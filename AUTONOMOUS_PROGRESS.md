@@ -1688,3 +1688,12 @@ failures, reward/mix trade-offs and waived/deferred evidence are in G2A_REPORT.
 Keep the first candidate; G2 overall remains in progress. G2B wrapper gust/
 interception requires a fresh bounded claim/prompt review; Can/G3/G4/art unstarted.
 Owned resources cleaned up. No push/PR/merge or broad/device acceptance inferred.
+
+## G2B local continuation — 2026-10-22
+
+Wrapper/Paper Wisp interception is **kept** after its separate local gate:
+282units/30files, types/lint/build,120before+120after ambient cases/four balance
+commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
+[Report](build/content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
+G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
+broad/native/device evidence remains deferred/waived/unverified. No push/merge.

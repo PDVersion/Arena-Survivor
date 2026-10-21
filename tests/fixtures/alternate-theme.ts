@@ -257,6 +257,10 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.enemy.clusterFodder, maxHealth: 6, moveSpeed: 64, contactDamage: 3, contactCooldownMs: 1000,
       radius: 10, displayDiameter: 28, xpReward: 1, armour: 0, geometry: "circle", presentationToken: "enemyFast",
       arrivalCluster: { count: 3, spacing: 34 } },
+    { id: archetypeIds.enemy.gustDrifter, maxHealth: 12, moveSpeed: 80, contactDamage: 5, contactCooldownMs: 1000,
+      radius: 12, displayDiameter: 34, xpReward: 2, armour: 0, geometry: "square", presentationToken: "enemySpawner",
+      committedMotion: { triggerRange: 150, telegraphMs: 900, travelMs: 900, recoveryMs: 1300,
+        speedMultiplier: 2.5, aimOffsetRadians: 0.8, cueToken: "critical", cueWidth: 3 } },
   ],
   pickups: [
     {
@@ -397,6 +401,7 @@ export const alternateTheme = defineTheme({
       contactKnockbackImpulse: 18,
       contactKnockbackCooldownMs: 350,
       roles: [
+        { enemyId: archetypeIds.enemy.gustDrifter, separationScale: 0.9, mass: 0.7 },
         { enemyId: archetypeIds.enemy.clusterFodder, separationScale: 0.9, mass: 0.6 },
         { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6 },
         { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1 },

@@ -363,3 +363,12 @@ files. No new art, saved fields, factual claims, cap/rate/body changes. Broad
 stress/native/device acceptance deferred/waived, never newly passed. Next G2B
 wrapper interception needs a fresh bounded ownership/prompt review; Can/G3/G4
 remain unstarted. Earlier unstarted-G2 checkpoints above are historical.
+
+## G2B local continuation — 2026-10-22
+
+Wrapper/Paper Wisp interception is **kept** after its separate local gate:
+282units/30files, types/lint/build,120before+120after ambient cases/four balance
+commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
+[Report](content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
+G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
+broad/native/device evidence remains deferred/waived/unverified. No push/merge.

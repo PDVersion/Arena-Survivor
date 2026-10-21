@@ -157,5 +157,15 @@ export const enemies = [
     primitiveParts: [{ x: -0.1, y: 0, width: 0.65, height: 0.35, rotation: 0.3, token: "enemyFast" },
       { x: 0.3, y: 0.12, width: 0.22, height: 0.35, rotation: 0.3, token: "explosion" }],
   },
-
+  {
+    // G2B fictional gust/interception role; authored game values, not material facts.
+    id: archetypeIds.enemy.gustDrifter,
+    maxHealth: 12, moveSpeed: 80, contactDamage: 5, contactCooldownMs: 1000,
+    radius: 12, displayDiameter: 34, xpReward: 2, armour: 0,
+    geometry: "square", presentationToken: "enemySpawner",
+    committedMotion: { triggerRange: 150, telegraphMs: 900, travelMs: 900, recoveryMs: 1300,
+      speedMultiplier: 2.5, aimOffsetRadians: 0.8, cueToken: "critical", cueWidth: 3 },
+    primitiveParts: [{ x: 0, y: 0, width: 0.7, height: 0.55, rotation: 0.15, token: "enemySpawner" },
+      { x: 0, y: 0, width: 0.15, height: 0.65, rotation: 0.15, token: "critical" }],
+  },
 ] as const satisfies readonly EnemyDefinition[];
