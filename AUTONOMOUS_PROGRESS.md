@@ -1581,3 +1581,15 @@ no flaky tests. Only C3's later load poll fails:258–275simulation-ms/10s versu
 bound, retaining every assertion. Two affected cases pass once12.5s, one worker/
 zero retries; types/affected lint/diff pass. No new browser campaign or gameplay
 change. Publish this narrow follow-up and await its matching-head full Actions.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.
+At02:51:24UTC, elapsed78m38s; reserve/final review window is active. Publish the
+verified follow-up with full CI pending; do not infer a pass before03:02:46UTC
+session deadline. Pre-existing roadmap edits remain preserved unstaged.

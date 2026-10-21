@@ -65,3 +65,31 @@ Two affected cases pass once locally in12.5s, one worker/zero retries; final typ
 affected lint and diff checks pass. Full software/build/audit gates from a87f57f
 remain valid for this test-timeout-only follow-up. Current-head remote CI must run
 again; report its final result in the PR without manufacturing an evidence commit.
+
+
+## Second matching-head continuation — df75471 / run39531764460
+
+Both C3 cases now pass remotely. This run reports115passes/6skips/1flaky and
+2failures: the existing450-actor benchmark times out waiting30s for completion,
+and the Horde reward test expects4.5936XP but observes3.9816. The short interaction
+terminal also needs a retry after its15s completion wait. Audit remains skipped.
+
+Claim the newly affected capacity-probe/phase-four-v02 specs before editing.
+Use90s bounded simulation-completion waits,240s total for the benchmark's two
+complete runs and120s for the interaction terminal. Hold restart until generation
+changes and release in finally. All exact450population/origin and queue/stat reset
+assertions remain. No test is skipped and no retries are added.
+
+The Horde fixture's second Space interaction can change Chaos/reward scaling
+after some tagged enemies already spawn. Rewards retain spawn-time modifiers,
+so current-world multipliers cannot retrospectively price the mixed cohort. Move
+the second interaction after exact reward assertions, retaining stable single-
+activation spawn conditions. Then explicitly assert the surge still has exactly
+one activation and100scheduled arrivals. No gameplay reward code is changed.
+
+Three affected cases pass once locally17.9s, one worker/zero retries, six-minute
+global bound. Types/affected lint/diff pass. Prior full655units/build/audit0 remain
+valid for this test-only follow-up; no whole local campaign repeated. Report final
+CI honestly: another exact-head full run is required after publication and is not
+yet passed. The90-minute session budget ends03:02:46UTC; a full33–36minute Actions
+run may outlast it. No merge, deployment, Q6 completion or external acceptance.

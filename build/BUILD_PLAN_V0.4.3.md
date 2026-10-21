@@ -474,3 +474,18 @@ no flaky tests; only both C3 cases fail a later dense-load wall-time assumption
 (258–275simulation-ms/10s, target1000ms). Use the same bounded90s progress/120s
 test budget there, preserving all assertions. Two affected serial cases pass12.5s
 locally/zero retries; types/affected lint/diff pass. Remote confirmation pending.
+
+
+PR27 second continuation ownership: add tests/e2e/{capacity-probe,phase-four-v02}.spec.ts
+for newly observed slow-runner failures in39531764460; retain original exact actor/
+clock/reset assertions. Existing phase-six ownership covers spawn-time reward
+isolation after another valid adjacent-shrine interaction. No runtime/tuning change.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.

@@ -63,7 +63,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.activated))
     .toBe(true);
-  await page.keyboard.press("Space");
+  // Keep spawn-time reward scaling stable until the reward assertions finish.
   await choosePendingUpgrades(page, 15_000);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.scheduled), {
@@ -73,8 +73,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
 
   const surged = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(surged?.shrine).toMatchObject({ activated: true, scheduled: 100 });
-  // Space can activate another adjacent shrine. Feedback is global; the surge
-  // activation and its 100 scheduled arrivals must still occur exactly once.
+  // Feedback is global; the surge itself and its100 arrivals occur once.
   expect(surged?.world?.activations["shrine.spawn_surge"]).toBe(1);
   expect(surged?.shrine?.feedbackCount).toBe(
     surged?.shrine?.instances.filter((shrine) => shrine.activated).length,
@@ -106,6 +105,11 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
     const perPickup = resolvedReward * toughness * (rewarded?.world?.xpMultiplier ?? 1);
     expect(collected / perPickup).toBeCloseTo(Math.round(collected / perPickup));
   }
+  // A later interaction may select another shrine, but cannot restart this surge.
+  await page.keyboard.press("Space", { delay: 80 });
+  const repeated = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  expect(repeated?.world?.activations["shrine.spawn_surge"]).toBe(1);
+  expect(repeated?.shrine?.scheduled).toBe(100);
 });
 
 test("restart during an active surge clears its scheduler and tagged enemies", async ({ page }) => {

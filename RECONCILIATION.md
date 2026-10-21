@@ -3672,3 +3672,15 @@ Keep the1000ms work and exact world/reward/cap/reset assertions, using the same
 90-second progress budget as other simulation gates. Both affected cases pass
 locally12.5s/zero retries; full remote confirmation remains pending. No runtime
 defect, performance win or new device evidence is inferred from the wait repair.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.
+Spawn-time rewards are immutable; never compare a mixed-modifier cohort against
+one later world multiplier. Preserve exact assertions by controlling the fixture
+world until its reward checks finish, not by loosening numeric tolerances.

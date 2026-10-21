@@ -158,3 +158,12 @@ no flaky tests; both C3 dense-load polls fail their10-second wall budget after
 reaching258–275simulation-ms. The same90-second progress budget fixes that next
 fixture limit; both affected cases pass12.5s locally/zero retries, types/lint/diff
 pass. All earlier repaired cases pass remotely. Final current-head CI is pending.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.
