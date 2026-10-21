@@ -1,6 +1,6 @@
 # Readable cleanup gameplay — four-phase roadmap
 
-Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6 verified in44585dd; G1 verified locally. G2 in progress (G2A kept); G3–G4 planned/unstarted.**
+Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6/G1 verified locally; G2 complete with three local keeps. G3 ready/unstarted; G4 planned/unstarted.**
 The owner requests the ranked survivor-game ideas in a few phases, consideration
 of Australian rubbish data as enemy candidates, and rebalancing existing enemies
 where required. Implementation evidence and limits are in [G1_REPORT](content/G1_REPORT.md).
@@ -201,19 +201,19 @@ Prerequisite: G1. Proposed ownership: new neutral capability contracts/selectors
 theme enemy/copy/director definitions, validation and affected tests. Existing
 sprite/body boundaries and save-ID rules remain mandatory.
 
-- [ ] Prototype one candidate at a time in the table's order, starting with
+- [x] Prototype one candidate at a time in the table's order, starting with
   Cigarette Butts; keep only a candidate that creates a distinct useful decision.
   Wrappers and the rolling Can are subsequent slices, not one bulk roster drop.
-- [ ] Introduce each alone at low pressure, then combine with an already-learned
+- [x] Introduce each alone at low pressure, then combine with an already-learned
   role. Author unlocks/weights from normalized director progress; no second
   hard-coded spawn timeline or compulsory long tutorial.
-- [ ] Supply recognizable silhouettes/cues at the actual camera/rate without
+- [x] Supply recognizable silhouettes/cues at the actual camera/rate without
   changing hitboxes from art. Small litter may use readable authored display
   footprints; visual size must not become a factual scale claim.
-- [ ] Rebalance existing-role shares/rewards after every addition, including
+- [x] Rebalance existing-role shares/rewards after every addition, including
   under optional pressure. Every new role must add a decision, not just reduce
   the chance of seeing familiar enemies or increase the live cap.
-- [ ] Reserve stable neutral IDs and author both-theme definitions only when a
+- [x] Reserve stable neutral IDs and author both-theme definitions only when a
   candidate is implemented. New discovery/profile fields require SAVE_DATA review;
   no profile/schema change is needed merely to document a candidate.
 
@@ -372,3 +372,17 @@ commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
 [Report](content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
 G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
 broad/native/device evidence remains deferred/waived/unverified. No push/merge.
+
+## G2 complete; G3 ready/unstarted — 2026-10-22
+
+G2A weak groups, G2B wrapper gust/interception and G2C direct Can roll/recovery
+are all **kept** after separate verified local candidate gates. G2Ab4d61ae and
+G2B7ce03c5 precede the G2C commit owning this checkpoint. Final686units/72files,
+types/lint/build/whole-branch whitespace,12serial Chromium Canvas candidate cases
+(4.2s,1worker,0retries) and per-candidate before/after balance evidence pass.
+[G2C report](content/G2C_REPORT.md) records all decisions, actual sources,
+initial test-only failures, trade-offs and aided-fixture/model limits.
+[Reviewed G3 handoff](PHASE_G3_PROMPT.md) is prepared; **G3 implementation
+has not started**. G4/new sprites remain unstarted. Broad regression/stress/soak
+checks deferred; actual Safari/missing browser-OS/older physical GPU evidence
+remains waived/unverified. No new remote CI, push, PR or main merge claim.

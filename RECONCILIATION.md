@@ -3854,3 +3854,31 @@ software/fourCLI/240scenario and4serial browser passes plus trade-offs/limits.
 The observer initially read removed physics after death; fix observer, not actor
 cleanup. The aided integration does not prove natural survival or device speed.
 G2B complete, G2C requires a new claim before edits; G3/art remain unstarted.
+
+## REC-101 continuation — G2C direct pass and complete roster gate
+
+G2C kept locally2026-10-22, reusing G2B's generic fixed-bearing motion unchanged.
+Can/Barrel Construct uses zero offset/longer faster travel, while Wrappers/Paper
+Wisp uses oblique shorter crossing. Capture at warning start allows a sideways
+step to miss; launch-time re-aim would invalidate the announced route. All phases
+retain ordinary contact/targets/XP, independent source identity and body data.
+Finite one-actor intro at55% and sparse weight2 avoid grouping or later cap growth.
+Balance adds costs to some weak builds; retain the measured trade-off, not blanket
+XP/weapon buffs.108attainable cases (of120) lose no final levels, but cap dwell can
+increase. Geometry/avoidance and survival remain outside the ambient model.
+
+Final12serial both-theme/default-low-reduced-motion Canvas candidate cases pass;
+mixed Can scenes include both prior new roles and old Bottle/Microplastics.
+Can rolls past captured player position and yields exact spawn21.375health/
+3.375XP at55%Normal, once. Views/cues/hooks release on death. Aid/clock/source/
+platform limits and screenshots are in G2C_REPORT; these are not natural survival
+or physical performance results. No listener remains on owned4173 after checks.
+
+Consolidated full units found an unchanged Q6 starter-stat expectation requiring
+vacuum-only primaryTargets. Exact narrow test ownership was added before editing;
+correct the applicable-key expectation and explicitly assert capped secondary and
+projectile display contracts. No runtime UI/weapon change. Initial684pass/1fail,
+final686pass/72files; targeted288/30files, types/lint/build/whitespace also pass.
+All three G2 candidates kept under separate gates/commits. G2 complete locally;
+reviewed PHASE_G3_PROMPT is next, G3/G4/art unstarted. Outstanding broad/external
+checks stay deferred/waived/unverified; no push/merge or new release claim.

@@ -15,6 +15,7 @@ export const archetypeIds = {
     stationaryFragment: "enemy.stationary_fragment",
     clusterFodder: "enemy.cluster_fodder",
     gustDrifter: "enemy.gust_drifter",
+    committedCharger: "enemy.committed_charger",
     miniBoss: "enemy.mini_boss",
     finalBoss: "enemy.final_boss",
   },

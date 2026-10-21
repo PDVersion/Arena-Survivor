@@ -41,3 +41,19 @@ for (const theme of [ecoGuardianTheme, knightMagicTheme]) {
     });
   }
 }
+
+for (const theme of [ecoGuardianTheme, knightMagicTheme]) it(`${theme.id} direct pass and oblique gust make different routes`, () => {
+  const can = theme.enemies.find((e) => e.id === "enemy.committed_charger")!;
+  const wrapper = theme.enemies.find((e) => e.id === "enemy.gust_drifter")!;
+  const position = { x: 140, y: 0 }, target = { x: 0, y: 0 };
+  const roll = advanceCommittedMotion(createMotionState(), can.committedMotion, 20, position, target);
+  const gust = advanceCommittedMotion(createMotionState(), wrapper.committedMotion, 20, position, target);
+  const rollDistance = can.moveSpeed * can.committedMotion.speedMultiplier * can.committedMotion.travelMs / 1000;
+  expect(roll.headingY).toBeCloseTo(0);
+  expect(position.x + roll.headingX * rollDistance).toBeLessThan(target.x - can.radius);
+  // A modest sideways step escapes the captured center line by both body radii.
+  expect(50).toBeGreaterThan(can.radius + theme.characters[0]!.radius);
+  expect(Math.abs(gust.headingY)).toBeGreaterThan(.5);
+  expect(rollDistance).toBeGreaterThan(wrapper.moveSpeed * wrapper.committedMotion.speedMultiplier * wrapper.committedMotion.travelMs / 1000);
+  expect(can.committedMotion.recoveryMs).toBeGreaterThan(wrapper.committedMotion.recoveryMs);
+});

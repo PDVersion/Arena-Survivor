@@ -168,4 +168,17 @@ export const enemies = [
     primitiveParts: [{ x: 0, y: 0, width: 0.7, height: 0.55, rotation: 0.15, token: "enemySpawner" },
       { x: 0, y: 0, width: 0.15, height: 0.65, rotation: 0.15, token: "critical" }],
   },
+  {
+    // G2C direct committed roll: sidestep the shown route, then clear in recovery.
+    id: archetypeIds.enemy.committedCharger,
+    maxHealth: 18, moveSpeed: 90, contactDamage: 7, contactCooldownMs: 1000,
+    radius: 14, displayDiameter: 38, xpReward: 3, armour: 0,
+    geometry: "circle", presentationToken: "enemyTank",
+    committedMotion: { triggerRange: 150, telegraphMs: 1000, travelMs: 1000, recoveryMs: 1400,
+      speedMultiplier: 3.5, aimOffsetRadians: 0, cueToken: "critical", cueWidth: 3 },
+    primitiveParts: [{ x: 0, y: 0, width: 0.8, height: 0.65, rotation: 0, token: "enemyFast" },
+      { x: 0, y: 0, width: 0.36, height: 0.65, rotation: 0, token: "enemyTank" },
+      { x: -0.4, y: 0, width: 0.1, height: 0.72, rotation: 0, token: "text" },
+      { x: 0.4, y: 0, width: 0.1, height: 0.72, rotation: 0, token: "text" }],
+  },
 ] as const satisfies readonly EnemyDefinition[];

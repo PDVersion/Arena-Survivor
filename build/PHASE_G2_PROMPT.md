@@ -1,5 +1,5 @@
 <!-- G2A instructions below are retained as the reviewed implementation record. -->
-# G2 start prompt — G2A implemented and reviewed
+# G2 execution prompt — retired after all three local keeps
 
 Owner authorizes writing/reviewing this prompt and beginning G2 on2026-10-22.
 Work in this repository on `codex/readable-gameplay-g2`, based on locally verified
@@ -66,3 +66,20 @@ finishing G2 sequentially. G3 begins only after G2 readiness; do not start it he
 G2B instructions retired after its durable keep/report. Next: claim/review G2C,
 reuse the motion capability with straight roll/past-position/recovery, verify and
 commit separately. Do not start G3 until the complete G2 disposition is recorded.
+
+## Active G2C prompt — reviewed before implementation
+
+G2B is verified7ce03c5. Execute G2C's exact claim in BUILD_PLAN_G2. Reuse committed
+motion for a direct old-position roll and recovery. Add both-theme definitions,
+a recognizable primitive can, bounded one-actor introduction and sparse weights.
+Verify the distinct sidestep/past-position route against wrappers; run and record
+the full candidate gate. Then record all three candidate decisions, retire G2's
+execution prompt and write/review the G3 start handoff without executing G3.
+
+## Complete result / prompt retired — 2026-10-22
+
+G2C passes its own gate and is kept. This retires all G2 execution instructions
+above. All three candidate decisions are durable in BUILD_PLAN_G2 and
+[G2C_REPORT](content/G2C_REPORT.md). G2 is locally complete; G3 is ready/unstarted.
+Next current handoff is [PHASE_G3_PROMPT](PHASE_G3_PROMPT.md), written/reviewed here.
+Do not infer G3 execution, G4/art or publication/merge from this preparation.

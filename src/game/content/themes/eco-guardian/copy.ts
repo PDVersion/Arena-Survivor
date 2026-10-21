@@ -167,6 +167,10 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.committedCharger]: {
+      name: "Aluminium Can",
+      description: "Watch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.",
+    },
     [archetypeIds.enemy.gustDrifter]: {
       name: "Packets / Wrappers",
       description: "Watch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.",

@@ -1,8 +1,9 @@
 # G2 — one outdoor candidate at a time
 
 Date2026-10-22. Owner authorizes starting G2. Branch `codex/readable-gameplay-g2`
-is stacked on local G1 `54e9b2f`, not a merged-main claim. G2A Cigarette Butts is
-selected first. Wrappers, Can, G3/G4 and new art remain unstarted.
+is stacked on local G1 `54e9b2f`, not a merged-main claim. Current result: all
+three candidates locally kept; G2 complete, G3 ready/unstarted. G3/G4 and new art
+remain unimplemented. The claims below retain their before-edit chronology.
 
 ## G2A scope and exact ownership, claimed before code edits
 
@@ -128,3 +129,60 @@ exact-once XP/death and clean destruction. Keep/revise/drop then phase commit.
 
 G2B accepted **keep**: [report](content/G2B_REPORT.md). Ready for the separately
 claimed/reviewed G2C Can candidate; G2 overall remains open.
+
+## G2C scope and prompt self-review — claimed before code 2026-10-22
+
+G2B verified/committed7ce03c5. Now claim the same both-theme ID/definition/copy/
+director/body/validator-fixture/content/director/enemies test paths and
+`tests/e2e/g2-motion.spec.ts`; existing committed-motion/cue/actor integration is
+read/reused, not extended unless an evidenced defect requires a recorded claim.
+Evidence `build/content/G2C*`, this plan/prompt/current authority/status/reconciliation
+paths. Also claim `build/PHASE_G3_PROMPT.md` for the final reviewed handoff only.
+No G3 implementation, boss/site/world/weapon/save/sprite code is owned.
+
+Reviewed G2C prompt: neutral `enemy.committed_charger`, eco Aluminium Can / knight
+Barrel Construct. Reuse fixed-bearing capability with zero aim offset: approach90,
+trigger150, warning1000ms aimed at the player's captured prior position, travel
+1000ms at3.5×base (315units), stationary recovery1400ms.18HP/0armour,7contact harm,
+3XP,radius14/display38. One introduction at55%, sparse weight2/growth0.4/bias0.
+Aimed line crosses the old player position and passes beyond it; moving sideways
+leaves the committed route. Unlike the oblique180-unit wrapper gust, this is a
+longer fast direct pass followed by a larger recovery opportunity. Primitive can
+body/label/end caps provide a separate silhouette; no new sprite or body inference.
+
+Self-review: keep the same phase logic rather than adding a parallel AI system.
+Preserve both old behaviours and all finite cap/XP/causal rules. No retargeting
+at launch, predictive tracking, invulnerability or extra attack hitbox. New role
+must prove the old-position pass and sideways miss, not just share the wrapper's
+phase test. Intro at55% is a trial, not natural encounter acceptance; G3 owns
+encounter sequencing around the existing mini-boss. Pacing model still omits
+movement/survival/offspring/intro/bosses. Compare actual role shares and both-theme
+weak/strong build work/XP/cap trade-offs before keep. No numerical survey ranking.
+
+- [x] G2C implementation, content/motion and sidestep/target/XP checks.
+- [x] G2C120before+120after/fourCLI, bounded serial browser/software gate.
+- [x] G2C keep/revise/drop, complete G2 disposition, reviewed G3 handoff/commit.
+
+### Final verification discovery / narrow ownership extension
+
+The consolidated full unit suite finds one pre-existing Q6 expectation in
+`tests/unit/ui-selectors/describe-upgrade.test.ts`: the starter stats must cover
+all keys except projectiles/pierce, but Q6 added `primaryTargets` only for a capped
+melee tool. The actual starter has no such cap. Test and selector are unchanged
+since G1 (empty diff against54e9b2f; selector's last relevant change44585dd).
+Claim this test only before correction: exclude the inapplicable capacity from
+starter keys and explicitly verify both themes' finite secondary capacity and
+knight projectile delivery stats. No selector/weapon/UI runtime change. Rerun the
+full unit suite once; record the initial684pass/1fail honestly in the G2C report.
+
+## G2 complete local gate / G3 readiness — 2026-10-22
+
+All three candidates kept individually: G2Ab4d61ae, G2B7ce03c5, G2C in this plan's
+owning final candidate commit. [G2C_REPORT](content/G2C_REPORT.md) records the full
+disposition.288targeted units, final686units/72files, types/lint/build/whitespace,
+12serial candidate browser cases and120before+120after model cases/fourCLI for
+G2C pass. Earlier G2A/G2B gates retain their own evidence. Broad/native/device
+limits remain as recorded, never silently passed. No push/PR/merge/art.
+
+[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written and reviewed. G3 remains unstarted;
+its exact implementation ownership will be claimed at the next owner instruction.

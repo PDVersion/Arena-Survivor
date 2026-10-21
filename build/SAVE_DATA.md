@@ -159,3 +159,10 @@ unit gate. This does not imply implementation of saved discoveries or new fields
 `enemy.gust_drifter` is an additive content ID with actor-local transient motion.
 No saved ID remap, schema/field/migration/profile/unlock/discovery change. Existing
 unknown-ID portable round trips still pass in the affected persistence suite.
+
+## G2C compatibility / complete roster — 2026-10-22
+
+`enemy.committed_charger` is additive content, with fresh actor-local transient
+motion; no field/schema/profile/migration/import/export/unlock/discovery change.
+Existing IDs and unknown-ID round trips retain their meanings. Final686unit suite
+includes current persistence compatibility; no saved discovery system is implied.

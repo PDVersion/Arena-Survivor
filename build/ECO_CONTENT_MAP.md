@@ -38,6 +38,8 @@ Collection Sweep level wording:
 | Stable role | Eco name | Identity and behavior | Can create | Status |
 | --- | --- | --- | --- | --- |
 | `enemy.cluster_fodder` | Cigarette Butts | Slow weak individuals in spaced groups; clear a lane or use a cone. | Nothing | G2A local keep |
+| `enemy.gust_drifter` | Packets / Wrappers | Announced oblique gust, then pause for interception. | Nothing | G2B local keep |
+| `enemy.committed_charger` | Aluminium Can | Announced direct roll through old player position; sidestep then clear in recovery. | Nothing | G2C local keep |
 | `enemy.swarm_basic` | Plastic Bottle | Common moving plastic waste; the baseline crowd role. | Microplastics through Fragmentation | Live |
 | `enemy.fast_fragile` | Microplastics | Small, fast, multicolour shards and pieces of plastic waste. This replaces Plastic Bag. | Nothing | Live |
 | `enemy.slow_durable` | Glass Bottle | Slow, durable glass waste. | Glass Shards through Fragmentation | Live |
@@ -210,3 +212,19 @@ movement/harm, no real handling/abundance claim, automatic waste patch, new guid
 surface, sprite or save field. Existing material families/IDs unchanged.
 [G2B_REPORT](content/G2B_REPORT.md) records keep and measured limits. Can next;
 G2 in progress, G3/G4/art unstarted. Historical earlier status remains historical.
+
+## G2C kept / G2 complete — 2026-10-22
+
+`enemy.committed_charger`: eco Aluminium Can; knight Barrel Construct. A visible
+fixed line captures the player's old position, then a fast direct roll passes it
+and stops for recovery. Sideways movement avoids that route; cleanup rewards the
+return. This differs from the wrapper's oblique gust and weak-group lane clearing.
+One introduction at55%, sparse natural weight2; timings/stats/cue/body/presentation
+are theme-authored and use the shared capability. The primitive can's body/label/
+end caps are code-native presentation, never physics input. No generated art,
+material/harm/handling fact, new information surface, saved field or ID remap.
+
+All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
+[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written/reviewed. G3 ready/unstarted;
+G4/art unstarted, external evidence still deferred/waived/unverified. This is the
+current state; earlier staged continuation paragraphs are historical checkpoints.

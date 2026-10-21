@@ -10,7 +10,9 @@ verified through C7 `88f220b`. PR27 merged as9837158; the main planning claim is
 c200b21. On `codex/readable-gameplay-g1`, Q6 is verified and committed44585dd;
 G1 now passes its own bounded local gate. See [G1 report](build/content/G1_REPORT.md)
 for the two Glass tuning changes, model corrections,187units/21files, serial
-contact check and scenario evidence. G2 is now in progress: G2A kept locally; G2B/Can/G3/G4 and sprites remain unstarted. Broad
+contact check and scenario evidence. G2 is now locally complete with all three candidates kept (G2Ab4d61ae, G2B7ce03c5,
+G2C owning the latest report). G3 prompt is written/reviewed and ready; G3/G4 and
+sprites remain unstarted. Broad
 regression/stress/soak/native/device checks are deferred; existing external checks
 remain temporarily waived/unverified. This session creates local phase commits;
 no push/PR/merge is authorized by the older planning publication. Older session
@@ -1697,3 +1699,17 @@ commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
 [Report](build/content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
 G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
 broad/native/device evidence remains deferred/waived/unverified. No push/merge.
+
+## G2 complete; G3 ready/unstarted — 2026-10-22
+
+G2A weak groups, G2B wrapper gust/interception and G2C direct Can roll/recovery
+are all **kept** after separate verified local candidate gates. G2Ab4d61ae and
+G2B7ce03c5 precede the G2C commit owning this checkpoint. Final686units/72files,
+types/lint/build/whole-branch whitespace,12serial Chromium Canvas candidate cases
+(4.2s,1worker,0retries) and per-candidate before/after balance evidence pass.
+[G2C report](build/content/G2C_REPORT.md) records all decisions, actual sources,
+initial test-only failures, trade-offs and aided-fixture/model limits.
+[Reviewed G3 handoff](build/PHASE_G3_PROMPT.md) is prepared; **G3 implementation
+has not started**. G4/new sprites remain unstarted. Broad regression/stress/soak
+checks deferred; actual Safari/missing browser-OS/older physical GPU evidence
+remains waived/unverified. No new remote CI, push, PR or main merge claim.
