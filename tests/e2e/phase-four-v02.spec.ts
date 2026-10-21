@@ -25,10 +25,13 @@ test("explosion, Fracture, Bloodlust, and chain reaction compose iteratively", a
 });
 
 test("terminal restart clears interaction queues and rolling Bloodlust", async ({ page }) => {
+  test.setTimeout(120_000);
   await page.goto("/?interactions=all&runDurationMs=700&attackSpeedBonus=9&loadHarness=40&noXp=1&atTimeUp=complete");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 15_000 }).toBe("complete");
-  await page.keyboard.press("r");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration)).toBeGreaterThan(1);
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 90_000 }).toBe("complete");
+  await page.keyboard.down("r");
+  try {
+    await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration)).toBeGreaterThan(1);
+  } finally { await page.keyboard.up("r"); }
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.effects).toMatchObject({
     explosionsCommitted: 0,

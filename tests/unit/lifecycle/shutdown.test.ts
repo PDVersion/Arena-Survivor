@@ -43,6 +43,7 @@ it("shutdown releases retained resources and claims idempotently without alterin
   const scene = {
     scale: { off: vi.fn() }, game: { events: { off: vi.fn() } }, input: { off: vi.fn() },
     handleResize: vi.fn(), handleGameBlur: vi.fn(), handleGameFocus: vi.fn(), handleRestartKey: vi.fn(), handleMeasurementVisibility: vi.fn(), handlePointerGesture: vi.fn(),
+    bossHealthUi: { destroy: vi.fn() }, bossCues: new Map(), bossAttacks: new Map(), spawnedBossIds: new Set(["enemy.final_boss"]),
     hud: ui, levelUpUi: ui, pauseMenu: ui, runEndOverlay: ui, overtimeUi: ui, minimap: ui,
     audioFeedback: { destroy: vi.fn() },
     enemies: new Set([actor]), projectiles: new Set([actor]), pickups: new Set([actor]), hazards: new Set([actor]), feedbackObjects: new Set([actor]),
@@ -57,7 +58,7 @@ it("shutdown releases retained resources and claims idempotently without alterin
   shutdown.call(scene);
   expect(actor.destroy).not.toHaveBeenCalled();
   expect(scene.runState).toBe(runState);
-  for (const set of [scene.enemies, scene.projectiles, scene.pickups, scene.hazards, scene.feedbackObjects, scene.claimedPickupIds, scene.shrineMarkers]) expect(set.size).toBe(0);
+  for (const set of [scene.enemies, scene.projectiles, scene.pickups, scene.hazards, scene.feedbackObjects, scene.claimedPickupIds, scene.shrineMarkers, scene.bossCues, scene.bossAttacks, scene.spawnedBossIds]) expect(set.size).toBe(0);
   expect(scene.enemyHash.size).toBe(0);
   expect(scene.minimapView).toEqual({ enemies: [], shrines: [], hazards: [] });
   expect(scene.shrineActors).toEqual([]);

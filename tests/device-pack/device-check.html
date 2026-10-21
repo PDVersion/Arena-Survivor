@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Arena Survivor device check</title>
+<style>body{font:16px system-ui;background:#111b16;color:#edf4eb;margin:20px}button,input,select{font:inherit;margin:4px;padding:8px}a{color:#b3ed94}iframe{width:100%;height:72vh;border:1px solid #7a9}label{display:inline-block}#status{white-space:pre-wrap}small{display:block;max-width:85ch}</style></head>
+<body><h1>Arena Survivor device check</h1><p>This is an instrumented test build. It does not establish production performance or older-device acceptance by itself.</p>
+<label>Device, graphics driver and power mode <input id="device" size="48" placeholder="Example: laptop model, GPU driver, plugged in"></label>
+<label>Scenario <select id="scenario"><option value="play">Play normally</option><option value="60">60 actors (aided benchmark)</option><option value="150">150 actors (aided benchmark)</option><option value="300">300 actors (aided benchmark)</option></select></label>
+<button id="load">Load selected scenario</button><button id="record">Record 60 seconds</button><button id="download" disabled>Download result</button>
+<p id="status" role="status">Load a scenario, choose Default or Low in the game’s Settings, then record. Select upgrades and resume pauses normally.</p>
+<small>Keep the game visible and focused. The recorder waits for active play, warms up for 10 seconds, and measures at least 60 seconds. It stops within three minutes. Interruptions, pauses and frame stalls stay in the downloaded evidence. Run each 60/150/300 scenario three times in both Default and Low; also play normally, resize, pause/resume and restart. A complete human playable run remains a separate checklist item.</small>
+<iframe id="game" title="Arena Survivor test build" src="about:blank"></iframe>
+<script type="module" src="./device-check.ts"></script></body></html>

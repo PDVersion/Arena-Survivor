@@ -7,6 +7,7 @@ import {
   upgradeRarities,
   worldKeys,
   type ThemeManifest,
+  type UpgradeDefinition,
 } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
 import { upgradeStatTargets } from "../core/archetypes/effects";
@@ -47,6 +48,7 @@ const vocabularyKeys = [
   "directDamage",
   "criticalBonusDamage",
   "piercingMomentumDamage",
+  "splashDamage",
   "explosionDamage",
   "chainedExplosionDamage",
   "remainderDamage",
@@ -91,6 +93,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   const issues: string[] = [];
 
   if (!theme.id.trim()) issues.push("theme id is required");
+  for (const key of ["manageSave", "title", "description", "exportSave", "copyCode", "codeLabel", "fileLabel", "previewImport", "confirmImport", "cancel", "close", "restoreBackup", "resetProgress", "confirmRestore", "confirmReset", "previewTitle", "importAction", "restoreAction", "resetAction", "runs", "kills", "bestLevel", "weapons", "upgrades", "theme", "difficulty", "saved", "exported", "copied", "manualCopy", "cancelled", "error", "confirmationHint", "fileTooLarge", "warnTheme", "warnContentVersion", "warnUnavailable", "warnCharacterFallback"] as const) {
+    if (!theme.copy.saveManager?.[key]?.trim()) issues.push(`saveManager.${key} copy is required`);
+  }
   if (!theme.copy.gameTitle.trim()) issues.push("game title is required");
   if (!theme.copy.arenaName.trim()) issues.push("arena name is required");
   if (!theme.copy.bootStatus.trim()) issues.push("boot status copy is required");
@@ -200,6 +205,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required character: ${archetypeIds.character.starter}`);
   }
 
+  if (!Number.isSafeInteger(theme.weaponSlotCount) || theme.weaponSlotCount < 1) {
+    issues.push("weaponSlotCount must be a positive safe integer");
+  }
   const weaponIds = new Set<string>();
   const weapons = Array.isArray(theme.weapons) ? theme.weapons : [];
   if (!Array.isArray(theme.weapons)) issues.push("weapons registry is required");
@@ -227,6 +235,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (weapon.critDamage !== undefined && (!Number.isFinite(weapon.critDamage) || weapon.critDamage < 1)) {
       issues.push(`${weapon.id} critDamage must be at least one`);
     }
+    if (weapon.splash && (!Number.isFinite(weapon.splash.radius) || weapon.splash.radius <= 0 ||
+      !Number.isFinite(weapon.splash.damageMultiplier) || weapon.splash.damageMultiplier <= 0 ||
+      !Number.isSafeInteger(weapon.splash.targetCap) || weapon.splash.targetCap < 1)) {
+      issues.push(`${weapon.id} has invalid bounded on-hit splash`);
+    }
     if (weapon.deliveryKind === "projectile") {
       if (!Number.isFinite(weapon.projectileSpeed) || weapon.projectileSpeed <= 0) {
         issues.push(`${weapon.id} projectileSpeed must be greater than zero`);
@@ -248,6 +261,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
         issues.push(`${weapon.id} projectile flight cannot reach its declared range`);
       }
     } else {
+      if (weapon.arcRadians !== undefined && (!Number.isFinite(weapon.arcRadians) || weapon.arcRadians <= 0 || weapon.arcRadians > Math.PI)) {
+        issues.push(`${weapon.id} arcRadians must be in (0, pi]`);
+      }
       if (!Number.isFinite(weapon.reach) || weapon.reach <= 0) {
         issues.push(`${weapon.id} reach must be greater than zero`);
       }
@@ -279,6 +295,17 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
   if (!Array.isArray(theme.enemies)) issues.push("enemies registry is required");
   for (const enemy of enemies) {
+    if (enemy.boss) {
+      const { kind, appearAt, attack } = enemy.boss;
+      if (!["mini", "final"].includes(kind) || !Number.isFinite(appearAt) || appearAt <= 0 || appearAt > 1 || (kind === "final" && appearAt !== 1)) issues.push(`${enemy.id} invalid boss milestone`);
+      if (!attack || typeof attack !== "object" || Array.isArray(attack)) issues.push(`${enemy.id} boss attack is required`);
+      else for (const value of [attack.telegraphMs, attack.recoveryMs, attack.radius, attack.damage]) {
+        if (!Number.isFinite(value) || value <= 0) issues.push(`${enemy.id} boss attack values must be finite and positive`);
+      }
+      if (enemy.fragmentInto || (enemy.deathSpawns?.length ?? 0) > 0) issues.push(`${enemy.id} unique boss cannot create descendants`);
+      if (enemies.filter((candidate) => candidate.boss?.kind === kind).length !== 1) issues.push(`${enemy.id} boss kind must be unique`);
+      if (theme.tuning.director.roles.some((role) => role.enemyId === enemy.id)) issues.push(`${enemy.id} boss cannot be an ambient director role`);
+    }
     if (enemyIds.has(enemy.id)) issues.push(`duplicate enemy id: ${enemy.id}`);
     enemyIds.add(enemy.id);
     if (!Number.isFinite(enemy.maxHealth) || enemy.maxHealth <= 0) {
@@ -323,7 +350,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
   }
-  for (const requiredId of Object.values(archetypeIds.enemy)) {
+  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss)) {
     if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
   }
   for (const enemy of enemies) {
@@ -378,16 +405,64 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push(`missing required pickup: ${archetypeIds.pickup.experience}`);
   }
 
+  const curseIds = new Set<string>();
+  const curses = Array.isArray(theme.curses) ? theme.curses : [];
+  if (!Array.isArray(theme.curses)) issues.push("curses registry is required");
+  for (const curse of curses) {
+    if (curseIds.has(curse.id)) issues.push(`duplicate curse id: ${curse.id}`);
+    curseIds.add(curse.id);
+    if (!Object.values(archetypeIds.curse).includes(curse.id)) issues.push(`unsupported curse id: ${curse.id}`);
+    if (!Number.isFinite(curse.chaosIncrease) || curse.chaosIncrease < 0 ||
+      !Number.isFinite(curse.enemySpawnMultiplier) || curse.enemySpawnMultiplier < 1 ||
+      (curse.chaosIncrease === 0 && curse.enemySpawnMultiplier === 1) ||
+      !Number.isFinite(curse.xpMultiplier) || curse.xpMultiplier <= 1) {
+      issues.push(`${curse.id} requires finite positive pressure and XP reward`);
+    }
+    if (!(curse.presentationToken in theme.tokens.palette)) issues.push(`${curse.id} references missing presentation token`);
+  }
+
   const upgradeIds = new Set<string>();
   const upgrades = Array.isArray(theme.upgrades) ? theme.upgrades : [];
   if (!Array.isArray(theme.upgrades)) issues.push("upgrades registry is required");
   for (const upgrade of upgrades) {
     if (upgradeIds.has(upgrade.id)) issues.push(`duplicate upgrade id: ${upgrade.id}`);
     upgradeIds.add(upgrade.id);
+    if (upgrade.ownerWeaponId && (!weaponIds.has(upgrade.ownerWeaponId) ||
+      !weapons.find((weapon) => weapon.id === upgrade.ownerWeaponId)?.upgrades?.some((entry: UpgradeDefinition) => entry === upgrade))) {
+      issues.push(`${upgrade.id} must be authored beside its owning weapon`);
+    }
+    const curseEffects = Array.isArray(upgrade.effects) ? upgrade.effects.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "curse.accept") : [];
+    if (curseEffects.length && (curseEffects.length !== 1 || upgrade.effects.length !== 1 || upgrade.maxLevel !== 1 || upgrade.ownerWeaponId)) {
+      issues.push(`${upgrade.id} curse must be a standalone one-time choice`);
+    }
+    const acquisition = Array.isArray(upgrade.effects) ? upgrade.effects.filter((effect: UpgradeDefinition["effects"][number]) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve") : [];
+    if (acquisition.length > 0 && (acquisition.length !== 1 || upgrade.effects.length !== 1 || upgrade.maxLevel !== 1 || upgrade.ownerWeaponId)) {
+      issues.push(`${upgrade.id} acquisition must be a standalone one-time choice`);
+    }
     if (!Array.isArray(upgrade.effects) || upgrade.effects.length === 0) {
       issues.push(`${upgrade.id} must define at least one effect`);
     } else {
       for (const effect of upgrade.effects) {
+        if (effect.kind === "curse.accept") {
+          if (!curseIds.has(effect.curseId)) issues.push(`${upgrade.id} references missing curse: ${effect.curseId}`);
+          continue;
+        }
+        if (effect.kind === "weapon.evolve") {
+          const prerequisite = upgrades.find((entry) => entry.id === effect.requiredUpgradeId);
+          if (!weaponIds.has(effect.weaponId) || !weaponIds.has(effect.fromWeaponId) || effect.weaponId === effect.fromWeaponId) {
+            issues.push(`${upgrade.id} evolution requires distinct known weapons`);
+          }
+          if (!Number.isSafeInteger(effect.requiredPicks) || effect.requiredPicks < 1 ||
+            !prerequisite || prerequisite.ownerWeaponId !== effect.fromWeaponId ||
+            prerequisite.maxLevel === null || effect.requiredPicks > prerequisite.maxLevel) {
+            issues.push(`${upgrade.id} evolution requires an attainable source-owned pick condition`);
+          }
+          continue;
+        }
+        if (effect.kind === "weapon.equip") {
+          if (!weaponIds.has(effect.weaponId)) issues.push(`${upgrade.id} references missing weapon: ${effect.weaponId}`);
+          continue;
+        }
         if (effect.kind === "skill.level") {
           if (!Object.values(archetypeIds.skill).includes(effect.skillId)) {
             issues.push(`${upgrade.id} references unsupported skill: ${String(effect.skillId)}`);
@@ -413,6 +488,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
           issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
           continue;
         }
+        if (upgrade.ownerWeaponId && !effect.target.startsWith("weapon.")) {
+          issues.push(`${upgrade.id} owned stat effect must target a weapon`);
+        }
         if (!upgradeStatTargets.includes(effect.target)) {
           issues.push(`${upgrade.id} has unsupported stat target: ${String(effect.target)}`);
         }
@@ -435,6 +513,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (!upgradeCategories.includes(upgrade.category)) {
       issues.push(`${upgrade.id} has an unsupported category: ${String(upgrade.category)}`);
+    }
+  }
+  for (const weapon of weapons) {
+    for (const upgrade of weapon.upgrades ?? []) {
+      if (upgrade.ownerWeaponId !== weapon.id || !upgrades.includes(upgrade)) issues.push(`${weapon.id} owned upgrade registry mismatch`);
     }
   }
   // Upgrade pools are theme-owned. Only the universal damage role is required;
@@ -468,7 +551,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!shrineIds.has(archetypeIds.shrine.spawnSurge)) {
     issues.push(`missing required shrine: ${archetypeIds.shrine.spawnSurge}`);
   }
-  for (const requiredId of Object.values(archetypeIds.shrine)) {
+  for (const requiredId of [archetypeIds.shrine.spawnSurge, archetypeIds.shrine.greed, archetypeIds.shrine.multiplicity, archetypeIds.shrine.duplication]) {
     if (!shrineIds.has(requiredId)) issues.push(`missing required shrine: ${requiredId}`);
   }
 
@@ -569,6 +652,12 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     })) {
       if (!Number.isFinite(value) || value <= 1) issues.push(`${elite.id} ${key} must be greater than one`);
     }
+    if (elite.split && (!Number.isInteger(elite.split.childCount) || elite.split.childCount < 1 || elite.split.childCount > 2 ||
+      !Number.isInteger(elite.split.maxDepth) || elite.split.maxDepth < 1 || elite.split.maxDepth > 1 || !Number.isFinite(elite.split.rewardMultiplier) || elite.split.rewardMultiplier <= 0 || elite.split.rewardMultiplier > 1)) issues.push(`${elite.id} split must have bounded children, one generation and a positive reward share`);
+    if (elite.shield && (!Number.isFinite(elite.shield.damageMultiplier) || elite.shield.damageMultiplier <= 0 || elite.shield.damageMultiplier >= 1 ||
+      !Number.isFinite(elite.shield.untilHealthFraction) || elite.shield.untilHealthFraction <= 0 || elite.shield.untilHealthFraction >= 1)) issues.push(`${elite.id} shield must have finite non-immune reduction and a break threshold`);
+    if (elite.acceleration && (!Number.isFinite(elite.acceleration.durationMs) || elite.acceleration.durationMs <= 0 ||
+      !Number.isFinite(elite.acceleration.maxSpeedMultiplier) || elite.acceleration.maxSpeedMultiplier <= 1)) issues.push(`${elite.id} acceleration must have a finite positive duration and speed gain`);
     if (!(elite.presentationToken in theme.tokens.palette)) issues.push(`${elite.id} references missing presentation token: ${elite.presentationToken}`);
   }
   if (!eliteIdsFound.has(eliteIds.baseline)) {
@@ -622,6 +711,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     ...pickupIds,
     ...upgradeIds,
     ...shrineIds,
+    ...curseIds,
     ...skillIds,
     ...hazardIds,
   ]);
@@ -629,6 +719,14 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
 
   issues.push(...validateTuning(theme, enemyIds, hazardIds, shrineIds));
 
+  const unlockIds = new Set<string>();
+  for (const grant of theme.unlocks ?? []) {
+    if (!["weapon", "upgrade"].includes(grant.kind) || !["runsPlayed", "totalKills"].includes(grant.metric) || !Number.isSafeInteger(grant.required) || grant.required < 1) issues.push("unlock requires a positive integer milestone");
+    if (unlockIds.has(grant.id)) issues.push("duplicate unlock grant");
+    unlockIds.add(grant.id);
+    const exists = grant.kind === "weapon" ? theme.weapons.some((entry) => entry.id === grant.id) : theme.upgrades.some((entry) => entry.id === grant.id);
+    if (!exists || grant.id === "weapon.starter") issues.push("unlock must reference available non-starter content");
+  }
   return issues;
 }
 

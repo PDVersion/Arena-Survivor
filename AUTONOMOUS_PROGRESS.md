@@ -1,12 +1,15 @@
 # Autonomous progress
 
-Updated: 2026-10-19 (Australia/Sydney).
+Updated: 2026-10-21 (Australia/Sydney).
 
 ## Objective and current state
 
 Current milestone dates/statuses and published CI evidence are consolidated in
-[build/BUILD_STATUS.md](build/BUILD_STATUS.md). Active work is remaining P5
-acceptance; P6/content remain gated. The session records below are historical
+[build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
+verified through C7 `88f220b`. Next is the open
+Session21 Q6 correction gate: player motion, cone feedback and owner-selected
+vacuum target-cap progression. Remaining external checks are temporarily waived/
+unverified; delivery stays local. The session records below are historical
 checkpoints, including their then-current delivery constraints and dirty-file
 notes. Those are superseded where the current summary records later evidence
 or the owner's documentation cleanup.
@@ -1097,3 +1100,496 @@ Final verification/recording 02:05 UTC /13:05 AEDT (~11min elapsed), within90min
 budget with >20min reserved capacity. No publication/remote mutation.
 
 Final recording timestamp 2026-10-19T02:05:36.870497+00:00; actual elapsed 695.9 seconds. Final 20-minute reserve was preserved; completed early. Reviewed133 changed-document links,52 single-attempt expected results, raw/source hashes; no4173 listener or owned runner remains.
+
+## Session 12 — P5 remaining checks and owner-authorized P6 software work
+
+Start 2026-10-19 09:18:10 UTC /20:18:10 AEDT; 90-minute deadline10:48:10 UTC,
+final20-minute reserve begins10:28:10 UTC. Owner requests finishing P5, starting
+P6 and remaining V0.4.3. This supersedes the old no-P6-preparation instruction;
+acceptance is not waived. Owner confirms no older device available. Record
+physical acceptance pending; implement reproducible test support and fix evidenced
+software-test failures before content. No sprites or runtime speculative edits.
+PR26 is merged c6daeb6 (03:11:29UTC), matching-head2806720 run39189877476 succeeds
+with91 passed/two flaky/four skipped and zero audit findings; retries are not a
+clean gate. Native Safari26.5.2 driver preflight (20s bound) fails session creation
+because Allow remote automation is disabled; owned driver exits. Owner says they
+will enable it; wait for completion before another probe. Test support ownership
+added before edits; review4213 remains untouched. Consolidated software gate is
+serial/one worker/zero retries; no accepted long/native/engine campaign rerun.
+
+Session12 final recording: P5 adds26 focused Edge155/154 passes and two unpatched
+headed Firefox158/157.0.1 smokes (25.038/25.390s), verified vendor packages and
+fresh profiles. Safari still rejects session creation; no gameplay pass. Owner
+confirms no older device. P5 remains open; the gate-order question has no reply.
+P6 software slice:96 browser/stress passes/six explicit opt-in skips/zero retries,
+488units/57files, types/lint/build/diff and zero-vulnerability audit. Final portable
+pack passes two checks including a real60-second export.18 frozen warmed windows
+at60/150/300 across Default/Low complete in1297.8s: p95 medians Default25.1/25.5/
+41.7ms, Low17.6/24.3/25.0ms, exact counts/cap300, no browser errors or >100ms stalls.
+SwiftShader comparisons do not establish older-device or production readiness.
+Original tool hashes/runtime maps match; no runtime/asset/tuning/dependency change.
+Final verification/recording begins10:27UTC, before the10:28 final20-minute reserve.
+No accepted long/native campaign repeated; no production/startup browser guard
+rerun. Owned apps/images/mounts/profiles/drivers/servers removed;4213 untouched.
+P5 and overall acceptance remain pending; C1–C7 not started without the requested
+gate-order decision. Session12 recorded in master/reports; successor Session13.
+Two reviewed local commits separate P5 evidence and P6 software support; no push,
+new PR, merge, deployment or workflow dispatch.
+
+Final review timestamp 2026-10-19T10:31:52.379609+00:00; actual elapsed 4422.4seconds. P5 checkpoint06f590b committed; P6 source/raw/link checks reviewed for its separate commit. Required gate-order reply remains pending.
+
+
+## Session13 — C1 foundation / owner gate-order revision (2026-10-20 Sydney)
+
+Start 2026-10-19 23:04:16 UTC (10:04:16 AEDT); deadline 00:34:16 UTC
+(11:34:16 AEDT), final verification/recording reserve starts 00:14:16 UTC.
+Owner explicitly approves C1–C7 proceeding in dependency order with missing
+P5/P6 browser/device acceptance release-blocking rather than build-blocking.
+No missing evidence is passed. Start from clean45f837f on existingcodex/v0.4.3.
+Live read-only GitHub inspection confirms PR26 merged2806720 as c6daeb6 and
+run39189877476 passes only2806720; no later matching-head CI claim.
+Exact C1 foundation paths claimed before runtime edits; no publication authorized.
+
+Session13 final recording: C1 foundation implemented and reviewed; normal game
+still equips only the original starter. Serializable ordered slots, independent
+successful-attack clocks, no catch-up bursts, immutable projectile attack data
+and explicit melee/projectile source ownership preserve ledger/XP/rate and
+Phaser shutdown boundaries. Reset helper retains starting loadout/difficulty.
+495units/58files, typecheck/lint/build/diff pass.11 unique affected browser cases
+pass across the corrected new cases plus9 existing cases; one combined-run eco
+fixture failure used fractional armour rather than points, fixed only test data.
+Final evidence attachment run2pass/0fail/0retry in1.201s. Initial sandbox server
+bind failed; approved bounded execution succeeded. CPU re-read denied; retained
+prior host inventory explicitly distinguished from actual current uname/Canvas/
+profile user agent. No physical Windows/WebGL/native/performance inference.
+Verification/recording began23:07:28UTC, before00:14:16 final20-minute reserve.
+No startup/production guard, full/stress/long/native campaign repeated. All owned
+Playwright/server resources exit; port4173 has no listener,4213 untouched.
+Report/results and completed master record are durable in this same reviewed
+local slice; Session13 prompt retired and Session14 C1 continuation written.
+P5/P6 external acceptance remains release-blocking; C1 overall and C2–C7 remain
+open. No push/new PR/merge/deployment/workflow dispatch.
+Final recording timestamp 2026-10-19T23:11:01.933941+00:00; actual elapsed
+405.9seconds (90min maximum, finished early).
+
+
+## Session14 — C1 second tool / 2026-10-20 Sydney
+
+Start2026-10-19 23:15:13UTC (10:15:13AEDT); deadline00:45:13UTC
+(11:45:13AEDT); final20-minute verification/recording reserve starts00:25:13UTC.
+Clean3b2b927 on existingcodex/v0.4.3; read authorities in order and C1/theme/
+product/save boundaries. Read-only GitHub confirms mergedPR26 head2806720 as
+c6daeb6 and successful39189877476 only2806720. No later-head CI claim.
+Exact C1 paths claimed before runtime edits. Owner's gate-order approval remains
+in effect; external browser/device acceptance stays release-blocking.
+
+Session14 final verification/recording: C1 complete locally. Normal level-up
+acquires Cleanup Vacuum/Runic Fan; cone reuses melee contract; owned upgrades
+reside beside definitions and affect their own equipped slot. Shared modifiers/
+tiers/category spread remain; acquisition one-time/common. Separate on-hit
+splash ledger, exact capped kills/XP, owner source and floating-number flush;
+skip targets already killed by previous splash. Pause exposes secondary stats.
+No rate0.5/sprite/enemy tuning/dependency/save/physics teardown change.
+509units/59files,typecheck/lint/build/diff pass. New4-case run passes14.997s;
+combined14 pass26.152s. Review catches missing floating splash-number wiring;
+final affected5 pass30.031s (4 C1 overlap+terminal aggregation), zero retries/
+errors/flakiness;15 unique cases total. Both-theme real-XP/80ms keyboard offer
+selection and owner-only14.4 reach gain; eco27actual/10.2splash/3kills/3XP,
+30.6display intent fully flushed; controlled dead-primary survivor1HP/2kills/
+10.1damage. Default/Low short300-mixed rounds advance>2000sim-ms at0.5,
+peak300/current242/246, backlog0, exact ledger/no page errors.
+Actual rendererSwiftShader WebGL,1600×900FIT displayed1280×720/DPR1/test mode.
+Windows Desktop-profile UA persists despite undefined override; no physical
+Windows/hardware acceptance or separate actual browser.version claim.
+All eight balance models/both themes/three difficulties pass explicit commands;
+initial unsupportedtheme=all request rejected before any simulation. Bands assume
+contact and omit movement/overkill/extra tiered damage purchases.
+Screenshots inspected under testInfo.outputPath; final source hashes verified.
+No full/native/long/startup/performance campaign repeated; full regression and
+remaining P5/P6 external device/browser gate stay explicitly deferred. Build
+marker exclusion inspected without a repeated production/startup browser guard.
+Owned test servers/browsers cleaned,4173 has no listener;4213/unknowns untouched.
+Final verification/recording starts23:24:54UTC, ahead of00:25:13 final20-minute
+reserve. Report/status/checklist/reconciliation/progress/master updated together;
+Session14 retired after recording and Session15 C2 successor written. C2–C7
+remain unstarted; no push/new PR/merge/deploy/workflow dispatch.
+Final review timestamp 2026-10-19T23:33:44.528178+00:00; actual elapsed
+1111.5seconds, within90-minute maximum, finished early.
+
+
+## Session15 — C2 evolution / temporary owner compatibility waiver
+
+Start2026-10-19 23:59:35UTC (2026-10-20 10:59:35AEDT); deadline2026-10-20
+01:29:35UTC; final20-minute reserve starts01:09:35UTC. Clean10b7883 on existing
+codex/v0.4.3. Authorities read in order; C1 verified. Read-only GitHub confirms
+PR26 merged2806720 as c6daeb6,39189877476 succeeds only2806720.
+Owner explicitly temporarily waives missing actual Safari, browser/OS combinations
+and older integrated-GPU checks; no missing evidence becomes passed. Proceed C2,
+local only, exact ownership claimed before runtime edits.
+
+
+Session15 verification/recording began00:03:27UTC, ahead of01:09:35 final20-minute
+reserve. C2 complete: four earned owner-reach picks unlock normal-draw same-slot
+Cyclone Vacuum/Runic Tempest; exact clocks/local tier gains/history retained,
+globals shared, stale choices no-op, reset restores baseline. Both-theme bounded
+cone/splash definitions and existing attack/provenance/presentation path used.
+No rate0.5/XP/enemy/dependency/persistence/sprite/physics teardown changes.
+Final527units/60files,types/lint/build/diff pass;18new deterministic cases.
+Initial8 serial browsers:7pass/1fixture failure25.055s, no automatic retries.
+Three eco targets have no splash lethal: correct only fixture to four targets;
+two evolution cases pass14.6s, then final simplified player-copy subset2pass14.5s.
+Eight unique affected cases verified cumulatively. Both-theme actual XP/80ms
+keyboard choices,57.6earned reach/1400clock retained;36/40actual damage,
+19.8/21.8splash,4kills/4/8XP, evolved direct+splash lethal sources. Short Low300
+mixed rounds peak300/current237/292, advance>2000sim-ms, exact ledger/backlog0.
+Test aids/software renderer/scenario limits and initial synchronous4-death backlog
+are explicit; no survival/native/audio/throughput/physical-device inference.
+Actual Chromium151.0.7922.34/SwiftShader WebGL/test Normal/FIT1600x900 displayed
+1280x720/DPR1/Darwin25.5.0arm64; Desktop Windows UA does not mean Windows hardware.
+Screenshots visually reviewed under testInfo.outputPath. Final source/tree/image/
+compiled hashes recorded. All60 balance model/theme/difficulty scenarios pass;
+CLI raw output retained after separate /tmp structured collector fails root loading
+(twice, no code/config patch). Bands assume earliest level7/ideal contact, not
+movement/overkill/offer frequency/survival. Known Phaser build warning persists.
+Owner temporary waiver recorded across current authorities/matrix/status; missing
+actual Safari/browser-OS/older-device checks are waived/unverified, never passed.
+Other broad/startup/long/full campaigns deferred; marker exclusion inspected.
+Owned servers/browsers cleaned,4173 no listener; unknowns/review4213 untouched.
+Local-only C2 implementation/tests/status/master/reconciliation/progress commit;
+Session15 retired after durable completed record, Session16/C3 successor written.
+No push/newPR/merge/deploy/dispatch; no matching-head CI claim beyond2806720.
+Final review timestamp2026-10-20T00:07:30.048213+00:00; actual elapsed475.0seconds, within90-minute maximum, finished early.
+
+
+## Session16 — C3 shrines and curses /2026-10-20 Sydney
+
+Start00:13:27UTC (11:13:27AEDT); deadline01:43:27UTC; final20-minute reserve
+starts01:23:27UTC. Clean d113617, existingcodex/v0.4.3. Required authority order,
+C2 record and C3/product/theme/content/save boundaries read. Read-only GitHub
+confirms mergedPR26 head2806720 as c6daeb6 and39189877476 succeeds only2806720.
+Temporary owner external-browser/device waiver remains explicit, never a pass.
+C3 paths claimed before edits; local only. Add one scheduled world-pressure/XP
+shrine and two one-time run-local level-up curses using existing world products.
+
+
+Session16 verification/recording begins00:19:07UTC, ahead of01:23:27 final20-minute
+reserve. C3 complete locally: sixth scheduled world-multiplier shrine and two
+one-time run-local level-up curses per production theme. Stable curse catalog/
+accepted IDs compose existing pressure/reward products, no new actor/timer/queue;
+existing source reward and XP collection remain separate and fractional.
+Screenshots reproduce hidden numeric XP under card's three-line cap: prioritize
+resolved XP/Chaos/arrivals for curse lines only. Deterministic/actual rendered-text
+regressions and final both-theme images verify visibility. One browser follow-up
+expects1.5 instead of1.8 after arrival curse, omitting existing Chaos XP curve;
+correct fixture and add composed-preview assertion, no runtime tuning fix.
+Final547units/61files,types/lint/build/diff pass.20 new deterministic cases.
+Initial7 browsers pass40.098s under150s cap; intermediate2 fixture failures
+982/874ms; corrected final2pass12.4s under90s cap, zero automatic retries.
+Seven unique affected cases verified cumulatively. Real XP/seeded draw/80ms
+keyboard, E activation/repeat refusal, scheduled scripted clock258000/travel,
+fractional tagged0.375→1.18125once/duplicate0, pause1000x700resize/restart.
+Combined worldChaos3/spawnproduct1.3/XPproduct2.1, resolvedspawn1.95/XP3.15.
+Brief requested300mixed active intervals current278eco/300knight≤cap300,
+backlog0, elapsed259037/259523ms; no sampled peak/throughput claim. Existing
+shortened natural six-shrine arrivals/placement/guide and retained duplication
+also pass. No contact/hazards/audio, scripted fixtures/XP cap and software-renderer
+limits explicit. ActualChromium151.0.7922.34/SwiftShader WebGL/testNormal/rate0.5,
+FIT1600x900initial1280x720/DPR1,Darwin25.5.0arm64; Desktop Windows UA is not
+Windows hardware. Final source/tree/build/image hashes recorded; images reviewed.
+120balance scenarios pass, baseline raw output matches C2 exactly; combined C3
+fixture assumes choices at start, no travel/offer frequency/survival inference.
+Known Phaser chunk warning persists; no dependencies/persistence/sprites/physics
+teardown or global tuning. Full/stress/native/long/startup campaigns deferred;
+compiled marker exclusion inspected. Temporary external browser/device waiver
+remains waived/unverified. Historical P5/P6 measurements/device kit source-bound.
+Owned servers/browsers cleaned,4173 no listener;4213/unknowns untouched. Local C3
+implementation/tests/report/status/checklist/reconciliation/progress/master in one
+reviewed commit. Retired Session16 after recording; Session17/C4 successor written.
+No push/newPR/merge/deploy/dispatch or later-head CI claim. C4–C7 unbuilt.
+Final review timestamp2026-10-20T00:23:38.527581+00:00; actual elapsed611.5seconds, within90-minute maximum, finished early.
+
+
+## Session17 — C4 elite family /2026-10-20 Sydney
+
+Start00:28:23UTC; deadline01:58:23UTC; final20-minute reserve01:38:23UTC.
+Existing05f8860/codex/v0.4.3 clean. Authorities and C4/product/theme/content/save boundaries read in order. Exact C4 runtime/test ownership claimed before edits. Local only; external Safari/browser-OS/older-device waiver remains waived/unverified.
+
+Session17 verification/recording begins00:33UTC, ahead of01:38:23reserve.
+C4 complete: both-theme split/shield/acceleration and exact variant/depth
+inheritance, bounded source rewards, simulation-only acceleration and readable
+markers. Reproduced silent dropped pending spawn at capacity1; returnfalse retains
+it in existing lane. Actual-method deterministic retention/24eventbudget tests,
+both-theme scene cap regression and100parent→200child burst prove finite work.
+Final561units/63files,types/lint/build/diff. Six unique affected serial browser
+cases cumulatively verified; initial2pass1.962s, capacity1fail1.332s, combined6pass
+24.193s, expanded2pass and final theme-marker2pass3.475s. All zero retries.
+Actual shield losses/ledger1then2; parent3.75+children3.75taggedXPexact, duplicate
+lethal adds0. Duplication/offspring/fracture retain all variants/depth1; fragments0XP.
+Speed104→130,paused130→156. Burst300kills/peak200/backlog0; scripted pausedphysics
+checks are not throughput/survival. Initial sandbox server failed beforebrowser;
+two unit import fixture paths corrected, no additional game defect.
+ActualChromium151.0.7922.34/SwiftShaderWebGL/testNormalDefault/rate0.5,FIT1600x900
+at1280x720/DPR1,Darwin25.5.0arm64/M5Pro48GiBretained; WindowsUA is preset only.
+NoAmbient/noContact/noHazards/noAudio,scripted damage/spawns/status/age/RNG; limits
+explicit in C4_REPORT. Screenshots under testInfo.outputPath reviewed; final
+source/build/image hashes retained.60baseline balance scenarios pass; simulator
+does not model elite families. Known Phaser chunk warning remains.
+Full/native/long/startup campaigns deferred;compiledfixturemarker exclusion
+inspected. Owner external waiver remains waived/unverified; historical P5/P6
+measurements/device pack source-bound. Owned resources cleaned,4173no listener,
+4213/unknowns untouched. Local-only phase commit includes implementation/tests/
+report/status/checklist/master/reconciliation/progress;Session17retired after
+recording,Session18/C5successor current. No push/PR/merge/deploy/dispatch.
+Final review timestamp2026-10-20T00:35:28.339111+00:00;actual elapsed425.3seconds, within90minute
+maximum, finished early. C5–C7 remain unbuilt.
+
+
+## Session18 — C5 bosses /2026-10-20 Sydney
+
+Start00:36:56UTC (11:36:56AEDT); deadline02:06:56UTC; final20-minute reserve
+starts01:46:56UTC. C4 b0ff7e9 verified/clean. Required authority order and C4
+reports/current handoff read; C5 ownership claimed before edits. Parent inspected
+remote evidence;39189877476 covers2806720 only. Local only, no publication.
+
+Verification/recording began00:57:45UTC, before01:46:56final20-minute reserve.
+C5 complete locally: both-theme unique mini50%/final100%, real capped actors,
+fixed simulation warning/pulse, healthrows, live boss_fight and retained activePhase.
+Final normal lethal/XP/removal opens existing endless/clearing; queued work retained,
+ordinary duplication/elite inheritance intact. Shared timed/clearing pressure1 aligns
+world/director/hazard/elite/HUD/pause, selected endless alone exceeds1. Boss cue/state
+at most2 and cleared on death/stop; no second physics teardown. If queued lethal
+arrives during level_up, preserve choice then hold physics into immediate decision;
+actual-method regression covers no intervening resume. Generic helper opt-in,
+normal production/test enable, only explicit atTimeUp legacy fixtures bypass.
+583units/64files,types/lint/build/diff pass;22 new deterministic cases. Six unique
+affected serial browser cases verified cumulatively, zero automatic retries. Initial
+4case attempts fail only final fixture polling uninstalled global after all earlier
+game assertions; corrected fixture-owned read-only restart observation passes4/8.5s.
+Two affected legacy ending cases pass12.7s. List reporter body was ephemeral and
+later suite cleared default images; final4case dedicated durable capture passes8.2s,
+raw JSON/source/build/image hashes retained in C5_RESULTS. No acceptance expansion.
+Mini300HP/300capped weapon damage, final1800/1800 and50rawXPonce, duplicate lethal
+adds0; warning harmless100HP, pulse28.8actual to71.2, next pulse dodged. Pause/focus/
+level choice retain boss_fight; duplication leaves one. Actual/HUD/pause threat10
+at306400/300000ms. Final kill retires cues and holds decision; pending ordinary
+spawn survives, clearing fights it to complete/backlog0, endless resumes escalation,
+restart playing/clock0/noIDs. Both-theme resized screenshots visually reviewed.
+ActualChromium151.0.7922.34/SwiftShader VulkanWebGL/testNormalDefault/rate0.5,
+FIT1600x9001280x720DPR1, images1000x700; M5host/Windows preset UA distinguished.
+Pausedphysics/scriptedclock/position/highdamagebuild/noambient/contact/hazards/audio
+and actual coordinator/weapon-hit aids are explicit; no human/full authored/native/
+300boss sustained throughput/device acceptance.60coarse pacing/TTK scenarios pass,
+ambient totals unchanged, bosses appear in TTK only from milestones (absent dash,
+not zero); simulator omits actual encounters/pattern/movement/survival. KnownPhaser
+chunk advisory unchanged. Full/stress/native/long/startup campaigns deferred;
+external actualSafari/browserOS/older physicalGPU checks temporarily waived/unverified,
+no new hardware evidence. Historical P5/P6 reports/kit source-bound. Compiled test
+marker exclusion passes. Owned browser/server clean,4173 no listener;4213/unknowns
+untouched. Local C5 implementation/tests/status/checklist/REC064/progress/master/report
+and Session19/C6 handoff in one reviewed commit; Session18 retired after result.
+Parent reviewed runtime/report/screenshots; no push/PR/merge/deploy/dispatch.
+Final review2026-10-20T01:02:36.244158+00:00, actual elapsed1540.2s, within90minmaximum.
+
+
+## Session19 — C6 durable profile /2026-10-20 Sydney
+
+Phase started2026-10-20 01:03:01UTC after verified C5 commit5da2ed3. Original
+owner-wide start00:28:23/deadline01:58:23/final20reserve01:38:23UTC; preparatory
+read-only audit ran in parallel while C4/C5 remained ordered. C6 sole-editor ownership
+claimed before runtime edits. Initial implementation/verification reached01:08UTC,
+then usage interruption prevented completion. Owner resumed05:41:29UTC with a new
+90minute deadline07:11:29/final20reserve06:51:29; no browser/process kept running
+through the interruption. Completed tool outputs recovered without repeating them.
+
+C6 schema2 persists all six settings, identity/unlocks, existing lifetime/best/
+upgrade totals, completion/death counts and longest run. Strict immutable bounded
+validation and deterministic schema1 migration preserve unknown compatible IDs.
+Initialize before Phaser; throwing storage getter/read/write/quota stays playable
+in memory with themed title/terminal warning. Corrupt current and good backup stay
+untouched. Ordinary valid writes preserve previous raw valid source. No active-run
+save; terminalShown commits once, computed live Field Guide overlay never persisted.
+Durable aggregates alone saturate1e15 so valid ceiling profiles can finish another
+run safely; actual run damage/XP remains unchanged and module totals rehydrate.
+
+Both themes unlock secondary after1finishedrun and bloodlust after25finishedkills.
+Offer pool snapshots entitlement at next run; normal owner/slot/tier/caps/weighting
+unchanged. Requirements/lifetime labels and named terminal rewards readable. C7
+codec/portable import/export/recovery UI remains next; no optional features/sprites.
+
+595units/65files/types/lint/build/diff pass.12new deterministic cases include exact
+reload/unknown IDs/schema1/future/unsafe/nonfinite/duplicate/settings/corrupt/denied/
+actual quota and durable ceiling. Boot-recovery extraction fixture initially needed
+initializeProfile dependency injection; original assertion retained.10unique affected
+serial browser cases cumulatively pass,1worker/0retries/30s bound. Initial7cases
+pass5/fail2eco fixture offer prerequisites: seedhelper searched full theme catalog
+rather than actual entitled pool; corrected2pass8.9s. Actualterminal/corrupt2pass5.1s;
+final5persistencecasespass8.0s with durable raw JSON; death/unlocks/warning layout
+1casepass1.2s after moving cause below new reward text. Both Knight acq/evolution
+passed initially; no broad campaign is inferred from these scoped tests.
+
+Exact595unit/finalsoftware and raw/source/compiled/image hashes in C6_REPORT/results.
+Actual short1000ms legacy complete ending/noAmbient/noContact/noHazards/noXp shows
+one completed contribution/secondary reward and no duplicate after150ms/reload.
+Both-theme servicefixtures seed25kills/123.25damage/level5/1234ms, mutedLowExperienced,
+then exactreload. Not survival/authored-duration/throughput/hardware acceptance.
+Browser151.0.7922.34,1280x720DPR1/FIT1600x900,test,rate0.5; Windows UA preset never
+physical Windows. New profile renderer string not separately captured; existing
+C1/C2 WebGLrequest and explicit Canvas deathlayout are scoped honestly. New complete,
+deniedstorage and death+2unlock+warning images visually inspected, no overlap.
+Production marker exclusion passes; known Phaser bundle advisory remains. Full/
+stress/native/long/production campaigns deferred, actualSafari/browserOS/olderphysical
+GPU checks temporarily waived/unverified. Historical P5/P6 evidence/kit source-bound.
+Owned resources cleaned,4173 no listener; review4213/unknowns untouched. Local-only,
+remote39189877476 covers2806720 only. Session20 C7 successor current; Session19
+retired with completed master slice after actual result recorded. Parent review
+before local phase commit; no publication/dispatch.
+Final parent-reviewed checks 2026-10-20T05:44:52.500054+00:00; resumed elapsed 203.5s, total wall elapsed 16911.5s includes usage interruption. Verification/recording ended well before resumed final20reserve.
+Staged diff review caught recording-script path-variable collision overwriting one unit file after checks. Restored exact HEAD plus intended schema2 assertion; verified two-line diff and reran all software checks595/65 pass. Corrected recorder uses distinct names. Final hashes refreshed 2026-10-20T05:45:40.181031+00:00, resumed elapsed 251.2s; runtime/browser evidence unchanged.
+
+
+## Session20 resumed — finish C6 then C7 /2026-10-20 Sydney
+
+Owner resumes after the usage interruption at05:41:29UTC. New deadline07:11:29UTC,
+final20-minute reserve06:51:29UTC. Existing C4 b0ff7e9/C5 5da2ed3 retained; no branch
+reset/recreation or publication. Required authority/status/currentownership/SAVE_DATA
+and actual Git/PR/Actions read. PR26 remains merged2806720 as c6daeb6; success
+39189877476 covers2806720 only. The interruption's wall time is separately retained
+in C6's record, not counted as active work or hidden by a later-head CI claim.
+
+C6 resumed review/checks completes in local0776c95:595units65files,10 unique scoped
+browsers, exact terminal-only lifetime totals/settings/unlocks, corruption/quota
+warnings and readable death+new-unlock layout. Parent reviewed report/runtime/images.
+C7 begins05:46:14UTC only after C6 gate/commit. Exact paths claimed; codec, nativeDOM
+UI/e2e and replacement service implemented in parallel with disjoint ownership.
+
+C7 delivers exact three-line canonical Base64URL/SHA256 export, file/paste same
+validated schema2 preview, explicit backup/restore/reset confirmation and reload.
+Unknown IDs preserved/warned, schema1 pure migration retained, no active-run save.
+Immutable token and localrevision/storage checks prevent stale replacements;
+review reproduced external save loss before preview, fixed preparation/ordinary
+writes as well as post-preview check. Changed external bytes are preserved, local
+changes stay in memory with a reload warning. Backup/quarantine precedes one current
+write; memory/settings/statistics publish only after success. Multi-key transaction/
+atomic cross-tab CAS is not claimed; corrupt original quarantined, good backup kept.
+
+Final typecheck/all655units67files/lint/build/diff pass;45 new codec+15 transaction
+cases. Initial44/45codec fixture treated a legitimate CRLF as malformed; changed to
+embeddedCR then45/45. Initial combined typecheck caught testtextarea cast, corrected
+before browsers. Five unique serial browser cases pass once4.4s/zero retries/one
+worker,30s each/180s global bound. Actual title download945bytes equals textarea
+and actual clipboard, explicit denial collaborator gives selectedmanualcode, Enter
+staysmenu/threeactions. Boththeme file/paste previews equal, cancellation keepsbytes,
+confirmbackup/reload exactcandidate inclunknownweapon. Invalid/oversize unchanged;
+restore/reset separatelyconfirmed/recoverable. No page errors/browserfailure/rerun.
+
+Boththeme images readable with internal scrolling; confirmation/warnings belowfold
+were exercised. Export image afterEnterguard intentionally no longer shows code;
+retained download/assertions establish equivalence. ActualChromium151.0.7922.34,
+SwiftShaderVulkan/title,test1280x720DPR1→900x650; otherfixturecases nativeDOM/noGPU
+claim. RetainedM5Pro48GiBDarwin,WindowsUA preset is notphysicalWindows. No native
+visibility/permission/hardware/survival/throughput claim. OwnedDOM/downloadURLs/
+browser/server cleaned,4173 no listener;4213/unknowns untouched. All8production
+HTML/JS exclude testmarkers; existing Phaserchunk1642.10kB/384.43gzip advisory.
+Source/raw/compiled/image/export hashes durably in C7_RESULTS, reports/master/status/
+checklist/REC012/SAVE_DATA/product/theme/progress in same reviewed local phase commit.
+
+No pacing/dependency change so balance/audit not repeated. Full/stress/native/long/
+production browsers deferred, actualSafari/browserOS/olderphysicalGPU temporarily
+waived/unverified. Historical P5/P6 evidence/pack remains source-bound; regenerate
+before later current-source device check. No optional scope, sprites, rate/XP/caps
+or second physics teardown. C1–C7 local gates complete. Session20 retired only after
+actual report/results/master recorded; Session21 retains delivery/acceptance choices.
+Final source review/check recording 2026-10-20T05:55:53.985376+00:00; resumed actual elapsed
+865.0s, C7 elapsed580.0s.
+Finished before the reserved final20 window; no remote publication authorized.
+
+## Session21 — read-only assessment and owner-selected correction planning
+
+Documentation cycle start2026-10-21T00:05:11UTC /11:05:11AEDT; maximum deadline
+01:35:11UTC /12:35:11AEDT, final20reserve01:15:11UTC /12:15:11AEDT.
+Exact documentation ownership is in the active plan's Q6 section, claimed before
+edits. No runtime/assets/test edits or standalone evidence-only commit.
+
+Reviewed authorities, C4–C7 records/reports/results/SAVE_DATA, player animation,
+sprite pipeline and actual vacuum hit/presentation wiring. Checkout clean at
+88f220b before documentation changes, ten commits ahead of local tracking ref.
+Read-only GitHub PR/Actions inspection confirms PR26 merged; merge run39193504359
+passes c6daeb6, historical run39189877476 passes2806720. Neither covers current HEAD.
+
+Owner reports ongoing player glitching and visible cone occupants not hit.
+Per-pose centring is a candidate alignment cause, not a reproduced live defect.
+Cone/hits share resolved reach/angle, but direct hits are capped3/4(base/evolved)
+and resolve once; the stationary280ms fade does not apply further damage.
+Owner accepts a modest early cap and selects increasing vacuum primary targets
+with weapon-level progression. Record owner-track interpretation; thresholds,
+increments/ceiling and evolution carryover tuning remain open, not implemented.
+Keep finite caps, independent clocks, rate0.5, exact XP and direct/splash provenance.
+
+Read-only review:25units/3files pass for sprite-animation, melee-stab and second-tool.
+No browser campaign/full-suite/build rerun is claimed for this planning change.
+Active plan/status/handoff/product/theme/education/roadmap/reconciliation updated.
+Q6 must claim exact runtime paths and verify before committing its implementation.
+No push/PR/merge/deployment/dispatch; waived external evidence stays unverified;
+V0.4.4 generation and unrelated optional features remain unselected.
+
+Documentation validation checkpoint2026-10-21T00:06:34UTC /11:06:34AEDT;
+elapsed83seconds from the documentation-cycle start, before the reserved window.
+Whitespace/diff checks and planning-consistency checks pass across10 Markdown
+paths; Q6 stays open and no runtime/assets/tests changed. Changes remain local
+and uncommitted for the subsequent reviewed correction commit.
+
+### Session21 authorized draft delivery
+
+Owner now requests wrapping up and creating the V0.4.3 PR. Delivery-cycle start
+2026-10-21T00:27:54UTC /11:27:54AEDT; deadline01:57:54UTC /12:57:54AEDT;
+final20reserve01:37:54UTC /12:37:54AEDT. Same10 documentation paths plus Git/PR
+metadata claimed before delivery edits. This explicit authorization supersedes
+prior local-only delivery and allows committing the selected planning changes;
+Q6 runtime changes remain unimplemented and no phase is falsely completed.
+
+Fetched remote refs without reset/recreation: main=c6daeb6, branch has10 unpublished
+commits since the merged checkpoint. No open PR at preflight. Fresh local checks:
+655units/67files, typecheck, lint and build pass. Existing bundle advisory remains.
+Audit fails one high Vite finding across three launch-editor advisories; suggested
+6.4.4 lies outside exact6.4.3 pin. No dependency upgrade or audit bypass. Draft PR
+will disclose audit/Q6 and retain external checks waived/unverified. Full local
+browser/stress/native/long campaigns are not repeated; PR Actions owns current-head
+browser regression. No merge/deployment/manual workflow dispatch authorized.
+
+
+## PR27 owner-authorized CI repair
+
+Start2026-10-21T01:32:46UTC /12:32:46AEDT; deadline03:02:46UTC, final20reserve02:42:46UTC.
+Claim in active plan covers7dependency/test paths, repair report and only appended
+repair sections in shared documents. Saved pre-existing diff before edits; all
+genre/roster roadmap changes/untracked reports remain unstaged.
+
+Failed39521650366 on5511e86:6browser failures/1flaky/111pass/6skip; audit skipped.
+Fixed C3 seed pool, frame-consumed input, shrine feedback scope and bounded
+simulation-progress waits; patched only Vite6.4.3→6.4.4. Local655units/67files,
+types/lint/build/diff pass, audit0. Seven unique affected browser cases pass
+cumulatively:6pass/1reproduced shrine failure36.6s, corrected shrine1pass7.5s,
+all serial/zero retries. EPERM server setup precedes authorized browser rerun.
+Report:build/performance/PR27_CI_REPAIR.md. No gameplay/Q6/device acceptance changes.
+At01:36:01UTC recording checkpoint elapsed3m15s; full PR Actions verification
+follows push and is not yet a pass. No merge/deployment.
+
+
+PR27 first repair remote result:39528406842 on a87f57f passes116cases/6skips,
+no flaky tests. Only C3's later load poll fails:258–275simulation-ms/10s versus
+1000ms required. Extend that poll to the existing90s simulation budget/120s test
+bound, retaining every assertion. Two affected cases pass once12.5s, one worker/
+zero retries; types/affected lint/diff pass. No new browser campaign or gameplay
+change. Publish this narrow follow-up and await its matching-head full Actions.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.
+At02:51:24UTC, elapsed78m38s; reserve/final review window is active. Publish the
+verified follow-up with full CI pending; do not infer a pass before03:02:46UTC
+session deadline. Pre-existing roadmap edits remain preserved unstaged.

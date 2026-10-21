@@ -1,0 +1,210 @@
+{
+  "checkpoint": "45f837f plus reviewed local C1 foundation diff",
+  "dateSydney": "2026-10-20",
+  "mode": "Vite test; isolated Canvas scenes; explicit simulation timestamps; automatic physics paused",
+  "runner": {
+    "workers": 1,
+    "automaticRetries": 0,
+    "affectedSuiteCapMs": 180000,
+    "finalTwoCaseCapMs": 60000,
+    "perNewCaseTimeoutMs": 30000
+  },
+  "host": {
+    "machine": "arm64",
+    "os": "Darwin 25.5.0",
+    "device": "M5 Pro /48GiB from prior retained physical-host inventory; CPU sysctl read denied by sandbox this session"
+  },
+  "limits": [
+    "Desktop Chrome profile user agent is a Windows string; physical host is macOS, not Windows acceptance",
+    "No WebGL/GPU performance, native focus, long-play, full/stress or production-throughput acceptance",
+    "Current player-facing content remains one starter",
+    "Historical P5/P6 frozen results and portable pack are not recertified for this later source"
+  ],
+  "attempts": [
+    {
+      "scope": "initial two new cases before exact-total assertion",
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 1400
+    },
+    {
+      "scope": "combined new+existing affected suite",
+      "stats": {
+        "startTime": "2026-10-19T23:07:40.281Z",
+        "duration": 16810.467,
+        "expected": 10,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "failure": "one new eco fixture expected fractional armour; corrected fixture to100 armour points;9 existing+one new knight cases passed"
+    },
+    {
+      "scope": "corrected two new cases before evidence attachment",
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 1351.258
+    },
+    {
+      "scope": "final two cases with evidence attachment",
+      "stats": {
+        "startTime": "2026-10-19T23:09:24.259Z",
+        "duration": 1200.8799999999999,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "finalObservations": [
+    {
+      "status": "passed",
+      "durationMs": 251,
+      "observations": {
+        "environment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "dpr": 1,
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "renderer": "Canvas",
+          "gameSize": {
+            "width": 800,
+            "height": 450
+          },
+          "themeKey": "eco-guardian"
+        },
+        "noTargetClocks": [
+          0,
+          0
+        ],
+        "pausedShots": 0,
+        "firstClocks": [
+          1000,
+          300
+        ],
+        "firstShots": 2,
+        "heldShots": 2,
+        "secondClocks": [
+          1000,
+          600
+        ],
+        "secondShots": 3,
+        "hit": {
+          "damage": 8,
+          "knockback": 12
+        },
+        "deaths": [
+          {
+            "eventId": "death-1",
+            "kind": "death.committed",
+            "entityId": "enemy-1",
+            "provenance": {
+              "sourceCategory": "weapon",
+              "sourceId": "weapon.fixture_secondary"
+            },
+            "payload": {
+              "enemyId": "enemy.swarm_basic",
+              "damageSource": "direct",
+              "elite": false
+            }
+          }
+        ],
+        "ledger": {
+          "total": 14,
+          "breakdown": 14
+        },
+        "freshSlots": [
+          {
+            "weaponId": "weapon.starter",
+            "nextAttackAtMs": 0
+          }
+        ]
+      }
+    },
+    {
+      "status": "passed",
+      "durationMs": 178,
+      "observations": {
+        "environment": {
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "dpr": 1,
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "renderer": "Canvas",
+          "gameSize": {
+            "width": 800,
+            "height": 450
+          },
+          "themeKey": "knight-magic"
+        },
+        "noTargetClocks": [
+          0,
+          0
+        ],
+        "pausedShots": 0,
+        "firstClocks": [
+          1000,
+          300
+        ],
+        "firstShots": 2,
+        "heldShots": 2,
+        "secondClocks": [
+          1000,
+          600
+        ],
+        "secondShots": 3,
+        "hit": {
+          "damage": 8,
+          "knockback": 12
+        },
+        "deaths": [
+          {
+            "eventId": "death-1",
+            "kind": "death.committed",
+            "entityId": "enemy-1",
+            "provenance": {
+              "sourceCategory": "weapon",
+              "sourceId": "weapon.fixture_secondary"
+            },
+            "payload": {
+              "enemyId": "enemy.swarm_basic",
+              "damageSource": "direct",
+              "elite": false
+            }
+          }
+        ],
+        "ledger": {
+          "total": 9,
+          "breakdown": 9
+        },
+        "freshSlots": [
+          {
+            "weaponId": "weapon.starter",
+            "nextAttackAtMs": 0
+          }
+        ]
+      }
+    }
+  ],
+  "sourceSha256": {
+    "src/game/content/define-theme.ts": "ee2c3a2764fb8e5799900e8e9a5cdf14866d904fce9dd41ac09aa8e3aee271b1",
+    "src/game/content/themes/eco-guardian/index.ts": "078335ca8a00fcdd5409e6be5021f17ab266e88ec98f36cbbccb1c5daae247cb",
+    "src/game/content/themes/eco-guardian/weapons.ts": "c448aeb9e35b2ab4a9a89cb76dce32643ccae925d1fe533d7124100d255b4529",
+    "src/game/content/themes/knight-magic/index.ts": "b3c73d8c5b89683d9dfc5fecd80ad6e038685f34c2a23eafe1e8edb2e6589f04",
+    "src/game/content/themes/knight-magic/weapons.ts": "69d44d3cca1b24a6deb457fb2e81252c677f0fe3df1c837d31ab3b003a6656ef",
+    "src/game/core/archetypes/contracts.ts": "0115d0514c89d51e70394dc838820361619a6534885576d09788e608e1d24488",
+    "src/game/entities/projectile-actor.ts": "df22838d676894bf25d36eac592a6739064a0bbc9fce68cd44a1b2bf651cf311",
+    "src/game/scenes/run-scene.ts": "464c8a2c216c37c52f738075cdf7a0311eba93b6dc46d2f8907ec08e6c3e8aba",
+    "src/game/state/run-state.ts": "d237055d0f39c2af6b3cf627bb43d47155ac946140a8be1ab42b0d4ddd4efab3",
+    "src/game/systems/weapons/weapon-loadout.ts": "334ea3599ef62e6ed15c013420804807baa8df674c553725f15cdd4c35eb5b24",
+    "tests/e2e/weapon-slots-v043.spec.ts": "6a96f25db18f2422bdf1da7a8f11e96fb425dd0f81c7896d69d36c595a2a7681",
+    "tests/fixtures/alternate-theme.ts": "7a476ce579e442e5ace2b096c6fa150aa51b6b1c326e4a05d4406f45d7208d07",
+    "tests/unit/content/theme.test.ts": "bbbb1b3eddbd019ef4bece9d7086fc5ee5fa57e58b7d82da3eb29c99ff973bbc",
+    "tests/unit/weapons/weapon-loadout.test.ts": "33a4e9e53cf9f37e9148122db482616ab953f1a6aab1655af9ef31e7f0649536"
+  }
+}

@@ -8,6 +8,15 @@ import { validateTheme } from "../../../src/game/content/define-theme";
 import { alternateTheme } from "../../fixtures/alternate-theme";
 
 describe("theme manifests", () => {
+  it("requires a finite positive authored weapon-slot capacity", () => {
+    for (const capacity of [0, -1, 1.5, Infinity, NaN, Number.MAX_SAFE_INTEGER + 1]) {
+      expect(validateTheme({ ...alternateTheme, weaponSlotCount: capacity }))
+        .toContain("weaponSlotCount must be a positive safe integer");
+    }
+    expect(ecoGuardianTheme.weaponSlotCount).toBe(2);
+    expect(knightMagicTheme.weaponSlotCount).toBe(2);
+  });
+
   it.each([
     ["eco-guardian", ecoGuardianTheme],
     ["knight-magic", knightMagicTheme],
@@ -71,7 +80,7 @@ describe("theme manifests", () => {
 
     // Glass is the highest health in the roster and among the lowest harm:
     // effectively permanent, but chemically inert.
-    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.map((e) => e.maxHealth)));
+    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.filter((e) => !("boss" in e)).map((e) => e.maxHealth)));
     expect(glass?.contactDamage).toBeLessThan(bottle!.contactDamage);
   });
 
@@ -85,9 +94,10 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.tokens.palette.player).not.toBe(alternateTheme.tokens.palette.player);
     expect(knightMagicTheme.characters[0]?.id).toBe(alternateTheme.characters[0]?.id);
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
-    expect(knightMagicTheme.weapons).toEqual(alternateTheme.weapons);
-    expect(knightMagicTheme.enemies).toEqual(alternateTheme.enemies);
-    expect(knightMagicTheme.shrines).toEqual(alternateTheme.shrines);
+    expect(knightMagicTheme.weapons[0]).toEqual(alternateTheme.weapons[0]);
+    expect(knightMagicTheme.weapons[1]?.id).toBe(archetypeIds.weapon.secondary);
+    expect(knightMagicTheme.enemies.filter((enemy) => !("boss" in enemy))).toEqual(alternateTheme.enemies);
+    expect(knightMagicTheme.shrines.filter((shrine) => shrine.id !== archetypeIds.shrine.escalation)).toEqual(alternateTheme.shrines);
     expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);
     expect(currentShrine.name).not.toBe(alternateShrine.name);
   });

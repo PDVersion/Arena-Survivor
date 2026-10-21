@@ -22,7 +22,7 @@ test("all shrine roles activate exactly once and Duplication retains every copy"
     "shrine.multiplicity": 2,
     "shrine.duplication": 1,
   });
-  expect(snapshot?.world).toMatchObject({ chaos: 4.2, duplicatedEnemiesQueued: 5, duplicatedEnemiesSpawned: 5 });
+  expect(snapshot?.world).toMatchObject({ chaos: 5.4, duplicatedEnemiesQueued: 5, duplicatedEnemiesSpawned: 5 });
   expect(snapshot?.shrine?.instances.every(({ activated }) => activated)).toBe(true);
   expect(snapshot?.ui?.minimapShrines).toBe(0);
   expect(snapshot?.ui?.shrineTextResolution).toBe(4);
@@ -36,7 +36,7 @@ test("world multipliers restart to a clean 1.0x state", async ({ page }) => {
   await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&runDurationMs=900&noXp=1&atTimeUp=complete");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.chaos)).toBe(2.4);
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), { timeout: 90_000 }).toBe("complete");
-  await page.keyboard.press("r");
+  await page.keyboard.press("r", { delay: 80 });
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().lifecycle?.runGeneration)).toBeGreaterThan(1);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.world).toMatchObject({ chaos: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, activations: {} });

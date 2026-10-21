@@ -29,7 +29,8 @@ async function advanceSimulation(page: Page, byMs: number): Promise<void> {
 }
 
 async function waitForTimeUp(page: Page, path: string): Promise<void> {
-  await page.goto(path);
+  // Explicit legacy decision fixture: C5 real-boss victory is verified separately.
+  await page.goto(`${path}&atTimeUp=decision`);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
       timeout: SIMULATION_BUDGET_MS,
@@ -52,7 +53,7 @@ async function pressUntil(
 
 // Every other browser path answers this decision through `atTimeUp=complete`,
 // which reproduces the V0.3 ending. This file is the only coverage of the
-// decision itself and of the two modes it can leave the run in.
+// legacy decision modes; bosses-v043 covers the production boss-victory prerequisite.
 test("the timer ends in a decision rather than an ending", async ({ page }) => {
   test.setTimeout(150_000);
   await waitForTimeUp(page, "/?runDurationMs=1500&noContact&noXp=1&noHazards&spawnRadius=320");

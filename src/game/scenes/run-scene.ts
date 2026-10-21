@@ -1,11 +1,13 @@
 import Phaser from "phaser";
+import { advanceBossAttack, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
+import { BossHealthUi } from "../ui/boss-health-ui";
 import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
 import { activeTheme } from "../content/active-theme";
 import { isDifficultyId } from "../core/archetypes/difficulty";
 import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
 import { addWorldText, UI_SCALE } from "../ui/ui-text";
 import { archetypeIds } from "../core/archetypes/ids";
-import { eliteIds, type FeedbackCategory } from "../core/archetypes/categories";
+import { type EliteId, type FeedbackCategory } from "../core/archetypes/categories";
 import type {
   EnemyDefinition,
   PickupDefinition,
@@ -21,9 +23,12 @@ import { ProjectileActor } from "../entities/projectile-actor";
 import { GrabberActor } from "../entities/grabber-actor";
 import { ShrineActor } from "../entities/shrine-actor";
 import type { EnemySpawnSource } from "../entities/enemy-actor";
-import { createInitialProfile } from "../state/profile-state";
+import { ensureProfile, selectRunUpgradePool, recordProfileFinishedRun, describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import {
   advanceRunState,
+  isRunActive,
+  runEscalationProgress,
+  defeatFinalBoss,
   applyRunUpgrade,
   chooseRunMode,
   completeRun,
@@ -88,6 +93,7 @@ import { PauseMenuUi } from "../ui/pause-menu-ui";
 import {
   describeUpgrade,
   selectPlayerStats,
+  selectEquippedWeaponStats,
   selectWorldLines,
 } from "../systems/upgrades/describe-upgrade";
 import {
@@ -118,7 +124,6 @@ import {
 } from "../systems/codex/describe-shrine";
 import {
   getSessionStatistics,
-  recordFinishedRun,
   type RunContribution,
 } from "../state/session-statistics";
 import {
@@ -149,7 +154,7 @@ import {
   requestHitStop,
   type HitStopState,
 } from "../systems/feedback/impact";
-import { shouldSpawnElite } from "../systems/elites/elites";
+import { eliteIncomingDamage, eliteSplitCount, selectElite } from "../systems/elites/elites";
 import { configureRunCamera } from "../systems/view/configure-run-camera";
 import {
   expectedRealDurationMs,
@@ -158,6 +163,9 @@ import {
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
+import { ConeAttackActor } from "../entities/cone-attack-actor";
+import { selectSplashHits } from "../systems/weapons/on-hit-splash";
+import { recordWeaponAttack } from "../systems/weapons/weapon-loadout";
 import {
   completeCollectionSweepAttack,
   createCollectionSweepProgress,
@@ -306,13 +314,15 @@ function testShrineLayout(): string | null {
  * expires; their subject is restart, world reset, or terminal accounting, not
  * the decision itself. `complete` ends the run on the last tick, which is
  * exactly what V0.3 did, so those paths keep measuring what they measured.
+ * C5 also bypasses unique bosses for these explicit legacy fixture requests.
+ * Normal test-mode runs exercise the same bosses as production.
  * `endless` and `clearing` answer the decision instead, for the path whose
  * subject *is* the decision.
  */
-function testOvertimeChoice(): OvertimeChoice | "complete" | null {
+function testOvertimeChoice(): OvertimeChoice | "complete" | "decision" | null {
   if (import.meta.env.MODE !== "test") return null;
   const value = new URLSearchParams(window.location.search).get("atTimeUp");
-  if (value === "endless" || value === "clearing" || value === "complete") return value;
+  if (value === "endless" || value === "clearing" || value === "complete" || value === "decision") return value;
   return null;
 }
 
@@ -333,7 +343,7 @@ interface MovementKeys {
   readonly right: Phaser.Input.Keyboard.Key;
 }
 
-type DamageSource = "direct" | "explosion" | "chained_explosion";
+type DamageSource = "direct" | "splash" | "explosion" | "chained_explosion";
 interface ExplosionEventPayload {
   readonly x: number;
   readonly y: number;
@@ -343,6 +353,7 @@ interface ExplosionEventPayload {
 }
 
 export class RunScene extends Phaser.Scene {
+  private runUpgradePool: ThemeManifest["upgrades"] = [];
   private runTheme: ThemeManifest = activeTheme;
   private enemyCapacity = V02_SPAWN_LIMITS.maxAlive;
   private spawnStatistics = new SpawnStatistics();
@@ -362,6 +373,12 @@ export class RunScene extends Phaser.Scene {
   private projectiles = new Set<ProjectileActor>();
   private pickups = new Set<PickupActor>();
   private enemyDefinition?: EnemyDefinition;
+  private bossHealthUi?: BossHealthUi;
+  private spawnedBossIds = new Set<string>();
+  private bossAttacks = new Map<EnemyActor, BossAttackState>();
+  private bossCues = new Map<EnemyActor, Phaser.GameObjects.Graphics>();
+  private bossPulses = 0;
+  private bossDamage = 0;
   private enemyDefinitions: readonly EnemyDefinition[] = [];
   private weaponDefinition?: WeaponDefinition;
   private pickupDefinition?: PickupDefinition;
@@ -430,7 +447,6 @@ export class RunScene extends Phaser.Scene {
   private levelTimestampsMs: number[] = [];
   private xpByBucketMs: number[] = [];
   private xpEarnedTotal = 0;
-  private nextFireAtMs = 0;
   private lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
   private lastContactKnockbackAtMs = Number.NEGATIVE_INFINITY;
   private invulnerableUntilMs = 0;
@@ -526,15 +542,9 @@ export class RunScene extends Phaser.Scene {
     );
     if (!starter) throw new Error("The active theme has no starter character");
 
-    const profile = createInitialProfile({
-      activeThemeId: this.runTheme.id,
-      contentSchemaVersion: this.runTheme.schemaVersion,
-      starterCharacterId: starter.id,
-    });
-    const selectedCharacter = this.runTheme.characters.find(
-      (character) => character.id === profile.selectedCharacterId,
-    );
-    if (!selectedCharacter) throw new Error("The selected character is unavailable");
+    const profile = ensureProfile(this.runTheme);
+    const selectedCharacter = this.runTheme.characters.find((character) => character.id === profile.selectedCharacterId) ?? starter;
+    this.runUpgradePool = selectRunUpgradePool(this.runTheme);
     this.enemyDefinitions = this.runTheme.enemies;
     this.enemyDefinition = this.enemyDefinitions.find(
       (enemy) => enemy.id === archetypeIds.enemy.swarmBasic,
@@ -562,6 +572,8 @@ export class RunScene extends Phaser.Scene {
 
     this.runState = createRunState({
       difficulty,
+      finalBossEnabled: this.runTheme.enemies.some((enemy) => enemy.boss?.kind === "final") && testOvertimeChoice() === null,
+      weaponSlotCount: this.runTheme.weaponSlotCount,
       themeId: this.runTheme.id,
       characterId: selectedCharacter.id,
       baseStats: selectedCharacter.baseStats,
@@ -675,6 +687,7 @@ export class RunScene extends Phaser.Scene {
     this.levelUpUi = new LevelUpChoiceUi(this, this.runTheme);
     this.pauseMenu = new PauseMenuUi(this, this.runTheme);
     this.hud = new Hud(this, this.runTheme);
+    this.bossHealthUi = new BossHealthUi(this, this.runTheme);
     this.runEndOverlay = new RunEndOverlay(this, this.runTheme);
     this.overtimeUi = new OvertimeChoiceUi(this, this.runTheme);
     this.minimap = new MinimapUi(
@@ -700,7 +713,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !this.pauseKey) return;
     const updateCpuStartedAt = this.frameMeasurements ? performance.now() : undefined;
     const wallDelta = delta;
-    const startedPlaying = this.runState.status === "playing";
+    const startedPlaying = isRunActive(this.runState);
     this.lastFrameMs = delta;
 
     // Hit-stop and the death moment slow the mapping from wall time to
@@ -739,14 +752,17 @@ export class RunScene extends Phaser.Scene {
     if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
     if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
-    if (this.runState.status === "playing") {
+    if (isRunActive(this.runState)) {
+      this.releaseBossMilestones();
+      this.updateBossAttacks();
+      if (!isRunActive(this.runState)) { this.publishTelemetry(); return; }
       const movementInput = this.readMovementInput();
       this.updateMovementHint(movementInput, wallDelta);
       this.player.move(
         movementInput,
         this.runState.player.stats.moveSpeed * this.hazardSlow,
       );
-      this.updateEnemies();
+      this.updateEnemies(delta);
       this.rebuildEnemyIndex();
       this.resolveCrowd();
       this.updateHazards();
@@ -784,6 +800,7 @@ export class RunScene extends Phaser.Scene {
     }
 
     this.hud?.update(this.runState, this.hudExtras());
+    this.bossHealthUi?.update(this.bossHealthValues());
     this.updateMinimap();
     this.drawBodyDebug();
     this.publishTelemetry();
@@ -791,7 +808,7 @@ export class RunScene extends Phaser.Scene {
       wallFrameMs: this.game.loop.rawDelta,
       simulationDeltaMs: delta,
       updateCpuMs: updateCpuStartedAt === undefined ? undefined : performance.now() - updateCpuStartedAt,
-      active: startedPlaying && this.runState.status === "playing" &&
+      active: startedPlaying && isRunActive(this.runState) &&
         !preparingRepresentativeLoad && timeScale === this.runTheme.tuning.pace.gameplayRate &&
         !document.hidden && !this.focusPaused,
     });
@@ -809,6 +826,12 @@ export class RunScene extends Phaser.Scene {
     window.removeEventListener("keydown", this.handleRestartKey);
     document.removeEventListener("visibilitychange", this.handleMeasurementVisibility);
     this.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerGesture);
+    this.bossHealthUi?.destroy();
+    this.bossHealthUi = undefined;
+    for (const cue of this.bossCues.values()) cue.destroy();
+    this.bossCues.clear();
+    this.bossAttacks.clear();
+    this.spawnedBossIds.clear();
     this.hud?.destroy();
     this.levelUpUi?.hide();
     this.pauseMenu?.hide();
@@ -860,6 +883,12 @@ export class RunScene extends Phaser.Scene {
   }
 
   private resetTransientRuntime(): void {
+    this.spawnedBossIds = new Set();
+    this.bossAttacks = new Map();
+    this.bossCues = new Map();
+    this.bossPulses = 0;
+    this.bossDamage = 0;
+    this.bossHealthUi = undefined;
     this.enemyCapacity = testEnemyCapacity();
     this.spawnStatistics = new SpawnStatistics();
     this.player = undefined;
@@ -941,7 +970,6 @@ export class RunScene extends Phaser.Scene {
     this.levelTimestampsMs = [];
     this.xpByBucketMs = [];
     this.xpEarnedTotal = 0;
-    this.nextFireAtMs = 0;
     this.lastContactDamageAtMs = Number.NEGATIVE_INFINITY;
     this.lastContactKnockbackAtMs = Number.NEGATIVE_INFINITY;
     this.invulnerableUntilMs = 0;
@@ -1036,6 +1064,7 @@ export class RunScene extends Phaser.Scene {
 
   private processTestLoadHarness(): void {
     if (this.loadHarnessRequested === 0) return;
+    const ordinaryDefinitions = this.enemyDefinitions.filter((enemy) => !enemy.boss);
     const capacity = Math.max(0, this.enemyCapacity - this.enemies.size);
     this.loadEventQueue.process(Math.min(12, capacity), (event) => {
       const sequence = Number((event.payload as { sequence?: number }).sequence ?? 1);
@@ -1044,7 +1073,7 @@ export class RunScene extends Phaser.Scene {
       const definition = requestedRole
         ? this.enemyDefinitions.find(({ id }) => id === requestedRole)
         : representative
-        ? this.enemyDefinitions[(sequence - 1) % this.enemyDefinitions.length]
+        ? ordinaryDefinitions[(sequence - 1) % ordinaryDefinitions.length]
         : this.enemyDefinition;
       const closeAngle = testSkillEnabled("lineLoad") ? 0 : sequence * GOLDEN_ANGLE;
       const closeDistance = this.weaponDefinition?.deliveryKind === "melee"
@@ -1071,7 +1100,7 @@ export class RunScene extends Phaser.Scene {
     if (selection === null) return;
     const definitions = selection === "broodmother"
       ? this.enemyDefinitions.filter((definition) => definition.id === archetypeIds.enemy.deathSpawner)
-      : this.enemyDefinitions;
+      : this.enemyDefinitions.filter((enemy) => !enemy.boss);
     for (const definition of definitions) {
       this.enqueueSpawnRequest(definition.id, "ambient", 1, undefined, undefined, "roster");
     }
@@ -1083,23 +1112,24 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" = "offspring",
+    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" | "elite_split" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
-    elite?: boolean,
+    elite?: boolean | EliteId,
     movement: WaveMovement = "chase",
+    eliteSplitDepth = 0,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
       eventId: `spawn-${this.eventSequence}`,
       kind: "spawn.requested",
       provenance: {
-        sourceCategory: reason === "offspring" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
+        sourceCategory: reason === "offspring" || reason === "elite_split" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
         sourceId: spawnSource,
         parentEventId,
-        effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : undefined,
+        effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : reason === "elite_split" ? "elite.split" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement, eliteSplitDepth },
     });
   }
 
@@ -1113,13 +1143,14 @@ export class RunScene extends Phaser.Scene {
     });
     if (capacity <= 0 || remaining <= 0) return;
     this.eventQueue.processMatching(remaining, (event) => event.kind === "spawn.requested", (event) => {
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean; movement?: WaveMovement };
+      if (capacity <= 0) return false;
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean | EliteId; eliteSplitDepth?: number; movement?: WaveMovement };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
       if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement,
         payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
-          payload.reason === "duplication" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural")) {
+          payload.reason === "duplication" || payload.reason === "elite_split" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural", payload.eliteSplitDepth)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1190,7 +1221,7 @@ export class RunScene extends Phaser.Scene {
     if (testSkillEnabled("noHazards")) return;
     const nowMs = this.runState.elapsedMs;
     const tuning = this.runTheme.tuning.hazards;
-    const progress = runProgress(nowMs, this.runState.durationMs);
+    const progress = runEscalationProgress(this.runState);
 
     if (nowMs >= this.nextHazardAtMs && this.hazards.size < tuning.maxActive) {
       this.placeHazard(nowMs);
@@ -1304,13 +1335,13 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
-  private updateEnemies(): void {
+  private updateEnemies(deltaMs: number): void {
     if (!this.player) return;
     const target = new Phaser.Math.Vector2(this.player.x, this.player.y);
     const obstacles = this.activeObstacles();
     for (const enemy of this.enemies) {
       if (!enemy.active || enemy.defeated) continue;
-      enemy.advance(target);
+      enemy.advance(target, deltaMs);
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
       if (obstacles.length > 0 && enemy.movement === "chase") {
@@ -1557,7 +1588,7 @@ export class RunScene extends Phaser.Scene {
       this.surgeState = activateShrineSurge(this.surgeState, this.runState.elapsedMs);
     }
     const livingSnapshot = definition.effectKind === "duplicate_living"
-      ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated)
+      ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated && !enemy.definition.boss)
       : [];
     this.runState = {
       ...this.runState,
@@ -1572,7 +1603,7 @@ export class RunScene extends Phaser.Scene {
     if (definition.effectKind === "duplicate_living") {
       const rewardMultiplier = definition.rewardMultiplier * this.worldModifiers().shrineRewardMultiplier;
       for (const enemy of livingSnapshot) {
-        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, Boolean(enemy.elite));
+        this.enqueueSpawnRequest(enemy.definition.id, definition.id, rewardMultiplier, enemy.targetId, undefined, "duplication", { x: enemy.x + 12, y: enemy.y + 12 }, enemy.elite?.id ?? false, "chase", enemy.eliteSplitDepth);
         this.duplicatedEnemiesQueued += 1;
       }
     }
@@ -1626,11 +1657,11 @@ export class RunScene extends Phaser.Scene {
     // Only an endless run is allowed past `1`. A clearing run also outlives the
     // duration, but it has no arrivals and is meant to be finishable, so
     // escalating it would punish the player for choosing to tidy up.
-    const progress = runProgress(runState.elapsedMs, runState.durationMs);
+    const progress = runEscalationProgress(runState);
     return selectWorldModifiers(
       runState.world,
       this.runTheme.tuning.difficulty,
-      runState.mode === "endless" ? progress : Math.min(1, progress),
+      progress,
     );
   }
 
@@ -1640,7 +1671,7 @@ export class RunScene extends Phaser.Scene {
     const world = this.worldModifiers();
     return resolveDirectorPlan(
       this.runTheme.tuning.director,
-      runProgress(this.runState.elapsedMs, this.runState.durationMs),
+      runEscalationProgress(this.runState),
       world,
     );
   }
@@ -1653,7 +1684,7 @@ export class RunScene extends Phaser.Scene {
    */
   private releaseMilestoneWaves(): void {
     if (!this.runState || testSkillEnabled("noAmbient")) return;
-    const progress = runProgress(this.runState.elapsedMs, this.runState.durationMs);
+    const progress = Math.min(1, runProgress(this.runState.elapsedMs, this.runState.durationMs));
     const crossed = crossedUnlocks(this.runTheme.tuning.director, this.lastDirectorProgress, progress);
     this.lastDirectorProgress = progress;
     if (crossed.length === 0) return;
@@ -1737,10 +1768,11 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     definition: EnemyDefinition = this.enemyDefinition as EnemyDefinition,
     requestedPoint?: Readonly<{ x: number; y: number }>,
-    eliteOverride?: boolean,
+    eliteOverride?: boolean | EliteId,
     angleRadians?: number,
     movement: WaveMovement = "chase",
     origin: SpawnOrigin = spawnSource === "ambient" ? "natural" : "environment",
+    eliteSplitDepth = 0,
   ): boolean {
     if (
       !this.player ||
@@ -1772,17 +1804,17 @@ export class RunScene extends Phaser.Scene {
     this.spawnSequence += 1;
     this.enemySequence += 1;
     const worldModifiers = this.worldModifiers();
-    const eliteDefinition = this.runTheme.elites.find((elite) => elite.id === eliteIds.baseline);
     const directorEliteChance = resolveEliteChance(
       this.runTheme.tuning.director,
-      runProgress(this.runState.elapsedMs, this.runState.durationMs),
+      runEscalationProgress(this.runState),
       worldModifiers.eliteChance,
     );
-    const elite = eliteDefinition && shouldSpawnElite(
+    const elite = selectElite(
+      this.runTheme.elites,
       testSkillEnabled("forceElite") ? 1 : directorEliteChance * this.luckScale(),
       this.eliteRandom,
-      eliteOverride,
-    ) ? eliteDefinition : undefined;
+      definition.boss ? false : eliteOverride,
+    );
     // Tougher spawns are worth more. The share applies to the world health
     // multiplier only: elite reward is already an explicit multiplier, so
     // folding elite health in here would pay for the same thing twice.
@@ -1811,6 +1843,8 @@ export class RunScene extends Phaser.Scene {
         eliteMassMultiplier: this.runTheme.tuning.bodies.eliteMassMultiplier,
       },
     );
+    enemy.eliteSplitDepth = eliteSplitDepth;
+    enemy.sourceRewardMultiplier = rewardMultiplier;
     if (movement === "drift") this.driftSpawned += 1;
     const spawnStatistics = this.spawnStatistics;
     spawnStatistics.add(enemy.targetId, origin);
@@ -1819,7 +1853,7 @@ export class RunScene extends Phaser.Scene {
     if (elite) {
       this.eliteSpawned += 1;
       this.eliteSpawnedByRole[definition.id] = (this.eliteSpawnedByRole[definition.id] ?? 0) + 1;
-      this.emitFeedback("elite", enemy.x, enemy.y, "ELITE");
+      this.emitFeedback("elite", enemy.x, enemy.y, elite.name ?? "ELITE");
     }
     if (spawnSource === archetypeIds.shrine.spawnSurge) this.shrineEnemiesSpawned += 1;
     enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
@@ -1831,6 +1865,58 @@ export class RunScene extends Phaser.Scene {
     return true;
   }
 
+  private releaseBossMilestones(): void {
+    if (!this.runState?.finalBossEnabled || !this.player || this.runState.mode !== "timed") return;
+    for (const definition of dueBosses(this.enemyDefinitions, runProgress(this.runState.elapsedMs, this.runState.durationMs), this.spawnedBossIds)) {
+      // One capped attempt per due authored definition; failure stays due.
+      if (!this.spawnEnemy(definition.id, 1, definition, undefined, false)) break;
+      this.spawnedBossIds.add(definition.id);
+      const enemy = [...this.enemies].find((actor) => actor.definition.id === definition.id);
+      if (!enemy || !definition.boss) continue;
+      this.bossAttacks.set(enemy, createBossAttack(this.runState.elapsedMs, definition.boss));
+      const cue = this.add.graphics().setDepth(15);
+      this.bossCues.set(enemy, cue);
+      enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
+        cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy);
+      });
+      this.announceWave(this.runTheme.copy.content[definition.id].name);
+    }
+  }
+
+  private bossHealthValues() {
+    return [...this.bossAttacks.keys()].filter((enemy) => enemy.active && !enemy.defeated).map((enemy) => ({
+      id: enemy.targetId, name: this.runTheme.copy.content[enemy.definition.id].name,
+      health: enemy.health, maxHealth: enemy.maxHealth,
+    }));
+  }
+
+  private updateBossAttacks(): void {
+    if (!this.runState || !this.player || !isRunActive(this.runState)) return;
+    for (const [enemy, state] of this.bossAttacks) {
+      const definition = enemy.definition.boss;
+      if (!enemy.active || enemy.defeated || !definition) continue;
+      const result = advanceBossAttack(state, definition, this.runState.elapsedMs, enemy,
+        { x: this.player.x, y: this.player.y, radius: this.player.definition.radius });
+      this.bossAttacks.set(enemy, result.state);
+      const cue = this.bossCues.get(enemy);
+      cue?.clear();
+      if (result.state.warning && cue) {
+        const colour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.critical).color;
+        cue.fillStyle(colour, 0.16).fillCircle(result.state.warning.x, result.state.warning.y, definition.attack.radius);
+        cue.lineStyle(3, colour, 1).strokeCircle(result.state.warning.x, result.state.warning.y, definition.attack.radius);
+      }
+      if (result.released) this.bossPulses += 1;
+      if (result.damage > 0) {
+        const damage = reduceByArmour(result.damage * (enemy.contactDamage / enemy.definition.contactDamage), this.runState.player.stats.armour);
+        const healthBefore = this.runState.player.health;
+        this.runState = damageRunPlayer(this.runState, damage, { sourceId: enemy.definition.id, elite: false });
+        this.bossDamage += healthBefore - this.runState.player.health;
+        this.player.flashDamage(this.runTheme.tokens.palette.critical);
+        if (this.runState.status === "dead") { this.enterTerminalState(); break; }
+      }
+    }
+  }
+
   private fireIfReady(): void {
     if (testSkillEnabled("noWeapon")) return;
     if (
@@ -1838,19 +1924,20 @@ export class RunScene extends Phaser.Scene {
       testSkillEnabled("closeLoad") &&
       this.loadHarnessSpawned < this.loadHarnessRequested
     ) return;
-    if (
-      !this.player ||
-      !this.runState ||
-      !this.weaponDefinition ||
-      !this.projectileGroup ||
-      this.runState.elapsedMs < this.nextFireAtMs
-    ) {
-      return;
+    if (!this.player || !this.runState || !isRunActive(this.runState) || !this.projectileGroup) return;
+    for (const slot of this.runState.weaponSlots) {
+      if (this.runState.elapsedMs < slot.nextAttackAtMs) continue;
+      const definition = this.runTheme.weapons.find((weapon) => weapon.id === slot.weaponId);
+      if (!definition) throw new Error(`Equipped weapon is unavailable: ${slot.weaponId}`);
+      this.fireWeaponIfReady(definition);
     }
+  }
 
+  private fireWeaponIfReady(definition: WeaponDefinition): void {
+    if (!this.player || !this.runState || !isRunActive(this.runState) || !this.projectileGroup) return;
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const weapon = resolveWeaponDefinition(this.weaponDefinition, this.runState.weaponModifiers);
+    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id]);
     const target = weapon.deliveryKind === "melee"
       ? selectMeleeAim(this.player, this.enemies, weapon.reach)
       : findNearestTarget(this.player, this.enemies);
@@ -1875,7 +1962,8 @@ export class RunScene extends Phaser.Scene {
       );
       if (hits.length === 0) return;
       this.activeGrabbers += 1;
-      new GrabberActor(
+      const AttackActor = weapon.arcRadians === undefined ? GrabberActor : ConeAttackActor;
+      new AttackActor(
         this,
         this.player.x,
         this.player.y,
@@ -1889,6 +1977,7 @@ export class RunScene extends Phaser.Scene {
       if (damage.critical) this.criticalShots += 1;
       this.runState = observeRunCrit(this.runState, damage.tier);
       for (const enemy of hits) {
+        if (!enemy.active || enemy.defeated) continue;
         accumulateDamage(
           this.damageNumbers,
           { targetId: enemy.targetId, amount: damage.damage, tier: damage.tier, x: enemy.x, y: enemy.y },
@@ -1896,20 +1985,18 @@ export class RunScene extends Phaser.Scene {
           DAMAGE_NUMBER_WINDOW_MS,
         );
         this.commitEnemyDamage(enemy, damage.damage, "direct", undefined, {
+          weapon,
           directBase: damage.baseDamage,
           criticalBonus: damage.bonusDamage,
           piercingMomentum: 0,
         });
-        this.applyWeaponKnockback(enemy);
+        this.applyOnHitSplash(enemy, weapon, damage.damage, damage.tier);
+        this.applyWeaponKnockback(enemy, weapon);
         this.meleeHits += 1;
         this.firstMeleeHitAtMs ??= this.runState.elapsedMs;
       }
       this.completeCollectionSweep(baseAngle, weapon, damage);
-      this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
-        weapon.cooldownMs,
-        this.runState.player.stats.attackSpeedBonus,
-        this.bloodlustAttackSpeedBonus,
-      );
+      this.recordWeaponAttack(weapon);
       return;
     }
 
@@ -1954,11 +2041,19 @@ export class RunScene extends Phaser.Scene {
       if (damage.critical) this.criticalShots += 1;
       this.runState = observeRunCrit(this.runState, damage.tier);
     }
-    this.nextFireAtMs = this.runState.elapsedMs + attackCooldownMs(
-      weapon.cooldownMs,
-      this.runState.player.stats.attackSpeedBonus,
-      this.bloodlustAttackSpeedBonus,
-    );
+    this.recordWeaponAttack(weapon);
+  }
+
+  private recordWeaponAttack(weapon: WeaponDefinition): void {
+    if (!this.runState) return;
+    this.runState = {
+      ...this.runState,
+      weaponSlots: recordWeaponAttack(
+        this.runState.weaponSlots, weapon.id, this.runState.elapsedMs,
+        attackCooldownMs(weapon.cooldownMs, this.runState.player.stats.attackSpeedBonus,
+          this.bloodlustAttackSpeedBonus),
+      ),
+    };
   }
 
   /** Complete one committed grabber attack and resolve its optional sweep track. */
@@ -1967,7 +2062,8 @@ export class RunScene extends Phaser.Scene {
     weapon: Extract<ReturnType<typeof resolveWeaponDefinition>, { deliveryKind: "melee" }>,
     damage: ReturnType<typeof rollDamage>,
   ): void {
-    if (!this.runState || !this.player) return;
+    if (!this.runState || !this.player || !weapon.upgrades?.some((upgrade) =>
+      upgrade.effects.some((effect) => effect.kind === "skill.level" && effect.skillId === archetypeIds.skill.collectionSweep))) return;
     const effect = findSkillEffect(
       this.runTheme.skills,
       archetypeIds.skill.collectionSweep,
@@ -1998,6 +2094,7 @@ export class RunScene extends Phaser.Scene {
           DAMAGE_NUMBER_WINDOW_MS,
         );
         this.commitEnemyDamage(enemy, amount, "direct", undefined, {
+          weapon,
           directBase: damage.baseDamage * effect.damageMultiplier,
           criticalBonus: damage.bonusDamage * effect.damageMultiplier,
           piercingMomentum: 0,
@@ -2067,13 +2164,31 @@ export class RunScene extends Phaser.Scene {
     );
     if (projectile.pierceChainIndex > 0) this.emitFeedback("pierce", enemy.x, enemy.y, "PIERCE");
     this.commitEnemyDamage(enemy, projectile.damage, "direct", undefined, {
+      weapon: projectile.weapon,
       directBase: projectile.normalDamage,
       criticalBonus: projectile.criticalBonusDamage,
       piercingMomentum: projectile.damage - projectile.baseDamage,
     });
-    this.applyWeaponKnockback(enemy);
+    this.applyOnHitSplash(enemy, projectile.weapon, projectile.damage, projectile.critTier);
+    this.applyWeaponKnockback(enemy, projectile.weapon);
     projectile.registerHit(enemy.targetId);
     this.runState = observeRunPierce(this.runState, projectile.pierceChainIndex);
+  }
+
+  /** A hit may splash even when it kills; splash never recursively triggers splash. */
+  private applyOnHitSplash(primary: EnemyActor, weapon: WeaponDefinition, rolledDamage: number, tier: number): void {
+    if (!weapon.splash || !this.runState) return;
+    const targets = selectSplashHits(primary, primary.targetId, weapon.splash, this.enemies);
+    for (const enemy of targets) {
+      const amount = rolledDamage * weapon.splash.damageMultiplier;
+      accumulateDamage(this.damageNumbers,
+        { targetId: enemy.targetId, amount, tier, x: enemy.x, y: enemy.y },
+        this.runState.elapsedMs, DAMAGE_NUMBER_WINDOW_MS);
+      this.commitEnemyDamage(enemy, amount, "splash", undefined, {
+        weapon, directBase: 0, criticalBonus: 0, piercingMomentum: 0,
+      });
+    }
+    if (targets.length > 0) this.renderCollectionSweepCue(primary.x, primary.y, weapon.splash.radius);
   }
 
   /** Valid enemy contact nudges the player without turning an enemy into a wall. */
@@ -2107,10 +2222,10 @@ export class RunScene extends Phaser.Scene {
 
   /**
    * Weapon knockback, scaled by the target's mass so heavy roles shrug it off.
-   * Both production weapons declare `0`, so this is inert until a weapon uses it.
+   * The attack owns its impulse even if its equipped slot changes before impact.
    */
-  private applyWeaponKnockback(enemy: EnemyActor): void {
-    const strength = this.weaponDefinition?.knockback ?? 0;
+  private applyWeaponKnockback(enemy: EnemyActor, weapon: WeaponDefinition): void {
+    const strength = weapon.knockback;
     if (strength <= 0 || !this.player) return;
     const push = knockbackDisplacement(this.player, enemy, strength, enemy.mass);
     enemy.x += push.x;
@@ -2123,15 +2238,15 @@ export class RunScene extends Phaser.Scene {
     damage: number,
     damageSource: DamageSource,
     parentEventId?: string,
-    direct?: Readonly<{ directBase: number; criticalBonus: number; piercingMomentum: number }>,
+    direct?: Readonly<{ weapon: WeaponDefinition; directBase: number; criticalBonus: number; piercingMomentum: number }>,
   ): void {
     if (!this.runState || enemy.defeated) return;
     // Enemy armour is multiplicative and the weapon may ignore a share of it.
-    const reduced = reduceByArmour(
+    const reduced = eliteIncomingDamage(enemy.elite, enemy.health, enemy.maxHealth, reduceByArmour(
       damage,
       enemy.definition.armour,
-      this.weaponDefinition?.armourPierce ?? 0,
-    );
+      direct?.weapon.armourPierce ?? 0,
+    ));
     const appliedDamage = Math.min(enemy.health, Math.max(0, reduced));
     const result = enemy.takeDamage(reduced);
     if (!result.applied) return;
@@ -2139,7 +2254,9 @@ export class RunScene extends Phaser.Scene {
     this.runState = recordRunDamage(this.runState, {
       amount: appliedDamage,
       source: damageSource,
-      ...direct,
+      directBase: direct?.directBase,
+      criticalBonus: direct?.criticalBonus,
+      piercingMomentum: direct?.piercingMomentum,
     });
     if (!result.killed) return;
     this.firstKillAtMs ??= this.runState.elapsedMs;
@@ -2151,12 +2268,21 @@ export class RunScene extends Phaser.Scene {
       kind: "death.committed",
       entityId: enemy.targetId,
       provenance: {
-        sourceCategory: damageSource === "direct" ? "weapon" : "skill",
-        sourceId: damageSource === "direct" ? this.weaponDefinition?.id : archetypeIds.skill.onKillExplosion,
+        sourceCategory: damageSource === "direct" || damageSource === "splash" ? "weapon" : "skill",
+        sourceId: damageSource === "direct" || damageSource === "splash" ? direct?.weapon.id : archetypeIds.skill.onKillExplosion,
         parentEventId,
       },
-      payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite) },
+      payload: { enemyId: enemy.definition.id, damageSource, elite: Boolean(enemy.elite), eliteId: enemy.elite?.id },
     });
+    const splitCount = eliteSplitCount(enemy.elite, enemy.eliteSplitDepth);
+    if (splitCount > 0 && this.eventQueue.claimEffect(enemy.targetId, "elite.split")) {
+      for (let index = 0; index < splitCount; index += 1) {
+        this.enqueueSpawnRequest(enemy.definition.id, enemy.spawnSource,
+          enemy.sourceRewardMultiplier * (enemy.elite?.split?.rewardMultiplier ?? 1),
+          enemy.targetId, deathEventId, "elite_split", { x: enemy.x, y: enemy.y }, enemy.elite?.id,
+          enemy.movement, enemy.eliteSplitDepth + 1);
+      }
+    }
     const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
       deathSpawns.length > 0 &&
@@ -2172,7 +2298,9 @@ export class RunScene extends Phaser.Scene {
             spawn.parentEventId,
             "offspring",
             { x: enemy.x, y: enemy.y },
-            Boolean(enemy.elite),
+            enemy.elite?.id ?? false,
+            "chase",
+            enemy.eliteSplitDepth,
           );
           this.offspringQueued += 1;
         }
@@ -2202,6 +2330,10 @@ export class RunScene extends Phaser.Scene {
     }
     enemy.releaseDeathView();
     enemy.destroy();
+    if (enemy.definition.boss?.kind === "final") {
+      this.runState = defeatFinalBoss(this.runState);
+      if (this.runState.status === "time_up") this.showOvertimeChoice();
+    }
   }
 
   private enqueueConfiguredOnKillEffects(
@@ -2223,7 +2355,7 @@ export class RunScene extends Phaser.Scene {
     );
     const chainLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.chainReaction);
     const chain = chainEffect && chainLevel > 0 ? resolveChain(chainEffect, chainLevel) : undefined;
-    const depth = damageSource === "direct" ? 0 : damageSource === "explosion" ? 1 : 2;
+    const depth = damageSource === "direct" || damageSource === "splash" ? 0 : damageSource === "explosion" ? 1 : 2;
 
     if (
       explosionEffect &&
@@ -2280,7 +2412,9 @@ export class RunScene extends Phaser.Scene {
           deathEventId,
           "fracture",
           { x: enemy.x + (index === 0 ? -8 : 8), y: enemy.y },
-          Boolean(enemy.elite),
+          enemy.elite?.id ?? false,
+          "chase",
+          enemy.eliteSplitDepth,
         );
         this.fractureQueued += 1;
       }
@@ -2520,8 +2654,11 @@ export class RunScene extends Phaser.Scene {
     this.player?.stop();
     this.physics.world.pause();
     const luck = this.runState.player.stats.luck;
-    const drawn = selectUpgradeChoices(this.runTheme.upgrades, 3, this.upgradeRandom, {
+    const drawn = selectUpgradeChoices(this.runUpgradePool, 3, this.upgradeRandom, {
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
+      world: this.runState.world,
+      weaponSlots: this.runState.weaponSlots,
+      weaponSlotCount: this.runState.weaponSlotCount,
       luck,
       skillLevels: this.runState.skillLevels,
       skills: this.runTheme.skills,
@@ -2548,7 +2685,7 @@ export class RunScene extends Phaser.Scene {
         ? selectWorldModifiers(
             runState.world,
             this.runTheme.tuning.difficulty,
-            runProgress(runState.elapsedMs, runState.durationMs),
+            runEscalationProgress(runState),
           ).threatStep
         : 0,
       killChain: runState?.statistics.recentKillTimesMs.length ?? 0,
@@ -2578,12 +2715,12 @@ export class RunScene extends Phaser.Scene {
       ? selectRunSummaryValues(runState, this.runTheme.copy.vocabulary, this.runTheme.copy.content)
       : undefined;
     return {
-      stats: runState ? selectPlayerStats(runState, this.runTheme) : [],
+      stats: runState ? [...selectPlayerStats(runState, this.runTheme), ...selectEquippedWeaponStats(runState, this.runTheme)] : [],
       world: runState
         ? [...selectWorldLines(
             runState.world,
             this.runTheme,
-            runProgress(runState.elapsedMs, runState.durationMs),
+            runEscalationProgress(runState),
           ), { label: `${this.runTheme.copy.spawnOrigins.live} / ${this.runTheme.copy.spawnOrigins.total}`, display: "" }, ...spawnOrigins.map((origin) => ({
             label: this.runTheme.copy.spawnOrigins[origin],
             display: `${this.spawnStatistics.live[origin]} / ${this.spawnStatistics.spawned[origin]}`,
@@ -2592,7 +2729,7 @@ export class RunScene extends Phaser.Scene {
       upgrades: summary?.upgrades ?? [],
       codex: selectShrineCodex(this.runTheme),
       codexUpgrades: selectUpgradeCodex(this.runTheme, session),
-      codexSession: selectSessionCodex(this.runTheme, session),
+      codexSession: [...selectSessionCodex(this.runTheme, session), ...describeProfile(this.runTheme)],
       settings: getSessionSettings(),
     };
   }
@@ -2627,7 +2764,7 @@ export class RunScene extends Phaser.Scene {
 
   private updateMinimap(): void {
     if (!this.minimap || !this.player) return;
-    this.minimap.setOverlayHidden(this.runState?.status !== "playing");
+    this.minimap.setOverlayHidden(!isRunActive(this.runState));
     if (!this.minimap.visible) return;
     const view = this.minimapView;
     view.player.x = this.player.x;
@@ -2691,6 +2828,8 @@ export class RunScene extends Phaser.Scene {
       choice,
       (skillId) => skillMaxLevel(this.runTheme.skills, skillId),
       tierMultiplier(this.runTheme.tuning.upgradeTiers, offer?.tier ?? "common"),
+      this.runTheme.weapons,
+      this.runTheme.curses,
     );
     this.runState = observeRunChaos(this.runState);
     if (this.runState.status === "level_up") {
@@ -2699,7 +2838,8 @@ export class RunScene extends Phaser.Scene {
       this.currentChoices = [];
       this.currentOffers = [];
       this.levelUpUi?.hide();
-      this.physics.world.resume();
+      if (this.runState.status === "time_up") this.showOvertimeChoice();
+      else if (isRunActive(this.runState)) this.physics.world.resume();
     }
     this.publishTelemetry();
   }
@@ -2767,7 +2907,7 @@ export class RunScene extends Phaser.Scene {
       this.enterTerminalState();
       return;
     }
-    if (forced) {
+    if (forced && forced !== "decision") {
       this.resolveOvertimeChoice(forced);
       return;
     }
@@ -2810,11 +2950,12 @@ export class RunScene extends Phaser.Scene {
     this.activeExplosionCues = 0;
     this.audioFeedback.destroy();
     this.physics.world.pause();
-    recordFinishedRun({
+    const newUnlocks = recordProfileFinishedRun(this.runTheme, {
+      status: this.runState.status, elapsedMs: this.runState.elapsedMs,
       level: this.runState.progression.level,
       statistics: this.runState.statistics,
     });
-    this.runEndOverlay?.show(this.runState, () => this.restartRun());
+    this.runEndOverlay?.show(this.runState, () => this.restartRun(), newUnlocks, getProfileStatus().mode === "saved" ? undefined : getProfileStatus().message);
   }
 
   private restartRun(): void {
@@ -2842,7 +2983,7 @@ export class RunScene extends Phaser.Scene {
 
   private handleGameBlur(): void {
     this.frameMeasurements?.interrupt();
-    if (!this.runState || this.runState.status !== "playing") return;
+    if (!this.runState || !isRunActive(this.runState)) return;
     this.runState = setRunStatus(this.runState, "paused");
     this.player?.stop();
     this.physics.world.pause();
@@ -2926,7 +3067,7 @@ export class RunScene extends Phaser.Scene {
 
   private togglePause(): void {
     if (!this.runState || !this.player) return;
-    if (this.runState.status === "playing") {
+    if (isRunActive(this.runState)) {
       this.runState = setRunStatus(this.runState, "paused");
       this.player.stop();
       this.physics.world.pause();
@@ -2976,7 +3117,7 @@ export class RunScene extends Phaser.Scene {
 
   private publishTelemetry(): void {
     if (import.meta.env.MODE !== "test") return;
-    const frameMeasurements = this.frameMeasurements?.snapshot(this.runState?.status !== "playing");
+    const frameMeasurements = this.frameMeasurements?.snapshot(!isRunActive(this.runState));
     const body = this.player?.arcadeBody;
     const projectileSample = [...this.projectiles].find((projectile) => projectile.active);
     const hud = this.runState ? selectHudValues(this.runState) : undefined;
@@ -3001,6 +3142,12 @@ export class RunScene extends Phaser.Scene {
     ).length;
     this.peakVisibleEnemies = Math.max(this.peakVisibleEnemies, visibleEnemies);
     updateTestTelemetry({
+      bosses: {
+        spawnedIds: [...this.spawnedBossIds],
+        live: this.bossHealthValues(),
+        pulses: this.bossPulses, damageToPlayer: this.bossDamage,
+        warnings: [...this.bossAttacks].filter(([, state]) => state.warning).map(([enemy, state]) => ({ enemyId: enemy.definition.id, ...state.warning! })),
+      },
       status: "ready",
       scene: this.scene.key,
       themeId: this.runTheme.id,
@@ -3052,6 +3199,7 @@ export class RunScene extends Phaser.Scene {
       combat: {
         spriteFramesByRole: Object.fromEntries(this.enemyDefinitions.map((definition) => [definition.id, [...this.enemies].find((enemy) => enemy.definition.id === definition.id)?.view?.frame ?? null])),
         weaponId: this.weaponDefinition?.id ?? null,
+        weaponSlots: this.runState?.weaponSlots ?? [],
         deliveryKind: this.weaponDefinition?.deliveryKind ?? null,
         enemyId: this.enemyDefinition?.id ?? null,
         projectiles: this.projectiles.size,
@@ -3219,7 +3367,7 @@ export class RunScene extends Phaser.Scene {
           getSessionStatistics(this.liveRunContribution()),
         ).map((line) => ({ label: line.label, display: line.display })),
         statLines: this.runState
-          ? selectPlayerStats(this.runState, this.runTheme).map((line) => ({
+          ? [...selectPlayerStats(this.runState, this.runTheme), ...selectEquippedWeaponStats(this.runState, this.runTheme)].map((line) => ({
               key: line.key,
               display: line.display,
             }))

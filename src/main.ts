@@ -1,3 +1,4 @@
+import { initializeProfile } from "./game/systems/persistence/profile-service";
 import "./style.css";
 import { activeTheme } from "./game/content/active-theme";
 import { validateTheme } from "./game/content/define-theme";
@@ -45,6 +46,7 @@ async function boot(): Promise<void> {
     app.innerHTML = '<div id="game-container" aria-label="Arena Survivor game"></div>';
     // A dependency may fail before Phaser can construct a Game (for example,
     // unsupported canvas contexts). Keep that import inside the recovery boundary.
+    initializeProfile(activeTheme);
     const { startGame } = await import("./game/start-game");
     startGame("game-container", showBootFailure);
   } catch (error) {

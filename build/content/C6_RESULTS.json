@@ -1,0 +1,481 @@
+{
+  "recordedAt": "2026-10-20T05:44:02.830641+00:00",
+  "base": "5da2ed3",
+  "units": {
+    "tests": 595,
+    "files": 65
+  },
+  "checks": {
+    "types": true,
+    "units": true,
+    "lint": true,
+    "build": true,
+    "diff": true,
+    "productionMarkersExcluded": [
+      "__ARENA_TEST__",
+      "__C1_TOOL_FIXTURE__",
+      "alternate_test"
+    ]
+  },
+  "browsers": {
+    "uniquePassed": 10,
+    "workers": 1,
+    "retries": 0,
+    "caseBoundMs": 30000,
+    "attempts": [
+      {
+        "cases": 7,
+        "passed": 5,
+        "failed": 2,
+        "seconds": 13.6,
+        "reason": "eco fixture searched full rather than entitled pool"
+      },
+      {
+        "cases": 2,
+        "passed": 2,
+        "seconds": 8.9,
+        "reason": "corrected eco seed fixture"
+      },
+      {
+        "cases": 2,
+        "passed": 2,
+        "seconds": 5.1,
+        "reason": "actual short terminal and corrupt startup"
+      },
+      {
+        "cases": 5,
+        "passed": 5,
+        "seconds": 8.0,
+        "reason": "final persistence durable evidence"
+      },
+      {
+        "cases": 1,
+        "passed": 1,
+        "seconds": 1.2,
+        "reason": "death/unlock/warning layout"
+      }
+    ]
+  },
+  "sourceSha256": {
+    "src/game/content/define-theme.ts": "599524b73146584244d111e25835d3b36d1dbe801959739df044e232c36d29e9",
+    "src/game/content/themes/eco-guardian/copy.ts": "b7f61e1537f5c4105e4c6f4e9e7066e2222e44dace47e0bca6aeaa960ef2c6d7",
+    "src/game/content/themes/eco-guardian/index.ts": "67b16bdebe205a93171ad23b6ea4b27aca41c7a5d56b7c32cffb9c19b51eb523",
+    "src/game/content/themes/eco-guardian/unlocks.ts": "d111621cbbd31d2acfeec8401067287f7908a3cb0954fd1f8c6e54e46b44e784",
+    "src/game/content/themes/knight-magic/copy.ts": "f990961131a1c388751429973e35378130a24794bc18b94acfba865b7c79cd61",
+    "src/game/content/themes/knight-magic/index.ts": "7269165318626dc56ab99f01720f967b42f3373692bec589e5ad82214ca5f183",
+    "src/game/content/themes/knight-magic/unlocks.ts": "d111621cbbd31d2acfeec8401067287f7908a3cb0954fd1f8c6e54e46b44e784",
+    "src/game/core/archetypes/contracts.ts": "bcb6043e7b2fc5d0123caa558571df79f8719b4b61db8dda65150f3cf9c78d24",
+    "src/game/scenes/menu-scene.ts": "b341af74825164f4d7990f7fb4f0029c5a1dab408d0335193f40773310652fd9",
+    "src/game/scenes/run-scene.ts": "793043ee1459b5e2bb702636ef9dad0ada5d698b295cd05f1ce31a250f132364",
+    "src/game/state/profile-state.ts": "6aecc2e72cb1c939e2bf4b4ba7a132642ce0ad8759e0d91c93c2e665502ae6f4",
+    "src/game/state/session-statistics.ts": "1715bbe8eeb370f3abeb7020c4466f4d72f2dc3902fe327dfecaa14355e8a10c",
+    "src/game/state/settings-state.ts": "ebd78bf35411ebe75f185f102280647df2aae11d317064b7d40134a8f646dac5",
+    "src/game/systems/persistence/profile-service.ts": "18744d559ef855f6aafbfc01da06374ec0ba4edb282ad9d02cadc54f32db31a7",
+    "src/game/systems/persistence/profile-validation.ts": "d658f4ef76d2dddbd6af6b939d8abc87a91c38ec1222dd9aabf38dc865cd9046",
+    "src/game/ui/run-end-overlay.ts": "b9397ee67f1798dc4507c009c13c612618d4555ded13cc699a229540be0575cf",
+    "src/main.ts": "05c74d13cf6b0d8c133898913f0e91c33f1d9a802966da8d9f3ff55f0c43a8d2",
+    "tests/e2e/profile-persistence-v043.spec.ts": "dc337bd6164439aa27670e1487f81a6aa1e2256e8fd7e0b0ddfdd32088cbaf36",
+    "tests/e2e/second-tool-v043.spec.ts": "2c5ff2d76002383b72b6db7ff372dd1dfccbff7453ab22fee775b8f5688b1cac",
+    "tests/fixtures/alternate-theme.ts": "15821c0934522ec0819f41f35e43c52f2eeac669c36412dc56b1fbaa5e9c0f8b",
+    "tests/unit/boot/boot-recovery.test.ts": "fed618e66a81aa11d8149de00f23b77190f073128665c862201c2ed0c072f39a",
+    "tests/unit/persistence/profile.test.ts": "2d35a0e2eaf6adc437b4c255e4e59009dacb227602c0995ae1032e4eae7f97d6",
+    "tests/unit/run-state/run-state.test.ts": "c1f94b47af4cd0d31a0a557ed33bc4d4705cd7565cd2cf78db9adbf6a679f7ee"
+  },
+  "compiledSha256": {
+    "dist/index.html": "38c18fc17b8c5ead77dfaaf627f3af703759068ac146c42d36d4c34895561e17",
+    "dist/sprite-browser.html": "656db6e85552e1355f4304d3a534904841164292682d34a1e2576e45e7616c89",
+    "dist/build/ARCHITECTURE_MAP.html": "1118c6b5c45abaf3bd791950e70c314569a2ea26472737e62f550aaf3fd49aed",
+    "dist/assets/start-game-BCYy-agj.js": "6cdf0f0089c9e1191f7471d04811965ef4680716db1fd9303a7596db9a6758a5",
+    "dist/assets/sprites-DqSGO-CP.js": "50dabc7a429ebddb9f63adde83be4a092675b86c6ca4d0d8101db823d4b58b43",
+    "dist/assets/combat-DP5YJCqn.js": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0",
+    "dist/assets/index-BS7C3ZWO.js": "aa2ec2913db0eeadf4438ad823ff32b6890076a7882ff470b46f5ad6921f87ad",
+    "dist/assets/game-BUgOr2su.js": "1275590d59b126625d5f0de79039d6857140e1bde6d2460a430d4f950cc80515"
+  },
+  "artifactSha256": {
+    "test-results/c6-final/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "test-results/c6-final/profile-persistence-v043-e-7b96e-rofile-and-next-run-unlocks-chromium/restored-title.png": "421bce53add9908cc19344cd4237d256557f54a285de5aa8cb8d0058cce4bbec",
+    "test-results/c6-final/profile-persistence-v043-e-7b96e-rofile-and-next-run-unlocks-chromium/profile-evidence.json": "e0f06d566be56ea87ae8929677fdbae0e67f6161c476001db14d23e89823b118",
+    "test-results/c6-final/profile-persistence-v043-a-76b21--reload-retains-earned-tool-chromium/actual-terminal.json": "50d00f4a1429e73ae5218ee524134049753face4bf097f1b6523083646b9619d",
+    "test-results/c6-final/profile-persistence-v043-a-76b21--reload-retains-earned-tool-chromium/actual-terminal-unlock.png": "1fae1455a328396fd32d4215f4c9bd7ef32e83ac308e9ec342070ed6022a49b9",
+    "test-results/c6-final/profile-persistence-v043-d-def5b-gameplay-startup-and-source-chromium/storage-denied.png": "82812d371c7a32a68fb02573d008b0635e5676a7af906f1ce565af7b3a36032a",
+    "test-results/c6-final/profile-persistence-v043-k-f5c97-rofile-and-next-run-unlocks-chromium/restored-title.png": "421bce53add9908cc19344cd4237d256557f54a285de5aa8cb8d0058cce4bbec",
+    "test-results/c6-final/profile-persistence-v043-k-f5c97-rofile-and-next-run-unlocks-chromium/profile-evidence.json": "af0bcca46774be06cb6ffbd2285b687b4795640c7f35689bfc450a27bd20b3c8",
+    "test-results/c6-corrected/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "test-results/c6-corrected/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/evolved-load.png": "c41bb73314ffdd786f92fff9f1aaf5f928038ed6d46f0471245877c809605896",
+    "test-results/c6-corrected/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/evolution-offer.png": "1dff134db589c7ee0702ceb33516c232081477b534f319922716a1b3af233705",
+    "test-results/c6-corrected/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/evolved-cone.png": "c8c9852ba2b315d1e185eed15e5b0cb5f0f0e72fff55c866786725699289198f",
+    "test-results/c6-corrected/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/tool-offer.png": "0508d461a9602f6e83cadb402970960fe9ac2a549a07f66868d8fb0fb249179e",
+    "test-results/c6-corrected/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/owner-range-offer.png": "7d3fde23c9cd53cc3d1121a2ccfa43839bd6c4f2de44dc8ace46ced50f9966c4",
+    "test-results/c6-corrected/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/cone-and-splash.png": "b6af91d10d276cfeac89703784c206ed980a423f8b39371b9cb0f6a504c28c66",
+    "test-results/c6-affected/.last-run.json": "e90fc95b451b2cc749469fb0322c7be5f7efbd76ce147f648f9901425fa8b742",
+    "test-results/c6-affected/profile-persistence-v043-e-7b96e-rofile-and-next-run-unlocks-chromium/restored-title.png": "421bce53add9908cc19344cd4237d256557f54a285de5aa8cb8d0058cce4bbec",
+    "test-results/c6-affected/second-tool-v043-knight-ma-2478a-ot-with-exact-hit-ownership-chromium/evolved-load.png": "9ad307b958a434e5dc7733c0f3466bc47dc0b520605c8e25c57fb2e5c4ad6d72",
+    "test-results/c6-affected/second-tool-v043-knight-ma-2478a-ot-with-exact-hit-ownership-chromium/evolution-offer.png": "6286e585496ad25a19d4d10c9e9de3fd66e987b52e07eab455ee63b4134ba5bd",
+    "test-results/c6-affected/second-tool-v043-knight-ma-2478a-ot-with-exact-hit-ownership-chromium/evolved-cone.png": "9de1110687a876b972efe66f253e030e82ab82ac6f58111679fdebd24b822e2d",
+    "test-results/c6-affected/second-tool-v043-eco-guard-e290d-ot-with-exact-hit-ownership-chromium/error-context.md": "d0d360789eea67c9957b79a39616ab50789e40acf7bec758beb7cc2ea0d5b1a6",
+    "test-results/c6-affected/second-tool-v043-knight-ma-a9c11-er-and-resets-it-on-restart-chromium/tool-offer.png": "45bfebf3f9b27f3b5f768aa97acedf62a82469e17d4627c15d442b24d99ccd49",
+    "test-results/c6-affected/second-tool-v043-knight-ma-a9c11-er-and-resets-it-on-restart-chromium/owner-range-offer.png": "0ac14f0cb6b172a86f93cd35b168b3d0b288e267206fe7e2d60d598809fa802a",
+    "test-results/c6-affected/second-tool-v043-knight-ma-a9c11-er-and-resets-it-on-restart-chromium/cone-and-splash.png": "3f71fdebd14cc94ebe83fc9c0d66101580310478156f5fe2dd924526ae60e4b9",
+    "test-results/c6-affected/profile-persistence-v043-d-def5b-gameplay-startup-and-source-chromium/storage-denied.png": "82812d371c7a32a68fb02573d008b0635e5676a7af906f1ce565af7b3a36032a",
+    "test-results/c6-affected/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/tool-offer.png": "fe95ca11d01a633960d1e206899b74e444e951cab26d9ae194ffb1e9a33bf355",
+    "test-results/c6-affected/second-tool-v043-eco-guard-62fdd-er-and-resets-it-on-restart-chromium/error-context.md": "07c861e756b51739c73f21142c6513f2f166a586e75978c78e1f64d35b4bd858",
+    "test-results/c6-affected/profile-persistence-v043-k-f5c97-rofile-and-next-run-unlocks-chromium/restored-title.png": "421bce53add9908cc19344cd4237d256557f54a285de5aa8cb8d0058cce4bbec",
+    "test-results/c6-death/.last-run.json": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+    "test-results/c6-death/profile-persistence-v043-d-b5d6c-nd-storage-warning-readable-chromium/death-unlock-warning.png": "a500ba2205fe462c088fac029258e90ec99e222cb684f9177ffeab35ecc1439b"
+  },
+  "raw": {
+    "test-results/c6-final/profile-persistence-v043-e-7b96e-rofile-and-next-run-unlocks-chromium/profile-evidence.json": {
+      "result": {
+        "before": [
+          "upgrade.damage",
+          "upgrade.attack_speed",
+          "upgrade.crit_chance",
+          "upgrade.move_speed",
+          "upgrade.health",
+          "upgrade.pickup_radius",
+          "upgrade.fracture",
+          "upgrade.armour",
+          "upgrade.regeneration",
+          "upgrade.luck",
+          "upgrade.world_surge",
+          "upgrade.world_brittle",
+          "upgrade.accept_frenzy",
+          "upgrade.accept_escalation",
+          "upgrade.evolve_secondary",
+          "upgrade.weapon_range",
+          "upgrade.weapon_collection_sweep",
+          "upgrade.secondary_range"
+        ],
+        "newly": [
+          "weapon.secondary",
+          "upgrade.bloodlust"
+        ],
+        "after": [
+          "upgrade.damage",
+          "upgrade.attack_speed",
+          "upgrade.crit_chance",
+          "upgrade.move_speed",
+          "upgrade.health",
+          "upgrade.pickup_radius",
+          "upgrade.fracture",
+          "upgrade.bloodlust",
+          "upgrade.armour",
+          "upgrade.regeneration",
+          "upgrade.luck",
+          "upgrade.world_surge",
+          "upgrade.world_brittle",
+          "upgrade.accept_frenzy",
+          "upgrade.accept_escalation",
+          "upgrade.equip_secondary",
+          "upgrade.evolve_secondary",
+          "upgrade.weapon_range",
+          "upgrade.weapon_collection_sweep",
+          "upgrade.secondary_range"
+        ],
+        "profile": {
+          "schemaVersion": 2,
+          "gameVersion": "0.4.3",
+          "activeThemeId": "eco_guardian",
+          "contentSchemaVersion": 1,
+          "selectedCharacterId": "character.starter",
+          "unlockedCharacterIds": [
+            "character.starter"
+          ],
+          "unlockedWeaponIds": [
+            "weapon.starter",
+            "weapon.secondary"
+          ],
+          "unlockedUpgradeIds": [
+            "upgrade.bloodlust"
+          ],
+          "settings": {
+            "difficulty": "experienced",
+            "presentationQuality": "low",
+            "detailedUpgradeCards": true,
+            "reducedMotion": false,
+            "muted": true,
+            "minimapOpacity": 0.6
+          },
+          "statistics": {
+            "runsPlayed": 1,
+            "totalKills": 25,
+            "totalDamage": 123.25,
+            "bestLevel": 5,
+            "bestKills": 25,
+            "bestDamage": 123.25,
+            "upgrades": {}
+          },
+          "completedRuns": 1,
+          "deaths": 0,
+          "bestDurationMs": 1234,
+          "createdAt": "2026-10-20T01:07:51.267Z",
+          "updatedAt": "2026-10-20T01:07:51.879Z"
+        },
+        "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36"
+      },
+      "restored": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "eco_guardian",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [
+          "upgrade.bloodlust"
+        ],
+        "settings": {
+          "difficulty": "experienced",
+          "presentationQuality": "low",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": true,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 25,
+          "totalDamage": 123.25,
+          "bestLevel": 5,
+          "bestKills": 25,
+          "bestDamage": 123.25,
+          "upgrades": {}
+        },
+        "completedRuns": 1,
+        "deaths": 0,
+        "bestDurationMs": 1234,
+        "createdAt": "2026-10-20T01:07:51.267Z",
+        "updatedAt": "2026-10-20T01:07:51.879Z"
+      },
+      "browserVersion": "151.0.7922.34",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    "test-results/c6-final/profile-persistence-v043-a-76b21--reload-retains-earned-tool-chromium/actual-terminal.json": {
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "eco_guardian",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "default",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 0,
+          "totalDamage": 0,
+          "bestLevel": 1,
+          "bestKills": 0,
+          "bestDamage": 0,
+          "upgrades": {}
+        },
+        "completedRuns": 1,
+        "deaths": 0,
+        "bestDurationMs": 1000,
+        "createdAt": "2026-10-20T01:07:54.277Z",
+        "updatedAt": "2026-10-20T01:07:56.499Z"
+      },
+      "browserVersion": "151.0.7922.34",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "rate": 0.5,
+      "mode": "test",
+      "aid": "legacy short complete ending, noAmbient/noContact/noHazards/noXp"
+    },
+    "test-results/c6-final/profile-persistence-v043-k-f5c97-rofile-and-next-run-unlocks-chromium/profile-evidence.json": {
+      "result": {
+        "before": [
+          "upgrade.damage",
+          "upgrade.attack_speed",
+          "upgrade.crit_chance",
+          "upgrade.pierce",
+          "upgrade.projectile_count",
+          "upgrade.move_speed",
+          "upgrade.health",
+          "upgrade.pickup_radius",
+          "upgrade.piercing_momentum",
+          "upgrade.on_kill_explosion",
+          "upgrade.fracture",
+          "upgrade.chain_reaction",
+          "upgrade.armour",
+          "upgrade.regeneration",
+          "upgrade.luck",
+          "upgrade.world_surge",
+          "upgrade.world_brittle",
+          "upgrade.accept_frenzy",
+          "upgrade.accept_escalation",
+          "upgrade.evolve_secondary",
+          "upgrade.secondary_range"
+        ],
+        "newly": [
+          "weapon.secondary",
+          "upgrade.bloodlust"
+        ],
+        "after": [
+          "upgrade.damage",
+          "upgrade.attack_speed",
+          "upgrade.crit_chance",
+          "upgrade.pierce",
+          "upgrade.projectile_count",
+          "upgrade.move_speed",
+          "upgrade.health",
+          "upgrade.pickup_radius",
+          "upgrade.piercing_momentum",
+          "upgrade.on_kill_explosion",
+          "upgrade.fracture",
+          "upgrade.bloodlust",
+          "upgrade.chain_reaction",
+          "upgrade.armour",
+          "upgrade.regeneration",
+          "upgrade.luck",
+          "upgrade.world_surge",
+          "upgrade.world_brittle",
+          "upgrade.accept_frenzy",
+          "upgrade.accept_escalation",
+          "upgrade.equip_secondary",
+          "upgrade.evolve_secondary",
+          "upgrade.secondary_range"
+        ],
+        "profile": {
+          "schemaVersion": 2,
+          "gameVersion": "0.4.3",
+          "activeThemeId": "eco_guardian",
+          "contentSchemaVersion": 1,
+          "selectedCharacterId": "character.starter",
+          "unlockedCharacterIds": [
+            "character.starter"
+          ],
+          "unlockedWeaponIds": [
+            "weapon.starter",
+            "weapon.secondary"
+          ],
+          "unlockedUpgradeIds": [
+            "upgrade.bloodlust"
+          ],
+          "settings": {
+            "difficulty": "experienced",
+            "presentationQuality": "low",
+            "detailedUpgradeCards": true,
+            "reducedMotion": false,
+            "muted": true,
+            "minimapOpacity": 0.6
+          },
+          "statistics": {
+            "runsPlayed": 1,
+            "totalKills": 25,
+            "totalDamage": 123.25,
+            "bestLevel": 5,
+            "bestKills": 25,
+            "bestDamage": 123.25,
+            "upgrades": {}
+          },
+          "completedRuns": 1,
+          "deaths": 0,
+          "bestDurationMs": 1234,
+          "createdAt": "2026-10-20T01:07:52.547Z",
+          "updatedAt": "2026-10-20T01:07:53.027Z"
+        },
+        "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36"
+      },
+      "restored": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "eco_guardian",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [
+          "upgrade.bloodlust"
+        ],
+        "settings": {
+          "difficulty": "experienced",
+          "presentationQuality": "low",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": true,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 25,
+          "totalDamage": 123.25,
+          "bestLevel": 5,
+          "bestKills": 25,
+          "bestDamage": 123.25,
+          "upgrades": {}
+        },
+        "completedRuns": 1,
+        "deaths": 0,
+        "bestDurationMs": 1234,
+        "createdAt": "2026-10-20T01:07:52.547Z",
+        "updatedAt": "2026-10-20T01:07:53.027Z"
+      },
+      "browserVersion": "151.0.7922.34",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      }
+    }
+  },
+  "limits": {
+    "profileBytes": 262144,
+    "depth": 12,
+    "entries": 512,
+    "idLength": 128,
+    "number": 1000000000000000.0
+  },
+  "deferred": [
+    "full-app browser/stress",
+    "native/long campaigns",
+    "actual Safari/browserOS/older physicalGPU temporarily waived/unverified",
+    "C7 portable UI/codec"
+  ],
+  "finalCheckedAt": "2026-10-20T05:45:40.181031+00:00",
+  "finalBuild": {
+    "startGameMinifiedBytes": 1631102,
+    "startGameGzipKb": 381.07,
+    "knownPhaserChunkAdvisory": true
+  },
+  "timing": {
+    "phaseStarted": "2026-10-20T01:03:01Z",
+    "usageInterruptionAfter": "2026-10-20T01:08:02Z",
+    "ownerResumed": "2026-10-20T05:41:29Z",
+    "resumedDeadline": "2026-10-20T07:11:29Z",
+    "resumedFinal20Reserve": "2026-10-20T06:51:29Z",
+    "finalCheckedAt": "2026-10-20T05:45:40.181031+00:00",
+    "resumedElapsedSeconds": 251.2,
+    "totalWallElapsedSeconds": 16959.2,
+    "interruptedWallTimeIsNotActiveWork": true
+  },
+  "recordingCorrection": "Staged diff review caught a temporary hash-recorder path-variable collision overwriting one unit file after checks. Restored HEAD plus intended schema2 assertion, verified exact two-line diff, reran all final software checks successfully and refreshed hashes with distinct output/file variables. Runtime and captured browser evidence unchanged."
+}

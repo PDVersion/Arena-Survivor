@@ -1,0 +1,17 @@
+{
+  "head": "2806720f34f64bf774f38fd30e5d9483900c3e23",
+  "runtimeMatchesHead": true,
+  "sourceSha256": {
+    "scripts/performance.ts": "c97f666e4374b072ec5daea55377c1bbc17cd809d4add11af0b01eb7ebcc18c0",
+    "scripts/build-device-pack.ts": "8e0bd137b60b8ab432ed7dd00b49b5854c0e5d3adb40f00b95ba5bc10e1110ea",
+    "tests/playwright.compatibility.config.ts": "ef79b87bbd1148b88777369df4d3ea2f8f053e6c771c77ae3cff960fe020a9a0",
+    "tests/playwright.device-pack.config.ts": "dc2009923b76d6cfdf6eb1c34619051266d1f86ac2880885f96efa04e4606f75",
+    "tests/e2e/phase-five.spec.ts": "57fe72b1eac1ed91669ce40d4dee4d7ca7ddf85463fb09405d68baaca0dc7a4d",
+    "tests/e2e/phase-eight-v03.spec.ts": "7e593014c12c4c56caf1890737c12e88bb891f809907157b6fdc873092f48efd",
+    "tests/e2e/device-pack-v043.spec.ts": "e2510242e4028319318cb2ee633d21fc202968224c0029f1b8f312ce01aa5dab",
+    "tests/native/safari-compatibility.py": "3c1fe7995fa52c046876dccab0b4f071fda85f8cfbe01ee6726a96fad427a68b",
+    "tests/device-pack/device-check.ts": "682c918a7382aaec506fe048970790c8641e9b57be2f45c1ca4b78124fd6e126",
+    "tests/device-pack/device-check.html": "9348365f935da4a42406c275eb0bd2194fd345832c5ecbdfc21679894d6420c9",
+    "tests/device-pack/serve.mjs": "2acf9270b1bc1bc398f59361c56f2094b4f0a5060b51bfadc9971d4c19aa5078"
+  }
+}

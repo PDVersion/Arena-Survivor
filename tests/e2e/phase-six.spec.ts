@@ -27,14 +27,14 @@ async function choosePendingUpgrades(page: Page, deadlineMs: number): Promise<vo
 }
 
 async function activateNearbyShrine(page: Page): Promise<void> {
-  for (let press = 0; press < 12; press += 1) {
-    const activated = await page.evaluate(
+  // One consumed press: retrying E before telemetry catches up can activate a
+  // second adjacent shrine and invalidate this single-shrine reward fixture.
+  await page.keyboard.down("KeyE");
+  try {
+    await expect.poll(() => page.evaluate(
       () => window.__ARENA_TEST__?.getSnapshot().shrine?.activated,
-    );
-    if (activated) return;
-    await page.keyboard.press("KeyE");
-    await page.waitForTimeout(100);
-  }
+    )).toBe(true);
+  } finally { await page.keyboard.up("KeyE"); }
 }
 
 test("Horde shrine activates once, schedules 100 tagged enemies, and creates bonus XP", async ({
@@ -63,7 +63,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.activated))
     .toBe(true);
-  await page.keyboard.press("Space");
+  // Keep spawn-time reward scaling stable until the reward assertions finish.
   await choosePendingUpgrades(page, 15_000);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().shrine?.scheduled), {
@@ -72,7 +72,12 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
     .toBe(100);
 
   const surged = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
-  expect(surged?.shrine).toMatchObject({ activated: true, scheduled: 100, feedbackCount: 1 });
+  expect(surged?.shrine).toMatchObject({ activated: true, scheduled: 100 });
+  // Feedback is global; the surge itself and its100 arrivals occur once.
+  expect(surged?.world?.activations["shrine.spawn_surge"]).toBe(1);
+  expect(surged?.shrine?.feedbackCount).toBe(
+    surged?.shrine?.instances.filter((shrine) => shrine.activated).length,
+  );
   expect(surged?.shrine?.spawned).toBeLessThanOrEqual(100);
   expect(surged?.shrine?.enemiesSpawned).toBe(surged?.shrine?.spawned);
   expect(surged?.run?.liveEnemies).toBeLessThanOrEqual(surged?.combat?.enemyCap ?? 0);
@@ -100,6 +105,11 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
     const perPickup = resolvedReward * toughness * (rewarded?.world?.xpMultiplier ?? 1);
     expect(collected / perPickup).toBeCloseTo(Math.round(collected / perPickup));
   }
+  // A later interaction may select another shrine, but cannot restart this surge.
+  await page.keyboard.press("Space", { delay: 80 });
+  const repeated = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  expect(repeated?.world?.activations["shrine.spawn_surge"]).toBe(1);
+  expect(repeated?.shrine?.scheduled).toBe(100);
 });
 
 test("restart during an active surge clears its scheduler and tagged enemies", async ({ page }) => {

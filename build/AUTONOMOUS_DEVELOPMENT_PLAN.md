@@ -328,8 +328,9 @@ arbitrarily or add a service worker merely to silence the large-chunk warning.
 The affected Session 6/7 gates do not complete P5. Session 8 completed the
 [acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
 probe could not reach hidden state. Sessions 9–10 subsequently verify native
-overlays and the scoped consolidated lifecycle campaign. Continue with
-[Session 12 / P5](SESSION_12_PROMPT.md) for remaining compatibility evidence. Prefer
+overlays and the scoped consolidated lifecycle campaign. Session15 explicitly
+temporarily waives the outstanding external browser/device checks; continue
+[current C7 work](SESSION_20_PROMPT.md). Historical evidence stays source-bound. Prefer
 existing evidence and deterministic checks; only a necessary bounded serial
 browser fixture is allowed. Long soaks/full local suites remain deferred, not
 passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
@@ -359,13 +360,26 @@ WebKit. Test-only key-hold/resize-readiness corrections; no runtime fix. See
 [compatibility report](performance/P5_COMPATIBILITY_REPORT.md). Actual branded/
 platform/older physical-device coverage remains open.
 
-### Session 12 — P5: remaining selected targets
+### Session12 — P5 branded checks and P6 software slice
 
-Use [SESSION_12_PROMPT.md](SESSION_12_PROMPT.md). Obtain actual Safari/Edge,
-missing branded-release/platform combinations and representative physical older
-integrated-GPU access/captured evidence. No need to reselect the support list.
-Do not rerun accepted unchanged engine/native/long campaigns or create another
-inventory-only commit. P5 stays open; P6/content remain gated.
+Owner requests P6 work alongside remaining P5.26 focused Edge155/154 checks
+and two unpatched Firefox158/157 smokes pass. Safari access remains blocked;
+owner confirms no older device. P6 software has96 browser/stress passes/six
+opt-in skips/zero retries,488units/types/lint/build/audit, a verified portable
+kit/manual checklist and18 frozen warmed Default/Low60/150/300 windows. See
+[readiness report](performance/P6_READINESS_REPORT.md). Physical/Safari/other
+release/platform acceptance remains pending, not passed.
+
+### Session13 — owner-approved C1 foundation
+
+On 2026-10-20 the owner explicitly approves planned C1–C7 after verified software
+checks, with missing browser/device evidence release-blocking. C1 is verified locally, including the second tool, owner-only progression,
+on-hit splash and the combined affected gate. Session15 verifies C2 evolution;
+Session16 verifies C3 shrines/curses; continue C4 using
+[SESSION_20_PROMPT.md](SESSION_20_PROMPT.md). Owner explicitly
+temporarily waives missing actual Safari/browser-OS/older physical-device checks;
+waived/unverified, never passed. Historical measurements remain source-bound.
+No optional/sprite scope is added.
 
 ### After P5 — P6: combined readiness gate and real-device report
 
@@ -747,3 +761,29 @@ again. Current C1–C7, F1–F20, SAVE_DATA and the active plans govern what rem
 10. **Per-enemy invulnerability windows**, revisited alongside the above.
 
 ---
+
+
+## 2026-10-20 selected C1–C7 checkpoint
+
+Planned C1–C7 local gates are verified; C7 delivers the bounded F7 portable-save
+flow following C6 persistence/unlocks. Completed records are in MASTER_BUILD_PLAN
+and individual content reports. This does not select R01–R06 or other optional
+proposals, start V0.4.4, or turn temporarily waived external browser/device evidence
+into a pass. Session21 retains owner delivery/acceptance decisions; no remote
+publication or additional broad campaign is authorized.
+
+## Session21 selected correction follow-up
+
+The next local work is Q6 in BUILD_PLAN_V0.4.3: diagnose/correct player pose motion,
+make cone feedback correspond to actual pulses/hits, and implement owner-selected
+vacuum primary-target growth with its own weapon upgrades. Retain a modest early
+cap; exact later integer steps/ceiling and evolution tuning need theme-owned data
+and balance validation. Planning is updated; runtime implementation/verification
+remains open. This supersedes delivery as the immediate next priority, preserving
+local-only delivery and the temporarily waived/unverified external checks.
+
+Session21 delivery revision: owner explicitly authorizes wrapping up and creating
+the V0.4.3 PR before Q6 implementation. Publish a draft with completed C1–C7 and
+selected planning; Q6 stays open. Fresh local delivery software checks pass but
+audit reports a high finding in Vite6.4.3; no dependency change/bypass is selected.
+PR Actions must verify the actual delivered head. No merge/deployment is authorized.

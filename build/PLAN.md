@@ -191,6 +191,17 @@ general upgrade pool.
 The first priority is making this one action legible and satisfying before
 adding more weapons or restoring the parked projectile interaction families.
 
+V0.4.3 C1 adds one contrasting second automatic tool through ordinary level-up
+choices, after the readable starter and software prerequisites. The Cleanup
+Vacuum resolves a short forward cone of at most three primary targets, with
+bounded on-hit splash around each hit. It needs no kill or manual switching.
+Both slots keep independent simulation clocks. Longer Grabber/Collection Sweep
+belong to the grabber; the Vacuum has its own reach track. Shared damage,
+attack-speed and crit gains still improve both. On-hit splash is a separate
+ledger category from on-kill Compaction Burst, which remains parked in eco.
+This is a game mechanic, not a material effectiveness or real-world handling
+claim. New tools use primitives until the V0.4.4 roster/sprite gate.
+
 ---
 
 # Enemy Archetypes
@@ -1424,3 +1435,88 @@ non-critical starter hits deal 12 / 10 / 10. Only this role's health changes;
 time, Pollution and elite scaling still apply to later or modified enemies.
 This is a playability override to the earlier persistence-derived health model,
 not an environmental measurement. See REC-112 and `balance/Q4_OPENING_REPORT.md`.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — voluntary world bargains
+
+One additional scheduled shrine is Unmanaged Dump / Shrine of Defiance. It
+raises Pollution/Chaos and the run's XP product through the existing world model.
+Two one-time level-up curses offer arrival pressure or Pollution/Chaos pressure
+for XP: Overflow Contract / Frenzy Pact and Contamination Pact / Doom Pact.
+Acceptance lasts for the current run; walking past a shrine or choosing another
+card declines it. Restart clears all accepted curses and world products.
+
+Curse definitions own their pressure/reward values; normal upgrade entries refer
+to their stable IDs. Cards show resolved XP reward and primary pressure first,
+because only three detail rows fit. Other pressure effects remain inspectable
+through the world stats; chosen bargains remain in the upgrade tally. The sixth
+shrine arrives at86% authored duration using existing placement/interaction.
+This bounded C3 adds these choices, not every illustrative shrine/curse example
+above; no Blood Altar/forced legendary encounter, knowledge question, boss,
+persistence or sprite work is introduced.
+
+
+### V0.4.3 C5 — readable boss climax
+
+One unique mini threat arrives at half the authored duration; one final threat
+arrives at its limit. Both use ordinary enemy combat plus a harmless fixed-circle
+warning and one pulse. The final fight stays live past the timer; defeating the
+boss opens the existing choice to continue endlessly or stop arrivals and clear
+remaining enemies/causal work. Pausing or earning a level does not discard the
+fight's intent. Unique bosses are not copied by duplication sites and never
+become ordinary random arrivals. Both themes own their fiction/tuning; these
+primitive encounters add no sprite or layered-material knowledge system.
+
+## V0.4.3 C6 implementation checkpoint /2026-10-20
+
+Browser-local schema2 now retains six settings, terminal-only lifetime statistics,
+completed/death counts, longest run and stable identity/unlock IDs. Both themes
+unlock the existing secondary tool after one finished run and bloodlust after25
+finished-run kills, affecting the next run only. These are the planned mechanical
+content unlocks, distinct from exploratory educational cosmetic feats. No permanent
+stat bonus, active-run suspension, sprite or new factual content is added.
+Corrupt storage is preserved; denied/quota storage falls back to memory with visible
+warnings. Schema1 migration is deterministic. C7 portable export/import/preview and
+explicit backup recovery are implemented through the same validated profile model.
+
+
+### V0.4.3 C7 — portable progress
+
+Title Settings → Manage Save exports the complete implemented profile to encoded
+text/download, or previews a file/pasted save before explicit confirmation. Both
+themes supply labels/warnings; stable IDs retain identity across display-name
+changes. Unknown valid IDs remain saved and warn about unavailable selection.
+Backup restore and reset each need confirmation. No save management is offered
+during a live run; no transient simulation objects or suspended run are persisted.
+Current progress is preserved on cancellation/invalid input/storage failure, and
+corrupt source is quarantined without replacing a good backup. See SAVE_DATA.md
+for exact format, bounds, storage transaction limits and accepted schema migration.
+
+## Session21 selected correction — vacuum target progression
+
+The C1/C2 descriptions above record the shipped local baseline: three primary
+vacuum targets, four after evolution. Owner accepts a modest cap at early weapon
+levels and selects increasing primary targets through the vacuum's own upgrade
+progression. This replaces the fixed-cap design intent for the next Q6 correction;
+it is not implemented yet. Exact level thresholds, increments, finite ceiling and
+evolution tuning remain subject to theme-owned data and `npm run balance`.
+Earned growth must survive evolution without a reduction. Shared damage/speed/crit,
+independent clocks and bounded splash stay separate; unrelated player level-ups
+do not automatically level this tool. The visible cone must communicate actual
+pulse timing/affected targets, and player pose alignment remains a separate open
+presentation correction. See BUILD_PLAN_V0.4.3 Q6 for verification and scope.

@@ -38,5 +38,24 @@ export interface WorldModifyEffect {
   readonly xpMultiplier?: number;
 }
 
-export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect;
-import type { SkillId } from "./ids";
+export interface EquipWeaponEffect {
+  readonly kind: "weapon.equip";
+  readonly weaponId: WeaponId;
+}
+
+/** A pick-count condition; quality gains never substitute for earned picks. */
+export interface EvolveWeaponEffect {
+  readonly kind: "weapon.evolve";
+  readonly fromWeaponId: WeaponId;
+  readonly weaponId: WeaponId;
+  readonly requiredUpgradeId: UpgradeId;
+  readonly requiredPicks: number;
+}
+
+export interface AcceptCurseEffect {
+  readonly kind: "curse.accept";
+  readonly curseId: CurseId;
+}
+
+export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect | EvolveWeaponEffect | AcceptCurseEffect;
+import type { CurseId, SkillId, UpgradeId, WeaponId } from "./ids";

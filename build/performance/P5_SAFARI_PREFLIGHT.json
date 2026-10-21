@@ -1,0 +1,13 @@
+{
+  "purpose": "native Safari WebDriver availability only",
+  "boundSeconds": 20,
+  "driverVersion": "Included with Safari 26.5.2 (21624.2.5.11.8)",
+  "response": {
+    "value": {
+      "error": "session not created",
+      "message": "Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.",
+      "stacktrace": ""
+    }
+  },
+  "driverOutput": ""
+}

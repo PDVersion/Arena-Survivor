@@ -29,6 +29,9 @@ consolidation; duplicate plan files are removed rather than maintained in parall
 - [V0.4.3 — Completed P0–P4 performance slices](#v0-4-3-performance)
 - [V0.4.3 — Verified P5 lifecycle and startup slices](#v0-4-3-p5-slices)
 - [V0.4.3 — Verified PR #25 CI repair](#v0-4-3-ci-repair)
+- [V0.4.3 — C2 same-slot evolution](#v0-4-3-c2)
+- [V0.4.3 — C3 shrines and curses](#v0-4-3-c3)
+- [V0.4.3 — C6 local profile and unlocks](#v0-4-3-c6)
 
 <a id="v0-1"></a>
 ## V0.1 — First playable
@@ -2920,3 +2923,365 @@ renderer/DPR/source/raw details, fixtures/limits and deferred evidence. Actual
 Safari/Edge, missing branded-release/platform combinations and physical older
 integrated-GPU hardware remain pending; WebKit/software rendering is not their
 acceptance. P5 remains open; P6/content not started. Session12 remains P5.
+
+
+<a id="v0-4-3-p5-branded"></a>
+## V0.4.3 — P5 branded-browser follow-up / Session12
+
+26 serial focused checks pass across native stable Edge155/154 applications;
+two unpatched headed Firefox158/157.0.1 application smokes pass, on M5/WebGL,
+with vendor checksum/signature verification and fresh owned profiles. Safari26.5.2
+still blocks session creation before gameplay because automation is disabled.
+No runtime/dependency change. [Follow-up report](performance/P5_COMPATIBILITY_FOLLOWUP.md)
+retains exact scopes, raw records and cleanup. Owner confirms no older device;
+P5 remains open for missing browser/platform/device evidence. Native/long accepted
+campaigns were not repeated. P6 software preparation is explicitly authorized,
+not a hardware pass or content gate waiver.
+
+<a id="v0-4-3-p6-software"></a>
+## V0.4.3 — P6 verified software/readiness-tool slice / Session12
+
+The combined local gate passes96 Chromium/browser/stress cases, six explicit
+opt-in skips, zero retries/flaky cases;488units/57files,types/lint/build/audit
+and whitespace pass. Eight focused cases repair two evidenced CI fixture flakes
+without runtime or assertion changes. The portable instrumented device kit is
+built separately from production and verified with a real60-second export and
+server-boundary case. Clock/CPU scope and manual target checklist are explicit.
+
+18 independent warmed60-second Default/Low windows at60/150/300 actors complete
+in1,297.8s on M5/SwiftShader, with exact populations, no errors or >100ms stalls.
+Median p95 Default25.1/25.5/41.7ms; Low17.6/24.3/25.0ms. Tool/runtime source hashes
+match. No production throughput, native event, continuous-soak or older-device
+acceptance is inferred. [P6 report](performance/P6_READINESS_REPORT.md) retains
+raw results/limits; P5 and overall acceptance remain open. Required owner reply
+on release-versus-build gate classification is pending; C1–C7 has not started.
+
+
+<a id="v0-4-3-c1-foundation"></a>
+### V0.4.3 C1 foundation — automatic slots and attack ownership (2026-10-20)
+
+Owner explicitly approves planned C1–C7 after verified software checks while
+missing P5/P6 browser/device acceptance remains release-blocking. This is an
+ordering revision, not missing evidence being accepted.
+
+Completed local foundation: theme-owned two-slot capacity, serializable ordered
+loadouts with independent successful-attack clocks and no catch-up bursts;
+restart reconstructs starting slots/clocks and retains difficulty. Actual melee
+and in-flight projectile hits carry their own weapon's armour, knockback and
+lethal source identity. Existing ledger, XP, rate0.5 and shutdown ownership stay
+intact. Normal play still has only its original starter.
+
+Typecheck,495units/58files, lint/build/diff and11 unique affected serial browser
+cases pass (one new-case fixture armour-points correction explicitly recorded).
+No full/stress/native/long/startup campaign repeated or later-head CI inferred.
+See [C1 foundation report](content/C1_FOUNDATION_REPORT.md). C1 second tool,
+owned offers, splash, simulator and combined gate remain in the active plan;
+C2–C7 are not started. No new publication or workflow dispatch.
+
+
+<a id="v0-4-3-c1"></a>
+### V0.4.3 C1 — second tool, owned upgrades and on-hit splash (2026-10-20)
+
+Verified local phase on `codex/v0.4.3`, following foundation3b2b927. Ordinary
+level-up offers equip Cleanup Vacuum / Runic Fan in the empty second slot.
+Existing melee/projectile union extended with optional authored sector geometry;
+no parallel delivery system. Both slots fire independently. Weapon-owned offers
+live beside their definitions, require that owner equipped, and apply local
+modifiers while shared upgrades remain shared. Acquisition is one-time/common;
+tier scaling/rounding/floors remain for progression. Pause stats expose both tools.
+
+Bounded non-recursive on-hit splash has its own capped applied-damage ledger
+column, weapon source and floating-number aggregation; on-kill explosion stays
+distinct. Skip primary-list entries already killed by prior splash. The exact
+eco probe records27 actual damage /10.2 splash /three kills /3XP, and flushes
+all30.6 intended display damage, overkill included. A controlled dead-primary
+probe leaves one health rather than gaining a false splash. Theme definitions
+own all ranges, angles, cadence, damage and limits. Rate0.5, XP, caps, sprites,
+persistence/dependencies and Phaser physics shutdown ownership remain unchanged.
+
+Typecheck,509units/59files,lint/build/diff pass.15 unique affected serial browser
+cases verified across the14-case combined gate and final5-case feedback subset;
+zero retries/failures. Both-theme real-XP/keyboard acquisition and owner-card
+choices, restart, bounded300-mixed active combat in Default/Low, prior independent
+clocks/in-flight provenance, cards/pause/resize/grabber/sweep and terminal damage
+flush. Test/SwiftShader WebGL, not hardware compatibility. Actual logical/display
+viewport, explicit fixture aids, partial/preliminary source distinctions, exact
+observations/hash records and reviewed screenshot paths are in
+[C1 report](content/C1_SECOND_TOOL_REPORT.md). Both themes/all eight models/three
+difficulties run through balance; two new contact bands model the second tool.
+
+C1's local gate passes; C2 evolution is next. P5/P6 missing browser/platform/older
+physical integrated-GPU evidence remains release-blocking under owner approval,
+not passed. Old frozen measurements/portable pack do not certify changed source.
+No full/long/native/startup campaign, new publication, dependency or sprite work.
+
+
+<a id="v0-4-3-c2"></a>
+### V0.4.3 C2 — same-slot weapon evolution (2026-10-20)
+
+Owner explicitly temporarily waives outstanding actual Safari, missing selected
+browser/OS combinations and older physical integrated-GPU checks. They are waived/
+unverified, never passed, superseding the earlier release-blocking classification
+for now. Prior reports remain source/scenario-bound; no support certification or
+new campaign/publication is inferred. C1/C2 local gates pass; C3 is next.
+
+Theme-owned standalone evolution choice unlocks after four actual secondary reach
+picks. Tier quality keeps earned gains without counting extra picks. New Cyclone
+Vacuum/Runic Tempest definitions replace the source in its ordered slot, preserving
+capacity, other slots and next attack clock. Transfer exact local modifiers once,
+retain global gains/selected/tallied IDs, remove obsolete offers, reject stale or
+duplicate choice without spending pending credit, and reset to the starting loadout.
+Definitions/copy use the existing cone/splash presentation and bounded damage path;
+no XP/rate0.5/enemy tuning, dependency, persistence, sprite or physics teardown edit.
+
+Ownership: core ids/effects, theme validation and both themes' weapons/index/copy,
+upgrade application/eligibility/tiers/description, weapon-loadout replacement,
+build-models/pacing-simulator, deterministic evolution and affected selector/tier
+units, existing second-tool browser fixture, reports and governing documentation.
+No production test control is introduced. A replacement keeps immutable launch
+snapshots and exact actual weapon provenance through the existing attack path.
+
+527units/60files,typecheck/lint/build/diff pass;18 new deterministic cases.
+Initial8 browsers:7pass/1fixture assertion failure in25.055s. Three-target eco
+combat has no splash lethal; correct to four targets, no runtime fix. Two corrected
+evolution cases pass14.6s; after final player-copy shortening only those two pass
+14.5s. Eight unique affected cases verified, all serial/one worker/zero retries.
+Both themes take actual XP/80ms keyboard offers into evolution, retain57.6 earned
+reach and1400clock, record36/40actual damage with19.8/21.8splash,4kills and4/8XP,
+direct/splash evolved provenance. Short Low300-mixed rounds keep cap/ledger and
+drain queues; aided/test/software-renderer scope is explicit. Screenshots reviewed
+under testInfo.outputPath. Ten models/both themes/three difficulties run balance,
+with ideal contact/earliest level7 bands, no survival/offer-frequency inference.
+See [C2 report](content/C2_REPORT.md) and exact source/result/build hashes.
+Full/native/long/startup campaigns deferred; marker exclusion inspected without
+repeating startup browsers. Owned server/browser resources cleaned,4213 untouched.
+Session15 prompt retired after this durable record; Session16 continues C3.
+
+
+<a id="v0-4-3-c3"></a>
+### V0.4.3 C3 — additional shrine and run-local curses (2026-10-20)
+
+Add Unmanaged Dump/Shrine of Defiance as sixth scheduled shrine at86% progress:
++1.2Chaos and×1.4XP product through the existing world-multiplier actor, placement,
+interaction, guide and spent/reset paths. Two one-time normal-level-up curses:
+Overflow Contract/Frenzy Pact (×1.3arrival/×1.2XP products) and Contamination Pact/
+Doom Pact (+0.8Chaos/×1.25XP product). Both themes own definitions/offers/copy.
+Curse acceptance records stable IDs separately from shrine activations, composes
+existing world products exactly once, stays untiered, rejects stale choices without
+spending pending credit, and clears on restart. No actors/timers/queues/profile
+adapter, new enemy tuning, sprite/delivery or physics teardown change.
+
+Screenshot review reproduces a hidden numeric reward: the existing three-row
+card detail cap truncates XP after secondary pressure effects. Prioritize resolved
+XP/Chaos/arrivals for curse descriptions only; retain all other lines/order.
+Actual rendered-text and deterministic regression verify visible reward. A test
+expected×1.5 after an accepted arrival curse but omitted the existing Chaos bonus;
+correct expected×1.8, not gameplay coefficients. Reverse product-order tests use
+floating tolerance, preserving fractional XP without artificial rounding.
+
+Ownership: core IDs/contracts/effects; theme validation and both themes' shrines/
+curses/index/copy; world-modifiers, upgrades/tiers/describer, run state and narrow
+scene wiring; simulator initial-world fixture and balance CLI; alternate fixture,
+world/content/tier units plus20 C3 rule cases and bounded browser fixture; reports
+and governing records. Existing shrine/upgrade tests keep meaningful assertions
+with new baseline metadata, optional role and all-role Chaos5.4.
+
+547units/61files,typecheck/lint/build/diff pass. Initial7 browsers pass40.098s;
+visual correction followed by2fixture expectation failures, corrected final2pass
+12.4s. Seven unique affected cases verified, all serial/one worker/zero retries.
+Both themes use real XP/seeded eligible draw/80ms keyboard and E activation,
+repeat refusal, tagged0.375XP→1.18125once, pause/resize and reset. Short requested
+300-mixed active intervals stay≤cap300/current278/300, backlog0; scripted clock/
+travel/aids and software renderer limits explicit. Existing natural shortened
+arrival/placement/guide and retained Duplication cases also pass.
+
+120 coarse balance scenarios compare60 baseline (raw output identical to C2)
+with60 all-C3-choices-at-start fixtures, not human survival/offer-frequency/
+throughput evidence. See [C3 report](content/C3_REPORT.md) and exact source/result/
+build/image hashes. External browser/device checks remain temporarily waived/
+unverified under owner revision; old P5/P6 results/kit remain source-bound.
+No full/native/long/startup campaign, publication or dependency change. Owned
+resources cleaned and4213 untouched. Session16 retired after recording;
+Session17 continues C4 elite modifiers; its completed record follows.
+
+
+<a id="v0-4-3-c4"></a>
+### V0.4.3 C4 — bounded elite family (2026-10-20)
+
+Baseline elite chance remains; successful rolls choose baseline/split/shield/
+acceleration. Both themes own tuning and copy; exact variant IDs inherit without
+reroll across duplication, role offspring and Fragmentation. One split generation
+(two same-role children) retains lineage depth and half source reward per child;
+elite/world multipliers apply once. Shield halves damage above half health before
+actual capped ledger; acceleration ramps×1→1.5 over3000 simulation-ms and freezes
+outside playing. Theme markers2/◇/» follow sprite/primitive actors and clean up
+on destruction; Phaser teardown remains engine-owned. Existing chase defaults for
+non-split descendants remain, split movement inherits.
+
+Reproduced capacity defect drops the second queued split when one slot is free.
+Returnfalse from the existing causal lane at capacity, retaining work; deterministic
+actual-method tests lock pending identity/reward/depth and24-event budget. Browser
+probe records failedpending0 before fix and correctedpending1→0 after space frees.
+No speculative lifecycle change.
+
+`src/game/core/archetypes/{categories,contracts}.ts`, `src/game/content/define-theme.ts`, both themes’ `elites.ts`/`copy.ts`, `src/game/systems/elites/elites.ts`, `src/game/entities/enemy-actor.ts`, narrow spawn/death/damage/movement/telemetry wiring in `src/game/scenes/run-scene.ts`, `tests/unit/elites/**`, affected content fixtures/tests, `tests/e2e/elite-family-v043.spec.ts`, and C4 reports plus governing plan/status/master/progress/reconciliation/theme/content-map/handoff/README records. No later phase scope.
+
+561units/63files,typecheck/lint/build/diff pass;14new deterministic cases. Six unique
+affected serial browser cases verify rules/wiring/existing interactions, zero
+retries. Final expanded both-theme probe includes100parent→200child burst, depth1,
+300kills, cap≤300, empty queues. Shield ledger1then2, raw taggedXP7.5 exactly,
+zero-reward fracture children, duplication/offspring IDs and paused acceleration.
+Screenshots reviewed under testInfo.outputPath; source/build/image hashes in
+[C4 results](content/C4_RESULTS.json), limits and attempts in [report](content/C4_REPORT.md).
+60baseline balance scenarios complete; simulator does not model elite families.
+Aided/test/software-renderer checks do not imply sustained throughput/survival.
+Full/native/long/startup campaigns deferred, external checks temporarily waived/
+unverified. Local only; remoteCI39189877476 covers2806720, never this source.
+Session17 retired after recording; Session18 continues C5, C5–C7 remain unbuilt.
+
+
+<a id="v0-4-3-c5"></a>
+### V0.4.3 C5 — unique boss encounters and live final fight (2026-10-20)
+
+Both themes author unique mini50%/final100% enemies, primitive presentation,
+current/max health rows and fixed-circle simulation warnings/pulses. Real actors
+share cap300/hash/targeting/armour/capped damage/lethal/on-kill/XP; no elite rolls,
+children or duplication. Due capacity work remains due; commit spawn identity
+only on success and reset it on reconstruction. No queued/live actor is deleted
+to admit a boss. Attack state/cues at most two, one pulse per warning/no catch-up.
+
+Production time limit enters live boss_fight with retained activePhase through
+pause/focus/level-up; movement/combat/XP continue. Shared pressure selector caps
+timed boss/clearing at1 consistently across world/director/hazards/elite chance/
+HUD/pause. Only endless escalates further. Final lethal pays/removes normally,
+then existing held decision offers endless or clearing, which still waits on
+causal backlog. If a lethal commits during level_up, keep the earned choice and
+open time_up immediately after it without one frame of resumed physics; actual
+coordinator regressions lock this. Pure generic helpers opt in; normal production
+and test scenes enable bosses; explicit atTimeUp legacy fixtures alone bypass.
+
+Active Session18 ownership (claimed2026-10-20 before edits): core archetypes
+ids/contracts; content define-theme validation; both themes enemies/bodies/copy;
+state run-state/statistics; systems/bosses/**; systems/simulation/pacing-simulator/format-report; scenes/run-scene; ui/boss-health-ui/hud;
+test-support/telemetry-bridge; deterministic bosses/run-state/focus/interface/content/separation/simulation/shutdown units;
+tests/e2e/bosses-v043.spec.ts and affected overtime fixture; content C5 report/results,
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP, C3 report successor link, status/progress/master/
+reconciliation and session successor. No persistence/dependencies/sprites.
+
+583units/64files,typecheck/lint/build/diff pass;22 new deterministic cases. Four
+real-scene both-theme×ending cases plus two legacy ending checks pass serially,
+zero retries. Initial4 only fail final fixture global polling after prior game
+assertions; corrected4pass8.5s. Legacy2pass12.7s, final durable4capturepass8.2s
+in dedicated test output after list reporter discarded inline body. Six unique
+cases, no new campaign. Mini300HP/300actual weapon damage; final1800/1800 and
+50rawXPonce, pulse100→71.2 then dodge, exact ids/cue cleanup and queued clearing,
+endless escalation and restart0. Readable resized health/warnings inspected.
+60 coarse pacing/TTK scenarios include bosses only from authored milestones;
+missing values are dashed. Simulator omits encounters/attacks/movement and is no
+human survival/balance acceptance. [C5 report](content/C5_REPORT.md), source/build/
+image hashes and raw evidence in [results](content/C5_RESULTS.json).
+
+Full/stress/native/long/startup campaigns deferred; external actual Safari/browserOS/
+older physical-device checks remain temporarily waived/unverified. Source-bound
+P5/P6 evidence/kit does not certify this changed runtime. No dependencies/save/
+sprite/global XP/rate or second physics teardown. Local-only; remote39189877476
+covers2806720 only. Session18 retired after record; Session19 continues C6.
+
+<a id="v0-4-3-c6"></a>
+### V0.4.3 C6 — local profile, unlocks and lifetime records (2026-10-20)
+
+Schema2 persists all six settings, stable theme/character identity, unknown compatible
+unlock IDs, lifetime totals/bests/upgrade counts, completed/dead counts, longest run
+and version/timestamps. Pure schema1 migration supplies deterministic epoch/defaults.
+Strict bounded validation rejects unsafe keys, unsupported schemas, invalid numeric/
+setting/reference shapes, duplicate IDs and excessive collections/nesting; immutable
+validated snapshots are the storage and future portable-save model.
+
+Boot restores before game construction. Browser-storage getter/read/write/quota failures
+keep play available in memory with themed title/terminal warnings. Corrupt current data
+and any known-good backup remain untouched. Ordinary successful writes preserve the
+previous valid source as backup, then replace current; no active-frame or suspended-run
+serialization. TerminalShown guards one finished contribution, live Field Guide overlays
+are never persisted. Durable aggregates saturate at1e15 while actual run values remain exact.
+
+Both themes grant the secondary tool after one finished run and bloodlust after25
+finished-run kills. Runs snapshot their entitled offer pool; acquisition/evolution still
+use existing conditions/caps/weighting and never gain a bypass query. New unlocks appear
+on the terminal summary and next run; Field Guide shows lifetime labels/locked requirements.
+Unknown IDs survive storage and unavailable selected characters use starter only at runtime.
+
+Session19 ownership (2026-10-20, claimed before edits):
+`src/main.ts`, `src/game/state/{profile-state,settings-state,session-statistics}.ts`,
+`src/game/systems/persistence/**`, `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both themes' `{index,unlocks,copy}.ts`,
+`src/game/scenes/{menu-scene,run-scene}.ts`, `src/game/ui/{pause-menu-ui,run-end-overlay}.ts`,
+`src/game/systems/codex/describe-shrine.ts`, `tests/fixtures/alternate-theme.ts`, affected profile/statistics/content units, `tests/unit/boot/boot-recovery.test.ts`,
+`tests/unit/persistence/**`, `tests/e2e/{profile-persistence-v043,second-tool-v043}.spec.ts`,
+active plan/status/master/progress/reconciliation, SAVE_DATA/PLAN/THEME_ARCHETYPES,
+C6 report/results/current and successor handoffs. No C7 codec/import/export yet.
+
+595units/65files,types/lint/build/diff and production marker exclusion pass.10unique
+necessary serial browser cases verified cumulatively: both-theme profile/settings/reload,
+denied/corrupt startup, actual short terminal exactly-once/reload, four acquisition/evolution
+cases and death/new-unlock/warning layout. Initial two eco failures were fixture seed selection
+using full theme pool rather than snapshotted entitled pool; corrected cases pass. A boot
+recovery unit fixture also needed the new initialization dependency supplied. Final five
+persistence cases pass8.0s; separate death layout1.2s. Raw/source/image hashes and exact
+limits are in [C6 report](content/C6_REPORT.md)/[results](content/C6_RESULTS.json).
+
+No C7 codec/import/export/recovery UI yet; no active-run save, new content art, global
+combat/XP/rate or physics teardown. Broad/stress/native/long/hardware campaigns deferred;
+missing actualSafari/browserOS/older physical-device checks remain temporarily waived and
+unverified. Historical P5/P6 evidence/device pack stays source-bound. Local-only, remote
+39189877476 covers2806720 only. Session19 retired after durable record; Session20 is C7.
+
+
+<a id="v0-4-3-c7"></a>
+## V0.4.3 C7 — portable saves and explicit recovery /2026-10-20
+
+Session20 resumed ownership (2026-10-20, claimed before edits; C6 verified at
+0776c95): root owns `src/game/systems/persistence/profile-service.ts`,
+`tests/unit/persistence/profile-replacement.test.ts`, `README.md`,
+`AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, `build/{BUILD_STATUS,MASTER_BUILD_PLAN,
+AUTONOMOUS_DEVELOPMENT_PLAN,PLAN,SAVE_DATA,THEME_ARCHETYPES}.md`,
+`build/content/C7_{REPORT,RESULTS}.*`, the C6 report successor-link correction and current/successor handoffs.
+Codec agent owns `src/game/systems/persistence/save-codec.ts` and
+`tests/unit/persistence/save-codec.test.ts`. UI agent owns
+`src/game/ui/{save-manager-ui,pause-menu-ui}.ts`, `src/game/scenes/menu-scene.ts`,
+`src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both
+themes' `copy.ts`, `tests/fixtures/alternate-theme.ts`, `src/style.css` and
+`tests/e2e/save-portability-v043.spec.ts`. Parallel implementation follows the
+verified C6 gate; one reviewed C7 commit follows combined verification.
+
+Canonical three-line schema2 export, native SHA-256/Base64URL, strict shared
+bounds/validation/schema1 migration and unknown stable-ID preservation. Title
+Settings alone opens native save management; file/paste share preview and explicit
+confirmation, backup/restore/reset. Native focus/input ownership, selectable clipboard
+fallback, text-only rendering and download/dialog cleanup are verified. Candidate
+snapshots are immutable; backup/quarantine precede one current-key write and only
+then hydration/publication. Pre/post-preview and ordinary-save cross-tab guards
+preserve newer external bytes; compare-before-write is not cross-tab CAS.
+
+655units/67files (45codec+15transaction new cases), types/lint/build/diff and static
+production marker exclusion pass. Five unique affected serial Chromium cases pass
+once/4.4s, one worker/zero retries: title export/download/clipboard/input, both-theme
+file/paste/cancel/import/reload, invalid/oversize preservation and confirmed restore/
+reset. See [C7 report](content/C7_REPORT.md)/[results](content/C7_RESULTS.json) for
+source/compiled/raw/image hashes, attempts, exact aid/environment limits and bounds.
+No pacing/dependency change; balance/audit not repeated. Full/stress/native/long/
+production campaigns deferred; actual Safari/browserOS/older physical GPU checks
+remain temporarily waived/unverified. Historical P5/P6 reports/kit are source-bound.
+No sprites/active-run save/second physics teardown or remote publication. C1–C7 local
+implementation complete; Session20 retires after this durable record and Session21
+retains local delivery/remaining acceptance decisions.
+
+
+## V0.4.3 — PR27 CI repair local verification
+
+Owner-authorized narrow repair of C3 seed-pool mismatch, frame-consumed input,
+single-shrine versus global feedback assertions, and runner simulation-progress
+budgets. Vite6.4.4 resolves the new audit finding.655units/67files, types/lint/
+build/diff/audit0 and7unique affected serial browser cases pass cumulatively.
+See [repair report](performance/PR27_CI_REPAIR.md) for retained failed attempts,
+exact scope and limits. Full current-head remote CI is pending at this checkpoint;
+no milestone/Q6 or missing external acceptance is marked complete.

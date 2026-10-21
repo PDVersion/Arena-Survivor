@@ -1,4 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
+import { archetypeIds } from "../../src/game/core/archetypes/ids";
+import { xpRequiredForLevelOn } from "../../src/game/systems/xp";
 import { activeTheme } from "../../src/game/content/active-theme";
 
 async function snapshot(page: Page) {
@@ -6,7 +8,10 @@ async function snapshot(page: Page) {
 }
 
 async function waitForLevelUp(page: Page, query = ""): Promise<void> {
-  await page.goto(`/?noContact&spawnRadius=320${query}`);
+  // Close real arrivals isolate card/stat wiring from travel and director pace.
+  const role = activeTheme.enemies.find((enemy) => enemy.id === archetypeIds.enemy.fastFragile)!;
+  const count = Math.ceil(xpRequiredForLevelOn(activeTheme.tuning.progression.xpCurve, 1) / role.xpReward);
+  await page.goto(`/?noContact&noHazards&loadHarness=${count}&loadRole=${role.id}&closeLoad&lineLoad${query}`);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status), {
       timeout: 60_000,
@@ -53,7 +58,7 @@ test("a card's stated result matches the pause menu after taking it", async ({ p
 
   const chosen = cards[index]!;
   const claimed = chosen.lines[0]!;
-  await page.keyboard.press(String(index + 1));
+  await page.keyboard.press(String(index + 1), { delay: 80 });
 
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
@@ -80,7 +85,7 @@ test("the detail toggle hides numbers without hiding identity", async ({ page })
   const initial = await snapshot(page);
   expect(initial?.ui?.settings?.detailedUpgradeCards).toBe(true);
 
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen))
     .toBe(true);
@@ -99,7 +104,7 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
     .toBe("playing");
 
   const running = await snapshot(page);
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen))
     .toBe(true);
@@ -111,13 +116,13 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
   expect(held?.run?.elapsedMs).toBe(opened?.run?.elapsedMs);
   expect(opened?.run?.elapsedMs).toBeGreaterThanOrEqual(running?.run?.elapsedMs ?? 0);
 
-  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab))
     .not.toBe("stats");
 
   // Mute is a setting now, so the key and the menu cannot disagree.
-  await page.keyboard.press("KeyM");
+  await page.keyboard.press("KeyM", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.settings?.muted))
     .toBe(true);
@@ -125,9 +130,9 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
 
   // The minimap is the fourth row on the shared Settings page. Its opacity is
   // a real session setting, not a visual-only test hook.
-  await page.keyboard.press("Tab");
-  await page.keyboard.press("Tab");
-  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab", { delay: 80 });
+  await page.keyboard.press("Tab", { delay: 80 });
+  await page.keyboard.press("Tab", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab))
     .toBe("settings");
@@ -142,7 +147,7 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
   // Still paused after all of that.
   expect((await snapshot(page))?.run?.status).toBe("paused");
 
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen))
     .toBe(false);
@@ -158,7 +163,7 @@ test("both overlays survive a resize", async ({ page }) => {
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
 
-  await page.keyboard.press("Escape");
+  await page.keyboard.press("Escape", { delay: 80 });
   await page.setViewportSize({ width: 900, height: 620 });
   await page.waitForTimeout(200);
 

@@ -76,7 +76,7 @@ it("the recovery boundary catches dependency-import failures before a Game exist
   const code = ts.transpileModule(body, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
   const fail = vi.fn();
   const error = new Error("Canvas initialization unavailable");
-  const run = new Function("activeTheme", "validateTheme", "app", "showBootFailure", "loadGame", "document", `${code}; return boot;`)(themeRegistry[0]!.theme, () => [], { innerHTML: "" }, fail, () => Promise.reject(error), { createElement: () => ({ getContext: () => ({}) }) });
+  const run = new Function("activeTheme", "validateTheme", "app", "showBootFailure", "loadGame", "document", "initializeProfile", `${code}; return boot;`)(themeRegistry[0]!.theme, () => [], { innerHTML: "" }, fail, () => Promise.reject(error), { createElement: () => ({ getContext: () => ({}) }) }, () => {});
   await run();
   expect(fail).toHaveBeenCalledExactlyOnceWith(error);
 });
@@ -87,7 +87,7 @@ it("unavailable 2D canvases fail before loading Phaser and use actionable theme 
   const code = ts.transpileModule(body, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
   const fail = vi.fn(), load = vi.fn();
   const theme = themeRegistry[0]!.theme;
-  const run = new Function("activeTheme", "validateTheme", "app", "showBootFailure", "loadGame", "document", `${code}; return boot;`)(theme, () => [], { innerHTML: "" }, fail, load, { createElement: () => ({ getContext: () => null }) });
+  const run = new Function("activeTheme", "validateTheme", "app", "showBootFailure", "loadGame", "document", "initializeProfile", `${code}; return boot;`)(theme, () => [], { innerHTML: "" }, fail, load, { createElement: () => ({ getContext: () => null }) }, () => {});
   await run();
   expect(load).not.toHaveBeenCalled();
   expect(fail).toHaveBeenCalledExactlyOnceWith(new Error(theme.copy.bootGraphicsFailure));

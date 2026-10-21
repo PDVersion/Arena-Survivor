@@ -150,7 +150,7 @@ export class Hud {
     const maxHealthText = Math.ceil(state.player.stats.maxHealth);
     const progression = state.progression;
     const statistics = state.statistics;
-    const clockSecond = Math.max(0, Math.ceil((state.mode === "timed"
+    const clockSecond = Math.max(0, Math.ceil((state.mode === "timed" && state.activePhase !== "boss_fight"
       ? state.durationMs - state.elapsedMs : state.elapsedMs - state.durationMs) / 1000));
     const killChain = extras.killChain > 1 ? extras.killChain : 0;
     // The origin ledger mutates in place; compare scalars, never its identity.

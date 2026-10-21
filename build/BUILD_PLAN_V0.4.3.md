@@ -18,9 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). The active work
-is remaining P5 acceptance; P6 and optional C1–C7 remain gated. F16 was selected
-and delivered; other optional content still requires owner selection.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; Session21 identifies player-motion/cone-feedback corrections and selects vacuum target-cap growth for the next bounded correction gate below. These corrections remain unimplemented. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -35,10 +33,10 @@ are excluded from these performance phases.
 | P0 | Active plans, `AGENTS.md`, `README.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, roadmap status; known lint defect in `tests/unit/weapons/collection-sweep.test.ts`; `src/test-support/**`; frame sampling only in `src/game/scenes/run-scene.ts`; `tests/unit/performance/**`, `tests/e2e/frame-measurements.spec.ts`; opt-in `scripts/performance.ts`, measurement command only in `package.json`, measurement config/tests and `build/performance/**` reports | `build(v0.4.3): establish browser performance measurements` |
 | P1 | Telemetry call sites in scenes, main boot failure, test-support bridge, architecture/production guard tests; measurement reports/script and bench-only load/cap options per Q2 | `perf(v0.4.3): avoid production telemetry work` |
 | P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
-| P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
+| P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, `src/game/systems/effects/on-kill-effects.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
 | P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
-| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. Session 9 exact acceptance dependencies: `tests/e2e/native-visibility-v043.spec.ts`, `tests/unit/lifecycle/focus.test.ts`, `build/performance/P5_NATIVE_VISIBILITY.json`, acceptance report and current/successor handoffs. Session 10 owner-authorized consolidated campaign: `tests/e2e/lifecycle-campaign-v043.spec.ts`, `tests/fixtures/p5-campaign.{html,ts}`, `build/performance/P5_CAMPAIGN*`, acceptance/status/progress/master/reconciliation and successor handoff. Session 11 owner-selected-by-delegation compatibility dependencies: `tests/playwright.compatibility.config.ts`, `tests/e2e/compatibility-environment-v043.spec.ts`, existing boot/phase-two/gameplay-rate/presentation/lifecycle specs (unchanged assertions), `build/performance/P5_COMPATIBILITY*` and acceptance/status/master/progress/reconciliation/handoffs. One bounded serial cross-engine run on available M5; no physical-device inference or P6. Session 10 authorization covered one serial M5 lifecycle campaign only. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
-| P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
+| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. Session 9 exact acceptance dependencies: `tests/e2e/native-visibility-v043.spec.ts`, `tests/unit/lifecycle/focus.test.ts`, `build/performance/P5_NATIVE_VISIBILITY.json`, acceptance report and current/successor handoffs. Session 10 owner-authorized consolidated campaign: `tests/e2e/lifecycle-campaign-v043.spec.ts`, `tests/fixtures/p5-campaign.{html,ts}`, `build/performance/P5_CAMPAIGN*`, acceptance/status/progress/master/reconciliation and successor handoff. Session 12 also owns `tests/native/firefox-compatibility.py`, `build/performance/P5_FIREFOX*` for two bounded unpatched Mozilla application smoke checks, without system installation/dependency changes. Session 12 P5 follow-up adds opt-in Edge executable/report selection in `tests/playwright.compatibility.config.ts`, native Safari driver support in `tests/native/safari-compatibility.py` and `build/performance/P5_{EDGE,SAFARI}*`. Session 11 owner-selected-by-delegation compatibility dependencies: `tests/playwright.compatibility.config.ts`, `tests/e2e/compatibility-environment-v043.spec.ts`, existing boot/phase-two/gameplay-rate/presentation/lifecycle specs (unchanged assertions), `build/performance/P5_COMPATIBILITY*` and acceptance/status/master/progress/reconciliation/handoffs. One bounded serial cross-engine run on available M5; no physical-device inference or P6. Session 10 authorization covered one serial M5 lifecycle campaign only. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate. Session 12 exact dependencies: `scripts/build-device-pack.ts`, `tests/device-pack/**`, `tests/e2e/device-pack-v043.spec.ts`, `tests/playwright.device-pack.config.ts`, `tests/e2e/phase-{five,eight-v03}.spec.ts`, `scripts/performance.ts` key-input holds, `tests/native/safari-compatibility.py`, `build/performance/P6*`, P5 acceptance/status/master/progress/reconciliation/handoffs. Owner explicitly requests starting P6 while finishing P5; software preparation may proceed, but no missing physical/browser evidence is marked passed and missing acceptance stays open (the later 2026-10-20 content-order revision is below). | `test(v0.4.3): verify browser performance readiness` |
 
 - [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
   hit-stop regression, lint repair, types/units/lint/build and browser boot/load
@@ -52,9 +50,7 @@ are excluded from these performance phases.
 - [x] P4 — measured Default/Low enemy minimap geometry; affected local gate accepted;
   simulation, visible world and telegraphs remain equivalent. Read `SAVE_DATA.md`
   before serializable settings; presentation budgets stay theme-owned.
-- [ ] P5 — sustained play/restarts/focus and cold/warm startup evidence; fix only
-  demonstrated lifecycle/boot issues, keeping cleanup bounded. Session 6's affected
-  lifecycle gate is accepted below; this overall checkbox remains open.
+- [x] P5 — recorded lifecycle/startup/software slices verified; outstanding external checks temporarily waived by owner in Session15. This closes the current gate by explicit disposition, not by new physical/browser evidence.
 - [x] P5 lifecycle slice / Session 6 — REC-117 overflow tracking, paid-collect-cue
   reward race and stopped-scene references; both-theme deterministic coverage and
   bounded serial Phaser collection/stop/start ownership checks (REC-119).
@@ -75,9 +71,12 @@ are excluded from these performance phases.
   Test-only survival/focus aids and measurement limits are explicit in
   `performance/P5_CAMPAIGN_REPORT.md`; no runtime fix or broader readiness claim.
 - [x] P5 Session 11 available desktop-engine compatibility — owner delegates support selection; 52 serial focused checks pass in installed Chrome/pinned Chromium/Firefox/WebKit, with four final guard-only probes. Test input/resize readiness corrections only; no runtime defect. See `performance/P5_COMPATIBILITY_REPORT.md`.
-- [ ] P5 remaining acceptance — selected current/previous-major desktop Chrome/Edge/Firefox/Safari policy; actual branded/platform combinations and representative older integrated-GPU access/evidence remain pending. Preserve all prior aided-campaign limits; no gate waiver. Session 12 stays P5; do not repeat accepted campaigns.
-- [ ] P6 — combined software gate, baseline/final reports and manual device
-  checklist; representative older-device acceptance measured or explicitly pending.
+- [x] P5 Session12 branded follow-up —26 Edge155/154 focused passes and two unpatched headed Firefox158/157.0.1 smokes. Safari session blocked by its setting; no runtime change. See `performance/P5_COMPATIBILITY_FOLLOWUP.md`.
+- [x] P5 remaining external check disposition — Session15 owner temporarily waives missing actual Safari, selected browser/OS combinations and representative older integrated-GPU checks. Waived/unverified, never passed; prior source/aided-campaign limits remain. No repeated campaign.
+- [x] P6 software/readiness-tool slice —96 browser/stress passes/six explicit opt-in skips, zero retries;488units, types/lint/build/audit; portable device kit verified;18 warmed Default/Low windows at60/150/300, frozen sources. See `performance/P6_READINESS_REPORT.md`.
+- [x] P6 external check disposition — Session15 owner temporarily waives the same missing browser/platform/physical checks. Software verified; external checks waived, not accepted evidence. No older machine is available.
+- [x] Owner content-order revision (2026-10-20) — explicit “yes proceed” permits C1–C7 after verified software checks while missing acceptance remains release-blocking. No evidence was waived by that initial revision; the later explicit Session15
+  temporary external-check waiver supersedes its release classification.
 
 P0's short gate is `npm run typecheck`, `npm test -- --run`, `npm run lint`,
 `npm run build`, serial boot/load/frame-measurement browser tests and the existing
@@ -121,6 +120,54 @@ pending and must be reported before describing older-device readiness as complet
 Ordered by dependency, and sized so each ends in something playable.
 
 ### C1 — Weapon slots and a second weapon
+
+**Owner gate-order revision — 2026-10-20:** the owner explicitly replied “yes
+proceed” to continuing planned C1–C7 with missing browser/device acceptance
+release-blocking rather than build-blocking. P5 and P6 acceptance stay open;
+software readiness is verified. This historical ordering note is superseded by
+Session15's explicit temporary external-check waiver below. No additional
+optional features or sprites are selected.
+
+C1 foundation ownership (claim before edits): `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both production themes' `{weapons,index}.ts`,
+`src/game/state/run-state.ts`, `src/game/systems/weapons/{weapon-loadout,resolve-weapon}.ts`,
+`src/game/entities/projectile-actor.ts`, `src/game/scenes/run-scene.ts`,
+`tests/fixtures/alternate-theme.ts`, `tests/unit/weapons/weapon-loadout.test.ts`,
+`tests/unit/content/theme.test.ts`, `tests/unit/run-state/run-state.test.ts`,
+`tests/e2e/weapon-slots-v043.spec.ts`, and plan/status/master/progress/README/
+`build/content/C1_FOUNDATION*`, acceptance reports/reconciliation/handoffs. This first verified slice establishes
+serializable slot state, independent scheduling and actual hit-source ownership.
+The second tool, owned upgrades, on-hit splash, balance and combined C1 gate
+remain subsequent C1 slices; C2 cannot begin before C1 passes.
+
+C1 Session14 ownership (2026-10-20, claimed before runtime edits):
+`src/game/core/archetypes/{ids,contracts,effects}.ts`, `src/game/content/define-theme.ts`,
+both themes' `{weapons,upgrades,index,copy}.ts`, `src/game/state/{run-state,statistics}.ts`,
+`src/game/systems/upgrades.ts`, `src/game/systems/upgrades/{describe-upgrade,upgrade-tiers}.ts`,
+`src/game/systems/weapons/{resolve-weapon,weapon-loadout,melee-stab,on-hit-splash}.ts`,
+`src/game/systems/statistics/run-statistics.ts`, `src/game/systems/effects/on-kill-effects.ts`, `src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`src/game/entities/{projectile-actor,cone-attack-actor}.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/ui/pause-menu-ui.ts`, `src/test-support/telemetry-bridge.ts`,
+`tests/fixtures/alternate-theme.ts`, corresponding units in `tests/unit/{weapons,upgrades,statistics,content,ui-selectors,simulation}/**`,
+`tests/e2e/{second-tool-v043,weapon-slots-v043,grabber-weapon}.spec.ts`,
+`scripts/balance.ts`, `build/content/C1_SECOND_TOOL*`, active plan/status/master,
+README/progress/reconciliation/current+successor handoffs, `build/AUTONOMOUS_DEVELOPMENT_PLAN.md`,
+`build/performance/P5_ACCEPTANCE_REPORT.md`, and the C1 sections of
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP. Reuse melee/projectile:
+add optional authored cone geometry to melee, bounded on-hit splash, owner-local
+progression and level-up acquisition. No factual education claim or bitmap work.
+
+- [x] C1 foundation — slot state/resolution, independent clocks and hit ownership.
+- [x] C1 second tool and weapon-conditioned upgrade offers.
+- [x] C1 on-hit splash ledger, simulator, balance/readability/affected stress gate.
+
+C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
+15 unique affected serial browser cases (final feedback subset5), both themes/
+all models/all difficulties balance. Completed record and exact limits are in
+[master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5–C7 are verified below. The subsequent owner
+waiver supersedes the missing P5/P6 external checks' release-blocking classification.
+
 The delivery-kind union deliberately deferred in REC-051, because its shape
 depended on decisions slots had not made yet. Slots make it decidable: a melee
 weapon declares an arc and a target cap instead of a projectile speed and
@@ -146,31 +193,116 @@ until it is equipped and present afterwards; the pacing simulator's build models
 cover both.
 
 ### C2 — Weapon evolution
+
+Session15 ownership (2026-10-20, claimed before edits):
+`src/game/core/archetypes/{ids,effects}.ts`, `src/game/content/define-theme.ts`,
+both themes' `{weapons,index,copy}.ts`, `src/game/systems/upgrades.ts`,
+`src/game/systems/upgrades/{describe-upgrade,upgrade-tiers}.ts`,
+`src/game/systems/weapons/weapon-loadout.ts`,
+`src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`tests/unit/weapons/weapon-evolution.test.ts`, affected content/tier/selector/simulation units,
+`tests/e2e/second-tool-v043.spec.ts`, `build/content/C2*`, `build/BUILD_PLAN_V0.4.md`, plan/status/master/progress/
+reconciliation/README/roadmap, product/theme/education/content map, P5 acceptance and
+P6 readiness reports/current handoff. No persistence, sprite, physics or dependency edits.
+
+- [x] Theme-owned evolution choice after four secondary-reach picks; replacement
+  preserves slot position/capacity/clock and transfers local gains to the new ID.
+- [x] Condition, stale/idempotent choice, reset, preview and combat/provenance rules.
+- [x] Both-theme bounded browser/readability, affected load, balance and software gate.
+
+Owner revision (2026-10-20): “yes waive those checks for now and continue with
+build for c2” temporarily waives the outstanding actual Safari, missing selected
+browser/OS combinations and older physical integrated-GPU acceptance checks.
+They are waived/unverified, never passed. This supersedes their release-blocking
+classification for now, without changing support evidence, historical results or
+other phase verification. No new browser/device campaign is authorized or needed.
+
 An evolved weapon is a new definition unlocked by a condition, not a mutated one.
 Upgrade tiers (REC-065) are the natural trigger surface.
 
+C2 verified locally2026-10-20:527units/60files, types/lint/build/diff;
+eight unique affected browser cases verified, corrected evolution subset2
+passes14.6s and final player-copy subset2 passes14.5s, one worker/zero retries. Both themes/ten models/three difficulties
+balance. See [report](content/C2_REPORT.md) and [master](MASTER_BUILD_PLAN.md#v0-4-3-c2).
+
 ### C3 — Shrines and curses
+
+Session16 ownership (2026-10-20, claimed before edits):
+`src/game/core/archetypes/{ids,contracts,effects}.ts`, `src/game/content/define-theme.ts`,
+both production themes' `{shrines,curses,index,copy}.ts`,
+`src/game/systems/chaos/world-modifiers.ts`, `src/game/systems/upgrades.ts`,
+`src/game/systems/upgrades/{upgrade-tiers,describe-upgrade}.ts`,
+`src/game/state/run-state.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/systems/simulation/pacing-simulator.ts`, `scripts/balance.ts`,
+`tests/fixtures/alternate-theme.ts`, affected world/content/shrine/tier/selector units,
+`tests/unit/chaos/curses.test.ts`, `tests/e2e/shrines-curses-v043.spec.ts`,
+`tests/e2e/{phase-five-v02,shrine-arrivals}.spec.ts` if catalog-size assertions change,
+`build/content/C3*`, status/plan/master/progress/reconciliation/README/roadmap,
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP and current/successor handoffs.
+Retirement link-only dependencies: `build/content/C2_REPORT.md`,
+`build/performance/P5_ACCEPTANCE_REPORT.md`; preserve their historical evidence.
+
+- [x] Add scheduled pressure-for-XP shrine in both themes through existing world model.
+- [x] Add two one-time level-up curses, run-local acceptance/provenance/reset,
+  clear real-number offer preview and no repeat/tier-scaled bargain.
+- [x] Validate definitions/references/composition and preserve exact XP/caps/causal work.
+- [x] Both-theme affected browsers/readability, pacing and final software gate.
+
 A curse is the inverse of a shrine: pressure the player accepts for a reward,
 but persistent and chosen at a different moment. Both resolve through the world
 model from REC-035, which already takes any number of contributors.
 
-### C4 — Elite modifiers
-One baseline elite becomes a small family — an elite that splits, one that
-shields, one that accelerates. REC-037's inheritance rules already say what
-happens when an elite duplicates or fractures, and this must not break them.
+C3 verified locally2026-10-20:547units/61files, types/lint/build/diff; seven
+unique affected serial browser cases verified (initial7pass40.1s, final C3 subset2
+pass12.4s after visible-reward ordering correction and fixture XP correction).
+Both themes/ten models/three difficulties/baseline+combined world fixture balance
+(120scenarios; baseline output identical to C2). See [report](content/C3_REPORT.md)
+and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4–C7 are verified below.
 
-### C5 — Mini-boss and final boss
+### C4 — Elite modifiers ✅
+
+Verified Session17: split/shield/acceleration family in both themes, exact inherited
+identity/depth and source rewards, bounded pending work, shield-capped ledger,
+simulation-age acceleration and readable markers.561units/63files and six unique
+affected serial browser cases pass; see [report](content/C4_REPORT.md) and
+[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c4). C5–C7 are verified below.
+
+### C5 — Mini-boss and final boss ✅
+
 A boss is an enemy with a health bar, a telegraphed pattern, and a director
 milestone that spawns exactly one. The final boss replaces the end-of-timer
 prompt: it spawns where the decision used to appear, and REC-064's choice moves
 to after the kill rather than being removed. See "Decisions settled before C1".
 
-### C6 — Persistence, unlocks, and advanced statistics
+- [x] Unique capped mini/final milestones, theme-owned enemy and warning pattern.
+- [x] Live boss phase, retained pause/level intent and after-kill endless/clearing.
+- [x] Exact capped ledger/reward/reset, readable health/telegraph and affected checks.
+- [x]583units/64files, six unique affected serial browser cases,60 coarse TTK scenarios;
+  broader campaigns deferred, external checks waived/unverified. [Report](content/C5_REPORT.md),
+  [completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c5).
+
+### C6 — Persistence, unlocks, and advanced statistics ✅
+
+- [x] Validated schema2, deterministic schema1 migration and safe local adapter.
+- [x] Durable settings/terminal-only lifetime totals and theme-owned next-run unlocks.
+- [x] Readable requirements/new rewards/failure warnings, affected browsers/software.
+
+595units/65files, types/lint/build/diff pass;10 unique affected serial browser cases
+verified cumulatively, including final five-case persistence capture and death-layout
+check. [Report](content/C6_REPORT.md), [completed ownership](MASTER_BUILD_PLAN.md#v0-4-3-c6).
+C7 is verified below; missing external device/browser checks remain waived/unverified.
+
 The first real slice of `SAVE_DATA.md`. The session statistics slice from REC-062
 is already shaped for the payload's lifetime-statistics field, so this is mostly
 adapter and migration work rather than new modelling.
 
-### C7 — Save export and import
+### C7 — Save export and import ✅
+- [x] Canonical codec, strict shared validation/migration and unknown-ID preservation.
+- [x] Title-only export/file/paste preview, explicit backup/recovery/reset and stale checks.
+- [x]655units/67files, five unique serial browser cases, types/lint/build/diff and production marker exclusion.
+
+See [report](content/C7_REPORT.md), [results](content/C7_RESULTS.json) and
+[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c7).
 Encoded text export, import with validation, preview, backup, and migration.
 `SAVE_DATA.md` §"Verification required when implemented" is the acceptance list.
 
@@ -246,16 +378,114 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next slice — remaining P5 acceptance
+## Next step — Q6 player motion, cone feedback and vacuum progression
 
-Sessions 8–11 evidence is in
-[`performance/P5_ACCEPTANCE_REPORT.md`](performance/P5_ACCEPTANCE_REPORT.md).
-The owner-authorized consolidated M5 lifecycle campaign passes within its
-explicit test/measurement limits; see
-[`performance/P5_CAMPAIGN_REPORT.md`](performance/P5_CAMPAIGN_REPORT.md).
-Session 11 selects the desktop support policy and passes 52 focused engine checks; see
-[`performance/P5_COMPATIBILITY_REPORT.md`](performance/P5_COMPATIBILITY_REPORT.md).
-Actual branded/platform and physical older-device evidence remains pending. Obtain
-access/captured results for the selected targets; support selection need not be repeated.
-No P6/content or repeat of unchanged accepted checks is authorized here.
-The next-session handoff is [SESSION_12_PROMPT.md](SESSION_12_PROMPT.md).
+Session21 documentation ownership (claimed before edits):
+`build/{BUILD_PLAN_V0.4,BUILD_PLAN_V0.4.3,BUILD_STATUS,SESSION_21_PROMPT,PLAN,THEME_ARCHETYPES,EDUCATION_PIVOT,AUTONOMOUS_DEVELOPMENT_PLAN}.md`,
+`AUTONOMOUS_PROGRESS.md` and `RECONCILIATION.md`. This cycle records review and
+owner direction only; no runtime/assets/tests are edited. The subsequent owner
+request to wrap up and create the V0.4.3 PR authorizes committing these selected
+planning changes and publishing the existing branch. Claim exact runtime/test
+ownership before implementing Q6.
+
+C1–C7 local gates pass at C7 `88f220b`. Owner reports continuing player-sprite
+jitter and enemies inside the visible vacuum cone receiving no hit. The next
+local correction gate remains open. The later owner request authorizes a draft
+PR for completed work before Q6; it does not complete Q6 or start V0.4.4:
+
+- [ ] Reproduce player movement against a fixed actor/body anchor. Inspect walk,
+  idle and hit transitions in both horizontal directions and diagonal movement.
+  Independent per-pose bounding-box centring is a candidate cause, not a proved
+  live diagnosis. Correct presentation without changing physics or hand-editing
+  generated art; preserve facing, rate0.5 and Phaser shutdown ownership.
+- [ ] Reconcile the visible cone with actual pulse timing, origin and hit selection.
+  Current drawing and collision share resolved reach/angle; no separate-radius
+  defect was established. Damage resolves once at firing, while a stationary cone
+  fades for280ms. A target entering the fade is not a new hit. Verify base/upgraded/
+  evolved boundaries and make actual affected targets/pulse timing readable.
+- [ ] Implement owner-selected vacuum primary-target growth with its own weapon
+  upgrade progression. A small early target limit is accepted; it must increase
+  at later weapon levels rather than stay at three until evolution. Use the
+  existing owner-track model, not automatic growth with unrelated player levels.
+  Exact thresholds/increments/ceiling and evolution carryover need theme-owned
+  tuning and balance verification; they are not settled or implemented here.
+  Keep finite integer caps and deterministic target ordering. Preserve independent
+  clocks, direct/splash provenance and exact XP; growth does not remove caps or
+  automatically increase splash targets. Both production themes must satisfy the
+  generic contract. Evolution must retain earned growth without reducing it.
+- [ ] Add affected deterministic coverage for cap steps, boundaries, evolution/
+  reset and attack ownership; run typecheck, affected units, lint, build and diff
+  checks. Use `npm run balance` for the changed pacing, including packed targets.
+  Run only necessary serial browser cases, one worker/zero automatic retries,
+  with declared bounds and images under testInfo.outputPath; inspect motion and
+  cone-hit correspondence. Record deferred broad/stress/native/long checks.
+- [ ] Record implementation, actual verification, remaining limits and reconciliation
+  together in one reviewed local correction commit. Keep C1–C7 historical passes
+  intact; Q6 is open until its own gate passes.
+
+Read-only Session21 review reran25 animation/melee/second-tool units across3files:
+all pass. This does not verify the reported motion/cone behavior or the proposed
+cap progression. No new browser campaign or runtime fix occurred.
+
+## Delivery and remaining acceptance disposition
+
+No unrelated content, dependencies, new sprites or optional work is selected.
+[Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
+authorized draft PR delivery. Q6 and the newly observed high-severity Vite audit
+finding remain open; no merge or deployment is authorized. External actual
+Safari/browserOS/older physical-device checks
+remain temporarily waived/unverified, not passed. No current-head remote CI is
+inferred from run39189877476 on2806720 or merge CI39193504359 on c6daeb6.
+A later owner-approved delivery/check campaign
+must use these changed sources; regenerate the historical device pack if needed.
+
+Session21 delivery ownership extends the same10 documentation paths plus Git/PR
+metadata. Owner explicitly requests “wrap this up and create PR for t4.3”, resolved
+as existing `codex/v0.4.3`. Commit the selected planning decisions separately from
+the completed phase commits and publish a draft PR into main. Local delivery
+checks:655units/67files, typecheck, lint and build pass; audit fails with one high
+Vite finding (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw,
+GHSA-587h-7wmj-h5pm). Vite remains6.4.3; suggested6.4.4 is outside its exact pin.
+No dependency change or audit bypass is made. Full browser regression is deferred
+to PR Actions; report its actual matching head/status, never a historical pass.
+
+
+## PR27 CI repair — owner-authorized scope
+
+Owner requests fixing failed Actions checks. Start2026-10-21T01:32:46UTC
+/12:32:46AEDT; deadline03:02:46UTC /14:02:46AEDT; final20reserve02:42:46UTC.
+Claim before edits: package.json/package-lock.json; tests/e2e/{frame-measurements,
+phase-six,profile-persistence-v043,second-tool-v043,shrines-curses-v043}.spec.ts;
+build/performance/PR27_CI_REPAIR.md and repair-only appended sections of this plan,
+BUILD_STATUS, MASTER_BUILD_PLAN, AUTONOMOUS_PROGRESS and RECONCILIATION. Preserve
+all pre-existing genre/roster roadmap edits and untracked reports unstaged.
+No production gameplay, Q6, sprites or tuning changes are selected. Run affected
+browsers serially/one worker/zero retries with bounded waits and owned cleanup;
+full regression stays in Actions. Apply only the necessary Vite audit patch.
+
+Local repair gate passes as recorded in performance/PR27_CI_REPAIR.md:655units/
+67files, types/lint/build/diff/audit0, seven unique affected serial browser cases
+verified cumulatively/zero retries. Full current-head PR Actions must confirm
+after push. Q6 stays open; pre-existing roadmap edits remain unstaged.
+
+
+PR27 repair continuation: run39528406842 on a87f57f passes116browser cases/6skips/
+no flaky tests; only both C3 cases fail a later dense-load wall-time assumption
+(258–275simulation-ms/10s, target1000ms). Use the same bounded90s progress/120s
+test budget there, preserving all assertions. Two affected serial cases pass12.5s
+locally/zero retries; types/affected lint/diff pass. Remote confirmation pending.
+
+
+PR27 second continuation ownership: add tests/e2e/{capacity-probe,phase-four-v02}.spec.ts
+for newly observed slow-runner failures in39531764460; retain original exact actor/
+clock/reset assertions. Existing phase-six ownership covers spawn-time reward
+isolation after another valid adjacent-shrine interaction. No runtime/tuning change.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.

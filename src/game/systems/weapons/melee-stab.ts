@@ -49,6 +49,20 @@ export function selectMeleeHits<T extends MeleeTarget>(
     const dy = target.y - origin.y;
     const distance = dx * forwardX + dy * forwardY;
     const sideways = Math.abs(dx * -forwardY + dy * forwardX);
+    if (weapon.arcRadians !== undefined) {
+      const radial = Math.hypot(dx, dy);
+      const offset = Math.abs(Math.atan2(dx * -forwardY + dy * forwardX, distance));
+      const half = weapon.arcRadians / 2;
+      const edgeAngle = angle + (dx * -forwardY + dy * forwardX < 0 ? -half : half);
+      const edgeX = Math.cos(edgeAngle);
+      const edgeY = Math.sin(edgeAngle);
+      const along = Math.max(0, Math.min(weapon.reach, dx * edgeX + dy * edgeY));
+      const edgeDistance = Math.hypot(dx - along * edgeX, dy - along * edgeY);
+      if ((offset <= half && radial <= weapon.reach + target.radius) || edgeDistance <= target.radius) {
+        candidates.push({ target, distance: radial });
+      }
+      continue;
+    }
     if (distance < -target.radius || distance > weapon.reach + target.radius) continue;
     if (sideways > weapon.width / 2 + target.radius) continue;
     candidates.push({ target, distance });

@@ -1,0 +1,1669 @@
+{
+  "sourceBase": "05f8860",
+  "sourceSha256": {
+    "src/game/content/define-theme.ts": "05ac239fba0d9d6cae743c50606661f9f175a39c776e5a219f32f8b80d71be49",
+    "src/game/content/themes/eco-guardian/copy.ts": "c8a2c4c35e092f238f6ed3d0e9e469561a71d28381f29731bd9bd828fe3f98db",
+    "src/game/content/themes/eco-guardian/elites.ts": "9f2b0f799b8b5375cd26a4d1a8770085b7b5c616b20efbaf02838399181ecd63",
+    "src/game/content/themes/knight-magic/copy.ts": "f2b132cef5d5d8e4415eab70d2db1442dd3ae5095fe5fb31ac6f55529cf3ca5e",
+    "src/game/content/themes/knight-magic/elites.ts": "9f2b0f799b8b5375cd26a4d1a8770085b7b5c616b20efbaf02838399181ecd63",
+    "src/game/core/archetypes/categories.ts": "b9f3087acd55d4e88a37dd71599f2c036626c71b8aa32a7f33571aa5580166ce",
+    "src/game/core/archetypes/contracts.ts": "6088747eec06f166778bd7f538fa9efda5f0d760d3ad77481f77e6141e5e267d",
+    "src/game/entities/enemy-actor.ts": "4743d0b06ff9967093e21859c71e464d77216bfb9fdc8867e9cd4b8e21a43aa5",
+    "src/game/scenes/run-scene.ts": "45d05dc9880d4e2ff0c314ff6e7486858bf8825aca2c9020c7871b511eefe073",
+    "src/game/systems/elites/elites.ts": "3f4e0755fe0ea1d8679f03bdada6d44a43e46dbba9849c35b2684af15fd39cde",
+    "tests/unit/elites/family.test.ts": "346d251ddac5ee3cf29b9ef2ffed9ada83fd4eb7656ec61f2e2c99a98b09e2da",
+    "tests/unit/elites/pending-spawn.test.ts": "2c46a0e4c5a6ae628c9f9b59c3e81dff312f7bd95efe719ce7f449769dd99466",
+    "tests/e2e/elite-family-v043.spec.ts": "18517791fc74356c15a74ace0501fb94139279b5b0869717d52d9722d16f6b1a"
+  },
+  "initial": {
+    "stats": {
+      "startTime": "2026-10-20T00:31:44.500Z",
+      "duration": 1962.2720000000002,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "evidence": [
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "eco-guardian",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      },
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "knight-magic",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      }
+    ]
+  },
+  "capReproduction": {
+    "stats": {
+      "startTime": "2026-10-20T00:32:09.404Z",
+      "duration": 1331.525,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "evidence": [],
+    "errors": [
+      [
+        {
+          "location": {
+            "file": "/Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/elite-family-v043.spec.ts",
+            "column": 19,
+            "line": 107
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"live\": 1,\u001b[22m\n\u001b[32m-   \"pending\": 1,\u001b[39m\n\u001b[31m+   \"pending\": 0,\u001b[39m\n\u001b[2m  }\u001b[22m\n\n  105 |     for (const reward of o.split.rewards) expect(reward).toBeCloseTo(o.split.parentReward * 0.5);\n  106 |     expect(o.afterChildren).toEqual({ live: 0, backlog: 0, xp: o.split.parentXp * 2 });\n> 107 |     expect(o.cap).toEqual({ live: 1, pending: 1 }); expect(o.capDrained).toEqual({ live: 1, pending: 0 });\n      |                   ^\n  108 |     for (const [variant, descendants] of Object.entries(o.duplication)) expect(descendants).toEqual([{ id: variant, depth: 1, movement: \"chase\" }, { id: variant, depth: 1, movement: \"chase\" }]);\n  109 |     expect(o.acceleration.half).toBeCloseTo(o.acceleration.speed * 1.25); expect(o.acceleration.paused).toBe(o.acceleration.half); expect(o.acceleration.full).toBeCloseTo(o.acceleration.speed * 1.5);\n  110 |     expect(o.markers).toEqual([\"2\", \"\u25c7\", \"\u00bb\"]); expect(errors).toEqual([]);\n    at /Users/pdv/Documents/Projects/Arena-Survivor/tests/e2e/elite-family-v043.spec.ts:107:19"
+        }
+      ]
+    ]
+  },
+  "combinedFinal": {
+    "stats": {
+      "startTime": "2026-10-20T00:32:56.134Z",
+      "duration": 24193.473,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "evidence": [
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "cap": {
+            "live": 1,
+            "pending": 1
+          },
+          "capDrained": {
+            "live": 1,
+            "pending": 0
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "descendants": {
+            "elite.split": {
+              "offspring": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.shield": {
+              "offspring": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.acceleration": {
+              "offspring": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            }
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "eco-guardian",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      },
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "cap": {
+            "live": 1,
+            "pending": 1
+          },
+          "capDrained": {
+            "live": 1,
+            "pending": 0
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "descendants": {
+            "elite.split": {
+              "offspring": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.shield": {
+              "offspring": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.acceleration": {
+              "offspring": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            }
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "knight-magic",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      }
+    ]
+  },
+  "expandedFinal": {
+    "stats": {
+      "startTime": "2026-10-20T00:33:42.934Z",
+      "duration": 3560.431,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "evidence": [
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "cap": {
+            "live": 1,
+            "pending": 1
+          },
+          "capDrained": {
+            "live": 1,
+            "pending": 0
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "descendants": {
+            "elite.split": {
+              "offspring": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.shield": {
+              "offspring": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.acceleration": {
+              "offspring": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            }
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "burst": {
+            "peak": 200,
+            "childrenCount": 200,
+            "depths": [
+              1
+            ],
+            "live": 0,
+            "backlog": 0,
+            "kills": 300
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "eco-guardian",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      },
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "cap": {
+            "live": 1,
+            "pending": 1
+          },
+          "capDrained": {
+            "live": 1,
+            "pending": 0
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "descendants": {
+            "elite.split": {
+              "offspring": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.shield": {
+              "offspring": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.acceleration": {
+              "offspring": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            }
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "burst": {
+            "peak": 200,
+            "childrenCount": 200,
+            "depths": [
+              1
+            ],
+            "live": 0,
+            "backlog": 0,
+            "kills": 300
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "knight-magic",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      }
+    ]
+  },
+  "buildSha256": {
+    "dist/index.html": "604ea4c7f340becc45f7bd5a1957495bfd30f3da728db3d0690ce07199d6206f",
+    "dist/sprite-browser.html": "4630860d79ce459bf37d83fa567afaf833a9ae6cafcbc0c92aa83d2a149089eb",
+    "dist/build/ARCHITECTURE_MAP.html": "1118c6b5c45abaf3bd791950e70c314569a2ea26472737e62f550aaf3fd49aed",
+    "dist/assets/game-BGf5O-Pk.js": "f04c50188a141a4899fc5297238cf0cca238e53512e22be238a5c8fcc3649bd0",
+    "dist/assets/sprites-BEc7CUEy.js": "2fc9a5fed6708c2d2a77e51353e53b612f06165691a140bed670cd41911f624c",
+    "dist/assets/index-D34mPnaG.js": "c811a1fc1291d8eb42e6e81d302d4ed58ce323fbf63e973fcbfeb55861436364",
+    "dist/assets/combat-DP5YJCqn.js": "582f10f6d54c5262a87dfabd4aebf7eeadf7a3528b5828ee5d15f6e160ead7f0",
+    "dist/assets/start-game-CIFeNC87.js": "63d52d0e1d33b1918fb2a1e48a5f269c9b88e285ba0f4669087854a4a0a18fef"
+  },
+  "imagesSha256": {
+    "test-results/elite-family-v043-eco-guar-6d735-nts-and-exact-shield-ledger-chromium/elite-family.png": "12c33bc5e288e24dfaf21ae39d88dc8a472344a4c93a5c302c2975ed54f88514",
+    "test-results/elite-family-v043-knight-m-5b4cc-nts-and-exact-shield-ledger-chromium/elite-family.png": "8c153f88ee113c4a0cbe24f3a623d214323356eb6a6be08bfabd9c09be55397a"
+  },
+  "themedMarkerFinal": {
+    "stats": {
+      "startTime": "2026-10-20T00:35:08.225Z",
+      "duration": 3474.716,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "evidence": [
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "cap": {
+            "live": 1,
+            "pending": 1
+          },
+          "capDrained": {
+            "live": 1,
+            "pending": 0
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "descendants": {
+            "elite.split": {
+              "offspring": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.shield": {
+              "offspring": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.acceleration": {
+              "offspring": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            }
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "burst": {
+            "peak": 200,
+            "childrenCount": 200,
+            "depths": [
+              1
+            ],
+            "live": 0,
+            "backlog": 0,
+            "kills": 300
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "eco-guardian",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      },
+      {
+        "observations": {
+          "shield": {
+            "initial": 40,
+            "lost": 1,
+            "ledger": 1
+          },
+          "brokenShield": {
+            "lost": 2,
+            "ledger": 2
+          },
+          "split": {
+            "count": 2,
+            "queued": 2,
+            "variants": [
+              "elite.split",
+              "elite.split"
+            ],
+            "depth": [
+              1,
+              1
+            ],
+            "rewards": [
+              1.875,
+              1.875
+            ],
+            "parentReward": 3.75,
+            "parentXp": 3.75,
+            "rawXp": 1
+          },
+          "afterChildren": {
+            "live": 0,
+            "backlog": 0,
+            "xp": 7.5
+          },
+          "cap": {
+            "live": 1,
+            "pending": 1
+          },
+          "capDrained": {
+            "live": 1,
+            "pending": 0
+          },
+          "duplication": {
+            "elite.split": [
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.split",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.shield": [
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.shield",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ],
+            "elite.acceleration": [
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              },
+              {
+                "id": "elite.acceleration",
+                "depth": 1,
+                "movement": "chase"
+              }
+            ]
+          },
+          "descendants": {
+            "elite.split": {
+              "offspring": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.split",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.shield": {
+              "offspring": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.shield",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            },
+            "elite.acceleration": {
+              "offspring": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1
+                }
+              ],
+              "expectedOffspring": 5,
+              "fragments": [
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                },
+                {
+                  "variant": "elite.acceleration",
+                  "depth": 1,
+                  "reward": 0
+                }
+              ]
+            }
+          },
+          "acceleration": {
+            "speed": 104,
+            "half": 130,
+            "paused": 130,
+            "full": 156
+          },
+          "burst": {
+            "peak": 200,
+            "childrenCount": 200,
+            "depths": [
+              1
+            ],
+            "live": 0,
+            "backlog": 0,
+            "kills": 300
+          },
+          "markers": [
+            "2",
+            "\u25c7",
+            "\u00bb"
+          ]
+        },
+        "environment": {
+          "themeKey": "knight-magic",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.7922.34 Safari/537.36",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 1
+          },
+          "mode": "test",
+          "rate": 0.5
+        },
+        "browser": "151.0.7922.34",
+        "errors": []
+      }
+    ]
+  }
+}

@@ -103,7 +103,7 @@ export function formatTimeToKill(
         pad(`${Math.round(row.progress * 100)}%`, 7),
         padLeft(String(row.level), 4),
         padLeft(compact(row.damagePerSecond), 8),
-        ...roleIds.map((id) => padLeft(`${round(row.seconds[id] ?? 0)}s`, 10)),
+        ...roleIds.map((id) => padLeft(row.seconds[id] === undefined ? "—" : `${round(row.seconds[id]!)}s`, 10)),
       ].join(" "),
     );
   }

@@ -574,3 +574,64 @@ a claim about environmental persistence. Starting stats in the sprite browser
 come from actual difficulty-resolved theme definitions. A future stat book should
 reuse those definitions/selectors and clearly distinguish authored, starting and
 live modified values; that future feature is not implemented here.
+
+
+## V0.4.3 C1 promotion — bounded second tool
+
+The selected content phase adds a short-cone Cleanup Vacuum beside the unchanged
+starter grabber. Two automatic slots; no manual switching or material matrix.
+Three direct targets and bounded on-hit neighbour splash are authored game rules,
+not sourced factual handling claims. The shared ledger names hit splash separately
+from on-kill detonation. Tool-owned upgrades remain in each theme's weapon data.
+No new enemy material, fact card, persistence or sprite is introduced here.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — readable, voluntary pressure choices
+
+Unmanaged Dump adds a spatial Pollution/XP bargain. Overflow Contract and
+Contamination Pact are one-time normal level-up choices for more arrivals or
+more Pollution in exchange for XP, lasting only for that run. Their names and
+numeric effects are theme-owned game fiction, not environmental facts or
+material-effectiveness claims. No Knowledge Shrine/question or new enemy/material
+identity is introduced. The detail card prioritizes the actual reward and primary
+cost so the voluntary bargain stays readable under the three-line limit.
+
+C4 implementation boundary2026-10-20: elite family names describe authored game
+modifiers over existing material roles. Split/shield/acceleration adds no factual
+environmental claim, material/tool effectiveness table or new educational surface.
+
+
+### V0.4.3 C5 — bounded fictional encounters
+
+Compacted Waste and Dumping Colossus are readable mini/final encounter fiction,
+not persistence estimates, disposal advice or a promoted layered-material system.
+They use the same tool damage path as existing waste actors. Their marked circle
+teaches the immediate game action: move clear before the pulse. No knowledge
+question, content-source claim, type effectiveness, material layer or sprite
+inventory is added. Boss values and labels remain theme-owned.
+
+### Session21 selected correction — vacuum progression and feedback
+
+Owner selects increasing vacuum primary-target capacity as its own weapon upgrades
+advance, retaining a modest early cap. This is a planned game rule, not an
+educational/material-effectiveness claim. The C1/C2 three/four-target descriptions
+above remain the implemented baseline. Exact steps, finite ceiling and evolution
+carryover tuning need theme data and balance verification in Q6; growth must not
+be lost at evolution. Clarify pulse/cone feedback and investigate player pose
+alignment before further sprite generation. No new information surface, factual
+content, material identity or progression category is introduced here.

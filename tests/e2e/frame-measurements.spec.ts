@@ -13,10 +13,13 @@ test("wall frame measurement stays separate from the half-speed simulation and p
   expect(measured?.load?.averageUpdateCpuMs).toBeGreaterThan(0);
   // Compare units, not hardware throughput. Smoothing means this isn't exactly 2x.
   expect(measured!.load!.averageFrameMs).toBeGreaterThan(measured!.load!.averageSimulationDeltaMs);
-  await page.keyboard.press("Escape");
-  await expect.poll(() => page.evaluate(
-    () => window.__ARENA_TEST__?.getSnapshot().run?.status,
-  )).toBe("paused");
+  // Keep the key down until Phaser consumes it; a full down/up between frames is lost.
+  await page.keyboard.down("Escape");
+  try {
+    await expect.poll(() => page.evaluate(
+      () => window.__ARENA_TEST__?.getSnapshot().run?.status,
+    )).toBe("paused");
+  } finally { await page.keyboard.up("Escape"); }
   const paused = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().load);
   expect(paused?.distribution?.windowSamples).toBe(paused?.frameSamples);
   expect(paused?.distribution?.wall.p50Ms).toBeGreaterThan(0);
@@ -24,8 +27,10 @@ test("wall frame measurement stays separate from the half-speed simulation and p
   const afterPause = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().load);
   expect(afterPause?.frameSamples).toBe(paused?.frameSamples);
   expect(afterPause?.averageFrameMs).toBe(paused?.averageFrameMs);
-  await page.keyboard.press("Escape");
-  await expect.poll(() => page.evaluate(
-    () => window.__ARENA_TEST__?.getSnapshot().load?.frameSamples,
-  )).toBeGreaterThan(paused!.frameSamples);
+  await page.keyboard.down("Escape");
+  try {
+    await expect.poll(() => page.evaluate(
+      () => window.__ARENA_TEST__?.getSnapshot().load?.frameSamples,
+    )).toBeGreaterThan(paused!.frameSamples);
+  } finally { await page.keyboard.up("Escape"); }
 });

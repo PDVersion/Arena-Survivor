@@ -1,0 +1,31 @@
+# C4 — elite family /2026-10-20
+
+Verified local phase on codex/v0.4.3 from05f8860. No publication or matching-head CI claim. Read-only remote inspection confirms mergedPR26 head2806720/mergec6daeb6 and run39189877476 passing2806720 only. Exact source, compiled and screenshot hashes plus actual browser observations are in [C4_RESULTS.json](C4_RESULTS.json).
+
+## Delivered rules
+
+Existing elite chance remains unchanged; after a successful elite roll choose uniformly from baseline/split/shield/acceleration. Inherited IDs consume no RNG, preserving the exact family through duplication, authored offspring and Fragmentation. Legacy explicit true means baseline, false remains non-elite. Multipliers are applied once at each new spawn.
+
+Both themes author the family beside elites.ts, with names/descriptions in copy.ts. Dispersing Waste/Splitting Elite creates two same-role copies once per lineage, depth1 copies retain identity but cannot split again. Split source reward is half the parent's pre-elite/pre-world source multiplier; new elite/world multipliers apply once, avoiding compounding. Parent and children each pay their own exact authored XP on one committed lethal. Existing role offspring/fracture remain finite and retain their original chase movement. Split copies preserve parent movement. Split provenance includes parent entity/death event, original reward source and elite.split effect. No randomness/timer is added per frame.
+
+Wrapped Waste/Warded Elite takes half incoming damage while above half maximum health; at/below threshold full damage applies. Resolve once after armour and before capped actual health/ledger commit, for every damage source. Existing floating numbers remain rolled attack intent, as with armour/overkill; statistics count only actual capped shield-adjusted health loss. Existing direct/crit/momentum attribution order is unchanged.
+
+Rolling Waste/Charging Elite ramps speed from×1 to×1.5 over3000 simulation-ms, bounded at×1.5. World speed remains snapshotted at spawn; paused/hidden/overlay updates do not advance age, stationary roles stay stationary. Existing drift heading is retained. Markers2/◇/» follow presentation position, with shield marker disappearing after break. Scene-owned marker listener/text clean up on actor destruction; no second physics teardown and no sprite-system edit.
+
+## Reproduced correction
+
+At capacity1, killing one split parent queues two requests. Before the fix, processCausalEvents creates one child then consumes/drops the second request because its spawn consumer returns undefined on failed capacity. One actual-scene eco regression fails: expectedpending1, observed0. Returnfalse when remaining lane capacity is exhausted, using the queue's existing retain contract. Both-theme browser regressions now show live1/pending1, then live1/pending0 after freeing space. Two deterministic tests extract the actual coordinator method (existing focus-handler convention): retained identity/source/reward/depth and unchanged24-event budget. Existing compound/death/restart checks still pass.
+
+## Verification and limits
+
+Final561units/63files (14new cases), typecheck/lint/build/diff pass. Build retains existing Phaser chunk advisory. Production compiled HTML/JS excludes C4 test fixture marker; startup browser guards were not repeated because startup boundaries did not change.
+
+Initial bounded C4 two cases pass1.962s. Capacity reproduction one case fails1.332s as above. Combined affected six cases pass24.193s: both themes plus original elite duplication, explosion/Fracture/Bloodlust/chaining, terminal restart and all-shrine duplication. Final expanded two C4 cases pass with100-parent→200-child queue burst, cap≤300, depths1,300kills and empty queues after children die. Six unique affected cases verified cumulatively, not ten distinct cases or a full-app gate. Every run serial/one worker/zero automatic retries. The first non-escalated attempt could not start a server; no browser assertions ran. Two intermediate unit fixture imports were corrected to actual causal-events path, no runtime defect.
+
+Actual Chromium151.0.7922.34, SwiftShader Vulkan WebGL, test/Normal/Default, rate0.5, logical1600×900FIT at1280×720/DPR1; retained M5Pro/48GiB, Darwin25.5.0arm64. Windows desktop UA is preset data, never physical Windows evidence. Fixture imports actual Phaser/RunScene/theme registry, no production test control; noAmbient/noContact/noHazards/noAudio, zero-delta ordinary updates, direct scripted spawns/damage/age/status and forced fracture RNG. This verifies rules/wiring, not unassisted combat/survival/native focus/physical throughput. Burst uses paused physics and coordinator calls, not sustained density performance.
+
+Exact observed shield ledger losses1then2, split parentreward3.75 and childrewards1.875each, total tagged XP7.5 (parent3.75 plus children3.75). Duplicate lethals add nothing. Both themes retain all three variant/depth identities through actual duplication actor, role-specific offspring and two zero-reward fragments. Speed104→130, paused130→156. Final screenshots under testInfo.outputPath were visually reviewed after clearing transient flash/feedback; markers readable over sprites and primitives.
+
+60 coarse baseline balance scenarios (tenmodels×threedifficulties×twothemes) complete; simulator does not model elite families, so these do not claim shield/split/movement pacing acceptance. Authored family costs/rewards are bounded theme data. Full-app/stress/native/long/startup campaigns deferred by resource policy; external actual Safari/browserOS/older-device checks remain temporarily waived/unverified by explicit owner revision. Historical P5/P6 reports/portable pack remain frozen-source evidence. No dependencies/persistence/boss/rate/global weapon/XP rules/content sprites changed. Owned server/browser resources cleaned;4173 no listener, review4213 and unknown resources untouched.
+
+Final theme-token marker correction followed by both affected cases passing3.475s, zero retries. Final source/build/image hashes and observations are refreshed in C4_RESULTS. Final review2026-10-20T00:35:28.339111+00:00, elapsed425.3s from00:28:23UTC, well before the01:38:23final reserve and01:58:23deadline.

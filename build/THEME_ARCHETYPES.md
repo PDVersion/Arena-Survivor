@@ -71,6 +71,7 @@ IDs describe gameplay roles, not fiction. They remain stable across theme packs 
 | --- | --- | --- |
 | `character.starter` | Environment Protector | Wandering Knight |
 | `weapon.starter` | Cleanup Grabber | Magic Needle |
+| `weapon.secondary` | Cleanup Vacuum | Runic Fan |
 | `enemy.swarm_basic` | Plastic Bottle | Grunt |
 | `enemy.fast_fragile` | Microplastics (V0.4.2.1; replaces Plastic Bag) | Runner |
 | `enemy.slow_durable` | Glass Bottle | Tank |
@@ -245,3 +246,91 @@ difficulty using the game's resolver, labels stats through theme copy and reads
 physics/stats from definitions, never sprites. Its starting values exclude
 time/pressure/elites/upgrades; future live stat-book selectors must preserve that
 distinction. The secondary pack's roster balance is unchanged.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — shrine and curse catalog
+
+| Stable role | Eco | Knight/magic |
+| --- | --- | --- |
+| `shrine.escalation` | Unmanaged Dump | Shrine of Defiance |
+| `curse.frenzy` | Overflow Contract | Frenzy Pact |
+| `curse.escalation` | Contamination Pact | Doom Pact |
+
+Each theme now owns `curses.ts` beside shrines/upgrades. A curse is a run-local,
+one-time world bargain; its normal level-up offer uses `curse.accept` and records
+stable accepted IDs separately from shrine activations. Shared world resolution
+composes Chaos additions and spawn/XP products, retaining fractional rewards.
+Curses do not add actors, timers, queues, inherited source rewards or profiles.
+The new shrine uses the existing world-multiplier actor/arrival/guide path.
+Both production themes remain complete; a small alternate fixture may omit this
+optional new shrine and provide an empty curse registry.
+
+### V0.4.3 C4 elite family
+
+Both packs author four elite definitions: baseline plus split/shield/acceleration.
+Eco Dispersing/Wrapped/Rolling Waste correspond to Splitting/Warded/Charging Elite.
+Copy catalog owns names/descriptions, elites.ts owns finite mechanics and markers.
+Identity is inherited, not inferred from sprite/tint. See content/C4_REPORT.md.
+
+
+### V0.4.3 C5 — unique encounter capabilities
+
+Enemy definitions may carry one unique mini/final boss capability with normalized
+arrival and simulation warning/recovery/radius/damage. It is excluded from ambient
+roles, random elites, duplication and descendant relationships. Stable mini/final
+IDs map to Compacted Waste/Dumping Colossus or Runic Sentinel/Chaos Warden. All
+combat/body/display/reward values are explicit theme data; primitive shape and
+health bars observe combat state and never determine it. Exactly one of each kind
+can be authored; no boss art is claimed by this phase.
+
+## V0.4.3 C6 implementation checkpoint /2026-10-20
+
+Browser-local schema2 now retains six settings, terminal-only lifetime statistics,
+completed/death counts, longest run and stable identity/unlock IDs. Both themes
+unlock the existing secondary tool after one finished run and bloodlust after25
+finished-run kills, affecting the next run only. These are the planned mechanical
+content unlocks, distinct from exploratory educational cosmetic feats. No permanent
+stat bonus, active-run suspension, sprite or new factual content is added.
+Corrupt storage is preserved; denied/quota storage falls back to memory with visible
+warnings. Schema1 migration is deterministic. C7 portable export/import/preview and
+explicit backup recovery are implemented through the same validated profile model.
+
+
+### V0.4.3 C7 — portable progress
+
+Title Settings → Manage Save exports the complete implemented profile to encoded
+text/download, or previews a file/pasted save before explicit confirmation. Both
+themes supply labels/warnings; stable IDs retain identity across display-name
+changes. Unknown valid IDs remain saved and warn about unavailable selection.
+Backup restore and reset each need confirmation. No save management is offered
+during a live run; no transient simulation objects or suspended run are persisted.
+Current progress is preserved on cancellation/invalid input/storage failure, and
+corrupt source is quarantined without replacing a good backup. See SAVE_DATA.md
+for exact format, bounds, storage transaction limits and accepted schema migration.
+
+### Session21 selected correction — owner-track target capacity
+
+Q6 will extend vacuum primary-target capacity through its own weapon progression;
+the current three-target/four-target evolved definitions remain the implemented
+baseline until that gate passes. A modest early cap is retained. Exact integer
+steps, finite ceiling and evolution tuning belong to theme weapon data and need
+balance verification. Earned capacity must survive same-slot evolution without
+regression; splash caps are a separate authored mechanic. The reusable contract
+must validate both Cleanup Vacuum/Cyclone Vacuum and Runic Fan/Runic Tempest while
+keeping themed identity out of systems. No new stable IDs, save schema, materials
+or sprites are selected by this planning decision.

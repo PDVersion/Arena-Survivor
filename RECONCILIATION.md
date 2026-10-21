@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5 consolidated acceptance and P6 readiness remain gated.**
+- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C7 local gates verified; Session21 authorizes draft PR delivery with Q6 and a new Vite audit finding open.**
 
 ## How to maintain this file
 
@@ -346,6 +346,27 @@ Run/profile unit tests require JSON round trips, clean reset, terminal-state imm
 
 Revisit when:
 Phase 3 adds death/health mutation, Phase 5 adds restart and statistics, or suspended runs/persistence enter scope.
+
+C7 continuation /2026-10-20:
+The portable codec uses the same schema2 validation/migration as local storage,
+canonical sorted-object UTF-8 JSON, unpadded Base64URL and SHA-256 over its encoded
+payload line. Strict350KiB/256KiB bounds and semantic validation precede any mutation.
+Preview is an immutable opaque token; cancellation has no writes. Explicit confirm
+backs up valid progress before one current-key replacement, then publishes memory.
+localStorage has no multi-key transaction; a failed current write may refresh the
+valid backup, never current progress. Corrupt source is quarantined separately and
+never replaces a known-good backup. Reset/restore also need explicit confirmation.
+
+Review reproduced loss of another tab's newer save written before preview: cached
+memory would become backup while newer storage was overwritten. Preparation now
+rejects uncached storage bytes; confirmation detects post-preview changes. Ordinary
+settings/terminal writes also block on uncached bytes, retain local memory and warn
+to reload. These checks are not atomic cross-tab CAS. Regression tests cover both
+stale timing windows, quota/backup/current/quarantine failures and post-write-only
+hydration. Unknown IDs retain saved identity with warnings/runtime fallback; schema1
+migration is deterministic.655units/67files and five bounded serial browser cases
+verify the slice; see build/content/C7_REPORT.md. No active-run persistence or new
+hardware evidence follows.
 
 ### REC-013 — Manifest validation must defend against malformed runtime data
 
@@ -898,6 +919,22 @@ Unit tests lock deterministic chance boundaries and inheritance precedence. Brow
 
 Revisit when:
 Elite variants, role-specific elite tuning, descendant mutation, or elite-exclusive drops enter scope.
+
+C4 continuation2026-10-20: baseline becomes a four-member registry. The existing
+elite chance is unchanged; a second deterministic draw chooses the family. Preserve
+exact EliteId (legacybooleantrue means baseline), split depth, and original source
+reward through causal requests. Split adds two same-role children at depth1 with
+half source reward each; depth1 cannot split. Role offspring/fracture remain their
+existing finite role graph, retaining variant/depth but existing chase defaults.
+Shield resolution precedes capped ledger; floating numbers remain attack intent.
+Acceleration age uses only playing simulation delta and leaves stationary roles0.
+New marker text/listeners are presentation-owned and destroyed with actor.
+
+A capacity1/two-request browser regression reproduced silent loss of the second
+request in the existing spawn lane. Returnfalse once its remaining capacity is
+exhausted to retain it using the queue's existing contract. Actual-method unit and
+both-theme scene regressions prove retention, exact source/depth/reward and24event
+budget. No enlarged cap or second physics teardown. See build/content/C4_REPORT.md.
 
 ### REC-038 — Combat feedback is bounded and never authoritative
 
@@ -1573,6 +1610,26 @@ Future guardrail:
 Revisit when:
 Persistence lands and this slice needs a codec and migrations, or lifetime statistics need to outlive the page.
 
+C6 continuation2026-10-20: the existing module statistics now hydrate from validated
+schema2 and persist only finished contributions guarded by terminalShown. Never save
+the live-run overlay. Six settings persist at explicit changes; no active-run snapshot.
+Schema1 migration is pure/deterministic. Browser-storage getter can throw, not only
+setItem; catch acquisition/read/write and keep in-memory play with visible warning.
+Malformed current bytes stay untouched and must never replace a known-good backup.
+Ordinary valid replacement backs up previous raw source first. The later C7 recovery
+flow must quarantine corrupt current separately before any explicit replacement.
+
+Theme-owned milestones unlock secondary after1finished run and bloodlust after25
+finished-run kills; snapshot offers at run creation. Existing acquisition/evolution
+fixtures must search that actual entitled pool, not the full authoring catalog; the
+first two eco seed precondition failures demonstrated that mismatch. Imported unknown
+well-formed IDs stay preserved, unavailable selected character uses runtime fallback.
+Durable aggregates alone saturate at1e15 to prevent valid ceiling saves crashing a
+future terminal contribution; actual run damage/XP remains exact. Both-theme rules,
+reload and actual short terminal verify wiring.10unique bounded serial browser cases,
+595units/65files and final software pass; see build/content/C6_REPORT.md. C7 remains
+next; temporary external acceptance waiver is not evidence of a hardware/browser pass.
+
 ### REC-063 — The game opens on a title screen, and test mode skips it
 
 - Status: Accepted
@@ -1627,6 +1684,31 @@ Seventeen browser assertions poll for `complete` once the duration expires, and 
 
 Revisit when:
 Endless needs its own escalation curve past `t = 1`, or a run can be abandoned from the decision rather than only resolved.
+
+C5 continuation2026-10-20: the production duration now enters live boss_fight,
+with one unique capped final enemy instead of the held decision. The same enemy
+path owns hit/armour/capped ledger/lethal/on-kill/reward claims. Mini at50% and
+final at100% are authored theme capabilities, never ambient roles or duplicates;
+only successful capped creation consumes a milestone. Do not delete queued or
+live work to admit the encounter. Each boss has one fixed-position warning and
+one simulation pulse; no catch-up loop/wall timer. At most two state/cue entries.
+
+Stored activePhase and a shared active predicate preserve combat and intended
+resume through pause/focus/level-up. If a final lethal occurs while an earned
+choice is open, retain that choice, then open the held victory decision without
+resuming physics even for one frame. Actual scene-method regressions lock this.
+After normal final lethal accounting, existing endless/clearing options resume;
+clearing still waits on causal backlog. Generic pure run helpers opt in, normal
+production/test RunScene enables authored bosses, only explicit atTimeUp legacy
+fixtures bypass them. Test-mode is never a blanket boss exemption.
+
+Timed boss/clearing pressure must plateau consistently in actual world, director,
+hazards, elite chance and HUD/pause values; selected endless alone escalates past1.
+TTK omits bosses before their milestones and displays absent values as a dash,
+not zero.583units/64files and six unique bounded serial browser cases verify
+C5 rules/wiring, not survival/native/throughput or device acceptance. Persist raw
+report attachments before later Playwright runs clean output; final dedicated
+capture is in build/content/C5_RESULTS.json. See C5_REPORT for exact aids/limits.
 
 ### REC-065 — Rarity said two things at once; the roll is now separate
 
@@ -2572,6 +2654,109 @@ P5 consolidated acceptance is still next, so Session 8 remains P5 and the
 roadmap's future P6 handoff becomes Session 9. No new reconciliation ID is
 allocated outside V0.4.3's reserved range.
 
+Session13 continuation (2026-10-20): the owner explicitly replies “yes proceed”
+to continuing planned C1–C7 after the verified software gate with missing
+browser/device evidence release-blocking rather than build-blocking. P5/P6
+acceptance remains open; the device shortfall is neither a pass nor a waiver.
+C1 starts with serializable ordered slots and independent simulation clocks;
+only successful attacks advance their own slot and missed frames never replay
+attacks. Theme-owned capacity is two; current runs still equip only their starter.
+In-flight projectiles retain immutable attack-time weapon data for armour,
+knockback and lethal provenance, so another slot/catalog change cannot lend
+them the starter's stats. Restart reconstructs baseline slots/clocks and retains
+selected difficulty. No second physics teardown, new content, rate or XP change.
+The bounded both-theme actual-actor test proves scheduling and hit ownership;
+its first exact-total assertion used fractional armour instead of armour points
+and was corrected in test data, not gameplay. New tool/owned offers/splash and
+C1's combined balance/readability/stress acceptance remain next. See
+`build/content/C1_FOUNDATION_REPORT.md`. No new reconciliation ID is allocated.
+
+Session14 C1 continuation (2026-10-20): the second tool ships through ordinary
+level-up acquisition and the existing melee union (optional cone). Weapon-owned
+entries are authored beside their definitions, merged into the shared registry,
+filtered by equipped owner and resolved into owner-local modifiers; global gains
+and category spread remain intact. Acquisition is one-time and unscaled. Display
+its level0→1 separately from an already-owned weapon track, and inspect secondary
+stats as well as starter stats so an acquisition card's numbers remain verifiable.
+Collection Sweep's trigger belongs only to the weapon that declares its track.
+
+On-hit splash is separate from kill detonation in damage source/ledger. A primary
+hit list can contain an actor killed by a prior splash: skip it before another
+hit/response rather than granting phantom damage. Real Phaser regression leaves
+one health on the surviving controlled target and commits only two kills. Capped
+ledger damage and intended floating-number damage are different authorities;
+wire splash into the existing number aggregator too. Exact eco probe reconciles
+27 actual /10.2 splash, three kills/3XP, and flushes all30.6 intended display
+damage including overkill. Existing causal/death claims and bounded kill response
+remain; no second physics teardown. Frame-bound keyboard offer choices use80ms.
+
+509units/59files, types/lint/build/diff and15 unique affected serial browser cases
+verify C1 locally. Both themes/all build models/three difficulties run balance.
+Contact/packed simulator bands do not model movement/overkill/tiered damage picks;
+short300-actor rounds are not throughput/soak/hardware acceptance. Record the
+actual renderer and separate Desktop-profile Windows UA from physical macOS:
+`test.use(undefined)` did not clear that profile in these runs. P5/P6 external
+release gate remains open, C2 is next, and no matching-head CI/publication is
+inferred. See `build/content/C1_SECOND_TOOL_REPORT.md` and source/result hashes.
+
+Session15 C2 / owner revision (2026-10-20): owner explicitly says “yes waive
+those checks for now and continue with build for c2”. Outstanding actual Safari,
+missing selected browser/OS combinations and older physical integrated-GPU checks
+are temporarily waived, superseding their release-blocking classification. This
+is a gate disposition, not evidence, permanent support certification, or permission
+to re-run broad campaigns. Preserve prior source hashes/scenario limits; revisit
+support claims against this waiver when external access or owner scope changes.
+
+Evolution is a standalone unscaled normal-draw choice after four actual picks
+of the secondary-owned reach track. Tier quality scales earned gains, not the
+pick counter. Source/target/prerequisite references and attainable positive pick
+counts validate in each theme. A new definition replaces the old ID in the same
+ordered slot, preserving its clock and capacity; transfer exact local modifiers
+once, keep globals and selected/tallied IDs intact, then exclude obsolete owner/
+acquisition/evolution cards. Restart reconstructs original starting state. No
+free attack or catch-up. Both themes author the wider four-target cone and bounded
+splash with existing presentation; no sprite, persistence or delivery abstraction.
+
+527units/60files and eight unique affected serial browser cases verify C2. Initial
+8-case run has7passes/1fixture failure: three eco targets die from direct hits,
+so expecting a splash kill is invalid. Four-target corrected evolution subset
+passes both themes with direct/splash evolved provenance,36/40 actual damage,
+4kills,4/8XP. No runtime fix follows that fixture error. Short300-actor rounds
+preserve ledger/cap and independent clocks; not throughput/soak/device evidence.
+All ten models/both themes/three difficulties run balance; ideal contact bands
+assume earliest evolution at level7 and omit offer frequency/movement/overkill.
+See `build/content/C2_REPORT.md`. C3 is next; local only, no matching-head CI claim.
+
+Session16 C3 continuation (2026-10-20): add one optional sixth shrine at86%
+progress and two one-time normal-level-up curses in each production theme. New
+curse catalog entries own finite pressure/reward; offers reference stable curse
+IDs. Run world state retains accepted IDs separately from shrine activations,
+using existing additive Chaos and multiplicative spawn/XP products. Acceptance
+is idempotent even with stale pick history; one successful choice/tally, no tier
+scaling, no new actor/timer/queue, and reset clears it. Keep source rewards
+separate from world XP at actual collection. Do not round fractional rewards to
+force order-independent IEEE products; deterministic tests compare within tolerance.
+
+Actual screenshots reveal the card's three-row detail cap can hide a curse's XP
+reward after secondary pressure lines. Prioritize resolved XP, Chaos and arrivals
+for curse choices in the existing description selector, retaining all detail lines
+and leaving other upgrades' ordering unchanged. Actual rendered-text regression
+and both-theme screenshots verify the numeric reward. One follow-up fixture
+expected ×1.5 instead of ×1.8 after an accepted arrival curse: it omitted the
+existing Chaos XP curve; correct the fixture, not runtime coefficients.
+
+547units/61files and seven unique serial browser cases verify C3 locally; initial
+seven pass40.1s, final two pass12.4s after the visibility fix. Two intervening
+fixture assertion failures are retained, zero automatic retries. Both-theme real
+XP/80ms keyboard choices and E shrine activation, repeat refusal, fractional
+0.375 source XP→1.18125 once, pause/resize/reset and brief300-mixed load preserve
+cap/world/queues. A scripted clock jump/travel in the C3 cases is distinct from
+the existing shortened natural-arrival case, which also passes all six placements.
+120 coarse balance scenarios compare baseline versus all C3 choices at start;
+baseline raw output matches C2 exactly. These are model bands, not survival or
+hardware evidence. Source-bound scope and temporary external waiver remain.
+See `build/content/C3_REPORT.md`; C4 next, local only, no later-head CI inferred.
+
 ### REC-103 — Scene delta is smoothed as well as scaled; measure raw wall intervals
 
 - Status: Accepted
@@ -3391,3 +3576,111 @@ hardware. Reporter output paths resolve relative to config location; root them
 explicitly and preserve raw artifacts before another run. Source hashes separate
 the accepted52 run from the final nullable-guard-only four-probe rerun. P5/P6
 hardware gates remain intact.
+
+
+Session12 readiness continuation (2026-10-19): the owner explicitly requests
+starting P6 while finishing P5. This authorizes software preparation/validation
+before physical acceptance, not a fabricated pass. Owner confirms no older
+machine is available. P5's remaining branded/platform/device evidence stays open;
+any move of that evidence from build-blocking to release-blocking needs the
+owner's explicit decision. C1–C7 do not start merely because hardware is absent.
+
+PR26 merged2806720 as c6daeb6; run39189877476 succeeds with two browser retries.
+The card test's distant natural-arrival/travel prerequisite is not a reliable
+card/stat test; use the existing theme-derived close real-XP arrival fixture.
+Restart keys also need frame-length holds. Eight affected cases and the full
+96-case local browser/stress run now pass without retries; no runtime fix.
+Current/previous-major native Edge155/154 add26 focused macOS passes; native
+Safari's automation-setting block is recorded before any gameplay claim.
+
+Portable device evidence must label its clock source accurately: a wrapper's
+browser rAF is not Phaser rawDelta. Omit unmeasured CPU/GPU fields rather than
+emit zero; distinguish telemetry elapsed differences from actual engine deltas.
+Keep warmup, sampled/paused/hidden counts, quality/population checkpoints and
+source/artifact identity. Export unreviewed evidence, not automatic hardware
+acceptance. The test-mode pack stays outside production dist, serves loopback
+only and preserves all prior aided-fixture/physical-device limits. P6 reports
+and exact final load results own the completed software slice.
+
+Session12 final evidence:26 Edge155/154 passes and two unpatched headed
+Firefox158/157 smokes use verified vendor packages at temporary paths, not system
+installations. All owned browsers/profiles/mounts/servers are cleaned up. Safari's
+setting still blocks session creation. P6's18 frozen warmed windows preserve
+exact60/150/300 live counts/cap300; Default p95 medians25.1/25.5/41.7ms versus
+Low17.6/24.3/25.0ms, no >100ms stalls. Conditional SwiftShader evidence is not
+physical acceptance. No older device exists; no reply to the proposed gate-order
+revision, so content stays blocked and P5/overall acceptance remains open.
+
+## Session21 Q6 follow-up — motion acceptance and weapon target progression
+
+Continuation of REC-105 (player presentation) and REC-102 Session14/15 (C1/C2);
+no new ID is allocated from V0.4.4's reserved range. Status: open correction gate
+in BUILD_PLAN_V0.4.3; C1–C7 historical local verification remains intact.
+
+Observation: owner reports continuing player jitter and enemies in the drawn
+vacuum cone not hit. The pipeline independently centres each pose's bounds, so
+shared body/foot alignment needs a fixed-anchor motion check; still a hypothesis,
+not a live reproduction. Drawing/hits use the same resolved reach/angle. Direct
+hits resolve once at firing with nearest-target caps3/4(base/evolved), while the
+cue remains stationary and fades280ms. Occupying its fade does not cause a hit.
+Passing flip/cadence or hit-total tests does not prove motion/cone correspondence.
+
+Owner decision2026-10-21: a modest early vacuum cap is acceptable; enemies hit
+should increase as the weapon levels up. Plan growth through its own upgrade
+track, preserving finite integer caps and deterministic ties. Exact thresholds,
+increments/ceiling and evolution tuning remain open until theme data/balance
+validation. Earned growth must survive evolution without a reduction. Do not
+silently remove caps or grow splash targets; preserve independent clocks, rate0.5,
+XP and damage-source provenance. Planning only; no runtime implementation yet.
+
+Review verification:25 affected units/3files pass; no new browser campaign.
+Read-only remote inspection finds merge CI39193504359 successful on c6daeb6;
+older39189877476 covers2806720. Neither certifies local C7 head88f220b or Q6.
+No publication or additional acceptance waiver. Keep source-bound P5/P6 evidence
+and actual Safari/platform/older-device gaps explicitly waived/unverified.
+
+Session21 delivery disposition: the later explicit owner request authorizes a
+commit of selected planning decisions, push and draft V0.4.3 PR now; this
+supersedes local-only delivery and the recommendation to fix Q6 before PR creation.
+Q6 remains open, not waived or implemented. Fresh delivery units655/67, types,
+lint/build pass. Audit now reports one high Vite finding across three launch-editor
+advisories (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw, GHSA-587h-7wmj-h5pm),
+with6.4.4 suggested outside the exact6.4.3 pin. Earlier zero-audit results are
+historical snapshots. Leave this visible as a draft-delivery blocker rather than
+silently upgrading dependencies or weakening CI. PR Actions will provide current-
+head browser/audit evidence; no merge/deployment/manual dispatch is authorized.
+
+
+PR27 CI repair continuation of REC-114/REC-113: owner explicitly authorizes fixing
+failed Actions. C3 seed search must use runUpgradePool after C6 filters unlocks.
+Frame-consumed keys stay down until observed, released in finally; resending E
+can select another adjacent shrine. Space after E also legitimately activates
+another shrine, so assert surge exactly-once independently of global feedback;
+feedback equals all activated instances. Slow software-runner simulation requires
+bounded progress waits, not assumed wall throughput; keep exact elapsed/population/
+reward assertions. Vite6.4.4 narrowly resolves the new launch-editor audit finding.
+No audit bypass, retry/skip increase or gameplay change. Local655units/67files,
+types/lint/build/diff/audit0 and7unique serial affected browser cases verified;
+[repair report](build/performance/PR27_CI_REPAIR.md) records failures and limits.
+Remote current-head confirmation pending; Q6 and device waiver remain unchanged.
+
+
+PR27 continuation: fixing an early fixture precondition can expose later CI-only
+wall-time assumptions. Run39528406842 passes116cases/no flaky tests; the two C3
+cases now reach their final300-actor poll, advancing258–275simulation-ms/10s.
+Keep the1000ms work and exact world/reward/cap/reset assertions, using the same
+90-second progress budget as other simulation gates. Both affected cases pass
+locally12.5s/zero retries; full remote confirmation remains pending. No runtime
+defect, performance win or new device evidence is inferred from the wait repair.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.
+Spawn-time rewards are immutable; never compare a mixed-modifier cohort against
+one later world multiplier. Preserve exact assertions by controlling the fixture
+world until its reward checks finish, not by loosening numeric tolerances.

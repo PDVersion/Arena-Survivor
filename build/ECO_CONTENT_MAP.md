@@ -15,6 +15,11 @@ and **Parked** is not offered by this theme.
 | --- | --- | --- | --- | --- |
 | `character.starter` | Environment Protector | Character | A field operative clearing an overflowing waste site. | Live |
 | `weapon.starter` | Cleanup Grabber | Melee weapon | A mechanical grabber that extends through every item in its narrow path, then retracts. | Live |
+| `weapon.secondary_evolved` | Cyclone Vacuum | Evolved melee cone | Replace Cleanup Vacuum after four owned reach picks; wider four-target cone and stronger nearby splash, keeping earned reach. | V0.4.3 C2 |
+| `upgrade.evolve_secondary` | Evolve to Cyclone Vacuum | Evolution choice | One normal level-up choice; replaces in the same slot, no extra slot. | V0.4.3 C2 |
+| `weapon.secondary` | Cleanup Vacuum | Melee cone | Automatically clears up to three targets in a short cone; each hit splashes nearby targets. | V0.4.3 C1 |
+| `upgrade.equip_secondary` | Equip Cleanup Vacuum | Weapon acquisition | Fill the empty second automatic-tool slot through a normal level-up choice. | V0.4.3 C1 |
+| `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum; appears after it is equipped. | V0.4.3 C1 |
 | `upgrade.weapon_range` | Longer Grabber | Weapon track, owned level 1 | Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5. | Live |
 | `upgrade.weapon_collection_sweep` | Collection Sweep | Weapon track, starts unowned | Periodically sweep a wider area at the grabber's jaws. Higher levels trigger more often and add sweeps along extension and retraction. | Live |
 
@@ -72,8 +77,8 @@ when another level would otherwise be meaningless.
 
 | Stable ID | Name | Type | Approved description |
 | --- | --- | --- | --- |
-| `upgrade.damage` | Reinforced Tools | General / offense | Process more waste with every grab. |
-| `upgrade.attack_speed` | Rapid Cycling | General / offense | Cycle the Cleanup Grabber more frequently. |
+| `upgrade.damage` | Reinforced Tools | General / offense | Process more waste with every tool. |
+| `upgrade.attack_speed` | Rapid Cycling | General / offense | Cycle all equipped tools more frequently. |
 | `upgrade.crit_chance` | Precision Sort | General / critical | Increase the chance of a critical separation. |
 | `upgrade.move_speed` | Field Boots | General / gear | Cover the site more quickly. |
 | `upgrade.health` | Safety Gear | General / gear | Increase maximum health and recover by the same amount. |
@@ -102,3 +107,33 @@ World Effects, Shrines, and Hazards. Names/descriptions come from theme copy;
 levels, values, caps, discovered state, and relationships come from live theme
 definitions and session statistics. This document supplies structure and
 wording review, never a second executable ruleset.
+
+
+## V0.4.3 C3 — sites and run-local contracts
+
+| Stable ID | Name | Decision / wording |
+| --- | --- | --- |
+| `shrine.escalation` | Unmanaged Dump | Raise Pollution for the rest of this run in exchange for more impact credit. One scheduled site at86% progress; activation is voluntary. |
+| `curse.frenzy` / `upgrade.accept_frenzy` | Overflow Contract | Accept more arrivals for more impact credit for the rest of this run. Once per run, chosen at level-up. |
+| `curse.escalation` / `upgrade.accept_escalation` | Contamination Pact | Raise Pollution for more impact credit for the rest of this run. Once per run, chosen at level-up. |
+
+All multipliers and effects come from shrine/curse definitions. These are game
+risk/reward choices, not educational fact cards. Restart clears the contracts;
+accepted contract names remain visible in the run's equipment/upgrade tally.
+
+## V0.4.3 elite variants
+
+Dispersing Waste splits into two same-role copies once per lineage; Wrapped Waste
+halves damage above half health; Rolling Waste accelerates over three simulation
+seconds. These are game modifiers on material roles, not new material identities
+or environmental effectiveness claims. Markers2/◇/» remain visible over actor art.
+
+
+### V0.4.3 C5 — bounded fictional encounters
+
+Compacted Waste and Dumping Colossus are readable mini/final encounter fiction,
+not persistence estimates, disposal advice or a promoted layered-material system.
+They use the same tool damage path as existing waste actors. Their marked circle
+teaches the immediate game action: move clear before the pulse. No knowledge
+question, content-source claim, type effectiveness, material layer or sprite
+inventory is added. Boss values and labels remain theme-owned.

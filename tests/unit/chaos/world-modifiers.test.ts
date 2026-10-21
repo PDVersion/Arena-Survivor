@@ -6,7 +6,7 @@ import { applyWorldChoice, createWorldState, selectWorldModifiers } from "../../
 describe("Chaos and world modifiers", () => {
   it("starts at a clean serializable 1.0x baseline", () => {
     const state = createWorldState();
-    expect(state).toEqual({ chaos: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, shrineActivations: {} });
+    expect(state).toEqual({ chaos: 1, enemySpawnMultiplier: 1, xpMultiplier: 1, acceptedCurseIds: [], shrineActivations: {} });
     expect(selectWorldModifiers(state)).toMatchObject({
       chaos: 1, enemySpawnMultiplier: 1, enemyHealthMultiplier: 1,
       enemyDamageMultiplier: 1, xpMultiplier: 1, eliteChance: 0,

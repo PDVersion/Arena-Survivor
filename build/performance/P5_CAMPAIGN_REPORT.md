@@ -170,4 +170,4 @@ Session 11 follow-up: owner delegated browser support selection and authorized
 the focused desktop engine checks. See [compatibility report](P5_COMPATIBILITY_REPORT.md)
 for selected policy and 52 passes. That resolves the selection prerequisite above;
 actual missing branded/platform/older-device evidence remains pending. Current
-handoff: [Session 12 / P5](../SESSION_12_PROMPT.md). Original campaign limits remain.
+handoff: [Session 13 / remaining gates](../SESSION_13_PROMPT.md). Original campaign limits remain.

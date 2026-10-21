@@ -54,6 +54,8 @@ export class PauseMenuUi {
   private sectionBounds: { readonly section: CodexSection; readonly bounds: Phaser.Geom.Rectangle }[] = [];
   private onToggle?: (key: SettingKey) => void;
   private menuContext = false;
+  private onManageSave?: () => void;
+  private manageSaveBounds?: Phaser.Geom.Rectangle;
 
   constructor(scene: Phaser.Scene, theme: ThemeManifest) {
     this.scene = scene;
@@ -84,12 +86,13 @@ export class PauseMenuUi {
   show(
     view: PauseMenuView,
     onToggle: (key: SettingKey) => void,
-    options: Readonly<{ tab?: PauseTab; menuContext?: boolean }> = {},
+    options: Readonly<{ tab?: PauseTab; menuContext?: boolean; onManageSave?: () => void }> = {},
   ): void {
     this.view = view;
     this.onToggle = onToggle;
     this.tab = options.tab ?? this.tab;
     this.menuContext = options.menuContext ?? false;
+    this.onManageSave = options.onManageSave;
     this.render();
   }
 
@@ -169,6 +172,7 @@ export class PauseMenuUi {
     });
 
     this.settingBounds = [];
+    this.manageSaveBounds = undefined;
     this.sectionBounds = [];
     const bodyTop = top + 116;
     // Everything above the footer hint. Sections that can grow with content
@@ -227,6 +231,12 @@ export class PauseMenuUi {
           bounds: new Phaser.Geom.Rectangle(valueX - valueWidth / 2, y - 5, valueWidth, 40),
         });
       });
+      if (this.menuContext && this.onManageSave) {
+        const y = bodyTop + Object.keys(labels).length * 44 + 12;
+        children.push(this.scene.add.rectangle(width / 2, y, 260, 38, floor, 1).setStrokeStyle(2, accent),
+          addUiText(this.scene, width / 2, y, this.theme.copy.saveManager.manageSave, { ...rowStyle, fontStyle: "bold", color: palette.accent }).setOrigin(0.5));
+        this.manageSaveBounds = new Phaser.Geom.Rectangle(width / 2 - 130, y - 19, 260, 38);
+      }
     }
 
     children.push(
@@ -451,6 +461,8 @@ export class PauseMenuUi {
     this.destroyContainer();
     this.view = undefined;
     this.onToggle = undefined;
+    this.onManageSave = undefined;
+    this.manageSaveBounds = undefined;
   }
 
   private destroyContainer(): void {
@@ -461,6 +473,7 @@ export class PauseMenuUi {
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
     const point = uiPointer(this.scene, pointer);
+    if (this.manageSaveBounds?.contains(point.x, point.y)) { this.onManageSave?.(); return; }
     const tab = this.tabBounds.find((entry) => entry.bounds.contains(point.x, point.y));
     if (tab) {
       this.tab = tab.tab;

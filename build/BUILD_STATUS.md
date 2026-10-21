@@ -1,6 +1,6 @@
 # Build dates and status
 
-Updated **2026-10-19 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-21 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -44,11 +44,50 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | P5 native-event slice (Session 9) | 2026-10-16, local test/evidence slice | One native same-window Chromium/Metal playing-run round trip passes; 14 deterministic state guards; final 488 units/57 files, types/lint/build; [report](performance/P5_ACCEPTANCE_REPORT.md) |
 | P5 consolidated lifecycle (Session 10) | 2026-10-19, local test/evidence slice | Owner-authorized 20-minute M5 campaign passes: full authored clock, endless extension, ten short terminals, native overlays/pending work, twelve clean lifecycles, thirteen actual closed AudioContexts; scoped aids/limits in [report](performance/P5_CAMPAIGN_REPORT.md) |
 | P5 available-engine compatibility (Session 11) | 2026-10-19, local test/evidence slice | 52 serial focused passes across installed Chrome, Chromium, Firefox, WebKit; test timing/readiness fixes; [report](performance/P5_COMPATIBILITY_REPORT.md) |
-| P5 overall | **Incomplete** | Scoped lifecycle campaign accepted; desktop support policy selected; actual branded/platform combinations and physical older integrated-GPU evidence remain pending; [next prompt](SESSION_12_PROMPT.md) |
-| P6 | **Not started** | Combined readiness gate follows P5; no hardware readiness claim |
-| C1–C7 / optional content | **Not started / owner selection required** | Performance gate first; F16 is already delivered, other proposals are unselected |
+| P5 branded-browser follow-up (Session12) | 2026-10-19, local test/evidence slice | Edge155/154:26 focused passes; Firefox158/157:two unpatched application smokes; native Safari blocked by automation setting, no gameplay assertions; [report](performance/P5_COMPATIBILITY_FOLLOWUP.md) |
+| P5 overall | **Verified scoped software; external checks temporarily waived** | Session15 explicit owner waiver covers missing actual Safari/browser-OS/older physical integrated-GPU checks. No new external pass; historical source limits retained |
+| P6 | **Software verified; external checks temporarily waived** |96 serial browser/stress passes/six opt-in skips/zero retries,488units, verified device pack and18 final warmed windows; software slice verified. Physical/browser checks waived/unverified by Session15 owner; [report](performance/P6_READINESS_REPORT.md) |
+| C1 foundation | **Verified local slice, 2026-10-20** | Serializable slots, independent attack clocks and attack-owned hit data; [report](content/C1_FOUNDATION_REPORT.md). Foundation retained; the completed C1 gate is recorded below |
+| C1 second-tool gate | **Verified local phase, 2026-10-20** | Cleanup Vacuum/Runic Fan, owner-only upgrades, hit splash/ledger/number flush, simulator and bounded gameplay/readability/stress;509units/59files and15 unique affected browser cases. [Report](content/C1_SECOND_TOOL_REPORT.md) |
+| C2 evolution | **Verified local phase, 2026-10-20** | Same-slot Cyclone Vacuum/Runic Tempest after four reach picks, exact clock/modifier carryover;527units/60files, eight unique affected browser cases; [report](content/C2_REPORT.md) |
+| C3 shrines/curses | **Verified local phase, 2026-10-20** | One scheduled shrine and two run-local one-time curses per theme; visible resolved reward/cost, exact fractional XP/reset;547units/61files, seven unique affected browser cases and120 balance scenarios. [Report](content/C3_REPORT.md) |
+| C4 elite family | **Verified local phase,2026-10-20** | Both-theme split/shield/acceleration with inherited identity and finite causal work;561units/63files,six unique affected browser cases; [report](content/C4_REPORT.md) |
+| C5 bosses | **Verified local phase,2026-10-20** | Unique capped mini/final, live boss_fight and post-kill endless/clearing,583units/64files, six unique affected serial browser cases and60 coarse TTK scenarios; [report](content/C5_REPORT.md) |
+| C6 local profile | **Verified local phase,2026-10-20** | Schema2 local persistence, terminal lifetime stats, two theme-owned unlocks,595units/65files,10 unique affected serial browser cases; [report](content/C6_REPORT.md) |
+| C7 portable saves | **Verified local phase,2026-10-20** | Canonical codec, preview/backup/recovery/reset,655units/67files and five affected serial browser cases; [report](content/C7_REPORT.md) |
+| C1–C7 / optional content | **C1–C7 local gates verified** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
+
+## Session21 correction disposition
+
+C7 is committed locally as `88f220b`; clean branch review found ten commits ahead
+of the local origin tracking ref. C1–C7 scoped local gates remain verified.
+Q6 is the next open correction gate in [the active plan](BUILD_PLAN_V0.4.3.md#next-step--q6-player-motion-cone-feedback-and-vacuum-progression):
+player-motion/alignment diagnosis, truthful cone feedback, and owner-selected
+vacuum primary-target growth with weapon upgrades. Modest early caps are accepted;
+exact later cap steps/evolution tuning remain undecided and unimplemented.
+Read-only review reran25 affected units/3files, all pass; no new browser evidence,
+runtime correction or completion claim. Owner subsequently requests delivery:
+publish existing completed work and selected planning in a draft V0.4.3 PR,
+leaving Q6 open. Fresh delivery checks pass655units/67files, types/lint/build.
+Audit fails with one high finding in pinned Vite6.4.3 (three launch-editor
+advisories); dependency pin unchanged, no bypass. Browser regression is deferred
+to PR CI; current-head CI is pending at this recording checkpoint. No merge or
+deployment is authorized.
 
 ## Latest remote evidence
+
+PR #26 merged on2026-10-19 at03:11:29UTC as `c6daeb6`, head `2806720`.
+[Run39189877476](https://github.com/PDVersion/Arena-Survivor/actions/runs/39189877476)
+succeeds on that head:488units/57files,91 browser passes/two flaky/four skips,
+zero audit findings. Two retried failures are repaired in the local P6 software
+slice; current local combined run passes96 cases/six explicit opt-in skips with
+zero retries. No matching-head CI result is claimed for subsequent local changes.
+Read-only Session21 GitHub inspection also finds successful merge CI
+[run39193504359](https://github.com/PDVersion/Arena-Survivor/actions/runs/39193504359)
+on `c6daeb6`. Neither run covers local C7 `88f220b` or the pending Q6 corrections.
+PR26 is merged, not an active PR to update. No new publication/workflow is run.
+
+### Historical PR25 checkpoints
 
 Read-only Session 8 recheck: PR #25 merged on **2026-10-16 at 11:34:15 AEDT**,
 head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
@@ -57,7 +96,7 @@ head `03965ef2fc15e856e8c38f7ee52ec91b1ca875cd`, merge commit
 on `03965ef` was in progress during Session 8. Session 9 confirms it completed
 successfully on **2026-10-16 at 11:40:11 AEDT**: **474 units / 56 files**,
 types/lint/build, **93 browser passes / one existing skip**, zero audit findings.
-This result covers `03965ef` only; later local slices have no matching-head CI.
+This result covers `03965ef` only; at that checkpoint later local slices had no matching-head CI.
 Session 9 publishes nothing and triggers no workflow.
 
 The owner previously authorized publication of the two P5 commits and CI repair;
@@ -69,8 +108,9 @@ audit (**zero vulnerabilities**). This is remote evidence, not a full local run.
 The older failed run on `d9047c0` remains a historical failure.
 
 This pass does not establish long-soak, additional-browser, physical older-device
-or sustained mixed-combat performance acceptance. Such checks remain pending
-unless their scenario-specific reports provide evidence. No P5/P6 gate is closed
+or sustained mixed-combat performance acceptance. Such checks stay unverified
+unless their scenario-specific reports provide evidence; Session15 explicitly
+temporarily waives the specified outstanding external requirements. No P5/P6 gate is closed
 merely by consolidating documents or observing green CI.
 
 ## Maintenance and document ownership
@@ -99,3 +139,31 @@ recommendations and active C1–C7 scope. `npm run build` and whitespace checks
 pass; emitted runtime JS/CSS hashes are unchanged. No local browser/stress suite
 was run for this documentation-only change. The existing chunk-size advisory
 remains. This is a later local documentation checkpoint, not a new remote CI pass.
+
+
+## PR27 CI repair — local gate verified, remote confirmation pending
+
+Owner authorizes fixing failed Actions. Failed run39521650366 on5511e86 has
+6browser failures/1flaky; audit was skipped. Narrow fixture/input/simulation-budget
+repairs and Vite6.4.4 audit patch pass655units/67files, types/lint/build/diff and
+audit0findings. Seven unique affected browser cases pass cumulatively, serially
+with zero retries; one reproduced shrine assertion failure is retained in the
+[repair report](performance/PR27_CI_REPAIR.md). Full current-head Actions is pending
+at this checkpoint; no historical run is claimed. Q6 stays open. Existing dirty
+roadmap planning is preserved unstaged. No merge/deployment/device acceptance.
+
+
+PR27 repair follow-up: run39528406842 on a87f57f has116browser passes/6skips and
+no flaky tests; both C3 dense-load polls fail their10-second wall budget after
+reaching258–275simulation-ms. The same90-second progress budget fixes that next
+fixture limit; both affected cases pass12.5s locally/zero retries, types/lint/diff
+pass. All earlier repaired cases pass remotely. Final current-head CI is pending.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.

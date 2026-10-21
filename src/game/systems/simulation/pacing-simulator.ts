@@ -33,6 +33,8 @@ export interface PacingOptions {
   readonly bucketMs?: number;
   /** Chaos the run is assumed to sit at. `1` is a shrine-free run. */
   readonly chaos?: number;
+  /** Explicit immutable world fixture; no automatic shrine travel/choice model. */
+  readonly initialWorld?: WorldState;
   readonly seed?: number;
 }
 
@@ -80,7 +82,7 @@ function chaosWorldState(chaos: number): WorldState {
 export function simulatePacing(options: PacingOptions): PacingReport {
   const stepMs = options.stepMs ?? DEFAULT_STEP_MS;
   const bucketMs = options.bucketMs ?? DEFAULT_BUCKET_MS;
-  const chaos = options.chaos ?? 1;
+  const chaos = options.initialWorld?.chaos ?? options.chaos ?? 1;
   if (!Number.isFinite(options.durationMs) || options.durationMs <= 0) {
     throw new Error("Run duration must be greater than zero");
   }
@@ -95,7 +97,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     ?.effects?.find((effect) => effect.kind === "collection_sweep");
   if (!weapon || !character) throw new Error("The theme is missing required simulation content");
 
-  const world = chaosWorldState(chaos);
+  const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
+    .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
+  const world = options.initialWorld ?? chaosWorldState(chaos);
   const random = createSeededRandom(options.seed ?? SIMULATION_SEED);
 
   let progression: ProgressionState = createProgressionState(tuning.progression.xpCurve);
@@ -179,6 +183,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     }
 
     const context: BuildContext = {
+      secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
+      evolvedWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondaryEvolved),
+      evolutionLevel: evolution?.kind === "weapon.evolve" ? 3 + evolution.requiredPicks : undefined,
       weaponDamage: weapon.damage,
       weaponCooldownMs: weapon.cooldownMs,
       baseCritChance: character.baseStats.critChance,
@@ -271,13 +278,18 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
   const theme = resolveDifficultyTheme(options.theme, options.difficulty ?? "normal");
   const weapon = theme.weapons.find((entry) => entry.id === archetypeIds.weapon.starter)!;
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
-  const world = chaosWorldState(options.chaos ?? 1);
+  const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
+    .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
+  const world = options.initialWorld ?? chaosWorldState(options.chaos ?? 1);
 
   return Object.freeze(
     report.buckets.map((bucket) => {
       const progress = bucket.endMs / options.durationMs;
       const modifiers = selectWorldModifiers(world, theme.tuning.difficulty, progress);
       const dps = options.build.damagePerSecond(bucket.level, {
+        secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
+        evolvedWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondaryEvolved),
+        evolutionLevel: evolution?.kind === "weapon.evolve" ? 3 + evolution.requiredPicks : undefined,
         weaponDamage: weapon.damage,
         weaponCooldownMs: weapon.cooldownMs,
         baseCritChance: character.baseStats.critChance,
@@ -286,6 +298,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
       });
       const seconds: Record<string, number> = {};
       for (const enemy of theme.enemies) {
+        if (enemy.boss && progress < enemy.boss.appearAt) continue;
         // Armour is multiplicative, exactly as the scene applies it.
         const effective = enemy.maxHealth * modifiers.enemyHealthMultiplier * (1 + enemy.armour / 100);
         seconds[enemy.id] = dps > 0 ? effective / dps : Number.POSITIVE_INFINITY;

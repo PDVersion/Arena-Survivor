@@ -4,6 +4,7 @@ export const damageCategories = [
   "direct",
   "criticalBonus",
   "piercingMomentum",
+  "splash",
   "explosion",
   "chainedExplosion",
   "remainder",
@@ -32,7 +33,7 @@ export interface RunStatistics {
 
 export interface DamageRecord {
   readonly amount: number;
-  readonly source: "direct" | "explosion" | "chained_explosion";
+  readonly source: "direct" | "splash" | "explosion" | "chained_explosion";
   readonly directBase?: number;
   readonly criticalBonus?: number;
   readonly piercingMomentum?: number;
@@ -54,6 +55,7 @@ export function createRunStatistics(initialCritChance = 0): RunStatistics {
       direct: 0,
       criticalBonus: 0,
       piercingMomentum: 0,
+      splash: 0,
       explosion: 0,
       chainedExplosion: 0,
       remainder: 0,
@@ -122,11 +124,13 @@ export function recordCommittedDamage(statistics: RunStatistics, record: DamageR
     direct: 0,
     criticalBonus: 0,
     piercingMomentum: 0,
+    splash: 0,
     explosion: 0,
     chainedExplosion: 0,
     remainder: 0,
   };
-  if (record.source === "explosion") additions.explosion = amount;
+  if (record.source === "splash") additions.splash = amount;
+  else if (record.source === "explosion") additions.explosion = amount;
   else if (record.source === "chained_explosion") additions.chainedExplosion = amount;
   else {
     let remaining = amount;

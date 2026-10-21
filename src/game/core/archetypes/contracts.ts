@@ -1,6 +1,7 @@
 import type {
   CharacterId,
   ContentId,
+  CurseId,
   EnemyId,
   HazardId,
   PickupId,
@@ -58,6 +59,7 @@ export interface ThemeVocabulary {
   readonly directDamage: string;
   readonly criticalBonusDamage: string;
   readonly piercingMomentumDamage: string;
+  readonly splashDamage: string;
   readonly explosionDamage: string;
   readonly chainedExplosionDamage: string;
   readonly remainderDamage: string;
@@ -108,7 +110,51 @@ export const worldKeys = [
 ] as const;
 export type WorldKey = (typeof worldKeys)[number];
 
+export interface SaveManagerCopy {
+  readonly manageSave: string;
+  readonly title: string;
+  readonly description: string;
+  readonly exportSave: string;
+  readonly copyCode: string;
+  readonly codeLabel: string;
+  readonly fileLabel: string;
+  readonly previewImport: string;
+  readonly confirmImport: string;
+  readonly cancel: string;
+  readonly close: string;
+  readonly restoreBackup: string;
+  readonly resetProgress: string;
+  readonly confirmRestore: string;
+  readonly confirmReset: string;
+  readonly previewTitle: string;
+  readonly importAction: string;
+  readonly restoreAction: string;
+  readonly resetAction: string;
+  readonly runs: string;
+  readonly kills: string;
+  readonly bestLevel: string;
+  readonly weapons: string;
+  readonly upgrades: string;
+  readonly theme: string;
+  readonly difficulty: string;
+  readonly saved: string;
+  readonly exported: string;
+  readonly copied: string;
+  readonly manualCopy: string;
+  readonly cancelled: string;
+  readonly error: string;
+  readonly confirmationHint: string;
+  readonly fileTooLarge: string;
+  readonly warnTheme: string;
+  readonly warnContentVersion: string;
+  readonly warnUnavailable: string;
+  readonly warnCharacterFallback: string;
+}
+
 export interface ThemeCopy {
+  readonly saveManager: SaveManagerCopy;
+  readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly changedElsewhere: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
+  readonly eliteVariants?: Readonly<Partial<Record<EliteId, ContentCopy>>>;
   readonly spawnOrigins: Readonly<{ live: string; total: string; natural: string; fragmentation: string; baggedWaste: string; environment: string; benchmark: string }>;
   readonly difficulty: Readonly<{
     label: string;
@@ -327,6 +373,12 @@ export type SkillEffectDefinition =
     }>;
 
 export interface EliteDefinition {
+  readonly marker?: string;
+  readonly name?: string;
+  readonly description?: string;
+  readonly split?: Readonly<{ childCount: number; maxDepth: number; rewardMultiplier: number }>;
+  readonly shield?: Readonly<{ damageMultiplier: number; untilHealthFraction: number }>;
+  readonly acceleration?: Readonly<{ durationMs: number; maxSpeedMultiplier: number }>;
   readonly id: EliteId;
   readonly healthMultiplier: number;
   readonly damageMultiplier: number;
@@ -344,7 +396,16 @@ export interface CharacterDefinition {
   readonly baseStats: PlayerBaseStats;
 }
 
+export interface OnHitSplashDefinition {
+  readonly radius: number;
+  readonly damageMultiplier: number;
+  readonly targetCap: number;
+}
+
 interface WeaponDefinitionBase {
+  /** Authored beside its weapon; manifest merges these into the offer registry. */
+  readonly upgrades?: readonly UpgradeDefinition[];
+  readonly splash?: OnHitSplashDefinition;
   readonly id: WeaponId;
   readonly damage: number;
   readonly cooldownMs: number;
@@ -378,6 +439,8 @@ export interface ProjectileWeaponDefinition extends WeaponDefinitionBase {
 
 export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
   readonly deliveryKind: "melee";
+  /** Optional forward sector; absent retains the original narrow stab corridor. */
+  readonly arcRadians?: number;
   /** Length of the forward stab from the player's centre. */
   readonly reach: number;
   /** Width of the grabber head's contact corridor. */
@@ -391,7 +454,15 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
 /** Theme-owned weapon data with delivery-specific fields kept type-safe. */
 export type WeaponDefinition = ProjectileWeaponDefinition | MeleeWeaponDefinition;
 
+export interface BossDefinition {
+  readonly kind: "mini" | "final";
+  /** Normalized authored progress; unique encounter, not an ambient role. */
+  readonly appearAt: number;
+  readonly attack: Readonly<{ telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
+}
+
 export interface EnemyDefinition {
+  readonly boss?: BossDefinition;
   readonly id: EnemyId;
   readonly maxHealth: number;
   readonly moveSpeed: number;
@@ -441,6 +512,8 @@ export const upgradeCategories = [
 export type UpgradeCategory = (typeof upgradeCategories)[number];
 
 export interface UpgradeDefinition {
+  /** Own stat gains affect only this equipped weapon. Global cards omit it. */
+  readonly ownerWeaponId?: WeaponId;
   readonly id: UpgradeId;
   readonly effects: readonly UpgradeEffect[];
   /** `null` is a repeatable general stat upgrade with no per-run cap. */
@@ -450,6 +523,15 @@ export interface UpgradeDefinition {
   readonly rarity: UpgradeRarity;
   readonly category: UpgradeCategory;
   readonly presentationToken: keyof Pick<ThemePalette, "accent" | "critical" | "overcritical" | "shrine">;
+}
+
+/** Run-local voluntary world bargain, accepted once through a level-up choice. */
+export interface CurseDefinition {
+  readonly id: CurseId;
+  readonly chaosIncrease: number;
+  readonly enemySpawnMultiplier: number;
+  readonly xpMultiplier: number;
+  readonly presentationToken: keyof Pick<ThemePalette, "shrine">;
 }
 
 export interface ShrineDefinition {
@@ -467,16 +549,20 @@ export interface ShrineDefinition {
 }
 
 export interface ThemeManifest {
+  readonly unlocks?: readonly { readonly kind: "weapon" | "upgrade"; readonly id: WeaponId | UpgradeId; readonly metric: "runsPlayed" | "totalKills"; readonly required: number }[];
   readonly id: string;
   readonly schemaVersion: 1;
   readonly copy: ThemeCopy;
   readonly tokens: ThemeTokens;
   readonly characters: readonly CharacterDefinition[];
   readonly weapons: readonly WeaponDefinition[];
+  /** Theme-owned capacity; all equipped slots fire automatically. */
+  readonly weaponSlotCount: number;
   readonly enemies: readonly EnemyDefinition[];
   readonly pickups: readonly PickupDefinition[];
   readonly upgrades: readonly UpgradeDefinition[];
   readonly shrines: readonly ShrineDefinition[];
+  readonly curses: readonly CurseDefinition[];
   readonly skills: readonly SkillDefinition[];
   readonly elites: readonly EliteDefinition[];
   readonly hazards: readonly HazardDefinition[];

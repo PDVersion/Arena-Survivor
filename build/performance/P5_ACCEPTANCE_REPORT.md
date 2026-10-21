@@ -1,11 +1,21 @@
-# P5 consolidated acceptance — Sessions 8–11
+# P5 consolidated acceptance — Sessions 8–12
 
-**P5 remains pending.** The scoped Session 10 lifecycle campaign passes;
+**Current disposition — Session15,2026-10-20:** owner explicitly temporarily
+waives the outstanding actual Safari, missing selected browser/OS combinations
+and older physical integrated-GPU checks. They are waived/unverified, never
+passed; their prior release-blocking classification is superseded for now.
+Historical evidence below retains its source/scenario bounds. C2 is verified
+locally; see [C2 report](../content/C2_REPORT.md). No external campaign rerun.
+Earlier dated pending/no-waiver statements describe those checkpoints.
+
+**Scoped P5 software verified; remaining external checks temporarily waived.** The scoped Session 10 lifecycle campaign passes;
 Session 11 adds 52 focused Chrome/Chromium/Firefox/WebKit passes; actual branded/platform/older-device coverage remains pending.
 No runtime defect was demonstrated. Session 8 delivered the inventory; Session 9
 adds a bounded native-tab acceptance fixture and deterministic focus-state checks.
 Session 10 adds the owner-authorized 20-minute lifecycle campaign. No runtime
-change is delivered. P6, content, persistence and sprite work remain gated.
+change is delivered in those evidence slices. On 2026-10-20 the owner explicitly
+authorizes C1–C7 after the verified software gate, with missing browser/device
+acceptance release-blocking. P5 remains pending; sprites stay outside scope.
 
 ## Session 8 checkpoint and evidence rules
 
@@ -52,7 +62,7 @@ this session's execution.
 | Async loader failure and game destruction | `tests/unit/boot/boot-recovery.test.ts` checks declared file error blocks scene start, retry resets state, and an owned once-only async error callback schedules Game.destroy before reporting. `P5_STARTUP_REPORT.md` and raw final/startup samples verify actual atlas/module blocking, reload-to-run, unsupported text canvas, forced Canvas and normal WebGL startup. | **Covered** for observed network/module/graphics failures; malformed atlas/JSON, entry delivery and mid-run WebGL context loss remain **pending** outside this focused recovery claim. No pipeline changes. |
 | Audio cleanup | Session 10 delegates to actual native AudioContext/oscillator/close APIs: all thirteen observed contexts close exactly once, their promises settle and state is closed; seven service closures begin with active voices and terminal voices become zero. Existing deterministic shutdown tests remain. | **Covered for browser WebAudio lifecycle** — sustained play muted; no audible quality, physical audio-device release, mobile policy or heap claim. |
 | Causal queue cleanup / exact rewards | `tests/unit/lifecycle/shutdown.test.ts` seeds both queues/claim sets, runs actual shutdown twice, rejects any physics/time/tween teardown access, and proves backlog/claims released without altering run data. Pickup units cover exact-once fractional rewards and provenance. `tests/e2e/load-harness.spec.ts` drains 80 scripted events; Session 6 seeds pending work before real scene stop. | **Covered** for tested stop/queue and XP ownership; long-run backlog/deduplication growth remains pending, no mid-run claim eviction. |
-| Browser / renderer / viewport compatibility | Session 11: 52 focused checks across installed Chrome155, pinned Chromium151, Firefox153 and WebKit26.5, M5/macOS, WebGL with DPR1/2 and resize; both themes isolated Canvas lifecycle. See [compatibility report](P5_COMPATIBILITY_REPORT.md). | **Partial** — desktop support policy now selected under owner delegation. Actual Safari/Edge, stable release/platform combinations and physical older integrated-GPU evidence remain pending. Mobile/touch is outside selected desktop control scope. Software/emulation never becomes older-device acceptance. |
+| Browser / renderer / viewport compatibility | Session 11: 52 focused checks across installed Chrome155, pinned Chromium151, Firefox153 and WebKit26.5, M5/macOS, WebGL with DPR1/2 and resize; both themes isolated Canvas lifecycle. See [compatibility report](P5_COMPATIBILITY_REPORT.md). | **Partial evidence; outstanding external checks temporarily waived in Session15.** Session12 adds Edge evidence; actual Safari, missing release/platform combinations and older physical integrated-GPU evidence are unverified. Mobile/touch is outside selected desktop control scope. Software/emulation never becomes older-device acceptance. |
 
 ## Session 8 execution and bounded failed probe
 
@@ -234,8 +244,41 @@ Do not repeat the unchanged long campaign, native case or another inventory-only
 slice absent a reproduced defect, changed source or selected missing requirement.
 Preserve the unassisted/hazard, direct-active-destruction and production-performance
 limitations rather than silently converting a fixture pass into broader readiness.
-P6/content remain gated. Session 11 result: [completed record](../MASTER_BUILD_PLAN.md#v0-4-3-p5-compatibility); current successor is [Session 12 / P5](../SESSION_12_PROMPT.md).
+P6/content remain gated. Session 11 result: [completed record](../MASTER_BUILD_PLAN.md#v0-4-3-p5-compatibility); current successor is [checkpoint status](../BUILD_STATUS.md).
 
 ## Session 11 — delegated support selection and executed engine matrix
 
-Owner instructed Codex to determine the browser list using modern browser standards and run the tests. This supersedes the selection/access prerequisite for available local browser testing; it does not provide physical older hardware or waive the gate. Selected current/previous-major desktop Chrome/Edge/Firefox/Safari on vendor-supported OS; mobile/touch outside this desktop contract. **52 focused passes in 4.9 minutes**, plus four final guard-only environment passes; test timing/readiness corrections only. Final 488 units/57 files, types/lint/build/whitespace pass. Full method, interrupted setup attempts, exact renderer/mode and remaining branded/platform/device matrix: [Session 11 report](P5_COMPATIBILITY_REPORT.md). P5 remains open; [Session 12](../SESSION_12_PROMPT.md) seeks missing evidence using the selected policy, without repeating accepted work.
+Owner instructed Codex to determine the browser list using modern browser standards and run the tests. This supersedes the selection/access prerequisite for available local browser testing; it does not provide physical older hardware or waive the gate. Selected current/previous-major desktop Chrome/Edge/Firefox/Safari on vendor-supported OS; mobile/touch outside this desktop contract. **52 focused passes in 4.9 minutes**, plus four final guard-only environment passes; test timing/readiness corrections only. Final 488 units/57 files, types/lint/build/whitespace pass. Full method, interrupted setup attempts, exact renderer/mode and remaining branded/platform/device matrix: [Session 11 report](P5_COMPATIBILITY_REPORT.md). P5 remains open; [checkpoint status](../BUILD_STATUS.md) seeks missing evidence using the selected policy, without repeating accepted work.
+
+## Session12 — remaining branded checks and P6 software preparation
+
+Owner requests finishing P5, beginning P6 and remaining V0.4.3.26 focused
+Edge155/154 checks and two unpatched headed Firefox158/157.0.1 smokes pass;
+Safari26.5.2 blocks driver session creation, so no gameplay/native pass is claimed.
+Exact environment, sources, bounds and cleanup: [branded follow-up](P5_COMPATIBILITY_FOLLOWUP.md).
+Owner confirms no older device is available. P5 remains open for missing releases/
+platforms/Safari access/physical older hardware; the selected list is unchanged.
+
+P6's [software/readiness-tool slice](P6_READINESS_REPORT.md) is verified:96 full
+local browser/stress passes with six explicit skips and zero retries,488units,
+types/lint/build/audit, portable pack and18 warmed fixed-load windows. This
+explicitly authorized preparation does not pass P5 or silently waive its gate.
+The requested decision on moving missing acceptance to a release gate while
+C1–C7 proceeds has no reply. Content has not started; [Session13 record](../MASTER_BUILD_PLAN.md#v0-4-3-c1-foundation)
+continues from that decision/access, without another unchanged campaign.
+
+
+## Session13 ordering revision (2026-10-20)
+
+Owner explicitly permits planned C1–C7 after verified software checks while the
+missing browser/device evidence remains release-blocking. P5 is still pending,
+and no accepted campaign is repeated. C1's runtime foundation is verified in
+`../content/C1_FOUNDATION_REPORT.md`; earlier P5/P6 frozen measurements and the
+portable pack remain evidence for their recorded source, not later runtime.
+
+
+Session14 (2026-10-20): C1's second-tool local gate is verified; see
+`../content/C1_SECOND_TOOL_REPORT.md`. This adds scoped gameplay/owner-upgrade/
+splash and short affected stress evidence, not P5 compatibility/native/long-play
+acceptance. Missing browser/platform/older physical-device evidence remains
+release-blocking. Original source-bound P5/P6 measurements/pack stay historical.

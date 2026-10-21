@@ -8,7 +8,7 @@ export default defineConfig({
   workers: 1,
   retries: 0,
   globalTimeout: 15 * 60_000,
-  reporter: [["list"], ["json", { outputFile: "../build/performance/P5_COMPATIBILITY_RESULTS.json" }]],
+  reporter: [["list"], ["json", { outputFile: process.env.ARENA_COMPATIBILITY_REPORT ?? "../build/performance/P5_COMPATIBILITY_RESULTS.json" }]],
   outputDir: "../test-results/compatibility",
   use: {
     baseURL: "http://127.0.0.1:4173",
@@ -17,6 +17,11 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
   projects: [
+    ...(process.env.ARENA_EDGE_EXECUTABLE ? [{
+      name: "edge-stable",
+      use: { ...devices["Desktop Chrome"], userAgent: undefined,
+        launchOptions: { executablePath: process.env.ARENA_EDGE_EXECUTABLE } },
+    }] : []),
     { name: "chrome-installed", use: { ...devices["Desktop Chrome"], userAgent: undefined, channel: "chrome" } },
     { name: "chromium", use: { ...devices["Desktop Chrome"], userAgent: undefined } },
     { name: "firefox", use: { ...devices["Desktop Firefox"], userAgent: undefined } },

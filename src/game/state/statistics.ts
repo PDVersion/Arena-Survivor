@@ -26,7 +26,7 @@ export function selectHudValues(state: RunState): HudValues {
     health: `${Math.ceil(state.player.health)} / ${Math.ceil(state.player.stats.maxHealth)}`,
     experience: `${formatXp(state.progression.xp)} / ${formatXp(state.progression.xpToNextLevel)}`,
     level: String(state.progression.level),
-    time: state.mode === "timed"
+    time: state.mode === "timed" && state.activePhase !== "boss_fight"
       ? formatRunTime(state.durationMs - state.elapsedMs)
       // Past the limit the clock counts up, because a negative countdown reads
       // as a bug and overtime is the thing worth showing.
@@ -116,6 +116,7 @@ export function selectRunSummaryValues(
       `${vocabulary.directDamage}: ${formatStatistic(breakdown.direct)}`,
       `${vocabulary.criticalBonusDamage}: ${formatStatistic(breakdown.criticalBonus)}`,
       `${vocabulary.piercingMomentumDamage}: ${formatStatistic(breakdown.piercingMomentum)}`,
+      `${vocabulary.splashDamage}: ${formatStatistic(breakdown.splash)}`,
       `${vocabulary.explosionDamage}: ${formatStatistic(breakdown.explosion)}`,
       `${vocabulary.chainedExplosionDamage}: ${formatStatistic(breakdown.chainedExplosion)}`,
       `${vocabulary.remainderDamage}: ${formatStatistic(breakdown.remainder)}`,
