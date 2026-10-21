@@ -1322,4 +1322,3 @@ at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mi
 80%       26      126      0.24s      0.12s       1.4s      0.67s      0.25s       2.9s          —
 90%       28      134      0.24s      0.12s       1.3s      0.66s      0.24s       2.9s          —
 100%      30      142      0.23s      0.12s       1.3s      0.64s      0.23s       2.8s      14.0s
-

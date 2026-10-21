@@ -46,8 +46,7 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  */
 export const enemies = [
   {
-    // Plastic bottle — ~450 years. The baseline enemy, and the most prevalent
-    // material in real litter counts.
+    // Plastic Bottle is the numerical baseline, not a litter-count ranking.
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,
     moveSpeed: 104,
@@ -90,7 +89,8 @@ export const enemies = [
     radius: 22,
     displayDiameter: 50,
     xpReward: 7,
-    armour: 40,
+    // G1 removes compounded durability while keeping the 96-health wall.
+    armour: 20,
     geometry: "square",
     presentationToken: "enemyTank",
     fragmentInto: archetypeIds.enemy.stationaryFragment,

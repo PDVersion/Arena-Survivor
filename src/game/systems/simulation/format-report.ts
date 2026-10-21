@@ -61,6 +61,10 @@ export function formatPacingReport(report: PacingReport): string {
     `final level ${report.finalLevel}  ·  kills ${report.totalKills}  ·  peak live ${report.peakLiveEnemies}  ·  total xp ${Math.round(report.totalXp)}`,
   );
 
+  lines.push(`sampled cap dwell ${clock(report.capDwellMs)} simulated; due natural arrivals blocked ${clock(report.naturalSpawnBlockedMs)} simulated (no causal-queue model)`);
+  lines.push(`kills by role ${Object.entries(report.killsByRole).map(([id, n]) => `${id} ${n}`).join(" · ")}`);
+  lines.push(`remaining by role ${Object.entries(report.remainingByRole).map(([id, n]) => `${id} ${n}`).join(" · ")}`);
+  lines.push(`remaining work (HP × armour) ${Object.entries(report.remainingEffectiveWorkByRole).map(([id, n]) => `${id} ${Math.round(n)}`).join(" · ")}`);
   const milestones = [5, 10, 15, 20, 25, 30]
     .map((level) => {
       const at = report.levelTimestampsMs[level - 2];

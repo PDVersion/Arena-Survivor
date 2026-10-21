@@ -33,8 +33,8 @@ evolution, events, bosses and persistence are foundations to refine, not rebuild
 After the active Q6 correction gate: **G1** measure/rebalance the current roster
 against corrected tools; **G2** prototype recognizable outdoor litter one role at
 a time; **G3** refine encounter rhythm, useful destinations and optional escalation;
-**G4** improve mastery goals, results and optional Field Guide discovery. These are
-planned follow-on phases, not implemented content or new V0.4.3 completion claims.
+**G4** improve mastery goals, results and optional Field Guide discovery. G1 is now verified locally; G2–G4 remain planned follow-ons. These do not
+retroactively complete V0.4.3 or add unselected content.
 
 Use the roadmap's separate waste-tonnage and surveyed-litter-count rankings for
 context. Neither becomes spawn probability, hit points or harm. Cigarette Butts,
@@ -1556,3 +1556,18 @@ presentation anchors align player poses without editing accepted art or bodies.
 This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
 fact, effectiveness matrix, persisted state or new sprite is added.
 [Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.
+
+## G1 accepted balance — 2026-10-21
+
+After verified Q6, the existing-roster comparison selects only eco Glass armour
+40→20 and its director base weight12→8. Glass retains96health, slow70movement,
+9contact harm and7XP; the health ordering/material relationships stay intact.
+The calm late natural selection mix is approximately45%Bottle/30%Microplastics/
+11%Glass/14%Bagged, replacing the historical43/28/16/13rounded mix. These are game
+weights, never litter-survey probabilities. Microplastics still open one-hit;
+Bottles remain the numerical baseline, Shards stationary/clearable and bag
+families finite. Knight tuning, other roles, weapon damage, progression, presets,
+cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
+[G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
+retains all scenarios and records the bounded local gate and its limits. G1 is
+locally complete; G2–G4 and sprite generation remain unstarted.

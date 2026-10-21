@@ -547,3 +547,12 @@ browser cases pass;120balance scenarios recorded. Full/browser-device campaigns
 remain deferred; external checks waived/unverified. Q6 is closed locally; G1
 is next on the same branch, with its own claim, report and verified commit.
 The unchecked/open language in Session21/delivery sections is historical.
+
+## Current handoff after Q6/G1 — 2026-10-21
+
+Q6 was committed44585dd after its own local gate. G1 then completed the owning
+roadmap's bounded gate, with its separate local phase commit and
+[G1_REPORT](content/G1_REPORT.md). Its two eco Glass tuning changes do not reopen
+C1–C7. This supersedes the earlier next-G1 wording. G2–G4 and new sprites remain
+unstarted; claim the owner-selected next scope before implementation. Broad/
+external evidence limits and the absence of gameplay merge authorization persist.

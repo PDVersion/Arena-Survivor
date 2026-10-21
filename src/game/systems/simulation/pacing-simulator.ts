@@ -63,6 +63,12 @@ export interface PacingReport {
   readonly totalKills: number;
   readonly totalXp: number;
   readonly peakLiveEnemies: number;
+  /** Sampled before combat each step, simulation milliseconds (not wall time). */
+  readonly capDwellMs: number;
+  readonly naturalSpawnBlockedMs: number;
+  readonly killsByRole: Readonly<Record<string, number>>;
+  readonly remainingByRole: Readonly<Record<string, number>>;
+  readonly remainingEffectiveWorkByRole: Readonly<Record<string, number>>;
   /** Simulation time in ms at which each level was first reached, index 0 = level 2. */
   readonly levelTimestampsMs: readonly number[];
 }
@@ -113,6 +119,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   let totalKills = 0;
   let totalXp = 0;
   let peakLiveEnemies = 0;
+  let capDwellMs = 0;
+  let naturalSpawnBlockedMs = 0;
+  const killsByRole: Record<string, number> = {};
 
   let bucketStartMs = 0;
   let bucketSpawns: Record<string, number> = {};
@@ -157,31 +166,39 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     const progress = runProgress(elapsedMs, options.durationMs);
     const modifiers = selectWorldModifiers(world, tuning.difficulty, progress);
     const plan = resolveDirectorPlan(tuning.director, progress, modifiers);
-    while (elapsedMs >= nextSpawnAtMs && liveCount() < V02_SPAWN_LIMITS.maxAlive) {
+    if (elapsedMs >= nextSpawnAtMs && liveCount() >= V02_SPAWN_LIMITS.maxAlive) naturalSpawnBlockedMs += stepMs;
+    // Runtime schedules one batch from "now"; it never repays a cap-delayed
+    // natural-arrival debt in one burst when a slot opens.
+    if (elapsedMs >= nextSpawnAtMs && liveCount() < V02_SPAWN_LIMITS.maxAlive) {
       for (let batch = 0; batch < plan.batchSize; batch += 1) {
         if (liveCount() >= V02_SPAWN_LIMITS.maxAlive) break;
         const enemyId = selectRole(plan.weights, random);
         const definition = theme.enemies.find((entry) => entry.id === enemyId);
         if (!definition) continue;
-        const existing = live.get(definition.id);
+        const effectiveHealth = definition.maxHealth * modifiers.enemyHealthMultiplier * (1 + definition.armour / 100);
+        const effectiveReward = definition.xpReward * (1 +
+          (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare);
+        // Preserve spawn-time stats rather than retroactively assigning the
+        // first surviving member's health/reward to every later arrival.
+        const cohortId = `${definition.id}:${effectiveHealth}:${effectiveReward}`;
+        const existing = live.get(cohortId);
         if (existing) {
           existing.count += 1;
         } else {
-          live.set(definition.id, {
+          live.set(cohortId, {
             definition,
             count: 1,
-            effectiveHealth: definition.maxHealth * modifiers.enemyHealthMultiplier,
-            effectiveReward:
-              definition.xpReward *
-              (1 +
-                (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare),
+            effectiveHealth,
+            effectiveReward,
           });
         }
         bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + 1;
       }
-      nextSpawnAtMs += plan.intervalMs;
+      nextSpawnAtMs = elapsedMs + plan.intervalMs;
     }
 
+    peakLiveEnemies = Math.max(peakLiveEnemies, liveCount());
+    if (liveCount() >= V02_SPAWN_LIMITS.maxAlive) capDwellMs += stepMs;
     const context: BuildContext = {
       secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
       evolvedWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondaryEvolved),
@@ -198,20 +215,26 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     bucketDpsSamples += 1;
     damagePool += (dps * stepMs) / 1000;
 
-    // Spend the damage pool on the densest cohort first, which approximates
+    // Spend the damage pool on the densest role first, which approximates
     // auto-targeting the nearest enemy in a crowd.
     let guard = 0;
     while (damagePool > 0 && liveCount() > 0 && guard < 4096) {
       guard += 1;
       let target: LiveRole | undefined;
-      for (const role of live.values()) {
+      let targetKey: string | undefined;
+      const counts = new Map<string, number>();
+      for (const role of live.values()) counts.set(role.definition.id, (counts.get(role.definition.id) ?? 0) + role.count);
+      for (const [key, role] of live) {
         if (role.count <= 0) continue;
-        if (!target || role.count > target.count) target = role;
+        // Cohort splitting must not change the model's role-priority policy.
+        // Within the densest role, spend against its oldest surviving cohort.
+        if (!target || counts.get(role.definition.id)! > counts.get(target.definition.id)!) { target = role; targetKey = key; }
       }
       if (!target || damagePool < target.effectiveHealth) break;
       damagePool -= target.effectiveHealth;
       target.count -= 1;
-      if (target.count === 0) live.delete(target.definition.id);
+      if (target.count === 0) live.delete(targetKey!);
+      killsByRole[target.definition.id] = (killsByRole[target.definition.id] ?? 0) + 1;
       totalKills += 1;
       bucketKills += 1;
 
@@ -226,6 +249,8 @@ export function simulatePacing(options: PacingOptions): PacingReport {
       }
     }
 
+    // No attack can store damage while there is no target to hit.
+    if (liveCount() === 0) damagePool = 0;
     peakLiveEnemies = Math.max(peakLiveEnemies, liveCount());
 
     if (elapsedMs - bucketStartMs >= bucketMs || elapsedMs >= options.durationMs) {
@@ -233,7 +258,17 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     }
   }
 
+  const remainingByRole: Record<string, number> = {};
+  const remainingEffectiveWorkByRole: Record<string, number> = {};
+  for (const role of live.values()) {
+    remainingByRole[role.definition.id] = (remainingByRole[role.definition.id] ?? 0) + role.count;
+    remainingEffectiveWorkByRole[role.definition.id] = (remainingEffectiveWorkByRole[role.definition.id] ?? 0) + role.count * role.effectiveHealth;
+  }
   return Object.freeze({
+    capDwellMs, naturalSpawnBlockedMs,
+    killsByRole: Object.freeze(killsByRole),
+    remainingByRole: Object.freeze(remainingByRole),
+    remainingEffectiveWorkByRole: Object.freeze(remainingEffectiveWorkByRole),
     difficulty: options.difficulty ?? "normal",
     themeId: theme.id,
     buildId: options.build.id,

@@ -203,3 +203,15 @@ types/lint/build/diff,2serial Chromium Canvas cases and120model scenarios pass.
 [Report](content/Q6_REPORT.md) preserves exact source and limits. G1 is next;
 no new main merge/CI/device pass is claimed. Historical pending-Q6 entries above
 are superseded by this record; external checks remain waived/unverified.
+
+## G1 — local gate accepted 2026-10-21
+
+Branch `codex/readable-gameplay-g1`; Q6 prerequisite44585dd, G1 follows as a
+separate phase commit. Eco Glass armour40→20/base director weight12→8; no other
+runtime tuning changes. Corrected ambient model binds armour, spawn-time cohorts,
+no banked empty attacks and one natural batch from current time.187units/21files,
+types/lint/build/diff, one serial Chromium Canvas contact case1.7s/no retries and
+all120 before/after scenarios plus36sensitivity cases pass. Fresh Q6 capture120
+is kept separately. [G1_REPORT](content/G1_REPORT.md) owns source/values/limits.
+G1 locally complete; G2–G4/new sprites unstarted. No new remote CI/main merge,
+full stress/native/device acceptance; external evidence waived/unverified.

@@ -1,18 +1,17 @@
 # Readable cleanup gameplay — four-phase roadmap
 
-Owner direction: 2026-10-21 (Australia/Sydney). Status: **G1 claimed to Codex;
-implementation not started; prerequisite Q6 pending. G2–G4 planned.**
+Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6 verified in44585dd; G1 verified locally. G2–G4 planned/unstarted.**
 The owner requests the ranked survivor-game ideas in a few phases, consideration
 of Australian rubbish data as enemy candidates, and rebalancing existing enemies
-where required. This records that direction without claiming new runtime work.
+where required. Implementation evidence and limits are in [G1_REPORT](content/G1_REPORT.md).
 
 ## Authority, sequencing and ownership
 
 Product intent lives in [PLAN.md](PLAN.md); this document owns the detailed
 follow-on scope, candidate assessment and gates. [BUILD_STATUS.md](BUILD_STATUS.md)
 owns actual completion. [BUILD_PLAN_V0.4.3.md](BUILD_PLAN_V0.4.3.md) still owns the
-immediate **Q6 motion/cone-feedback/vacuum-progression correction**. Finish Q6
-before tuning enemies against the corrected tools. Do not reopen verified C1–C7.
+**Q6 motion/cone-feedback/vacuum-progression correction**, verified in44585dd.
+G1 tuning follows that accepted prerequisite. Do not reopen verified C1–C7.
 
 Sequence: **Q6 → G1 existing-roster balance → G2 bounded outdoor variety →
 G3 encounter rhythm and optional sites → G4 mastery and replay goals**.
@@ -22,8 +21,8 @@ this roadmap; its delivery branch is `codex/readable-gameplay-g1`, based on merg
 main containing the claim. Q6 keeps its checklist/ownership in the V0.4.3 plan
 and is implemented as a separate prerequisite commit on that follow-on branch.
 G2–G4 milestone/branch placement remains TBC. Narrow exact ownership before
-runtime edits and preserve one verified commit per phase. Start with the
-[G1 implementation prompt](PHASE_G1_PROMPT.md).
+runtime edits and preserve one verified commit per phase. The
+[G1 implementation prompt](PHASE_G1_PROMPT.md) is retired after its durable result.
 
 This planning amendment owns this file, `content/READABLE_ROSTER_BASELINE.md`,
 `content/READABLE_ROSTER_BASELINE.json`, the cross-links/clarifications in
@@ -144,8 +143,8 @@ recycling rules or a tool-effectiveness matrix.
 
 ## Phase G1 — reliable power growth and existing-roster rebalance
 
-Claim: **Codex**, `codex/readable-gameplay-g1`; status **claimed, Q6 prerequisite
-pending**, not an implementation/completion claim. No parallel roster or sprite
+Claim: **Codex**, `codex/readable-gameplay-g1`; status **verified locally**,
+after Q6 prerequisite44585dd. See [G1_REPORT](content/G1_REPORT.md). No parallel roster or sprite
 work is claimed. The [start prompt](PHASE_G1_PROMPT.md) includes prerequisite
 recovery, ownership, implementation and verification.
 
@@ -165,26 +164,26 @@ Prerequisite: Q6 verified. Claim theme-owned enemy/director/progression/difficul
 weapon tuning and corresponding simulation/tests before runtime work. Keep both
 production themes contract-valid; do not copy eco tuning into knight-magic blindly.
 
-- [ ] Re-run the [captured baseline](content/READABLE_ROSTER_BASELINE.md) against
+- [x] Re-run the [captured baseline](content/READABLE_ROSTER_BASELINE.md) against
   corrected tools. Extend the simulator only where a real capability is missing;
   exclude parked projectile/kill-explosion models from eco acceptance decisions.
-- [ ] Evaluate each current role's health, armour, speed, contact harm, XP,
+- [x] Evaluate each current role's health, armour, speed, contact harm, XP,
   arrival share and interaction with the corrected Vacuum capacity and Sweep.
   Change theme values only where the comparison demonstrates a pacing problem;
   keep unchanged values explicitly where they already serve their role.
-- [ ] Microplastics: preserve the opening one-hit exception across all three
+- [x] Microplastics: preserve the opening one-hit exception across all three
   presets; do not use surveyed >5 mm fragment counts as their natural spawn rate.
   Plastic Bottles: preserve the familiar baseline, without claiming they dominate
   litter item counts. Review common-role proportions as gameplay composition.
-- [ ] Glass: review compounded health/armour and arrival share so a durable
+- [x] Glass: review compounded health/armour and arrival share so a durable
   commitment does not crowd out all other choices. Preserve greater material
   durability than plastic, stationary clearable Shards, and finite fragmentation.
   Bagged Waste: budget parent plus released children, their half rewards, elite
   descendants and retained spawn work; never create recursive bag families.
-- [ ] Measure level milestones, kills/XP, role mix, backlog/cap dwell and TTK
+- [x] Measure level milestones, kills/XP, role mix, backlog/cap dwell and TTK
   before/after, with isolated-contact and packed-target bands. Do not call a peak
   population alone a demonstrated balance defect or a performance result.
-- [ ] Give owned upgrades/evolution an observable benefit and a chance to enjoy
+- [x] Give owned upgrades/evolution an observable benefit and a chance to enjoy
   it; do not automatically cancel each power gain with enemy scaling. Preserve a
   viable generalist fallback and assess early economy choices for snowballing.
 
@@ -303,3 +302,46 @@ gate passes; record partial work and deferred browser/device evidence honestly.
 Use necessary local browsers serially and clean up owned resources. This roadmap
 does not create a new CI, device, native-browser or performance pass or expand the
 temporary external-check waiver. Current next action remains Q6.
+
+## G1 exact implementation claim — 2026-10-21
+
+Q6 gate passes in44585dd ([report](content/Q6_REPORT.md)); G1 starts from that
+commit. Claim before edits: `src/game/content/themes/eco-guardian/{enemies,director}.ts`
+only if measured changes warrant them; retained knight theme tuning is assessed
+but not pre-emptively copied. Applicable simulation support:
+`src/game/systems/simulation/{pacing-simulator,format-report}.ts`, `scripts/balance.ts`;
+`tests/unit/simulation/pacing-simulator.test.ts`,
+`tests/unit/{content/theme,enemies/g1-role-balance}.test.ts`,
+`tests/e2e/enemy-roster.spec.ts` (bounded contact/readability fixture only).
+Evidence/docs: `build/content/G1*`, this roadmap,
+`build/{BUILD_STATUS,PLAN,EDUCATION_PIVOT,THEME_ARCHETYPES,ECO_CONTENT_MAP,PHASE_G1_PROMPT}.md`,
+`AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`.
+The Q6-corrected simulator still omits armour from kill spending, retains the
+first spawn's health for later same-role arrivals, banks damage while empty and
+catches up natural arrivals unlike the runtime's cadence. Capture its fresh
+output first, then label model corrections separately from tuning effects.
+No G2/art/scene/body/save changes are selected by G1.
+
+G1 narrow verification dependency: `tests/unit/director/spawn-director.test.ts`
+contains the old rounded late composition table. Update its expected documented
+shares for the selected Glass weight; keep opening/unlock behavior assertions.
+
+## G1 accepted local outcome — 2026-10-21
+
+Q6 prerequisite44585dd and G1's own gate pass. Eco Glass armour40→20 and director
+base weight12→8 are the only runtime tuning changes; all other roles and knight
+values are retained with reasons in [G1_REPORT](content/G1_REPORT.md). Model
+corrections are separated from tuning: fresh Q6 baseline120, corrected before120,
+after120 and36step-size sensitivity scenarios.187units/21files, types/lint/build/
+diff and one bounded serial contact browser case pass. Full stress/soak/native/
+device checks deferred; external checks waived/unverified. No publication/merge
+or new roster/art authorization follows from this local acceptance. G2–G4 remain
+unstarted; owner-selected G2 is the next planning handoff.
+
+G1 handoff-only documentation dependency: `build/BUILD_PLAN_V0.4.md` and
+`build/BUILD_PLAN_V0.4.3.md` receive current outcome links so their earlier open-Q6/
+next-G1 checkpoints cannot be mistaken for the final handoff. No phase is reopened.
+
+G1 final evidence-only dependency: normalize trailing spaces/terminal blank lines
+in `build/content/Q6/*.txt` while reviewing generated report whitespace. This
+preserves every Q6 captured value and source identity; no prerequisite code changes.

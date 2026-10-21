@@ -3765,3 +3765,38 @@ Packed gains support bounded capacity payoff, not survival/performance. G1 still
 must assess health+armour and existing role budgets. Broad native/stress/device
 checks deferred; actual Safari/browser-OS/older-device evidence waived/unverified.
 This closes the preceding Session21 Q6 correction gate without reopening C1–C7.
+
+## REC-101 continuation — G1 corrected measurement and bounded Glass tuning
+
+Accepted2026-10-21, after Q6 prerequisite44585dd. G1 comparison must distinguish
+a model repair from a balance change. The old ambient simulator spent health
+without armour, reused the first surviving role cohort's health/reward for later
+arrivals, banked attacks across empty time and repaid natural capacity debt unlike
+the scene. Correct these against current contracts; keep same-role cohorts separate
+without changing densest-role priority. TTK and kill spending now both include
+armour. Sample cap dwell/due-natural blocking separately; neither is a causal
+backlog or runtime survival/performance metric. Ambient model still omits elites,
+children, milestone waves and bosses; review finite family budgets separately.
+
+Eco Glass retains96health but armour40→20 and base weight12→8. This lowers
+compounded work14.3% and calm late natural share16.2%→11.4%, preserving clear
+material durability and all speed/harm/reward/child contracts. No blanket weapon/
+XP/health/cadence/cap adjustment. Corrected Normal packed-base kills648→739 and
+cap dwell14.4→1.2simulation seconds, with level25→26; global damage/crit builds
+retain a generalist fallback. Some contact-only/Sweep outcomes lose a few XP and
+Beginner packed evolution loses one level as high-XP Glass becomes less common;
+record that trade-off, never assert universal improvement from lower work.
+
+Normal bag family is6lethals/10.5XP; inherited split bag family is28lethals/80XP
+before time/world/Fracture. Source halves and elite/world application must not
+compound twice; authored role offspring keep their fixed half reward and inherited
+depth. Existing24-event retention/dedup/ledger ownership remains unchanged. The
+new family budget guards finite rewards/work, not an invented simulated lineage.
+
+Fresh Q6-tools120, corrected before120/after120 and36fifty-ms sensitivity scenarios
+are retained with source hashes.187units/21files, types/lint/build/diff and one
+bounded serial Canvas contact case pass. [Report](build/content/G1_REPORT.md)
+records exact values, isolated/packed limits and body/camera/rate/save preservation.
+Owned test resources cleaned up; broad stress/soak/native/device checks deferred;
+actual Safari/browser-OS/older-device checks waived/unverified. G1 locally complete;
+G2–G4/new art unstarted, no gameplay merge authorization from planning publication.

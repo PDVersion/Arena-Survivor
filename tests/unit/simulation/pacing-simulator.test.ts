@@ -277,3 +277,55 @@ describe("V0.3 balance pass", () => {
     expect(long.levelTimestampsMs.length).toBe(long.finalLevel - 1);
   });
 });
+
+describe("G1 model contract corrections", () => {
+  const noDamage = { id: "fixture", description: "No attacks", damagePerSecond: () => 0 };
+  const singleRole = (health: number, armour: number) => ({ ...ecoGuardianTheme,
+    enemies: ecoGuardianTheme.enemies.map((enemy) => ({ ...enemy, maxHealth: health, armour })),
+    tuning: { ...ecoGuardianTheme.tuning, director: { ...ecoGuardianTheme.tuning.director,
+      baseIntervalMs: 900, minIntervalMs: 900, intervalDecayK: 0, batchRamp: 0,
+      roles: [{ ...ecoGuardianTheme.tuning.director.roles[0]!, unlockAt: 0, baseWeight: 1, weightGrowth: 0 }] } } });
+
+  it("spends the same work for equivalent health-plus-armour without changing rewards", () => {
+    const armoured = run({ theme: singleRole(100, 100) });
+    const health = run({ theme: singleRole(200, 0) });
+    expect(armoured.totalKills).toBe(health.totalKills);
+    expect(armoured.totalXp).toBe(health.totalXp);
+    expect(armoured.capDwellMs).toBe(health.capDwellMs);
+  });
+
+  it("retains each arrival's spawn-time health instead of copying the first survivor", () => {
+    const theme = singleRole(100, 0);
+    const report = run({ theme: { ...theme, tuning: { ...theme.tuning, difficulty: { ...theme.tuning.difficulty,
+      time: { ...theme.tuning.difficulty.time, steps: 2, enemyHealthAtEnd: 1 } } } },
+      build: noDamage, durationMs: 2000, stepMs: 1000 });
+    // Two same-role arrivals: 150 and 200 HP before Normal's 0.95 preset.
+    expect(Object.values(report.remainingEffectiveWorkByRole)).toEqual([350 * 0.95]);
+    expect(Object.values(report.remainingByRole)).toEqual([2]);
+  });
+
+  it("does not store attacks during an empty interval", () => {
+    const theme = singleRole(100, 0);
+    const report = run({ theme: { ...theme, tuning: { ...theme.tuning, director: {
+      ...theme.tuning.director, baseIntervalMs: 20_000, minIntervalMs: 20_000 } } },
+      build: { ...noDamage, damagePerSecond: () => 10 }, durationMs: 40_000, bucketMs: 1000 });
+    expect(report.buckets.filter((b) => b.endMs <= 25_000).reduce((n, b) => n + b.kills, 0)).toBe(1);
+  });
+
+  it("admits at most one natural batch per step rather than a catch-up storm", () => {
+    const theme = singleRole(100, 0);
+    const report = run({ theme: { ...theme, tuning: { ...theme.tuning, director: {
+      ...theme.tuning.director, baseIntervalMs: 1, minIntervalMs: 1 } } }, build: noDamage, durationMs: 1000, stepMs: 1000 });
+    expect(Object.values(report.buckets[0]!.spawnedByRole)).toEqual([1]);
+    expect(report.peakLiveEnemies).toBe(1);
+  });
+
+  it("accounts sampled cap dwell and natural blocking separately from an unmodelled causal queue", () => {
+    const report = run({ build: noDamage });
+    expect(report.capDwellMs).toBeGreaterThan(0);
+    expect(report.naturalSpawnBlockedMs).toBeGreaterThan(0);
+    expect(report.capDwellMs).toBeLessThanOrEqual(report.durationMs);
+    expect(Object.values(report.remainingByRole).reduce((n, count) => n + count, 0)).toBe(300);
+    expect(Object.values(report.killsByRole).reduce((n, count) => n + count, 0)).toBe(report.totalKills);
+  });
+});

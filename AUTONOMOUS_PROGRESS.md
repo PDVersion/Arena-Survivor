@@ -6,18 +6,15 @@ Updated: 2026-10-21 (Australia/Sydney).
 
 Current milestone dates/statuses and published CI evidence are consolidated in
 [build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
-verified through C7 `88f220b`. Historical next was the
-Session21 Q6 correction gate: player motion, cone feedback and owner-selected
-vacuum target-cap progression. The owner's subsequent genre/rubbish request is
-recorded in [the four-phase roadmap](build/READABLE_GAMEPLAY_ROADMAP.md): G1–G4
-follow Q6, with current-enemy rebalancing measured against corrected tools.
-G1 is now claimed to Codex on `codex/readable-gameplay-g1`; the owner authorizes
-publishing the plan/claim/start prompt to main. No follow-on runtime implementation
-has started. PR27 has merged as9837158; Q6 remains open. Remaining external checks
-are temporarily waived/unverified. The session records below are historical
-checkpoints, including their then-current delivery constraints and dirty-file
-notes. Those are superseded where the current summary records later evidence
-or the owner's documentation cleanup.
+verified through C7 `88f220b`. PR27 merged as9837158; the main planning claim is
+c200b21. On `codex/readable-gameplay-g1`, Q6 is verified and committed44585dd;
+G1 now passes its own bounded local gate. See [G1 report](build/content/G1_REPORT.md)
+for the two Glass tuning changes, model corrections,187units/21files, serial
+contact check and scenario evidence. G2–G4 and sprites remain unstarted. Broad
+regression/stress/soak/native/device checks are deferred; existing external checks
+remain temporarily waived/unverified. This session creates local phase commits;
+no push/PR/merge is authorized by the older planning publication. Older session
+records below preserve their historical evidence and delivery constraints.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -1657,3 +1654,20 @@ Early motion fixture failures/limits are in build/content/Q6_REPORT.md. Games an
 test server cleaned up; broad stress/soak/device checks deferred, existing external
 checks waived/unverified. Q6 gate passes; G1 baseline/assessment is next. Nothing
 pushed/merged by this local phase. Exact source digest: Q6/results.json.
+
+## G1 — verified 2026-10-21
+
+Started only after Q6 commit44585dd passed. Claimed exact tuning/model/test/report
+paths. Fresh120Q6-tools scenarios preserved, then repaired actual model omissions
+(armour, spawn-time cohorts, natural cadence, empty attack banking), retaining
+role-priority semantics. Independent120before/after captures isolate Glass
+armour40→20/director weight12→8; other eco/knight balance stays unchanged.
+Existing roles, stationary Shards, normal/split bag families and their exact
+rewards reviewed.187units/21files, types/lint/build/diff, final1bounded serial
+Canvas contact case1.7s/no retries and36fifty-ms sensitivity cases pass. Visual
+artifacts inspected and owned game/browser/server cleaned up. Detailed numbers,
+source hashes, regression trade-offs and model omissions: build/content/G1_REPORT.md.
+Full-app/stress/soak/native/device campaigns remain deferred; actual Safari/
+browser-OS/older device evidence waived/unverified. Prompt retired after durable
+result; G2–G4/art not started. Next handoff is selected G2 work on a separately
+claimed branch/scope; no implied publication/merge of these gameplay commits.

@@ -681,3 +681,18 @@ presentation anchors align player poses without editing accepted art or bodies.
 This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
 fact, effectiveness matrix, persisted state or new sprite is added.
 [Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.
+
+## G1 accepted balance — 2026-10-21
+
+After verified Q6, the existing-roster comparison selects only eco Glass armour
+40→20 and its director base weight12→8. Glass retains96health, slow70movement,
+9contact harm and7XP; the health ordering/material relationships stay intact.
+The calm late natural selection mix is approximately45%Bottle/30%Microplastics/
+11%Glass/14%Bagged, replacing the historical43/28/16/13rounded mix. These are game
+weights, never litter-survey probabilities. Microplastics still open one-hit;
+Bottles remain the numerical baseline, Shards stationary/clearable and bag
+families finite. Knight tuning, other roles, weapon damage, progression, presets,
+cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
+[G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
+retains all scenarios and records the bounded local gate and its limits. G1 is
+locally complete; G2–G4 and sprite generation remain unstarted.

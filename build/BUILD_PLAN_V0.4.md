@@ -148,3 +148,12 @@ G1's bounded paths and `codex/readable-gameplay-g1` branch. Start with
 [PHASE_G1_PROMPT.md](PHASE_G1_PROMPT.md), completing/verifying Q6 first. G1 is
 claimed, not started/completed. G2–G4 remain planned and V0.4.4 stays gated by
 the settled implemented roster. This documentation publication changes no gameplay.
+
+## Current follow-on outcome — 2026-10-21
+
+Q6 is verified in44585dd on `codex/readable-gameplay-g1`; G1 subsequently passes
+its bounded local gate. [G1_REPORT](content/G1_REPORT.md) records the two Glass
+changes, model repairs, actual checks and limits. Earlier Session21/open-Q6 and
+claimed/unstarted-G1 sections above are historical. G2–G4/new art remain unstarted;
+next owner-selected work must claim the roadmap's G2 scope. No gameplay merge,
+broad campaign or additional external-device pass is inferred from this result.

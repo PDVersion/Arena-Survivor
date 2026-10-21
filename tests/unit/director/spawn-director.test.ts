@@ -82,10 +82,10 @@ describe("role composition", () => {
       [archetypeIds.enemy.fastFragile]: 88,
     });
     expect(shares(1)).toMatchObject({
-      [archetypeIds.enemy.swarmBasic]: 43,
-      [archetypeIds.enemy.fastFragile]: 28,
-      [archetypeIds.enemy.slowDurable]: 16,
-      [archetypeIds.enemy.deathSpawner]: 13,
+      [archetypeIds.enemy.swarmBasic]: 45,
+      [archetypeIds.enemy.fastFragile]: 30,
+      [archetypeIds.enemy.slowDurable]: 11,
+      [archetypeIds.enemy.deathSpawner]: 14,
     });
   });
 

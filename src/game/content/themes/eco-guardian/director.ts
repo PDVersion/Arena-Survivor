@@ -45,7 +45,8 @@ export const director = {
       enemyId: archetypeIds.enemy.slowDurable,
       waveMovement: "chase",
       unlockAt: 0.4,
-      baseWeight: 12,
+      // G1 keeps Glass distinct without dominating retained combat work.
+      baseWeight: 8,
       weightGrowth: 0.9,
       chaosWeightBias: 0.35,
     },
