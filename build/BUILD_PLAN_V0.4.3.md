@@ -389,3 +389,30 @@ history remains in Git, the master, status, progress and its retained
 Remaining work is [cumulative delivery and owner-selected V0.4.4 planning](NEXT_READABLE_GAMEPLAY_HANDOFF.md).
 The historical external waiver remains unverified; no current broad CI/browser/
 stress/soak acceptance or new publication is established by this consolidation.
+
+## PR28 CI repair — claimed before edits / 2026-10-22
+
+Owner requests diagnosing/fixing failed Actions. Active bounded repair ownership:
+`tests/e2e/{enemy-roster,phase-six-v02,readable-contact-v0421,sprites}.spec.ts`,
+`build/performance/PR28_CI_REPAIR.md`, this plan, BUILD_STATUS, MASTER_BUILD_PLAN,
+AUTONOMOUS_PROGRESS and RECONCILIATION; Git/PR metadata for the existing PR28.
+Failed run39705612316 on dd30186 reports four failures,138passes/6skips.
+All four fail old five-role fixture expectations against eight configured
+non-boss roles. Derive exact expected IDs/counts from activeTheme, retain the
+existing semantic assertions and do not change runtime, retries, skips or timeouts.
+Run affected browser cases serially/zero retries, types/units/lint/build/whitespace;
+push one repair commit and verify matching-head Actions. No new content/art,
+manual stress campaign, merge or physical/browser acceptance is selected.
+
+## PR28 roster CI repair — local verification / 2026-10-22
+
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.

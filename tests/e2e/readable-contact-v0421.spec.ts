@@ -1,4 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+
+const rosterIds = activeTheme.enemies.filter((enemy) => !("boss" in enemy && enemy.boss)).map((enemy) => enemy.id).sort();
 
 async function pressUntil(
   page: Page,
@@ -58,7 +61,7 @@ test("all enemy roles are walk-through while valid contact gives one bounded sho
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.player?.x ?? 0).toBeGreaterThan(start + 120);
   expect(snapshot?.crowd?.solidResolutions).toBe(0);
-  expect(Object.values(snapshot?.combat?.rosterHighWater ?? {}).filter((count) => count > 0)).toHaveLength(5);
+  expect(Object.entries(snapshot?.combat?.rosterHighWater ?? {}).filter(([, count]) => count > 0).map(([id]) => id).sort()).toEqual(rosterIds);
 });
 
 test("Collection Sweep triggers from completed grabber attacks without projectiles", async ({ page }) => {

@@ -4111,3 +4111,16 @@ its existing checklist; the next implementation uses the follow-on
 than reopening the merged milestone branch. [G1 ownership](READABLE_GAMEPLAY_ROADMAP.md)
 and [start prompt](PHASE_G1_PROMPT.md) own continuation. Old draft/local-only
 statements above describe historical delivery checkpoints, not this new request.
+
+## PR28 roster CI repair — local verification / 2026-10-22
+
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.

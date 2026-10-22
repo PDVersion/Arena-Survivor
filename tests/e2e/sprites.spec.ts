@@ -1,4 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+
+const rosterIds = activeTheme.enemies.filter((enemy) => !("boss" in enemy && enemy.boss)).map((enemy) => enemy.id).sort();
 
 const spritePaths = [
   "/sprites/eco-guardian/atlas.png",
@@ -14,8 +17,8 @@ test("the accepted player and enemy roster load together in a live run", async (
     const roster = await page.evaluate(
       () => window.__ARENA_TEST__?.getSnapshot().combat?.rosterHighWater,
     );
-    return roster ? Object.values(roster).filter((count) => count > 0).length : 0;
-  }).toBe(5);
+    return Object.keys(roster ?? {}).filter((id) => (roster?.[id] ?? 0) > 0).sort();
+  }).toEqual(rosterIds);
 
   const loaded = await page.evaluate(() =>
     performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),

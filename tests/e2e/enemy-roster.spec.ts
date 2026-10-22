@@ -1,20 +1,17 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
 
-test("enemy roster exposes all five distinct configured roles", async ({ page }) => {
+const rosterIds = activeTheme.enemies.filter((enemy) => !("boss" in enemy && enemy.boss)).map((enemy) => enemy.id).sort();
+
+test("enemy roster exposes every configured non-boss role", async ({ page }) => {
   await page.goto("/?enemyRoster=all");
   await expect.poll(async () => {
     const roster = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.rosterHighWater);
-    return roster ? Object.values(roster).filter((count) => count > 0).length : 0;
-  }).toBe(5);
+    return Object.keys(roster ?? {}).filter((id) => (roster?.[id] ?? 0) > 0).sort();
+  }).toEqual(rosterIds);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.combat?.spriteFramesByRole?.["enemy.stationary_fragment"]).toBe(3);
-  expect(snapshot?.combat?.rosterHighWater).toMatchObject({
-    "enemy.swarm_basic": 1,
-    "enemy.fast_fragile": 1,
-    "enemy.slow_durable": 1,
-    "enemy.death_spawner": 1,
-    "enemy.stationary_fragment": 1,
-  });
+  expect(snapshot?.combat?.rosterHighWater).toEqual(Object.fromEntries(activeTheme.enemies.map((enemy) => [enemy.id, rosterIds.includes(enemy.id) ? 1 : 0])));
 });
 
 test("Bagged Waste queues and eventually spawns its finite five-child material mix", async ({ page }) => {
