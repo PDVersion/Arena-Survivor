@@ -218,3 +218,25 @@ broken targets/anchors; 321 retained G4 source/evidence SHA256 hashes match.
 Only 11 Markdown files change; whitespace checks pass. No runtime/build/browser
 suite was rerun for this documentation-only consolidation, and no new gameplay
 or external acceptance is claimed. Existing phase commits remain intact.
+
+## Readable gameplay PR delivery — 2026-10-22
+
+Owner explicitly requests creating the cumulative PR. Delivery ownership is
+limited to Git/PR metadata and appended status/progress/reconciliation notes;
+no runtime, dependency, art or test change is selected. Fresh remote inspection:
+`origin/main` is `c200b21`, with no open PR and no main-only commits; local
+`4bac071` contains the seven Q6/G1/G2A/G2B/G2C/G3/G4 phase commits plus the
+consolidation. Preserve these commits and publish one PR into main.
+
+Fresh delivery verification passes all703unit tests/74files, typecheck, lint,
+production build and whole-branch whitespace. The existing bundle-size advisory
+remains. `npm audit --audit-level=high` exits0 with two moderate findings in
+Vitest/@vitest/mocker (GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp); this is not a
+zero-findings audit. Pins/lockfile are unchanged and no audit bypass is used.
+
+Select the existing automatic PR CI as the consolidated browser regression
+campaign; no repeated heavy local browser run or manual stress dispatch. Remote
+current-head CI is pending until its own run completes. Prior scoped reports
+retain source/aided-fixture limits. Actual Safari/missing browser-OS/older physical
+GPU evidence remains waived/unverified. PR creation does not merge or deploy;
+V0.4.4 inventory/frame/canvas/style selection remains next after delivery.
