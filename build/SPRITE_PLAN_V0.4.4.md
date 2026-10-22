@@ -7,6 +7,67 @@ Before any claim or generation, reconcile the roster against settled V0.4.2 /
 V0.4.3 content; confirm stable IDs, subjects, sizes and frame roles. Optional
 content and new art remain unselected. Higher sprite resolution remains parked.
 
+## Settled roster checkpoint after G4 — 2026-10-22
+
+G1–G4 are locally verified, ending on `codex/readable-gameplay-g4`.
+[G4_REPORT](content/G4_REPORT.md) owns current limits. This reconciles identity,
+body and current presentation for planning; it is not an art claim or acceptance.
+Frame/canvas selections for remaining work are still TBC. The runtime definitions
+and current sprite map remain authoritative; never derive a body from this table
+or a generated sheet. Listed radius/display diameter are authored world units,
+independent of camera2× and sheet pixels. Elite rendering keeps the base identity.
+
+| Stable ID | Current eco subject | Radius / display diameter | Current presentation and frame constraint |
+| --- | --- | --- | --- |
+| `character.starter` | Environment Protector |18 /42| Accepted48px/8frame sheet; preserve Q6 per-frame hood anchors and existing walk/hit/death mapping |
+| `enemy.swarm_basic` | Plastic Bottle |14 /36| Accepted32px/4frames idle/move/hit/death |
+| `enemy.fast_fragile` | Microplastics |10 /26| Current24px/4frame sheet; never rename back to Plastic Bag or reinterpret old IDs |
+| `enemy.slow_durable` | Glass Bottle |22 /50| Accepted48px/4frames; G1 durability change does not require new art |
+| `enemy.death_spawner` | Bagged Waste |25 /56| Accepted48px/4frames; releases existing Bottle/Microplastics family |
+| `enemy.stationary_fragment` | Glass Shards |12 /28| Reuses Glass death pose/frame3; stationary, no walk animation requirement; dedicated sheet TBC |
+| `enemy.cluster_fodder` | Cigarette Butts |10 /28| G2 primitive individual, three actors per group; never draw a group as one body; sheet/frames TBC |
+| `enemy.gust_drifter` | Packets / Wrappers |12 /34| G2 primitive; warning, oblique committed gust and recovery must stay readable; sheet/frames TBC |
+| `enemy.committed_charger` | Aluminium Can |14 /38| G2 primitive; direct line warning, roll and recovery remain distinct; sheet/frames TBC |
+| `enemy.mini_boss` | Compacted Waste |26 /64| Primitive; fixed-circle warning/one pulse/recovery/pursuit hold; sheet/frames TBC |
+| `enemy.final_boss` | Dumping Colossus |32 /90| Primitive; same fixed-circle contract, unique terminal flag; sheet/frames TBC |
+
+Microplastics remain both the live opening role and Bottle's Fragmentation result;
+Glass Shards remain stationary. No independent Bottle/Bag/Glass fragment trio or
+retired Plastic Bag sheet follows from the historical inventory. G2 groups do not
+spawn new children. Knight-magic remains a complete primitive fallback pack; this
+checkpoint does not require a second generated roster.
+
+Other current presentation subjects, still unselected for generation:
+
+- `weapon.starter` Cleanup Grabber: procedural extension/contact/retraction and
+  Collection Sweep; base78reach/18width with earned growth. Historical64×16/3frame
+  and32px icon suggestions are not accepted specs. Tool frames must align with
+  real contact timing; no art-derived reach, width, target count or damage.
+- `weapon.secondary` Cleanup Vacuum /`weapon.secondary_evolved` Cyclone Vacuum:
+  melee cone pulses, primary caps3→7 /4→8 and nearby splash. Visual assets must
+  preserve pulse versus fade and same-slot evolution; canvas/frame roles TBC.
+  Sorting Pulse remains parked for eco.
+- `pickup.experience` Impact Point: current radius7 primitive. Existing fractional
+  reward/merge/magnet semantics do not create new stable orb-tier IDs. Sheet and
+  tiers TBC; no art-derived pickup radius/reward.
+- Five sites, not the old four: `shrine.spawn_surge` Landfill Breach,
+  `shrine.greed` Fast Fashion Boom, `shrine.multiplicity` Single-Use Boom,
+  `shrine.duplication` Overproduction Order, `shrine.escalation` Unmanaged Dump.
+  All radius24/interaction120; idle/available/spent distinctions and current
+  prompt/minimap/edge indicators must remain. Old64px/4frame specs are TBC.
+- `hazard.damage_zone` Contamination Spill radius110, `hazard.obstacle` Debris
+  Pile radius46, `hazard.periodic_burst` Methane Vent radius96. Warning/active/
+  recovery or cleared states need a selected tile/scaling/frame design. Never
+  replace fixed authored damage regions with sprite geometry.
+- Elite cues, optional variants and full-roster/fallback/performance acceptance
+  remain separate pending selections. G4 adds UI only; no new mastery sprites.
+
+Next: owner selection of bounded subjects and exact style/frame/canvas contracts,
+then the existing manifest claim/acceptance workflow. No manifest rows are claimed
+or changed here. No generated art, higher resolution or pipeline edits occurred.
+The historical tables below remain history, superseded where this checkpoint
+resolves a subject count/identity/role.
+
 ## Remaining scope to reconcile
 
 - Dedicated fragment sheets and elite treatment.

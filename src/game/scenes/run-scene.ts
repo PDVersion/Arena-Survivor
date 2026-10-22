@@ -1,3 +1,4 @@
+import { selectCapabilityProgress } from "../systems/mastery/run-review";
 import Phaser from "phaser";
 import { describeShrineChoice } from "../systems/codex/describe-shrine";
 import { arrivalClusterAngles, introductionCount } from "../systems/director/arrival-cluster";
@@ -25,7 +26,7 @@ import { ProjectileActor } from "../entities/projectile-actor";
 import { GrabberActor } from "../entities/grabber-actor";
 import { ShrineActor } from "../entities/shrine-actor";
 import type { EnemySpawnSource } from "../entities/enemy-actor";
-import { ensureProfile, selectRunUpgradePool, recordProfileFinishedRun, describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
+import { ensureProfile, getProfile, selectRunUpgradePool, recordProfileFinishedRun, describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import {
   advanceRunState,
   isRunActive,
@@ -120,6 +121,7 @@ import {
 } from "../systems/shrine-surge";
 import {
   selectSessionCodex,
+  selectEnemyCodex,
   selectShrineCodex,
   selectUpgradeCodex,
 } from "../systems/codex/describe-shrine";
@@ -2282,6 +2284,7 @@ export class RunScene extends Phaser.Scene {
     this.hitFlashes += 1;
     this.runState = recordRunDamage(this.runState, {
       amount: appliedDamage,
+      weaponId: direct?.weapon.id,
       source: damageSource,
       directBase: direct?.directBase,
       criticalBonus: direct?.criticalBonus,
@@ -2756,6 +2759,8 @@ export class RunScene extends Phaser.Scene {
           }))]
         : [],
       upgrades: summary?.upgrades ?? [],
+      codexEnemies: selectEnemyCodex(this.runTheme),
+      capabilities: selectCapabilityProgress(this.runTheme, getProfile()),
       codex: selectShrineCodex(this.runTheme),
       codexUpgrades: selectUpgradeCodex(this.runTheme, session),
       codexSession: [...selectSessionCodex(this.runTheme, session), ...describeProfile(this.runTheme)],
@@ -2984,7 +2989,7 @@ export class RunScene extends Phaser.Scene {
       level: this.runState.progression.level,
       statistics: this.runState.statistics,
     });
-    this.runEndOverlay?.show(this.runState, () => this.restartRun(), newUnlocks, getProfileStatus().mode === "saved" ? undefined : getProfileStatus().message);
+    this.runEndOverlay?.show(this.runState, () => this.restartRun(), newUnlocks, getProfileStatus().mode === "saved" ? undefined : getProfileStatus().message, getProfile().unlockedWeaponIds);
   }
 
   private restartRun(): void {

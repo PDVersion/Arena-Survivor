@@ -1,8 +1,10 @@
 import Phaser from "phaser";
+import type { CapabilityProgress } from "../systems/mastery/run-review";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { StatLine, WorldLine } from "../systems/upgrades/describe-upgrade";
 import type { RunSettings, SettingKey } from "../state/settings-state";
 import type {
+  CodexEnemyEntry,
   CodexEntry,
   CodexSessionLine,
   CodexUpgradeEntry,
@@ -19,10 +21,12 @@ export type PauseTab = (typeof pauseTabs)[number];
  * upgrade pool, and the tab strip is already tight at five tabs, so the split
  * lives inside the tab rather than adding more of them.
  */
-export const codexSections = ["shrines", "equipment", "session"] as const;
+export const codexSections = ["shrines", "enemies", "equipment", "capabilities", "session"] as const;
 export type CodexSection = (typeof codexSections)[number];
 
 export interface PauseMenuView {
+  readonly codexEnemies: readonly CodexEnemyEntry[];
+  readonly capabilities: readonly CapabilityProgress[];
   readonly stats: readonly StatLine[];
   readonly world: readonly Pick<WorldLine, "label" | "display">[];
   /** Upgrades taken, already formatted by the shared run-summary selector. */
@@ -48,6 +52,22 @@ export class PauseMenuUi {
   private container?: Phaser.GameObjects.Container;
   private tab: PauseTab = "stats";
   private codexSection: CodexSection = "shrines";
+  private enemyPage = 0;
+  private enemyPageBounds: { direction: 1 | -1; bounds: Phaser.Geom.Rectangle }[] = [];
+  private readonly previousEnemy = (event: KeyboardEvent) => this.handleEnemyPage(event, -1);
+  private readonly nextEnemy = (event: KeyboardEvent) => this.handleEnemyPage(event, 1);
+  private handleEnemyPage(event: KeyboardEvent, direction: 1 | -1): void {
+    if (!this.isOpen || this.tab !== "codex" || this.codexSection !== "enemies") return;
+    event.preventDefault();
+    this.cycleEnemyPage(direction);
+  }
+  cycleEnemyPage(direction: 1 | -1): void {
+    if (!this.isOpen || this.tab !== "codex" || this.codexSection !== "enemies") return;
+    const count = this.view?.codexEnemies.length ?? 0;
+    if (!count) return;
+    this.enemyPage = (this.enemyPage + direction + count) % count;
+    this.render();
+  }
   private view?: PauseMenuView;
   private tabBounds: { readonly tab: PauseTab; readonly bounds: Phaser.Geom.Rectangle }[] = [];
   private settingBounds: { readonly key: SettingKey; readonly bounds: Phaser.Geom.Rectangle }[] = [];
@@ -174,6 +194,7 @@ export class PauseMenuUi {
     this.settingBounds = [];
     this.manageSaveBounds = undefined;
     this.sectionBounds = [];
+    this.enemyPageBounds = [];
     const bodyTop = top + 116;
     // Everything above the footer hint. Sections that can grow with content
     // measure against this rather than assuming they fit.
@@ -250,6 +271,8 @@ export class PauseMenuUi {
     );
 
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
+    this.scene.input.keyboard?.on("keydown-PAGE_UP", this.previousEnemy);
+    this.scene.input.keyboard?.on("keydown-PAGE_DOWN", this.nextEnemy);
     this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, children)).setDepth(1050);
   }
 
@@ -323,6 +346,35 @@ export class PauseMenuUi {
     const sectionHeight = bodyHeight - 42;
     if (this.codexSection === "shrines") {
       children.push(...this.renderCodex(view.codex, left, sectionTop, panelWidth, style));
+    } else if (this.codexSection === "enemies") {
+      const entries = view.codexEnemies;
+      this.enemyPage = Math.min(this.enemyPage, Math.max(0, entries.length - 1));
+      const entry = entries[this.enemyPage];
+      if (entry) {
+        const copy = this.theme.copy.mastery;
+        const display = (value: number) => String(Number(value.toFixed(2)));
+        const relations = entry.relations.map((relation) => `${relation.kind === "fractures_into" ? copy.fractures : copy.releases}: ${relation.name} ×${relation.count}`);
+        const text = `${entry.name}\n\n${entry.description}\n\n${copy.gameValues}\n${copy.health}: ${display(entry.health)} · ${copy.speed}: ${display(entry.moveSpeed)} · ${copy.harm}: ${display(entry.contactDamage)}\n${relations.join("\n")}`;
+        children.push(addUiText(this.scene, left + 32, sectionTop, text,
+          { ...style, fontSize: "16px", wordWrap: { width: panelWidth - 64, useAdvancedWrap: true } }));
+        const y = sectionTop + sectionHeight - 28;
+        for (const direction of [-1, 1] as const) {
+          const x = left + panelWidth / 2 + direction * 185;
+          children.push(this.scene.add.rectangle(x, y, 160, 32, floor).setStrokeStyle(2, accent));
+          children.push(addUiText(this.scene, x, y, direction < 0 ? copy.previous : copy.nextPage,
+            { ...style, fontSize: "14px" }).setOrigin(.5));
+          this.enemyPageBounds.push({ direction, bounds: new Phaser.Geom.Rectangle(x - 80, y - 16, 160, 32) });
+        }
+        children.push(addUiText(this.scene, left + panelWidth / 2, y, `${this.enemyPage + 1} / ${entries.length} · PgUp / PgDn`,
+          { ...style, fontSize: "13px" }).setOrigin(.5));
+      }
+    } else if (this.codexSection === "capabilities") {
+      let y = sectionTop;
+      for (const capability of view.capabilities) {
+        const text = addUiText(this.scene, left + 32, y, `${capability.name} · ${capability.display}\n${capability.description}`,
+          { ...style, fontSize: "17px", wordWrap: { width: panelWidth - 64, useAdvancedWrap: true } });
+        children.push(text); y += text.height + 24;
+      }
     } else if (this.codexSection === "equipment") {
       children.push(
         ...this.renderCodexUpgrades(
@@ -343,6 +395,8 @@ export class PauseMenuUi {
   private codexSectionLabel(section: CodexSection): string {
     const codex = this.theme.copy.codex;
     if (section === "shrines") return codex.shrines;
+    if (section === "enemies") return this.theme.copy.mastery.enemies;
+    if (section === "capabilities") return this.theme.copy.mastery.capabilities;
     if (section === "equipment") return codex.upgrades;
     return codex.session;
   }
@@ -467,6 +521,8 @@ export class PauseMenuUi {
 
   private destroyContainer(): void {
     this.scene.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
+    this.scene.input.keyboard?.off("keydown-PAGE_UP", this.previousEnemy);
+    this.scene.input.keyboard?.off("keydown-PAGE_DOWN", this.nextEnemy);
     this.container?.destroy(true);
     this.container = undefined;
   }
@@ -480,6 +536,8 @@ export class PauseMenuUi {
       this.render();
       return;
     }
+    const page = this.enemyPageBounds.find((entry) => entry.bounds.contains(point.x, point.y));
+    if (page) { this.cycleEnemyPage(page.direction); return; }
     const section = this.sectionBounds.find((entry) => entry.bounds.contains(point.x, point.y));
     if (section) {
       this.codexSection = section.section;

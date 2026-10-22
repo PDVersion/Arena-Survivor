@@ -3925,3 +3925,45 @@ G3_REPORT binds sources, images, initial fixture/type failures and measurement
 limits. G3 locally complete; PHASE_G4_PROMPT reviewed, G4/art unstarted. No broad
 app/stress/soak/hardware campaign; external checks remain deferred/waived/
 unverified, never newly passed. No push/PR/merge or new release acceptance.
+
+## REC-101 continuation — G4 evidence-based mastery and optional reference
+
+Owner requests G4 after G3d8ae891. Exact paths/design claimed in BUILD_PLAN_G4
+before code; completed implementation is consolidated in MASTER_BUILD_PLAN.
+Prefer a useful review plus optional reference over new achievements/discoveries.
+Reuse existing unlock thresholds/IDs; unknown saved IDs retain their meanings.
+
+Actual damage attribution must enter at `commitEnemyDamage` after health clamping
+and defeated guards, retaining the originating weapon for direct/splash only.
+The map partitions the existing damage total; it is not another category to add.
+Skills/unattributed effects remain the difference. Never infer payoff from being
+equipped, kills from pending work, or source-specific historical profile totals
+from old saves. Base and evolved tools retain their actual IDs/names. The map is
+run-local, resets fresh and is excluded by explicit durable aggregate folding.
+
+Results default to tool/pressure/next-experiment evidence. Details preserves the
+old ledger; Tab and clicks switch without re-recording the terminal. Advice uses
+current entitlement after the terminal fold, owned picks and the existing random
+evolution/equip choices, not guaranteed offers or new grind. Correct the old death
+clock from `durationMs - cause.atMs` to elapsed `cause.atMs`; overtime is not0:00.
+Final-boss flag may be true on a later endless death; do not relabel that as clear.
+
+Expose existing enemy catalogue in bounded pages. Game stats are difficulty-
+resolved definitions, not real material facts or every current actor's multipliers.
+Round only displayed values to two decimals to remove binary floating tails.
+Current capability progress is read-only and never grants. No new ranking/factual
+or handling surface, saved discovery, schema/ID/tuning/content/art change.
+
+Phaser3 keyboard events are PAGE_UP/PAGE_DOWN. Prevent the browser default only
+while enemy paging owns that input; otherwise a scrollable host can scroll after
+PageDown and invalidate canvas coordinates. Remove stable listeners on redraw/
+hide. Actual title smoke uses public canvas/telemetry: Phaser.GAMES is unavailable
+in this runtime; do not add a production global to support a test assumption.
+
+703full/74files,283focused/25files, types/lint/build/diff and final5serial browser
+cases4.3s/zero retries pass.120G3/G4 ambient cases exactly match. Report retains
+initial wrong-key/input/unsupported-test-global failures and aided-fixture/model
+limits. G4 locally complete; next handoff is delivery/owner-selected V0.4.4 art
+planning, with settled roster documented and generation unstarted. Broad/stress/
+soak/device checks are deferred; existing external waiver remains unverified.
+No new CI/push/PR/merge or natural survival/retention/offer-frequency claim.

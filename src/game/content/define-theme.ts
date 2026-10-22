@@ -1,6 +1,7 @@
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
 import {
+  masteryCopyKeys,
   spriteStates,
   statKeys,
   upgradeCategories,
@@ -134,6 +135,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   for (const key of worldKeys) {
     if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
+  }
+  for (const key of masteryCopyKeys) {
+    if (!theme.copy.mastery?.[key]?.trim()) issues.push(`mastery.${key} label is required`);
   }
   for (const key of codexCopyKeys) {
     if (!theme.copy.codex?.[key]?.trim()) issues.push(`codex.${key} label is required`);

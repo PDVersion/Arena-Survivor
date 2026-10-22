@@ -152,7 +152,13 @@ export interface SaveManagerCopy {
   readonly warnCharacterFallback: string;
 }
 
+export const masteryCopyKeys = ["review", "details", "tools", "choices", "nextExperiment", "noDamage", "otherDamage", "noChoices",
+  "capabilities", "enemies", "health", "speed", "harm", "fractures", "releases", "gameValues", "previous", "nextPage",
+  "tryFirst", "tryEquip", "tryEvolve", "tryReady", "tryRisk", "tryRecovery", "tryCalm", "bossDefeated"] as const;
+export type MasteryCopy = Readonly<Record<(typeof masteryCopyKeys)[number], string>>;
+
 export interface ThemeCopy {
+  readonly mastery: MasteryCopy;
   readonly saveManager: SaveManagerCopy;
   readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly changedElsewhere: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
   readonly eliteVariants?: Readonly<Partial<Record<EliteId, ContentCopy>>>;

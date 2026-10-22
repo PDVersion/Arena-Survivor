@@ -246,3 +246,27 @@ not real material/handling/abundance claims. No quiz, currency, new roster, save
 field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
 verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
 complete; [reviewed G4 handoff](PHASE_G4_PROMPT.md) is current, G4/art unstarted.
+
+## G4 — useful reviews and optional reference / 2026-10-22
+
+Locally verified G4 adds a concise run review: actual committed direct/splash
+damage by tool, other effects as the remaining partition, recorded voluntary
+site/curse pressure and an attainable next experiment. The old damage ledger,
+metrics and upgrade tally remain in Details (click or Tab); R/Enter restarts.
+A death source describes the recorded final hit at elapsed time, including
+endless overtime; it is not a diagnosis of the whole run. Final-boss success
+appears only from its recorded flag and can coexist with a later death.
+
+Info and the pause Field Guide/Grimoire now include one paged enemy entry at a
+time and read-only progress toward the existing finished-attempt/kill unlocks.
+Enemy descriptions/relations come from the current theme; health, speed and
+contact harm come from difficulty-resolved definitions, displayed to two decimals
+and explicitly labelled game values. They are reference values, not every live
+actor's time/world/elite-scaled state. Previous/Next and PgUp/PgDn navigate;
+Tab/arrows switch sections and Escape returns. Reading is optional and changes
+no progress. No new fact, ranking, disposal/handling advice, discovered-material
+record, ID remap or permanent stat economy was selected. Existing environmental
+copy has not received a new factual review in this phase.
+
+[Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
+is current. G1–G4 are locally complete; new sprite generation remains unstarted.

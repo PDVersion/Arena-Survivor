@@ -1,0 +1,134 @@
+{
+  "parent": "d8ae891",
+  "branch": "codex/readable-gameplay-g4",
+  "scope": "G4 local gate, no publication or new art",
+  "units": {
+    "focused": {
+      "tests": 283,
+      "files": 25
+    },
+    "full": {
+      "tests": 703,
+      "files": 74
+    }
+  },
+  "software": {
+    "typecheck": "pass",
+    "lint": "pass without warnings",
+    "build": "pass; existing size advisory",
+    "whitespace": "verified before phase commit"
+  },
+  "browser": {
+    "finalPassed": 5,
+    "seconds": 4.3,
+    "workers": 1,
+    "automaticRetries": 0,
+    "renderer": "Canvas owned fixtures; ordinary title app entry",
+    "observations": [
+      {
+        "path": "build/content/G4_BROWSER/g4-mastery-eco-guardian-G4-review-and-optional-guide-default-chromium/observations.json",
+        "theme": "eco-guardian",
+        "quality": "default",
+        "browser": "151.0.7922.34",
+        "kills": 1,
+        "totalDamage": 5.699999999999999
+      },
+      {
+        "path": "build/content/G4_BROWSER/g4-mastery-eco-guardian-G4-review-and-optional-guide-low-chromium/observations.json",
+        "theme": "eco-guardian",
+        "quality": "low",
+        "browser": "151.0.7922.34",
+        "kills": 3,
+        "totalDamage": 18.011999999999997
+      },
+      {
+        "path": "build/content/G4_BROWSER/g4-mastery-knight-magic-G4-review-and-optional-guide-default-chromium/observations.json",
+        "theme": "knight-magic",
+        "quality": "default",
+        "browser": "151.0.7922.34",
+        "kills": 1,
+        "totalDamage": 5.699999999999999
+      },
+      {
+        "path": "build/content/G4_BROWSER/g4-mastery-knight-magic-G4-review-and-optional-guide-low-chromium/observations.json",
+        "theme": "knight-magic",
+        "quality": "low",
+        "browser": "151.0.7922.34",
+        "kills": 3,
+        "totalDamage": 18.011999999999997
+      },
+      {
+        "path": "build/content/G4_BROWSER/g4-mastery-title-Info-supp-b4a28-on-without-writing-progress-chromium/observations.json",
+        "titleProfileUnchanged": true
+      }
+    ],
+    "screenshots": 14,
+    "aids": "frozen update/physics; scripted clocks/terminal flags/positions/pending-choice builds; actual attacks/choices/terminal/profile/UI/restart methods",
+    "cleanup": "owned fixture games destroyed, Playwright contexts/server exited; no listener on4173"
+  },
+  "balance": {
+    "capture": "G4_BALANCE.json",
+    "comparison": "G3_AFTER.json",
+    "equalCases": 120,
+    "applicable": 108,
+    "parkedDiagnostic": 12,
+    "unchangedPaths": [
+      "src/game/content/themes/knight-magic/shrines.ts",
+      "src/game/content/themes/knight-magic/difficulty-presets.ts",
+      "src/game/content/themes/knight-magic/weapons.ts",
+      "src/game/content/themes/knight-magic/upgrades.ts",
+      "src/game/content/themes/knight-magic/director.ts",
+      "src/game/content/themes/knight-magic/sprites.ts",
+      "src/game/content/themes/knight-magic/characters.ts",
+      "src/game/content/themes/knight-magic/unlocks.ts",
+      "src/game/content/themes/knight-magic/view.ts",
+      "src/game/content/themes/knight-magic/tokens.ts",
+      "src/game/content/themes/knight-magic/difficulty.ts",
+      "src/game/content/themes/knight-magic/bodies.ts",
+      "src/game/content/themes/knight-magic/pace.ts",
+      "src/game/content/themes/knight-magic/pickups.ts",
+      "src/game/content/themes/knight-magic/elites.ts",
+      "src/game/content/themes/knight-magic/index.ts",
+      "src/game/content/themes/knight-magic/skills.ts",
+      "src/game/content/themes/knight-magic/enemies.ts",
+      "src/game/content/themes/knight-magic/curses.ts",
+      "src/game/content/themes/knight-magic/progression.ts",
+      "src/game/content/themes/knight-magic/hazards.ts",
+      "src/game/content/themes/eco-guardian/shrines.ts",
+      "src/game/content/themes/eco-guardian/difficulty-presets.ts",
+      "src/game/content/themes/eco-guardian/weapons.ts",
+      "src/game/content/themes/eco-guardian/upgrades.ts",
+      "src/game/content/themes/eco-guardian/director.ts",
+      "src/game/content/themes/eco-guardian/sprites.ts",
+      "src/game/content/themes/eco-guardian/characters.ts",
+      "src/game/content/themes/eco-guardian/unlocks.ts",
+      "src/game/content/themes/eco-guardian/view.ts",
+      "src/game/content/themes/eco-guardian/tokens.ts",
+      "src/game/content/themes/eco-guardian/difficulty.ts",
+      "src/game/content/themes/eco-guardian/bodies.ts",
+      "src/game/content/themes/eco-guardian/pace.ts",
+      "src/game/content/themes/eco-guardian/pickups.ts",
+      "src/game/content/themes/eco-guardian/elites.ts",
+      "src/game/content/themes/eco-guardian/index.ts",
+      "src/game/content/themes/eco-guardian/skills.ts",
+      "src/game/content/themes/eco-guardian/enemies.ts",
+      "src/game/content/themes/eco-guardian/curses.ts",
+      "src/game/content/themes/eco-guardian/progression.ts",
+      "src/game/content/themes/eco-guardian/hazards.ts",
+      "src/game/core/archetypes/ids.ts",
+      "src/game/state/session-statistics.ts",
+      "src/game/state/profile-state.ts",
+      "src/game/systems/persistence",
+      "public/sprites",
+      "package.json",
+      "package-lock.json"
+    ],
+    "limits": "ambient contact model only; inherited omissions in capture/report"
+  },
+  "deferred": [
+    "full app/browser/WebGL/stress/soak campaign",
+    "natural first-attempt/upgrade offer/retention evidence"
+  ],
+  "external": "actual Safari/missing browser-OS/older physical integrated-GPU waived and unverified",
+  "attemptNotes": "See G4_REPORT for initial paging names/frame input/host scroll/unsupported test global and decimal display corrections; final5pass together."
+}

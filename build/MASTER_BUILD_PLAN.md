@@ -3285,3 +3285,45 @@ build/diff/audit0 and7unique affected serial browser cases pass cumulatively.
 See [repair report](performance/PR27_CI_REPAIR.md) for retained failed attempts,
 exact scope and limits. Full current-head remote CI is pending at this checkpoint;
 no milestone/Q6 or missing external acceptance is marked complete.
+
+<a id="readable-gameplay-g4"></a>
+## Readable gameplay G4 — useful reviews and optional mastery reference /2026-10-22
+
+Owner-requested implementation on `codex/readable-gameplay-g4` from verified
+G3 `d8ae891`. Exact pre-code ownership/self-review is in BUILD_PLAN_G4; this is
+the consolidated completed implementation record. No push/PR/merge/new art.
+
+The actual committed-damage seam records an originating weapon's health-clamped
+direct/splash damage in transient `RunStatistics.damageByWeapon`. It partitions
+existing totals; skill/unattributed effects remain the difference, with no new
+kill/source totals or durable fields. Explicit session/profile folds remain.
+Results default to tool/pressure/next-experiment review, retaining the full old
+ledger/tally in Details. Pointer/Tab switching, resize and restart preserve the
+terminal's one durable fold. Elapsed final-hit time fixes overtime0:00; final-boss
+flag and subsequent death/clearing headings remain honest. Advice uses current
+entitlement and owned evolution picks, without guaranteeing random offers.
+
+The existing shared optional guide gains ten bounded enemy pages and progress
+toward the two existing capability unlocks. Both themes supply complete validated
+mastery copy. Enemy descriptions/relations and difficulty-resolved game stats come
+from live theme definitions, with display-only decimal rounding. PgUp/PgDn and
+pointer paging clean up stable listeners and suppress host scrolling only while
+active. Reading never grants/writes, introduces no new saved discovery, sourced
+fact/ranking/handling surface or mandatory learning gate. No tuning, IDs, art,
+weapon/unlock definitions, save schema or adapter change.
+
+703units/74files,283focused/25files, types/lint/build/whitespace and final5serial
+Chromium cases4.3s/one worker/zero retries pass. Both themes Default/Low+reduced-
+motion cover actual damage/overkill guards, all10pages, result pointer/keyboard/
+resize/restart, exact-once fold and memory-adapter reload. Ordinary title Info
+entry/exit is checked separately within those5cases. All14screenshots inspected.
+120ambient cases exactly match G3. Source/artifact hashes, initial input/test-
+global/decimal-display corrections, aids and limits are in [G4_REPORT](content/G4_REPORT.md),
+[G4_CHECKS](content/G4_CHECKS.json), [G4_SOURCES](content/G4_SOURCES.json).
+No natural first-run/offer-frequency/retention, full app/WebGL/stress/soak/device
+claim; external checks remain waived/unverified. Owned runtime resources exited.
+
+G1–G4 are locally complete. G4 prompt retired; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
+records delivery and owner-selected V0.4.4 work. The settled sprite roster/roles
+are reconciled in SPRITE_PLAN_V0.4.4; remaining canvas/frame selections and all
+new generation are unstarted. Five accepted sheets/current shard reuse remain.

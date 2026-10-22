@@ -1,6 +1,6 @@
 # Readable cleanup gameplay — four-phase roadmap
 
-Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6/G1 verified locally; G2 complete with three local keeps. G3 locally complete; G4 ready/unstarted.**
+Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6/G1 verified locally; G2 complete with three local keeps. G3/G4 locally complete; publication and new sprite work unstarted.**
 The owner requests the ranked survivor-game ideas in a few phases, consideration
 of Australian rubbish data as enemy candidates, and rebalancing existing enemies
 where required. Implementation evidence and limits are in [G1_REPORT](content/G1_REPORT.md).
@@ -20,7 +20,8 @@ now authorizes publishing this claim to main. G1's owning implementation plan is
 this roadmap; its delivery branch is `codex/readable-gameplay-g1`, based on merged
 main containing the claim. Q6 keeps its checklist/ownership in the V0.4.3 plan
 and is implemented as a separate prerequisite commit on that follow-on branch.
-G2–G4 milestone/branch placement remains TBC. Narrow exact ownership before
+G2/G3/G4 use `codex/readable-gameplay-g2`, `codex/readable-gameplay-g3` and
+`codex/readable-gameplay-g4`; their local phase reports own verification. Narrow exact ownership before
 runtime edits and preserve one verified commit per phase. The
 [G1 implementation prompt](PHASE_G1_PROMPT.md) is retired after its durable result.
 
@@ -255,16 +256,16 @@ Prerequisite: G3. Proposed ownership: existing results/Field Guide/unlock select
 theme copy/unlock definitions and affected tests; persistence only if a new field
 is actually required and SAVE_DATA migrations are included in the same phase.
 
-- [ ] Make existing results explain tool contributions, pressure chosen and the
+- [x] Make existing results explain tool contributions, pressure chosen and the
   recorded damage/death source where available. Offer a specific attainable next
   experiment without asserting an unrecorded cause of failure.
-- [ ] Use existing capability unlocks to encourage different approaches. Avoid
+- [x] Use existing capability unlocks to encourage different approaches. Avoid
   permanent stat grinding as a prerequisite for a satisfying first run; no large
   character roster, new economy, daily mode or restoration system is required.
-- [ ] Extend the existing Field Guide rather than create another encyclopedia.
+- [x] Extend the existing Field Guide rather than create another encyclopedia.
   Keep any discovery counts/optional facts bounded and opt-in. If saved discovery
   is selected, version/validate/migrate it and test portable saves before release.
-- [ ] When showing the Australian rankings, retain the two measures, period,
+- [x] When showing the Australian rankings, retain the two measures, period,
   denominator, source and review date. Separate game danger from environmental
   persistence/harm and from local disposal advice. No quiz or reading gate.
 
@@ -272,6 +273,13 @@ Gate: result/unlock/guide/content units and common software checks. Add exact-on
 terminal/reload/import/export/unknown-ID fixtures and bounded serial UI checks only
 when persistence or its UI changes. Compare baseline and new unlock builds; no
 old save may silently map Microplastics onto another material.
+
+Selected treatment: reuse the two capability unlocks, current profile progress
+and a transient per-weapon actual damage partition. No saved discovery or Australian
+ranking surface was selected; the conditional sourcing/migration gates introduce
+no new factual or durable surface. See [implementation record](MASTER_BUILD_PLAN.md#readable-gameplay-g4)
+and [report](content/G4_REPORT.md). Existing unlock/acquisition/evolution definitions
+are unchanged; all120 baseline/C3 build cases remain exactly G3-equivalent.
 
 ## Short verification recipes for implementation
 
@@ -402,3 +410,23 @@ schedule/roster fixture failures and actual aided/model limits are recorded in
 and new sprites remain unstarted. Broad browser/stress/soak checks deferred;
 external browser/OS/older physical GPU evidence waived/unverified. Local phase
 commit only, no new CI/push/PR/main merge. Earlier open-G3 entries are historical.
+
+## G4 complete locally — 2026-10-22
+
+Owner requests G4 implementation. `codex/readable-gameplay-g4` starts at verified
+G3 `d8ae891`. Results now default to actual tool contributions, accepted optional
+pressure and one attainable next experiment, with the existing ledger/tally in
+Details. Death clocks use elapsed time, including overtime. The shared optional
+guide adds ten paged enemies and current progress toward the existing two unlocks.
+Both themes use authored copy; no new progression, saved fields, tuning or art.
+
+Final **703 unit tests/74 files**, **283 focused tests/25 files**, types/lint/build
+and whitespace pass. All **five** bounded serial Chromium cases pass together in
+4.3s, one worker, zero retries; screenshots inspected. All120 ambient balance
+cases exactly match G3. [G4_REPORT](content/G4_REPORT.md) records actual sources,
+input-fixture corrections and limits. G1–G4 are locally complete, with no new
+remote CI/push/PR/main merge claim. Broad app/stress/soak and physical/native
+checks remain deferred; previously waived external evidence remains unverified.
+[Next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers delivery/owner-selected
+sprite planning. V0.4.4 roster reconciliation is documented; generation is unstarted.
+Earlier unstarted-G4 entries above are historical checkpoints.

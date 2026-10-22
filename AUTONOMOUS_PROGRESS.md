@@ -11,9 +11,10 @@ c200b21. On `codex/readable-gameplay-g1`, Q6 is verified and committed44585dd;
 G1 now passes its own bounded local gate. See [G1 report](build/content/G1_REPORT.md)
 for the two Glass tuning changes, model corrections,187units/21files, serial
 contact check and scenario evidence. G2 is now locally complete with all three candidates kept (G2Ab4d61ae, G2B7ce03c5,
-G2C5b50d7b). G3 is now locally complete on `codex/readable-gameplay-g3`, with
-[its report](build/content/G3_REPORT.md). G4 is ready/unstarted under the reviewed
-[handoff](build/PHASE_G4_PROMPT.md); sprites remain unstarted. Broad
+G2C5b50d7b). G3 is locally complete at `d8ae891`. G4 is now locally complete on
+`codex/readable-gameplay-g4`; [G4 report](build/content/G4_REPORT.md) records the
+verified review/guide slice. The current [next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md)
+covers delivery and owner-selected sprite planning; generation remains unstarted. Broad
 regression/stress/soak/native/device checks are deferred; existing external checks
 remain temporarily waived/unverified. This session creates local phase commits;
 no push/PR/merge is authorized by the older planning publication. Older session
@@ -1730,3 +1731,23 @@ schedule/roster fixture failures and actual aided/model limits are recorded in
 and new sprites remain unstarted. Broad browser/stress/soak checks deferred;
 external browser/OS/older physical GPU evidence waived/unverified. Local phase
 commit only, no new CI/push/PR/main merge. Earlier open-G3 entries are historical.
+
+## G4 complete locally — 2026-10-22
+
+Owner requests G4 implementation. `codex/readable-gameplay-g4` starts at verified
+G3 `d8ae891`. Results now default to actual tool contributions, accepted optional
+pressure and one attainable next experiment, with the existing ledger/tally in
+Details. Death clocks use elapsed time, including overtime. The shared optional
+guide adds ten paged enemies and current progress toward the existing two unlocks.
+Both themes use authored copy; no new progression, saved fields, tuning or art.
+
+Final **703 unit tests/74 files**, **283 focused tests/25 files**, types/lint/build
+and whitespace pass. All **five** bounded serial Chromium cases pass together in
+4.3s, one worker, zero retries; screenshots inspected. All120 ambient balance
+cases exactly match G3. [G4_REPORT](build/content/G4_REPORT.md) records actual sources,
+input-fixture corrections and limits. G1–G4 are locally complete, with no new
+remote CI/push/PR/main merge claim. Broad app/stress/soak and physical/native
+checks remain deferred; previously waived external evidence remains unverified.
+[Next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers delivery/owner-selected
+sprite planning. V0.4.4 roster reconciliation is documented; generation is unstarted.
+Earlier unstarted-G4 entries above are historical checkpoints.

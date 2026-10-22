@@ -166,3 +166,15 @@ unknown-ID portable round trips still pass in the affected persistence suite.
 motion; no field/schema/profile/migration/import/export/unlock/discovery change.
 Existing IDs and unknown-ID round trips retain their meanings. Final686unit suite
 includes current persistence compatibility; no saved discovery system is implied.
+
+## G4 compatibility — 2026-10-22
+
+`RunStatistics.damageByWeapon` is transient run-local actual direct/splash damage.
+Session/profile folding still selects existing aggregate fields explicitly; no
+per-tool map enters schema2, exports, import previews or backups. No stable ID,
+unlock rule, setting, adapter, migration or discovery field changes. Results use
+the already-folded current profile for advice, and redraw/tab/resize/guide reads
+never fold/grant/write. Reset clears the map. Existing persistence/portable-save/
+replacement/unknown-ID units pass; browser fixtures demonstrate one terminal fold,
+read-only redraws, exact memory-adapter reload and restart. No portable save UI
+changed, so a new import/export browser campaign was not needed.

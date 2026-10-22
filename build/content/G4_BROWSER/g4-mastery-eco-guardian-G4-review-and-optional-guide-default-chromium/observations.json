@@ -1,0 +1,1201 @@
+{
+  "themeKey": "eco-guardian",
+  "quality": "default",
+  "browser": "151.0.7922.34",
+  "initial": {
+    "writesBefore": 1,
+    "capabilities": {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Cleanup Vacuum · 0/1 finished runs\nPulse a short cone, starting at three targets. Owned reach upgrades add targets; each selected hit splashes nearby targets.",
+        "Cleanup Streak · 0/25 lifetime kills\nRecent clearances increase your cycling speed.",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 1,
+      "listeners": 1
+    },
+    "firstEnemy": {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Plastic Bottle\n\nThe most common thing on the ground, and it never truly goes away.\n\nGame values, not environmental measurements.\nHealth: 19 · Move speed: 104 · Contact harm: 8.5\nCan fragment into: Microplastics ×1",
+        "Previous",
+        "Next",
+        "1 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 1,
+      "listeners": 1
+    },
+    "enemyCount": 10
+  },
+  "paged": {
+    "texts": [
+      "The site is paused",
+      "STATS",
+      "EQUIPMENT REQUISITIONED",
+      "POLLUTION",
+      "FIELD GUIDE",
+      "SETTINGS",
+      "SITE EVENTS",
+      "ENEMIES",
+      "EQUIPMENT",
+      "CAPABILITIES",
+      "LIFETIME",
+      "Microplastics\n\nSmall plastic fragments spread easily and are difficult to recover once they enter the environment.\n\nGame values, not environmental measurements.\nHealth: 8.55 · Move speed: 190 · Contact harm: 6.8\n",
+      "Previous",
+      "Next",
+      "2 / 10 · PgUp / PgDn",
+      "Tab / arrows to switch · Escape to resume"
+    ],
+    "page": 1,
+    "writes": 1,
+    "bodyBottom": 462.4375,
+    "navigationTop": 660,
+    "listeners": 1,
+    "scroll": 0
+  },
+  "allPages": [
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Plastic Bottle\n\nThe most common thing on the ground, and it never truly goes away.\n\nGame values, not environmental measurements.\nHealth: 19 · Move speed: 104 · Contact harm: 8.5\nCan fragment into: Microplastics ×1",
+        "Previous",
+        "Next",
+        "1 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Microplastics\n\nSmall plastic fragments spread easily and are difficult to recover once they enter the environment.\n\nGame values, not environmental measurements.\nHealth: 8.55 · Move speed: 190 · Contact harm: 6.8\n",
+        "Previous",
+        "Next",
+        "2 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 1,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Glass Bottle\n\nSlow, inert, and effectively permanent. It outlasts everything here.\n\nGame values, not environmental measurements.\nHealth: 91.2 · Move speed: 70 · Contact harm: 7.65\nCan fragment into: Glass Shards ×1",
+        "Previous",
+        "Next",
+        "3 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 2,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Bagged Waste\n\nA sealed bundle that spills its mixed contents the moment it opens.\n\nGame values, not environmental measurements.\nHealth: 22.8 · Move speed: 80 · Contact harm: 10.2\nReleases on defeat: Plastic Bottle ×2\nReleases on defeat: Microplastics ×2\nReleases on defeat: Glass Bottle ×1",
+        "Previous",
+        "Next",
+        "4 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 3,
+      "writes": 1,
+      "bodyBottom": 537.15625,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Glass Shards\n\nBroken glass stays where it falls and remains hazardous until it is cleared.\n\nGame values, not environmental measurements.\nHealth: 17.1 · Move speed: 0 · Contact harm: 5.95\n",
+        "Previous",
+        "Next",
+        "5 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 4,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Compacted Waste\n\nA unique mid-run threat. Step clear of its marked circle before the pulse.\n\nGame values, not environmental measurements.\nHealth: 228 · Move speed: 60 · Contact harm: 10.2\n",
+        "Previous",
+        "Next",
+        "6 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 5,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Dumping Colossus\n\nThe final encounter. Escape its marked pulse, then defeat it to choose how the run finishes.\n\nGame values, not environmental measurements.\nHealth: 1140 · Move speed: 55 · Contact harm: 13.6\n",
+        "Previous",
+        "Next",
+        "7 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 6,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Cigarette Butts\n\nSlow groups of weak litter. Clear a lane or catch several in one tool action.\n\nGame values, not environmental measurements.\nHealth: 5.7 · Move speed: 64 · Contact harm: 2.55\n",
+        "Previous",
+        "Next",
+        "8 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 7,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Packets / Wrappers\n\nWatch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.\n\nGame values, not environmental measurements.\nHealth: 11.4 · Move speed: 80 · Contact harm: 4.25\n",
+        "Previous",
+        "Next",
+        "9 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 8,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The site is paused",
+        "STATS",
+        "EQUIPMENT REQUISITIONED",
+        "POLLUTION",
+        "FIELD GUIDE",
+        "SETTINGS",
+        "SITE EVENTS",
+        "ENEMIES",
+        "EQUIPMENT",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Aluminium Can\n\nWatch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.\n\nGame values, not environmental measurements.\nHealth: 17.1 · Move speed: 90 · Contact harm: 5.95\n",
+        "Previous",
+        "Next",
+        "10 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 9,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    }
+  ],
+  "canPage": {
+    "texts": [
+      "The site is paused",
+      "STATS",
+      "EQUIPMENT REQUISITIONED",
+      "POLLUTION",
+      "FIELD GUIDE",
+      "SETTINGS",
+      "SITE EVENTS",
+      "ENEMIES",
+      "EQUIPMENT",
+      "CAPABILITIES",
+      "LIFETIME",
+      "Aluminium Can\n\nWatch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.\n\nGame values, not environmental measurements.\nHealth: 17.1 · Move speed: 90 · Contact harm: 5.95\n",
+      "Previous",
+      "Next",
+      "10 / 10 · PgUp / PgDn",
+      "Tab / arrows to switch · Escape to resume"
+    ],
+    "page": 9,
+    "writes": 1,
+    "bodyBottom": 487.34375,
+    "navigationTop": 660,
+    "listeners": 1,
+    "scroll": 0
+  },
+  "result": {
+    "hits": [
+      {
+        "health": 5.699999999999999,
+        "defeated": true
+      }
+    ],
+    "beforeRuns": 0,
+    "first": {
+      "texts": [
+        "The Site Is Overwhelmed",
+        "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+        "Overwhelmed by Aluminium Can at 1:34",
+        "Run review · Tab",
+        "Details · Tab",
+        "Tool contributions\nCleanup Grabber: 5.7",
+        "Pressure chosen\nNo optional site or curse accepted.",
+        "Next experiment\nLook for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+        "New Shift · R / Enter"
+      ],
+      "page": "review",
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "eco_guardian",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "default",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 1,
+          "totalDamage": 5.699999999999999,
+          "bestLevel": 1,
+          "bestKills": 1,
+          "bestDamage": 5.699999999999999,
+          "upgrades": {}
+        },
+        "completedRuns": 0,
+        "deaths": 1,
+        "bestDurationMs": 94000,
+        "createdAt": "2026-10-22T00:23:48.287Z",
+        "updatedAt": "2026-10-22T00:23:48.503Z"
+      },
+      "writes": 3,
+      "statistics": {
+        "damageByWeapon": {
+          "weapon.starter": 5.699999999999999
+        },
+        "kills": 1,
+        "liveEnemies": 0,
+        "peakEnemiesAlive": 1,
+        "highestChaos": 1,
+        "highestCritChance": 0.05,
+        "highestCritTier": 0,
+        "longestPierceChain": 0,
+        "largestKillChain": 1,
+        "recentKillTimesMs": [
+          0
+        ],
+        "totalDamage": 5.699999999999999,
+        "damageBreakdown": {
+          "direct": 5.699999999999999,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "splash": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        },
+        "upgradeCounts": {}
+      },
+      "review": {
+        "tools": [
+          "Cleanup Grabber: 5.7"
+        ],
+        "choices": [
+          "No optional site or curse accepted."
+        ],
+        "next": "Look for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+        "bossDefeated": false
+      },
+      "tabPoints": [
+        {
+          "page": "review",
+          "x": 535,
+          "y": 186.3271484375
+        },
+        {
+          "page": "details",
+          "x": 745,
+          "y": 186.3271484375
+        }
+      ],
+      "boxes": [
+        {
+          "text": "The Site Is Overwhelmed",
+          "left": 578,
+          "top": 116.80859375,
+          "right": 1022,
+          "bottom": 167.19140625
+        },
+        {
+          "text": "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+          "left": 647,
+          "top": 170,
+          "right": 953,
+          "bottom": 220.05078125
+        },
+        {
+          "text": "Overwhelmed by Aluminium Can at 1:34",
+          "left": 631,
+          "top": 222.05078125,
+          "right": 969,
+          "bottom": 254.3271484375
+        },
+        {
+          "text": "Run review · Tab",
+          "left": 613,
+          "top": 260.1669921875,
+          "right": 777,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Details · Tab",
+          "left": 843.5,
+          "top": 260.1669921875,
+          "right": 966.5,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Tool contributions\nCleanup Grabber: 5.7",
+          "left": 410,
+          "top": 314.3271484375,
+          "right": 569,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Pressure chosen\nNo optional site or curse accepted.",
+          "left": 810,
+          "top": 314.3271484375,
+          "right": 1061,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Next experiment\nLook for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+          "left": 410,
+          "top": 585,
+          "right": 915,
+          "bottom": 633.57421875
+        },
+        {
+          "text": "New Shift · R / Enter",
+          "left": 690.5,
+          "top": 724.7109375,
+          "right": 909.5,
+          "bottom": 759.2890625
+        }
+      ]
+    },
+    "repeated": {
+      "texts": [
+        "The Site Is Overwhelmed",
+        "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+        "Overwhelmed by Aluminium Can at 1:34",
+        "Run review · Tab",
+        "Details · Tab",
+        "Tool contributions\nCleanup Grabber: 5.7",
+        "Pressure chosen\nNo optional site or curse accepted.",
+        "Next experiment\nLook for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+        "New Shift · R / Enter"
+      ],
+      "page": "review",
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "eco_guardian",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "default",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 1,
+          "totalDamage": 5.699999999999999,
+          "bestLevel": 1,
+          "bestKills": 1,
+          "bestDamage": 5.699999999999999,
+          "upgrades": {}
+        },
+        "completedRuns": 0,
+        "deaths": 1,
+        "bestDurationMs": 94000,
+        "createdAt": "2026-10-22T00:23:48.287Z",
+        "updatedAt": "2026-10-22T00:23:48.503Z"
+      },
+      "writes": 3,
+      "statistics": {
+        "damageByWeapon": {
+          "weapon.starter": 5.699999999999999
+        },
+        "kills": 1,
+        "liveEnemies": 0,
+        "peakEnemiesAlive": 1,
+        "highestChaos": 1,
+        "highestCritChance": 0.05,
+        "highestCritTier": 0,
+        "longestPierceChain": 0,
+        "largestKillChain": 1,
+        "recentKillTimesMs": [
+          0
+        ],
+        "totalDamage": 5.699999999999999,
+        "damageBreakdown": {
+          "direct": 5.699999999999999,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "splash": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        },
+        "upgradeCounts": {}
+      },
+      "review": {
+        "tools": [
+          "Cleanup Grabber: 5.7"
+        ],
+        "choices": [
+          "No optional site or curse accepted."
+        ],
+        "next": "Look for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+        "bossDefeated": false
+      },
+      "tabPoints": [
+        {
+          "page": "review",
+          "x": 535,
+          "y": 186.3271484375
+        },
+        {
+          "page": "details",
+          "x": 745,
+          "y": 186.3271484375
+        }
+      ],
+      "boxes": [
+        {
+          "text": "The Site Is Overwhelmed",
+          "left": 578,
+          "top": 116.80859375,
+          "right": 1022,
+          "bottom": 167.19140625
+        },
+        {
+          "text": "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+          "left": 647,
+          "top": 170,
+          "right": 953,
+          "bottom": 220.05078125
+        },
+        {
+          "text": "Overwhelmed by Aluminium Can at 1:34",
+          "left": 631,
+          "top": 222.05078125,
+          "right": 969,
+          "bottom": 254.3271484375
+        },
+        {
+          "text": "Run review · Tab",
+          "left": 613,
+          "top": 260.1669921875,
+          "right": 777,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Details · Tab",
+          "left": 843.5,
+          "top": 260.1669921875,
+          "right": 966.5,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Tool contributions\nCleanup Grabber: 5.7",
+          "left": 410,
+          "top": 314.3271484375,
+          "right": 569,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Pressure chosen\nNo optional site or curse accepted.",
+          "left": 810,
+          "top": 314.3271484375,
+          "right": 1061,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Next experiment\nLook for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+          "left": 410,
+          "top": 585,
+          "right": 915,
+          "bottom": 633.57421875
+        },
+        {
+          "text": "New Shift · R / Enter",
+          "left": 690.5,
+          "top": 724.7109375,
+          "right": 909.5,
+          "bottom": 759.2890625
+        }
+      ]
+    },
+    "keyboardListenersAfterGuide": 0
+  },
+  "details": {
+    "texts": [
+      "The Site Is Overwhelmed",
+      "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+      "Overwhelmed by Aluminium Can at 1:34",
+      "Cleared: 1\nPeak Waste On Site: 1\nPeak Pollution: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pass-Through: 0\nLargest Clearance Chain: 1",
+      "Processing Ledger\nTotal Processed: 5.7\nDirect: 5.7\nCritical Bonus: 0\nSorting Momentum: 0\nHit splash: 0\nCompaction: 0\nCascade: 0\nOther / Remainder: 0",
+      "Equipment Requisitioned\n—",
+      "Run review · Tab",
+      "Details · Tab",
+      "New Shift · R / Enter"
+    ],
+    "page": "details",
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "eco_guardian",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 94000,
+      "createdAt": "2026-10-22T00:23:48.287Z",
+      "updatedAt": "2026-10-22T00:23:48.503Z"
+    },
+    "writes": 3,
+    "statistics": {
+      "damageByWeapon": {
+        "weapon.starter": 5.699999999999999
+      },
+      "kills": 1,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 1,
+      "recentKillTimesMs": [
+        0
+      ],
+      "totalDamage": 5.699999999999999,
+      "damageBreakdown": {
+        "direct": 5.699999999999999,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "review": {
+      "tools": [
+        "Cleanup Grabber: 5.7"
+      ],
+      "choices": [
+        "No optional site or curse accepted."
+      ],
+      "next": "Look for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+      "bossDefeated": false
+    },
+    "tabPoints": [
+      {
+        "page": "review",
+        "x": 535,
+        "y": 186.3271484375
+      },
+      {
+        "page": "details",
+        "x": 745,
+        "y": 186.3271484375
+      }
+    ],
+    "boxes": [
+      {
+        "text": "The Site Is Overwhelmed",
+        "left": 578,
+        "top": 116.80859375,
+        "right": 1022,
+        "bottom": 167.19140625
+      },
+      {
+        "text": "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+        "left": 647,
+        "top": 170,
+        "right": 953,
+        "bottom": 220.05078125
+      },
+      {
+        "text": "Overwhelmed by Aluminium Can at 1:34",
+        "left": 631,
+        "top": 222.05078125,
+        "right": 969,
+        "bottom": 254.3271484375
+      },
+      {
+        "text": "Cleared: 1\nPeak Waste On Site: 1\nPeak Pollution: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pass-Through: 0\nLargest Clearance Chain: 1",
+        "left": 375,
+        "top": 314.3271484375,
+        "right": 581,
+        "bottom": 481.6708984375
+      },
+      {
+        "text": "Processing Ledger\nTotal Processed: 5.7\nDirect: 5.7\nCritical Bonus: 0\nSorting Momentum: 0\nHit splash: 0\nCompaction: 0\nCascade: 0\nOther / Remainder: 0",
+        "left": 665,
+        "top": 314.3271484375,
+        "right": 832,
+        "bottom": 527.4833984375
+      },
+      {
+        "text": "Equipment Requisitioned\n—",
+        "left": 955,
+        "top": 314.3271484375,
+        "right": 1145,
+        "bottom": 367.1396484375
+      },
+      {
+        "text": "Run review · Tab",
+        "left": 613,
+        "top": 260.1669921875,
+        "right": 777,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "Details · Tab",
+        "left": 843.5,
+        "top": 260.1669921875,
+        "right": 966.5,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "New Shift · R / Enter",
+        "left": 690.5,
+        "top": 724.7109375,
+        "right": 909.5,
+        "bottom": 759.2890625
+      }
+    ]
+  },
+  "resized": {
+    "texts": [
+      "The Site Is Overwhelmed",
+      "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+      "Overwhelmed by Aluminium Can at 1:34",
+      "Cleared: 1\nPeak Waste On Site: 1\nPeak Pollution: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pass-Through: 0\nLargest Clearance Chain: 1",
+      "Processing Ledger\nTotal Processed: 5.7\nDirect: 5.7\nCritical Bonus: 0\nSorting Momentum: 0\nHit splash: 0\nCompaction: 0\nCascade: 0\nOther / Remainder: 0",
+      "Equipment Requisitioned\n—",
+      "Run review · Tab",
+      "Details · Tab",
+      "New Shift · R / Enter"
+    ],
+    "page": "details",
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "eco_guardian",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 94000,
+      "createdAt": "2026-10-22T00:23:48.287Z",
+      "updatedAt": "2026-10-22T00:23:48.503Z"
+    },
+    "writes": 3,
+    "statistics": {
+      "damageByWeapon": {
+        "weapon.starter": 5.699999999999999
+      },
+      "kills": 1,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 1,
+      "recentKillTimesMs": [
+        0
+      ],
+      "totalDamage": 5.699999999999999,
+      "damageBreakdown": {
+        "direct": 5.699999999999999,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "review": {
+      "tools": [
+        "Cleanup Grabber: 5.7"
+      ],
+      "choices": [
+        "No optional site or curse accepted."
+      ],
+      "next": "Look for the Cleanup Vacuum equip choice, then try clearing a weak group.",
+      "bossDefeated": false
+    },
+    "tabPoints": [
+      {
+        "page": "review",
+        "x": 535,
+        "y": 186.3271484375
+      },
+      {
+        "page": "details",
+        "x": 745,
+        "y": 186.3271484375
+      }
+    ],
+    "boxes": [
+      {
+        "text": "The Site Is Overwhelmed",
+        "left": 578,
+        "top": 116.80859375,
+        "right": 1022,
+        "bottom": 167.19140625
+      },
+      {
+        "text": "The waste outpaced the response effort.\nUnlocked: Cleanup Vacuum",
+        "left": 647,
+        "top": 170,
+        "right": 953,
+        "bottom": 220.05078125
+      },
+      {
+        "text": "Overwhelmed by Aluminium Can at 1:34",
+        "left": 631,
+        "top": 222.05078125,
+        "right": 969,
+        "bottom": 254.3271484375
+      },
+      {
+        "text": "Cleared: 1\nPeak Waste On Site: 1\nPeak Pollution: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pass-Through: 0\nLargest Clearance Chain: 1",
+        "left": 375,
+        "top": 314.3271484375,
+        "right": 581,
+        "bottom": 481.6708984375
+      },
+      {
+        "text": "Processing Ledger\nTotal Processed: 5.7\nDirect: 5.7\nCritical Bonus: 0\nSorting Momentum: 0\nHit splash: 0\nCompaction: 0\nCascade: 0\nOther / Remainder: 0",
+        "left": 665,
+        "top": 314.3271484375,
+        "right": 832,
+        "bottom": 527.4833984375
+      },
+      {
+        "text": "Equipment Requisitioned\n—",
+        "left": 955,
+        "top": 314.3271484375,
+        "right": 1145,
+        "bottom": 367.1396484375
+      },
+      {
+        "text": "Run review · Tab",
+        "left": 613,
+        "top": 260.1669921875,
+        "right": 777,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "Details · Tab",
+        "left": 843.5,
+        "top": 260.1669921875,
+        "right": 966.5,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "New Shift · R / Enter",
+        "left": 690.5,
+        "top": 724.7109375,
+        "right": 909.5,
+        "bottom": 759.2890625
+      }
+    ]
+  },
+  "reload": {
+    "before": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "eco_guardian",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 94000,
+      "createdAt": "2026-10-22T00:23:48.287Z",
+      "updatedAt": "2026-10-22T00:23:48.503Z"
+    },
+    "after": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "eco_guardian",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 94000,
+      "createdAt": "2026-10-22T00:23:48.287Z",
+      "updatedAt": "2026-10-22T00:23:48.503Z"
+    }
+  },
+  "reset": {
+    "state": {
+      "damageByWeapon": {},
+      "kills": 0,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 0,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 0,
+      "recentKillTimesMs": [],
+      "totalDamage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "eco_guardian",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 94000,
+      "createdAt": "2026-10-22T00:23:48.287Z",
+      "updatedAt": "2026-10-22T00:23:48.503Z"
+    },
+    "pool": [
+      "upgrade.damage",
+      "upgrade.attack_speed",
+      "upgrade.crit_chance",
+      "upgrade.move_speed",
+      "upgrade.health",
+      "upgrade.pickup_radius",
+      "upgrade.fracture",
+      "upgrade.armour",
+      "upgrade.regeneration",
+      "upgrade.luck",
+      "upgrade.world_surge",
+      "upgrade.world_brittle",
+      "upgrade.accept_frenzy",
+      "upgrade.accept_escalation",
+      "upgrade.equip_secondary",
+      "upgrade.evolve_secondary",
+      "upgrade.weapon_range",
+      "upgrade.weapon_collection_sweep",
+      "upgrade.secondary_range"
+    ]
+  },
+  "errors": []
+}

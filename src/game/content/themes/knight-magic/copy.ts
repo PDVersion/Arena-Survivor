@@ -2,6 +2,34 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { ThemeCopy } from "../../../core/archetypes/contracts";
 
 export const copy = {
+  mastery: {
+    "review": "Battle review",
+    "details": "Details",
+    "tools": "Weapon contributions",
+    "choices": "Pressure chosen",
+    "nextExperiment": "Next experiment",
+    "noDamage": "No committed damage this run.",
+    "otherDamage": "Other effects / unattributed",
+    "noChoices": "No optional shrine or curse accepted.",
+    "capabilities": "Capabilities",
+    "enemies": "Enemies",
+    "health": "Health",
+    "speed": "Move speed",
+    "harm": "Contact harm",
+    "fractures": "Can fragment into",
+    "releases": "Releases on defeat",
+    "gameValues": "Authored game values.",
+    "previous": "Previous",
+    "nextPage": "Next",
+    "tryFirst": "Finish an attempt to make {name} available.",
+    "tryEquip": "Look for the {name} equip choice, then try clearing a weak group.",
+    "tryReady": "Look for the {name} evolution choice; the owned track is ready.",
+    "tryEvolve": "Look for {name}: {picked}/{required} owned picks towards {evolved}.",
+    "tryRisk": "Try one optional shrine, then compare its extra pressure and reward.",
+    "tryRecovery": "Practise leaving a marked attack area, then returning during recovery.",
+    "tryCalm": "Try a run without optional bargains and compare your tool contributions.",
+    "bossDefeated": "Final foe defeated"
+},
   saveManager: {
     "manageSave": "Manage Save",
     "title": "Manage Save",

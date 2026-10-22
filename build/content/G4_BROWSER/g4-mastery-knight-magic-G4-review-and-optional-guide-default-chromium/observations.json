@@ -1,0 +1,1204 @@
+{
+  "themeKey": "knight-magic",
+  "quality": "default",
+  "browser": "151.0.7922.34",
+  "initial": {
+    "writesBefore": 1,
+    "capabilities": {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Runic Fan · 0/1 finished runs\nPulse a short cone, starting at three targets. Owned reach upgrades add targets; each selected hit splashes nearby targets.",
+        "Bloodlust · 0/25 lifetime kills\nRecent kills increase attack speed.",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 1,
+      "listeners": 1
+    },
+    "firstEnemy": {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Grunt\n\nA frail creature dangerous in great numbers.\n\nAuthored game values.\nHealth: 19 · Move speed: 104 · Contact harm: 8.5\nCan fragment into: Runner ×1",
+        "Previous",
+        "Next",
+        "1 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 1,
+      "listeners": 1
+    },
+    "enemyCount": 10
+  },
+  "paged": {
+    "texts": [
+      "The arena is paused",
+      "STATS",
+      "BLESSINGS TAKEN",
+      "CHAOS",
+      "GRIMOIRE",
+      "SETTINGS",
+      "SHRINES",
+      "ENEMIES",
+      "RELICS",
+      "CAPABILITIES",
+      "LIFETIME",
+      "Runner\n\nA swift, fragile hunter that forces constant movement.\n\nAuthored game values.\nHealth: 9.5 · Move speed: 190 · Contact harm: 6.8\n",
+      "Previous",
+      "Next",
+      "2 / 10 · PgUp / PgDn",
+      "Tab / arrows to switch · Escape to resume"
+    ],
+    "page": 1,
+    "writes": 1,
+    "bodyBottom": 462.4375,
+    "navigationTop": 660,
+    "listeners": 1,
+    "scroll": 0
+  },
+  "allPages": [
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Grunt\n\nA frail creature dangerous in great numbers.\n\nAuthored game values.\nHealth: 19 · Move speed: 104 · Contact harm: 8.5\nCan fragment into: Runner ×1",
+        "Previous",
+        "Next",
+        "1 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Runner\n\nA swift, fragile hunter that forces constant movement.\n\nAuthored game values.\nHealth: 9.5 · Move speed: 190 · Contact harm: 6.8\n",
+        "Previous",
+        "Next",
+        "2 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 1,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Tank\n\nA slow, durable obstacle that anchors the horde.\n\nAuthored game values.\nHealth: 76 · Move speed: 70 · Contact harm: 17\nCan fragment into: Runner ×1",
+        "Previous",
+        "Next",
+        "3 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 2,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Broodmother\n\nA swollen creature whose defeat releases a fresh brood.\n\nAuthored game values.\nHealth: 47.5 · Move speed: 80 · Contact harm: 10.2\nReleases on defeat: Runner ×5",
+        "Previous",
+        "Next",
+        "4 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 3,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Rune Shards\n\nBroken sigil fragments linger where they fall until destroyed.\n\nAuthored game values.\nHealth: 17.1 · Move speed: 0 · Contact harm: 5.95\n",
+        "Previous",
+        "Next",
+        "5 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 4,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Runic Sentinel\n\nA unique mid-run threat. Step clear of its marked circle before the pulse.\n\nAuthored game values.\nHealth: 228 · Move speed: 60 · Contact harm: 10.2\n",
+        "Previous",
+        "Next",
+        "6 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 5,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Chaos Warden\n\nThe final encounter. Escape its marked pulse, then defeat it to choose how the run finishes.\n\nAuthored game values.\nHealth: 1140 · Move speed: 55 · Contact harm: 13.6\n",
+        "Previous",
+        "Next",
+        "7 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 6,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Ashling\n\nA slow, weak enemy that approaches in small groups. Clear a lane through them.\n\nAuthored game values.\nHealth: 5.7 · Move speed: 64 · Contact harm: 2.55\n",
+        "Previous",
+        "Next",
+        "8 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 7,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Paper Wisp\n\nWatch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.\n\nAuthored game values.\nHealth: 11.4 · Move speed: 80 · Contact harm: 4.25\n",
+        "Previous",
+        "Next",
+        "9 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 8,
+      "writes": 1,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Barrel Construct\n\nWatch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.\n\nAuthored game values.\nHealth: 17.1 · Move speed: 90 · Contact harm: 5.95\n",
+        "Previous",
+        "Next",
+        "10 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 9,
+      "writes": 1,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    }
+  ],
+  "canPage": {
+    "texts": [
+      "The arena is paused",
+      "STATS",
+      "BLESSINGS TAKEN",
+      "CHAOS",
+      "GRIMOIRE",
+      "SETTINGS",
+      "SHRINES",
+      "ENEMIES",
+      "RELICS",
+      "CAPABILITIES",
+      "LIFETIME",
+      "Barrel Construct\n\nWatch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.\n\nAuthored game values.\nHealth: 17.1 · Move speed: 90 · Contact harm: 5.95\n",
+      "Previous",
+      "Next",
+      "10 / 10 · PgUp / PgDn",
+      "Tab / arrows to switch · Escape to resume"
+    ],
+    "page": 9,
+    "writes": 1,
+    "bodyBottom": 487.34375,
+    "navigationTop": 660,
+    "listeners": 1,
+    "scroll": 0
+  },
+  "result": {
+    "hits": [
+      {
+        "health": 5.699999999999999,
+        "defeated": true
+      }
+    ],
+    "beforeRuns": 0,
+    "first": {
+      "texts": [
+        "The Knight Has Fallen",
+        "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+        "Slain by Barrel Construct at 6:34",
+        "Battle review · Tab",
+        "Details · Tab",
+        "Weapon contributions\nMagic Needle: 5.7",
+        "Pressure chosen\nNo optional shrine or curse accepted.",
+        "Final foe defeated\nNext experiment\nLook for the Runic Fan equip choice, then try clearing a weak group.",
+        "Begin Again · R / Enter"
+      ],
+      "page": "review",
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "knight_magic",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "default",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 1,
+          "totalDamage": 5.699999999999999,
+          "bestLevel": 1,
+          "bestKills": 1,
+          "bestDamage": 5.699999999999999,
+          "upgrades": {}
+        },
+        "completedRuns": 0,
+        "deaths": 1,
+        "bestDurationMs": 394000,
+        "createdAt": "2026-10-22T00:23:49.389Z",
+        "updatedAt": "2026-10-22T00:23:49.501Z"
+      },
+      "writes": 3,
+      "statistics": {
+        "damageByWeapon": {
+          "weapon.starter": 5.699999999999999
+        },
+        "kills": 1,
+        "liveEnemies": 0,
+        "peakEnemiesAlive": 1,
+        "highestChaos": 1,
+        "highestCritChance": 0.05,
+        "highestCritTier": 0,
+        "longestPierceChain": 1,
+        "largestKillChain": 1,
+        "recentKillTimesMs": [
+          0
+        ],
+        "totalDamage": 5.699999999999999,
+        "damageBreakdown": {
+          "direct": 5.699999999999999,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "splash": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        },
+        "upgradeCounts": {}
+      },
+      "review": {
+        "tools": [
+          "Magic Needle: 5.7"
+        ],
+        "choices": [
+          "No optional shrine or curse accepted."
+        ],
+        "next": "Look for the Runic Fan equip choice, then try clearing a weak group.",
+        "bossDefeated": true
+      },
+      "tabPoints": [
+        {
+          "page": "review",
+          "x": 535,
+          "y": 186.3271484375
+        },
+        {
+          "page": "details",
+          "x": 745,
+          "y": 186.3271484375
+        }
+      ],
+      "boxes": [
+        {
+          "text": "The Knight Has Fallen",
+          "left": 601,
+          "top": 116.80859375,
+          "right": 999,
+          "bottom": 167.19140625
+        },
+        {
+          "text": "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+          "left": 629.5,
+          "top": 170,
+          "right": 970.5,
+          "bottom": 220.05078125
+        },
+        {
+          "text": "Slain by Barrel Construct at 6:34",
+          "left": 661.5,
+          "top": 222.05078125,
+          "right": 938.5,
+          "bottom": 254.3271484375
+        },
+        {
+          "text": "Battle review · Tab",
+          "left": 605,
+          "top": 260.1669921875,
+          "right": 785,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Details · Tab",
+          "left": 843.5,
+          "top": 260.1669921875,
+          "right": 966.5,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Weapon contributions\nMagic Needle: 5.7",
+          "left": 410,
+          "top": 314.3271484375,
+          "right": 576,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Pressure chosen\nNo optional shrine or curse accepted.",
+          "left": 810,
+          "top": 314.3271484375,
+          "right": 1081,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Final foe defeated\nNext experiment\nLook for the Runic Fan equip choice, then try clearing a weak group.",
+          "left": 410,
+          "top": 585,
+          "right": 870,
+          "bottom": 653.361328125
+        },
+        {
+          "text": "Begin Again · R / Enter",
+          "left": 678.5,
+          "top": 724.7109375,
+          "right": 921.5,
+          "bottom": 759.2890625
+        }
+      ]
+    },
+    "repeated": {
+      "texts": [
+        "The Knight Has Fallen",
+        "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+        "Slain by Barrel Construct at 6:34",
+        "Battle review · Tab",
+        "Details · Tab",
+        "Weapon contributions\nMagic Needle: 5.7",
+        "Pressure chosen\nNo optional shrine or curse accepted.",
+        "Final foe defeated\nNext experiment\nLook for the Runic Fan equip choice, then try clearing a weak group.",
+        "Begin Again · R / Enter"
+      ],
+      "page": "review",
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "knight_magic",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "default",
+          "detailedUpgradeCards": true,
+          "reducedMotion": false,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 1,
+          "totalDamage": 5.699999999999999,
+          "bestLevel": 1,
+          "bestKills": 1,
+          "bestDamage": 5.699999999999999,
+          "upgrades": {}
+        },
+        "completedRuns": 0,
+        "deaths": 1,
+        "bestDurationMs": 394000,
+        "createdAt": "2026-10-22T00:23:49.389Z",
+        "updatedAt": "2026-10-22T00:23:49.501Z"
+      },
+      "writes": 3,
+      "statistics": {
+        "damageByWeapon": {
+          "weapon.starter": 5.699999999999999
+        },
+        "kills": 1,
+        "liveEnemies": 0,
+        "peakEnemiesAlive": 1,
+        "highestChaos": 1,
+        "highestCritChance": 0.05,
+        "highestCritTier": 0,
+        "longestPierceChain": 1,
+        "largestKillChain": 1,
+        "recentKillTimesMs": [
+          0
+        ],
+        "totalDamage": 5.699999999999999,
+        "damageBreakdown": {
+          "direct": 5.699999999999999,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "splash": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        },
+        "upgradeCounts": {}
+      },
+      "review": {
+        "tools": [
+          "Magic Needle: 5.7"
+        ],
+        "choices": [
+          "No optional shrine or curse accepted."
+        ],
+        "next": "Look for the Runic Fan equip choice, then try clearing a weak group.",
+        "bossDefeated": true
+      },
+      "tabPoints": [
+        {
+          "page": "review",
+          "x": 535,
+          "y": 186.3271484375
+        },
+        {
+          "page": "details",
+          "x": 745,
+          "y": 186.3271484375
+        }
+      ],
+      "boxes": [
+        {
+          "text": "The Knight Has Fallen",
+          "left": 601,
+          "top": 116.80859375,
+          "right": 999,
+          "bottom": 167.19140625
+        },
+        {
+          "text": "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+          "left": 629.5,
+          "top": 170,
+          "right": 970.5,
+          "bottom": 220.05078125
+        },
+        {
+          "text": "Slain by Barrel Construct at 6:34",
+          "left": 661.5,
+          "top": 222.05078125,
+          "right": 938.5,
+          "bottom": 254.3271484375
+        },
+        {
+          "text": "Battle review · Tab",
+          "left": 605,
+          "top": 260.1669921875,
+          "right": 785,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Details · Tab",
+          "left": 843.5,
+          "top": 260.1669921875,
+          "right": 966.5,
+          "bottom": 292.4873046875
+        },
+        {
+          "text": "Weapon contributions\nMagic Needle: 5.7",
+          "left": 410,
+          "top": 314.3271484375,
+          "right": 576,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Pressure chosen\nNo optional shrine or curse accepted.",
+          "left": 810,
+          "top": 314.3271484375,
+          "right": 1081,
+          "bottom": 365.1396484375
+        },
+        {
+          "text": "Final foe defeated\nNext experiment\nLook for the Runic Fan equip choice, then try clearing a weak group.",
+          "left": 410,
+          "top": 585,
+          "right": 870,
+          "bottom": 653.361328125
+        },
+        {
+          "text": "Begin Again · R / Enter",
+          "left": 678.5,
+          "top": 724.7109375,
+          "right": 921.5,
+          "bottom": 759.2890625
+        }
+      ]
+    },
+    "keyboardListenersAfterGuide": 0
+  },
+  "details": {
+    "texts": [
+      "The Knight Has Fallen",
+      "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+      "Slain by Barrel Construct at 6:34",
+      "Foes Vanquished: 1\nPeak Foes: 1\nHighest Chaos: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 1",
+      "Damage Ledger\nTotal Damage: 5.7\nDirect: 5.7\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+      "Blessings Taken\n—",
+      "Battle review · Tab",
+      "Details · Tab",
+      "Begin Again · R / Enter"
+    ],
+    "page": "details",
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 394000,
+      "createdAt": "2026-10-22T00:23:49.389Z",
+      "updatedAt": "2026-10-22T00:23:49.501Z"
+    },
+    "writes": 3,
+    "statistics": {
+      "damageByWeapon": {
+        "weapon.starter": 5.699999999999999
+      },
+      "kills": 1,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 1,
+      "largestKillChain": 1,
+      "recentKillTimesMs": [
+        0
+      ],
+      "totalDamage": 5.699999999999999,
+      "damageBreakdown": {
+        "direct": 5.699999999999999,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "review": {
+      "tools": [
+        "Magic Needle: 5.7"
+      ],
+      "choices": [
+        "No optional shrine or curse accepted."
+      ],
+      "next": "Look for the Runic Fan equip choice, then try clearing a weak group.",
+      "bossDefeated": true
+    },
+    "tabPoints": [
+      {
+        "page": "review",
+        "x": 535,
+        "y": 186.3271484375
+      },
+      {
+        "page": "details",
+        "x": 745,
+        "y": 186.3271484375
+      }
+    ],
+    "boxes": [
+      {
+        "text": "The Knight Has Fallen",
+        "left": 601,
+        "top": 116.80859375,
+        "right": 999,
+        "bottom": 167.19140625
+      },
+      {
+        "text": "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+        "left": 629.5,
+        "top": 170,
+        "right": 970.5,
+        "bottom": 220.05078125
+      },
+      {
+        "text": "Slain by Barrel Construct at 6:34",
+        "left": 661.5,
+        "top": 222.05078125,
+        "right": 938.5,
+        "bottom": 254.3271484375
+      },
+      {
+        "text": "Foes Vanquished: 1\nPeak Foes: 1\nHighest Chaos: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 1",
+        "left": 375,
+        "top": 314.3271484375,
+        "right": 581,
+        "bottom": 481.6708984375
+      },
+      {
+        "text": "Damage Ledger\nTotal Damage: 5.7\nDirect: 5.7\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+        "left": 665,
+        "top": 314.3271484375,
+        "right": 838,
+        "bottom": 527.4833984375
+      },
+      {
+        "text": "Blessings Taken\n—",
+        "left": 955,
+        "top": 314.3271484375,
+        "right": 1077,
+        "bottom": 367.1396484375
+      },
+      {
+        "text": "Battle review · Tab",
+        "left": 605,
+        "top": 260.1669921875,
+        "right": 785,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "Details · Tab",
+        "left": 843.5,
+        "top": 260.1669921875,
+        "right": 966.5,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "Begin Again · R / Enter",
+        "left": 678.5,
+        "top": 724.7109375,
+        "right": 921.5,
+        "bottom": 759.2890625
+      }
+    ]
+  },
+  "resized": {
+    "texts": [
+      "The Knight Has Fallen",
+      "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+      "Slain by Barrel Construct at 6:34",
+      "Foes Vanquished: 1\nPeak Foes: 1\nHighest Chaos: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 1",
+      "Damage Ledger\nTotal Damage: 5.7\nDirect: 5.7\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+      "Blessings Taken\n—",
+      "Battle review · Tab",
+      "Details · Tab",
+      "Begin Again · R / Enter"
+    ],
+    "page": "details",
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 394000,
+      "createdAt": "2026-10-22T00:23:49.389Z",
+      "updatedAt": "2026-10-22T00:23:49.501Z"
+    },
+    "writes": 3,
+    "statistics": {
+      "damageByWeapon": {
+        "weapon.starter": 5.699999999999999
+      },
+      "kills": 1,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 1,
+      "largestKillChain": 1,
+      "recentKillTimesMs": [
+        0
+      ],
+      "totalDamage": 5.699999999999999,
+      "damageBreakdown": {
+        "direct": 5.699999999999999,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "review": {
+      "tools": [
+        "Magic Needle: 5.7"
+      ],
+      "choices": [
+        "No optional shrine or curse accepted."
+      ],
+      "next": "Look for the Runic Fan equip choice, then try clearing a weak group.",
+      "bossDefeated": true
+    },
+    "tabPoints": [
+      {
+        "page": "review",
+        "x": 417.96875,
+        "y": 213.56808471679688
+      },
+      {
+        "page": "details",
+        "x": 582.03125,
+        "y": 213.56808471679688
+      }
+    ],
+    "boxes": [
+      {
+        "text": "The Knight Has Fallen",
+        "left": 601,
+        "top": 116.80859375,
+        "right": 999,
+        "bottom": 167.19140625
+      },
+      {
+        "text": "The Ember Court claims another challenger.\nUnlocked: Runic Fan",
+        "left": 629.5,
+        "top": 170,
+        "right": 970.5,
+        "bottom": 220.05078125
+      },
+      {
+        "text": "Slain by Barrel Construct at 6:34",
+        "left": 661.5,
+        "top": 222.05078125,
+        "right": 938.5,
+        "bottom": 254.3271484375
+      },
+      {
+        "text": "Foes Vanquished: 1\nPeak Foes: 1\nHighest Chaos: 1×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 1",
+        "left": 375,
+        "top": 314.3271484375,
+        "right": 581,
+        "bottom": 481.6708984375
+      },
+      {
+        "text": "Damage Ledger\nTotal Damage: 5.7\nDirect: 5.7\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+        "left": 665,
+        "top": 314.3271484375,
+        "right": 838,
+        "bottom": 527.4833984375
+      },
+      {
+        "text": "Blessings Taken\n—",
+        "left": 955,
+        "top": 314.3271484375,
+        "right": 1077,
+        "bottom": 367.1396484375
+      },
+      {
+        "text": "Battle review · Tab",
+        "left": 605,
+        "top": 260.1669921875,
+        "right": 785,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "Details · Tab",
+        "left": 843.5,
+        "top": 260.1669921875,
+        "right": 966.5,
+        "bottom": 292.4873046875
+      },
+      {
+        "text": "Begin Again · R / Enter",
+        "left": 678.5,
+        "top": 724.7109375,
+        "right": 921.5,
+        "bottom": 759.2890625
+      }
+    ]
+  },
+  "reload": {
+    "before": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 394000,
+      "createdAt": "2026-10-22T00:23:49.389Z",
+      "updatedAt": "2026-10-22T00:23:49.501Z"
+    },
+    "after": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 394000,
+      "createdAt": "2026-10-22T00:23:49.389Z",
+      "updatedAt": "2026-10-22T00:23:49.501Z"
+    }
+  },
+  "reset": {
+    "state": {
+      "damageByWeapon": {},
+      "kills": 0,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 0,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 0,
+      "recentKillTimesMs": [],
+      "totalDamage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 1,
+        "totalDamage": 5.699999999999999,
+        "bestLevel": 1,
+        "bestKills": 1,
+        "bestDamage": 5.699999999999999,
+        "upgrades": {}
+      },
+      "completedRuns": 0,
+      "deaths": 1,
+      "bestDurationMs": 394000,
+      "createdAt": "2026-10-22T00:23:49.389Z",
+      "updatedAt": "2026-10-22T00:23:49.501Z"
+    },
+    "pool": [
+      "upgrade.damage",
+      "upgrade.attack_speed",
+      "upgrade.crit_chance",
+      "upgrade.pierce",
+      "upgrade.projectile_count",
+      "upgrade.move_speed",
+      "upgrade.health",
+      "upgrade.pickup_radius",
+      "upgrade.piercing_momentum",
+      "upgrade.on_kill_explosion",
+      "upgrade.fracture",
+      "upgrade.chain_reaction",
+      "upgrade.armour",
+      "upgrade.regeneration",
+      "upgrade.luck",
+      "upgrade.world_surge",
+      "upgrade.world_brittle",
+      "upgrade.accept_frenzy",
+      "upgrade.accept_escalation",
+      "upgrade.equip_secondary",
+      "upgrade.evolve_secondary",
+      "upgrade.secondary_range"
+    ]
+  },
+  "errors": []
+}
