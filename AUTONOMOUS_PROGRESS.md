@@ -4,21 +4,17 @@ Updated: 2026-10-22 (Australia/Sydney).
 
 ## Objective and current state
 
-Current milestone dates/statuses and published CI evidence are consolidated in
-[build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
-verified through C7 `88f220b`. PR27 merged as9837158; the main planning claim is
-c200b21. On `codex/readable-gameplay-g1`, Q6 is verified and committed44585dd;
-G1 now passes its own bounded local gate. See [G1 report](build/content/G1_REPORT.md)
-for the two Glass tuning changes, model corrections,187units/21files, serial
-contact check and scenario evidence. G2 is now locally complete with all three candidates kept (G2Ab4d61ae, G2B7ce03c5,
-G2C5b50d7b). G3 is locally complete at `d8ae891`. G4 is now locally complete on
-`codex/readable-gameplay-g4`; [G4 report](build/content/G4_REPORT.md) records the
-verified review/guide slice. The current [next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md)
-covers delivery and owner-selected sprite planning; generation remains unstarted. Broad
-regression/stress/soak/native/device checks are deferred; existing external checks
-remain temporarily waived/unverified. This session creates local phase commits;
-no push/PR/merge is authorized by the older planning publication. Older session
-records below preserve their historical evidence and delivery constraints.
+G1–G4 are locally complete through G4 `a10e3eb` on
+`codex/readable-gameplay-g4`, with Q6 separately verified in `44585dd`.
+The [single completed build log](build/MASTER_BUILD_PLAN.md#readable-gameplay)
+now owns all four phase plans, original claims/checklists and evidence links.
+[BUILD_STATUS](build/BUILD_STATUS.md) owns dates/acceptance state; the
+[next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) owns delivery and
+owner-selected sprite planning. No further G1–G4 gameplay gate is open.
+Broad current-app checks remain deferred and existing external checks remain
+waived/unverified. This closure is documentation only, with no publication,
+new remote CI, gameplay/art selection or merge. Historical sessions below retain
+their original checkpoint meanings.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -1751,3 +1747,20 @@ checks remain deferred; previously waived external evidence remains unverified.
 [Next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers delivery/owner-selected
 sprite planning. V0.4.4 roster reconciliation is documented; generation is unstarted.
 Earlier unstarted-G4 entries above are historical checkpoints.
+
+## Four-phase local closure — 2026-10-22
+
+Owner requests wrap-up and a single completed plan log. Confirmed clean branch
+and G4 report-owning commit `a10e3eb` with Git. Consolidated Q6/G1 and G2–G4
+ownership/decisions/checklists into MASTER_BUILD_PLAN; old G2–G4 plan paths are
+compatibility pointers. Roadmap retains priorities/source context, current plans
+and status point to accepted closure. Detailed captures/reports/digests are intact.
+No runtime/tests/assets/packages changed and no browser campaign repeated.
+Next is delivery review when selected, then bounded V0.4.4 art planning; no new
+phase/manifest claim/generation. External acceptance remains waived/unverified.
+
+Closure verification: 482 repository-local Markdown links checked with no new
+broken targets/anchors; 321 retained G4 source/evidence SHA256 hashes match.
+Only 11 Markdown files change; whitespace checks pass. No runtime/build/browser
+suite was rerun for this documentation-only consolidation, and no new gameplay
+or external acceptance is claimed. Existing phase commits remain intact.

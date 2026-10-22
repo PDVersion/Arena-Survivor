@@ -1,7 +1,8 @@
 # Next handoff after G4 — local delivery and sprite selection
 
 Prepared 2026-10-22 after the owner requested G4. G1–G4 scoped local gates pass.
-Current branch: `codex/readable-gameplay-g4`; find its final report-owning commit
+Completed plans are consolidated in [the master build log](MASTER_BUILD_PLAN.md#readable-gameplay).
+Confirmed G4 report-owning commit: **`a10e3eb`**. Current branch: `codex/readable-gameplay-g4`; find its final report-owning commit
 with Git rather than treating parent G3 `d8ae891` as G4. No push/PR/merge or new
 remote CI is implied. G4's report/checks/source digest own current verification.
 

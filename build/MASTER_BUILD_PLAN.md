@@ -32,6 +32,7 @@ consolidation; duplicate plan files are removed rather than maintained in parall
 - [V0.4.3 — C2 same-slot evolution](#v0-4-3-c2)
 - [V0.4.3 — C3 shrines and curses](#v0-4-3-c3)
 - [V0.4.3 — C6 local profile and unlocks](#v0-4-3-c6)
+- [Readable gameplay — completed Q6 and G1–G4](#readable-gameplay)
 
 <a id="v0-1"></a>
 ## V0.1 — First playable
@@ -3286,6 +3287,604 @@ See [repair report](performance/PR27_CI_REPAIR.md) for retained failed attempts,
 exact scope and limits. Full current-head remote CI is pending at this checkpoint;
 no milestone/Q6 or missing external acceptance is marked complete.
 
+<a id="readable-gameplay"></a>
+## Readable gameplay — completed Q6 prerequisite and G1–G4 build log
+
+Consolidated 2026-10-22 at the owner's request. All four scoped local phase
+gates passed; no gameplay phase remains open in this series. This is the single
+completed plan log. Detailed reports, raw captures, screenshots and source digests
+remain separate evidence, not competing implementation plans. Historical claims
+and intermediate “next/unstarted” wording below describe their original checkpoint;
+the final disposition here supersedes them.
+
+The clean checkout was `codex/readable-gameplay-g4` at **`a10e3eb`**, verified with
+Git as the G4 report-owning commit; `d8ae891` is its G3 parent. Existing phase
+commits are preserved. The consolidation changes documentation only and makes no
+new runtime, full-app CI, remote publication or merge claim.
+
+| Slice | Final phase commit | Accepted result | Recorded local gate / evidence |
+| --- | --- | --- | --- |
+| Q6 prerequisite | `44585dd` | Fixed player pose anchors, truthful pulse/fade feedback, finite owned Vacuum capacity growth | 146 tests/16 files, 2 bounded browser cases, 120 balance scenarios; [report](content/Q6_REPORT.md) |
+| G1 | `54e9b2f` | Corrected pacing model; eco Glass armour 40→20 and base arrival weight 12→8 | 187 tests/21 files, 1 bounded browser case, before/after and sensitivity captures; [report](content/G1_REPORT.md) |
+| G2A | `b4d61ae` | Keep independent weak litter groups | 278 tests/29 files, 4 bounded browser cases; [report](content/G2A_REPORT.md) |
+| G2B | `7ce03c5` | Keep fixed-bearing wrapper interception | 282 tests/30 files, 4 bounded browser cases; [report](content/G2B_REPORT.md) |
+| G2C / complete G2 | `5b50d7b` | Keep direct Can roll/recovery; all three candidates accepted | 686 full tests/72 files, 12 consolidated candidate browser cases; [report](content/G2C_REPORT.md) |
+| G3 | `d8ae891` | Spaced teaching/boss schedule, five voluntary destinations, resolved site previews and fixed boss warnings | 696 full tests/73 files, 13 unique affected browser cases, ambient/timed comparisons; [report](content/G3_REPORT.md) |
+| G4 | `a10e3eb` | Actual tool contribution review, next experiment, optional ten-enemy guide and existing unlock progress | 703 full tests/74 files, 283 focused tests/25 files, 5 final serial browser cases; [report](content/G4_REPORT.md) |
+
+Types, lint, production build and whitespace pass at each recorded gate. Counts
+above belong to their individual sources and must not be added into a cumulative
+pass count. G4's [checks](content/G4_CHECKS.json) and
+[source digest](content/G4_SOURCES.json) own final gameplay verification. Its 120
+ambient cases exactly match G3. Models and aided browser fixtures do not establish
+natural survival, offer frequency or retention. Broad current-app/browser/WebGL/
+stress/soak checks remain deferred; actual Safari, missing browser/OS combinations
+and older physical integrated-GPU evidence remain temporarily waived/unverified.
+Historical P5/P6 and PR27 CI results do not certify this cumulative branch.
+
+### Remaining work and handoff
+
+1. Local four-phase build closure is complete. Delivery is a separate next step:
+   inspect actual remote state, review cumulative Q6/G1–G4 against it, preserve
+   phase commits and use one milestone PR. Choose one consolidated CI/browser
+   campaign where needed, with heavy local work serial and owned resources cleaned.
+   This documentation request does not publish, merge or dispatch remote CI.
+2. V0.4.4 is the next planned implementation increment. Its
+   [settled roster checkpoint](SPRITE_PLAN_V0.4.4.md#settled-roster-checkpoint-after-g4--2026-10-22)
+   is ready for owner selection of a bounded inventory plus exact frame roles,
+   canvas sizes and style review. No manifest claim, generation or resolution
+   increase is selected. Preserve five accepted sheets, Glass Shards reuse and
+   current primitive G2/boss actors until replacements are separately accepted.
+3. No further gameplay phase is required by G1–G4. A newly observed issue needs
+   its own bounded claim. New facts/rankings/handling claims or saved discoveries
+   require separately selected sourced/persistence scope. V0.4 overall remains
+   open while its remaining sprite/acceptance work is unresolved.
+
+The [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) remains current. The
+[roadmap](READABLE_GAMEPLAY_ROADMAP.md) retains product priorities and Australian
+source context; it no longer owns completed phase plans.
+
+<a id="readable-gameplay-q6"></a>
+### Q6 — completed prerequisite / 2026-10-21
+
+Presentation-only per-frame mirrored hood anchors correct measured pose shifts.
+Cone damage resolves once at firing; its filled cue ends at 80 simulation-ms,
+with a faint outline/selected-hit feedback through 200 ms retraction. Capacity
+comes from actual owned reach picks: base 3→7, evolved 4→8, four picks maximum;
+unrelated levels/quality do not add targets and splash remains capped at three.
+Body geometry, generated pixels, pipeline and save state stay independent.
+[Q6_REPORT](content/Q6_REPORT.md) and [results](content/Q6/results.json) retain
+trace, exact checks, initial fixture failures and model/platform limitations.
+
+#### Original checklist and pre-code ownership (historical)
+
+#### Next step — Q6 player motion, cone feedback and vacuum progression
+
+Session21 documentation ownership (claimed before edits):
+`build/{BUILD_PLAN_V0.4,BUILD_PLAN_V0.4.3,BUILD_STATUS,SESSION_21_PROMPT,PLAN,THEME_ARCHETYPES,EDUCATION_PIVOT,AUTONOMOUS_DEVELOPMENT_PLAN}.md`,
+`AUTONOMOUS_PROGRESS.md` and `RECONCILIATION.md`. This cycle records review and
+owner direction only; no runtime/assets/tests are edited. The subsequent owner
+request to wrap up and create the V0.4.3 PR authorizes committing these selected
+planning changes and publishing the existing branch. Claim exact runtime/test
+ownership before implementing Q6.
+
+C1–C7 local gates pass at C7 `88f220b`. Owner reports continuing player-sprite
+jitter and enemies inside the visible vacuum cone receiving no hit. The next
+local correction gate remains open. The later owner request authorizes a draft
+PR for completed work before Q6; it does not complete Q6 or start V0.4.4:
+
+- [x] Reproduce player movement against a fixed actor/body anchor. Inspect walk,
+  idle and hit transitions in both horizontal directions and diagonal movement.
+  Independent per-pose bounding-box centring is a candidate cause, not a proved
+  live diagnosis. Correct presentation without changing physics or hand-editing
+  generated art; preserve facing, rate0.5 and Phaser shutdown ownership.
+- [x] Reconcile the visible cone with actual pulse timing, origin and hit selection.
+  Current drawing and collision share resolved reach/angle; no separate-radius
+  defect was established. Damage resolves once at firing, while a stationary cone
+  fades for280ms. A target entering the fade is not a new hit. Verify base/upgraded/
+  evolved boundaries and make actual affected targets/pulse timing readable.
+- [x] Implement owner-selected vacuum primary-target growth with its own weapon
+  upgrade progression. A small early target limit is accepted; it must increase
+  at later weapon levels rather than stay at three until evolution. Use the
+  existing owner-track model, not automatic growth with unrelated player levels.
+  Exact thresholds/increments/ceiling and evolution carryover need theme-owned
+  tuning and balance verification; they are not settled or implemented here.
+  Keep finite integer caps and deterministic target ordering. Preserve independent
+  clocks, direct/splash provenance and exact XP; growth does not remove caps or
+  automatically increase splash targets. Both production themes must satisfy the
+  generic contract. Evolution must retain earned growth without reducing it.
+- [x] Add affected deterministic coverage for cap steps, boundaries, evolution/
+  reset and attack ownership; run typecheck, affected units, lint, build and diff
+  checks. Use `npm run balance` for the changed pacing, including packed targets.
+  Run only necessary serial browser cases, one worker/zero automatic retries,
+  with declared bounds and images under testInfo.outputPath; inspect motion and
+  cone-hit correspondence. Record deferred broad/stress/native/long checks.
+- [x] Record implementation, actual verification, remaining limits and reconciliation
+  together in one reviewed local correction commit. Keep C1–C7 historical passes
+  intact; Q6 is open until its own gate passes.
+
+Read-only Session21 review reran25 animation/melee/second-tool units across3files:
+all pass. This does not verify the reported motion/cone behavior or the proposed
+cap progression. No new browser campaign or runtime fix occurred.
+
+
+#### Q6 implementation claim — 2026-10-21
+
+On `codex/readable-gameplay-g1` from main `c200b21`, claim the exact prerequisite
+paths before edits: `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both themes' `{weapons,copy}.ts`, eco
+`sprites.ts`, `src/game/systems/sprites/{sprite-view,sprite-animation}.ts`,
+`src/game/systems/weapons/resolve-weapon.ts`,
+`src/game/systems/upgrades/describe-upgrade.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/entities/cone-attack-actor.ts`,
+`src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`tests/unit/weapons/{weapon-target-growth,weapon-evolution,second-tool}.test.ts`,
+`tests/unit/sprites/sprite-animation.test.ts`, `tests/unit/content/theme.test.ts`,
+`tests/e2e/q6-readability.spec.ts`, `tests/fixtures/alternate-theme.ts` only if a
+required copy contract changes, `build/content/Q6*`, this plan,
+`build/{BUILD_STATUS,PLAN,THEME_ARCHETYPES,EDUCATION_PIVOT,ECO_CONTENT_MAP}.md`,
+`AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`.
+No generated pixels, pipeline/atlas, bodies or save state changes. Diagnose the
+fixed-anchor trace first. Capacity will resolve from actual owned-track pick
+history, with finite theme-authored steps; unrelated levels/tiers cannot add
+capacity. Record evidence before accepting the precise growth values.
+
+##### Q6 local gate accepted — 2026-10-21
+
+The implementation claim above is complete. [Q6_REPORT](content/Q6_REPORT.md)
+records fixed-anchor diagnosis/correction, truthful one-shot cue and3→7→8 owned
+capacity.146units/16files, typecheck/lint/build/diff and2bounded serial Canvas
+browser cases pass;120balance scenarios recorded. Full/browser-device campaigns
+remain deferred; external checks waived/unverified. Q6 is closed locally; G1
+is next on the same branch, with its own claim, report and verified commit.
+The unchecked/open language in Session21/delivery sections is historical.
+
+<a id="readable-gameplay-g1"></a>
+#### Phase G1 — reliable power growth and existing-roster rebalance
+
+Claim: **Codex**, `codex/readable-gameplay-g1`; status **verified locally**,
+after Q6 prerequisite44585dd. See [G1_REPORT](content/G1_REPORT.md). No parallel roster or sprite
+work is claimed. The [start prompt](PHASE_G1_PROMPT.md) includes prerequisite
+recovery, ownership, implementation and verification.
+
+| G1 ownership | Paths permitted when needed |
+| --- | --- |
+| Theme-owned enemy/tool/director tuning | `src/game/content/themes/{eco-guardian,knight-magic}/{enemies,director,progression,difficulty,difficulty-presets,weapons,skills,upgrades,elites,copy}.ts` |
+| Actual implemented-build simulation | `src/game/systems/simulation/{build-models,pacing-simulator,format-report}.ts`, `scripts/balance.ts` |
+| Contract validation, only for a demonstrated required seam | `src/game/core/archetypes/{contracts,tuning}.ts`, `src/game/content/define-theme.ts`; record the dependency before editing |
+| Affected deterministic verification | `tests/unit/{content,architecture,enemies,director,difficulty,weapons,simulation,elites,events}/**` |
+| Necessary bounded integration | `tests/e2e/{enemy-roster,opening-microplastics,second-tool-v043,elite-family-v043,difficulty-v043}.spec.ts`; Q6 cases keep separate ownership |
+| Evidence and durable decisions | `build/content/G1*`, this roadmap, `build/{BUILD_STATUS,PLAN,EDUCATION_PIVOT,THEME_ARCHETYPES,ECO_CONTENT_MAP,PHASE_G1_PROMPT}.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md` |
+
+No G1 production scene/entity/sprite/save/dependency edits are implied. If measured
+work needs another path, record its exact bounded dependency in this claim first.
+
+Prerequisite: Q6 verified. Claim theme-owned enemy/director/progression/difficulty/
+weapon tuning and corresponding simulation/tests before runtime work. Keep both
+production themes contract-valid; do not copy eco tuning into knight-magic blindly.
+
+- [x] Re-run the [captured baseline](content/READABLE_ROSTER_BASELINE.md) against
+  corrected tools. Extend the simulator only where a real capability is missing;
+  exclude parked projectile/kill-explosion models from eco acceptance decisions.
+- [x] Evaluate each current role's health, armour, speed, contact harm, XP,
+  arrival share and interaction with the corrected Vacuum capacity and Sweep.
+  Change theme values only where the comparison demonstrates a pacing problem;
+  keep unchanged values explicitly where they already serve their role.
+- [x] Microplastics: preserve the opening one-hit exception across all three
+  presets; do not use surveyed >5 mm fragment counts as their natural spawn rate.
+  Plastic Bottles: preserve the familiar baseline, without claiming they dominate
+  litter item counts. Review common-role proportions as gameplay composition.
+- [x] Glass: review compounded health/armour and arrival share so a durable
+  commitment does not crowd out all other choices. Preserve greater material
+  durability than plastic, stationary clearable Shards, and finite fragmentation.
+  Bagged Waste: budget parent plus released children, their half rewards, elite
+  descendants and retained spawn work; never create recursive bag families.
+- [x] Measure level milestones, kills/XP, role mix, backlog/cap dwell and TTK
+  before/after, with isolated-contact and packed-target bands. Do not call a peak
+  population alone a demonstrated balance defect or a performance result.
+- [x] Give owned upgrades/evolution an observable benefit and a chance to enjoy
+  it; do not automatically cancel each power gain with enemy scaling. Preserve a
+  viable generalist fallback and assess early economy choices for snowballing.
+
+Gate: themed content/architecture, director, material-family, difficulty, melee,
+evolution and simulation units; `npm run typecheck`, `npm run lint`,
+`npm run build`, `git diff --check`; `npm run balance` baseline/C3 fixtures across
+both themes and all presets, with applicable models identified. One necessary
+bounded serial play/readability check validates the model's contact assumptions.
+Record values, source state, actual acceptance and deferred checks in a G1 report.
+No fixed new stat or target population is accepted by this planning document.
+
+
+#### G1 exact implementation claim — 2026-10-21
+
+Q6 gate passes in44585dd ([report](content/Q6_REPORT.md)); G1 starts from that
+commit. Claim before edits: `src/game/content/themes/eco-guardian/{enemies,director}.ts`
+only if measured changes warrant them; retained knight theme tuning is assessed
+but not pre-emptively copied. Applicable simulation support:
+`src/game/systems/simulation/{pacing-simulator,format-report}.ts`, `scripts/balance.ts`;
+`tests/unit/simulation/pacing-simulator.test.ts`,
+`tests/unit/{content/theme,enemies/g1-role-balance}.test.ts`,
+`tests/e2e/enemy-roster.spec.ts` (bounded contact/readability fixture only).
+Evidence/docs: `build/content/G1*`, this roadmap,
+`build/{BUILD_STATUS,PLAN,EDUCATION_PIVOT,THEME_ARCHETYPES,ECO_CONTENT_MAP,PHASE_G1_PROMPT}.md`,
+`AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`.
+The Q6-corrected simulator still omits armour from kill spending, retains the
+first spawn's health for later same-role arrivals, banks damage while empty and
+catches up natural arrivals unlike the runtime's cadence. Capture its fresh
+output first, then label model corrections separately from tuning effects.
+No G2/art/scene/body/save changes are selected by G1.
+
+G1 narrow verification dependency: `tests/unit/director/spawn-director.test.ts`
+contains the old rounded late composition table. Update its expected documented
+shares for the selected Glass weight; keep opening/unlock behavior assertions.
+
+#### G1 accepted local outcome — 2026-10-21
+
+Q6 prerequisite44585dd and G1's own gate pass. Eco Glass armour40→20 and director
+base weight12→8 are the only runtime tuning changes; all other roles and knight
+values are retained with reasons in [G1_REPORT](content/G1_REPORT.md). Model
+corrections are separated from tuning: fresh Q6 baseline120, corrected before120,
+after120 and36step-size sensitivity scenarios.187units/21files, types/lint/build/
+diff and one bounded serial contact browser case pass. Full stress/soak/native/
+device checks deferred; external checks waived/unverified. No publication/merge
+or new roster/art authorization follows from this local acceptance. G2–G4 remain
+unstarted; owner-selected G2 is the next planning handoff.
+
+G1 handoff-only documentation dependency: `build/BUILD_PLAN_V0.4.md` and
+`build/BUILD_PLAN_V0.4.3.md` receive current outcome links so their earlier open-Q6/
+next-G1 checkpoints cannot be mistaken for the final handoff. No phase is reopened.
+
+G1 final evidence-only dependency: normalize trailing spaces/terminal blank lines
+in `build/content/Q6/*.txt` while reviewing generated report whitespace. This
+preserves every Q6 captured value and source identity; no prerequisite code changes.
+
+<a id="readable-gameplay-g2"></a>
+### G2 — one outdoor candidate at a time
+
+Date2026-10-22. Owner authorizes starting G2. Branch `codex/readable-gameplay-g2`
+is stacked on local G1 `54e9b2f`, not a merged-main claim. Current result: all
+three candidates locally kept; G2 complete, G3 ready/unstarted. G3/G4 and new art
+remain unimplemented. The claims below retain their before-edit chronology.
+
+#### G2A scope and exact ownership, claimed before code edits
+
+- Contracts/validation: `src/game/core/archetypes/{ids,contracts,tuning}.ts`,
+  `src/game/content/define-theme.ts`.
+- Both themes' `{enemies,director,bodies,copy}.ts`; no edits to old saved IDs.
+- Pure formation/admission helper: `src/game/systems/director/arrival-cluster.ts`;
+  integration limited to `run-scene.ts` natural arrivals and milestone size.
+- Primitive-only view: `src/game/entities/{enemy-actor,enemy-primitive-view}.ts`.
+  Sprite seam/pipeline/generated art and collision geometry stay independent.
+- `src/game/systems/simulation/pacing-simulator.ts`; reuse G1 models/reporter.
+- `tests/fixtures/alternate-theme.ts`, `tests/unit/{content/theme,director/spawn-director,simulation/pacing-simulator}.test.ts`,
+  `tests/unit/{enemies/cluster-fodder,director/arrival-cluster}.test.ts`,
+  `tests/e2e/g2-cluster-v044.spec.ts`; existing roster test only if its explicit
+  old five-role fixture is genuinely affected (do not broaden historical claims).
+- Evidence `build/content/G2*`, this plan/prompt/roadmap, BUILD_STATUS/BUILD_PLAN_V0.4/
+  BUILD_PLAN_V0.4.3/PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP/SAVE_DATA,
+  AUTONOMOUS_PROGRESS and RECONCILIATION. Save doc is compatibility note only.
+
+G2A candidate: slow individual weak litter in a group of three, each visibly
+clearable and independently targetable/rewarded. Trial theme data:6HP/0armour,
+64speed/3contact harm/1XP, radius10/display28; group3, spacing34world units.
+Sparse roll weight2 with0.5 growth, unlock0.25, first introduction3. These are
+trial game numbers, never environmental facts, and require measured acceptance.
+Existing material values, weapon tuning, timing/rate0.5 and caps stay unchanged.
+
+#### Prompt self-review before implementation
+
+Reviewed PHASE_G2_PROMPT on2026-10-22. Accept with these explicit resolutions:
+
+- A group consists of separate actors, not three painted items paying triple XP
+  from one lethal. Formation only applies to natural arrival selection. Duplication,
+  elite splitting and causal offspring spawn exactly their requested actors.
+- A generic small milestone-count override is necessary: the existing burst
+  would introduce about19 actors at25%, contradicting a low-pressure first view.
+  Queue the three introduction requests through existing retention, never drop
+  causal work. Do not multiply a milestone introduction by group size again.
+- Form off-screen on the same ring with world-unit spacing converted to angle;
+  do not place unavoidable enemies on-screen or derive spawn/body sizes from art.
+- Natural grouping raises arrivals per selection. Measure actual actor shares,
+  not just roll weights, and parent/elite budgets. Do not enlarge caps or silently
+  label the old per-roll model a valid comparison.
+- Primitive two-part shapes are presentation only, with a shared transform/flash/
+  destruction lifecycle. Use data, never theme-name branches. A declined art
+  silhouette cannot be repaired by changing hitboxes.
+- Fresh neutral IDs are content additions, not a save schema migration. Verify
+  current unknown-ID compatibility; no saved discovery/unlock field is selected.
+- This is a candidate trial. The local gate must explicitly keep/revise/drop;
+  a prototype or aided fixture is not natural survival/performance acceptance.
+
+#### Ordered checklist and gate
+
+- [x] Fresh G1 identity/baseline captured; prompt reviewed and scope claimed.
+- [x] Definition/formation/intro/presentation and both-theme fixture implemented.
+- [x] Deterministic admission, retained causal introduction, targets/XP/reset pass.
+- [x] Both-theme/all-preset before/after balance and reward/mix review complete.
+- [x] Necessary bounded serial browser evidence inspected in Default/Low and
+  reduced-motion, with independent body/visual and source/XP assertions.
+- [x] G2 short suite + types/lint/build + whole-branch whitespace pass.
+- [x] Keep/revise/drop, actual source/checks/limits and next handoff durable.
+
+G2 recipe: `npm test -- --run tests/unit/content tests/unit/architecture tests/unit/enemies tests/unit/director tests/unit/spawning tests/unit/targeting tests/unit/combat tests/unit/elites tests/unit/events tests/unit/simulation`.
+Also run affected difficulty/weapons/persistence units for new ID compatibility.
+Four balance commands are recorded in content/READABLE_ROSTER_BASELINE.json.
+Browser cases: new g2-cluster-v044 only, each bounded30s (retention45s if needed),
+one worker/zero retries, owned cleanup. Full app/stress/soak/native/device gates
+remain deferred; actual Safari/browser-OS/older-device evidence waived/unverified.
+
+Initial deterministic review revises trial speed50→64: the legacy maximum-ring
+approach guard would take19.16s at50, above its16s band;64 reaches in14.97s while
+remaining far slower than Microplastics. Keep the existing envelope assertion.
+Append the new role to catalogs to preserve existing fixture/roster ordering.
+
+#### G2A accepted local gate — 2026-10-22
+
+Keep the candidate: [G2A_REPORT](content/G2A_REPORT.md).278units/29files,
+types/lint/build,240before/after scenario summaries and4serial browser cases pass.
+Each case now includes old/new mixed roles and exact source/XP/view destruction.
+Broad/native/device checks deferred/waived as recorded; no human survival claim.
+The first candidate is complete; G2 remains in progress. Next is G2B wrapper
+interception, which needs a fresh exact claim/prompt review before implementation.
+The `v044` suffix in the bounded test filename is only a fixture filename; it
+neither starts nor accepts the V0.4.4 sprite milestone. No generated art is owned.
+
+#### G2B scope and prompt review — claimed 2026-10-22 before code
+
+Owner now requests completing the G2 plan, then reporting G3 readiness. Implement
+G2B and verify/commit it before claiming G2C. Exact additional ownership:
+`src/game/systems/enemies/committed-motion.ts`, `src/game/entities/enemy-motion-cue.ts`,
+`tests/unit/enemies/committed-motion.test.ts`, `tests/e2e/g2-motion.spec.ts`;
+reuse G2A contracts/validation, both-theme enemies/director/bodies/copy, actor,
+run-scene enemy movement/avoidance only, alternate fixture/content tests and
+G2 evidence/planning/status/reconciliation paths. No simulator algorithm change.
+
+Reviewed prompt: add neutral `enemy.gust_drifter` (Packets / Wrappers; Paper Wisp).
+Approach at80, enter a stationary900ms directional warning within150world units,
+commit to a heading offset0.8radians from the captured player bearing, travel900ms
+at2.5×base speed, stop1300ms, then approach/repeat. Reusable motion capability
+contains all thresholds/timing/offset/speed in theme data. Presentation observes
+state; a persistent essential arrow/ring survives Low/reduced-motion. Stats trial:
+12HP/0armour,5harm,2XP,radius12/display34. Introduce one at0.32, natural weight3,
+growth0.5. Approach trigger is inside the camera's225world-unit vertical half-view;
+no off-screen launch. First hint uses existing wave announcement/catalog copy.
+
+Self-review: this is intermittent crossing/interception, not continuous pursuit;
+heading locks at warning entry (never tracks during warning/travel). Zero delta
+freezes motion; large deltas advance at most one phase so warning/recovery cannot
+be skipped. Existing target/contact/XP/cap/causal semantics remain. Actor-local
+state resets on construction. Skip obstacle steering during commitment so it
+cannot silently re-aim; recovery remains contactable/targetable. Existing drift
+waves keep their behaviour for roles without the capability. No save fields or
+sprites. Balance model does not simulate these movement or interception costs.
+
+Gate: deterministic phase/heading/reset/invalid-definition checks; current G2
+short suite + difficulty/weapons/persistence, types/lint/build/whitespace;120
+before/after ambient cases and four balance CLI commands; four bounded serial
+both-theme Default/Low+reduced-motion browser cases for phase cue, mixed target,
+exact-once XP/death and clean destruction. Keep/revise/drop then phase commit.
+
+- [x] G2B implementation and deterministic motion checks.
+- [x] G2B balance, bounded visual evidence and software gate.
+- [x] G2B decision/report/status/reconciliation and phase commit.
+
+G2B accepted **keep**: [report](content/G2B_REPORT.md). Ready for the separately
+claimed/reviewed G2C Can candidate; G2 overall remains open.
+
+#### G2C scope and prompt self-review — claimed before code 2026-10-22
+
+G2B verified/committed7ce03c5. Now claim the same both-theme ID/definition/copy/
+director/body/validator-fixture/content/director/enemies test paths and
+`tests/e2e/g2-motion.spec.ts`; existing committed-motion/cue/actor integration is
+read/reused, not extended unless an evidenced defect requires a recorded claim.
+Evidence `build/content/G2C*`, this plan/prompt/current authority/status/reconciliation
+paths. Also claim `build/PHASE_G3_PROMPT.md` for the final reviewed handoff only.
+No G3 implementation, boss/site/world/weapon/save/sprite code is owned.
+
+Reviewed G2C prompt: neutral `enemy.committed_charger`, eco Aluminium Can / knight
+Barrel Construct. Reuse fixed-bearing capability with zero aim offset: approach90,
+trigger150, warning1000ms aimed at the player's captured prior position, travel
+1000ms at3.5×base (315units), stationary recovery1400ms.18HP/0armour,7contact harm,
+3XP,radius14/display38. One introduction at55%, sparse weight2/growth0.4/bias0.
+Aimed line crosses the old player position and passes beyond it; moving sideways
+leaves the committed route. Unlike the oblique180-unit wrapper gust, this is a
+longer fast direct pass followed by a larger recovery opportunity. Primitive can
+body/label/end caps provide a separate silhouette; no new sprite or body inference.
+
+Self-review: keep the same phase logic rather than adding a parallel AI system.
+Preserve both old behaviours and all finite cap/XP/causal rules. No retargeting
+at launch, predictive tracking, invulnerability or extra attack hitbox. New role
+must prove the old-position pass and sideways miss, not just share the wrapper's
+phase test. Intro at55% is a trial, not natural encounter acceptance; G3 owns
+encounter sequencing around the existing mini-boss. Pacing model still omits
+movement/survival/offspring/intro/bosses. Compare actual role shares and both-theme
+weak/strong build work/XP/cap trade-offs before keep. No numerical survey ranking.
+
+- [x] G2C implementation, content/motion and sidestep/target/XP checks.
+- [x] G2C120before+120after/fourCLI, bounded serial browser/software gate.
+- [x] G2C keep/revise/drop, complete G2 disposition, reviewed G3 handoff/commit.
+
+##### Final verification discovery / narrow ownership extension
+
+The consolidated full unit suite finds one pre-existing Q6 expectation in
+`tests/unit/ui-selectors/describe-upgrade.test.ts`: the starter stats must cover
+all keys except projectiles/pierce, but Q6 added `primaryTargets` only for a capped
+melee tool. The actual starter has no such cap. Test and selector are unchanged
+since G1 (empty diff against54e9b2f; selector's last relevant change44585dd).
+Claim this test only before correction: exclude the inapplicable capacity from
+starter keys and explicitly verify both themes' finite secondary capacity and
+knight projectile delivery stats. No selector/weapon/UI runtime change. Rerun the
+full unit suite once; record the initial684pass/1fail honestly in the G2C report.
+
+#### G2 complete local gate / G3 readiness — 2026-10-22
+
+All three candidates kept individually: G2Ab4d61ae, G2B7ce03c5, G2C in this plan's
+owning final candidate commit. [G2C_REPORT](content/G2C_REPORT.md) records the full
+disposition.288targeted units, final686units/72files, types/lint/build/whitespace,
+12serial candidate browser cases and120before+120after model cases/fourCLI for
+G2C pass. Earlier G2A/G2B gates retain their own evidence. Broad/native/device
+limits remain as recorded, never silently passed. No push/PR/merge/art.
+
+[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written and reviewed. G3 remains unstarted;
+its exact implementation ownership will be claimed at the next owner instruction.
+
+<a id="readable-gameplay-g3"></a>
+### G3 — encounter rhythm, optional destinations and readable bosses
+
+Owner explicitly requests execution of PHASE_G3_PROMPT. Date2026-10-22.
+Branch `codex/readable-gameplay-g3` from verified G2C `5b50d7b`; clean at claim.
+One verified local G3 phase commit; no publication/merge/G4/art implied.
+
+#### Exact ownership claimed before code
+
+- Both themes' `director.ts`, `shrines.ts`, boss entries in `enemies.ts`, `copy.ts`.
+  Keep existing role stats/weights, weapons, rate/camera/caps and all saved IDs.
+- `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts` for
+  optional theme-authored boss warning hold; no tuning literal in scene/systems.
+- `src/game/systems/bosses/bosses.ts`, `src/game/scenes/run-scene.ts` only boss
+  movement hold and current in-range site preview integration.
+- `src/game/systems/codex/describe-shrine.ts`, `src/game/entities/shrine-actor.ts`,
+  `src/game/ui/minimap-ui.ts` for current-world preview/destination diamond.
+- `src/game/systems/simulation/pacing-simulator.ts` for explicit timed world-only
+  choices; `build/content/G3_CAPTURE.ts`, `build/content/G3*` evidence/report.
+- `tests/unit/{director/spawn-director,bosses/bosses,shrine/shrine-placement,
+  codex/describe-shrine,simulation/pacing-simulator,ui/presentation-quality}.test.ts`,
+  new `tests/unit/director/encounter-rhythm.test.ts`, `tests/e2e/g3-encounters.spec.ts`;
+  existing `tests/e2e/bosses-v043.spec.ts` only its authored mini threshold fixture.
+  Other tests require an explicit extension if a real affected contract emerges.
+- This plan/prompt, roadmap, BUILD_STATUS, BUILD_PLAN_V0.4/V0.4.3, PLAN,
+  EDUCATION_PIVOT, THEME_ARCHETYPES, ECO_CONTENT_MAP, AUTONOMOUS_PROGRESS and
+  RECONCILIATION. SAVE_DATA read; no saved state/adapter/schema changes selected.
+
+#### Reviewed implementation decisions
+
+Prefer data and existing machinery. Natural milestone arrival is offscreen and
+capacity-sensitive; fractions below are due times, not guaranteed first contact.
+Five authored minutes / rate0.5 remains ten nominal wall minutes before pauses.
+
+|Event|Old fraction|Trial fraction|Sim seconds|Nominal wall seconds|
+|---|---|---|---|---|
+|Microplastics / Runner|0|0|0|0|
+|Bottle / Grunt|.10|.10|30|60|
+|First optional surge site|.04|.16|48|96|
+|Weak group|.25|.25|75|150|
+|Wrapper gust|.32|.34|102|204|
+|Optional Greed site|.18|.40|120|240|
+|Glass / Tank|.40|.44|132|264|
+|Bag / Broodmother|.45|.52|156|312|
+|Can roll|.55|.60|180|360|
+|Optional Multiplicity site|.34 / .52|.66 (one)|198|396|
+|Mini-boss|.50|.72|216|432|
+|Baseline elite ramp begins|.60|.82|246|492|
+|Optional Duplication site|.72|.84|252|504|
+|Optional Escalation site|.86|.90|270|540|
+|Final boss|1|1|300|600|
+
+Removing only the repeated Multiplicity arrival avoids compulsory scheduling of
+two identical permanent doubling choices; the one existing definition remains
+unchanged. Every site can still be ignored, and deliberate different-site stacks
+remain possible. No fake guaranteed upgrade/evolution minute. Earlier taught
+roles get18–30sim-second gaps; Can precedes mini by36sim seconds. Optional late
+escalation leaves30sim seconds before final, but travel/kill/build may consume it.
+
+Placement band trial560–1320→480–800, min separation620→360, same24attempts/160edge.
+At base200 move speed, center-to-site travel is2.4–4sim seconds,4.8–8nominal wall
+seconds before obstacles/route choice; reaching interaction range is shorter.
+Minimum480 exceeds current view half-height225 and interaction120; a diagonal or
+horizontal site can still be visible. Do not assert fully offscreen for all bearings.
+Existing finite fallback remains unchanged and must be measured at corners.
+
+Preview is read-only from current world + selected site at current threat step:
+resolved arrivals/durability/harm/XP and elite chance, plus finite surge/duplication
+source reward. Display existing themed labels, no new fact surface. Refresh only
+when text changes; ignore keeps world unchanged. Existing input/activation guard
+stays the owner of acceptance. Minimap site diamond differs from enemy dots.
+
+Bosses hold movement during their already-fixed circular warning (theme boolean),
+then resume pursuit during existing recovery. Keep health/damage/radius, pulse
+rules and recovery durations; longer rest/cost changes require measured evidence.
+Hold prevents body/circle divergence and gives a clear safe-space/return choice.
+No new attack, tracking circle, counter, invulnerability or body derived from art.
+
+Timed pacing choices apply only existing world-multiplier shrine and curse
+contracts at explicit simulation times. Preserve spawn-time cohorts and exact-once
+curse handling. Reject surge/duplication simulation rather than pretending to
+model their actors/rewards. Before/after timed scenarios supplement the four
+baseline/C3 CLI comparisons; never infer movement/offers/travel/survival/boss passes.
+
+#### Gate / execution checklist
+
+- [x] Fresh120ambient/fourCLI baseline and timed ignored/accepted comparison.
+- [x] Both-theme schedule/placement, resolved preview and warning hold implemented.
+- [x] Deterministic ordering/restretch, no-change ignored, repeated acceptance,
+  cap/retention/ledger/terminal/reset and timed cohort boundaries verified.
+- [x] G3 short suite: content/architecture/director/shrine/chaos/bosses/codex/
+  simulation/events/statistics/run-state/weapons plus affected UI tests; full units
+  once for cross-cutting selectors. Types/lint/build/whole-branch whitespace.
+- [x] Both-theme/all-preset before/after baseline/C3 plus weak/generalist/evolved
+  timed choices; record XP/work/dwell/level trade-offs, model and timing limits.
+- [x] Necessary bounded serial both-theme Default/Low+reduced-motion site-preview/
+  ignore/accept/repeat and mixed boss/directional cue cases; relevant existing
+  boss terminal/reset regression.1worker/0retries, screenshots/cleanup inspected.
+- [x] Report/status/product/reconciliation and current next handoff in phase commit.
+
+No natural first-contact/upgrade claim from forced clocks or positioned actors.
+No broad browser/stress/soak campaign; external device/browser checks remain
+waived/unverified. Gate failures must be fixed/recorded before completion.
+
+##### First-heavy introduction review, before theme edits
+
+Use existing introductionCount overrides: Glass/Tank4 and Bag/Broodmother2 in
+both themes, rather than their general21–23-member waves. Four walls teach a
+route; two releasers expose finite offspring without a bulk first-encounter spike.
+Later natural weights remain unchanged. Ambient balance omits milestone actors;
+record this separately and test actual retained requests at capacity in browser.
+
+##### Verification fixture extension / themed opening distinction
+
+Claim `tests/unit/chaos/curses.test.ts` to update its authored258000ms/6site
+expectations to the new270000ms/5site schedule; no world-choice runtime change.
+Knight retains its historical Grunt opening at0 and Runner unlock.20 (eco uses
+Microplastics0/Bottle.10). Do not silently homogenize that pack. Its original
+Runner→weak-group gap is15sim seconds; subsequent new teaching gaps stay≥18.
+The table's eco opening labels/times are not a claim about knight's original pair.
+
+##### Affected historical fixtures / review refinements
+
+Claim `tests/unit/enemies/g1-role-balance.test.ts` for its pre-unlock.40 Glass
+sample to use the actual authored unlock, preserving its G1 armour/share assertions.
+Claim `tests/e2e/{phase-five-v02,shrines-curses-v043}.spec.ts` for natural5-site/
+270000ms expectations and affected focused checks. Preserve the deliberately named
+`worldScenario=multiplicity2` synthetic two-instance fixture in planShrineArrivals;
+it remains an explicit stress/world-composition aid, not a natural second site.
+`worldScenario=all` uses the actual five-site schedule and new expected composition.
+No test helper may silently change a benchmark's requested two-site load to one.
+
+Visual review: lift the site detail above actors so the player cannot cover the
+accept/ignore instruction, increase its text15px, and name the site inside the
+panel (the aided fixture relocates actors, so the original static world label
+cannot serve as the relocated panel's identity). Clamp details to the live view.
+
+##### Final handoff claim and review
+
+Claim `build/PHASE_G4_PROMPT.md` for a reviewed next-session handoff only; G4
+runtime work remains unstarted. Preserve all waived/deferred external evidence.
+The final short recipe also includes enemies/G1 family assertions because role
+unlock changes affect those fixtures. Preserve the synthetic multiplicity2 load;
+all-site duplication now derives eight eligible roles, never hardcodes the old five.
+No natural encounter timing or full-run survival acceptance is inferred.
+
+#### Accepted local gate — 2026-10-22
+
+[Report](content/G3_REPORT.md) owns complete decisions/evidence/limits. Final short
+342tests/35files; full696tests/73files; types/lint/build/whole-branch whitespace,
+13unique affected serial browser cases,120before+120after ambient and90before+
+90after timed scenarios pass. One old duplication fixture failed5vsactual8; its
+roster-derived correction passes. Initial typed/schedule/G1 fixture failures are
+recorded honestly in the report. Production emitted-marker static scan passes;
+no extra production/full browser or device campaign was run. G3 complete locally,
+G4 ready/unstarted with [reviewed handoff](PHASE_G4_PROMPT.md). No push/PR/merge/art.
+
 <a id="readable-gameplay-g4"></a>
 ## Readable gameplay G4 — useful reviews and optional mastery reference /2026-10-22
 
@@ -3327,3 +3926,188 @@ G1–G4 are locally complete. G4 prompt retired; [next handoff](NEXT_READABLE_GA
 records delivery and owner-selected V0.4.4 work. The settled sprite roster/roles
 are reconciled in SPRITE_PLAN_V0.4.4; remaining canvas/frame selections and all
 new generation are unstarted. Five accepted sheets/current shard reuse remain.
+
+### G4 original ownership, self-review and completed checklist (historical)
+
+### G4 — useful run reviews and optional mastery reference
+
+Owner requests implementation2026-10-22. Branch `codex/readable-gameplay-g4` from
+verified G3`d8ae891`; clean at claim. One verified local phase commit; no push/
+merge/new art. Read PHASE_G4_PROMPT and required authorities before this claim.
+
+#### Exact ownership before code
+
+- `src/game/systems/statistics/run-statistics.ts` for transient actual weapon
+  attribution; `src/game/scenes/run-scene.ts` only damage provenance, end-review
+  context and Field Guide data. No HP/reward/attack/clock/cap changes.
+- New pure `src/game/systems/mastery/run-review.ts`; existing state/statistics.ts
+  only truthful elapsed death-clock correction if verified necessary.
+- `src/game/ui/{run-end-overlay,pause-menu-ui}.ts`, `src/game/scenes/menu-scene.ts`
+  for bounded summary/details and paged optional enemy/capability guide.
+- `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`,
+  both themes' copy.ts and `tests/fixtures/alternate-theme.ts` for required themed
+  labels/advice. Existing enemy/weapon/unlock definitions stay unchanged.
+- `tests/unit/{statistics/run-statistics,statistics/statistics,content/theme}.test.ts`,
+  new `tests/unit/ui-selectors/run-review.test.ts`, `tests/e2e/g4-mastery.spec.ts`;
+  affected UI fixtures only with a fresh exact claim if discovered.
+- Build plan/prompt, G4 evidence/report, roadmap/status/current V0.4/V0.4.3 plans,
+  PLAN/EDUCATION_PIVOT/THEME_ARCHETYPES/ECO_CONTENT_MAP/SAVE_DATA compatibility note,
+  AUTONOMOUS_PROGRESS/RECONCILIATION; SPRITE_PLAN_V0.4.4 documentation reconciliation
+  and a next handoff only. No sprite manifests/claims/generation or pipeline edit.
+
+#### Design and prompt self-review
+
+Use existing recorded run/profile data. Add `damageByWeapon` to transient run
+statistics only, with optional weaponId on actual committed damage records.
+Direct/splash retain their originating weapon; skill/unattributed damage is the
+remaining partition of the existing total. Group evolved/base weapon IDs by their
+actual names, never infer damage from equipped items or assign kills to a tool.
+No pending request, overkill, duplicate lethal or source category double-count.
+Profile/session folding already selects explicit aggregate fields and must not
+persist this transient map. No schema/migration/IDs/unlocks/settings change.
+
+Results default to a concise review: actual tool contributions, accepted site/
+curse choices and one attainable next experiment. Preserve the existing full
+metrics/damage/upgrade ledger behind a Details tab. Keep restart reachable and
+resize-safe; use measured text/paging where needed. Do not assert why a player
+failed from a single death source. Death time must be elapsed time, not remaining.
+Final-boss victory is only a recorded result when finalBossDefeated is true;
+clearing/death/endless stay distinct. Existing terminal coordinator still owns
+one durable fold, unchanged by tab switching/resizing/read-only review.
+
+Expose the existing enemy catalog in the same optional Field Guide: one bounded
+paged entry, description/behaviour/health/speed/contact harm/material relations
+from the active theme, no discovery persistence/facts/handling claims. Add existing
+capability unlock progress from current profile values/IDs; viewing never grants
+or writes anything. Suggestions respect actual availability, random offer choice,
+owned capacity picks and same-slot evolution. No new unlock or permanent grind.
+No Australian ranking surface is selected, so no unsourced ranking is displayed.
+
+Baseline/new unlock mechanics are identical: verify unchanged weapon/unlock/tuning
+sources and compare the existing120ambient cases against G3, not invent a new
+build. Existing first finished attempt unlocks the second tool;25lifetime kills
+unlock the current recovery upgrade. Use these to suggest variety, not new stats.
+
+#### Gate
+
+- [x] Pure actual source partition, zero/duplicate/unknown/evolved/reset coverage.
+- [x] Terminal-aware review/advice, accurate elapsed death time, read-only unlock
+  progress/unknown IDs, complete both-theme copy and optional guide paging.
+- [x] G4 short suite: content/upgrades/statistics/ui-selectors/codex; affected
+  persistence/terminal/reset and architecture/weapons; types/lint/build/diff.
+- [x] One full unit run for cross-cutting state/UI; unchanged combat balance and
+  comparison to G3 baselines, no new mechanic/tuning claimed.
+- [x] Necessary bounded serial both-theme Default/Low+reduced-motion result/guide
+  and terminal lifetime-once/resize/restart cases; affected existing save UI if
+  actually changed. One worker/zero retries, images inspected, owned cleanup.
+- [x] Report/product/status/reconciliation and settled V0.4.4 planning handoff in
+  the same verified phase commit. No art or broad browser/stress/device campaign.
+
+Natural first-attempt/offer frequency and environmental facts are not inferred
+from aided browser fixtures. External checks remain waived/unverified.
+
+Ownership extension before completion documentation: `build/MASTER_BUILD_PLAN.md`
+for the required consolidated G4 implementation/verification record. No additional
+runtime scope. Final visual inspection rounds displayed enemy game values to two
+decimal places without changing authored/difficulty-resolved values.
+
+Completed 2026-10-22: see [consolidated master record](MASTER_BUILD_PLAN.md#readable-gameplay-g4)
+and [G4_REPORT](content/G4_REPORT.md). Final283focused/25files,703full/74files,
+5serial browser passes/4.3s/no retries, types/lint/build/whitespace and120identical
+G3ambient cases satisfy the selected gate. Prompt retired after durable record.
+Next handoff is delivery/selected sprite planning; no new phase or art starts.
+
+### Historical delivery, PR27 repair and follow-on claim context
+
+The following records retain their original checkpoint state; the completed
+Q6/G1–G4 disposition above and BUILD_STATUS own current status.
+
+#### Delivery and remaining acceptance disposition
+
+No unrelated content, dependencies, new sprites or optional work is selected.
+[Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
+authorized draft PR delivery. Q6 and the newly observed high-severity Vite audit
+finding remain open; no merge or deployment is authorized. External actual
+Safari/browserOS/older physical-device checks
+remain temporarily waived/unverified, not passed. No current-head remote CI is
+inferred from run39189877476 on2806720 or merge CI39193504359 on c6daeb6.
+A later owner-approved delivery/check campaign
+must use these changed sources; regenerate the historical device pack if needed.
+
+Session21 delivery ownership extends the same10 documentation paths plus Git/PR
+metadata. Owner explicitly requests “wrap this up and create PR for t4.3”, resolved
+as existing `codex/v0.4.3`. Commit the selected planning decisions separately from
+the completed phase commits and publish a draft PR into main. Local delivery
+checks:655units/67files, typecheck, lint and build pass; audit fails with one high
+Vite finding (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw,
+GHSA-587h-7wmj-h5pm). Vite remains6.4.3; suggested6.4.4 is outside its exact pin.
+No dependency change or audit bypass is made. Full browser regression is deferred
+to PR Actions; report its actual matching head/status, never a historical pass.
+
+#### Planned follow-on after Q6 — readable gameplay and rubbish roster
+
+Owner direction2026-10-21 is recorded in
+[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md). Q6 remains first and
+unchanged. Follow-on G1 measures/rebalances current enemies against corrected
+tools, G2 trials outdoor litter behaviour, G3 refines encounters/sites, G4 adds
+mastery goals using existing surfaces. New candidates are not current runtime
+content. Assign the appropriate milestone/branch and exact phase ownership before
+implementation; do not silently expand this increment or reopen completed C1–C7.
+
+The [planning baseline](content/READABLE_ROSTER_BASELINE.md) executes120 model
+scenarios with no tuning changes. Parked eco projectile/explosion builds are
+labelled nonrepresentative. This does not pass Q6/G1 or certify new balance,
+browser/device performance or current-head CI. Existing acceptance/delivery
+restrictions remain; the owner request authorizes planning and necessary measured
+roster rebalancing in its proper phase, not wholesale optional content/art.
+
+
+#### PR27 CI repair — owner-authorized scope
+
+Owner requests fixing failed Actions checks. Start2026-10-21T01:32:46UTC
+/12:32:46AEDT; deadline03:02:46UTC /14:02:46AEDT; final20reserve02:42:46UTC.
+Claim before edits: package.json/package-lock.json; tests/e2e/{frame-measurements,
+phase-six,profile-persistence-v043,second-tool-v043,shrines-curses-v043}.spec.ts;
+build/performance/PR27_CI_REPAIR.md and repair-only appended sections of this plan,
+BUILD_STATUS, MASTER_BUILD_PLAN, AUTONOMOUS_PROGRESS and RECONCILIATION. Preserve
+all pre-existing genre/roster roadmap edits and untracked reports unstaged.
+No production gameplay, Q6, sprites or tuning changes are selected. Run affected
+browsers serially/one worker/zero retries with bounded waits and owned cleanup;
+full regression stays in Actions. Apply only the necessary Vite audit patch.
+
+Local repair gate passes as recorded in performance/PR27_CI_REPAIR.md:655units/
+67files, types/lint/build/diff/audit0, seven unique affected serial browser cases
+verified cumulatively/zero retries. Full current-head PR Actions must confirm
+after push. Q6 stays open; pre-existing roadmap edits remain unstaged.
+
+
+PR27 repair continuation: run39528406842 on a87f57f passes116browser cases/6skips/
+no flaky tests; only both C3 cases fail a later dense-load wall-time assumption
+(258–275simulation-ms/10s, target1000ms). Use the same bounded90s progress/120s
+test budget there, preserving all assertions. Two affected serial cases pass12.5s
+locally/zero retries; types/affected lint/diff pass. Remote confirmation pending.
+
+
+PR27 second continuation ownership: add tests/e2e/{capacity-probe,phase-four-v02}.spec.ts
+for newly observed slow-runner failures in39531764460; retain original exact actor/
+clock/reset assertions. Existing phase-six ownership covers spawn-time reward
+isolation after another valid adjacent-shrine interaction. No runtime/tuning change.
+
+
+PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
+115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
+need bounded simulation-completion waits. Horde Space interaction changes world
+modifiers after tagged enemies spawn; move it after exact spawn-time reward
+assertions, then assert surge activation1/scheduled100. Three affected cases
+pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
+current-head full Actions remains unverified until its own run completes.
+
+#### Post-merge correction handoff and G1 claim
+
+PR27 merged the completed checkpoint as9837158. The owner now requests the
+readable-gameplay plan/claim on main plus a G1 start prompt. Q6 remains open with
+its existing checklist; the next implementation uses the follow-on
+`codex/readable-gameplay-g1` branch and separate Q6/G1 verified commits rather
+than reopening the merged milestone branch. [G1 ownership](READABLE_GAMEPLAY_ROADMAP.md)
+and [start prompt](PHASE_G1_PROMPT.md) own continuation. Old draft/local-only
+statements above describe historical delivery checkpoints, not this new request.

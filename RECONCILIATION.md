@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C7 local gates verified; Session21 authorizes draft PR delivery with Q6 and a new Vite audit finding open.**
+- Current disposition: **REC-113 audit/Q5 Actions repair resolved; REC-117 pickup retention resolved; P5/P6 software slices verified. Session15 temporarily waives missing actual Safari/browser-OS/older physical-device checks, which remain unverified. C1–C7 delivered in PR27; subsequent Q6/G1–G4 scoped local gates complete through G4 `a10e3eb`. Current broad branch CI/delivery and selected V0.4.4 art work remain outstanding; see the [completed log](build/MASTER_BUILD_PLAN.md#readable-gameplay) and BUILD_STATUS.**
 
 ## How to maintain this file
 
@@ -3967,3 +3967,15 @@ limits. G4 locally complete; next handoff is delivery/owner-selected V0.4.4 art
 planning, with settled roster documented and generation unstarted. Broad/stress/
 soak/device checks are deferred; existing external waiver remains unverified.
 No new CI/push/PR/merge or natural survival/retention/offer-frequency claim.
+
+## REC-101 continuation — single completed gameplay log / 2026-10-22
+
+Owner requests local closure of all four phases. Git identifies G4 `a10e3eb`,
+not its G3 parent `d8ae891`. Consolidate completed Q6/G1–G4 ownership, reviewed
+scope, checklists, outcomes and source-bound evidence links in MASTER_BUILD_PLAN.
+Retain evidence reports/digests unchanged; old phase plan paths are compatibility
+pointers and the roadmap keeps research/priorities only. Historical intermediate
+“unstarted/next” wording inside archived specifications is not current authority.
+No additional gameplay gate is implied. Delivery review and separately selected
+V0.4.4 art scope remain next choices; scoped passes are not current full-app CI
+or natural retention/device evidence. No runtime change or new campaign/publication.
