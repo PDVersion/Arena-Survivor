@@ -86,7 +86,7 @@ export const copy = {
     restartAction: "Begin Again",
     startAction: "Begin Run",
     startHint: "Press Enter or Space, or click to begin",
-    shrinePrompt: "Press E or Space to invoke",
+    shrinePrompt: "E / Space: invoke · walk away to ignore",
     shrineArrived: "A shrine has risen",
     surgeActive: "The horde answers",
     statisticsTitle: "Trial Record",

@@ -1,4 +1,4 @@
-# G3 start prompt — reviewed handoff, implementation unstarted
+# G3 execution prompt — retired after the verified local gate
 
 Prepared2026-10-22 after the owner requested completion of G2 and notification of
 G3 readiness. This file is the next-session handoff, not evidence of G3 execution.
@@ -120,3 +120,14 @@ stale site-placement comments, synthetic model limits and pressure/XP snowballin
 No new AI system, factual lesson, saved discovery or sprite is assumed. Exact
 implementation ownership remains the first action of G3, not a claim made by this
 G2 handoff. G3 execution is intentionally unstarted until the owner's next request.
+
+## Completed execution / prompt retired — 2026-10-22
+
+Owner explicitly requested execution after G2C5b50d7b. G3 is locally complete on
+`codex/readable-gameplay-g3`; [BUILD_PLAN_G3](BUILD_PLAN_G3.md) contains the exact
+pre-edit claim and checked gate. [G3_REPORT](content/G3_REPORT.md) records696units,
+final342short units,13unique affected serial browser passes, ambient/timed balance,
+trade-offs, corrected fixture failures and remaining evidence limits. This retires
+the start instructions above; historical unstarted wording is no longer current.
+Next is [PHASE_G4_PROMPT](PHASE_G4_PROMPT.md), written/reviewed; G4/art unstarted.
+No publication/merge or deferred hardware/browser acceptance is implied.

@@ -11,8 +11,9 @@ c200b21. On `codex/readable-gameplay-g1`, Q6 is verified and committed44585dd;
 G1 now passes its own bounded local gate. See [G1 report](build/content/G1_REPORT.md)
 for the two Glass tuning changes, model corrections,187units/21files, serial
 contact check and scenario evidence. G2 is now locally complete with all three candidates kept (G2Ab4d61ae, G2B7ce03c5,
-G2C owning the latest report). G3 prompt is written/reviewed and ready; G3/G4 and
-sprites remain unstarted. Broad
+G2C5b50d7b). G3 is now locally complete on `codex/readable-gameplay-g3`, with
+[its report](build/content/G3_REPORT.md). G4 is ready/unstarted under the reviewed
+[handoff](build/PHASE_G4_PROMPT.md); sprites remain unstarted. Broad
 regression/stress/soak/native/device checks are deferred; existing external checks
 remain temporarily waived/unverified. This session creates local phase commits;
 no push/PR/merge is authorized by the older planning publication. Older session
@@ -1713,3 +1714,19 @@ initial test-only failures, trade-offs and aided-fixture/model limits.
 has not started**. G4/new sprites remain unstarted. Broad regression/stress/soak
 checks deferred; actual Safari/missing browser-OS/older physical GPU evidence
 remains waived/unverified. No new remote CI, push, PR or main merge claim.
+
+## G3 complete locally / G4 ready, unstarted — 2026-10-22
+
+Owner requests execution of PHASE_G3_PROMPT. G3 runs on `codex/readable-gameplay-g3`
+from G2C5b50d7b: spaced teaching/mini/elite thresholds,4Glass/2Bag first waves,
+five optional destinations, current-world site cost/reward, minimap diamonds and
+boss pursuit holds during fixed warnings. Rate/camera/bodies/caps/weapons/stable
+IDs/saves/art remain. Final342short tests/35files and696full units/73files,
+types/lint/build/whitespace,13unique affected serial browser cases and120before+
+120after ambient /90before+90after timed balance scenarios pass. Initial old
+schedule/roster fixture failures and actual aided/model limits are recorded in
+[G3_REPORT](build/content/G3_REPORT.md); this is no natural survival/device claim.
+[PHASE_G4_PROMPT](build/PHASE_G4_PROMPT.md) is written/reviewed; G4 implementation
+and new sprites remain unstarted. Broad browser/stress/soak checks deferred;
+external browser/OS/older physical GPU evidence waived/unverified. Local phase
+commit only, no new CI/push/PR/main merge. Earlier open-G3 entries are historical.

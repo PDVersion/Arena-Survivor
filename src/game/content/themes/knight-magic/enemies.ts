@@ -90,8 +90,8 @@ export const enemies = [
     maxHealth: 240, moveSpeed: 60, contactDamage: 12, contactCooldownMs: 1000,
     radius: 26, displayDiameter: 64, xpReward: 18, armour: 0,
     geometry: "hexagon", presentationToken: "enemyTank",
-    boss: { kind: "mini", appearAt: 0.5,
-      attack: { telegraphMs: 1200, recoveryMs: 2200, radius: 90, damage: 18 } },
+    boss: { kind: "mini", appearAt: 0.72,
+      attack: { holdDuringTelegraph: true, telegraphMs: 1200, recoveryMs: 2200, radius: 90, damage: 18 } },
   },
   {
     id: archetypeIds.enemy.finalBoss,
@@ -99,7 +99,7 @@ export const enemies = [
     radius: 32, displayDiameter: 90, xpReward: 40, armour: 0,
     geometry: "hexagon", presentationToken: "enemySpawner",
     boss: { kind: "final", appearAt: 1,
-      attack: { telegraphMs: 1400, recoveryMs: 1800, radius: 120, damage: 24 } },
+      attack: { holdDuringTelegraph: true, telegraphMs: 1400, recoveryMs: 1800, radius: 120, damage: 24 } },
   },
   {
     // G2A authored weak-cluster game tuning; no persistence/harm fact is implied.

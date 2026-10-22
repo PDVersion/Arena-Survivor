@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import { themeRegistry } from "../../../src/game/content/theme-registry";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import { validateTheme } from "../../../src/game/content/define-theme";
-import { createBossAttack, advanceBossAttack, dueBosses } from "../../../src/game/systems/bosses/bosses";
+import { createBossAttack, advanceBossAttack, bossHoldsPosition, dueBosses } from "../../../src/game/systems/bosses/bosses";
 import { advanceRunState, applyRunUpgrade, awardRunExperience, chooseRunMode, createRunState, damageRunPlayer, observeRunChaos, defeatFinalBoss, isRunActive, regenerateRunPlayer, resetRunState, runEscalationProgress, setRunStatus } from "../../../src/game/state/run-state";
 import { selectHudValues } from "../../../src/game/state/statistics";
 import { findBuildModel } from "../../../src/game/systems/simulation/build-models";
@@ -19,8 +19,8 @@ for (const { theme } of themeRegistry) describe(`${theme.id} unique bosses`, () 
   const start = () => createRunState({ themeId: theme.id, characterId: theme.characters[0]!.id, baseStats: theme.characters[0]!.baseStats, durationMs: 1000, finalBossEnabled: true });
   it("keeps milestone work due until successful creation is recorded, once per run", () => {
     const spawned = new Set<string>();
-    expect(dueBosses(theme.enemies, 0.49, spawned)).toEqual([]);
-    expect(dueBosses(theme.enemies, 0.5, spawned)).toEqual([mini]);
+    expect(dueBosses(theme.enemies, mini.boss!.appearAt - .001, spawned)).toEqual([]);
+    expect(dueBosses(theme.enemies, mini.boss!.appearAt, spawned)).toEqual([mini]);
     expect(dueBosses(theme.enemies, 0.9, spawned)).toEqual([mini]);
     spawned.add(mini.id);
     expect(dueBosses(theme.enemies, 1, spawned)).toEqual([final]);
@@ -142,4 +142,19 @@ for (const { theme } of themeRegistry) it(`${theme.id} holds actual physics whil
   expect(scene.runState.status).toBe("time_up");
   expect(scene.showOvertimeChoice).toHaveBeenCalledOnce();
   expect(scene.physics.world.resume).not.toHaveBeenCalled();
+});
+
+for (const { theme } of themeRegistry) it(`${theme.id} holds pursuit only during the authored fixed warning`, () => {
+  const definition = theme.enemies.find((enemy) => enemy.boss?.kind === "mini")!.boss!;
+  const start = createBossAttack(0, definition);
+  expect(bossHoldsPosition(start, definition)).toBe(false);
+  const warning = advanceBossAttack(start, definition, start.nextAtMs, { x: 10, y: 20 }, { x: 10, y: 20, radius: 14 });
+  expect(bossHoldsPosition(warning.state, definition)).toBe(true);
+  const moved = advanceBossAttack(warning.state, definition, start.nextAtMs + 1, { x: 100, y: 200 }, { x: 500, y: 500, radius: 14 });
+  expect(moved.state.warning).toEqual(warning.state.warning);
+  const released = advanceBossAttack(moved.state, definition, warning.state.warning!.releaseAtMs, { x: 100, y: 200 }, { x: 500, y: 500, radius: 14 });
+  expect(released.damage).toBe(0); expect(released.released).toBe(true);
+  expect(bossHoldsPosition(released.state, definition)).toBe(false);
+  expect(bossHoldsPosition(warning.state, { ...definition, attack: { ...definition.attack, holdDuringTelegraph: false } })).toBe(false);
+  expect(validateTheme({ ...theme, enemies: theme.enemies.map((e) => e.boss ? { ...e, boss: { ...e.boss, attack: { ...e.boss.attack, holdDuringTelegraph: "yes" as never } } } : e) }).join()).toContain("warning hold must be boolean");
 });

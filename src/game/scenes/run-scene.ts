@@ -1,6 +1,7 @@
 import Phaser from "phaser";
+import { describeShrineChoice } from "../systems/codex/describe-shrine";
 import { arrivalClusterAngles, introductionCount } from "../systems/director/arrival-cluster";
-import { advanceBossAttack, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
+import { advanceBossAttack, bossHoldsPosition, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
 import { BossHealthUi } from "../ui/boss-health-ui";
 import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
 import { activeTheme } from "../content/active-theme";
@@ -1342,6 +1343,10 @@ export class RunScene extends Phaser.Scene {
     const obstacles = this.activeObstacles();
     for (const enemy of this.enemies) {
       if (!enemy.active || enemy.defeated) continue;
+      if (enemy.definition.boss && bossHoldsPosition(this.bossAttacks.get(enemy), enemy.definition.boss)) {
+        enemy.arcadeBody.setVelocity(0, 0);
+        continue;
+      }
       enemy.advance(target, deltaMs);
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
@@ -1403,6 +1408,13 @@ export class RunScene extends Phaser.Scene {
       this.runTheme.tuning.shrines,
       this.runState?.durationMs ?? 1,
     );
+    // Preserve the explicitly requested legacy two-instance stress fixture.
+    // Natural G3 scheduling has only one; production testWorldScenario is null.
+    if (testWorldScenario() === "multiplicity2") {
+      const instances = this.shrineArrivals.filter((arrival) => arrival.shrineId === archetypeIds.shrine.multiplicity);
+      if (instances.length === 1) this.shrineArrivals = [...this.shrineArrivals, { ...instances[0]!, appearAtMs: 0 }]
+        .sort((a, b) => a.appearAtMs - b.appearAtMs);
+    }
     this.shrinesRevealed = 0;
     if (testShrineLayout() === "adjacent") this.revealAllShrines();
   }
@@ -1491,7 +1503,11 @@ export class RunScene extends Phaser.Scene {
     let activated: ShrineActor | undefined;
     for (const shrine of this.shrineActors) {
       const inRange = Phaser.Math.Distance.Between(this.player.x, this.player.y, shrine.x, shrine.y) <= shrine.definition.interactionRadius;
-      shrine.setInRange(inRange);
+      const detail = inRange && !shrine.activated ? describeShrineChoice(this.runTheme, shrine.definition,
+        this.runState.world, runEscalationProgress(this.runState),
+        shrine.definition.effectKind === "duplicate_living"
+          ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated && !enemy.definition.boss).length : 0) : undefined;
+      shrine.setInRange(inRange, detail);
       if (interact && inRange && !shrine.activated && !activated) activated = shrine;
     }
     this.updateShrineMarkers();

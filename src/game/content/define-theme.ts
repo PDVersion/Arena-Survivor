@@ -314,8 +314,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       const { kind, appearAt, attack } = enemy.boss;
       if (!["mini", "final"].includes(kind) || !Number.isFinite(appearAt) || appearAt <= 0 || appearAt > 1 || (kind === "final" && appearAt !== 1)) issues.push(`${enemy.id} invalid boss milestone`);
       if (!attack || typeof attack !== "object" || Array.isArray(attack)) issues.push(`${enemy.id} boss attack is required`);
-      else for (const value of [attack.telegraphMs, attack.recoveryMs, attack.radius, attack.damage]) {
-        if (!Number.isFinite(value) || value <= 0) issues.push(`${enemy.id} boss attack values must be finite and positive`);
+      else {
+        if (attack.holdDuringTelegraph !== undefined && typeof attack.holdDuringTelegraph !== "boolean") issues.push(`${enemy.id} boss warning hold must be boolean`);
+        for (const value of [attack.telegraphMs, attack.recoveryMs, attack.radius, attack.damage]) {
+          if (!Number.isFinite(value) || value <= 0) issues.push(`${enemy.id} boss attack values must be finite and positive`);
+        }
       }
       if (enemy.fragmentInto || (enemy.deathSpawns?.length ?? 0) > 0) issues.push(`${enemy.id} unique boss cannot create descendants`);
       if (enemies.filter((candidate) => candidate.boss?.kind === kind).length !== 1) issues.push(`${enemy.id} boss kind must be unique`);

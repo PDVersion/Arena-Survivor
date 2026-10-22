@@ -11,7 +11,7 @@ import { MinimapUi } from "../../../src/game/ui/minimap-ui";
 vi.mock("phaser", () => ({ default: { Display: { Color: { HexStringToColor: (hex: string) => ({ color: parseInt(hex.slice(1), 16) }) } } } }));
 
 function fixture(theme: (typeof themeRegistry)[number]["theme"]) {
-  const graphics = Object.fromEntries(["clear", "fillStyle", "fillRoundedRect", "lineStyle", "strokeRoundedRect", "fillCircle", "fillRect"].map((key) => [key, vi.fn().mockReturnThis()]));
+  const graphics = Object.fromEntries(["clear", "fillStyle", "fillRoundedRect", "lineStyle", "strokeRoundedRect", "fillCircle", "fillRect", "strokePoints"].map((key) => [key, vi.fn().mockReturnThis()]));
   const container = { visible: true, setDepth: vi.fn().mockReturnThis(), setVisible: vi.fn(function(this: { visible: boolean }, value: boolean) { this.visible = value; return this; }), setPosition: vi.fn().mockReturnThis(), setScale: vi.fn().mockReturnThis(), setScrollFactor: vi.fn().mockReturnThis(), destroy: vi.fn() };
   const scene = { scale: { width: 1600, height: 900 }, cameras: { main: { zoom: 2 } }, add: { graphics: () => graphics, container: () => container } };
   const map = new MinimapUi(scene as never, theme, { width: 3200, height: 2200 }, 0.6);
@@ -39,7 +39,10 @@ for (const { theme } of themeRegistry) describe(`${theme.id} presentation isolat
     const before = JSON.stringify(view);
     map.update(view);
     const circles = graphics.fillCircle!.mock.calls.map((args) => [...args]);
-    expect(circles).toHaveLength(4);
+    expect(circles).toHaveLength(3);
+    const diamonds = graphics.strokePoints!.mock.calls;
+    expect(diamonds).toHaveLength(1);
+    expect(diamonds[0]![1]).toBe(true);
     map.setPresentationQuality("low");
     graphics.fillCircle!.mockClear();
     map.update(view);

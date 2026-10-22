@@ -463,7 +463,7 @@ export interface BossDefinition {
   readonly kind: "mini" | "final";
   /** Normalized authored progress; unique encounter, not an ambient role. */
   readonly appearAt: number;
-  readonly attack: Readonly<{ telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
+  readonly attack: Readonly<{ holdDuringTelegraph?: boolean; telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
 }
 
 export interface EnemyPrimitivePart {

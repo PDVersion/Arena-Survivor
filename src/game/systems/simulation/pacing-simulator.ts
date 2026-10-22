@@ -1,8 +1,8 @@
 import { arrivalClusterCount } from "../director/arrival-cluster";
 import type { EnemyDefinition, ThemeManifest } from "../../core/archetypes/contracts";
-import { archetypeIds } from "../../core/archetypes/ids";
+import { archetypeIds, type ShrineId, type CurseId } from "../../core/archetypes/ids";
 import { awardExperience, createProgressionState, type ProgressionState } from "../xp";
-import { createWorldState, selectWorldModifiers, type WorldState } from "../chaos/world-modifiers";
+import { acceptCurse, applyWorldChoice, createWorldState, selectWorldModifiers, type WorldState } from "../chaos/world-modifiers";
 import { V02_SPAWN_LIMITS } from "../spawning";
 import { resolveDirectorPlan, runProgress, selectRole } from "../director/spawn-director";
 import { createSeededRandom } from "../upgrades";
@@ -25,7 +25,33 @@ const DEFAULT_STEP_MS = 100;
 const DEFAULT_BUCKET_MS = 15_000;
 const SIMULATION_SEED = 0x5157_0003;
 
+export type TimedWorldChoice = Readonly<{ atMs: number } &
+  ({ kind: "shrine"; id: ShrineId } | { kind: "curse"; id: CurseId })>;
+
+/** Explicit acceptance fixture, not a travel, offer or autonomous choice model. */
+export function applyPacingWorldChoice(world: WorldState, choice: TimedWorldChoice, theme: ThemeManifest): WorldState {
+  if (choice.kind === "curse") {
+    const curse = theme.curses.find((entry) => entry.id === choice.id);
+    if (!curse) throw new Error(`Unknown pacing curse: ${choice.id}`);
+    return acceptCurse(world, curse);
+  }
+  const shrine = theme.shrines.find((entry) => entry.id === choice.id);
+  if (!shrine || shrine.effectKind !== "world_multiplier") throw new Error("Pacing choices only model world-multiplier sites; actor-producing sites are unsupported");
+  return applyWorldChoice(world, { ...shrine, shrineId: shrine.id });
+}
+
+function pacingChoices(options: PacingOptions): readonly TimedWorldChoice[] {
+  const choices = [...(options.worldChoices ?? [])].sort((a, b) => a.atMs - b.atMs);
+  for (const choice of choices) {
+    if (!Number.isFinite(choice.atMs) || choice.atMs < 0 || choice.atMs > options.durationMs) throw new Error("Pacing choice time must be finite and within the run");
+    // Validate even choices landing between the last bucket and duration.
+    applyPacingWorldChoice(options.initialWorld ?? createWorldState(), choice, options.theme);
+  }
+  return choices;
+}
+
 export interface PacingOptions {
+  readonly worldChoices?: readonly TimedWorldChoice[];
   readonly difficulty?: DifficultyId;
   readonly theme: ThemeManifest;
   readonly build: BuildModel;
@@ -106,7 +132,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
   const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
     .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
-  const world = options.initialWorld ?? chaosWorldState(chaos);
+  let world = options.initialWorld ?? chaosWorldState(chaos);
+  const choices = pacingChoices(options);
+  let nextChoice = 0;
   const random = createSeededRandom(options.seed ?? SIMULATION_SEED);
 
   let progression: ProgressionState = createProgressionState(tuning.progression.xpCurve);
@@ -164,6 +192,10 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
     // World pressure is resolved per step, so elapsed-time escalation is
     // modelled exactly as the scene resolves it.
+    while (nextChoice < choices.length && choices[nextChoice]!.atMs <= elapsedMs) {
+      world = applyPacingWorldChoice(world, choices[nextChoice]!, theme);
+      nextChoice += 1;
+    }
     const progress = runProgress(elapsedMs, options.durationMs);
     const modifiers = selectWorldModifiers(world, tuning.difficulty, progress);
     const plan = resolveDirectorPlan(tuning.director, progress, modifiers);
@@ -280,7 +312,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
       options.durationMs,
       theme.tuning.pace.gameplayRate,
     ),
-    chaos,
+    chaos: world.chaos,
     buckets: Object.freeze(buckets),
     finalLevel: progression.level,
     totalKills,
@@ -317,11 +349,14 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
   const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
     .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
-  const world = options.initialWorld ?? chaosWorldState(options.chaos ?? 1);
+  const initialWorld = options.initialWorld ?? chaosWorldState(options.chaos ?? 1);
+  const choices = pacingChoices(options);
 
   return Object.freeze(
     report.buckets.map((bucket) => {
       const progress = bucket.endMs / options.durationMs;
+      const world = choices.filter((choice) => choice.atMs <= bucket.endMs)
+        .reduce((current, choice) => applyPacingWorldChoice(current, choice, theme), initialWorld);
       const modifiers = selectWorldModifiers(world, theme.tuning.difficulty, progress);
       const dps = options.build.damagePerSecond(bucket.level, {
         secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),

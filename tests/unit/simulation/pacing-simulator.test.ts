@@ -1,3 +1,4 @@
+import { acceptCurse, applyWorldChoice, createWorldState } from "../../../src/game/systems/chaos/world-modifiers";
 import { describe, expect, it } from "vitest";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
@@ -8,6 +9,7 @@ import {
   findBuildModel,
 } from "../../../src/game/systems/simulation/build-models";
 import {
+  applyPacingWorldChoice,
   levelAt,
   simulatePacing,
   timeToKillTable,
@@ -327,5 +329,34 @@ describe("G1 model contract corrections", () => {
     expect(report.capDwellMs).toBeLessThanOrEqual(report.durationMs);
     expect(Object.values(report.remainingByRole).reduce((n, count) => n + count, 0)).toBe(300);
     expect(Object.values(report.killsByRole).reduce((n, count) => n + count, 0)).toBe(report.totalKills);
+  });
+});
+
+for (const theme of [ecoGuardianTheme, knightMagicTheme]) describe(`${theme.id} explicit timed world-choice fixtures`, () => {
+  const shrine = theme.shrines.find((s) => s.id === archetypeIds.shrine.greed)!;
+  const options = { theme, build: findBuildModel("damage-rush")!, durationMs: 60000, bucketMs: 1000 };
+  it("leaves every pre-acceptance bucket unchanged, while ignored choices remain exactly baseline", () => {
+    const baseline = simulatePacing(options);
+    expect(simulatePacing({ ...options, worldChoices: [] })).toEqual(baseline);
+    const choice = { atMs: 30000, kind: "shrine" as const, id: shrine.id };
+    const accepted = simulatePacing({ ...options, worldChoices: [choice] });
+    expect(accepted.buckets.filter((b) => b.endMs < choice.atMs)).toEqual(baseline.buckets.filter((b) => b.endMs < choice.atMs));
+    expect(accepted.chaos).toBeGreaterThan(baseline.chaos);
+    const early = simulatePacing({ ...options, worldChoices: [{ ...choice, atMs: 0 }] });
+    const initial = applyWorldChoice(createWorldState(), { ...shrine, shrineId: shrine.id });
+    expect(early).toEqual(simulatePacing({ ...options, initialWorld: initial }));
+    const timedTtk = timeToKillTable(accepted, { ...options, worldChoices: [choice] });
+    const baseTtk = timeToKillTable(baseline, options);
+    expect(timedTtk[0]).toEqual(baseTtk[0]);
+  });
+  it("keeps repeated curse acceptance idempotent and rejects unsupported actor-producing events", () => {
+    const curse = theme.curses[0]!;
+    const choice = { atMs: 1000, kind: "curse" as const, id: curse.id };
+    const first = applyPacingWorldChoice(createWorldState(), choice, theme);
+    expect(first).toEqual(acceptCurse(createWorldState(), curse));
+    expect(applyPacingWorldChoice(first, choice, theme)).toBe(first);
+    expect(simulatePacing({ ...options, worldChoices: [choice, { ...choice, atMs: 2000 }] })).toEqual(simulatePacing({ ...options, worldChoices: [choice] }));
+    for (const id of [archetypeIds.shrine.spawnSurge, archetypeIds.shrine.duplication]) expect(() => simulatePacing({ ...options, worldChoices: [{ atMs: 0, kind: "shrine", id }] })).toThrow(/only model/);
+    for (const atMs of [-1, NaN, Infinity, options.durationMs + 1]) expect(() => simulatePacing({ ...options, worldChoices: [{ atMs, kind: "shrine", id: shrine.id }] })).toThrow(/time/);
   });
 });

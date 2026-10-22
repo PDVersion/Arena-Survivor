@@ -50,36 +50,22 @@ export const shrines = [
   },
 ] as const satisfies readonly ShrineDefinition[];
 
-/**
- * Shrine arrivals and placement.
- *
- * Five instances across the run rather than five laid out at the start: the
- * V0.3 layout put every risk/reward decision inside the opening seconds, so the
- * remaining four minutes had none. Arrivals are normalized progress, so a
- * ten-minute run spreads the same five decisions without re-authoring.
- *
- * Derived arrival times at five minutes:
- *
- *   0:12  Shrine of the Horde     0:54  Shrine of Greed
- *   1:42  Shrine of Multiplicity  2:36  Shrine of Multiplicity
- *   3:36  Shrine of Duplication
- *
- * The distance band is measured against the 1600x900 view: the near edge is
- * just beyond one screen height, so a shrine is never handed to a player
- * standing still, and the far edge keeps it inside about one screen of travel.
+/** G3 optional destinations in the current800×450 world view at2×zoom.
+ * Center distance480–800 costs2.4–4sim seconds at base speed before obstacles.
+ * Placement remains bounded; corner/crowding fallback can relax the band.
+ * One instance per definition avoids repeating a permanent doubling site.
  */
 export const shrineTuning = {
   edgeMargin: 160,
-  minSeparation: 620,
-  minDistanceFromPlayer: 560,
-  maxDistanceFromPlayer: 1_320,
+  minSeparation: 360,
+  minDistanceFromPlayer: 480,
+  maxDistanceFromPlayer: 800,
   placementAttempts: 24,
   arrivals: [
-    { shrineId: archetypeIds.shrine.spawnSurge, appearAt: 0.04 },
-    { shrineId: archetypeIds.shrine.greed, appearAt: 0.18 },
-    { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.34 },
-    { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.52 },
-    { shrineId: archetypeIds.shrine.duplication, appearAt: 0.72 },
-    { shrineId: archetypeIds.shrine.escalation, appearAt: 0.86 },
+    { shrineId: archetypeIds.shrine.spawnSurge, appearAt: 0.16 },
+    { shrineId: archetypeIds.shrine.greed, appearAt: 0.40 },
+    { shrineId: archetypeIds.shrine.multiplicity, appearAt: 0.66 },
+    { shrineId: archetypeIds.shrine.duplication, appearAt: 0.84 },
+    { shrineId: archetypeIds.shrine.escalation, appearAt: 0.90 },
   ],
 } as const satisfies ShrinesTuning;

@@ -23,9 +23,9 @@ describe.each([ecoGuardianTheme, knightMagicTheme])("C3 world choices in $id", (
 
   it("schedules a distinct late shrine and derives its actual world bargain in the guide", () => {
     const arrivals = scheduleShrineArrivals(theme.tuning.shrines, 300000);
-    expect(arrivals.find((entry) => entry.shrineId === shrine.id)?.appearAtMs).toBe(258000);
-    expect(arrivals).toHaveLength(6);
-    expect(scheduleShrineArrivals(theme.tuning.shrines, 600000).at(-1)?.appearAtMs).toBe(516000);
+    expect(arrivals.find((entry) => entry.shrineId === shrine.id)?.appearAtMs).toBe(270000);
+    expect(arrivals).toHaveLength(5);
+    expect(scheduleShrineArrivals(theme.tuning.shrines, 600000).at(-1)?.appearAtMs).toBe(540000);
     const guide = selectShrineCodex(theme).find((entry) => entry.id === shrine.id)!;
     expect(guide.effects).toContainEqual({ label: theme.copy.world.chaos, display: "+1.2" });
     expect(guide.effects).toContainEqual({ label: theme.copy.world.xpGain, display: "×1.4" });

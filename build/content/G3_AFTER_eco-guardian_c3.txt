@@ -1,0 +1,1445 @@
+
+> arena-survivor@0.1.0 balance
+> vite-node scripts/balance.ts --theme eco-guardian --build all --difficulty all --world c3 --ttk
+
+C3 world fixture: new shrine and both curses applied at start; no traversal/offer-frequency/survival model.
+
+Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.
+theme eco_guardian  ·  difficulty beginner  ·  build evolved-single  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9       19       22      1      21     79.4      79.4
+0:30      13       20       22      1      22     83.2       163
+0:45      16       23       25      1      25     97.3       260
+1:00      18       23       25      1      25     97.3       357
+1:15      19     23.6       25      1      25      100       457
+1:30      21     24.3       29      2      28      112       569
+1:45      22     24.5       40     15      27      111       680
+2:00      24     24.5       62     46      31      127       807
+2:15      25     24.5       60     75      31      128       935
+2:30      26     24.5       60    107      28      118      1053
+2:45      27     24.5       76    155      28      118      1171
+3:00      28     24.5       80    209      26      109      1280
+3:15      28     24.5       76    257      28      120      1400
+3:30      29     24.5       66    300      23     98.8      1499
+3:45      29     24.5       22    300      22     94.4      1593
+4:00      30     24.5       24    299      25      108      1701
+4:15      31     24.5       23    300      22     95.9      1797
+4:30      31     24.5       20    300      20     87.1      1884
+4:45      31     24.5       19    300      19     83.2      1967
+5:00      32     24.5       18    300      18     78.8      2046
+--------------------------------------------------------------
+final level 32  ·  kills 494  ·  peak live 300  ·  total xp 2046
+sampled cap dwell 1:36 simulated; due natural arrivals blocked 0:51 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 396 · enemy.swarm_basic 95 · enemy.cluster_fodder 3
+remaining by role enemy.cluster_fodder 21 · enemy.gust_drifter 10 · enemy.slow_durable 56 · enemy.swarm_basic 79 · enemy.death_spawner 52 · enemy.fast_fragile 78 · enemy.committed_charger 4
+remaining work (HP × armour) enemy.cluster_fodder 168 · enemy.gust_drifter 163 · enemy.slow_durable 8709 · enemy.swarm_basic 2209 · enemy.death_spawner 1928 · enemy.fast_fragile 1002 · enemy.committed_charger 106
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 2:09  ·  L30 3:46
+spawned  enemy.fast_fragile 474  ·  enemy.swarm_basic 174  ·  enemy.cluster_fodder 24  ·  enemy.gust_drifter 10  ·  enemy.slow_durable 56  ·  enemy.death_spawner 52  ·  enemy.committed_charger 4
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13     24.5      0.90s      0.40s       5.2s       1.2s      0.91s          —          —      0.27s      0.54s      0.81s
+20%       18     24.5      0.94s      0.42s       5.4s       1.2s      0.95s          —          —      0.28s      0.57s      0.85s
+30%       21     24.5      0.99s      0.44s       5.7s       1.3s      0.99s          —          —      0.30s      0.59s      0.89s
+40%       24     24.5       1.0s      0.46s       5.9s       1.4s       1.0s          —          —      0.31s      0.62s      0.93s
+50%       26     24.5       1.1s      0.48s       6.2s       1.4s       1.1s          —          —      0.32s      0.64s      0.96s
+60%       28     24.5       1.1s      0.50s       6.4s       1.5s       1.1s          —          —      0.33s      0.67s       1.0s
+70%       29     24.5       1.2s      0.52s       6.7s       1.5s       1.2s          —          —      0.35s      0.69s       1.0s
+80%       30     24.5       1.2s      0.54s       6.9s       1.6s       1.2s      14.4s          —      0.36s      0.72s       1.1s
+90%       31     24.5       1.2s      0.56s       7.2s       1.6s       1.3s      14.9s          —      0.37s      0.75s       1.1s
+100%      32     24.5       1.3s      0.58s       7.4s       1.7s       1.3s      15.4s      77.1s      0.39s      0.77s       1.2s
+
+Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.
+theme eco_guardian  ·  difficulty beginner  ·  build evolved-packed  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9       19       22      1      21     79.4      79.4
+0:30      13       20       22      1      22     83.2       163
+0:45      16     23.1       25      1      25     97.3       260
+1:00      18     23.1       25      1      25     97.3       357
+1:15      19     24.7       25      1      25      100       457
+1:30      21     26.5       29      1      29      116       573
+1:45      23     39.4       40      2      39      160       733
+2:00      25     57.9       62      2      62      255       988
+2:15      27     59.8       60      3      59      253      1241
+2:30      30      124       60      3      60      431      1672
+2:45      33      177       76     15      64      562      2234
+3:00      35      170       80      5      90      728      2961
+3:15      38      181       76      7      74      723      3684
+3:30      40      196      106     21      92      933      4617
+3:45      42      199      119     39     101      878      5495
+4:00      43      199      127     83      83      778      6273
+4:15      45      199      158    134     107      913      7186
+4:30      46      199      156    193      97      859      8046
+4:45      47      199      152    251      94      929      8975
+5:00      48      199      116    300      67      857      9832
+--------------------------------------------------------------
+final level 48  ·  kills 1236  ·  peak live 300  ·  total xp 9832
+sampled cap dwell 0:04 simulated; due natural arrivals blocked 0:02 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 669 · enemy.swarm_basic 326 · enemy.cluster_fodder 32 · enemy.gust_drifter 7 · enemy.slow_durable 81 · enemy.death_spawner 121
+remaining by role enemy.committed_charger 16 · enemy.gust_drifter 20 · enemy.cluster_fodder 37 · enemy.slow_durable 57 · enemy.fast_fragile 57 · enemy.death_spawner 56 · enemy.swarm_basic 57
+remaining work (HP × armour) enemy.committed_charger 423 · enemy.gust_drifter 353 · enemy.cluster_fodder 325 · enemy.slow_durable 9864 · enemy.fast_fragile 782 · enemy.death_spawner 2251 · enemy.swarm_basic 1736
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 1:54  ·  L30 2:28
+spawned  enemy.fast_fragile 726  ·  enemy.swarm_basic 383  ·  enemy.cluster_fodder 69  ·  enemy.gust_drifter 27  ·  enemy.slow_durable 138  ·  enemy.death_spawner 177  ·  enemy.committed_charger 16
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13     24.5      0.90s      0.40s       5.2s       1.2s      0.91s          —          —      0.27s      0.54s      0.81s
+20%       18     24.5      0.94s      0.42s       5.4s       1.2s      0.95s          —          —      0.28s      0.57s      0.85s
+30%       21     24.5      0.99s      0.44s       5.7s       1.3s      0.99s          —          —      0.30s      0.59s      0.89s
+40%       25     43.4      0.58s      0.26s       3.3s      0.77s      0.59s          —          —      0.17s      0.35s      0.52s
+50%       30     70.7      0.37s      0.17s       2.1s      0.49s      0.37s          —          —      0.11s      0.22s      0.33s
+60%       35      130      0.21s      0.09s       1.2s      0.28s      0.21s          —          —      0.06s      0.13s      0.19s
+70%       40      199      0.14s      0.06s      0.82s      0.19s      0.14s          —          —      0.04s      0.09s      0.13s
+80%       43      199      0.15s      0.07s      0.85s      0.20s      0.15s       1.8s          —      0.04s      0.09s      0.13s
+90%       46      199      0.15s      0.07s      0.88s      0.20s      0.15s       1.8s          —      0.05s      0.09s      0.14s
+100%      48      199      0.16s      0.07s      0.91s      0.21s      0.16s       1.9s       9.5s      0.05s      0.10s      0.14s
+
+Second tool at level2; one target in reach, no splash neighbours. Contact-only lower band.
+theme eco_guardian  ·  difficulty beginner  ·  build two-tools-single  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     18.1       22      1      21     79.4      79.4
+0:30      13     18.3       22      1      22     83.2       163
+0:45      16     19.2       25      1      25     97.3       260
+1:00      18     19.2       25      1      25     97.3       357
+1:15      19       20       25      2      24       96       453
+1:30      21       20       29      7      24       96       549
+1:45      22       20       40     23      24       98       647
+2:00      23       20       62     58      27      111       758
+2:15      24       20       60     91      27      111       869
+2:30      25       20       60    127      24      101       970
+2:45      26       20       76    179      24      101      1071
+3:00      27       20       80    237      22     92.5      1164
+3:15      27       20       76    289      24      101      1265
+3:30      28       20       30    300      19     81.2      1346
+3:45      28       20       18    300      18     76.4      1423
+4:00      29       20       17    300      17     72.4      1495
+4:15      29       20       18    300      18     77.2      1572
+4:30      30       20       20    300      20     86.1      1658
+4:45      30       20       16    300      16     68.4      1727
+5:00      31       20       17    299      18     78.2      1805
+--------------------------------------------------------------
+final level 31  ·  kills 439  ·  peak live 300  ·  total xp 1805
+sampled cap dwell 1:42 simulated; due natural arrivals blocked 1:01 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 366 · enemy.swarm_basic 71 · enemy.cluster_fodder 2
+remaining by role enemy.cluster_fodder 19 · enemy.swarm_basic 84 · enemy.gust_drifter 11 · enemy.slow_durable 55 · enemy.death_spawner 43 · enemy.fast_fragile 85 · enemy.committed_charger 2
+remaining work (HP × armour) enemy.cluster_fodder 151 · enemy.swarm_basic 2288 · enemy.gust_drifter 182 · enemy.slow_durable 8600 · enemy.death_spawner 1597 · enemy.fast_fragile 1085 · enemy.committed_charger 52
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:16  ·  L25 2:18  ·  L30 4:21
+spawned  enemy.fast_fragile 451  ·  enemy.swarm_basic 155  ·  enemy.cluster_fodder 21  ·  enemy.gust_drifter 11  ·  enemy.slow_durable 55  ·  enemy.death_spawner 43  ·  enemy.committed_charger 2
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13       20       1.1s      0.50s       6.4s       1.5s       1.1s          —          —      0.33s      0.66s      0.99s
+20%       18       20       1.2s      0.52s       6.7s       1.5s       1.2s          —          —      0.35s      0.69s       1.0s
+30%       21       20       1.2s      0.54s       7.0s       1.6s       1.2s          —          —      0.36s      0.72s       1.1s
+40%       23       20       1.3s      0.57s       7.3s       1.7s       1.3s          —          —      0.38s      0.76s       1.1s
+50%       25       20       1.3s      0.59s       7.6s       1.7s       1.3s          —          —      0.39s      0.79s       1.2s
+60%       27       20       1.4s      0.61s       7.9s       1.8s       1.4s          —          —      0.41s      0.82s       1.2s
+70%       28       20       1.4s      0.64s       8.2s       1.9s       1.4s          —          —      0.43s      0.85s       1.3s
+80%       29       20       1.5s      0.66s       8.5s       1.9s       1.5s      17.6s          —      0.44s      0.88s       1.3s
+90%       30       20       1.5s      0.69s       8.8s       2.0s       1.5s      18.3s          —      0.46s      0.91s       1.4s
+100%      31       20       1.6s      0.71s       9.1s       2.1s       1.6s      18.9s      94.5s      0.47s      0.94s       1.4s
+
+Second tool at level2, then owned track picks; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model.
+theme eco_guardian  ·  difficulty beginner  ·  build two-tools-packed  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     18.1       22      1      21     79.4      79.4
+0:30      13     18.3       22      1      22     83.2       163
+0:45      16     19.5       25      1      25     97.3       260
+1:00      18     19.5       25      1      25     97.3       357
+1:15      19     22.2       25      1      25      100       457
+1:30      21     24.1       29      1      29      116       573
+1:45      23     36.4       40      3      38      156       729
+2:00      25     59.4       62      3      62      255       984
+2:15      27     58.2       60      5      58      249      1233
+2:30      29     97.4       60     10      55      333      1566
+2:45      31      100       76     40      46      351      1918
+3:00      33      100       80     59      61      368      2286
+3:15      34      100       76     86      49      344      2630
+3:30      36      100      106    129      63      513      3144
+3:45      38      100      119    180      68      489      3633
+4:00      39      100      127    248      59      363      3996
+4:15      40      100      118    300      66      467      4463
+4:30      41      100       38    300      38      421      4884
+4:45      42      100       46    299      47      468      5352
+5:00      42      100       45    300      44      447      5800
+--------------------------------------------------------------
+final level 42  ·  kills 901  ·  peak live 300  ·  total xp 5800
+sampled cap dwell 0:39 simulated; due natural arrivals blocked 0:14 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 581 · enemy.swarm_basic 223 · enemy.cluster_fodder 6 · enemy.gust_drifter 1 · enemy.slow_durable 38 · enemy.death_spawner 52
+remaining by role enemy.cluster_fodder 45 · enemy.gust_drifter 16 · enemy.slow_durable 57 · enemy.committed_charger 12 · enemy.death_spawner 56 · enemy.swarm_basic 57 · enemy.fast_fragile 57
+remaining work (HP × armour) enemy.cluster_fodder 377 · enemy.gust_drifter 269 · enemy.slow_durable 9399 · enemy.committed_charger 318 · enemy.death_spawner 2173 · enemy.swarm_basic 1705 · enemy.fast_fragile 771
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:16  ·  L25 1:54  ·  L30 2:32
+spawned  enemy.fast_fragile 638  ·  enemy.swarm_basic 280  ·  enemy.cluster_fodder 51  ·  enemy.gust_drifter 17  ·  enemy.slow_durable 95  ·  enemy.death_spawner 108  ·  enemy.committed_charger 12
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13       20       1.1s      0.50s       6.4s       1.5s       1.1s          —          —      0.33s      0.66s      0.99s
+20%       18       20       1.2s      0.52s       6.7s       1.5s       1.2s          —          —      0.35s      0.69s       1.0s
+30%       21       20       1.2s      0.54s       7.0s       1.6s       1.2s          —          —      0.36s      0.72s       1.1s
+40%       25     44.6      0.57s      0.25s       3.3s      0.75s      0.57s          —          —      0.17s      0.34s      0.51s
+50%       29      100      0.26s      0.12s       1.5s      0.35s      0.26s          —          —      0.08s      0.16s      0.24s
+60%       33      100      0.27s      0.12s       1.6s      0.36s      0.27s          —          —      0.08s      0.16s      0.25s
+70%       36      100      0.28s      0.13s       1.6s      0.37s      0.29s          —          —      0.08s      0.17s      0.25s
+80%       39      100      0.29s      0.13s       1.7s      0.39s      0.30s       3.5s          —      0.09s      0.18s      0.26s
+90%       41      100      0.30s      0.14s       1.8s      0.40s      0.31s       3.7s          —      0.09s      0.18s      0.27s
+100%      42      100      0.31s      0.14s       1.8s      0.42s      0.32s       3.8s      18.9s      0.09s      0.19s      0.28s
+
+Takes no offensive upgrades. The floor of the DPS band.
+theme eco_guardian  ·  difficulty beginner  ·  build passive  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9       14       22      1      21     79.4      79.4
+0:30      13       14       22      2      21     79.4       159
+0:45      15       14       25      5      22     85.5       244
+1:00      17       14       25      9      21     81.7       326
+1:15      19       14       25     14      20     79.3       405
+1:30      20       14       29     24      19     75.9       481
+1:45      21       14       40     46      18     72.6       554
+2:00      22       14       62     89      19     78.1       632
+2:15      23       14       60    129      20     82.2       714
+2:30      24       14       60    170      19     78.1       792
+2:45      24       14       76    227      19     79.3       871
+3:00      25       14       80    289      18       76       947
+3:15      26       14       30    300      19     80.2      1028
+3:30      26       14       13    300      13     53.8      1081
+3:45      26       14       13    300      13       54      1135
+4:00      27       14       13    300      13     54.2      1190
+4:15      27       14       13    300      13     54.5      1244
+4:30      28       14       12    300      12     50.9      1295
+4:45      28       14       13    300      13     55.2      1350
+5:00      28       14       11    300      11     46.3      1397
+--------------------------------------------------------------
+final level 28  ·  kills 344  ·  peak live 300  ·  total xp 1397
+sampled cap dwell 1:57 simulated; due natural arrivals blocked 1:20 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 305 · enemy.swarm_basic 39
+remaining by role enemy.cluster_fodder 17 · enemy.swarm_basic 101 · enemy.gust_drifter 7 · enemy.slow_durable 43 · enemy.fast_fragile 101 · enemy.death_spawner 30 · enemy.committed_charger 1
+remaining work (HP × armour) enemy.cluster_fodder 131 · enemy.swarm_basic 2678 · enemy.gust_drifter 113 · enemy.slow_durable 6677 · enemy.fast_fragile 1242 · enemy.death_spawner 1120 · enemy.committed_charger 25
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:40  ·  L20 1:26  ·  L25 2:49
+spawned  enemy.fast_fragile 406  ·  enemy.swarm_basic 140  ·  enemy.cluster_fodder 17  ·  enemy.gust_drifter 7  ·  enemy.slow_durable 43  ·  enemy.death_spawner 30  ·  enemy.committed_charger 1
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13       14       1.6s      0.71s       9.1s       2.1s       1.6s          —          —      0.47s      0.94s       1.4s
+20%       17       14       1.6s      0.74s       9.5s       2.2s       1.7s          —          —      0.49s      0.99s       1.5s
+30%       20       14       1.7s      0.78s       9.9s       2.3s       1.7s          —          —      0.52s       1.0s       1.6s
+40%       22       14       1.8s      0.81s      10.4s       2.4s       1.8s          —          —      0.54s       1.1s       1.6s
+50%       24       14       1.9s      0.84s      10.8s       2.5s       1.9s          —          —      0.56s       1.1s       1.7s
+60%       25       14       1.9s      0.88s      11.2s       2.6s       2.0s          —          —      0.58s       1.2s       1.8s
+70%       26       14       2.0s      0.91s      11.7s       2.7s       2.0s          —          —      0.61s       1.2s       1.8s
+80%       27       14       2.1s      0.94s      12.1s       2.8s       2.1s      25.2s          —      0.63s       1.3s       1.9s
+90%       28       14       2.2s      0.98s      12.5s       2.9s       2.2s      26.1s          —      0.65s       1.3s       2.0s
+100%      28       14       2.2s       1.0s      13.0s       3.0s       2.3s      27.0s       135s      0.67s       1.3s       2.0s
+
+Every level takes the additive damage upgrade (+25% of base).
+theme eco_guardian  ·  difficulty beginner  ·  build damage-rush  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     32.2       22      0      22     83.2      83.2
+0:30      13     50.5       22      1      21     79.4       163
+0:45      16     60.7       25      1      25     97.3       260
+1:00      18     69.3       25      1      25     97.3       357
+1:15      19     75.6       25      1      25      100       457
+1:30      21     81.9       29      1      29      116       573
+1:45      23     87.3       40      1      40      164       737
+2:00      25     95.4       62      1      62      255       992
+2:15      27      103       60      3      58      249      1241
+2:30      30      110       60      6      57      393      1634
+2:45      32      118       76     31      51      401      2035
+3:00      34      125       80     45      66      416      2450
+3:15      36      131       76     61      60      532      2982
+3:30      38      139      106     91      76      699      3681
+3:45      39      145      119    126      84      678      4359
+4:00      41      151      127    184      69      544      4903
+4:15      42      156      158    248      94      745      5648
+4:30      44      160      141    299      90      744      6392
+4:45      45      165       50    299      50      726      7118
+5:00      46      169       70    298      71      784      7902
+--------------------------------------------------------------
+final level 46  ·  kills 1075  ·  peak live 300  ·  total xp 7902
+sampled cap dwell 0:17 simulated; due natural arrivals blocked 0:05 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 629 · enemy.swarm_basic 280 · enemy.cluster_fodder 14 · enemy.gust_drifter 1 · enemy.slow_durable 58 · enemy.death_spawner 93
+remaining by role enemy.cluster_fodder 48 · enemy.gust_drifter 23 · enemy.committed_charger 15 · enemy.slow_durable 53 · enemy.swarm_basic 53 · enemy.fast_fragile 53 · enemy.death_spawner 53
+remaining work (HP × armour) enemy.cluster_fodder 412 · enemy.gust_drifter 395 · enemy.committed_charger 396 · enemy.slow_durable 8927 · enemy.swarm_basic 1599 · enemy.fast_fragile 716 · enemy.death_spawner 2097
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 1:54  ·  L30 2:29
+spawned  enemy.fast_fragile 682  ·  enemy.swarm_basic 333  ·  enemy.cluster_fodder 62  ·  enemy.gust_drifter 24  ·  enemy.slow_durable 111  ·  enemy.death_spawner 146  ·  enemy.committed_charger 15
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13       56      0.39s      0.18s       2.3s      0.52s      0.40s          —          —      0.12s      0.24s      0.35s
+20%       18     73.5      0.31s      0.14s       1.8s      0.41s      0.32s          —          —      0.09s      0.19s      0.28s
+30%       21       84      0.29s      0.13s       1.7s      0.38s      0.29s          —          —      0.09s      0.17s      0.26s
+40%       25       98      0.26s      0.12s       1.5s      0.34s      0.26s          —          —      0.08s      0.15s      0.23s
+50%       30      116      0.23s      0.10s       1.3s      0.30s      0.23s          —          —      0.07s      0.14s      0.20s
+60%       34      130      0.21s      0.09s       1.2s      0.28s      0.21s          —          —      0.06s      0.13s      0.19s
+70%       38      144      0.20s      0.09s       1.1s      0.26s      0.20s          —          —      0.06s      0.12s      0.18s
+80%       41      154      0.19s      0.09s       1.1s      0.25s      0.19s       2.3s          —      0.06s      0.11s      0.17s
+90%       44      165      0.19s      0.08s       1.1s      0.24s      0.19s       2.2s          —      0.06s      0.11s      0.17s
+100%      46      172      0.18s      0.08s       1.1s      0.24s      0.19s       2.2s      11.0s      0.06s      0.11s      0.17s
+
+Alternates crit chance and attack speed, reaching overcrit tiers.
+theme eco_guardian  ·  difficulty beginner  ·  build crit  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     27.1       22      0      22     83.2      83.2
+0:30      13     43.2       22      1      21     79.4       163
+0:45      16     53.7       25      1      25     97.3       260
+1:00      18     63.6       25      1      25     97.3       357
+1:15      19     71.3       25      1      25      100       457
+1:30      21     80.4       29      1      29      116       573
+1:45      23     89.9       40      1      40      164       737
+2:00      25      107       62      1      62      255       992
+2:15      27      124       60      3      58      249      1241
+2:30      30      144       60      0      63      469      1710
+2:45      33      167       76     16      60      520      2229
+3:00      36      196       80      2      94      775      3005
+3:15      38      224       76      2      76      755      3760
+3:30      41      250      106      5     103     1079      4839
+3:45      43      291      119      2     122     1169      6009
+4:00      45      333      127     13     116     1224      7233
+4:15      47      378      158      4     167     1730      8963
+4:30      49      425      156     12     148     1594       11k
+4:45      51      470      152      3     161     1944       13k
+5:00      53      509      155     17     141     1976       14k
+--------------------------------------------------------------
+final level 53  ·  kills 1558  ·  peak live 23  ·  total xp 14478
+sampled cap dwell 0:00 simulated; due natural arrivals blocked 0:00 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 727 · enemy.swarm_basic 396 · enemy.cluster_fodder 69 · enemy.gust_drifter 27 · enemy.slow_durable 142 · enemy.death_spawner 181 · enemy.committed_charger 16
+remaining by role enemy.slow_durable 3 · enemy.death_spawner 4 · enemy.swarm_basic 4 · enemy.fast_fragile 3 · enemy.cluster_fodder 3
+remaining work (HP × armour) enemy.slow_durable 526 · enemy.death_spawner 162 · enemy.swarm_basic 125 · enemy.fast_fragile 41 · enemy.cluster_fodder 27
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 1:54  ·  L30 2:27
+spawned  enemy.fast_fragile 730  ·  enemy.swarm_basic 400  ·  enemy.cluster_fodder 72  ·  enemy.gust_drifter 27  ·  enemy.slow_durable 145  ·  enemy.death_spawner 185  ·  enemy.committed_charger 16
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13     48.4      0.46s      0.21s       2.6s      0.60s      0.46s          —          —      0.14s      0.27s      0.41s
+20%       18     69.1      0.33s      0.15s       1.9s      0.44s      0.34s          —          —      0.10s      0.20s      0.30s
+30%       21       84      0.29s      0.13s       1.7s      0.38s      0.29s          —          —      0.09s      0.17s      0.26s
+40%       25      113      0.22s      0.10s       1.3s      0.29s      0.22s          —          —      0.07s      0.13s      0.20s
+50%       30      155      0.17s      0.08s      0.98s      0.22s      0.17s          —          —      0.05s      0.10s      0.15s
+60%       36      215      0.13s      0.06s      0.73s      0.17s      0.13s          —          —      0.04s      0.08s      0.11s
+70%       41      280      0.10s      0.05s      0.58s      0.13s      0.10s          —          —      0.03s      0.06s      0.09s
+80%       45      360      0.08s      0.04s      0.47s      0.11s      0.08s      0.98s          —      0.02s      0.05s      0.07s
+90%       49      449      0.07s      0.03s      0.39s      0.09s      0.07s      0.81s          —      0.02s      0.04s      0.06s
+100%      53      546      0.06s      0.03s      0.33s      0.08s      0.06s      0.69s       3.5s      0.02s      0.03s      0.05s
+
+Spreads picks across damage, attack speed, crit and projectiles: the multiplicative build the DPS budget is written for.
+theme eco_guardian  ·  difficulty beginner  ·  build spread  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     34.1       22      0      22     83.2      83.2
+0:30      13     91.2       22      0      22     83.3       166
+0:45      16      113       25      0      25     97.3       264
+1:00      18      202       25      0      25     97.4       361
+1:15      20      202       25      0      25      100       461
+1:30      21      261       29      0      29      116       577
+1:45      23      348       40      0      40      164       742
+2:00      25      348       62      0      62      255       996
+2:15      28      545       60      0      60      283      1279
+2:30      30      558       60      0      60      431      1710
+2:45      33      801       76      0      76      715      2424
+3:00      36      859       80      0      80      607      3031
+3:15      38     1078       76      0      76      764      3795
+3:30      41     1100      106      1     105     1066      4862
+3:45      43     1347      119      0     120     1156      6018
+4:00      45     1347      127      3     124     1384      7401
+4:15      47     1613      158      0     161     1627      9028
+4:30      49     1656      156      1     155     1679       11k
+4:45      51     1793      152      0     153     1847       13k
+5:00      53     2058      155      0     155     2167       15k
+--------------------------------------------------------------
+final level 53  ·  kills 1575  ·  peak live 5  ·  total xp 14722
+sampled cap dwell 0:00 simulated; due natural arrivals blocked 0:00 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 730 · enemy.swarm_basic 400 · enemy.cluster_fodder 72 · enemy.gust_drifter 27 · enemy.slow_durable 145 · enemy.death_spawner 185 · enemy.committed_charger 16
+remaining by role
+remaining work (HP × armour)
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 1:53  ·  L30 2:26
+spawned  enemy.fast_fragile 730  ·  enemy.swarm_basic 400  ·  enemy.cluster_fodder 72  ·  enemy.gust_drifter 27  ·  enemy.slow_durable 145  ·  enemy.death_spawner 185  ·  enemy.committed_charger 16
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13      105      0.21s      0.09s       1.2s      0.28s      0.21s          —          —      0.06s      0.13s      0.19s
+20%       18      202      0.11s      0.05s      0.66s      0.15s      0.12s          —          —      0.03s      0.07s      0.10s
+30%       21      348      0.07s      0.03s      0.40s      0.09s      0.07s          —          —      0.02s      0.04s      0.06s
+40%       25      348      0.07s      0.03s      0.42s      0.10s      0.07s          —          —      0.02s      0.04s      0.07s
+50%       30      558      0.05s      0.02s      0.27s      0.06s      0.05s          —          —      0.01s      0.03s      0.04s
+60%       36     1078      0.03s      0.01s      0.15s      0.03s      0.03s          —          —      0.01s      0.02s      0.02s
+70%       41     1347      0.02s      0.01s      0.12s      0.03s      0.02s          —          —      0.01s      0.01s      0.02s
+80%       45     1347      0.02s      0.01s      0.13s      0.03s      0.02s      0.26s          —      0.01s      0.01s      0.02s
+90%       49     1656      0.02s      0.01s      0.11s      0.02s      0.02s      0.22s          —      0.01s      0.01s      0.02s
+100%      53     2058      0.02s      0.01s      0.09s      0.02s      0.02s      0.18s      0.92s      0.00s      0.01s      0.01s
+
+Buys Collection Sweep through level five; assumes each authored sweep circle catches one target.
+theme eco_guardian  ·  difficulty beginner  ·  build collection-sweep  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     28.3       22      0      22     83.2      83.2
+0:30      13       35       22      1      21     79.4       163
+0:45      16       35       25      1      25     97.3       260
+1:00      18       35       25      1      25     97.3       357
+1:15      19       35       25      1      25      100       457
+1:30      21       35       29      1      29      116       573
+1:45      23       35       40      9      32      131       705
+2:00      24       35       62     31      40      164       869
+2:15      26       35       60     52      39      162      1031
+2:30      27       35       60     75      37      155      1187
+2:45      28       35       76    115      36      152      1339
+3:00      29       35       80    162      33      141      1480
+3:15      30       35       76    202      36      155      1635
+3:30      31       35      106    271      37      160      1795
+3:45      31       35       64    300      35      155      1950
+4:00      32       35       26    300      26      114      2064
+4:15      32       35       29    300      29      127      2191
+4:30      33       35       27    300      27      119      2310
+4:45      33       35       21    300      21      118      2429
+5:00      34       35        9    300       9     90.5      2519
+--------------------------------------------------------------
+final level 34  ·  kills 584  ·  peak live 300  ·  total xp 2519
+sampled cap dwell 1:23 simulated; due natural arrivals blocked 0:41 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 446 · enemy.swarm_basic 132 · enemy.cluster_fodder 3 · enemy.slow_durable 3
+remaining by role enemy.cluster_fodder 29 · enemy.gust_drifter 10 · enemy.slow_durable 65 · enemy.death_spawner 63 · enemy.swarm_basic 64 · enemy.committed_charger 4 · enemy.fast_fragile 65
+remaining work (HP × armour) enemy.cluster_fodder 236 · enemy.gust_drifter 161 · enemy.slow_durable 10294 · enemy.death_spawner 2327 · enemy.swarm_basic 1831 · enemy.committed_charger 101 · enemy.fast_fragile 848
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 2:02  ·  L30 3:12
+spawned  enemy.fast_fragile 511  ·  enemy.swarm_basic 196  ·  enemy.cluster_fodder 32  ·  enemy.gust_drifter 10  ·  enemy.slow_durable 68  ·  enemy.death_spawner 63  ·  enemy.committed_charger 4
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13       35      0.63s      0.28s       3.6s      0.83s      0.64s          —          —      0.19s      0.38s      0.57s
+20%       18       35      0.66s      0.30s       3.8s      0.87s      0.67s          —          —      0.20s      0.40s      0.59s
+30%       21       35      0.69s      0.31s       4.0s      0.91s      0.70s          —          —      0.21s      0.41s      0.62s
+40%       24       35      0.72s      0.32s       4.1s      0.95s      0.73s          —          —      0.22s      0.43s      0.65s
+50%       27       35      0.75s      0.34s       4.3s      0.99s      0.76s          —          —      0.22s      0.45s      0.67s
+60%       29       35      0.78s      0.35s       4.5s       1.0s      0.79s          —          —      0.23s      0.47s      0.70s
+70%       31       35      0.81s      0.36s       4.7s       1.1s      0.82s          —          —      0.24s      0.49s      0.73s
+80%       32       35      0.84s      0.38s       4.8s       1.1s      0.85s      10.1s          —      0.25s      0.50s      0.76s
+90%       33       35      0.87s      0.39s       5.0s       1.1s      0.88s      10.4s          —      0.26s      0.52s      0.78s
+100%      34       35      0.90s      0.40s       5.2s       1.2s      0.91s      10.8s      54.0s      0.27s      0.54s      0.81s
+
+Splits between damage and on-kill detonation; output rises with enemy density.
+theme eco_guardian  ·  difficulty beginner  ·  build explosion  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     22.6       22      1      21     79.4      79.4
+0:30      13     31.6       22      1      22     83.2       163
+0:45      16     37.1       25      1      25     97.3       260
+1:00      18     41.2       25      1      25     97.3       357
+1:15      19     44.7       25      1      25      100       457
+1:30      21     47.7       29      1      29      116       573
+1:45      23     51.6       40      4      37      152       725
+2:00      25     60.2       62      3      63      259       984
+2:15      27     61.7       60      3      60      257      1241
+2:30      29     77.4       60     15      48      279      1520
+2:45      31      110       76     42      49      389      1909
+3:00      33      147       80     49      73      498      2407
+3:15      36      172       76     55      70      671      3078
+3:30      39      195      106     68      93      927      4005
+3:45      41      233      119     78     109      998      5003
+4:00      43      254      127    106      99     1004      6007
+4:15      45      264      158    136     128     1192      7198
+4:30      46      273      156    175     117     1163      8361
+4:45      48      283      152    211     116     1260      9621
+5:00      49      290      155    278      88     1162       11k
+--------------------------------------------------------------
+final level 49  ·  kills 1297  ·  peak live 279  ·  total xp 10783
+sampled cap dwell 0:00 simulated; due natural arrivals blocked 0:00 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 681 · enemy.swarm_basic 348 · enemy.cluster_fodder 36 · enemy.gust_drifter 1 · enemy.slow_durable 96 · enemy.death_spawner 135
+remaining by role enemy.gust_drifter 26 · enemy.committed_charger 16 · enemy.cluster_fodder 36 · enemy.slow_durable 49 · enemy.fast_fragile 49 · enemy.death_spawner 50 · enemy.swarm_basic 52
+remaining work (HP × armour) enemy.gust_drifter 450 · enemy.committed_charger 423 · enemy.cluster_fodder 318 · enemy.slow_durable 8552 · enemy.fast_fragile 671 · enemy.death_spawner 2011 · enemy.swarm_basic 1587
+reached  L5 0:04  ·  L10 0:15  ·  L15 0:38  ·  L20 1:15  ·  L25 1:55  ·  L30 2:34
+spawned  enemy.fast_fragile 730  ·  enemy.swarm_basic 400  ·  enemy.cluster_fodder 72  ·  enemy.gust_drifter 27  ·  enemy.slow_durable 145  ·  enemy.death_spawner 185  ·  enemy.committed_charger 16
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13     35.9      0.61s      0.28s       3.5s      0.81s      0.62s          —          —      0.18s      0.37s      0.55s
+20%       18     43.1      0.54s      0.24s       3.1s      0.71s      0.54s          —          —      0.16s      0.32s      0.48s
+30%       21     50.2      0.48s      0.22s       2.8s      0.63s      0.48s          —          —      0.14s      0.29s      0.43s
+40%       25     60.2      0.42s      0.19s       2.4s      0.55s      0.42s          —          —      0.13s      0.25s      0.38s
+50%       29     86.6      0.30s      0.14s       1.7s      0.40s      0.31s          —          —      0.09s      0.18s      0.27s
+60%       33      156      0.18s      0.08s       1.0s      0.23s      0.18s          —          —      0.05s      0.11s      0.16s
+70%       39      217      0.13s      0.06s      0.75s      0.17s      0.13s          —          —      0.04s      0.08s      0.12s
+80%       43      263      0.11s      0.05s      0.65s      0.15s      0.11s       1.3s          —      0.03s      0.07s      0.10s
+90%       46      273      0.11s      0.05s      0.64s      0.15s      0.11s       1.3s          —      0.03s      0.07s      0.10s
+100%      49      294      0.11s      0.05s      0.62s      0.14s      0.11s       1.3s       6.4s      0.03s      0.06s      0.10s
+
+Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.
+theme eco_guardian  ·  difficulty normal  ·  build evolved-single  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     15.9       28      9      19     71.8      71.8
+0:30      13     18.4       30     15      24     90.7       163
+0:45      15     18.4       30     23      22     83.9       246
+1:00      17     18.4       30     31      22     85.6       332
+1:15      19     18.4       30     39      22     85.6       418
+1:30      20     18.4       37     55      21     83.5       501
+1:45      21     18.4       53     87      21       84       585
+2:00      22     18.4       74    140      21     84.6       670
+2:15      23     18.4       76    196      20     82.2       752
+2:30      24     18.4       78    254      20     82.2       834
+2:45      25     18.4       66    300      20     82.2       916
+3:00      25     18.4       20    300      20     82.2       999
+3:15      26     18.4       19    300      19     79.2      1078
+3:30      27     18.4       19    299      20     84.4      1162
+3:45      27     18.4       18    300      17     71.1      1233
+4:00      28     18.4       13    300      13     53.3      1287
+4:15      28     18.4       14    300      14       58      1345
+4:30      28     18.4       14    300      14       58      1403
+4:45      29     18.4       10    300      10     41.4      1444
+5:00      29     18.4       14    300      14     58.4      1502
+--------------------------------------------------------------
+final level 29  ·  kills 373  ·  peak live 300  ·  total xp 1502
+sampled cap dwell 2:19 simulated; due natural arrivals blocked 1:36 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 342 · enemy.swarm_basic 31
+remaining by role enemy.swarm_basic 106 · enemy.cluster_fodder 14 · enemy.gust_drifter 9 · enemy.fast_fragile 107 · enemy.slow_durable 42 · enemy.death_spawner 22
+remaining work (HP × armour) enemy.swarm_basic 3524 · enemy.cluster_fodder 136 · enemy.gust_drifter 186 · enemy.fast_fragile 1658 · enemy.slow_durable 8258 · enemy.death_spawner 1046
+reached  L5 0:05  ·  L10 0:16  ·  L15 0:40  ·  L20 1:22  ·  L25 2:40
+spawned  enemy.fast_fragile 449  ·  enemy.swarm_basic 137  ·  enemy.cluster_fodder 14  ·  enemy.gust_drifter 9  ·  enemy.slow_durable 42  ·  enemy.death_spawner 22
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13     18.4       1.5s      0.68s       8.8s       2.0s       1.5s          —          —      0.46s      0.91s       1.4s
+20%       17     18.4       1.6s      0.72s       9.2s       2.1s       1.6s          —          —      0.48s      0.96s       1.4s
+30%       20     18.4       1.7s      0.75s       9.6s       2.2s       1.7s          —          —      0.50s      1.00s       1.5s
+40%       22     18.4       1.7s      0.78s      10.0s       2.3s       1.8s          —          —      0.52s       1.0s       1.6s
+50%       24     18.4       1.8s      0.81s      10.4s       2.4s       1.8s          —          —      0.54s       1.1s       1.6s
+60%       25     18.4       1.9s      0.85s      10.8s       2.5s       1.9s          —          —      0.56s       1.1s       1.7s
+70%       27     18.4       2.0s      0.88s      11.3s       2.6s       2.0s          —          —      0.59s       1.2s       1.8s
+80%       28     18.4       2.0s      0.91s      11.7s       2.7s       2.0s      24.3s          —      0.61s       1.2s       1.8s
+90%       28     18.4       2.1s      0.94s      12.1s       2.8s       2.1s      25.2s          —      0.63s       1.3s       1.9s
+100%      29     18.4       2.2s      0.98s      12.5s       2.9s       2.2s      26.1s       130s      0.65s       1.3s       2.0s
+
+Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.
+theme eco_guardian  ·  difficulty normal  ·  build evolved-packed  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      11     21.8       28      1      27      102       102
+0:30      14       24       30      1      30      113       215
+0:45      17       27       30      1      30      117       332
+1:00      19     27.2       30      1      30      117       449
+1:15      21     31.7       30      2      29      116       565
+1:30      23     41.1       37      2      37      148       713
+1:45      25     56.8       53      5      50      205       918
+2:00      27     88.9       74      4      75      308      1226
+2:15      29      102       76      7      73      308      1534
+2:30      31      149       78     22      63      443      1977
+2:45      33      149       86     47      61      415      2392
+3:00      35      149      102     82      67      437      2830
+3:15      37      149      104    108      78      610      3440
+3:30      38      149      143    177      74      500      3940
+3:45      39      149      156    256      77      438      4378
+4:00      41      149      112    300      68      501      4879
+4:15      42      149       58    299      59      566      5445
+4:30      43      149       35    299      35      469      5914
+4:45      44      149       36    300      35      491      6405
+5:00      44      149       45    299      46      561      6966
+--------------------------------------------------------------
+final level 44  ·  kills 1044  ·  peak live 300  ·  total xp 6966
+sampled cap dwell 0:52 simulated; due natural arrivals blocked 0:24 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 668 · enemy.swarm_basic 250 · enemy.cluster_fodder 9 · enemy.slow_durable 51 · enemy.death_spawner 66
+remaining by role enemy.gust_drifter 19 · enemy.cluster_fodder 48 · enemy.slow_durable 54 · enemy.committed_charger 14 · enemy.fast_fragile 54 · enemy.death_spawner 55 · enemy.swarm_basic 55
+remaining work (HP × armour) enemy.gust_drifter 399 · enemy.cluster_fodder 503 · enemy.slow_durable 11292 · enemy.committed_charger 460 · enemy.fast_fragile 910 · enemy.death_spawner 2712 · enemy.swarm_basic 2088
+reached  L5 0:04  ·  L10 0:13  ·  L15 0:30  ·  L20 1:02  ·  L25 1:44  ·  L30 2:18
+spawned  enemy.fast_fragile 722  ·  enemy.swarm_basic 305  ·  enemy.cluster_fodder 57  ·  enemy.gust_drifter 19  ·  enemy.slow_durable 105  ·  enemy.death_spawner 121  ·  enemy.committed_charger 14
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     18.4       1.5s      0.68s       8.8s       2.0s       1.5s          —          —      0.46s      0.91s       1.4s
+20%       19     18.4       1.6s      0.72s       9.2s       2.1s       1.6s          —          —      0.48s      0.96s       1.4s
+30%       23     32.6      0.94s      0.42s       5.4s       1.2s      0.95s          —          —      0.28s      0.56s      0.85s
+40%       27     79.8      0.40s      0.18s       2.3s      0.53s      0.40s          —          —      0.12s      0.24s      0.36s
+50%       31      149      0.22s      0.10s       1.3s      0.29s      0.22s          —          —      0.07s      0.13s      0.20s
+60%       35      149      0.23s      0.10s       1.3s      0.31s      0.23s          —          —      0.07s      0.14s      0.21s
+70%       38      149      0.24s      0.11s       1.4s      0.32s      0.24s          —          —      0.07s      0.14s      0.22s
+80%       41      149      0.25s      0.11s       1.4s      0.33s      0.25s       3.0s          —      0.07s      0.15s      0.22s
+90%       43      149      0.26s      0.12s       1.5s      0.34s      0.26s       3.1s          —      0.08s      0.16s      0.23s
+100%      44      149      0.27s      0.12s       1.5s      0.35s      0.27s       3.2s      16.1s      0.08s      0.16s      0.24s
+
+Second tool at level2; one target in reach, no splash neighbours. Contact-only lower band.
+theme eco_guardian  ·  difficulty normal  ·  build two-tools-single  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     14.6       28     10      18       68        68
+0:30      12       15       30     21      19     71.8       140
+0:45      14       15       30     33      18       68       208
+1:00      16       15       30     45      18     69.7       278
+1:15      18       15       30     57      18       70       348
+1:30      19       15       37     76      18       70       418
+1:45      20       15       53    111      18     71.5       489
+2:00      21       15       74    168      17       68       557
+2:15      22       15       76    227      17       68       625
+2:30      23       15       78    289      16     65.1       690
+2:45      23       15       28    300      17     69.9       760
+3:00      24       15       16    300      16     65.8       826
+3:15      25       15       16    300      16     65.8       892
+3:30      25       15       17    300      17     69.9       962
+3:45      26       15       16    300      16     65.8      1027
+4:00      26       15       16    300      16     67.3      1095
+4:15      27       15       15    300      15     63.3      1158
+4:30      27       15       11    300      11     45.1      1203
+4:45      27       15       11    300      11     45.1      1248
+5:00      28       15       11    300      11     45.5      1294
+--------------------------------------------------------------
+final level 28  ·  kills 323  ·  peak live 300  ·  total xp 1294
+sampled cap dwell 2:28 simulated; due natural arrivals blocked 1:45 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 309 · enemy.swarm_basic 14
+remaining by role enemy.swarm_basic 111 · enemy.cluster_fodder 12 · enemy.gust_drifter 6 · enemy.fast_fragile 112 · enemy.slow_durable 34 · enemy.death_spawner 23 · enemy.committed_charger 2
+remaining work (HP × armour) enemy.swarm_basic 3626 · enemy.cluster_fodder 115 · enemy.gust_drifter 123 · enemy.fast_fragile 1705 · enemy.slow_durable 6726 · enemy.death_spawner 1108 · enemy.committed_charger 63
+reached  L5 0:05  ·  L10 0:18  ·  L15 0:47  ·  L20 1:39  ·  L25 3:14
+spawned  enemy.fast_fragile 421  ·  enemy.swarm_basic 125  ·  enemy.cluster_fodder 12  ·  enemy.gust_drifter 6  ·  enemy.slow_durable 34  ·  enemy.death_spawner 23  ·  enemy.committed_charger 2
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       12       15       1.9s      0.84s      10.7s       2.5s       1.9s          —          —      0.56s       1.1s       1.7s
+20%       16       15       2.0s      0.88s      11.2s       2.6s       2.0s          —          —      0.59s       1.2s       1.8s
+30%       19       15       2.0s      0.92s      11.7s       2.7s       2.1s          —          —      0.61s       1.2s       1.8s
+40%       21       15       2.1s      0.96s      12.3s       2.8s       2.1s          —          —      0.64s       1.3s       1.9s
+50%       23       15       2.2s      1.00s      12.8s       2.9s       2.2s          —          —      0.66s       1.3s       2.0s
+60%       24       15       2.3s       1.0s      13.3s       3.0s       2.3s          —          —      0.69s       1.4s       2.1s
+70%       25       15       2.4s       1.1s      13.8s       3.2s       2.4s          —          —      0.72s       1.4s       2.2s
+80%       26       15       2.5s       1.1s      14.3s       3.3s       2.5s      29.8s          —      0.74s       1.5s       2.2s
+90%       27       15       2.6s       1.2s      14.8s       3.4s       2.6s      30.9s          —      0.77s       1.5s       2.3s
+100%      28       15       2.7s       1.2s      15.3s       3.5s       2.7s      31.9s       160s      0.80s       1.6s       2.4s
+
+Second tool at level2, then owned track picks; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model.
+theme eco_guardian  ·  difficulty normal  ·  build two-tools-packed  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     21.1       28      2      26     98.3      98.3
+0:30      14     23.9       30      2      30      113       212
+0:45      17     25.9       30      2      30      116       328
+1:00      19     27.2       30      2      30      117       445
+1:15      21     31.9       30      3      29      116       561
+1:30      23     40.3       37      3      37      148       709
+1:45      25     53.2       53     10      46      189       897
+2:00      27     75.1       74     17      67      275      1173
+2:15      28     75.1       76     35      58      243      1416
+2:30      30     75.1       78     52      61      257      1674
+2:45      31     75.1       86     89      49      209      1882
+3:00      32     75.1      102    136      55      289      2171
+3:15      33     75.1      104    181      59      257      2428
+3:30      34     75.1      143    269      55      242      2671
+3:45      35     75.1       55    300      24      206      2877
+4:00      36     75.1       26    299      27      195      3072
+4:15      36     75.1       18    300      17      177      3249
+4:30      37     75.1       26    300      26      210      3459
+4:45      38     75.1       26    300      26      288      3747
+5:00      38     75.1       18    300      18      235      3983
+--------------------------------------------------------------
+final level 38  ·  kills 770  ·  peak live 300  ·  total xp 3983
+sampled cap dwell 1:20 simulated; due natural arrivals blocked 0:52 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 571 · enemy.swarm_basic 164 · enemy.cluster_fodder 2 · enemy.slow_durable 22 · enemy.death_spawner 11
+remaining by role enemy.cluster_fodder 41 · enemy.gust_drifter 14 · enemy.slow_durable 59 · enemy.death_spawner 59 · enemy.swarm_basic 61 · enemy.committed_charger 6 · enemy.fast_fragile 60
+remaining work (HP × armour) enemy.cluster_fodder 419 · enemy.gust_drifter 286 · enemy.slow_durable 11913 · enemy.death_spawner 2769 · enemy.swarm_basic 2228 · enemy.committed_charger 200 · enemy.fast_fragile 995
+reached  L5 0:04  ·  L10 0:13  ·  L15 0:31  ·  L20 1:02  ·  L25 1:44  ·  L30 2:25
+spawned  enemy.fast_fragile 631  ·  enemy.swarm_basic 225  ·  enemy.cluster_fodder 43  ·  enemy.gust_drifter 14  ·  enemy.slow_durable 81  ·  enemy.death_spawner 70  ·  enemy.committed_charger 6
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     22.6       1.2s      0.55s       7.1s       1.6s       1.2s          —          —      0.37s      0.74s       1.1s
+20%       19     22.6       1.3s      0.58s       7.4s       1.7s       1.3s          —          —      0.39s      0.78s       1.2s
+30%       23     33.5      0.91s      0.41s       5.3s       1.2s      0.92s          —          —      0.27s      0.55s      0.82s
+40%       27     75.1      0.43s      0.19s       2.4s      0.56s      0.43s          —          —      0.13s      0.26s      0.38s
+50%       30     75.1      0.44s      0.20s       2.6s      0.58s      0.45s          —          —      0.13s      0.27s      0.40s
+60%       32     75.1      0.46s      0.21s       2.7s      0.61s      0.46s          —          —      0.14s      0.28s      0.41s
+70%       34     75.1      0.48s      0.22s       2.8s      0.63s      0.48s          —          —      0.14s      0.29s      0.43s
+80%       36     75.1      0.50s      0.22s       2.9s      0.65s      0.50s       6.0s          —      0.15s      0.30s      0.45s
+90%       37     75.1      0.51s      0.23s       3.0s      0.68s      0.52s       6.2s          —      0.15s      0.31s      0.46s
+100%      38     75.1      0.53s      0.24s       3.1s      0.70s      0.54s       6.4s      31.9s      0.16s      0.32s      0.48s
+
+Takes no offensive upgrades. The floor of the DPS band.
+theme eco_guardian  ·  difficulty normal  ·  build passive  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       7     10.5       28     15      13     49.1      49.1
+0:30      10     10.5       30     32      13     49.1      98.3
+0:45      12     10.5       30     49      13     49.1       147
+1:00      14     10.5       30     66      13     49.1       197
+1:15      15     10.5       30     83      13     49.9       246
+1:30      16     10.5       37    108      12     46.7       293
+1:45      17     10.5       53    148      13     50.6       344
+2:00      18     10.5       74    209      13     50.6       394
+2:15      19     10.5       76    273      12     46.8       441
+2:30      20     10.5       39    300      12       48       489
+2:45      21     10.5       12    300      12       48       537
+3:00      21     10.5       12    300      12       48       585
+3:15      22     10.5       12    300      12       48       633
+3:30      22     10.5       11    300      11     44.8       678
+3:45      23     10.5       12    300      12     49.3       727
+4:00      23     10.5       11    300      11     45.2       772
+4:15      24     10.5       12    300      12     49.3       822
+4:30      24     10.5       11    300      11     45.2       867
+4:45      25     10.5       12    300      12     49.3       916
+5:00      25     10.5       11    300      11     45.2       962
+--------------------------------------------------------------
+final level 25  ·  kills 243  ·  peak live 300  ·  total xp 962
+sampled cap dwell 2:39 simulated; due natural arrivals blocked 2:02 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 243
+remaining by role enemy.swarm_basic 115 · enemy.fast_fragile 136 · enemy.cluster_fodder 9 · enemy.gust_drifter 6 · enemy.slow_durable 20 · enemy.death_spawner 13 · enemy.committed_charger 1
+remaining work (HP × armour) enemy.swarm_basic 3736 · enemy.fast_fragile 2014 · enemy.cluster_fodder 89 · enemy.gust_drifter 128 · enemy.slow_durable 3907 · enemy.death_spawner 634 · enemy.committed_charger 34
+reached  L5 0:07  ·  L10 0:25  ·  L15 1:06  ·  L20 2:21  ·  L25 4:37
+spawned  enemy.fast_fragile 379  ·  enemy.swarm_basic 115  ·  enemy.cluster_fodder 9  ·  enemy.gust_drifter 6  ·  enemy.slow_durable 20  ·  enemy.death_spawner 13  ·  enemy.committed_charger 1
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       10     10.5       2.7s       1.2s      15.3s       3.5s       2.7s          —          —      0.80s       1.6s       2.4s
+20%       14     10.5       2.8s       1.3s      16.1s       3.7s       2.8s          —          —      0.84s       1.7s       2.5s
+30%       16     10.5       2.9s       1.3s      16.8s       3.8s       2.9s          —          —      0.87s       1.7s       2.6s
+40%       18     10.5       3.0s       1.4s      17.5s       4.0s       3.1s          —          —      0.91s       1.8s       2.7s
+50%       20     10.5       3.2s       1.4s      18.2s       4.2s       3.2s          —          —      0.95s       1.9s       2.8s
+60%       21     10.5       3.3s       1.5s      19.0s       4.3s       3.3s          —          —      0.99s       2.0s       3.0s
+70%       22     10.5       3.4s       1.5s      19.7s       4.5s       3.4s          —          —       1.0s       2.1s       3.1s
+80%       23     10.5       3.5s       1.6s      20.4s       4.7s       3.6s      42.6s          —       1.1s       2.1s       3.2s
+90%       24     10.5       3.7s       1.7s      21.2s       4.8s       3.7s      44.1s          —       1.1s       2.2s       3.3s
+100%      25     10.5       3.8s       1.7s      21.9s       5.0s       3.8s      45.6s       228s       1.1s       2.3s       3.4s
+
+Every level takes the additive damage upgrade (+25% of base).
+theme eco_guardian  ·  difficulty normal  ·  build damage-rush  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      11     24.2       28      1      27      102       102
+0:30      14     41.2       30      1      30      113       215
+0:45      17     49.9       30      1      30      117       332
+1:00      19       56       30      1      30      117       449
+1:15      21     61.1       30      1      30      120       569
+1:30      23     65.6       37      0      38      152       721
+1:45      25     70.2       53      7      46      189       910
+2:00      27     75.7       74     14      67      275      1185
+2:15      29     80.6       76     27      63      264      1450
+2:30      30     85.2       78     42      63      266      1716
+2:45      32     88.5       86     81      47      277      1992
+3:00      33     92.7      102    125      58      302      2294
+3:15      34       96      104    166      63      326      2620
+3:30      35     99.1      143    249      60      307      2926
+3:45      36      102       96    300      45      275      3202
+4:00      37      104       38    300      38      323      3525
+4:15      38      107       40    300      40      394      3919
+4:30      39      110       33    299      34      378      4297
+4:45      40      112       43    299      43      414      4711
+5:00      41      115       41    299      41      405      5116
+--------------------------------------------------------------
+final level 41  ·  kills 893  ·  peak live 300  ·  total xp 5116
+sampled cap dwell 1:05 simulated; due natural arrivals blocked 0:28 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 625 · enemy.swarm_basic 202 · enemy.cluster_fodder 3 · enemy.slow_durable 28 · enemy.death_spawner 35
+remaining by role enemy.gust_drifter 16 · enemy.cluster_fodder 43 · enemy.slow_durable 57 · enemy.death_spawner 57 · enemy.committed_charger 10 · enemy.swarm_basic 58 · enemy.fast_fragile 58
+remaining work (HP × armour) enemy.gust_drifter 333 · enemy.cluster_fodder 442 · enemy.slow_durable 11606 · enemy.death_spawner 2755 · enemy.committed_charger 332 · enemy.swarm_basic 2184 · enemy.fast_fragile 992
+reached  L5 0:05  ·  L10 0:12  ·  L15 0:30  ·  L20 1:01  ·  L25 1:43  ·  L30 2:23
+spawned  enemy.fast_fragile 683  ·  enemy.swarm_basic 260  ·  enemy.cluster_fodder 46  ·  enemy.gust_drifter 16  ·  enemy.slow_durable 85  ·  enemy.death_spawner 92  ·  enemy.committed_charger 10
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     44.6      0.63s      0.28s       3.6s      0.83s      0.63s          —          —      0.19s      0.38s      0.56s
+20%       19     57.8      0.51s      0.23s       2.9s      0.67s      0.51s          —          —      0.15s      0.30s      0.46s
+30%       23     68.3      0.45s      0.20s       2.6s      0.59s      0.45s          —          —      0.13s      0.27s      0.40s
+40%       27     78.8      0.41s      0.18s       2.3s      0.54s      0.41s          —          —      0.12s      0.24s      0.36s
+50%       30     86.6      0.38s      0.17s       2.2s      0.51s      0.39s          —          —      0.12s      0.23s      0.35s
+60%       33     94.5      0.37s      0.16s       2.1s      0.48s      0.37s          —          —      0.11s      0.22s      0.33s
+70%       35     99.8      0.36s      0.16s       2.1s      0.48s      0.36s          —          —      0.11s      0.22s      0.32s
+80%       37      105      0.35s      0.16s       2.0s      0.47s      0.36s       4.3s          —      0.11s      0.21s      0.32s
+90%       39      110      0.35s      0.16s       2.0s      0.46s      0.35s       4.2s          —      0.10s      0.21s      0.31s
+100%      41      116      0.35s      0.16s       2.0s      0.46s      0.35s       4.1s      20.7s      0.10s      0.21s      0.31s
+
+Alternates crit chance and attack speed, reaching overcrit tiers.
+theme eco_guardian  ·  difficulty normal  ·  build crit  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     19.6       28      4      24     90.7      90.7
+0:30      14     35.5       30      1      33      125       215
+0:45      17     45.2       30      1      30      117       332
+1:00      19     52.6       30      1      30      117       449
+1:15      21     59.8       30      1      30      120       569
+1:30      23     67.6       37      0      38      152       721
+1:45      25     77.5       53      4      49      201       922
+2:00      27     90.9       74      1      77      321      1243
+2:15      29      105       76      8      69      291      1534
+2:30      31      118       78     28      58      371      1905
+2:45      33      131       86     57      57      371      2277
+3:00      34      143      102     93      66      414      2691
+3:15      37      158      104    117      80      627      3318
+3:30      38      174      143    182      78      543      3861
+3:45      40      185      156    250      88      583      4444
+4:00      41      202      139    296      93      738      5182
+4:15      43      220       67    300      63      709      5891
+4:30      44      243       61    298      63      852      6743
+4:45      45      263       78    299      77      855      7598
+5:00      47      283       68    298      69      911      8509
+--------------------------------------------------------------
+final level 47  ·  kills 1172  ·  peak live 300  ·  total xp 8509
+sampled cap dwell 0:42 simulated; due natural arrivals blocked 0:14 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 714 · enemy.swarm_basic 289 · enemy.cluster_fodder 8 · enemy.gust_drifter 1 · enemy.slow_durable 70 · enemy.death_spawner 90
+remaining by role enemy.cluster_fodder 51 · enemy.gust_drifter 25 · enemy.committed_charger 14 · enemy.slow_durable 52 · enemy.fast_fragile 52 · enemy.swarm_basic 52 · enemy.death_spawner 52
+remaining work (HP × armour) enemy.cluster_fodder 535 · enemy.gust_drifter 540 · enemy.committed_charger 456 · enemy.slow_durable 11162 · enemy.fast_fragile 899 · enemy.swarm_basic 1998 · enemy.death_spawner 2604
+reached  L5 0:05  ·  L10 0:14  ·  L15 0:30  ·  L20 1:01  ·  L25 1:43  ·  L30 2:17
+spawned  enemy.fast_fragile 766  ·  enemy.swarm_basic 341  ·  enemy.cluster_fodder 59  ·  enemy.gust_drifter 26  ·  enemy.slow_durable 122  ·  enemy.death_spawner 142  ·  enemy.committed_charger 14
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     39.6      0.71s      0.32s       4.1s      0.93s      0.71s          —          —      0.21s      0.42s      0.63s
+20%       19     54.6      0.54s      0.24s       3.1s      0.71s      0.54s          —          —      0.16s      0.32s      0.48s
+30%       23     73.6      0.42s      0.19s       2.4s      0.55s      0.42s          —          —      0.12s      0.25s      0.37s
+40%       27     97.2      0.33s      0.15s       1.9s      0.43s      0.33s          —          —      0.10s      0.20s      0.30s
+50%       31      124      0.27s      0.12s       1.5s      0.35s      0.27s          —          —      0.08s      0.16s      0.24s
+60%       34      145      0.24s      0.11s       1.4s      0.31s      0.24s          —          —      0.07s      0.14s      0.21s
+70%       38      178      0.20s      0.09s       1.2s      0.27s      0.20s          —          —      0.06s      0.12s      0.18s
+80%       41      210      0.18s      0.08s       1.0s      0.23s      0.18s       2.1s          —      0.05s      0.11s      0.16s
+90%       44      248      0.16s      0.07s      0.89s      0.20s      0.16s       1.9s          —      0.05s      0.09s      0.14s
+100%      47      302      0.13s      0.06s      0.76s      0.17s      0.13s       1.6s       7.9s      0.04s      0.08s      0.12s
+
+Spreads picks across damage, attack speed, crit and projectiles: the multiplicative build the DPS budget is written for.
+theme eco_guardian  ·  difficulty normal  ·  build spread  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     19.8       28      4      24     90.7      90.7
+0:30      15     76.4       30      0      34      129       219
+0:45      17      129       30      0      30      117       336
+1:00      19      151       30      0      30      117       453
+1:15      21      192       30      0      30      120       573
+1:30      23      261       37      0      37      148       721
+1:45      25      261       53      0      53      218       939
+2:00      27      385       74      0      74      308      1247
+2:15      30      419       76      0      76      397      1644
+2:30      33      577       78      0      78      561      2205
+2:45      35      635       86      2      84      693      2898
+3:00      38      793      102      0     104     1005      3903
+3:15      41      819      104      0     104      937      4840
+3:30      43     1010      143      0     143     1404      6244
+3:45      46     1039      156      0     156     1575      7818
+4:00      48     1242      154      0     154     1520      9339
+4:15      50     1242      156      0     156     1897       11k
+4:30      51     1401      152      0     152     1851       13k
+4:45      53     1544      166      1     165     2176       15k
+5:00      55     1544      229      0     230     2677       18k
+--------------------------------------------------------------
+final level 55  ·  kills 1914  ·  peak live 9  ·  total xp 17940
+sampled cap dwell 0:00 simulated; due natural arrivals blocked 0:00 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 899 · enemy.swarm_basic 481 · enemy.cluster_fodder 78 · enemy.gust_drifter 34 · enemy.slow_durable 178 · enemy.death_spawner 228 · enemy.committed_charger 16
+remaining by role
+remaining work (HP × armour)
+reached  L5 0:07  ·  L10 0:14  ·  L15 0:30  ·  L20 1:01  ·  L25 1:43  ·  L30 2:15
+spawned  enemy.fast_fragile 899  ·  enemy.swarm_basic 481  ·  enemy.cluster_fodder 78  ·  enemy.gust_drifter 34  ·  enemy.slow_durable 178  ·  enemy.death_spawner 228  ·  enemy.committed_charger 16
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       15     78.8      0.35s      0.16s       2.0s      0.47s      0.36s          —          —      0.11s      0.21s      0.32s
+20%       19      151      0.19s      0.09s       1.1s      0.26s      0.20s          —          —      0.06s      0.12s      0.17s
+30%       23      261      0.12s      0.05s      0.68s      0.15s      0.12s          —          —      0.04s      0.07s      0.11s
+40%       27      419      0.08s      0.03s      0.44s      0.10s      0.08s          —          —      0.02s      0.05s      0.07s
+50%       33      635      0.05s      0.02s      0.30s      0.07s      0.05s          —          —      0.02s      0.03s      0.05s
+60%       38      809      0.04s      0.02s      0.25s      0.06s      0.04s          —          —      0.01s      0.03s      0.04s
+70%       43     1010      0.04s      0.02s      0.20s      0.05s      0.04s          —          —      0.01s      0.02s      0.03s
+80%       48     1242      0.03s      0.01s      0.17s      0.04s      0.03s      0.36s          —      0.01s      0.02s      0.03s
+90%       51     1544      0.02s      0.01s      0.14s      0.03s      0.03s      0.30s          —      0.01s      0.01s      0.02s
+100%      55     1544      0.03s      0.01s      0.15s      0.03s      0.03s      0.31s       1.6s      0.01s      0.02s      0.02s
+
+Buys Collection Sweep through level five; assumes each authored sweep circle catches one target.
+theme eco_guardian  ·  difficulty normal  ·  build collection-sweep  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     18.9       28      5      23     86.9      86.9
+0:30      14     26.3       30      2      33      125       212
+0:45      17     26.3       30      2      30      116       328
+1:00      19     26.3       30      3      29      113       441
+1:15      21     26.3       30      7      26      104       545
+1:30      22     26.3       37     17      27      108       653
+1:45      23     26.3       53     44      26      106       758
+2:00      24     26.3       74     89      29      119       878
+2:15      25     26.3       76    136      29      119       997
+2:30      26     26.3       78    186      28      116      1113
+2:45      27     26.3       86    245      27      114      1227
+3:00      28     26.3       83    300      28      118      1345
+3:15      29     26.3       24    300      24      101      1446
+3:30      29     26.3       21    300      21     87.6      1534
+3:45      30     26.3       20    300      20     85.3      1619
+4:00      30     26.3       19    300      19     80.8      1700
+4:15      31     26.3       20    300      20     85.3      1785
+4:30      31     26.3       17    300      17     71.8      1857
+4:45      31     26.3       16    300      16     68.4      1925
+5:00      32     26.3       17    300      17     72.6      1998
+--------------------------------------------------------------
+final level 32  ·  kills 489  ·  peak live 300  ·  total xp 1998
+sampled cap dwell 2:04 simulated; due natural arrivals blocked 1:17 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 424 · enemy.swarm_basic 65
+remaining by role enemy.cluster_fodder 19 · enemy.gust_drifter 9 · enemy.swarm_basic 91 · enemy.slow_durable 46 · enemy.fast_fragile 90 · enemy.death_spawner 42 · enemy.committed_charger 3
+remaining work (HP × armour) enemy.cluster_fodder 189 · enemy.gust_drifter 180 · enemy.swarm_basic 3128 · enemy.slow_durable 8955 · enemy.fast_fragile 1433 · enemy.death_spawner 1966 · enemy.committed_charger 102
+reached  L5 0:06  ·  L10 0:14  ·  L15 0:31  ·  L20 1:03  ·  L25 2:01  ·  L30 3:43
+spawned  enemy.fast_fragile 514  ·  enemy.swarm_basic 156  ·  enemy.cluster_fodder 19  ·  enemy.gust_drifter 9  ·  enemy.slow_durable 46  ·  enemy.death_spawner 42  ·  enemy.committed_charger 3
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     26.3       1.1s      0.48s       6.1s       1.4s       1.1s          —          —      0.32s      0.64s      0.96s
+20%       19     26.3       1.1s      0.50s       6.4s       1.5s       1.1s          —          —      0.33s      0.67s       1.0s
+30%       22     26.3       1.2s      0.52s       6.7s       1.5s       1.2s          —          —      0.35s      0.70s       1.0s
+40%       24     26.3       1.2s      0.55s       7.0s       1.6s       1.2s          —          —      0.36s      0.73s       1.1s
+50%       26     26.3       1.3s      0.57s       7.3s       1.7s       1.3s          —          —      0.38s      0.76s       1.1s
+60%       28     26.3       1.3s      0.59s       7.6s       1.7s       1.3s          —          —      0.40s      0.79s       1.2s
+70%       29     26.3       1.4s      0.62s       7.9s       1.8s       1.4s          —          —      0.41s      0.82s       1.2s
+80%       30     26.3       1.4s      0.64s       8.2s       1.9s       1.4s      17.0s          —      0.43s      0.85s       1.3s
+90%       31     26.3       1.5s      0.66s       8.5s       1.9s       1.5s      17.6s          —      0.44s      0.88s       1.3s
+100%      32     26.3       1.5s      0.68s       8.8s       2.0s       1.5s      18.2s      91.2s      0.46s      0.91s       1.4s
+
+Splits between damage and on-kill detonation; output rises with enemy density.
+theme eco_guardian  ·  difficulty normal  ·  build explosion  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     17.8       28      6      22     83.2      83.2
+0:30      14     27.2       30      2      34      129       212
+0:45      17     30.5       30      1      31      120       332
+1:00      19     33.4       30      1      30      117       449
+1:15      21     36.1       30      1      30      120       569
+1:30      23     39.2       37      2      36      144       713
+1:45      24     44.7       53     15      40      164       877
+2:00      26     65.7       74     29      60      247      1124
+2:15      28     83.3       76     39      66      276      1399
+2:30      30     96.6       78     43      74      312      1712
+2:45      32      121       86     78      51      319      2031
+3:00      34      155      102    109      71      484      2515
+3:15      36      162      104    136      77      544      3059
+3:30      37      171      143    202      77      538      3597
+3:45      39      175      156    272      86      572      4170
+4:00      40      181       96    300      68      560      4729
+4:15      42      188       73    300      73      726      5455
+4:30      43      192       43    300      43      603      6059
+4:45      44      197       55    299      56      714      6772
+5:00      45      202       63    300      62      646      7418
+--------------------------------------------------------------
+final level 45  ·  kills 1087  ·  peak live 300  ·  total xp 7418
+sampled cap dwell 0:45 simulated; due natural arrivals blocked 0:16 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 689 · enemy.swarm_basic 264 · enemy.cluster_fodder 5 · enemy.slow_durable 55 · enemy.death_spawner 74
+remaining by role enemy.gust_drifter 24 · enemy.cluster_fodder 51 · enemy.slow_durable 53 · enemy.committed_charger 14 · enemy.death_spawner 52 · enemy.fast_fragile 53 · enemy.swarm_basic 53
+remaining work (HP × armour) enemy.gust_drifter 516 · enemy.cluster_fodder 531 · enemy.slow_durable 11162 · enemy.committed_charger 462 · enemy.death_spawner 2586 · enemy.fast_fragile 909 · enemy.swarm_basic 2027
+reached  L5 0:06  ·  L10 0:15  ·  L15 0:31  ·  L20 1:01  ·  L25 1:46  ·  L30 2:25
+spawned  enemy.fast_fragile 742  ·  enemy.swarm_basic 317  ·  enemy.cluster_fodder 56  ·  enemy.gust_drifter 24  ·  enemy.slow_durable 108  ·  enemy.death_spawner 126  ·  enemy.committed_charger 14
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     27.6       1.0s      0.46s       5.8s       1.3s       1.0s          —          —      0.30s      0.61s      0.91s
+20%       19       35      0.84s      0.38s       4.8s       1.1s      0.84s          —          —      0.25s      0.50s      0.75s
+30%       23     41.3      0.74s      0.33s       4.3s      0.98s      0.75s          —          —      0.22s      0.44s      0.67s
+40%       26     72.5      0.44s      0.20s       2.5s      0.58s      0.44s          —          —      0.13s      0.26s      0.40s
+50%       30       98      0.34s      0.15s       2.0s      0.45s      0.34s          —          —      0.10s      0.20s      0.31s
+60%       34      158      0.22s      0.10s       1.3s      0.29s      0.22s          —          —      0.07s      0.13s      0.20s
+70%       37      173      0.21s      0.09s       1.2s      0.27s      0.21s          —          —      0.06s      0.12s      0.19s
+80%       40      181      0.21s      0.09s       1.2s      0.27s      0.21s       2.5s          —      0.06s      0.12s      0.19s
+90%       43      197      0.20s      0.09s       1.1s      0.26s      0.20s       2.4s          —      0.06s      0.12s      0.18s
+100%      45      205      0.19s      0.09s       1.1s      0.26s      0.20s       2.3s      11.7s      0.06s      0.12s      0.18s
+
+Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.
+theme eco_guardian  ·  difficulty experienced  ·  build evolved-single  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       8     15.6       37     21      16     60.5      60.5
+0:30      12     18.4       38     39      20     75.6       136
+0:45      14     18.4       37     56      20     75.6       212
+1:00      16     18.4       38     74      20     75.7       287
+1:15      18     18.4       37     92      19     73.9       361
+1:30      19     18.4       42    115      19     73.9       435
+1:45      20     18.4       67    163      19     73.9       509
+2:00      21     18.4      100    245      18       71       580
+2:15      22     18.4       73    300      18       72       652
+2:30      23     18.4       18    300      18       72       724
+2:45      24     18.4       18    300      18       72       796
+3:00      24     18.4       18    300      18     73.9       870
+3:15      25     18.4       17    300      17     69.9       940
+3:30      26     18.4       17    300      17     69.9      1010
+3:45      26     18.4       18    300      18       74      1084
+4:00      27     18.4       17    300      17     69.9      1154
+4:15      27     18.4       17    300      17     69.9      1224
+4:30      28     18.4       17    299      18       74      1298
+4:45      28     18.4       17    300      16     66.5      1364
+5:00      28     18.4       12    300      12       49      1413
+--------------------------------------------------------------
+final level 28  ·  kills 355  ·  peak live 300  ·  total xp 1413
+sampled cap dwell 2:51 simulated; due natural arrivals blocked 2:03 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 350 · enemy.swarm_basic 5
+remaining by role enemy.swarm_basic 115 · enemy.cluster_fodder 12 · enemy.fast_fragile 114 · enemy.gust_drifter 6 · enemy.slow_durable 24 · enemy.death_spawner 28 · enemy.committed_charger 1
+remaining work (HP × armour) enemy.swarm_basic 4327 · enemy.cluster_fodder 134 · enemy.fast_fragile 2026 · enemy.gust_drifter 142 · enemy.slow_durable 5704 · enemy.death_spawner 1561 · enemy.committed_charger 36
+reached  L5 0:06  ·  L10 0:19  ·  L15 0:46  ·  L20 1:35  ·  L25 3:04
+spawned  enemy.fast_fragile 464  ·  enemy.swarm_basic 120  ·  enemy.cluster_fodder 12  ·  enemy.gust_drifter 6  ·  enemy.slow_durable 24  ·  enemy.death_spawner 28  ·  enemy.committed_charger 1
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       12     18.4       1.8s      0.79s      10.1s       2.3s       1.8s          —          —      0.53s       1.1s       1.6s
+20%       16     18.4       1.8s      0.83s      10.6s       2.4s       1.9s          —          —      0.55s       1.1s       1.7s
+30%       19     18.4       1.9s      0.87s      11.1s       2.5s       1.9s          —          —      0.58s       1.2s       1.7s
+40%       21     18.4       2.0s      0.91s      11.6s       2.7s       2.0s          —          —      0.60s       1.2s       1.8s
+50%       23     18.4       2.1s      0.94s      12.1s       2.8s       2.1s          —          —      0.63s       1.3s       1.9s
+60%       24     18.4       2.2s      0.98s      12.6s       2.9s       2.2s          —          —      0.65s       1.3s       2.0s
+70%       26     18.4       2.3s       1.0s      13.0s       3.0s       2.3s          —          —      0.68s       1.4s       2.0s
+80%       27     18.4       2.3s       1.1s      13.5s       3.1s       2.4s      28.2s          —      0.70s       1.4s       2.1s
+90%       28     18.4       2.4s       1.1s      14.0s       3.2s       2.4s      29.2s          —      0.73s       1.5s       2.2s
+100%      28     18.4       2.5s       1.1s      14.5s       3.3s       2.5s      30.2s       151s      0.75s       1.5s       2.3s
+
+Acquires second tool at level2, buys one owned reach/capacity pick each subsequent level, then evolves. Authored contact band, no movement/overkill/offer-frequency model.
+theme eco_guardian  ·  difficulty experienced  ·  build evolved-packed  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      12     33.3       37      1      36      136       136
+0:30      16     34.6       38      2      37      140       276
+0:45      19     37.6       37      2      37      144       420
+1:00      21     42.6       38      3      37      144       564
+1:15      23     43.4       37      2      38      152       715
+1:30      24     50.1       42      3      41      164       879
+1:45      27     82.4       67      6      64      263      1142
+2:00      29      138      100      6     100      411      1553
+2:15      31      144      106     12     100      421      1975
+2:30      33      149      102     41      73      409      2384
+2:45      35      149      104     84      61      388      2772
+3:00      36      149      108    129      63      374      3146
+3:15      37      149      104    174      59      385      3531
+3:30      38      149      146    253      67      374      3904
+3:45      39      149      116    300      69      375      4280
+4:00      40      149       51    300      51      434      4714
+4:15      41      149       27    299      28      436      5150
+4:30      42      149       30    300      29      410      5559
+4:45      43      149       43    300      43      477      6036
+5:00      44      149       44    300      44      449      6485
+--------------------------------------------------------------
+final level 44  ·  kills 1077  ·  peak live 300  ·  total xp 6485
+sampled cap dwell 1:18 simulated; due natural arrivals blocked 0:41 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 739 · enemy.swarm_basic 239 · enemy.cluster_fodder 10 · enemy.slow_durable 45 · enemy.death_spawner 44
+remaining by role enemy.cluster_fodder 45 · enemy.gust_drifter 22 · enemy.slow_durable 56 · enemy.committed_charger 12 · enemy.swarm_basic 55 · enemy.death_spawner 55 · enemy.fast_fragile 55
+remaining work (HP × armour) enemy.cluster_fodder 532 · enemy.gust_drifter 534 · enemy.slow_durable 13403 · enemy.committed_charger 452 · enemy.swarm_basic 2398 · enemy.death_spawner 3120 · enemy.fast_fragile 1076
+reached  L5 0:04  ·  L10 0:09  ·  L15 0:24  ·  L20 0:49  ·  L25 1:31  ·  L30 2:02
+spawned  enemy.fast_fragile 794  ·  enemy.swarm_basic 294  ·  enemy.cluster_fodder 55  ·  enemy.gust_drifter 22  ·  enemy.slow_durable 101  ·  enemy.death_spawner 99  ·  enemy.committed_charger 12
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       16     32.6      0.99s      0.45s       5.7s       1.3s       1.0s          —          —      0.30s      0.60s      0.89s
+20%       21       53      0.64s      0.29s       3.7s      0.84s      0.64s          —          —      0.19s      0.38s      0.58s
+30%       24       53      0.67s      0.30s       3.8s      0.88s      0.67s          —          —      0.20s      0.40s      0.60s
+40%       29      114      0.32s      0.15s       1.9s      0.43s      0.33s          —          —      0.10s      0.19s      0.29s
+50%       33      149      0.26s      0.12s       1.5s      0.34s      0.26s          —          —      0.08s      0.15s      0.23s
+60%       36      149      0.27s      0.12s       1.5s      0.35s      0.27s          —          —      0.08s      0.16s      0.24s
+70%       38      149      0.28s      0.13s       1.6s      0.37s      0.28s          —          —      0.08s      0.17s      0.25s
+80%       40      149      0.29s      0.13s       1.7s      0.38s      0.29s       3.5s          —      0.09s      0.17s      0.26s
+90%       42      149      0.30s      0.13s       1.7s      0.40s      0.30s       3.6s          —      0.09s      0.18s      0.27s
+100%      44      149      0.31s      0.14s       1.8s      0.41s      0.31s       3.7s      18.6s      0.09s      0.19s      0.28s
+
+Second tool at level2; one target in reach, no splash neighbours. Contact-only lower band.
+theme eco_guardian  ·  difficulty experienced  ·  build two-tools-single  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       8     14.6       37     22      15     56.7      56.7
+0:30      11       15       38     43      17     64.3       121
+0:45      13       15       37     64      16     60.5       181
+1:00      15       15       38     86      16     60.5       242
+1:15      17       15       37    107      16       61       303
+1:30      18       15       42    134      15     58.4       361
+1:45      19       15       67    185      16     62.2       424
+2:00      20       15      100    270      15     58.4       482
+2:15      21       15       46    300      16     62.2       544
+2:30      22       15       14    299      15       60       604
+2:45      22       15       15    300      14       56       660
+3:00      23       15       15    300      15       60       720
+3:15      23       15       15    300      15       60       780
+3:30      24       15       14    300      14       57       837
+3:45      25       15       14    300      14     57.6       895
+4:00      25       15       14    300      14     57.6       952
+4:15      26       15       14    300      14     57.6      1010
+4:30      26       15       14    299      15     61.7      1071
+4:45      26       15       15    300      14     57.6      1129
+5:00      27       15       14    300      14     57.6      1187
+--------------------------------------------------------------
+final level 27  ·  kills 300  ·  peak live 300  ·  total xp 1187
+sampled cap dwell 2:55 simulated; due natural arrivals blocked 2:13 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 300
+remaining by role enemy.swarm_basic 111 · enemy.cluster_fodder 9 · enemy.fast_fragile 132 · enemy.gust_drifter 5 · enemy.slow_durable 17 · enemy.death_spawner 24 · enemy.committed_charger 2
+remaining work (HP × armour) enemy.swarm_basic 4153 · enemy.cluster_fodder 99 · enemy.fast_fragile 2271 · enemy.gust_drifter 122 · enemy.slow_durable 4134 · enemy.death_spawner 1346 · enemy.committed_charger 75
+reached  L5 0:06  ·  L10 0:21  ·  L15 0:54  ·  L20 1:54  ·  L25 3:43
+spawned  enemy.fast_fragile 432  ·  enemy.swarm_basic 111  ·  enemy.cluster_fodder 9  ·  enemy.gust_drifter 5  ·  enemy.slow_durable 17  ·  enemy.death_spawner 24  ·  enemy.committed_charger 2
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       11       15       2.2s      0.97s      12.4s       2.8s       2.2s          —          —      0.65s       1.3s       1.9s
+20%       15       15       2.3s       1.0s      13.0s       3.0s       2.3s          —          —      0.68s       1.4s       2.0s
+30%       18       15       2.4s       1.1s      13.6s       3.1s       2.4s          —          —      0.71s       1.4s       2.1s
+40%       20       15       2.5s       1.1s      14.2s       3.3s       2.5s          —          —      0.74s       1.5s       2.2s
+50%       22       15       2.6s       1.2s      14.8s       3.4s       2.6s          —          —      0.77s       1.5s       2.3s
+60%       23       15       2.7s       1.2s      15.4s       3.5s       2.7s          —          —      0.80s       1.6s       2.4s
+70%       24       15       2.8s       1.2s      16.0s       3.7s       2.8s          —          —      0.83s       1.7s       2.5s
+80%       25       15       2.9s       1.3s      16.6s       3.8s       2.9s      34.5s          —      0.86s       1.7s       2.6s
+90%       26       15       3.0s       1.3s      17.1s       3.9s       3.0s      35.7s          —      0.89s       1.8s       2.7s
+100%      27       15       3.1s       1.4s      17.7s       4.1s       3.1s      37.0s       185s      0.92s       1.8s       2.8s
+
+Second tool at level2, then owned track picks; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model.
+theme eco_guardian  ·  difficulty experienced  ·  build two-tools-packed  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      12     32.3       37      3      34      129       129
+0:30      16     34.7       38      3      38      144       272
+0:45      19     36.4       37      3      37      144       416
+1:00      21       42       38      4      37      144       560
+1:15      23     43.8       37      3      38      152       711
+1:30      24     50.5       42      4      41      164       875
+1:45      26     69.3       67     16      55      226      1101
+2:00      28     75.1      100     52      64      263      1364
+2:15      30     75.1      106     99      59      245      1609
+2:30      31     75.1      102    139      62      261      1871
+2:45      32     75.1      104    186      57      239      2110
+3:00      33     75.1      108    243      51      218      2329
+3:15      34     75.1      104    296      51      220      2548
+3:30      35     75.1       46    300      42      180      2728
+3:45      35     75.1       41    300      41      179      2907
+4:00      36     75.1       36    300      36      183      3090
+4:15      36     75.1       22    300      22      172      3263
+4:30      37     75.1       13    300      13      158      3421
+4:45      37     75.1       21    300      21      169      3589
+5:00      38     75.1       19    300      19      160      3749
+--------------------------------------------------------------
+final level 38  ·  kills 818  ·  peak live 300  ·  total xp 3749
+sampled cap dwell 1:42 simulated; due natural arrivals blocked 1:02 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 643 · enemy.swarm_basic 159 · enemy.cluster_fodder 2 · enemy.slow_durable 14
+remaining by role enemy.cluster_fodder 41 · enemy.gust_drifter 13 · enemy.slow_durable 63 · enemy.death_spawner 54 · enemy.swarm_basic 62 · enemy.fast_fragile 62 · enemy.committed_charger 5
+remaining work (HP × armour) enemy.cluster_fodder 474 · enemy.gust_drifter 301 · enemy.slow_durable 14494 · enemy.death_spawner 2915 · enemy.swarm_basic 2598 · enemy.fast_fragile 1190 · enemy.committed_charger 193
+reached  L5 0:04  ·  L10 0:10  ·  L15 0:24  ·  L20 0:50  ·  L25 1:32  ·  L30 2:14
+spawned  enemy.fast_fragile 705  ·  enemy.swarm_basic 221  ·  enemy.cluster_fodder 43  ·  enemy.gust_drifter 13  ·  enemy.slow_durable 77  ·  enemy.death_spawner 54  ·  enemy.committed_charger 5
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       16     33.5      0.97s      0.44s       5.6s       1.3s      0.97s          —          —      0.29s      0.58s      0.87s
+20%       21     47.4      0.71s      0.32s       4.1s      0.94s      0.72s          —          —      0.21s      0.43s      0.64s
+30%       24     47.4      0.75s      0.34s       4.3s      0.99s      0.75s          —          —      0.22s      0.45s      0.67s
+40%       28     75.1      0.49s      0.22s       2.8s      0.65s      0.50s          —          —      0.15s      0.30s      0.44s
+50%       31     75.1      0.51s      0.23s       3.0s      0.68s      0.52s          —          —      0.15s      0.31s      0.46s
+60%       33     75.1      0.53s      0.24s       3.1s      0.70s      0.54s          —          —      0.16s      0.32s      0.48s
+70%       35     75.1      0.55s      0.25s       3.2s      0.73s      0.56s          —          —      0.17s      0.33s      0.50s
+80%       36     75.1      0.57s      0.26s       3.3s      0.76s      0.58s       6.9s          —      0.17s      0.34s      0.52s
+90%       37     75.1      0.59s      0.27s       3.4s      0.79s      0.60s       7.1s          —      0.18s      0.36s      0.54s
+100%      38     75.1      0.62s      0.28s       3.5s      0.81s      0.62s       7.4s      36.9s      0.18s      0.37s      0.55s
+
+Takes no offensive upgrades. The floor of the DPS band.
+theme eco_guardian  ·  difficulty experienced  ·  build passive  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       7     10.5       37     26      11     41.6      41.6
+0:30      10     10.5       38     53      11     41.6      83.2
+0:45      12     10.5       37     78      12     45.4       129
+1:00      13     10.5       38    105      11     41.6       170
+1:15      14     10.5       37    131      11     41.6       212
+1:30      16     10.5       42    161      12     45.4       257
+1:45      17     10.5       67    217      11       42       299
+2:00      17     10.5       94    300      11     42.8       342
+2:15      18     10.5       10    300      10     38.9       381
+2:30      19     10.5       11    300      11     42.8       424
+2:45      20     10.5       11    300      11     42.8       466
+3:00      20     10.5       11    300      11     42.8       509
+3:15      21     10.5       11    300      11       43       552
+3:30      21     10.5       10    300      10       40       592
+3:45      22     10.5       10    300      10       40       632
+4:00      22     10.5       11    300      11       44       676
+4:15      23     10.5       10    300      10       40       716
+4:30      23     10.5       10    300      10       40       756
+4:45      24     10.5       11    300      11       44       800
+5:00      24     10.5        9    299      10     41.1       841
+--------------------------------------------------------------
+final level 24  ·  kills 216  ·  peak live 300  ·  total xp 841
+sampled cap dwell 3:01 simulated; due natural arrivals blocked 2:29 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 216
+remaining by role enemy.swarm_basic 93 · enemy.cluster_fodder 6 · enemy.fast_fragile 174 · enemy.slow_durable 13 · enemy.death_spawner 9 · enemy.committed_charger 2 · enemy.gust_drifter 2
+remaining work (HP × armour) enemy.swarm_basic 3468 · enemy.cluster_fodder 66 · enemy.fast_fragile 2900 · enemy.slow_durable 3007 · enemy.death_spawner 506 · enemy.committed_charger 76 · enemy.gust_drifter 52
+reached  L5 0:08  ·  L10 0:29  ·  L15 1:17  ·  L20 2:43
+spawned  enemy.fast_fragile 390  ·  enemy.swarm_basic 93  ·  enemy.cluster_fodder 6  ·  enemy.slow_durable 13  ·  enemy.death_spawner 9  ·  enemy.committed_charger 2  ·  enemy.gust_drifter 2
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       10     10.5       3.1s       1.4s      17.7s       4.1s       3.1s          —          —      0.92s       1.8s       2.8s
+20%       13     10.5       3.2s       1.5s      18.6s       4.3s       3.3s          —          —      0.97s       1.9s       2.9s
+30%       16     10.5       3.4s       1.5s      19.4s       4.5s       3.4s          —          —       1.0s       2.0s       3.0s
+40%       17     10.5       3.5s       1.6s      20.3s       4.6s       3.5s          —          —       1.1s       2.1s       3.2s
+50%       19     10.5       3.7s       1.6s      21.1s       4.8s       3.7s          —          —       1.1s       2.2s       3.3s
+60%       20     10.5       3.8s       1.7s      22.0s       5.0s       3.8s          —          —       1.1s       2.3s       3.4s
+70%       21     10.5       4.0s       1.8s      22.8s       5.2s       4.0s          —          —       1.2s       2.4s       3.6s
+80%       22     10.5       4.1s       1.8s      23.7s       5.4s       4.1s      49.3s          —       1.2s       2.5s       3.7s
+90%       23     10.5       4.3s       1.9s      24.5s       5.6s       4.3s      51.0s          —       1.3s       2.6s       3.8s
+100%      24     10.5       4.4s       2.0s      25.3s       5.8s       4.4s      52.8s       264s       1.3s       2.6s       4.0s
+
+Every level takes the additive damage upgrade (+25% of base).
+theme eco_guardian  ·  difficulty experienced  ·  build damage-rush  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15      10     22.6       37     13      24     90.7      90.7
+0:30      16       42       38      6      45      170       261
+0:45      19       54       37      0      43      167       427
+1:00      21     60.6       38      1      37      144       571
+1:15      23     65.6       37      0      38      152       723
+1:30      24       70       42      1      41      164       887
+1:45      26     74.5       67     11      57      234      1122
+2:00      28     79.7      100     44      67      275      1397
+2:15      30     84.2      106     86      64      267      1663
+2:30      31     88.1      102    117      71      299      1962
+2:45      33     91.8      104    157      64      271      2233
+3:00      34     95.1      108    204      61      262      2495
+3:15      35     97.8      104    243      65      281      2776
+3:30      36      100      115    300      58      255      3030
+3:45      36      102       29    299      30      232      3262
+4:00      37      105       20    300      19      210      3472
+4:15      38      106       36    300      36      260      3732
+4:30      38      108       29    300      29      230      3962
+4:45      39      110       29    299      30      306      4268
+5:00      40      112       30    300      29      320      4588
+--------------------------------------------------------------
+final level 40  ·  kills 908  ·  peak live 300  ·  total xp 4588
+sampled cap dwell 1:30 simulated; due natural arrivals blocked 0:56 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 686 · enemy.swarm_basic 185 · enemy.cluster_fodder 3 · enemy.slow_durable 25 · enemy.death_spawner 9
+remaining by role enemy.cluster_fodder 45 · enemy.gust_drifter 15 · enemy.slow_durable 57 · enemy.death_spawner 57 · enemy.swarm_basic 59 · enemy.committed_charger 9 · enemy.fast_fragile 58
+remaining work (HP × armour) enemy.cluster_fodder 523 · enemy.gust_drifter 353 · enemy.slow_durable 13244 · enemy.death_spawner 3116 · enemy.swarm_basic 2524 · enemy.committed_charger 347 · enemy.fast_fragile 1135
+reached  L5 0:06  ·  L10 0:14  ·  L15 0:27  ·  L20 0:49  ·  L25 1:30  ·  L30 2:12
+spawned  enemy.fast_fragile 744  ·  enemy.swarm_basic 244  ·  enemy.cluster_fodder 48  ·  enemy.gust_drifter 15  ·  enemy.slow_durable 82  ·  enemy.death_spawner 66  ·  enemy.committed_charger 9
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       16     49.9      0.65s      0.29s       3.7s      0.86s      0.65s          —          —      0.19s      0.39s      0.58s
+20%       21       63      0.54s      0.24s       3.1s      0.71s      0.54s          —          —      0.16s      0.32s      0.48s
+30%       24     70.9      0.50s      0.22s       2.9s      0.66s      0.50s          —          —      0.15s      0.30s      0.45s
+40%       28     81.4      0.45s      0.20s       2.6s      0.60s      0.46s          —          —      0.14s      0.27s      0.41s
+50%       31     89.3      0.43s      0.19s       2.5s      0.57s      0.43s          —          —      0.13s      0.26s      0.39s
+60%       34     97.1      0.41s      0.19s       2.4s      0.54s      0.42s          —          —      0.12s      0.25s      0.37s
+70%       36      102      0.41s      0.18s       2.3s      0.54s      0.41s          —          —      0.12s      0.24s      0.37s
+80%       37      105      0.41s      0.18s       2.4s      0.54s      0.41s       4.9s          —      0.12s      0.25s      0.37s
+90%       38      108      0.41s      0.19s       2.4s      0.55s      0.42s       5.0s          —      0.12s      0.25s      0.37s
+100%      40      113      0.41s      0.18s       2.4s      0.54s      0.41s       4.9s      24.6s      0.12s      0.25s      0.37s
+
+Alternates crit chance and attack speed, reaching overcrit tiers.
+theme eco_guardian  ·  difficulty experienced  ·  build crit  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     18.3       37     18      19     71.8      71.8
+0:30      14     33.5       38     19      37      140       212
+0:45      19     46.7       37      7      49      189       400
+1:00      21     58.7       38      1      44      171       571
+1:15      23     67.6       37      0      38      152       723
+1:30      24     76.6       42      1      41      164       887
+1:45      26       87       67      7      61      251      1138
+2:00      29      100      100     29      78      321      1459
+2:15      31      114      106     55      80      334      1793
+2:30      32      127      102     64      93      393      2186
+2:45      34      139      104    107      61      362      2548
+3:00      35      150      108    152      63      373      2921
+3:15      37      161      104    196      60      387      3308
+3:30      38      172      146    265      77      441      3749
+3:45      39      182       98    300      63      409      4158
+4:00      40      192       62    299      63      599      4758
+4:15      42      208       41    300      40      569      5327
+4:30      43      223       53    299      54      675      6002
+4:45      44      243       64    300      63      659      6661
+5:00      45      261       57    300      57      737      7398
+--------------------------------------------------------------
+final level 45  ·  kills 1141  ·  peak live 300  ·  total xp 7398
+sampled cap dwell 1:11 simulated; due natural arrivals blocked 0:32 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 762 · enemy.swarm_basic 260 · enemy.cluster_fodder 3 · enemy.slow_durable 60 · enemy.death_spawner 56
+remaining by role enemy.cluster_fodder 52 · enemy.gust_drifter 24 · enemy.slow_durable 52 · enemy.committed_charger 12 · enemy.death_spawner 53 · enemy.swarm_basic 54 · enemy.fast_fragile 53
+remaining work (HP × armour) enemy.cluster_fodder 610 · enemy.gust_drifter 588 · enemy.slow_durable 12765 · enemy.committed_charger 450 · enemy.death_spawner 3037 · enemy.swarm_basic 2389 · enemy.fast_fragile 1056
+reached  L5 0:06  ·  L10 0:16  ·  L15 0:31  ·  L20 0:50  ·  L25 1:30  ·  L30 2:06
+spawned  enemy.fast_fragile 815  ·  enemy.swarm_basic 314  ·  enemy.cluster_fodder 55  ·  enemy.gust_drifter 24  ·  enemy.slow_durable 112  ·  enemy.death_spawner 109  ·  enemy.committed_charger 12
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       14     39.6      0.82s      0.37s       4.7s       1.1s      0.82s          —          —      0.24s      0.49s      0.73s
+20%       21       63      0.54s      0.24s       3.1s      0.71s      0.54s          —          —      0.16s      0.32s      0.48s
+30%       24     78.2      0.45s      0.20s       2.6s      0.60s      0.46s          —          —      0.14s      0.27s      0.41s
+40%       29      110      0.34s      0.15s       1.9s      0.44s      0.34s          —          —      0.10s      0.20s      0.30s
+50%       32      130      0.30s      0.13s       1.7s      0.39s      0.30s          —          —      0.09s      0.18s      0.27s
+60%       35      154      0.26s      0.12s       1.5s      0.34s      0.26s          —          —      0.08s      0.16s      0.23s
+70%       38      178      0.23s      0.11s       1.3s      0.31s      0.24s          —          —      0.07s      0.14s      0.21s
+80%       40      195      0.22s      0.10s       1.3s      0.29s      0.22s       2.7s          —      0.07s      0.13s      0.20s
+90%       43      239      0.19s      0.08s       1.1s      0.25s      0.19s       2.2s          —      0.06s      0.11s      0.17s
+100%      45      270      0.17s      0.08s      0.99s      0.23s      0.17s       2.1s      10.3s      0.05s      0.10s      0.15s
+
+Spreads picks across damage, attack speed, crit and projectiles: the multiplicative build the DPS budget is written for.
+theme eco_guardian  ·  difficulty experienced  ·  build spread  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     17.5       37     19      18       68        68
+0:30      16     82.5       38      0      57      215       283
+0:45      19      151       37      0      37      144       427
+1:00      21      187       38      0      38      148       575
+1:15      23      261       37      0      37      148       723
+1:30      25      261       42      0      42      168       891
+1:45      27      328       67      0      67      275      1167
+2:00      29      419      100      0     100      411      1578
+2:15      32      536      106      2     104      519      2097
+2:30      35      635      102      2     102      751      2848
+2:45      38      789      104      2     104      935      3783
+3:00      40      809      108      2     108      927      4710
+3:15      42      987      104      0     106     1016      5726
+3:30      45     1010      146      1     145     1378      7104
+3:45      48     1191      235      4     232     2458      9562
+4:00      50     1242      227      5     226     2394       12k
+4:15      53     1533      231      0     236     2731       15k
+4:30      55     1544      227      2     225     2718       17k
+4:45      56     1735      233      0     235     2782       20k
+5:00      58     1932      230      4     226     2801       23k
+--------------------------------------------------------------
+final level 58  ·  kills 2445  ·  peak live 20  ·  total xp 22988
+sampled cap dwell 0:00 simulated; due natural arrivals blocked 0:00 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 1147 · enemy.swarm_basic 621 · enemy.cluster_fodder 96 · enemy.gust_drifter 42 · enemy.slow_durable 233 · enemy.death_spawner 287 · enemy.committed_charger 19
+remaining by role enemy.slow_durable 2 · enemy.fast_fragile 2
+remaining work (HP × armour) enemy.slow_durable 532 · enemy.fast_fragile 42
+reached  L5 0:08  ·  L10 0:16  ·  L15 0:24  ·  L20 0:48  ·  L25 1:30  ·  L30 2:01
+spawned  enemy.fast_fragile 1149  ·  enemy.swarm_basic 621  ·  enemy.cluster_fodder 96  ·  enemy.gust_drifter 42  ·  enemy.slow_durable 235  ·  enemy.death_spawner 287  ·  enemy.committed_charger 19
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       16      151      0.21s      0.10s       1.2s      0.28s      0.22s          —          —      0.06s      0.13s      0.19s
+20%       21      261      0.13s      0.06s      0.75s      0.17s      0.13s          —          —      0.04s      0.08s      0.12s
+30%       25      261      0.14s      0.06s      0.78s      0.18s      0.14s          —          —      0.04s      0.08s      0.12s
+40%       29      419      0.09s      0.04s      0.51s      0.12s      0.09s          —          —      0.03s      0.05s      0.08s
+50%       35      635      0.06s      0.03s      0.35s      0.08s      0.06s          —          —      0.02s      0.04s      0.05s
+60%       40      809      0.05s      0.02s      0.29s      0.07s      0.05s          —          —      0.01s      0.03s      0.04s
+70%       45     1010      0.04s      0.02s      0.24s      0.05s      0.04s          —          —      0.01s      0.02s      0.04s
+80%       50     1242      0.03s      0.02s      0.20s      0.05s      0.03s      0.42s          —      0.01s      0.02s      0.03s
+90%       55     1544      0.03s      0.01s      0.17s      0.04s      0.03s      0.35s          —      0.01s      0.02s      0.03s
+100%      58     1932      0.02s      0.01s      0.14s      0.03s      0.02s      0.29s       1.4s      0.01s      0.01s      0.02s
+
+Buys Collection Sweep through level five; assumes each authored sweep circle catches one target.
+theme eco_guardian  ·  difficulty experienced  ·  build collection-sweep  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9     17.7       37     18      19     71.8      71.8
+0:30      13     26.3       38     28      28      106       178
+0:45      16     26.3       37     37      28      106       283
+1:00      18     26.3       38     47      28      109       392
+1:15      20     26.3       37     57      27      105       497
+1:30      21     26.3       42     73      26      103       600
+1:45      23     26.3       67    114      26      104       704
+2:00      24     26.3      100    189      25      100       804
+2:15      25     26.3      106    270      25      103       907
+2:30      26     26.3       55    300      25      103      1010
+2:45      26     26.3       24    299      25      103      1113
+3:00      27     26.3       25    300      24     98.7      1211
+3:15      28     26.3       25    300      25      103      1314
+3:30      28     26.3       24    300      24      101      1415
+3:45      29     26.3       23    299      24      101      1516
+4:00      30     26.3       24    300      23     97.1      1613
+4:15      30     26.3       17    300      17     69.4      1683
+4:30      30     26.3       18    300      18     74.5      1757
+4:45      31     26.3       16    300      16       66      1823
+5:00      31     26.3       15    300      15     62.8      1886
+--------------------------------------------------------------
+final level 31  ·  kills 468  ·  peak live 300  ·  total xp 1886
+sampled cap dwell 2:39 simulated; due natural arrivals blocked 1:43 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 440 · enemy.swarm_basic 28
+remaining by role enemy.cluster_fodder 18 · enemy.swarm_basic 103 · enemy.gust_drifter 9 · enemy.slow_durable 29 · enemy.fast_fragile 102 · enemy.death_spawner 38 · enemy.committed_charger 1
+remaining work (HP × armour) enemy.cluster_fodder 203 · enemy.swarm_basic 3956 · enemy.gust_drifter 211 · enemy.slow_durable 6671 · enemy.fast_fragile 1876 · enemy.death_spawner 2078 · enemy.committed_charger 39
+reached  L5 0:07  ·  L10 0:17  ·  L15 0:36  ·  L20 1:10  ·  L25 2:12  ·  L30 3:58
+spawned  enemy.fast_fragile 542  ·  enemy.swarm_basic 131  ·  enemy.cluster_fodder 18  ·  enemy.gust_drifter 9  ·  enemy.slow_durable 29  ·  enemy.death_spawner 38  ·  enemy.committed_charger 1
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       13     26.3       1.2s      0.55s       7.1s       1.6s       1.2s          —          —      0.37s      0.74s       1.1s
+20%       18     26.3       1.3s      0.58s       7.4s       1.7s       1.3s          —          —      0.39s      0.77s       1.2s
+30%       21     26.3       1.3s      0.61s       7.8s       1.8s       1.4s          —          —      0.40s      0.81s       1.2s
+40%       24     26.3       1.4s      0.63s       8.1s       1.9s       1.4s          —          —      0.42s      0.84s       1.3s
+50%       26     26.3       1.5s      0.66s       8.4s       1.9s       1.5s          —          —      0.44s      0.88s       1.3s
+60%       27     26.3       1.5s      0.69s       8.8s       2.0s       1.5s          —          —      0.46s      0.92s       1.4s
+70%       28     26.3       1.6s      0.71s       9.1s       2.1s       1.6s          —          —      0.48s      0.95s       1.4s
+80%       30     26.3       1.6s      0.74s       9.5s       2.2s       1.7s      19.7s          —      0.49s      0.99s       1.5s
+90%       30     26.3       1.7s      0.77s       9.8s       2.2s       1.7s      20.4s          —      0.51s       1.0s       1.5s
+100%      31     26.3       1.8s      0.79s      10.1s       2.3s       1.8s      21.1s       106s      0.53s       1.1s       1.6s
+
+Splits between damage and on-kill detonation; output rises with enemy density.
+theme eco_guardian  ·  difficulty experienced  ·  build explosion  ·  5:00 simulated / 10:00 real at 0.50x  ·  chaos x3.0
+
+time     lvl      dps  spawned   live   kills       xp  total xp
+--------------------------------------------------------------
+0:15       9       20       37     16      21     79.4      79.4
+0:30      15       35       38     16      38      144       223
+0:45      18     40.5       37     10      43      166       389
+1:00      21       42       38      9      39      152       540
+1:15      23     44.8       37      7      39      155       695
+1:30      24     49.1       42     11      38      152       847
+1:45      26     59.4       67     29      49      201      1048
+2:00      28     91.9      100     54      75      308      1356
+2:15      30      123      106     74      86      358      1714
+2:30      32      144      102     74     102      430      2144
+2:45      34      155      104    109      69      396      2540
+3:00      35      163      108    150      67      415      2955
+3:15      37      167      104    193      61      417      3372
+3:30      38      173      146    261      78      421      3793
+3:45      39      177      101    300      62      405      4198
+4:00      40      181       61    299      62      569      4767
+4:15      42      188       37    299      37      547      5315
+4:30      43      189       40    299      40      540      5854
+4:45      44      197       63    298      64      628      6482
+5:00      45      198       53    299      52      571      7053
+--------------------------------------------------------------
+final level 45  ·  kills 1122  ·  peak live 300  ·  total xp 7053
+sampled cap dwell 1:15 simulated; due natural arrivals blocked 0:35 simulated (no causal-queue model)
+kills by role enemy.fast_fragile 758 · enemy.swarm_basic 255 · enemy.slow_durable 51 · enemy.cluster_fodder 3 · enemy.death_spawner 55
+remaining by role enemy.cluster_fodder 52 · enemy.gust_drifter 24 · enemy.slow_durable 53 · enemy.committed_charger 11 · enemy.death_spawner 53 · enemy.fast_fragile 53 · enemy.swarm_basic 53
+remaining work (HP × armour) enemy.cluster_fodder 610 · enemy.gust_drifter 589 · enemy.slow_durable 12791 · enemy.committed_charger 412 · enemy.death_spawner 3037 · enemy.fast_fragile 1056 · enemy.swarm_basic 2344
+reached  L5 0:06  ·  L10 0:15  ·  L15 0:30  ·  L20 0:52  ·  L25 1:34  ·  L30 2:11
+spawned  enemy.fast_fragile 811  ·  enemy.swarm_basic 308  ·  enemy.cluster_fodder 55  ·  enemy.gust_drifter 24  ·  enemy.slow_durable 104  ·  enemy.death_spawner 108  ·  enemy.committed_charger 11
+
+time to kill
+at       lvl      dps  swarm_bas  fast_frag  slow_dura  death_spa  stationar  mini_boss  final_bos  cluster_f  gust_drif  committed
+-------------------------------------------------------------------------------------------------------------------------------------------
+10%       15     40.4      0.80s      0.36s       4.6s       1.1s      0.81s          —          —      0.24s      0.48s      0.72s
+20%       21       45      0.75s      0.34s       4.3s      0.99s      0.76s          —          —      0.23s      0.45s      0.68s
+30%       24     50.2      0.71s      0.32s       4.1s      0.93s      0.71s          —          —      0.21s      0.42s      0.63s
+40%       28      105      0.35s      0.16s       2.0s      0.47s      0.36s          —          —      0.11s      0.21s      0.32s
+50%       32      142      0.27s      0.12s       1.6s      0.36s      0.27s          —          —      0.08s      0.16s      0.24s
+60%       35      165      0.24s      0.11s       1.4s      0.32s      0.24s          —          —      0.07s      0.15s      0.22s
+70%       38      173      0.24s      0.11s       1.4s      0.32s      0.24s          —          —      0.07s      0.14s      0.22s
+80%       40      181      0.24s      0.11s       1.4s      0.31s      0.24s       2.9s          —      0.07s      0.14s      0.21s
+90%       43      197      0.23s      0.10s       1.3s      0.30s      0.23s       2.7s          —      0.07s      0.14s      0.20s
+100%      45      205      0.23s      0.10s       1.3s      0.30s      0.23s       2.7s      13.5s      0.07s      0.14s      0.20s

@@ -228,3 +228,21 @@ All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](
 [PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written/reviewed. G3 ready/unstarted;
 G4/art unstarted, external evidence still deferred/waived/unverified. This is the
 current state; earlier staged continuation paragraphs are historical checkpoints.
+
+## G3 rhythm and informed voluntary pressure — 2026-10-22
+
+Locally kept after owner-requested execution: shared later roles unlock25/34/44/
+52/60%, mini72%, baseline elites82%, final100%. Eco Microplastics0/Bottle10 and
+knight Grunt0/Runner20 remain distinct. First Glass/Tank4, Bag/Broodmother2 use
+existing retained causal introductions. Five optional sites at16/40/66/84/90%
+replace the repeated Multiplicity arrival; definitions/cost/reward values stay.
+
+Existing prompts now name the choice and show resolved current-world arrivals,
+durability/harm/XP/elite chance before acceptance; walk away to ignore. Named
+edge pointers remain, with distinct minimap site diamonds and a shorter authored
+placement band. Bosses stop pursuit during their fixed-circle warning, then resume
+in recovery; no new attack/counter/health/damage/body. These are game decisions,
+not real material/handling/abundance claims. No quiz, currency, new roster, saved
+field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
+verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
+complete; [reviewed G4 handoff](PHASE_G4_PROMPT.md) is current, G4/art unstarted.

@@ -1,3 +1,5 @@
+import { resolveEliteChance } from "../director/spawn-director";
+import { applyWorldChoice, selectWorldModifiers, type WorldState } from "../chaos/world-modifiers";
 import type { ShrineDefinition, ThemeCopy, ThemeManifest } from "../../core/archetypes/contracts";
 import type { EnemyId, ShrineId, UpgradeId } from "../../core/archetypes/ids";
 import type { SessionStatistics } from "../../state/session-statistics";
@@ -208,4 +210,29 @@ export function selectSessionCodex(
     { label: `${codex.best} ${vocabulary.kills}`, display: statistic(session.bestKills) },
     { label: `${codex.best} ${vocabulary.totalDamage}`, display: statistic(session.bestDamage) },
   ].map((line) => Object.freeze(line)));
+}
+
+/** Current resolved cost/reward; viewing never accepts or mutates a world choice. */
+export function describeShrineChoice(
+  theme: Pick<ThemeManifest, "copy" | "tuning">, shrine: ShrineDefinition,
+  world: WorldState, progress: number, eligibleLivingCount: number,
+): string {
+  const before = selectWorldModifiers(world, theme.tuning.difficulty, progress);
+  const after = selectWorldModifiers(applyWorldChoice(world, { ...shrine, shrineId: shrine.id }), theme.tuning.difficulty, progress);
+  const labels = theme.copy.world;
+  const change = (label: string, from: number, to: number) => `${label} ${multiplier(from)} → ${multiplier(to)}`;
+  const beforeElite = resolveEliteChance(theme.tuning.director, progress, before.eliteChance);
+  const afterElite = resolveEliteChance(theme.tuning.director, progress, after.eliteChance);
+  const lines = [
+    theme.copy.content[shrine.id].name,
+    change(labels.enemySpawn, before.enemySpawnMultiplier, after.enemySpawnMultiplier),
+    change(labels.enemyHealth, before.enemyHealthMultiplier, after.enemyHealthMultiplier),
+    change(labels.enemyDamage, before.enemyDamageMultiplier, after.enemyDamageMultiplier),
+    change(labels.xpGain, before.xpMultiplier, after.xpMultiplier),
+    `${labels.eliteChance} ${round(beforeElite * 100)}% → ${round(afterElite * 100)}%`,
+  ];
+  if (shrine.effectKind === "spawn_surge") lines.push(`${theme.copy.codex.released}: ${shrine.spawnCount} / ${seconds(shrine.spawnDurationMs)}`);
+  if (shrine.effectKind === "duplicate_living") lines.push(`${theme.copy.codex.duplicates}: ${eligibleLivingCount}`);
+  if (shrine.effectKind !== "world_multiplier") lines.push(`${theme.copy.codex.reward}: ${multiplier(shrine.rewardMultiplier * after.shrineRewardMultiplier)}`);
+  return lines.join("\n");
 }

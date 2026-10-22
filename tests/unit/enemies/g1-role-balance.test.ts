@@ -28,7 +28,7 @@ it("reduces Glass's compounded cost and share while preserving a distinct durabl
     expect(glass.moveSpeed).toBe(oldGlass.moveSpeed);
     expect(glass.contactDamage).toBe(oldGlass.contactDamage);
     expect(glass.xpReward).toBe(oldGlass.xpReward);
-    for (const progress of [.4, .6, 1]) {
+    for (const progress of [current.tuning.director.roles.find((role) => role.enemyId === ids.enemy.slowDurable)!.unlockAt, .6, 1]) {
       const share = (weights: ReturnType<typeof roleWeights>) => weights.find((r) => r.enemyId === ids.enemy.slowDurable)!.weight / weights.reduce((n, r) => n + r.weight, 0);
       expect(share(roleWeights(current.tuning.director, progress))).toBeLessThan(share(roleWeights(old.tuning.director, progress)));
     }

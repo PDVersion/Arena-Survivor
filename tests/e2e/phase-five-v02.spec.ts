@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+const rosterCount = activeTheme.enemies.filter((enemy) => !("boss" in enemy)).length;
 
 test("Chaos resolves two Multiplicity shrines through one world model", async ({ page }) => {
   await page.goto("/?shrineLayout=adjacent&worldScenario=multiplicity2&enemyRoster=all&noXp=1&atTimeUp=complete");
@@ -14,19 +16,19 @@ test("Chaos resolves two Multiplicity shrines through one world model", async ({
 
 test("all shrine roles activate exactly once and Duplication retains every copy", async ({ page }) => {
   await page.goto("/?shrineLayout=adjacent&worldScenario=all&enemyRoster=all&noXp=1&atTimeUp=complete");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.duplicatedEnemiesSpawned), { timeout: 15_000 }).toBe(5);
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().world?.duplicatedEnemiesSpawned), { timeout: 15_000 }).toBe(rosterCount);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(snapshot?.world?.activations).toMatchObject({
     "shrine.spawn_surge": 1,
     "shrine.greed": 1,
-    "shrine.multiplicity": 2,
+    "shrine.multiplicity": 1,
     "shrine.duplication": 1,
   });
-  expect(snapshot?.world).toMatchObject({ chaos: 5.4, duplicatedEnemiesQueued: 5, duplicatedEnemiesSpawned: 5 });
+  expect(snapshot?.world).toMatchObject({ chaos: 4.7, duplicatedEnemiesQueued: rosterCount, duplicatedEnemiesSpawned: rosterCount });
   expect(snapshot?.shrine?.instances.every(({ activated }) => activated)).toBe(true);
   expect(snapshot?.ui?.minimapShrines).toBe(0);
   expect(snapshot?.ui?.shrineTextResolution).toBe(4);
-  expect(snapshot?.spawnOrigins?.spawned.environment).toBeGreaterThanOrEqual(5);
+  expect(snapshot?.spawnOrigins?.spawned.environment).toBeGreaterThanOrEqual(rosterCount);
   expect(Object.values(snapshot?.spawnOrigins?.live ?? {}).reduce((sum, count) => sum + count, 0)).toBe(snapshot?.run?.liveEnemies);
   expect(snapshot?.run?.liveEnemies).toBeLessThanOrEqual(snapshot?.combat?.enemyCap ?? 0);
 });

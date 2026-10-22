@@ -148,8 +148,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} choos
     expect(cursed.summary).toHaveLength(2);
     await page.evaluate(() => window.__C3_WORLD__!.arrive());
     const arrived = await page.evaluate(() => window.__C3_WORLD__!.snapshot());
-    expect(arrived.elapsedMs).toBe(258000);
-    expect(arrived.shrines).toHaveLength(6);
+    expect(arrived.elapsedMs).toBe(270000);
+    expect(arrived.shrines).toHaveLength(5);
     const guide = arrived.guide.find((entry) => entry.id === "shrine.escalation")!;
     expect(guide.effects.map((line) => line.display)).toEqual(["+1.2", "×1.4"]);
     await page.screenshot({ path: testInfo.outputPath("new-shrine.png") });

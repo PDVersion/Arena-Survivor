@@ -26,3 +26,8 @@ export function advanceBossAttack(state: BossAttackState, definition: BossDefini
   if (nowMs < state.nextAtMs) return { state, damage: 0, released: false };
   return { state: { nextAtMs: state.nextAtMs, warning: { x: origin.x, y: origin.y, releaseAtMs: nowMs + definition.attack.telegraphMs } }, damage: 0, released: false };
 }
+
+/** Movement policy reads the same warning that owns the fixed damage circle. */
+export function bossHoldsPosition(state: BossAttackState | undefined, definition: BossDefinition): boolean {
+  return definition.attack.holdDuringTelegraph === true && state?.warning !== undefined;
+}

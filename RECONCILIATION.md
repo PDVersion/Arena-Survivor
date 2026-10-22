@@ -3882,3 +3882,46 @@ final686pass/72files; targeted288/30files, types/lint/build/whitespace also pass
 All three G2 candidates kept under separate gates/commits. G2 complete locally;
 reviewed PHASE_G3_PROMPT is next, G3/G4/art unstarted. Outstanding broad/external
 checks stay deferred/waived/unverified; no push/merge or new release claim.
+
+## REC-101 continuation — G3 rhythm, voluntary costs and fixed warnings
+
+Owner requests PHASE_G3_PROMPT execution after G2C5b50d7b. Claim exact G3 paths
+before code. Later shared roles34/44/52/60%, mini72%, baseline elites82% separate
+teaching from the old mini50%/second Multiplicity52%/Can55% stack. Eco and knight
+retain their different original openings. Use existing finite count overrides
+for4Glass/2Bag, not a new scheduler. Five optional sites16/40/66/84/90% eliminate
+the repeated permanent doubling arrival while preserving all definition values.
+
+Read-only in-range preview must resolve the current world and threat step, not
+repeat base multipliers. Elite preview includes the timer floor as well as Chaos.
+The same acceptance path still owns input/exact-once changes. Details clamp to
+view, stay above actors, and destroy with the source; minimap destinations use
+diamonds. Keep per-enemy dot projection allocation-free and avoid scanning enemy
+collections for previews that do not use a duplication count. Placement480–800/
+separation360 keeps traversal short; existing finite corner fallback can relax
+that band.480seeded samples min218.29/max799.16/≤48randomcalls, none within120;
+no universal distance or natural first-contact claim.
+
+Boss pursuit hold is optional theme data read from the active warning state.
+The announced circle stays fixed; AI resumes after its single pulse. It is not
+a kinematic lock against crowd separation/knockback, invulnerability or new attack.
+Existing capped unique admission, overlays, source XP, final/endless/clearing and
+reset remain. Explicit timed pacing choices model only existing world-multiplier
+sites/curses; reject actor-producing surge/duplication rather than invent lineage.
+Keep spawn-time cohorts, current collection multiplier and idempotent curses.
+
+Preserve named multiplicity2 as an explicit synthetic two-instance fixture even
+though the natural schedule has one. The all-site fixture follows actual five
+sites; duplication counts all8non-boss roles after G2, not the historic5. Updated
+old6site/258000ms and pre-unlock Glass fixtures; one legacy all-site browser5vs8
+failure corrected to roster-derived expectation without weakening caps/rewards.
+Final342short/35files and696full/73files, types/lint/build/whitespace,13unique
+affected serial browser passes and420before/after ambient/timed summaries pass.
+Some applicable ambient cases lose one final level; optional repeated-site XP/
+dwell drops substantially, while deliberate stacks still offer power and cost.
+Do not hide those trade-offs with XP/cap buffs or claim natural upgrade timing.
+
+G3_REPORT binds sources, images, initial fixture/type failures and measurement
+limits. G3 locally complete; PHASE_G4_PROMPT reviewed, G4/art unstarted. No broad
+app/stress/soak/hardware campaign; external checks remain deferred/waived/
+unverified, never newly passed. No push/PR/merge or new release acceptance.

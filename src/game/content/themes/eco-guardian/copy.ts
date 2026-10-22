@@ -86,7 +86,7 @@ export const copy = {
     restartAction: "New Shift",
     startAction: "Begin Shift",
     startHint: "Press Enter or Space, or click to begin",
-    shrinePrompt: "Press E or Space to authorise",
+    shrinePrompt: "E / Space: authorise · walk away to ignore",
     shrineArrived: "A site event has opened",
     surgeActive: "The landfill gives way",
     statisticsTitle: "Shift Report",

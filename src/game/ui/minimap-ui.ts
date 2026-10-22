@@ -95,7 +95,11 @@ export class MinimapUi {
     // Enemy dots communicate pressure, never hitboxes or targeting geometry.
     this.drawDots(view.enemies, colours.enemy, 1.4, this.enemyShapes[this.quality] === "square");
     this.drawDots(view.hazards, colours.critical, 2.2);
-    this.drawDots(view.shrines, colours.shrine, 3);
+    graphics.lineStyle(2, colours.shrine, this.opacity);
+    for (const shrine of view.shrines) {
+      const { x, y } = this.mapPoint(shrine);
+      graphics.strokePoints([{ x, y: y - 4 }, { x: x + 4, y }, { x, y: y + 4 }, { x: x - 4, y }], true);
+    }
     graphics.fillStyle(colours.player, this.opacity);
     this.drawDot(view.player, 3.4);
   }
@@ -105,7 +109,13 @@ export class MinimapUi {
     for (const entry of entries) this.drawDot(entry, radius, square);
   }
 
+  private mapPoint(entry: MinimapPoint): Readonly<{ x: number; y: number }> {
+    return { x: this.left + 5 + (entry.x / this.worldWidth) * (this.width - 10),
+      y: this.top + 5 + (entry.y / this.worldHeight) * (this.height - 10) };
+  }
+
   private drawDot(entry: MinimapPoint, radius: number, square = false): void {
+    // Keep the hot enemy-dot path allocation-free; mapPoint is sparse sites only.
     const x = this.left + 5 + (entry.x / this.worldWidth) * (this.width - 10);
     const y = this.top + 5 + (entry.y / this.worldHeight) * (this.height - 10);
     // Rectangles bypass per-frame arc triangulation in Phaser's Graphics renderer.
