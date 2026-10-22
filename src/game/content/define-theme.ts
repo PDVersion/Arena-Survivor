@@ -1,11 +1,13 @@
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
 import {
+  masteryCopyKeys,
   spriteStates,
   statKeys,
   upgradeCategories,
   upgradeRarities,
   worldKeys,
+  type EnemyPrimitivePart,
   type ThemeManifest,
   type UpgradeDefinition,
 } from "../core/archetypes/contracts";
@@ -133,6 +135,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   for (const key of worldKeys) {
     if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
+  }
+  for (const key of masteryCopyKeys) {
+    if (!theme.copy.mastery?.[key]?.trim()) issues.push(`mastery.${key} label is required`);
   }
   for (const key of codexCopyKeys) {
     if (!theme.copy.codex?.[key]?.trim()) issues.push(`codex.${key} label is required`);
@@ -273,6 +278,20 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       if (weapon.targetCap !== null && (!Number.isInteger(weapon.targetCap) || weapon.targetCap < 1)) {
         issues.push(`${weapon.id} targetCap must be a positive integer`);
       }
+      if (weapon.targetGrowth) {
+        const growth = weapon.targetGrowth;
+        const track = theme.upgrades.find((entry) => entry.id === growth.upgradeId);
+        const sourceOwner = track?.ownerWeaponId;
+        const evolutionSource = theme.upgrades.flatMap((entry) => entry.effects).some((effect) =>
+          effect.kind === "weapon.evolve" && effect.weaponId === weapon.id && effect.fromWeaponId === sourceOwner);
+        if (weapon.targetCap === null || !Number.isSafeInteger(growth.perPick) || growth.perPick < 1 ||
+          !Number.isSafeInteger(growth.maxPicks) || growth.maxPicks < 1 ||
+          !Number.isSafeInteger((weapon.targetCap ?? 0) + growth.perPick * growth.maxPicks) ||
+          !track || !sourceOwner || (sourceOwner !== weapon.id && !evolutionSource) ||
+          track.maxLevel === null || growth.maxPicks > track.maxLevel) {
+          issues.push(`${weapon.id} target growth needs a finite attainable owned track`);
+        }
+      }
       if (!Number.isFinite(weapon.extendMs) || weapon.extendMs <= 0) {
         issues.push(`${weapon.id} extendMs must be greater than zero`);
       }
@@ -299,8 +318,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       const { kind, appearAt, attack } = enemy.boss;
       if (!["mini", "final"].includes(kind) || !Number.isFinite(appearAt) || appearAt <= 0 || appearAt > 1 || (kind === "final" && appearAt !== 1)) issues.push(`${enemy.id} invalid boss milestone`);
       if (!attack || typeof attack !== "object" || Array.isArray(attack)) issues.push(`${enemy.id} boss attack is required`);
-      else for (const value of [attack.telegraphMs, attack.recoveryMs, attack.radius, attack.damage]) {
-        if (!Number.isFinite(value) || value <= 0) issues.push(`${enemy.id} boss attack values must be finite and positive`);
+      else {
+        if (attack.holdDuringTelegraph !== undefined && typeof attack.holdDuringTelegraph !== "boolean") issues.push(`${enemy.id} boss warning hold must be boolean`);
+        for (const value of [attack.telegraphMs, attack.recoveryMs, attack.radius, attack.damage]) {
+          if (!Number.isFinite(value) || value <= 0) issues.push(`${enemy.id} boss attack values must be finite and positive`);
+        }
       }
       if (enemy.fragmentInto || (enemy.deathSpawns?.length ?? 0) > 0) issues.push(`${enemy.id} unique boss cannot create descendants`);
       if (enemies.filter((candidate) => candidate.boss?.kind === kind).length !== 1) issues.push(`${enemy.id} boss kind must be unique`);
@@ -308,6 +330,24 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     }
     if (enemyIds.has(enemy.id)) issues.push(`duplicate enemy id: ${enemy.id}`);
     enemyIds.add(enemy.id);
+    if (enemy.committedMotion) {
+      const motion = enemy.committedMotion;
+      if ([motion.triggerRange, motion.telegraphMs, motion.travelMs, motion.recoveryMs, motion.speedMultiplier, motion.cueWidth]
+        .some((value) => !Number.isFinite(value) || value <= 0) || !Number.isFinite(motion.aimOffsetRadians) ||
+        Math.abs(motion.aimOffsetRadians) > Math.PI || !(motion.cueToken in theme.tokens.palette) || enemy.moveSpeed <= 0 || enemy.boss) {
+        issues.push(`${enemy.id} committed motion needs finite positive timings/range/speed/cue and a bounded bearing`);
+      }
+    }
+    if (enemy.arrivalCluster && (!Number.isSafeInteger(enemy.arrivalCluster.count) || enemy.arrivalCluster.count < 1 ||
+      !Number.isFinite(enemy.arrivalCluster.spacing) || enemy.arrivalCluster.spacing < enemy.radius * 2)) {
+      issues.push(`${enemy.id} arrival cluster needs finite count and body-separated spacing`);
+    }
+    if (enemy.primitiveParts && (enemy.primitiveParts.length < 1 || enemy.primitiveParts.length > 8 || enemy.primitiveParts.some((part: EnemyPrimitivePart) =>
+      !Number.isFinite(part.x) || !Number.isFinite(part.y) || !Number.isFinite(part.rotation) ||
+      !Number.isFinite(part.width) || part.width <= 0 || !Number.isFinite(part.height) || part.height <= 0 ||
+      Math.abs(part.x) + part.width / 2 > 0.5 || Math.abs(part.y) + part.height / 2 > 0.5 || !(part.token in theme.tokens.palette)))) {
+      issues.push(`${enemy.id} primitive parts must be bounded valid presentation data`);
+    }
     if (!Number.isFinite(enemy.maxHealth) || enemy.maxHealth <= 0) {
       issues.push(`${enemy.id} maxHealth must be greater than zero`);
     }
@@ -805,6 +845,11 @@ function validateSprites(
     if (sprite.authoredFacing !== undefined && sprite.authoredFacing !== "left" && sprite.authoredFacing !== "right") {
       issues.push(`sprites.${contentId} authored facing is invalid`);
     }
+    if (sprite.frameAnchors && (sprite.frameAnchors.length !== sprite.frames || sprite.frameAnchors.some((anchor) =>
+      !Number.isFinite(anchor.x) || !Number.isFinite(anchor.y) || anchor.x < 0 || anchor.x > sprite.frameWidth ||
+      anchor.y < 0 || anchor.y > sprite.frameHeight))) {
+      issues.push(`sprites.${contentId} frame anchors must cover the sheet within frame bounds`);
+    }
     if (sprite.walkAnimation) {
       if (!Number.isFinite(sprite.walkAnimation.distancePerFrame) || sprite.walkAnimation.distancePerFrame <= 0 ||
           sprite.walkAnimation.frames.length < 2 || sprite.walkAnimation.frames.some((frame) =>
@@ -930,6 +975,9 @@ function validateTuning(
           issues.push(`${role.enemyId} director unlockAt must be within [0, 1)`);
         }
         if (role.unlockAt === 0) hasOpeningRole = true;
+        if (role.introductionCount !== undefined && (!Number.isSafeInteger(role.introductionCount) || role.introductionCount < 1 || role.milestoneWave === false)) {
+          issues.push(`${role.enemyId} introduction count must be a finite enabled milestone`);
+        }
         if (!Number.isFinite(role.baseWeight) || role.baseWeight <= 0) {
           issues.push(`${role.enemyId} director baseWeight must be greater than zero`);
         }

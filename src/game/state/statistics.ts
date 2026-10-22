@@ -60,7 +60,7 @@ export function selectDeathCause(
   if (!cause || state.status !== "dead") return undefined;
   const name = content[cause.sourceId as keyof typeof content]?.name ?? cause.sourceId;
   const elite = cause.elite ? "an elite " : "";
-  return `${vocabulary.deathCause} ${elite}${name} at ${formatRunTime(state.durationMs - cause.atMs)}`;
+  return `${vocabulary.deathCause} ${elite}${name} at ${formatRunTime(cause.atMs)}`;
 }
 
 /**

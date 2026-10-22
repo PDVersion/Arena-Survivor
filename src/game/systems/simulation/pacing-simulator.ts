@@ -1,7 +1,8 @@
+import { arrivalClusterCount } from "../director/arrival-cluster";
 import type { EnemyDefinition, ThemeManifest } from "../../core/archetypes/contracts";
-import { archetypeIds } from "../../core/archetypes/ids";
+import { archetypeIds, type ShrineId, type CurseId } from "../../core/archetypes/ids";
 import { awardExperience, createProgressionState, type ProgressionState } from "../xp";
-import { createWorldState, selectWorldModifiers, type WorldState } from "../chaos/world-modifiers";
+import { acceptCurse, applyWorldChoice, createWorldState, selectWorldModifiers, type WorldState } from "../chaos/world-modifiers";
 import { V02_SPAWN_LIMITS } from "../spawning";
 import { resolveDirectorPlan, runProgress, selectRole } from "../director/spawn-director";
 import { createSeededRandom } from "../upgrades";
@@ -24,7 +25,33 @@ const DEFAULT_STEP_MS = 100;
 const DEFAULT_BUCKET_MS = 15_000;
 const SIMULATION_SEED = 0x5157_0003;
 
+export type TimedWorldChoice = Readonly<{ atMs: number } &
+  ({ kind: "shrine"; id: ShrineId } | { kind: "curse"; id: CurseId })>;
+
+/** Explicit acceptance fixture, not a travel, offer or autonomous choice model. */
+export function applyPacingWorldChoice(world: WorldState, choice: TimedWorldChoice, theme: ThemeManifest): WorldState {
+  if (choice.kind === "curse") {
+    const curse = theme.curses.find((entry) => entry.id === choice.id);
+    if (!curse) throw new Error(`Unknown pacing curse: ${choice.id}`);
+    return acceptCurse(world, curse);
+  }
+  const shrine = theme.shrines.find((entry) => entry.id === choice.id);
+  if (!shrine || shrine.effectKind !== "world_multiplier") throw new Error("Pacing choices only model world-multiplier sites; actor-producing sites are unsupported");
+  return applyWorldChoice(world, { ...shrine, shrineId: shrine.id });
+}
+
+function pacingChoices(options: PacingOptions): readonly TimedWorldChoice[] {
+  const choices = [...(options.worldChoices ?? [])].sort((a, b) => a.atMs - b.atMs);
+  for (const choice of choices) {
+    if (!Number.isFinite(choice.atMs) || choice.atMs < 0 || choice.atMs > options.durationMs) throw new Error("Pacing choice time must be finite and within the run");
+    // Validate even choices landing between the last bucket and duration.
+    applyPacingWorldChoice(options.initialWorld ?? createWorldState(), choice, options.theme);
+  }
+  return choices;
+}
+
 export interface PacingOptions {
+  readonly worldChoices?: readonly TimedWorldChoice[];
   readonly difficulty?: DifficultyId;
   readonly theme: ThemeManifest;
   readonly build: BuildModel;
@@ -63,6 +90,12 @@ export interface PacingReport {
   readonly totalKills: number;
   readonly totalXp: number;
   readonly peakLiveEnemies: number;
+  /** Sampled before combat each step, simulation milliseconds (not wall time). */
+  readonly capDwellMs: number;
+  readonly naturalSpawnBlockedMs: number;
+  readonly killsByRole: Readonly<Record<string, number>>;
+  readonly remainingByRole: Readonly<Record<string, number>>;
+  readonly remainingEffectiveWorkByRole: Readonly<Record<string, number>>;
   /** Simulation time in ms at which each level was first reached, index 0 = level 2. */
   readonly levelTimestampsMs: readonly number[];
 }
@@ -99,7 +132,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
   const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
     .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
-  const world = options.initialWorld ?? chaosWorldState(chaos);
+  let world = options.initialWorld ?? chaosWorldState(chaos);
+  const choices = pacingChoices(options);
+  let nextChoice = 0;
   const random = createSeededRandom(options.seed ?? SIMULATION_SEED);
 
   let progression: ProgressionState = createProgressionState(tuning.progression.xpCurve);
@@ -113,6 +148,9 @@ export function simulatePacing(options: PacingOptions): PacingReport {
   let totalKills = 0;
   let totalXp = 0;
   let peakLiveEnemies = 0;
+  let capDwellMs = 0;
+  let naturalSpawnBlockedMs = 0;
+  const killsByRole: Record<string, number> = {};
 
   let bucketStartMs = 0;
   let bucketSpawns: Record<string, number> = {};
@@ -154,34 +192,47 @@ export function simulatePacing(options: PacingOptions): PacingReport {
 
     // World pressure is resolved per step, so elapsed-time escalation is
     // modelled exactly as the scene resolves it.
+    while (nextChoice < choices.length && choices[nextChoice]!.atMs <= elapsedMs) {
+      world = applyPacingWorldChoice(world, choices[nextChoice]!, theme);
+      nextChoice += 1;
+    }
     const progress = runProgress(elapsedMs, options.durationMs);
     const modifiers = selectWorldModifiers(world, tuning.difficulty, progress);
     const plan = resolveDirectorPlan(tuning.director, progress, modifiers);
-    while (elapsedMs >= nextSpawnAtMs && liveCount() < V02_SPAWN_LIMITS.maxAlive) {
+    if (elapsedMs >= nextSpawnAtMs && liveCount() >= V02_SPAWN_LIMITS.maxAlive) naturalSpawnBlockedMs += stepMs;
+    // Runtime schedules one batch from "now"; it never repays a cap-delayed
+    // natural-arrival debt in one burst when a slot opens.
+    if (elapsedMs >= nextSpawnAtMs && liveCount() < V02_SPAWN_LIMITS.maxAlive) {
       for (let batch = 0; batch < plan.batchSize; batch += 1) {
         if (liveCount() >= V02_SPAWN_LIMITS.maxAlive) break;
         const enemyId = selectRole(plan.weights, random);
         const definition = theme.enemies.find((entry) => entry.id === enemyId);
         if (!definition) continue;
-        const existing = live.get(definition.id);
+        const admitted = arrivalClusterCount(definition, V02_SPAWN_LIMITS.maxAlive - liveCount());
+        const effectiveHealth = definition.maxHealth * modifiers.enemyHealthMultiplier * (1 + definition.armour / 100);
+        const effectiveReward = definition.xpReward * (1 +
+          (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare);
+        // Preserve spawn-time stats rather than retroactively assigning the
+        // first surviving member's health/reward to every later arrival.
+        const cohortId = `${definition.id}:${effectiveHealth}:${effectiveReward}`;
+        const existing = live.get(cohortId);
         if (existing) {
-          existing.count += 1;
+          existing.count += admitted;
         } else {
-          live.set(definition.id, {
+          live.set(cohortId, {
             definition,
-            count: 1,
-            effectiveHealth: definition.maxHealth * modifiers.enemyHealthMultiplier,
-            effectiveReward:
-              definition.xpReward *
-              (1 +
-                (modifiers.enemyHealthMultiplier - 1) * tuning.progression.toughnessRewardShare),
+            count: admitted,
+            effectiveHealth,
+            effectiveReward,
           });
         }
-        bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + 1;
+        bucketSpawns[definition.id] = (bucketSpawns[definition.id] ?? 0) + admitted;
       }
-      nextSpawnAtMs += plan.intervalMs;
+      nextSpawnAtMs = elapsedMs + plan.intervalMs;
     }
 
+    peakLiveEnemies = Math.max(peakLiveEnemies, liveCount());
+    if (liveCount() >= V02_SPAWN_LIMITS.maxAlive) capDwellMs += stepMs;
     const context: BuildContext = {
       secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
       evolvedWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondaryEvolved),
@@ -198,20 +249,26 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     bucketDpsSamples += 1;
     damagePool += (dps * stepMs) / 1000;
 
-    // Spend the damage pool on the densest cohort first, which approximates
+    // Spend the damage pool on the densest role first, which approximates
     // auto-targeting the nearest enemy in a crowd.
     let guard = 0;
     while (damagePool > 0 && liveCount() > 0 && guard < 4096) {
       guard += 1;
       let target: LiveRole | undefined;
-      for (const role of live.values()) {
+      let targetKey: string | undefined;
+      const counts = new Map<string, number>();
+      for (const role of live.values()) counts.set(role.definition.id, (counts.get(role.definition.id) ?? 0) + role.count);
+      for (const [key, role] of live) {
         if (role.count <= 0) continue;
-        if (!target || role.count > target.count) target = role;
+        // Cohort splitting must not change the model's role-priority policy.
+        // Within the densest role, spend against its oldest surviving cohort.
+        if (!target || counts.get(role.definition.id)! > counts.get(target.definition.id)!) { target = role; targetKey = key; }
       }
       if (!target || damagePool < target.effectiveHealth) break;
       damagePool -= target.effectiveHealth;
       target.count -= 1;
-      if (target.count === 0) live.delete(target.definition.id);
+      if (target.count === 0) live.delete(targetKey!);
+      killsByRole[target.definition.id] = (killsByRole[target.definition.id] ?? 0) + 1;
       totalKills += 1;
       bucketKills += 1;
 
@@ -226,6 +283,8 @@ export function simulatePacing(options: PacingOptions): PacingReport {
       }
     }
 
+    // No attack can store damage while there is no target to hit.
+    if (liveCount() === 0) damagePool = 0;
     peakLiveEnemies = Math.max(peakLiveEnemies, liveCount());
 
     if (elapsedMs - bucketStartMs >= bucketMs || elapsedMs >= options.durationMs) {
@@ -233,7 +292,17 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     }
   }
 
+  const remainingByRole: Record<string, number> = {};
+  const remainingEffectiveWorkByRole: Record<string, number> = {};
+  for (const role of live.values()) {
+    remainingByRole[role.definition.id] = (remainingByRole[role.definition.id] ?? 0) + role.count;
+    remainingEffectiveWorkByRole[role.definition.id] = (remainingEffectiveWorkByRole[role.definition.id] ?? 0) + role.count * role.effectiveHealth;
+  }
   return Object.freeze({
+    capDwellMs, naturalSpawnBlockedMs,
+    killsByRole: Object.freeze(killsByRole),
+    remainingByRole: Object.freeze(remainingByRole),
+    remainingEffectiveWorkByRole: Object.freeze(remainingEffectiveWorkByRole),
     difficulty: options.difficulty ?? "normal",
     themeId: theme.id,
     buildId: options.build.id,
@@ -243,7 +312,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
       options.durationMs,
       theme.tuning.pace.gameplayRate,
     ),
-    chaos,
+    chaos: world.chaos,
     buckets: Object.freeze(buckets),
     finalLevel: progression.level,
     totalKills,
@@ -280,11 +349,14 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
   const character = theme.characters.find((entry) => entry.id === archetypeIds.character.starter)!;
   const evolution = theme.upgrades.flatMap((upgrade) => upgrade.effects)
     .find((effect) => effect.kind === "weapon.evolve" && effect.fromWeaponId === archetypeIds.weapon.secondary);
-  const world = options.initialWorld ?? chaosWorldState(options.chaos ?? 1);
+  const initialWorld = options.initialWorld ?? chaosWorldState(options.chaos ?? 1);
+  const choices = pacingChoices(options);
 
   return Object.freeze(
     report.buckets.map((bucket) => {
       const progress = bucket.endMs / options.durationMs;
+      const world = choices.filter((choice) => choice.atMs <= bucket.endMs)
+        .reduce((current, choice) => applyPacingWorldChoice(current, choice, theme), initialWorld);
       const modifiers = selectWorldModifiers(world, theme.tuning.difficulty, progress);
       const dps = options.build.damagePerSecond(bucket.level, {
         secondaryWeapon: theme.weapons.find((entry) => entry.id === archetypeIds.weapon.secondary),
@@ -295,6 +367,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
         baseCritChance: character.baseStats.critChance,
         critDamage: character.baseStats.critDamage,
         liveEnemies: bucket.liveEnemies,
+        collectionSweep: theme.skills?.find((entry) => entry.id === archetypeIds.skill.collectionSweep)?.effects?.find((effect) => effect.kind === "collection_sweep"),
       });
       const seconds: Record<string, number> = {};
       for (const enemy of theme.enemies) {

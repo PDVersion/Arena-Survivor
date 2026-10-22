@@ -1,42 +1,23 @@
 # Readable cleanup gameplay — four-phase roadmap
 
-Owner direction: 2026-10-21 (Australia/Sydney). Status: **G1 claimed to Codex;
-implementation not started; prerequisite Q6 pending. G2–G4 planned.**
+Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6/G1 verified locally; G2 complete with three local keeps. G3/G4 locally complete; publication and new sprite work unstarted.**
 The owner requests the ranked survivor-game ideas in a few phases, consideration
 of Australian rubbish data as enemy candidates, and rebalancing existing enemies
-where required. This records that direction without claiming new runtime work.
+where required. Implementation evidence and limits are in [G1_REPORT](content/G1_REPORT.md).
 
 ## Authority, sequencing and ownership
 
-Product intent lives in [PLAN.md](PLAN.md); this document owns the detailed
-follow-on scope, candidate assessment and gates. [BUILD_STATUS.md](BUILD_STATUS.md)
-owns actual completion. [BUILD_PLAN_V0.4.3.md](BUILD_PLAN_V0.4.3.md) still owns the
-immediate **Q6 motion/cone-feedback/vacuum-progression correction**. Finish Q6
-before tuning enemies against the corrected tools. Do not reopen verified C1–C7.
+Product intent lives in [PLAN.md](PLAN.md). This roadmap retains priorities,
+candidate assessment and source context. [BUILD_STATUS.md](BUILD_STATUS.md)
+owns actual completion; [the master log](MASTER_BUILD_PLAN.md#readable-gameplay)
+owns completed Q6/G1–G4 plans and gates. Do not reopen verified C1–C7.
 
 Sequence: **Q6 → G1 existing-roster balance → G2 bounded outdoor variety →
 G3 encounter rhythm and optional sites → G4 mastery and replay goals**.
-G1–G4 are phase labels, not saved IDs or retroactive V0.4.3 content. The owner
-now authorizes publishing this claim to main. G1's owning implementation plan is
-this roadmap; its delivery branch is `codex/readable-gameplay-g1`, based on merged
-main containing the claim. Q6 keeps its checklist/ownership in the V0.4.3 plan
-and is implemented as a separate prerequisite commit on that follow-on branch.
-G2–G4 milestone/branch placement remains TBC. Narrow exact ownership before
-runtime edits and preserve one verified commit per phase. Start with the
-[G1 implementation prompt](PHASE_G1_PROMPT.md).
-
-This planning amendment owns this file, `content/READABLE_ROSTER_BASELINE.md`,
-`content/READABLE_ROSTER_BASELINE.json`, the cross-links/clarifications in
-`{PLAN,EDUCATION_PIVOT,THEME_ARCHETYPES,ECO_CONTENT_MAP,BUILD_PLAN_V0.4,
-BUILD_PLAN_V0.4.3,BUILD_STATUS,AUTONOMOUS_DEVELOPMENT_PLAN,SESSION_21_PROMPT}.md`,
-`../AUTONOMOUS_PROGRESS.md` and `../RECONCILIATION.md`. Preserve the pre-existing
-Session21 edits. No runtime, saved IDs, assets, sprite inventory or dependencies
-are changed by this planning session.
-
-V0.4.4 reconciles only a settled implemented roster. Prototype candidates with
-existing primitive support first; unselected future waste/site ideas must not
-hold up accepted actor sheets. No sprite generation or retired-ID reuse follows
-from a candidate's appearance below.
+G1–G4 are phase labels, not saved IDs or retroactive V0.4.3 content.
+The completed implementation authority is the [master log](MASTER_BUILD_PLAN.md#readable-gameplay).
+Preserve theme-owned tuning, presentation/physics separation, stable IDs and
+existing persistence contracts. No additional content is selected by this record.
 
 ## Priorities carried forward from the genre analysis
 
@@ -117,9 +98,9 @@ item.” Rubble's tonnage does not make it the common outdoor swarm.
 
 ## Enemy candidates and their distinct decisions
 
-All new subjects below are **candidates**. G2 starts with one, proves it, then
-considers the next; it does not add every survey row. Names are editorial proposals,
-not runtime IDs. Motion, contact damage and danger cues are game abstractions.
+The table preserves the original **candidate assessment**. Cigarette Butts,
+Wrappers and Can were subsequently accepted in G2; other candidates remain
+unselected. Names in this research table are editorial subjects, not runtime IDs. Motion, contact damage and danger cues are game abstractions.
 The sources above do not justify toxicity numbers, decay estimates, universal
 recycling rules or a tool-effectiveness matrix.
 
@@ -142,164 +123,20 @@ recycling rules or a tool-effectiveness matrix.
 | Ash | Marked industrial area/encounter rather than a household rubbish enemy | Deferred; these rankings establish prevalence only, not exposure or handling guidance |
 | Hazardous / contaminated waste | Clearly marked containment objective with a fictional specialist response | Deferred; no generic Grabber/Vacuum effectiveness or safe-disposal claim inferred |
 
-## Phase G1 — reliable power growth and existing-roster rebalance
+## Completed four-phase build
 
-Claim: **Codex**, `codex/readable-gameplay-g1`; status **claimed, Q6 prerequisite
-pending**, not an implementation/completion claim. No parallel roster or sprite
-work is claimed. The [start prompt](PHASE_G1_PROMPT.md) includes prerequisite
-recovery, ownership, implementation and verification.
+The [master build log](MASTER_BUILD_PLAN.md#readable-gameplay) now owns all
+completed Q6/G1–G4 scope, exact ownership, decisions, checklists, commits and
+verification. G1–G4 scoped local gates are complete through G4 `a10e3eb`.
+Individual evidence reports remain linked there. Former phase prompts are retired.
+Historical proposed candidates above do not authorize additional content or art;
+the implemented settled roster is in [V0.4.4](SPRITE_PLAN_V0.4.4.md).
 
-| G1 ownership | Paths permitted when needed |
-| --- | --- |
-| Theme-owned enemy/tool/director tuning | `src/game/content/themes/{eco-guardian,knight-magic}/{enemies,director,progression,difficulty,difficulty-presets,weapons,skills,upgrades,elites,copy}.ts` |
-| Actual implemented-build simulation | `src/game/systems/simulation/{build-models,pacing-simulator,format-report}.ts`, `scripts/balance.ts` |
-| Contract validation, only for a demonstrated required seam | `src/game/core/archetypes/{contracts,tuning}.ts`, `src/game/content/define-theme.ts`; record the dependency before editing |
-| Affected deterministic verification | `tests/unit/{content,architecture,enemies,director,difficulty,weapons,simulation,elites,events}/**` |
-| Necessary bounded integration | `tests/e2e/{enemy-roster,opening-microplastics,second-tool-v043,elite-family-v043,difficulty-v043}.spec.ts`; Q6 cases keep separate ownership |
-| Evidence and durable decisions | `build/content/G1*`, this roadmap, `build/{BUILD_STATUS,PLAN,EDUCATION_PIVOT,THEME_ARCHETYPES,ECO_CONTENT_MAP,PHASE_G1_PROMPT}.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md` |
+## Next decision
 
-No G1 production scene/entity/sprite/save/dependency edits are implied. If measured
-work needs another path, record its exact bounded dependency in this claim first.
-
-Prerequisite: Q6 verified. Claim theme-owned enemy/director/progression/difficulty/
-weapon tuning and corresponding simulation/tests before runtime work. Keep both
-production themes contract-valid; do not copy eco tuning into knight-magic blindly.
-
-- [ ] Re-run the [captured baseline](content/READABLE_ROSTER_BASELINE.md) against
-  corrected tools. Extend the simulator only where a real capability is missing;
-  exclude parked projectile/kill-explosion models from eco acceptance decisions.
-- [ ] Evaluate each current role's health, armour, speed, contact harm, XP,
-  arrival share and interaction with the corrected Vacuum capacity and Sweep.
-  Change theme values only where the comparison demonstrates a pacing problem;
-  keep unchanged values explicitly where they already serve their role.
-- [ ] Microplastics: preserve the opening one-hit exception across all three
-  presets; do not use surveyed >5 mm fragment counts as their natural spawn rate.
-  Plastic Bottles: preserve the familiar baseline, without claiming they dominate
-  litter item counts. Review common-role proportions as gameplay composition.
-- [ ] Glass: review compounded health/armour and arrival share so a durable
-  commitment does not crowd out all other choices. Preserve greater material
-  durability than plastic, stationary clearable Shards, and finite fragmentation.
-  Bagged Waste: budget parent plus released children, their half rewards, elite
-  descendants and retained spawn work; never create recursive bag families.
-- [ ] Measure level milestones, kills/XP, role mix, backlog/cap dwell and TTK
-  before/after, with isolated-contact and packed-target bands. Do not call a peak
-  population alone a demonstrated balance defect or a performance result.
-- [ ] Give owned upgrades/evolution an observable benefit and a chance to enjoy
-  it; do not automatically cancel each power gain with enemy scaling. Preserve a
-  viable generalist fallback and assess early economy choices for snowballing.
-
-Gate: themed content/architecture, director, material-family, difficulty, melee,
-evolution and simulation units; `npm run typecheck`, `npm run lint`,
-`npm run build`, `git diff --check`; `npm run balance` baseline/C3 fixtures across
-both themes and all presets, with applicable models identified. One necessary
-bounded serial play/readability check validates the model's contact assumptions.
-Record values, source state, actual acceptance and deferred checks in a G1 report.
-No fixed new stat or target population is accepted by this planning document.
-
-## Phase G2 — a small, recognizable outdoor roster
-
-Prerequisite: G1. Proposed ownership: new neutral capability contracts/selectors,
-theme enemy/copy/director definitions, validation and affected tests. Existing
-sprite/body boundaries and save-ID rules remain mandatory.
-
-- [ ] Prototype one candidate at a time in the table's order, starting with
-  Cigarette Butts; keep only a candidate that creates a distinct useful decision.
-  Wrappers and the rolling Can are subsequent slices, not one bulk roster drop.
-- [ ] Introduce each alone at low pressure, then combine with an already-learned
-  role. Author unlocks/weights from normalized director progress; no second
-  hard-coded spawn timeline or compulsory long tutorial.
-- [ ] Supply recognizable silhouettes/cues at the actual camera/rate without
-  changing hitboxes from art. Small litter may use readable authored display
-  footprints; visual size must not become a factual scale claim.
-- [ ] Rebalance existing-role shares/rewards after every addition, including
-  under optional pressure. Every new role must add a decision, not just reduce
-  the chance of seeing familiar enemies or increase the live cap.
-- [ ] Reserve stable neutral IDs and author both-theme definitions only when a
-  candidate is implemented. New discovery/profile fields require SAVE_DATA review;
-  no profile/schema change is needed merely to document a candidate.
-
-Gate per candidate: deterministic movement/telegraph and target/XP tests, content/
-architecture and finite-spawn/cap checks, both-theme balance comparisons, common
-software checks from G1, and only necessary serial mixed-roster browser cases.
-Review essential cues in Default/Low and reduced-motion settings. Record keep/
-revise/drop before advancing; aggregate broad stress into an authorized campaign.
-
-## Phase G3 — encounter rhythm, destinations and voluntary escalation
-
-Prerequisite: accepted G2 roster (including an explicit decision to keep the
-existing roster if no prototype qualifies). Proposed ownership: theme director/
-site/curse/boss definitions, existing interaction/feedback surfaces and tests.
-
-- [ ] Arrange teach → combine → optional pressure → power payoff → renewed
-  challenge around the existing short run. Keep five authored minutes at rate
-  0.5 (roughly ten wall minutes before pauses); do not double it by accident.
-- [ ] Make existing sites visible destinations through existing prompts/minimap.
-  Show resolved cost/reward and let the player ignore an event. No new deposit
-  currency, crafting, mandatory route or bespoke world generator is needed.
-- [ ] Test optional pressure on weak and strong builds: more enemies also mean
-  more potential XP and effect triggers. Check resource snowballing and whether
-  the player actually has time to capitalize on a reward before the next spike.
-- [ ] Refine current mini/final bosses to test learned movement, safe-space and
-  clearing decisions. Avoid introducing a new hard counter at the final moment.
-  Preserve the live boss fight and post-kill endless/clearing choice.
-- [ ] Keep construction/industrial/ash/hazardous subjects as future site options;
-  do not force their tonnage ranking into the current outdoor encounter mix.
-
-Gate: director/world-choice/boss/ledger units, ignored/accepted/repeated-event and
-terminal/reset regressions, all-preset baseline versus optional-pressure balance,
-common software checks, and necessary bounded serial event/telegraph cases. Record
-natural first-encounter/upgrade timings separately from forced test-clock evidence.
-
-## Phase G4 — mastery, useful results and reasons to return
-
-Prerequisite: G3. Proposed ownership: existing results/Field Guide/unlock selectors,
-theme copy/unlock definitions and affected tests; persistence only if a new field
-is actually required and SAVE_DATA migrations are included in the same phase.
-
-- [ ] Make existing results explain tool contributions, pressure chosen and the
-  recorded damage/death source where available. Offer a specific attainable next
-  experiment without asserting an unrecorded cause of failure.
-- [ ] Use existing capability unlocks to encourage different approaches. Avoid
-  permanent stat grinding as a prerequisite for a satisfying first run; no large
-  character roster, new economy, daily mode or restoration system is required.
-- [ ] Extend the existing Field Guide rather than create another encyclopedia.
-  Keep any discovery counts/optional facts bounded and opt-in. If saved discovery
-  is selected, version/validate/migrate it and test portable saves before release.
-- [ ] When showing the Australian rankings, retain the two measures, period,
-  denominator, source and review date. Separate game danger from environmental
-  persistence/harm and from local disposal advice. No quiz or reading gate.
-
-Gate: result/unlock/guide/content units and common software checks. Add exact-once
-terminal/reload/import/export/unknown-ID fixtures and bounded serial UI checks only
-when persistence or its UI changes. Compare baseline and new unlock builds; no
-old save may silently map Microplastics onto another material.
-
-## Short verification recipes for implementation
-
-These are future phase requirements, not checks claimed by this planning session.
-Each phase also runs `npm run typecheck`, `npm run lint`, `npm run build` and
-`git diff --check`. Add new capability regressions to the owning suites below.
-
-| Phase | Focused deterministic command |
-| --- | --- |
-| G1 | `npm test -- --run tests/unit/content tests/unit/architecture tests/unit/enemies tests/unit/director tests/unit/difficulty tests/unit/weapons tests/unit/simulation tests/unit/elites tests/unit/events` |
-| G2 | `npm test -- --run tests/unit/content tests/unit/architecture tests/unit/enemies tests/unit/director tests/unit/spawning tests/unit/targeting tests/unit/combat tests/unit/elites tests/unit/events tests/unit/simulation` |
-| G3 | `npm test -- --run tests/unit/content tests/unit/director tests/unit/chaos tests/unit/shrine tests/unit/bosses tests/unit/run-state tests/unit/statistics tests/unit/simulation` |
-| G4 | `npm test -- --run tests/unit/content tests/unit/upgrades tests/unit/statistics tests/unit/ui-selectors tests/unit/codex` plus `npm test -- --run tests/unit/persistence` if saved state changes |
-
-For G1–G3, run the four `npm run balance` commands recorded in the
-[baseline JSON](content/READABLE_ROSTER_BASELINE.json). Label eco `spread`/
-`explosion` diagnostics rather than using them for acceptance; extend applicable
-build models for new capabilities. G4 compares any changed unlock/build paths.
-Before each slice, choose the affected existing/new browser cases and document
-their purpose, timeout, single worker and zero retries. Run them serially; a
-deferred broad stress/compatibility campaign is not a locally passed gate.
-
-## Completion and handoff rule
-
-Each implemented slice keeps code, tests, balance evidence, plan status and
-reconciliation together in one reviewable commit. A phase stays open until its
-gate passes; record partial work and deferred browser/device evidence honestly.
-Use necessary local browsers serially and clean up owned resources. This roadmap
-does not create a new CI, device, native-browser or performance pass or expand the
-temporary external-check waiver. Current next action remains Q6.
+The [current handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers cumulative local
+delivery and separately selected sprite inventory/frame/canvas/style work. No
+further gameplay phase is required by this roadmap. Broad current-app CI/browser/
+stress/soak remains deferred; external Safari/browser-OS/older physical-GPU checks
+remain waived/unverified. New facts, saved discoveries and additional content
+remain separately selected scope.

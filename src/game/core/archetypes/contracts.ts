@@ -87,6 +87,7 @@ export const statKeys = [
   "projectiles",
   "pierce",
   "range",
+  "primaryTargets",
   "knockback",
   "armourPierce",
   "moveSpeed",
@@ -151,7 +152,13 @@ export interface SaveManagerCopy {
   readonly warnCharacterFallback: string;
 }
 
+export const masteryCopyKeys = ["review", "details", "tools", "choices", "nextExperiment", "noDamage", "otherDamage", "noChoices",
+  "capabilities", "enemies", "health", "speed", "harm", "fractures", "releases", "gameValues", "previous", "nextPage",
+  "tryFirst", "tryEquip", "tryEvolve", "tryReady", "tryRisk", "tryRecovery", "tryCalm", "bossDefeated"] as const;
+export type MasteryCopy = Readonly<Record<(typeof masteryCopyKeys)[number], string>>;
+
 export interface ThemeCopy {
+  readonly mastery: MasteryCopy;
   readonly saveManager: SaveManagerCopy;
   readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly changedElsewhere: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
   readonly eliteVariants?: Readonly<Partial<Record<EliteId, ContentCopy>>>;
@@ -251,6 +258,8 @@ export type SpriteState = (typeof spriteStates)[number];
 /** Where a sprite sheet lives and how it is cut. Optional per theme. */
 export interface SpriteDefinition {
   /** Actual facing of the authored pixels; never inferred by gameplay. */
+  /** Authored pixel anchors; presentation only, never fed back to bodies. */
+  readonly frameAnchors?: readonly Readonly<{ x: number; y: number }>[];
   readonly authoredFacing?: "left" | "right";
   readonly stateFacing?: Readonly<Partial<Record<SpriteState, "left" | "right">>>;
   readonly walkAnimation?: Readonly<{
@@ -447,6 +456,8 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
   readonly width: number;
   /** `null` resolves every target in the corridor, near to far. */
   readonly targetCap: number | null;
+  /** Capacity steps earned only by picks of this weapon-owned track. */
+  readonly targetGrowth?: Readonly<{ upgradeId: UpgradeId; perPick: number; maxPicks: number }>;
   readonly extendMs: number;
   readonly retractMs: number;
 }
@@ -458,10 +469,37 @@ export interface BossDefinition {
   readonly kind: "mini" | "final";
   /** Normalized authored progress; unique encounter, not an ambient role. */
   readonly appearAt: number;
-  readonly attack: Readonly<{ telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
+  readonly attack: Readonly<{ holdDuringTelegraph?: boolean; telegraphMs: number; recoveryMs: number; radius: number; damage: number }>;
+}
+
+export interface EnemyPrimitivePart {
+  /** Normalized to authored display diameter; never used by physics. */
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  readonly rotation: number;
+  readonly token: keyof ThemePalette;
+}
+
+/** Timed approach → fixed-bearing warning → travel → stationary recovery. */
+export interface CommittedMotionDefinition {
+  readonly triggerRange: number;
+  readonly telegraphMs: number;
+  readonly travelMs: number;
+  readonly recoveryMs: number;
+  readonly speedMultiplier: number;
+  readonly aimOffsetRadians: number;
+  readonly cueToken: keyof ThemePalette;
+  readonly cueWidth: number;
 }
 
 export interface EnemyDefinition {
+  readonly committedMotion?: CommittedMotionDefinition;
+  /** Only natural director selections expand a group; causal spawns never do. */
+  readonly arrivalCluster?: Readonly<{ count: number; spacing: number }>;
+  /** Optional code-native presentation; sprites still take precedence. */
+  readonly primitiveParts?: readonly EnemyPrimitivePart[];
   readonly boss?: BossDefinition;
   readonly id: EnemyId;
   readonly maxHealth: number;

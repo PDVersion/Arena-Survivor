@@ -1,4 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { activeTheme } from "../../src/game/content/active-theme";
+
+const rosterIds = activeTheme.enemies.filter((enemy) => !("boss" in enemy && enemy.boss)).map((enemy) => enemy.id).sort();
 
 test("elite capability applies to every enemy role and survives duplication", async ({ page }) => {
   await page.goto("/?forceElite=1&enemyRoster=all&worldScenario=all&noXp=1");
@@ -48,8 +51,9 @@ test("reduced-motion feedback remains bounded without changing elite simulation"
   await page.goto("/?forceElite=1&enemyRoster=all&reducedMotion=1&noXp=1");
   await expect.poll(() => page.evaluate(
     () => window.__ARENA_TEST__?.getSnapshot().elites?.spawned,
-  )).toBe(5);
+  )).toBe(rosterIds.length);
   const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  expect(snapshot?.elites?.byRole).toEqual(Object.fromEntries(rosterIds.map((id) => [id, 1])));
   expect(snapshot?.feedback?.reducedMotion).toBe(true);
   expect(snapshot?.feedback?.visualHighWater).toBeLessThanOrEqual(48);
 });

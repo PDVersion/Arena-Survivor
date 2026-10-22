@@ -1,21 +1,10 @@
 import { archetypeIds } from "../../../core/archetypes/ids";
 import type { DirectorTuning } from "../../../core/archetypes/tuning";
 
-/**
- * Curves, not a phase list. Everything resolves from normalized run progress,
- * so a run of any length restretches without new authoring.
- *
- * Held in step with the production pack so this theme stays a real balance
- * regression target rather than a stale fixture. Derived shape at five minutes,
- * computed from these coefficients and asserted by `tests/unit/director`:
- *
- *   progress  interval  batch  composition                      elite
- *   0.0        900 ms     1    swarm 100%                        0%
- *   0.2        737 ms     1    swarm 74% · fast 26%              0%
- *   0.4        603 ms     2    swarm 64% · fast 26% · slow 10%   0%
- *   0.6        494 ms     2    + spawner 7%                      0%
- *   0.8        404 ms     3    swarm 43% · fast 27% · slow 17%   4%
- *   1.0        331 ms     4    swarm 33% · fast 28% · slow 22%   8%
+/** Normalized G3 teaching/combination cadence. Knight retains its Grunt opening
+ * and Runner introduction at20%; new shared roles precede the72%mini-boss.
+ * Baseline elites ramp from82%to the existing8%ceiling. Optional world pressure
+ * can introduce elites earlier through the same resolved director selector.
  */
 export const director = {
   baseIntervalMs: 900,
@@ -23,12 +12,17 @@ export const director = {
   intervalDecayK: 1,
   batchRamp: 3,
   batchSpreadRadians: 0.5,
-  eliteUnlockAt: 0.6,
+  eliteUnlockAt: 0.82,
   maxBaselineEliteChance: 0.08,
   waveBurstBase: 15,
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+    { enemyId: archetypeIds.enemy.committedCharger, waveMovement: "chase", unlockAt: 0.60,
+      introductionCount: 1, baseWeight: 2, weightGrowth: 0.4, chaosWeightBias: 0 },
+    { enemyId: archetypeIds.enemy.gustDrifter, waveMovement: "chase", unlockAt: 0.34,
+      introductionCount: 1, baseWeight: 3, weightGrowth: 0.5, chaosWeightBias: 0 },
+
     // The baseline swarm, thinning as a share as heavier roles arrive.
     {
       enemyId: archetypeIds.enemy.swarmBasic,
@@ -38,9 +32,8 @@ export const director = {
       weightGrowth: -0.65,
       chaosWeightBias: 0,
     },
-    // Faster than the player, so its wave sweeps past on a fixed heading rather
-    // than chasing. An 18-strong homing pack of these is unsurvivable with the
-    // single-projectile starter weapon. See REC-050.
+    // Fast pressure remains below player speed; its milestone wave keeps a
+    // fixed heading instead of turning the whole pack into pursuit (REC-050).
     {
       enemyId: archetypeIds.enemy.fastFragile,
       waveMovement: "drift",
@@ -52,7 +45,8 @@ export const director = {
     {
       enemyId: archetypeIds.enemy.slowDurable,
       waveMovement: "chase",
-      unlockAt: 0.4,
+      unlockAt: 0.44,
+      introductionCount: 4,
       baseWeight: 12,
       weightGrowth: 0.9,
       chaosWeightBias: 0.35,
@@ -60,10 +54,13 @@ export const director = {
     {
       enemyId: archetypeIds.enemy.deathSpawner,
       waveMovement: "chase",
-      unlockAt: 0.45,
+      unlockAt: 0.52,
+      introductionCount: 2,
       baseWeight: 5,
       weightGrowth: 2.6,
       chaosWeightBias: 0.5,
     },
+    { enemyId: archetypeIds.enemy.clusterFodder, waveMovement: "chase", unlockAt: 0.25,
+      introductionCount: 3, baseWeight: 2, weightGrowth: 0.5, chaosWeightBias: 0 },
   ],
 } as const satisfies DirectorTuning;

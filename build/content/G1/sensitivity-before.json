@@ -1,0 +1,2825 @@
+{
+  "sourceParent": "44585dde4de87a79f0407cdf807923d6de90e8da",
+  "trackedRuntimeDigest": "edcdffa5f0ee5da08fc8eba82442f6696498152bb42564ca3cdfc9565d641cea",
+  "method": "SHA256 compact sorted JSON of tracked src/tests/scripts/public/package path SHA256; new test paths captured at final verification separately",
+  "stepMs": 50,
+  "historicalGlass": true,
+  "scenarioCount": 18,
+  "limits": [
+    "No movement, incoming damage, travel, offers, overkill, children, elites, milestone waves, bosses or causal queue in ambient pacing model",
+    "Isolated/packed DPS contact bands, not survival",
+    "C3 shrine and both curses applied at start; not natural timing",
+    "spread/explosion parked in eco"
+  ],
+  "cases": [
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 0,
+      "naturalSpawnBlockedMs": 0,
+      "killsByRole": {
+        "enemy.fast_fragile": 400,
+        "enemy.swarm_basic": 264,
+        "enemy.slow_durable": 91,
+        "enemy.death_spawner": 71
+      },
+      "remainingByRole": {
+        "enemy.fast_fragile": 7,
+        "enemy.slow_durable": 7,
+        "enemy.swarm_basic": 8,
+        "enemy.death_spawner": 7
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.fast_fragile": 68.5125,
+        "enemy.slow_durable": 1023.1199999999998,
+        "enemy.swarm_basic": 174,
+        "enemy.death_spawner": 200.97
+      },
+      "difficulty": "beginner",
+      "themeId": "eco_guardian",
+      "buildId": "evolved-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 31,
+      "totalKills": 826,
+      "totalXp": 1933.499999999991,
+      "peakLiveEnemies": 32,
+      "levelTimestampsMs": [
+        3100,
+        8150,
+        14450,
+        23150,
+        34000,
+        45500,
+        58700,
+        72900,
+        88700,
+        103900,
+        113400,
+        124650,
+        131600,
+        140800,
+        146950,
+        154200,
+        165350,
+        175850,
+        187200,
+        197900,
+        204300,
+        213050,
+        220400,
+        228950,
+        239300,
+        248900,
+        257150,
+        267200,
+        275850,
+        288900
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 272,
+        "enemy.fast_fragile": 407,
+        "enemy.slow_durable": 98,
+        "enemy.death_spawner": 78,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 3100,
+        "5": 23150,
+        "7": 45500,
+        "10": 88700,
+        "15": 140800,
+        "20": 187200,
+        "25": 228950,
+        "30": 275850
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.1785714285714284,
+            "enemy.fast_fragile": 0.5303571428571429,
+            "enemy.slow_durable": 7.919999999999999,
+            "enemy.death_spawner": 1.5557142857142856,
+            "enemy.stationary_fragment": 1.188
+          },
+          "damagePerSecond": 14.000000000000002,
+          "level": 8
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 1.2857142857142856,
+            "enemy.fast_fragile": 0.5785714285714285,
+            "enemy.slow_durable": 8.639999999999997,
+            "enemy.death_spawner": 1.6971428571428568,
+            "enemy.stationary_fragment": 1.296
+          },
+          "damagePerSecond": 14.000000000000002,
+          "level": 12
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.27581329561527584,
+            "enemy.fast_fragile": 0.12411598302687414,
+            "enemy.slow_durable": 1.8534653465346536,
+            "enemy.death_spawner": 0.3640735502121642,
+            "enemy.stationary_fragment": 0.2780198019801981,
+            "enemy.mini_boss": 3.3097595473833104
+          },
+          "damagePerSecond": 70.69999999999999,
+          "level": 19
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.11952191235059761,
+            "enemy.fast_fragile": 0.053784860557768925,
+            "enemy.slow_durable": 0.8031872509960158,
+            "enemy.death_spawner": 0.15776892430278888,
+            "enemy.stationary_fragment": 0.12047808764940239,
+            "enemy.mini_boss": 1.4342629482071712
+          },
+          "damagePerSecond": 175.7,
+          "level": 26
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.11317907444668009,
+            "enemy.fast_fragile": 0.050930583501006044,
+            "enemy.slow_durable": 0.7605633802816901,
+            "enemy.death_spawner": 0.14939637826961774,
+            "enemy.stationary_fragment": 0.11408450704225355,
+            "enemy.mini_boss": 1.358148893360161,
+            "enemy.final_boss": 6.790744466800805
+          },
+          "damagePerSecond": 198.79999999999998,
+          "level": 31
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 0,
+      "naturalSpawnBlockedMs": 0,
+      "killsByRole": {
+        "enemy.fast_fragile": 362,
+        "enemy.swarm_basic": 227,
+        "enemy.slow_durable": 53,
+        "enemy.death_spawner": 38
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 45,
+        "enemy.death_spawner": 40,
+        "enemy.fast_fragile": 45,
+        "enemy.swarm_basic": 45
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 6491.519999999999,
+        "enemy.death_spawner": 1129.5900000000001,
+        "enemy.fast_fragile": 440.4375,
+        "enemy.swarm_basic": 978.75
+      },
+      "difficulty": "beginner",
+      "themeId": "eco_guardian",
+      "buildId": "two-tools-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 28,
+      "totalKills": 680,
+      "totalXp": 1318.9999999999948,
+      "peakLiveEnemies": 177,
+      "levelTimestampsMs": [
+        3100,
+        8150,
+        14450,
+        23150,
+        34000,
+        45500,
+        58800,
+        73050,
+        88750,
+        104000,
+        113550,
+        125400,
+        132300,
+        141150,
+        148700,
+        155050,
+        166050,
+        176200,
+        187300,
+        199700,
+        209150,
+        219800,
+        232050,
+        247750,
+        260950,
+        275300,
+        293550
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 272,
+        "enemy.fast_fragile": 407,
+        "enemy.slow_durable": 98,
+        "enemy.death_spawner": 78,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 3100,
+        "5": 23150,
+        "7": 45500,
+        "10": 88750,
+        "15": 141150,
+        "20": 187300,
+        "25": 247750,
+        "30": null
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.1785714285714284,
+            "enemy.fast_fragile": 0.5303571428571429,
+            "enemy.slow_durable": 7.919999999999999,
+            "enemy.death_spawner": 1.5557142857142856,
+            "enemy.stationary_fragment": 1.188
+          },
+          "damagePerSecond": 14.000000000000002,
+          "level": 8
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 1.2857142857142856,
+            "enemy.fast_fragile": 0.5785714285714285,
+            "enemy.slow_durable": 8.639999999999997,
+            "enemy.death_spawner": 1.6971428571428568,
+            "enemy.stationary_fragment": 1.296
+          },
+          "damagePerSecond": 14.000000000000002,
+          "level": 12
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.22209567198177685,
+            "enemy.fast_fragile": 0.09994305239179958,
+            "enemy.slow_durable": 1.4924829157175403,
+            "enemy.death_spawner": 0.2931662870159455,
+            "enemy.stationary_fragment": 0.2238724373576311,
+            "enemy.mini_boss": 2.6651480637813223
+          },
+          "damagePerSecond": 87.79999999999997,
+          "level": 19
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.20979020979020988,
+            "enemy.fast_fragile": 0.09440559440559443,
+            "enemy.slow_durable": 1.40979020979021,
+            "enemy.death_spawner": 0.27692307692307705,
+            "enemy.stationary_fragment": 0.21146853146853153,
+            "enemy.mini_boss": 2.517482517482518
+          },
+          "damagePerSecond": 100.09999999999997,
+          "level": 24
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.22477522477522485,
+            "enemy.fast_fragile": 0.10114885114885118,
+            "enemy.slow_durable": 1.5104895104895109,
+            "enemy.death_spawner": 0.2967032967032968,
+            "enemy.stationary_fragment": 0.2265734265734267,
+            "enemy.mini_boss": 2.6973026973026983,
+            "enemy.final_boss": 13.486513486513491
+          },
+          "damagePerSecond": 100.09999999999997,
+          "level": 28
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 0,
+      "naturalSpawnBlockedMs": 0,
+      "killsByRole": {
+        "enemy.fast_fragile": 360,
+        "enemy.swarm_basic": 225,
+        "enemy.slow_durable": 51,
+        "enemy.death_spawner": 36
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 47,
+        "enemy.death_spawner": 42,
+        "enemy.fast_fragile": 47,
+        "enemy.swarm_basic": 47
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 6773.759999999998,
+        "enemy.death_spawner": 1185.03,
+        "enemy.fast_fragile": 460.0125,
+        "enemy.swarm_basic": 1022.25
+      },
+      "difficulty": "beginner",
+      "themeId": "eco_guardian",
+      "buildId": "damage-rush",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 28,
+      "totalKills": 672,
+      "totalXp": 1285.299999999995,
+      "peakLiveEnemies": 186,
+      "levelTimestampsMs": [
+        3100,
+        8200,
+        14450,
+        23100,
+        33900,
+        45350,
+        58650,
+        72650,
+        88550,
+        103900,
+        113250,
+        124500,
+        131550,
+        140350,
+        148500,
+        154350,
+        164950,
+        175750,
+        186000,
+        199500,
+        211200,
+        223800,
+        237050,
+        253600,
+        267450,
+        281650,
+        299250
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 272,
+        "enemy.fast_fragile": 407,
+        "enemy.slow_durable": 98,
+        "enemy.death_spawner": 78,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 3100,
+        "5": 23100,
+        "7": 45350,
+        "10": 88550,
+        "15": 140350,
+        "20": 186000,
+        "25": 253600,
+        "30": null
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.4285714285714285,
+            "enemy.fast_fragile": 0.19285714285714284,
+            "enemy.slow_durable": 2.8799999999999994,
+            "enemy.death_spawner": 0.5657142857142856,
+            "enemy.stationary_fragment": 0.43199999999999994
+          },
+          "damagePerSecond": 38.50000000000001,
+          "level": 8
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.34285714285714286,
+            "enemy.fast_fragile": 0.15428571428571428,
+            "enemy.slow_durable": 2.304,
+            "enemy.death_spawner": 0.4525714285714285,
+            "enemy.stationary_fragment": 0.3456
+          },
+          "damagePerSecond": 52.5,
+          "level": 12
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.2532467532467532,
+            "enemy.fast_fragile": 0.11396103896103894,
+            "enemy.slow_durable": 1.7018181818181815,
+            "enemy.death_spawner": 0.3342857142857143,
+            "enemy.stationary_fragment": 0.25527272727272726,
+            "enemy.mini_boss": 3.0389610389610384
+          },
+          "damagePerSecond": 77.00000000000001,
+          "level": 19
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.2222222222222222,
+            "enemy.fast_fragile": 0.09999999999999999,
+            "enemy.slow_durable": 1.4933333333333332,
+            "enemy.death_spawner": 0.29333333333333333,
+            "enemy.stationary_fragment": 0.224,
+            "enemy.mini_boss": 2.6666666666666665
+          },
+          "damagePerSecond": 94.5,
+          "level": 24
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.20737327188940088,
+            "enemy.fast_fragile": 0.0933179723502304,
+            "enemy.slow_durable": 1.393548387096774,
+            "enemy.death_spawner": 0.2737327188940092,
+            "enemy.stationary_fragment": 0.20903225806451614,
+            "enemy.mini_boss": 2.488479262672811,
+            "enemy.final_boss": 12.442396313364053
+          },
+          "damagePerSecond": 108.50000000000001,
+          "level": 28
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 0,
+      "naturalSpawnBlockedMs": 0,
+      "killsByRole": {
+        "enemy.fast_fragile": 475,
+        "enemy.swarm_basic": 285,
+        "enemy.slow_durable": 72,
+        "enemy.death_spawner": 40
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 54,
+        "enemy.death_spawner": 54,
+        "enemy.fast_fragile": 54,
+        "enemy.swarm_basic": 54
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 9831.359999999997,
+        "enemy.death_spawner": 1932.4139999999998,
+        "enemy.fast_fragile": 669.4649999999998,
+        "enemy.swarm_basic": 1487.7
+      },
+      "difficulty": "normal",
+      "themeId": "eco_guardian",
+      "buildId": "evolved-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 30,
+      "totalKills": 872,
+      "totalXp": 1676.0499999999915,
+      "peakLiveEnemies": 219,
+      "levelTimestampsMs": [
+        2850,
+        6600,
+        11600,
+        18500,
+        27050,
+        36350,
+        47050,
+        59250,
+        72450,
+        87600,
+        102100,
+        111600,
+        121900,
+        128800,
+        133700,
+        140150,
+        147600,
+        157850,
+        165400,
+        175400,
+        185300,
+        194800,
+        205500,
+        216200,
+        229650,
+        241050,
+        255700,
+        274350,
+        292450
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 339,
+        "enemy.fast_fragile": 529,
+        "enemy.slow_durable": 126,
+        "enemy.death_spawner": 94,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 2850,
+        "5": 18500,
+        "7": 36350,
+        "10": 72450,
+        "15": 128800,
+        "20": 165400,
+        "25": 216200,
+        "30": 292450
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.9904761904761907,
+            "enemy.fast_fragile": 0.8957142857142857,
+            "enemy.slow_durable": 13.375999999999998,
+            "enemy.death_spawner": 2.6274285714285717,
+            "enemy.stationary_fragment": 2.0064
+          },
+          "damagePerSecond": 10.5,
+          "level": 9
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.42998585572842996,
+            "enemy.fast_fragile": 0.19349363507779344,
+            "enemy.slow_durable": 2.889504950495049,
+            "enemy.death_spawner": 0.5675813295615274,
+            "enemy.stationary_fragment": 0.43342574257425737
+          },
+          "damagePerSecond": 53.025000000000006,
+          "level": 13
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.16566063044936286,
+            "enemy.fast_fragile": 0.07454728370221327,
+            "enemy.slow_durable": 1.1132394366197182,
+            "enemy.death_spawner": 0.21867203219315895,
+            "enemy.stationary_fragment": 0.16698591549295777,
+            "enemy.mini_boss": 1.9879275653923545
+          },
+          "damagePerSecond": 149.1,
+          "level": 21
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.1784037558685446,
+            "enemy.fast_fragile": 0.08028169014084506,
+            "enemy.slow_durable": 1.1988732394366195,
+            "enemy.death_spawner": 0.23549295774647885,
+            "enemy.stationary_fragment": 0.17983098591549293,
+            "enemy.mini_boss": 2.140845070422535
+          },
+          "damagePerSecond": 149.1,
+          "level": 26
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.19114688128772636,
+            "enemy.fast_fragile": 0.08601609657947686,
+            "enemy.slow_durable": 1.284507042253521,
+            "enemy.death_spawner": 0.25231388329979876,
+            "enemy.stationary_fragment": 0.19267605633802817,
+            "enemy.mini_boss": 2.2937625754527162,
+            "enemy.final_boss": 11.468812877263582
+          },
+          "damagePerSecond": 149.1,
+          "level": 30
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 17400,
+      "naturalSpawnBlockedMs": 11050,
+      "killsByRole": {
+        "enemy.fast_fragile": 405,
+        "enemy.swarm_basic": 208,
+        "enemy.slow_durable": 36,
+        "enemy.death_spawner": 4
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 69,
+        "enemy.slow_durable": 76,
+        "enemy.fast_fragile": 77,
+        "enemy.swarm_basic": 77
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 2362.5359999999996,
+        "enemy.slow_durable": 13457.471999999998,
+        "enemy.fast_fragile": 933.6599999999999,
+        "enemy.swarm_basic": 2079.5499999999997
+      },
+      "difficulty": "normal",
+      "themeId": "eco_guardian",
+      "buildId": "two-tools-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 25,
+      "totalKills": 653,
+      "totalXp": 992.8499999999934,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        2850,
+        6600,
+        11600,
+        18500,
+        27050,
+        36350,
+        47150,
+        59500,
+        72550,
+        87700,
+        102300,
+        112050,
+        122250,
+        131700,
+        139700,
+        149000,
+        158450,
+        171050,
+        184550,
+        198100,
+        214700,
+        232200,
+        249150,
+        274800
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 285,
+        "enemy.fast_fragile": 482,
+        "enemy.slow_durable": 112,
+        "enemy.death_spawner": 73,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 2850,
+        "5": 18500,
+        "7": 36350,
+        "10": 72550,
+        "15": 131700,
+        "20": 184550,
+        "25": 274800,
+        "30": null
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.3933333333333335,
+            "enemy.fast_fragile": 0.627,
+            "enemy.slow_durable": 9.363199999999999,
+            "enemy.death_spawner": 1.8392000000000002,
+            "enemy.stationary_fragment": 1.40448
+          },
+          "damagePerSecond": 15,
+          "level": 9
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.4810126582278481,
+            "enemy.fast_fragile": 0.2164556962025316,
+            "enemy.slow_durable": 3.232405063291139,
+            "enemy.death_spawner": 0.6349367088607595,
+            "enemy.stationary_fragment": 0.48486075949367086
+          },
+          "damagePerSecond": 47.4,
+          "level": 13
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.32900432900432897,
+            "enemy.fast_fragile": 0.14805194805194802,
+            "enemy.slow_durable": 2.2109090909090905,
+            "enemy.death_spawner": 0.4342857142857143,
+            "enemy.stationary_fragment": 0.3316363636363636,
+            "enemy.mini_boss": 3.9480519480519485
+          },
+          "damagePerSecond": 75.075,
+          "level": 19
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.35431235431235425,
+            "enemy.fast_fragile": 0.1594405594405594,
+            "enemy.slow_durable": 2.3809790209790203,
+            "enemy.death_spawner": 0.46769230769230763,
+            "enemy.stationary_fragment": 0.35714685314685307,
+            "enemy.mini_boss": 4.251748251748252
+          },
+          "damagePerSecond": 75.075,
+          "level": 23
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.3796203796203796,
+            "enemy.fast_fragile": 0.17082917082917082,
+            "enemy.slow_durable": 2.5510489510489505,
+            "enemy.death_spawner": 0.5010989010989011,
+            "enemy.stationary_fragment": 0.38265734265734264,
+            "enemy.mini_boss": 4.555444555444555,
+            "enemy.final_boss": 22.777222777222775
+          },
+          "damagePerSecond": 75.075,
+          "level": 25
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 24650,
+      "naturalSpawnBlockedMs": 14750,
+      "killsByRole": {
+        "enemy.fast_fragile": 388,
+        "enemy.swarm_basic": 185,
+        "enemy.slow_durable": 25
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 68,
+        "enemy.slow_durable": 77,
+        "enemy.fast_fragile": 77,
+        "enemy.swarm_basic": 77
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 2309.868,
+        "enemy.slow_durable": 13444.703999999998,
+        "enemy.fast_fragile": 929.8124999999998,
+        "enemy.swarm_basic": 2065.2999999999997
+      },
+      "difficulty": "normal",
+      "themeId": "eco_guardian",
+      "buildId": "damage-rush",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 24,
+      "totalKills": 598,
+      "totalXp": 833.7999999999919,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        2850,
+        6700,
+        11550,
+        18400,
+        26900,
+        36150,
+        46900,
+        58950,
+        72200,
+        87350,
+        101850,
+        111550,
+        122050,
+        134250,
+        146650,
+        159800,
+        175400,
+        189000,
+        206200,
+        224200,
+        241050,
+        261300,
+        286650
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 262,
+        "enemy.fast_fragile": 465,
+        "enemy.slow_durable": 102,
+        "enemy.death_spawner": 68,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 2850,
+        "5": 18400,
+        "7": 36150,
+        "10": 72200,
+        "15": 134250,
+        "20": 206200,
+        "25": null,
+        "30": null
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.6634920634920636,
+            "enemy.fast_fragile": 0.29857142857142854,
+            "enemy.slow_durable": 4.458666666666666,
+            "enemy.death_spawner": 0.8758095238095238,
+            "enemy.stationary_fragment": 0.6688
+          },
+          "damagePerSecond": 31.5,
+          "level": 9
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.5428571428571429,
+            "enemy.fast_fragile": 0.24428571428571424,
+            "enemy.slow_durable": 3.6479999999999997,
+            "enemy.death_spawner": 0.7165714285714285,
+            "enemy.stationary_fragment": 0.5471999999999999
+          },
+          "damagePerSecond": 42,
+          "level": 13
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.44807256235827664,
+            "enemy.fast_fragile": 0.20163265306122446,
+            "enemy.slow_durable": 3.0110476190476185,
+            "enemy.death_spawner": 0.5914557823129252,
+            "enemy.stationary_fragment": 0.45165714285714287,
+            "enemy.mini_boss": 5.3768707482993205
+          },
+          "damagePerSecond": 55.125,
+          "level": 18
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.42222222222222217,
+            "enemy.fast_fragile": 0.18999999999999995,
+            "enemy.slow_durable": 2.8373333333333326,
+            "enemy.death_spawner": 0.5573333333333332,
+            "enemy.stationary_fragment": 0.4255999999999999,
+            "enemy.mini_boss": 5.066666666666666
+          },
+          "damagePerSecond": 63,
+          "level": 21
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.4021164021164021,
+            "enemy.fast_fragile": 0.18095238095238095,
+            "enemy.slow_durable": 2.7022222222222214,
+            "enemy.death_spawner": 0.5307936507936507,
+            "enemy.stationary_fragment": 0.4053333333333334,
+            "enemy.mini_boss": 4.825396825396825,
+            "enemy.final_boss": 24.126984126984127
+          },
+          "damagePerSecond": 70.875,
+          "level": 24
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 12650,
+      "naturalSpawnBlockedMs": 6300,
+      "killsByRole": {
+        "enemy.fast_fragile": 548,
+        "enemy.swarm_basic": 293,
+        "enemy.slow_durable": 63,
+        "enemy.death_spawner": 31
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 74,
+        "enemy.death_spawner": 75,
+        "enemy.fast_fragile": 75,
+        "enemy.swarm_basic": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 15294.048,
+        "enemy.death_spawner": 3053.5560000000005,
+        "enemy.fast_fragile": 1058.31,
+        "enemy.swarm_basic": 2369.3999999999996
+      },
+      "difficulty": "experienced",
+      "themeId": "eco_guardian",
+      "buildId": "evolved-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 30,
+      "totalKills": 935,
+      "totalXp": 1627.5999999999942,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        2850,
+        5500,
+        9500,
+        15000,
+        21750,
+        29250,
+        37900,
+        47900,
+        58750,
+        72200,
+        85050,
+        100750,
+        109550,
+        117850,
+        125750,
+        135250,
+        141950,
+        147800,
+        155350,
+        164350,
+        173750,
+        183300,
+        196050,
+        209350,
+        221950,
+        238550,
+        257150,
+        277750,
+        296650
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 368,
+        "enemy.fast_fragile": 623,
+        "enemy.slow_durable": 137,
+        "enemy.death_spawner": 106,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 2850,
+        "5": 15000,
+        "7": 29250,
+        "10": 58750,
+        "15": 117850,
+        "20": 155350,
+        "25": 209350,
+        "30": 296650
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.3170068027210886,
+            "enemy.fast_fragile": 0.5926530612244898,
+            "enemy.slow_durable": 8.850285714285716,
+            "enemy.death_spawner": 1.7384489795918372,
+            "enemy.stationary_fragment": 1.3275428571428574
+          },
+          "damagePerSecond": 18.375,
+          "level": 10
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.3308270676691729,
+            "enemy.fast_fragile": 0.14887218045112782,
+            "enemy.slow_durable": 2.223157894736842,
+            "enemy.death_spawner": 0.4366917293233083,
+            "enemy.stationary_fragment": 0.33347368421052637
+          },
+          "damagePerSecond": 79.8,
+          "level": 15
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.19181757209926226,
+            "enemy.fast_fragile": 0.08631790744466802,
+            "enemy.slow_durable": 1.2890140845070426,
+            "enemy.death_spawner": 0.25319919517102624,
+            "enemy.stationary_fragment": 0.19335211267605637,
+            "enemy.mini_boss": 2.301810865191147
+          },
+          "damagePerSecond": 149.1,
+          "level": 22
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.20657276995305163,
+            "enemy.fast_fragile": 0.09295774647887324,
+            "enemy.slow_durable": 1.388169014084507,
+            "enemy.death_spawner": 0.2726760563380282,
+            "enemy.stationary_fragment": 0.20822535211267607,
+            "enemy.mini_boss": 2.4788732394366195
+          },
+          "damagePerSecond": 149.1,
+          "level": 27
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.22132796780684105,
+            "enemy.fast_fragile": 0.09959758551307848,
+            "enemy.slow_durable": 1.4873239436619718,
+            "enemy.death_spawner": 0.2921529175050302,
+            "enemy.stationary_fragment": 0.22309859154929582,
+            "enemy.mini_boss": 2.6559356136820926,
+            "enemy.final_boss": 13.279678068410464
+          },
+          "damagePerSecond": 149.1,
+          "level": 30
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 46800,
+      "naturalSpawnBlockedMs": 28650,
+      "killsByRole": {
+        "enemy.fast_fragile": 468,
+        "enemy.swarm_basic": 198,
+        "enemy.slow_durable": 28,
+        "enemy.death_spawner": 1
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 69,
+        "enemy.slow_durable": 76,
+        "enemy.fast_fragile": 77,
+        "enemy.swarm_basic": 78
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 2681.844000000001,
+        "enemy.slow_durable": 15183.168000000001,
+        "enemy.fast_fragile": 1064.7450000000001,
+        "enemy.swarm_basic": 2401.3
+      },
+      "difficulty": "experienced",
+      "themeId": "eco_guardian",
+      "buildId": "two-tools-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 25,
+      "totalKills": 695,
+      "totalXp": 963.7749999999921,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        2850,
+        5500,
+        9500,
+        15000,
+        21750,
+        29250,
+        38000,
+        48150,
+        58850,
+        72500,
+        85350,
+        101050,
+        110000,
+        118450,
+        127300,
+        136700,
+        149200,
+        161200,
+        174300,
+        191400,
+        207900,
+        225750,
+        247650,
+        279250
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 276,
+        "enemy.fast_fragile": 545,
+        "enemy.slow_durable": 104,
+        "enemy.death_spawner": 70,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 2850,
+        "5": 15000,
+        "7": 29250,
+        "10": 58850,
+        "15": 118450,
+        "20": 174300,
+        "25": 279250,
+        "30": null
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.0684326710816778,
+            "enemy.fast_fragile": 0.480794701986755,
+            "enemy.slow_durable": 7.1798675496688755,
+            "enemy.death_spawner": 1.410331125827815,
+            "enemy.stationary_fragment": 1.0769801324503314
+          },
+          "damagePerSecond": 22.65,
+          "level": 10
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.4009111617312072,
+            "enemy.fast_fragile": 0.18041002277904328,
+            "enemy.slow_durable": 2.6941230068337125,
+            "enemy.death_spawner": 0.5292027334851935,
+            "enemy.stationary_fragment": 0.40411845102505695
+          },
+          "damagePerSecond": 65.85000000000001,
+          "level": 15
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.38095238095238093,
+            "enemy.fast_fragile": 0.17142857142857143,
+            "enemy.slow_durable": 2.5600000000000005,
+            "enemy.death_spawner": 0.502857142857143,
+            "enemy.stationary_fragment": 0.38400000000000006,
+            "enemy.mini_boss": 4.571428571428571
+          },
+          "damagePerSecond": 75.075,
+          "level": 20
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.4102564102564102,
+            "enemy.fast_fragile": 0.1846153846153846,
+            "enemy.slow_durable": 2.756923076923077,
+            "enemy.death_spawner": 0.5415384615384616,
+            "enemy.stationary_fragment": 0.4135384615384616,
+            "enemy.mini_boss": 4.9230769230769225
+          },
+          "damagePerSecond": 75.075,
+          "level": 23
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.43956043956043955,
+            "enemy.fast_fragile": 0.19780219780219782,
+            "enemy.slow_durable": 2.9538461538461536,
+            "enemy.death_spawner": 0.5802197802197803,
+            "enemy.stationary_fragment": 0.4430769230769231,
+            "enemy.mini_boss": 5.274725274725275,
+            "enemy.final_boss": 26.373626373626372
+          },
+          "damagePerSecond": 75.075,
+          "level": 25
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "baseline",
+      "applicable": true,
+      "capDwellMs": 51850,
+      "naturalSpawnBlockedMs": 35500,
+      "killsByRole": {
+        "enemy.fast_fragile": 442,
+        "enemy.swarm_basic": 174,
+        "enemy.slow_durable": 19
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 61,
+        "enemy.slow_durable": 80,
+        "enemy.fast_fragile": 79,
+        "enemy.swarm_basic": 80
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 2342.0760000000005,
+        "enemy.slow_durable": 15863.232000000002,
+        "enemy.fast_fragile": 1073.6550000000002,
+        "enemy.swarm_basic": 2432.1000000000004
+      },
+      "difficulty": "experienced",
+      "themeId": "eco_guardian",
+      "buildId": "damage-rush",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 1,
+      "finalLevel": 24,
+      "totalKills": 635,
+      "totalXp": 828.1249999999947,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        2850,
+        5850,
+        9450,
+        14850,
+        21550,
+        29000,
+        37700,
+        47600,
+        58500,
+        71900,
+        84750,
+        100400,
+        110600,
+        121000,
+        133000,
+        145750,
+        160800,
+        178350,
+        195450,
+        212700,
+        231000,
+        254800,
+        285000
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 254,
+        "enemy.fast_fragile": 521,
+        "enemy.slow_durable": 99,
+        "enemy.death_spawner": 61,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 2850,
+        "5": 14850,
+        "7": 29000,
+        "10": 58500,
+        "15": 121000,
+        "20": 195450,
+        "25": null,
+        "30": null
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.7091575091575092,
+            "enemy.fast_fragile": 0.31912087912087916,
+            "enemy.slow_durable": 4.765538461538462,
+            "enemy.death_spawner": 0.9360879120879124,
+            "enemy.stationary_fragment": 0.7148307692307693
+          },
+          "damagePerSecond": 34.125,
+          "level": 10
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.5915966386554622,
+            "enemy.fast_fragile": 0.266218487394958,
+            "enemy.slow_durable": 3.9755294117647058,
+            "enemy.death_spawner": 0.78090756302521,
+            "enemy.stationary_fragment": 0.596329411764706
+          },
+          "damagePerSecond": 44.625,
+          "level": 14
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.49523809523809526,
+            "enemy.fast_fragile": 0.22285714285714286,
+            "enemy.slow_durable": 3.3280000000000007,
+            "enemy.death_spawner": 0.6537142857142859,
+            "enemy.stationary_fragment": 0.4992000000000001,
+            "enemy.mini_boss": 5.942857142857143
+          },
+          "damagePerSecond": 57.75,
+          "level": 19
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.46933333333333327,
+            "enemy.fast_fragile": 0.2112,
+            "enemy.slow_durable": 3.15392,
+            "enemy.death_spawner": 0.6195200000000001,
+            "enemy.stationary_fragment": 0.473088,
+            "enemy.mini_boss": 5.632
+          },
+          "damagePerSecond": 65.625,
+          "level": 22
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.4656084656084656,
+            "enemy.fast_fragile": 0.20952380952380956,
+            "enemy.slow_durable": 3.1288888888888886,
+            "enemy.death_spawner": 0.6146031746031746,
+            "enemy.stationary_fragment": 0.4693333333333334,
+            "enemy.mini_boss": 5.587301587301587,
+            "enemy.final_boss": 27.936507936507937
+          },
+          "damagePerSecond": 70.875,
+          "level": 24
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 19550,
+      "naturalSpawnBlockedMs": 7550,
+      "killsByRole": {
+        "enemy.fast_fragile": 611,
+        "enemy.swarm_basic": 257,
+        "enemy.slow_durable": 115,
+        "enemy.death_spawner": 87
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 76,
+        "enemy.death_spawner": 74,
+        "enemy.fast_fragile": 75,
+        "enemy.swarm_basic": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 15057.503999999997,
+        "enemy.death_spawner": 2891.1960000000004,
+        "enemy.fast_fragile": 1011.1499999999999,
+        "enemy.swarm_basic": 2245.95
+      },
+      "difficulty": "beginner",
+      "themeId": "eco_guardian",
+      "buildId": "evolved-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 48,
+      "totalKills": 1070,
+      "totalXp": 9228.287250000007,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        700,
+        1200,
+        2600,
+        4000,
+        5400,
+        7350,
+        9200,
+        11150,
+        14400,
+        17650,
+        21550,
+        26100,
+        31750,
+        36550,
+        42550,
+        49150,
+        56250,
+        63950,
+        72200,
+        81900,
+        91250,
+        101400,
+        106850,
+        113400,
+        120400,
+        126550,
+        130700,
+        134450,
+        138900,
+        143450,
+        147950,
+        152150,
+        157050,
+        163250,
+        168950,
+        175150,
+        184000,
+        190900,
+        198450,
+        206800,
+        215200,
+        227450,
+        241050,
+        253050,
+        267100,
+        280850,
+        299000
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 332,
+        "enemy.fast_fragile": 686,
+        "enemy.slow_durable": 191,
+        "enemy.death_spawner": 161,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 700,
+        "5": 4000,
+        "7": 7350,
+        "10": 14400,
+        "15": 36550,
+        "20": 72200,
+        "25": 113400,
+        "30": 138900
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.942857142857143,
+            "enemy.fast_fragile": 0.42428571428571427,
+            "enemy.slow_durable": 6.3359999999999985,
+            "enemy.death_spawner": 1.2445714285714287,
+            "enemy.stationary_fragment": 0.9504
+          },
+          "damagePerSecond": 24.5,
+          "level": 18
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.3564356435643565,
+            "enemy.fast_fragile": 0.16039603960396043,
+            "enemy.slow_durable": 2.3952475247524756,
+            "enemy.death_spawner": 0.47049504950495064,
+            "enemy.stationary_fragment": 0.3592871287128714
+          },
+          "damagePerSecond": 70.69999999999999,
+          "level": 25
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.13732394366197184,
+            "enemy.fast_fragile": 0.06179577464788732,
+            "enemy.slow_durable": 0.9228169014084507,
+            "enemy.death_spawner": 0.18126760563380284,
+            "enemy.stationary_fragment": 0.13842253521126763,
+            "enemy.mini_boss": 1.647887323943662
+          },
+          "damagePerSecond": 198.79999999999998,
+          "level": 37
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.14788732394366197,
+            "enemy.fast_fragile": 0.06654929577464788,
+            "enemy.slow_durable": 0.9938028169014083,
+            "enemy.death_spawner": 0.19521126760563381,
+            "enemy.stationary_fragment": 0.14907042253521127,
+            "enemy.mini_boss": 1.7746478873239435
+          },
+          "damagePerSecond": 198.79999999999998,
+          "level": 43
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.1584507042253521,
+            "enemy.fast_fragile": 0.07130281690140844,
+            "enemy.slow_durable": 1.064788732394366,
+            "enemy.death_spawner": 0.2091549295774648,
+            "enemy.stationary_fragment": 0.15971830985915492,
+            "enemy.mini_boss": 1.9014084507042253,
+            "enemy.final_boss": 9.507042253521126
+          },
+          "damagePerSecond": 198.79999999999998,
+          "level": 48
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 57300,
+      "naturalSpawnBlockedMs": 33350,
+      "killsByRole": {
+        "enemy.fast_fragile": 497,
+        "enemy.swarm_basic": 153,
+        "enemy.slow_durable": 60,
+        "enemy.death_spawner": 26
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 74,
+        "enemy.death_spawner": 75,
+        "enemy.swarm_basic": 76,
+        "enemy.fast_fragile": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 14133.167999999998,
+        "enemy.death_spawner": 2824.668,
+        "enemy.swarm_basic": 2221.7999999999997,
+        "enemy.fast_fragile": 987.0524999999999
+      },
+      "difficulty": "beginner",
+      "themeId": "eco_guardian",
+      "buildId": "two-tools-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 41,
+      "totalKills": 736,
+      "totalXp": 5114.261249999996,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        700,
+        1200,
+        2600,
+        4000,
+        5400,
+        7350,
+        9300,
+        11250,
+        14500,
+        17750,
+        21650,
+        26200,
+        31800,
+        36600,
+        42600,
+        49200,
+        56300,
+        64050,
+        72300,
+        82100,
+        91400,
+        101950,
+        107150,
+        113750,
+        120700,
+        126700,
+        134200,
+        141250,
+        148550,
+        157750,
+        165950,
+        175550,
+        187150,
+        198400,
+        208500,
+        218700,
+        234600,
+        256100,
+        274300,
+        289700
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 229,
+        "enemy.fast_fragile": 572,
+        "enemy.slow_durable": 134,
+        "enemy.death_spawner": 101,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 700,
+        "5": 4000,
+        "7": 7350,
+        "10": 14500,
+        "15": 36600,
+        "20": 72300,
+        "25": 113750,
+        "30": 148550
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 1.155,
+            "enemy.fast_fragile": 0.5197499999999999,
+            "enemy.slow_durable": 7.761599999999999,
+            "enemy.death_spawner": 1.5246,
+            "enemy.stationary_fragment": 1.16424
+          },
+          "damagePerSecond": 20,
+          "level": 18
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.3337748344370861,
+            "enemy.fast_fragile": 0.15019867549668875,
+            "enemy.slow_durable": 2.2429668874172184,
+            "enemy.death_spawner": 0.4405827814569537,
+            "enemy.stationary_fragment": 0.3364450331125828
+          },
+          "damagePerSecond": 75.5,
+          "level": 25
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.2727272727272728,
+            "enemy.fast_fragile": 0.12272727272727275,
+            "enemy.slow_durable": 1.8327272727272732,
+            "enemy.death_spawner": 0.36000000000000015,
+            "enemy.stationary_fragment": 0.274909090909091,
+            "enemy.mini_boss": 3.2727272727272734
+          },
+          "damagePerSecond": 100.09999999999997,
+          "level": 33
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.29370629370629375,
+            "enemy.fast_fragile": 0.1321678321678322,
+            "enemy.slow_durable": 1.973706293706294,
+            "enemy.death_spawner": 0.38769230769230784,
+            "enemy.stationary_fragment": 0.29605594405594415,
+            "enemy.mini_boss": 3.524475524475525
+          },
+          "damagePerSecond": 100.09999999999997,
+          "level": 38
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.31468531468531474,
+            "enemy.fast_fragile": 0.14160839160839161,
+            "enemy.slow_durable": 2.1146853146853153,
+            "enemy.death_spawner": 0.4153846153846155,
+            "enemy.stationary_fragment": 0.31720279720279726,
+            "enemy.mini_boss": 3.776223776223777,
+            "enemy.final_boss": 18.881118881118887
+          },
+          "damagePerSecond": 100.09999999999997,
+          "level": 41
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 36700,
+      "naturalSpawnBlockedMs": 17500,
+      "killsByRole": {
+        "enemy.fast_fragile": 550,
+        "enemy.swarm_basic": 200,
+        "enemy.slow_durable": 81,
+        "enemy.death_spawner": 51
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 75,
+        "enemy.swarm_basic": 74,
+        "enemy.slow_durable": 76,
+        "enemy.fast_fragile": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 2882.88,
+        "enemy.swarm_basic": 2202.8999999999996,
+        "enemy.slow_durable": 14789.375999999998,
+        "enemy.fast_fragile": 1008.7874999999999
+      },
+      "difficulty": "beginner",
+      "themeId": "eco_guardian",
+      "buildId": "damage-rush",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 44,
+      "totalKills": 882,
+      "totalXp": 6779.067749999974,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        700,
+        1250,
+        2550,
+        3900,
+        5250,
+        7150,
+        9100,
+        11000,
+        14250,
+        17500,
+        21350,
+        25900,
+        31500,
+        36300,
+        42300,
+        48850,
+        55950,
+        63650,
+        71900,
+        81400,
+        90950,
+        101150,
+        106550,
+        113200,
+        120000,
+        127000,
+        132850,
+        139150,
+        147250,
+        153850,
+        162350,
+        169750,
+        178700,
+        188350,
+        196300,
+        205650,
+        213100,
+        223250,
+        237150,
+        250900,
+        262600,
+        275800,
+        288700
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 274,
+        "enemy.fast_fragile": 625,
+        "enemy.slow_durable": 157,
+        "enemy.death_spawner": 126,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 700,
+        "5": 3900,
+        "7": 7150,
+        "10": 14250,
+        "15": 36300,
+        "20": 71900,
+        "25": 113200,
+        "30": 147250
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.3142857142857143,
+            "enemy.fast_fragile": 0.14142857142857143,
+            "enemy.slow_durable": 2.1119999999999997,
+            "enemy.death_spawner": 0.41485714285714287,
+            "enemy.stationary_fragment": 0.3168
+          },
+          "damagePerSecond": 73.5,
+          "level": 18
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.24827586206896549,
+            "enemy.fast_fragile": 0.11172413793103446,
+            "enemy.slow_durable": 1.668413793103448,
+            "enemy.death_spawner": 0.32772413793103444,
+            "enemy.stationary_fragment": 0.2502620689655172
+          },
+          "damagePerSecond": 101.50000000000001,
+          "level": 26
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.21081081081081074,
+            "enemy.fast_fragile": 0.09486486486486483,
+            "enemy.slow_durable": 1.4166486486486483,
+            "enemy.death_spawner": 0.27827027027027024,
+            "enemy.stationary_fragment": 0.21249729729729724,
+            "enemy.mini_boss": 2.5297297297297288
+          },
+          "damagePerSecond": 129.50000000000003,
+          "level": 34
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.19534883720930227,
+            "enemy.fast_fragile": 0.08790697674418602,
+            "enemy.slow_durable": 1.312744186046511,
+            "enemy.death_spawner": 0.257860465116279,
+            "enemy.stationary_fragment": 0.19691162790697672,
+            "enemy.mini_boss": 2.344186046511627
+          },
+          "damagePerSecond": 150.50000000000003,
+          "level": 40
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.19148936170212758,
+            "enemy.fast_fragile": 0.08617021276595742,
+            "enemy.slow_durable": 1.2868085106382976,
+            "enemy.death_spawner": 0.25276595744680846,
+            "enemy.stationary_fragment": 0.1930212765957446,
+            "enemy.mini_boss": 2.2978723404255312,
+            "enemy.final_boss": 11.489361702127656
+          },
+          "damagePerSecond": 164.50000000000003,
+          "level": 44
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 63250,
+      "naturalSpawnBlockedMs": 35650,
+      "killsByRole": {
+        "enemy.fast_fragile": 608,
+        "enemy.swarm_basic": 188,
+        "enemy.slow_durable": 70,
+        "enemy.death_spawner": 34
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 74,
+        "enemy.death_spawner": 75,
+        "enemy.swarm_basic": 75,
+        "enemy.fast_fragile": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 17794.761599999994,
+        "enemy.death_spawner": 3583.1796,
+        "enemy.swarm_basic": 2810.2899999999995,
+        "enemy.fast_fragile": 1259.2439999999997
+      },
+      "difficulty": "normal",
+      "themeId": "eco_guardian",
+      "buildId": "evolved-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 43,
+      "totalKills": 900,
+      "totalXp": 6185.686500000003,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        1150,
+        1700,
+        2750,
+        3800,
+        4900,
+        6550,
+        7900,
+        9400,
+        11900,
+        14400,
+        17400,
+        20900,
+        25400,
+        29900,
+        34500,
+        40400,
+        45800,
+        52150,
+        58850,
+        66700,
+        75200,
+        84450,
+        93600,
+        102250,
+        108000,
+        114350,
+        120400,
+        126400,
+        133650,
+        140700,
+        146950,
+        155750,
+        165200,
+        174500,
+        184700,
+        197600,
+        209700,
+        225150,
+        239450,
+        253600,
+        269800,
+        285200
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 263,
+        "enemy.fast_fragile": 683,
+        "enemy.slow_durable": 144,
+        "enemy.death_spawner": 109,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 1150,
+        "5": 3800,
+        "7": 6550,
+        "10": 11900,
+        "15": 29900,
+        "20": 58850,
+        "25": 102250,
+        "30": 133650
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.5518151815181518,
+            "enemy.fast_fragile": 0.24831683168316826,
+            "enemy.slow_durable": 3.708198019801979,
+            "enemy.death_spawner": 0.7283960396039603,
+            "enemy.stationary_fragment": 0.556229702970297
+          },
+          "damagePerSecond": 53.025000000000006,
+          "level": 20
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.39999999999999997,
+            "enemy.fast_fragile": 0.17999999999999997,
+            "enemy.slow_durable": 2.6879999999999997,
+            "enemy.death_spawner": 0.528,
+            "enemy.stationary_fragment": 0.4032
+          },
+          "damagePerSecond": 79.8,
+          "level": 27
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.231924882629108,
+            "enemy.fast_fragile": 0.10436619718309857,
+            "enemy.slow_durable": 1.5585352112676052,
+            "enemy.death_spawner": 0.30614084507042244,
+            "enemy.stationary_fragment": 0.23378028169014084,
+            "enemy.mini_boss": 2.7830985915492956
+          },
+          "damagePerSecond": 149.1,
+          "level": 35
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.2497652582159624,
+            "enemy.fast_fragile": 0.11239436619718307,
+            "enemy.slow_durable": 1.6784225352112672,
+            "enemy.death_spawner": 0.32969014084507037,
+            "enemy.stationary_fragment": 0.2517633802816901,
+            "enemy.mini_boss": 2.997183098591549
+          },
+          "damagePerSecond": 149.1,
+          "level": 40
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.2676056338028169,
+            "enemy.fast_fragile": 0.12042253521126757,
+            "enemy.slow_durable": 1.7983098591549291,
+            "enemy.death_spawner": 0.3532394366197183,
+            "enemy.stationary_fragment": 0.2697464788732394,
+            "enemy.mini_boss": 3.211267605633802,
+            "enemy.final_boss": 16.056338028169012
+          },
+          "damagePerSecond": 149.1,
+          "level": 43
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 94400,
+      "naturalSpawnBlockedMs": 73750,
+      "killsByRole": {
+        "enemy.fast_fragile": 502,
+        "enemy.swarm_basic": 107,
+        "enemy.slow_durable": 36
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 64,
+        "enemy.slow_durable": 78,
+        "enemy.swarm_basic": 79,
+        "enemy.fast_fragile": 79
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 2894.9843999999994,
+        "enemy.slow_durable": 18223.766399999997,
+        "enemy.swarm_basic": 2802.3099999999995,
+        "enemy.fast_fragile": 1264.0319999999995
+      },
+      "difficulty": "normal",
+      "themeId": "eco_guardian",
+      "buildId": "two-tools-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 37,
+      "totalKills": 645,
+      "totalXp": 3580.9200000000196,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        1150,
+        1700,
+        2750,
+        3800,
+        4900,
+        6550,
+        8200,
+        9750,
+        12250,
+        14750,
+        17750,
+        21250,
+        25800,
+        30250,
+        34800,
+        41050,
+        46150,
+        52500,
+        59500,
+        67150,
+        75600,
+        84900,
+        93800,
+        103000,
+        109450,
+        116250,
+        124600,
+        133150,
+        144200,
+        155750,
+        169400,
+        182900,
+        198850,
+        222500,
+        246950,
+        272300
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 186,
+        "enemy.fast_fragile": 581,
+        "enemy.slow_durable": 114,
+        "enemy.death_spawner": 64,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 1150,
+        "5": 3800,
+        "7": 6550,
+        "10": 12250,
+        "15": 30250,
+        "20": 59500,
+        "25": 103000,
+        "30": 144200
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.8747384155455904,
+            "enemy.fast_fragile": 0.3936322869955156,
+            "enemy.slow_durable": 5.878242152466366,
+            "enemy.death_spawner": 1.1546547085201793,
+            "enemy.stationary_fragment": 0.881736322869955
+          },
+          "damagePerSecond": 33.45,
+          "level": 20
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.42517482517482513,
+            "enemy.fast_fragile": 0.1913286713286713,
+            "enemy.slow_durable": 2.8571748251748246,
+            "enemy.death_spawner": 0.5612307692307692,
+            "enemy.stationary_fragment": 0.42857622377622373
+          },
+          "damagePerSecond": 75.075,
+          "level": 27
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.4606060606060606,
+            "enemy.fast_fragile": 0.20727272727272722,
+            "enemy.slow_durable": 3.095272727272726,
+            "enemy.death_spawner": 0.6079999999999998,
+            "enemy.stationary_fragment": 0.46429090909090903,
+            "enemy.mini_boss": 5.5272727272727264
+          },
+          "damagePerSecond": 75.075,
+          "level": 32
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.49603729603729596,
+            "enemy.fast_fragile": 0.22321678321678315,
+            "enemy.slow_durable": 3.333370629370628,
+            "enemy.death_spawner": 0.6547692307692307,
+            "enemy.stationary_fragment": 0.5000055944055943,
+            "enemy.mini_boss": 5.952447552447551
+          },
+          "damagePerSecond": 75.075,
+          "level": 35
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.5314685314685313,
+            "enemy.fast_fragile": 0.23916083916083908,
+            "enemy.slow_durable": 3.5714685314685304,
+            "enemy.death_spawner": 0.7015384615384614,
+            "enemy.stationary_fragment": 0.5357202797202796,
+            "enemy.mini_boss": 6.377622377622376,
+            "enemy.final_boss": 31.88811188811188
+          },
+          "damagePerSecond": 75.075,
+          "level": 37
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 87650,
+      "naturalSpawnBlockedMs": 62450,
+      "killsByRole": {
+        "enemy.fast_fragile": 532,
+        "enemy.swarm_basic": 126,
+        "enemy.slow_durable": 49,
+        "enemy.death_spawner": 4
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 74,
+        "enemy.slow_durable": 75,
+        "enemy.fast_fragile": 75,
+        "enemy.swarm_basic": 76
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 3423.42,
+        "enemy.slow_durable": 17723.260799999996,
+        "enemy.fast_fragile": 1220.9399999999996,
+        "enemy.swarm_basic": 2743.79
+      },
+      "difficulty": "normal",
+      "themeId": "eco_guardian",
+      "buildId": "damage-rush",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 39,
+      "totalKills": 711,
+      "totalXp": 4275.904500000018,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        1150,
+        2100,
+        3600,
+        4900,
+        6050,
+        7600,
+        8950,
+        10200,
+        12100,
+        14100,
+        17050,
+        20550,
+        25000,
+        29500,
+        34000,
+        39950,
+        45300,
+        51600,
+        58350,
+        66050,
+        74550,
+        83400,
+        92600,
+        102000,
+        108850,
+        115550,
+        123400,
+        132650,
+        142150,
+        152250,
+        163800,
+        176600,
+        188600,
+        203450,
+        222150,
+        241200,
+        263800,
+        286250
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 202,
+        "enemy.fast_fragile": 607,
+        "enemy.slow_durable": 124,
+        "enemy.death_spawner": 78,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 1150,
+        "5": 4900,
+        "7": 7600,
+        "10": 12100,
+        "15": 29500,
+        "20": 58350,
+        "25": 102000,
+        "30": 142150
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.4846376811594203,
+            "enemy.fast_fragile": 0.2180869565217391,
+            "enemy.slow_durable": 3.2567652173913038,
+            "enemy.death_spawner": 0.6397217391304347,
+            "enemy.stationary_fragment": 0.4885147826086956
+          },
+          "damagePerSecond": 60.375,
+          "level": 20
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.4053333333333333,
+            "enemy.fast_fragile": 0.18239999999999995,
+            "enemy.slow_durable": 2.7238399999999996,
+            "enemy.death_spawner": 0.53504,
+            "enemy.stationary_fragment": 0.408576
+          },
+          "damagePerSecond": 78.75,
+          "level": 27
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.36592592592592593,
+            "enemy.fast_fragile": 0.16466666666666663,
+            "enemy.slow_durable": 2.459022222222221,
+            "enemy.death_spawner": 0.4830222222222221,
+            "enemy.stationary_fragment": 0.3688533333333333,
+            "enemy.mini_boss": 4.391111111111111
+          },
+          "damagePerSecond": 94.5,
+          "level": 33
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.3637606837606837,
+            "enemy.fast_fragile": 0.16369230769230764,
+            "enemy.slow_durable": 2.4444717948717942,
+            "enemy.death_spawner": 0.48016410256410247,
+            "enemy.stationary_fragment": 0.36667076923076913,
+            "enemy.mini_boss": 4.3651282051282045
+          },
+          "damagePerSecond": 102.375,
+          "level": 36
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.36190476190476184,
+            "enemy.fast_fragile": 0.1628571428571428,
+            "enemy.slow_durable": 2.4319999999999995,
+            "enemy.death_spawner": 0.47771428571428565,
+            "enemy.stationary_fragment": 0.36479999999999996,
+            "enemy.mini_boss": 4.342857142857142,
+            "enemy.final_boss": 21.71428571428571
+          },
+          "damagePerSecond": 110.25,
+          "level": 39
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 87000,
+      "naturalSpawnBlockedMs": 56750,
+      "killsByRole": {
+        "enemy.fast_fragile": 701,
+        "enemy.swarm_basic": 174,
+        "enemy.slow_durable": 57,
+        "enemy.death_spawner": 30
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 75,
+        "enemy.death_spawner": 75,
+        "enemy.fast_fragile": 75,
+        "enemy.swarm_basic": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 20666.5536,
+        "enemy.death_spawner": 4112.3544,
+        "enemy.fast_fragile": 1415.799,
+        "enemy.swarm_basic": 3172.4
+      },
+      "difficulty": "experienced",
+      "themeId": "eco_guardian",
+      "buildId": "evolved-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 43,
+      "totalKills": 962,
+      "totalXp": 5988.9847500000305,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        1350,
+        1800,
+        2600,
+        3400,
+        4200,
+        5400,
+        6300,
+        7400,
+        9400,
+        11400,
+        13800,
+        16550,
+        20200,
+        23800,
+        27750,
+        32200,
+        37000,
+        42550,
+        48150,
+        54150,
+        61200,
+        68700,
+        77250,
+        86200,
+        95100,
+        102850,
+        108000,
+        113850,
+        119850,
+        126900,
+        134400,
+        143450,
+        153500,
+        162250,
+        173950,
+        186250,
+        200700,
+        217000,
+        235750,
+        252700,
+        273400,
+        292400
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 249,
+        "enemy.fast_fragile": 776,
+        "enemy.slow_durable": 132,
+        "enemy.death_spawner": 105,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 1350,
+        "5": 3400,
+        "7": 5400,
+        "10": 9400,
+        "15": 23800,
+        "20": 48150,
+        "25": 86200,
+        "30": 119850
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.6389438943894389,
+            "enemy.fast_fragile": 0.2875247524752475,
+            "enemy.slow_durable": 4.29370297029703,
+            "enemy.death_spawner": 0.8434059405940595,
+            "enemy.stationary_fragment": 0.6440554455445544
+          },
+          "damagePerSecond": 53.025000000000006,
+          "level": 21
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.2804780876494023,
+            "enemy.fast_fragile": 0.12621513944223106,
+            "enemy.slow_durable": 1.8848127490039837,
+            "enemy.death_spawner": 0.3702310756972111,
+            "enemy.stationary_fragment": 0.28272191235059757
+          },
+          "damagePerSecond": 131.77500000000003,
+          "level": 30
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.26854460093896715,
+            "enemy.fast_fragile": 0.12084507042253521,
+            "enemy.slow_durable": 1.8046197183098593,
+            "enemy.death_spawner": 0.3544788732394367,
+            "enemy.stationary_fragment": 0.27069295774647895,
+            "enemy.mini_boss": 3.2225352112676053
+          },
+          "damagePerSecond": 149.1,
+          "level": 36
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.28920187793427227,
+            "enemy.fast_fragile": 0.13014084507042253,
+            "enemy.slow_durable": 1.9434366197183097,
+            "enemy.death_spawner": 0.3817464788732395,
+            "enemy.stationary_fragment": 0.29151549295774654,
+            "enemy.mini_boss": 3.4704225352112674
+          },
+          "damagePerSecond": 149.1,
+          "level": 40
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.3098591549295774,
+            "enemy.fast_fragile": 0.13943661971830984,
+            "enemy.slow_durable": 2.08225352112676,
+            "enemy.death_spawner": 0.4090140845070423,
+            "enemy.stationary_fragment": 0.31233802816901407,
+            "enemy.mini_boss": 3.7183098591549286,
+            "enemy.final_boss": 18.591549295774644
+          },
+          "damagePerSecond": 149.1,
+          "level": 43
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 111700,
+      "naturalSpawnBlockedMs": 85850,
+      "killsByRole": {
+        "enemy.fast_fragile": 614,
+        "enemy.swarm_basic": 112,
+        "enemy.slow_durable": 22
+      },
+      "remainingByRole": {
+        "enemy.slow_durable": 78,
+        "enemy.death_spawner": 67,
+        "enemy.swarm_basic": 77,
+        "enemy.fast_fragile": 78
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.slow_durable": 20594.112000000005,
+        "enemy.death_spawner": 3526.9080000000004,
+        "enemy.swarm_basic": 3127.7400000000002,
+        "enemy.fast_fragile": 1450.449
+      },
+      "difficulty": "experienced",
+      "themeId": "eco_guardian",
+      "buildId": "two-tools-packed",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 38,
+      "totalKills": 748,
+      "totalXp": 3633.446250000033,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        1350,
+        1800,
+        2600,
+        3400,
+        4200,
+        5400,
+        6600,
+        7800,
+        9800,
+        11800,
+        14200,
+        17000,
+        20600,
+        24200,
+        28200,
+        32600,
+        37450,
+        42900,
+        48900,
+        54650,
+        61700,
+        69150,
+        77800,
+        86650,
+        95700,
+        104100,
+        112100,
+        120650,
+        130350,
+        141600,
+        153000,
+        166300,
+        181200,
+        203300,
+        232300,
+        261850,
+        296400
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 189,
+        "enemy.fast_fragile": 692,
+        "enemy.slow_durable": 100,
+        "enemy.death_spawner": 67,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 1350,
+        "5": 3400,
+        "7": 5400,
+        "10": 9800,
+        "15": 24200,
+        "20": 48900,
+        "25": 86650,
+        "30": 130350
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.7147679324894516,
+            "enemy.fast_fragile": 0.3216455696202532,
+            "enemy.slow_durable": 4.803240506329114,
+            "enemy.death_spawner": 0.9434936708860762,
+            "enemy.stationary_fragment": 0.7204860759493672
+          },
+          "damagePerSecond": 47.4,
+          "level": 21
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.4923076923076923,
+            "enemy.fast_fragile": 0.22153846153846155,
+            "enemy.slow_durable": 3.3083076923076926,
+            "enemy.death_spawner": 0.6498461538461539,
+            "enemy.stationary_fragment": 0.4962461538461539
+          },
+          "damagePerSecond": 75.075,
+          "level": 28
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.5333333333333333,
+            "enemy.fast_fragile": 0.24,
+            "enemy.slow_durable": 3.584,
+            "enemy.death_spawner": 0.7040000000000001,
+            "enemy.stationary_fragment": 0.5376000000000001,
+            "enemy.mini_boss": 6.3999999999999995
+          },
+          "damagePerSecond": 75.075,
+          "level": 33
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.5743589743589743,
+            "enemy.fast_fragile": 0.25846153846153846,
+            "enemy.slow_durable": 3.859692307692307,
+            "enemy.death_spawner": 0.7581538461538462,
+            "enemy.stationary_fragment": 0.5789538461538462,
+            "enemy.mini_boss": 6.892307692307691
+          },
+          "damagePerSecond": 75.075,
+          "level": 36
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.6153846153846152,
+            "enemy.fast_fragile": 0.2769230769230768,
+            "enemy.slow_durable": 4.1353846153846145,
+            "enemy.death_spawner": 0.8123076923076923,
+            "enemy.stationary_fragment": 0.6203076923076922,
+            "enemy.mini_boss": 7.384615384615382,
+            "enemy.final_boss": 36.92307692307691
+          },
+          "damagePerSecond": 75.075,
+          "level": 38
+        }
+      ]
+    },
+    {
+      "theme": "eco-guardian",
+      "world": "c3",
+      "applicable": true,
+      "capDwellMs": 103600,
+      "naturalSpawnBlockedMs": 73850,
+      "killsByRole": {
+        "enemy.fast_fragile": 649,
+        "enemy.swarm_basic": 132,
+        "enemy.slow_durable": 35,
+        "enemy.death_spawner": 4
+      },
+      "remainingByRole": {
+        "enemy.death_spawner": 74,
+        "enemy.slow_durable": 76,
+        "enemy.swarm_basic": 75,
+        "enemy.fast_fragile": 75
+      },
+      "remainingEffectiveWorkByRole": {
+        "enemy.death_spawner": 3947.6976000000004,
+        "enemy.slow_durable": 20469.926399999997,
+        "enemy.swarm_basic": 3120.04,
+        "enemy.fast_fragile": 1428.966
+      },
+      "difficulty": "experienced",
+      "themeId": "eco_guardian",
+      "buildId": "damage-rush",
+      "durationMs": 300000,
+      "gameplayRate": 0.5,
+      "expectedRealDurationMs": 600000,
+      "chaos": 3,
+      "finalLevel": 39,
+      "totalKills": 820,
+      "totalXp": 4344.826500000033,
+      "peakLiveEnemies": 300,
+      "levelTimestampsMs": [
+        1350,
+        2400,
+        4150,
+        5700,
+        7000,
+        8750,
+        10350,
+        11800,
+        14000,
+        16050,
+        18300,
+        20750,
+        23750,
+        26550,
+        29450,
+        32600,
+        36450,
+        42000,
+        47600,
+        53600,
+        60700,
+        68150,
+        76650,
+        85450,
+        94600,
+        103150,
+        110800,
+        119200,
+        127800,
+        137750,
+        147950,
+        159100,
+        172450,
+        188100,
+        207400,
+        231650,
+        254700,
+        279050
+      ],
+      "spawnedByRole": {
+        "enemy.swarm_basic": 207,
+        "enemy.fast_fragile": 724,
+        "enemy.slow_durable": 111,
+        "enemy.death_spawner": 78,
+        "enemy.stationary_fragment": 0,
+        "enemy.mini_boss": 0,
+        "enemy.final_boss": 0
+      },
+      "levelMilestones": {
+        "2": 1350,
+        "5": 5700,
+        "7": 8750,
+        "10": 14000,
+        "15": 26550,
+        "20": 47600,
+        "25": 85450,
+        "30": 127800
+      },
+      "ttk": [
+        {
+          "progress": 0.2,
+          "seconds": {
+            "enemy.swarm_basic": 0.5377777777777778,
+            "enemy.fast_fragile": 0.24200000000000002,
+            "enemy.slow_durable": 3.613866666666667,
+            "enemy.death_spawner": 0.7098666666666669,
+            "enemy.stationary_fragment": 0.54208
+          },
+          "damagePerSecond": 63,
+          "level": 21
+        },
+        {
+          "progress": 0.4,
+          "seconds": {
+            "enemy.swarm_basic": 0.44,
+            "enemy.fast_fragile": 0.198,
+            "enemy.slow_durable": 2.9568000000000003,
+            "enemy.death_spawner": 0.5808000000000001,
+            "enemy.stationary_fragment": 0.4435200000000001
+          },
+          "damagePerSecond": 84,
+          "level": 29
+        },
+        {
+          "progress": 0.6,
+          "seconds": {
+            "enemy.swarm_basic": 0.41225225225225226,
+            "enemy.fast_fragile": 0.18551351351351353,
+            "enemy.slow_durable": 2.7703351351351353,
+            "enemy.death_spawner": 0.5441729729729731,
+            "enemy.stationary_fragment": 0.41555027027027036,
+            "enemy.mini_boss": 4.947027027027026
+          },
+          "damagePerSecond": 97.125,
+          "level": 34
+        },
+        {
+          "progress": 0.8,
+          "seconds": {
+            "enemy.swarm_basic": 0.4106666666666666,
+            "enemy.fast_fragile": 0.1848,
+            "enemy.slow_durable": 2.75968,
+            "enemy.death_spawner": 0.54208,
+            "enemy.stationary_fragment": 0.41395200000000004,
+            "enemy.mini_boss": 4.927999999999999
+          },
+          "damagePerSecond": 105,
+          "level": 37
+        },
+        {
+          "progress": 1,
+          "seconds": {
+            "enemy.swarm_basic": 0.41904761904761895,
+            "enemy.fast_fragile": 0.18857142857142853,
+            "enemy.slow_durable": 2.8159999999999994,
+            "enemy.death_spawner": 0.5531428571428572,
+            "enemy.stationary_fragment": 0.42239999999999994,
+            "enemy.mini_boss": 5.028571428571428,
+            "enemy.final_boss": 25.14285714285714
+          },
+          "damagePerSecond": 110.25,
+          "level": 39
+        }
+      ]
+    }
+  ]
+}

@@ -44,3 +44,11 @@ describe("run statistics presentation", () => {
     expect(summary.damage).toContain("Total Damage: 0");
   });
 });
+
+it("reports elapsed death time, including overtime, without inventing a cause on completion", () => {
+  const base = createRunState({ themeId: knightMagicTheme.id, characterId: character.id, baseStats: character.baseStats });
+  const cause = { sourceId: "enemy.fast_fragile", elite: false, atMs: 394000 };
+  const run = { ...base, status: "dead" as const, elapsedMs: 394000, mode: "endless" as const, deathCause: cause };
+  expect(selectRunSummaryValues(run, knightMagicTheme.copy.vocabulary, knightMagicTheme.copy.content).deathCause).toContain("6:34");
+  expect(selectRunSummaryValues({ ...run, status: "complete" }, knightMagicTheme.copy.vocabulary).deathCause).toBeUndefined();
+});

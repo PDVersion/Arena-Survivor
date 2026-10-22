@@ -1,5 +1,6 @@
+import { selectCapabilityProgress } from "../systems/mastery/run-review";
 import { SaveManagerUi } from "../ui/save-manager-ui";
-import { describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
+import { describeProfile, getProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import Phaser from "phaser";
 import { activeTheme } from "../content/active-theme";
 import { archetypeIds } from "../core/archetypes/ids";
@@ -8,7 +9,7 @@ import { getSessionStatistics } from "../state/session-statistics";
 import { cyclePresentationQuality, cycleDifficulty, cycleMinimapOpacity, getSessionSettings, toggleSetting, updateSessionSettings, type SettingKey } from "../state/settings-state";
 import { difficultyIds, type DifficultyId } from "../core/archetypes/difficulty";
 import { resolveDifficultyTheme } from "../systems/difficulty/resolve-difficulty";
-import { selectSessionCodex, selectShrineCodex, selectUpgradeCodex } from "../systems/codex/describe-shrine";
+import { selectEnemyCodex, selectSessionCodex, selectShrineCodex, selectUpgradeCodex } from "../systems/codex/describe-shrine";
 import { selectPlayerStats, selectWorldLines } from "../systems/upgrades/describe-upgrade";
 import { PauseMenuUi, type PauseTab } from "../ui/pause-menu-ui";
 import { addUiText, configureUiContainer, uiPointer, uiViewport } from "../ui/ui-text";
@@ -195,6 +196,8 @@ export class MenuScene extends Phaser.Scene {
       stats: selectPlayerStats(state, theme),
       world: selectWorldLines(state.world, activeTheme),
       upgrades: [],
+      codexEnemies: selectEnemyCodex(theme),
+      capabilities: selectCapabilityProgress(activeTheme, getProfile()),
       codex: selectShrineCodex(activeTheme),
       codexUpgrades: selectUpgradeCodex(activeTheme, session),
       codexSession: [...selectSessionCodex(activeTheme, session), ...describeProfile(activeTheme)],

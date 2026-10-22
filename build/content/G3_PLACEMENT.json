@@ -1,0 +1,7208 @@
+{
+  "cases": [
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1464.2267375393742,
+        "y": 855.3597997737872
+      },
+      "calls": 2,
+      "distance": 481.16582525717297
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1016.660387461578,
+        "y": 1063.5539384791464
+      },
+      "calls": 2,
+      "distance": 795.1342504737156
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2376.2618854256552,
+        "y": 1083.973131483779
+      },
+      "calls": 2,
+      "distance": 587.8265006037168
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1086.5699302408907,
+        "y": 1559.02230308641
+      },
+      "calls": 4,
+      "distance": 798.6735744657874
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2204.2459333959623,
+        "y": 1682.0363898238204
+      },
+      "calls": 4,
+      "distance": 629.1055998650426
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1740.4352721681391,
+        "y": 600.0238329147352
+      },
+      "calls": 2,
+      "distance": 602.92566529549
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1652.3252061326957,
+        "y": 1854.9340331295712
+      },
+      "calls": 2,
+      "distance": 671.3765206611839
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2295.2564952814573,
+        "y": 706.5323305892994
+      },
+      "calls": 2,
+      "distance": 699.1347058129076
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1186.2264831319267,
+        "y": 1203.0791192630595
+      },
+      "calls": 2,
+      "distance": 613.7812403324488
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2288.56871638693,
+        "y": 1111.9239452352197
+      },
+      "calls": 12,
+      "distance": 496.4441378996243
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1707.7119653164086,
+        "y": 712.4357072131482
+      },
+      "calls": 2,
+      "distance": 496.221745741259
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1308.2644955288217,
+        "y": 1338.8765869216577
+      },
+      "calls": 2,
+      "distance": 510.9701681630083
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1743.7740016478047,
+        "y": 1873.4883490360528
+      },
+      "calls": 6,
+      "distance": 675.8312801121365
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2008.5473581158944,
+        "y": 460.2276335737266
+      },
+      "calls": 6,
+      "distance": 768.6059814398061
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1054.6979069221857,
+        "y": 1075.0881339623645
+      },
+      "calls": 6,
+      "distance": 755.6971511281323
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2337.2648715982095,
+        "y": 920.4252337206319
+      },
+      "calls": 2,
+      "distance": 605.653029542166
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1890.9704376972193,
+        "y": 1705.614933740854
+      },
+      "calls": 2,
+      "distance": 513.7334734632267
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2501.3269003684186,
+        "y": 1570.7214878001673
+      },
+      "calls": 4,
+      "distance": 793.2804313085906
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1284.0227914194338,
+        "y": 702.8827819168362
+      },
+      "calls": 2,
+      "distance": 716.4900615426128
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1870.2793831007975,
+        "y": 586.2703310917524
+      },
+      "calls": 2,
+      "distance": 617.7404780223293
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1526.7859155550725,
+        "y": 512.7811783703983
+      },
+      "calls": 2,
+      "distance": 739.5374532375344
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1931.603122506518,
+        "y": 1884.3498109361558
+      },
+      "calls": 2,
+      "distance": 696.8888330155808
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2391.642470255088,
+        "y": 1550.5851492814304
+      },
+      "calls": 2,
+      "distance": 687.7141553772362
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2272.3007385579926,
+        "y": 881.7137775015823
+      },
+      "calls": 4,
+      "distance": 569.5385035928103
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1936.2821223284025,
+        "y": 482.23806790579647
+      },
+      "calls": 2,
+      "distance": 730.5853872272137
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1325.2812270922896,
+        "y": 1122.527402676758
+      },
+      "calls": 2,
+      "distance": 480.9988738937043
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1509.6003946463245,
+        "y": 721.5923166224655
+      },
+      "calls": 2,
+      "distance": 559.6479628339853
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2579.1775383758095,
+        "y": 1222.2220093741337
+      },
+      "calls": 4,
+      "distance": 779.4943579077466
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1089.4433257738879,
+        "y": 1416.174703574879
+      },
+      "calls": 8,
+      "distance": 742.712790890907
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1705.791826325115,
+        "y": 1980.094329051231
+      },
+      "calls": 8,
+      "distance": 785.7622682497852
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2304.3780279527946,
+        "y": 1237.1605600200196
+      },
+      "calls": 2,
+      "distance": 505.74509617252
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1176.0238629709474,
+        "y": 1115.4100251554325
+      },
+      "calls": 4,
+      "distance": 629.6837963818853
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1773.3717135892937,
+        "y": 1741.818589782496
+      },
+      "calls": 6,
+      "distance": 542.4725337480813
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1858.8292304144147,
+        "y": 537.2203953252282
+      },
+      "calls": 2,
+      "distance": 665.3853640740823
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2133.4232951214744,
+        "y": 1688.2648084354196
+      },
+      "calls": 12,
+      "distance": 591.2475089893732
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2187.3346784634455,
+        "y": 1780.043616457533
+      },
+      "calls": 2,
+      "distance": 697.4802865554799
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1575.289656179089,
+        "y": 1881.8857216672532
+      },
+      "calls": 2,
+      "distance": 717.9574333021302
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1245.87610507182,
+        "y": 872.2492711733795
+      },
+      "calls": 2,
+      "distance": 643.7964205995228
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2039.8828651919557,
+        "y": 679.7359769180332
+      },
+      "calls": 2,
+      "distance": 572.9035195616582
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1619.9547854076325,
+        "y": 714.9684532640513
+      },
+      "calls": 10,
+      "distance": 517.3701582297518
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2040.9210582968944,
+        "y": 1921.8122926516526
+      },
+      "calls": 2,
+      "distance": 760.9572538283148
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1682.694884738714,
+        "y": 493.74422094763827
+      },
+      "calls": 4,
+      "distance": 715.9313622906333
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1636.5493330286133,
+        "y": 1966.6900350741184
+      },
+      "calls": 8,
+      "distance": 783.9194667919302
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1045.908332136249,
+        "y": 1028.7210076247056
+      },
+      "calls": 6,
+      "distance": 773.298607764575
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2228.693727686655,
+        "y": 717.1708079132982
+      },
+      "calls": 2,
+      "distance": 645.679751029082
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1021.4708510352516,
+        "y": 1190.2552813530026
+      },
+      "calls": 2,
+      "distance": 778.5901330798409
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1530.5485439750996,
+        "y": 502.6212154227385
+      },
+      "calls": 2,
+      "distance": 747.6237398132815
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1951.9178866497207,
+        "y": 1691.4749831614822
+      },
+      "calls": 4,
+      "distance": 514.4188015204116
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2580.8578584372885,
+        "y": 1370.0498263648035
+      },
+      "calls": 2,
+      "distance": 799.1595200771673
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2269.816890543935,
+        "y": 949.710939488284
+      },
+      "calls": 2,
+      "distance": 532.3274597953871
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1132.8429683438408,
+        "y": 1151.3425861290532
+      },
+      "calls": 2,
+      "distance": 668.9290312229438
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1265.4274482143258,
+        "y": 768.3047897266287
+      },
+      "calls": 2,
+      "distance": 687.1161238798123
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2197.2832914272076,
+        "y": 658.7607558741337
+      },
+      "calls": 2,
+      "distance": 671.3970010576267
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2386.283968341235,
+        "y": 1522.4378483505147
+      },
+      "calls": 2,
+      "distance": 669.1001850118229
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1177.370422894308,
+        "y": 1542.4170530737024
+      },
+      "calls": 6,
+      "distance": 710.5751392516429
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1678.6150058844878,
+        "y": 1696.647857983833
+      },
+      "calls": 2,
+      "distance": 511.26647810740786
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1112.6183232271253,
+        "y": 821.2023405571671
+      },
+      "calls": 2,
+      "distance": 784.8447211789459
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2078.6617905181233,
+        "y": 1597.9373476934725
+      },
+      "calls": 2,
+      "distance": 485.8050289818767
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1566.4254384686267,
+        "y": 538.1538692847486
+      },
+      "calls": 2,
+      "distance": 701.8528168621416
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2567.1215944665887,
+        "y": 1348.5346883151292
+      },
+      "calls": 4,
+      "distance": 781.3693712514165
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1237.8688666674734,
+        "y": 951.1776168655847
+      },
+      "calls": 2,
+      "distance": 614.7389603810715
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2251.7367126893105,
+        "y": 1414.623123123187
+      },
+      "calls": 2,
+      "distance": 500.129125896998
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1388.5792843773468,
+        "y": 589.9502120951431
+      },
+      "calls": 8,
+      "distance": 735.8177416767123
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1659.9014083818458,
+        "y": 1728.1364278807255
+      },
+      "calls": 2,
+      "distance": 546.4025089876537
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1152.6818989003582,
+        "y": 1482.8440340267368
+      },
+      "calls": 8,
+      "distance": 706.4145182509799
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1197.4642326956778,
+        "y": 1404.3582294608368
+      },
+      "calls": 2,
+      "distance": 636.2480937726857
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2018.1294542916442,
+        "y": 1797.593976776318
+      },
+      "calls": 4,
+      "distance": 636.1595868246466
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1572.4752130701206,
+        "y": 772.1940384132563
+      },
+      "calls": 2,
+      "distance": 484.5466638381132
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2504.789612138127,
+        "y": 896.012017043421
+      },
+      "calls": 2,
+      "distance": 767.5526634438972
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2439.9115388193104,
+        "y": 1491.2731516422093
+      },
+      "calls": 10,
+      "distance": 703.0837975530964
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1848.0284792132234,
+        "y": 1827.3936160469502
+      },
+      "calls": 2,
+      "distance": 629.2292779837911
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1273.4352404247386,
+        "y": 1568.6190497269806
+      },
+      "calls": 2,
+      "distance": 642.7678039915932
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2353.6739682674697,
+        "y": 978.6612122422467
+      },
+      "calls": 4,
+      "distance": 596.2765483423935
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2369.32379226142,
+        "y": 1448.764790360509
+      },
+      "calls": 2,
+      "distance": 621.2998481876785
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1811.680374870666,
+        "y": 675.8134753126192
+      },
+      "calls": 18,
+      "distance": 524.3166446155924
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1435.121525908155,
+        "y": 804.5534866247895
+      },
+      "calls": 2,
+      "distance": 538.0652802367049
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1809.1662200403844,
+        "y": 576.0186248965457
+      },
+      "calls": 2,
+      "distance": 624.0486968705459
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1539.1584744362326,
+        "y": 1612.8259002681293
+      },
+      "calls": 2,
+      "distance": 488.32727283106453
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2414.0047562861555,
+        "y": 947.6667574452965
+      },
+      "calls": 2,
+      "distance": 663.8327395061139
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2099.0417576663435,
+        "y": 1923.427416418157
+      },
+      "calls": 2,
+      "distance": 782.7983135224716
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 736.2618854256555,
+        "y": 160
+      },
+      "calls": 6,
+      "distance": 576.2618854256555
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 564.2459333959625,
+        "y": 642.0363898238204
+      },
+      "calls": 8,
+      "distance": 629.1055998650427
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 168.43079701916866,
+        "y": 701.8572780084941
+      },
+      "calls": 2,
+      "distance": 541.9228617332478
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 217.58731172813194,
+        "y": 955.1935114036867
+      },
+      "calls": 48,
+      "distance": 797.2759992942207
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 431.4631783875209,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 271.4631783875209
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 160,
+        "y": 814.9340331295713
+      },
+      "calls": 4,
+      "distance": 654.9340331295713
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 655.2564952814574,
+        "y": 160
+      },
+      "calls": 2,
+      "distance": 495.25649528145743
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 545.5348049505901,
+        "y": 560.4733766554384
+      },
+      "calls": 18,
+      "distance": 555.8920859646216
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 872.0019950128694,
+        "y": 508.90851995652844
+      },
+      "calls": 48,
+      "distance": 792.8959554699225
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 550.235351532858
+      },
+      "calls": 48,
+      "distance": 390.235351532858
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 160,
+        "y": 833.4883490360528
+      },
+      "calls": 10,
+      "distance": 673.4883490360528
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 841.1690971880687,
+        "y": 160
+      },
+      "calls": 18,
+      "distance": 681.1690971880687
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 509.13330432615777,
+        "y": 669.1240652083914
+      },
+      "calls": 4,
+      "distance": 617.3340894232391
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 497.1068387720852
+      },
+      "calls": 48,
+      "distance": 337.1068387720852
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 527.5261751234293,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 367.5261751234293
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 697.2648715982093,
+        "y": 160
+      },
+      "calls": 2,
+      "distance": 537.2648715982093
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 250.9704376972192,
+        "y": 665.614933740854
+      },
+      "calls": 2,
+      "distance": 513.7334734632267
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 861.3269003684187,
+        "y": 530.7214878001673
+      },
+      "calls": 4,
+      "distance": 793.2804313085907
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 635.8339559205726,
+        "y": 788.1523919494002
+      },
+      "calls": 48,
+      "distance": 788.0313325742667
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 531.2132965068034,
+        "y": 514.9378881262054
+      },
+      "calls": 48,
+      "distance": 513.5953815319397
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 291.60312250651816,
+        "y": 844.3498109361558
+      },
+      "calls": 4,
+      "distance": 696.8888330155808
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 751.642470255088,
+        "y": 510.58514928143035
+      },
+      "calls": 2,
+      "distance": 687.7141553772362
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 629.9011752520955,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 469.9011752520955
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 484.676252811979,
+        "y": 637.7545332359955
+      },
+      "calls": 48,
+      "distance": 577.6366186172514
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 640.0216466142665
+      },
+      "calls": 48,
+      "distance": 480.0216466142665
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 939.1775383758093,
+        "y": 182.22200937413376
+      },
+      "calls": 8,
+      "distance": 779.4943579077463
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 940.0943290512309
+      },
+      "calls": 16,
+      "distance": 780.0943290512309
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 678.2826946835503,
+        "y": 490.85439047305863
+      },
+      "calls": 36,
+      "distance": 614.8833867521071
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 505.27496225814394
+      },
+      "calls": 48,
+      "distance": 345.27496225814394
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 496.663443877672,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 336.663443877672
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 664.3780279527944,
+        "y": 197.1605600200196
+      },
+      "calls": 2,
+      "distance": 505.74509617251977
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 701.8185897824959
+      },
+      "calls": 10,
+      "distance": 541.8185897824959
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 853.7280679677165,
+        "y": 510.83027478552765
+      },
+      "calls": 18,
+      "distance": 777.393410052021
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 503.4037631954127,
+        "y": 568.7429201455172
+      },
+      "calls": 48,
+      "distance": 533.8510272968067
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 672.6006186061909,
+        "y": 772.2616765664787
+      },
+      "calls": 48,
+      "distance": 798.5134656268766
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 547.3346784634457,
+        "y": 740.043616457533
+      },
+      "calls": 2,
+      "distance": 697.48028655548
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 841.8857216672533
+      },
+      "calls": 2,
+      "distance": 681.8857216672533
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 785.3006804688063,
+        "y": 319.17460149169233
+      },
+      "calls": 22,
+      "distance": 645.2421985229975
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 537.3101881104981
+      },
+      "calls": 48,
+      "distance": 377.3101881104981
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 531.6657124436304,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 371.66571244363035
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 400.92105829689456,
+        "y": 881.8122926516527
+      },
+      "calls": 2,
+      "distance": 760.9572538283152
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 892.8972709978806,
+        "y": 388.47086811225734
+      },
+      "calls": 26,
+      "distance": 767.6831035082831
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 584.7748534608481,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 424.77485346084814
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 702.67440821053
+      },
+      "calls": 48,
+      "distance": 542.67440821053
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 531.8507645280425,
+        "y": 561.4218854166775
+      },
+      "calls": 48,
+      "distance": 547.1860023534683
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 311.9178866497207,
+        "y": 651.4749831614822
+      },
+      "calls": 8,
+      "distance": 514.4188015204116
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 940.8578584372884,
+        "y": 330.0498263648036
+      },
+      "calls": 2,
+      "distance": 799.1595200771671
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 629.8168905439352,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 469.8168905439352
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 613.616055793244,
+        "y": 588.6818539484011
+      },
+      "calls": 48,
+      "distance": 624.1279179607797
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 873.3398681560087
+      },
+      "calls": 48,
+      "distance": 713.3398681560087
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 746.2839683412346,
+        "y": 482.4378483505146
+      },
+      "calls": 8,
+      "distance": 669.1001850118226
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 414.480457804139,
+        "y": 687.9515719977635
+      },
+      "calls": 10,
+      "distance": 586.0829000910313
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 601.2392629830442,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 441.2392629830442
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 927.7347407809204,
+        "y": 201.4959249243464
+      },
+      "calls": 48,
+      "distance": 768.8553465947117
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 492.5224975062228
+      },
+      "calls": 48,
+      "distance": 332.5224975062228
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 160,
+        "y": 656.6478579838331
+      },
+      "calls": 2,
+      "distance": 496.6478579838331
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 927.1215944665887,
+        "y": 308.5346883151292
+      },
+      "calls": 10,
+      "distance": 781.3693712514165
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 531.4306938507009,
+        "y": 657.2810778944672
+      },
+      "calls": 38,
+      "distance": 620.6844856819737
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 380.9099417811069,
+        "y": 895.0812357271669
+      },
+      "calls": 48,
+      "distance": 767.5582228703637
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 519.8261751846817,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 359.8261751846817
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 611.7367126893107,
+        "y": 374.62312312318716
+      },
+      "calls": 4,
+      "distance": 500.1291258969983
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 688.1364278807254
+      },
+      "calls": 10,
+      "distance": 528.1364278807254
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 516.6789614131901,
+        "y": 803.4905594329211
+      },
+      "calls": 36,
+      "distance": 735.7309165680656
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 897.4433803583328,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 737.4433803583328
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 534.8460072680275,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 374.8460072680275
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 378.12945429164415,
+        "y": 757.5939767763181
+      },
+      "calls": 6,
+      "distance": 636.1595868246467
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 864.7896121381268,
+        "y": 160
+      },
+      "calls": 4,
+      "distance": 704.7896121381268
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 701.4685497211507,
+        "y": 455.3097734744157
+      },
+      "calls": 48,
+      "distance": 616.762557753498
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 475.34404510134675
+      },
+      "calls": 48,
+      "distance": 315.34404510134675
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 538.2798946381581,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 378.2798946381581
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 208.02847921322345,
+        "y": 787.3936160469503
+      },
+      "calls": 2,
+      "distance": 629.2292779837912
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 713.6739682674698,
+        "y": 160
+      },
+      "calls": 6,
+      "distance": 553.6739682674698
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 801.2321645355427,
+        "y": 616.4993853238124
+      },
+      "calls": 10,
+      "distance": 787.1279296505465
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 477.07325348133764,
+        "y": 571.5759180164436
+      },
+      "calls": 48,
+      "distance": 519.5480578005454
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 462.6244445844514
+      },
+      "calls": 48,
+      "distance": 302.6244445844514
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 774.0047562861553,
+        "y": 160
+      },
+      "calls": 8,
+      "distance": 614.0047562861553
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 459.0417576663435,
+        "y": 883.4274164181569
+      },
+      "calls": 2,
+      "distance": 782.7983135224715
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 632.8981805926253,
+        "y": 510.5985272880176
+      },
+      "calls": 40,
+      "distance": 588.6866879285975
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 533.8614516617124
+      },
+      "calls": 48,
+      "distance": 373.8614516617124
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 425.0087417492615,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 265.0087417492615
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3104.226737539374,
+        "y": 1895.3597997737872
+      },
+      "calls": 2,
+      "distance": 481.16582525717314
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2656.660387461578,
+        "y": 2103.5539384791464
+      },
+      "calls": 2,
+      "distance": 795.1342504737156
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3440,
+        "y": 1684.566086750177
+      },
+      "calls": 28,
+      "distance": 555.433913249823
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3036.824483207623,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 403.17551679237704
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 2021.7135121673255
+      },
+      "calls": 48,
+      "distance": 218.28648783267454
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3380.435272168139,
+        "y": 1640.023832914735
+      },
+      "calls": 2,
+      "distance": 602.9256652954901
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2826.2264831319267,
+        "y": 2240
+      },
+      "calls": 6,
+      "distance": 613.7735168680733
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2971.7585166506665,
+        "y": 1977.4999864526317
+      },
+      "calls": 48,
+      "distance": 536.8019596103882
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1930.8610502136112
+      },
+      "calls": 48,
+      "distance": 309.1389497863888
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3106.99269969963,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 333.00730030036993
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3347.7119653164086,
+        "y": 1752.4357072131484
+      },
+      "calls": 2,
+      "distance": 496.22174574125887
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2948.2644955288215,
+        "y": 2240
+      },
+      "calls": 2,
+      "distance": 491.7355044711785
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2849.3297442205603,
+        "y": 1893.8761793424133
+      },
+      "calls": 48,
+      "distance": 684.6116054297896
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3091.7429046466928,
+        "y": 1533.382717259575
+      },
+      "calls": 48,
+      "distance": 787.7759762339698
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2924.027452668498,
+        "y": 1689.3575133574793
+      },
+      "calls": 48,
+      "distance": 754.609049571775
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2924.022791419434,
+        "y": 1742.8827819168362
+      },
+      "calls": 10,
+      "distance": 716.4900615426128
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1626.2703310917523
+      },
+      "calls": 2,
+      "distance": 613.7296689082477
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2720.564382966904,
+        "y": 2108.520045340173
+      },
+      "calls": 4,
+      "distance": 731.3512053269222
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3114.426369658096,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 325.57363034190394
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 1931.5281376140697
+      },
+      "calls": 48,
+      "distance": 308.4718623859303
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3166.7859155550723,
+        "y": 1552.7811783703983
+      },
+      "calls": 2,
+      "distance": 739.5374532375344
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2859.462561360676,
+        "y": 2240
+      },
+      "calls": 14,
+      "distance": 580.5374386393241
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3066.3672659951662,
+        "y": 1933.1981749192832
+      },
+      "calls": 34,
+      "distance": 483.4550442314007
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1732.210000922628
+      },
+      "calls": 48,
+      "distance": 507.78999907737193
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2802.713732211265,
+        "y": 1815.6914302080847
+      },
+      "calls": 48,
+      "distance": 765.6184098563435
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2965.2812270922896,
+        "y": 2162.527402676758
+      },
+      "calls": 2,
+      "distance": 480.9988738937043
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3149.6003946463243,
+        "y": 1761.5923166224657
+      },
+      "calls": 2,
+      "distance": 559.6479628339853
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2761.214258925577,
+        "y": 1876.21348139375
+      },
+      "calls": 48,
+      "distance": 770.1238299167279
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3365.00998920691,
+        "y": 1470.2212696427096
+      },
+      "calls": 26,
+      "distance": 773.4227792283014
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 1874.6635988900186
+      },
+      "calls": 48,
+      "distance": 365.33640110998135
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2816.0238629709474,
+        "y": 2155.410025155433
+      },
+      "calls": 6,
+      "distance": 629.6837963818851
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1577.2203953252283
+      },
+      "calls": 8,
+      "distance": 662.7796046747717
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2886.621547269456,
+        "y": 1690.911847927725
+      },
+      "calls": 22,
+      "distance": 779.5675151599102
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1927.155842899802
+      },
+      "calls": 48,
+      "distance": 312.8441571001979
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3108.579152270839,
+        "y": 1884.389314963974
+      },
+      "calls": 48,
+      "distance": 486.10568565005224
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2885.87610507182,
+        "y": 1912.2492711733794
+      },
+      "calls": 6,
+      "distance": 643.796420599523
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1719.7359769180332
+      },
+      "calls": 2,
+      "distance": 520.2640230819668
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3023.853244581251,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 416.14675541874885
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3060.376511606469,
+        "y": 1549.1233961291543
+      },
+      "calls": 26,
+      "distance": 788.3048107909697
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3277.910012007199,
+        "y": 1503.4946767348388
+      },
+      "calls": 48,
+      "distance": 754.1307946274479
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3322.6948847387143,
+        "y": 1533.7442209476383
+      },
+      "calls": 6,
+      "distance": 715.9313622906333
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2685.908332136249,
+        "y": 2068.7210076247056
+      },
+      "calls": 14,
+      "distance": 773.298607764575
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3012.934165239746,
+        "y": 1716.048264688683
+      },
+      "calls": 48,
+      "distance": 675.9516611084056
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1824.4997735120953
+      },
+      "calls": 48,
+      "distance": 415.5002264879047
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3036.61510380395,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 403.3848961960498
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2661.4708510352516,
+        "y": 2230.2552813530024
+      },
+      "calls": 2,
+      "distance": 778.5901330798409
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3170.5485439750996,
+        "y": 1542.6212154227385
+      },
+      "calls": 2,
+      "distance": 747.6237398132815
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2811.2995458884925,
+        "y": 1797.9586184121597
+      },
+      "calls": 46,
+      "distance": 768.5472295416217
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1803.319588430219
+      },
+      "calls": 48,
+      "distance": 436.680411569781
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2999.220856747079,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 440.77914325292113
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2772.8429683438408,
+        "y": 2191.342586129053
+      },
+      "calls": 2,
+      "distance": 668.9290312229438
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2905.4274482143255,
+        "y": 1808.3047897266288
+      },
+      "calls": 2,
+      "distance": 687.1161238798126
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3440,
+        "y": 1698.7607558741338
+      },
+      "calls": 2,
+      "distance": 541.2392441258662
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3072.497144578842,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 367.5028554211581
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3132.009857381753,
+        "y": 1847.5515565389926
+      },
+      "calls": 48,
+      "distance": 498.87243732739495
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2752.618323227125,
+        "y": 1861.2023405571672
+      },
+      "calls": 4,
+      "distance": 784.844721178946
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3206.4254384686265,
+        "y": 1578.1538692847485
+      },
+      "calls": 4,
+      "distance": 701.8528168621419
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2954.8387399587023,
+        "y": 2240
+      },
+      "calls": 16,
+      "distance": 485.16126004129774
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1759.5127361248944
+      },
+      "calls": 48,
+      "distance": 480.48726387510555
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3004.6952840088134,
+        "y": 1778.9418424744968
+      },
+      "calls": 48,
+      "distance": 634.0858146851888
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2877.8688666674734,
+        "y": 1991.1776168655847
+      },
+      "calls": 2,
+      "distance": 614.7389603810715
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3028.579284377347,
+        "y": 1629.9502120951431
+      },
+      "calls": 10,
+      "distance": 735.8177416767122
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3423.567688891494,
+        "y": 1611.2100787397653
+      },
+      "calls": 14,
+      "distance": 629.0045992890822
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3009.995523842534,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 430.0044761574659
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 1931.5115597641304
+      },
+      "calls": 48,
+      "distance": 308.4884402358696
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2837.4642326956778,
+        "y": 2240
+      },
+      "calls": 2,
+      "distance": 602.5357673043222
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3212.4752130701204,
+        "y": 1812.1940384132563
+      },
+      "calls": 6,
+      "distance": 484.5466638381133
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3440,
+        "y": 1540.4185486334131
+      },
+      "calls": 48,
+      "distance": 699.5814513665869
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2787.706716948628,
+        "y": 1800.4957827606822
+      },
+      "calls": 20,
+      "distance": 786.5433771160257
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3028.5118600808887,
+        "y": 1590.224248493038
+      },
+      "calls": 48,
+      "distance": 769.1105359703034
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2913.4352404247384,
+        "y": 2240
+      },
+      "calls": 4,
+      "distance": 526.5647595752616
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1715.8134753126192
+      },
+      "calls": 24,
+      "distance": 524.1865246873808
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2980.06994960454,
+        "y": 1732.9608577663919
+      },
+      "calls": 4,
+      "distance": 684.5614238428598
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3191.711325643888,
+        "y": 1603.8606648467817
+      },
+      "calls": 48,
+      "distance": 682.8766503129933
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2673.1222633341113,
+        "y": 2033.1962564342898
+      },
+      "calls": 48,
+      "distance": 794.2727814463922
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3075.121525908155,
+        "y": 1844.5534866247895
+      },
+      "calls": 2,
+      "distance": 538.0652802367049
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1616.0186248965456
+      },
+      "calls": 2,
+      "distance": 623.9813751034544
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2784.624211802055,
+        "y": 2240
+      },
+      "calls": 22,
+      "distance": 655.375788197945
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1932.4374121150818
+      },
+      "calls": 48,
+      "distance": 307.56258788491823
+    },
+    {
+      "theme": "eco-guardian",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3144.5147219179835,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 295.4852780820165
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1464.2267375393742,
+        "y": 855.3597997737872
+      },
+      "calls": 2,
+      "distance": 481.16582525717297
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1016.660387461578,
+        "y": 1063.5539384791464
+      },
+      "calls": 2,
+      "distance": 795.1342504737156
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2376.2618854256552,
+        "y": 1083.973131483779
+      },
+      "calls": 2,
+      "distance": 587.8265006037168
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1086.5699302408907,
+        "y": 1559.02230308641
+      },
+      "calls": 4,
+      "distance": 798.6735744657874
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2204.2459333959623,
+        "y": 1682.0363898238204
+      },
+      "calls": 4,
+      "distance": 629.1055998650426
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1740.4352721681391,
+        "y": 600.0238329147352
+      },
+      "calls": 2,
+      "distance": 602.92566529549
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1652.3252061326957,
+        "y": 1854.9340331295712
+      },
+      "calls": 2,
+      "distance": 671.3765206611839
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2295.2564952814573,
+        "y": 706.5323305892994
+      },
+      "calls": 2,
+      "distance": 699.1347058129076
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1186.2264831319267,
+        "y": 1203.0791192630595
+      },
+      "calls": 2,
+      "distance": 613.7812403324488
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2288.56871638693,
+        "y": 1111.9239452352197
+      },
+      "calls": 12,
+      "distance": 496.4441378996243
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1707.7119653164086,
+        "y": 712.4357072131482
+      },
+      "calls": 2,
+      "distance": 496.221745741259
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1308.2644955288217,
+        "y": 1338.8765869216577
+      },
+      "calls": 2,
+      "distance": 510.9701681630083
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1743.7740016478047,
+        "y": 1873.4883490360528
+      },
+      "calls": 6,
+      "distance": 675.8312801121365
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2008.5473581158944,
+        "y": 460.2276335737266
+      },
+      "calls": 6,
+      "distance": 768.6059814398061
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1054.6979069221857,
+        "y": 1075.0881339623645
+      },
+      "calls": 6,
+      "distance": 755.6971511281323
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2337.2648715982095,
+        "y": 920.4252337206319
+      },
+      "calls": 2,
+      "distance": 605.653029542166
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1890.9704376972193,
+        "y": 1705.614933740854
+      },
+      "calls": 2,
+      "distance": 513.7334734632267
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2501.3269003684186,
+        "y": 1570.7214878001673
+      },
+      "calls": 4,
+      "distance": 793.2804313085906
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1284.0227914194338,
+        "y": 702.8827819168362
+      },
+      "calls": 2,
+      "distance": 716.4900615426128
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1870.2793831007975,
+        "y": 586.2703310917524
+      },
+      "calls": 2,
+      "distance": 617.7404780223293
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1526.7859155550725,
+        "y": 512.7811783703983
+      },
+      "calls": 2,
+      "distance": 739.5374532375344
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1931.603122506518,
+        "y": 1884.3498109361558
+      },
+      "calls": 2,
+      "distance": 696.8888330155808
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2391.642470255088,
+        "y": 1550.5851492814304
+      },
+      "calls": 2,
+      "distance": 687.7141553772362
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2272.3007385579926,
+        "y": 881.7137775015823
+      },
+      "calls": 4,
+      "distance": 569.5385035928103
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1936.2821223284025,
+        "y": 482.23806790579647
+      },
+      "calls": 2,
+      "distance": 730.5853872272137
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1325.2812270922896,
+        "y": 1122.527402676758
+      },
+      "calls": 2,
+      "distance": 480.9988738937043
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1509.6003946463245,
+        "y": 721.5923166224655
+      },
+      "calls": 2,
+      "distance": 559.6479628339853
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2579.1775383758095,
+        "y": 1222.2220093741337
+      },
+      "calls": 4,
+      "distance": 779.4943579077466
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1089.4433257738879,
+        "y": 1416.174703574879
+      },
+      "calls": 8,
+      "distance": 742.712790890907
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1705.791826325115,
+        "y": 1980.094329051231
+      },
+      "calls": 8,
+      "distance": 785.7622682497852
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2304.3780279527946,
+        "y": 1237.1605600200196
+      },
+      "calls": 2,
+      "distance": 505.74509617252
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1176.0238629709474,
+        "y": 1115.4100251554325
+      },
+      "calls": 4,
+      "distance": 629.6837963818853
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1773.3717135892937,
+        "y": 1741.818589782496
+      },
+      "calls": 6,
+      "distance": 542.4725337480813
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1858.8292304144147,
+        "y": 537.2203953252282
+      },
+      "calls": 2,
+      "distance": 665.3853640740823
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2133.4232951214744,
+        "y": 1688.2648084354196
+      },
+      "calls": 12,
+      "distance": 591.2475089893732
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2187.3346784634455,
+        "y": 1780.043616457533
+      },
+      "calls": 2,
+      "distance": 697.4802865554799
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1575.289656179089,
+        "y": 1881.8857216672532
+      },
+      "calls": 2,
+      "distance": 717.9574333021302
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1245.87610507182,
+        "y": 872.2492711733795
+      },
+      "calls": 2,
+      "distance": 643.7964205995228
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2039.8828651919557,
+        "y": 679.7359769180332
+      },
+      "calls": 2,
+      "distance": 572.9035195616582
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1619.9547854076325,
+        "y": 714.9684532640513
+      },
+      "calls": 10,
+      "distance": 517.3701582297518
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2040.9210582968944,
+        "y": 1921.8122926516526
+      },
+      "calls": 2,
+      "distance": 760.9572538283148
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1682.694884738714,
+        "y": 493.74422094763827
+      },
+      "calls": 4,
+      "distance": 715.9313622906333
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1636.5493330286133,
+        "y": 1966.6900350741184
+      },
+      "calls": 8,
+      "distance": 783.9194667919302
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1045.908332136249,
+        "y": 1028.7210076247056
+      },
+      "calls": 6,
+      "distance": 773.298607764575
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2228.693727686655,
+        "y": 717.1708079132982
+      },
+      "calls": 2,
+      "distance": 645.679751029082
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1021.4708510352516,
+        "y": 1190.2552813530026
+      },
+      "calls": 2,
+      "distance": 778.5901330798409
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1530.5485439750996,
+        "y": 502.6212154227385
+      },
+      "calls": 2,
+      "distance": 747.6237398132815
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1951.9178866497207,
+        "y": 1691.4749831614822
+      },
+      "calls": 4,
+      "distance": 514.4188015204116
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2580.8578584372885,
+        "y": 1370.0498263648035
+      },
+      "calls": 2,
+      "distance": 799.1595200771673
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2269.816890543935,
+        "y": 949.710939488284
+      },
+      "calls": 2,
+      "distance": 532.3274597953871
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1132.8429683438408,
+        "y": 1151.3425861290532
+      },
+      "calls": 2,
+      "distance": 668.9290312229438
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1265.4274482143258,
+        "y": 768.3047897266287
+      },
+      "calls": 2,
+      "distance": 687.1161238798123
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2197.2832914272076,
+        "y": 658.7607558741337
+      },
+      "calls": 2,
+      "distance": 671.3970010576267
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2386.283968341235,
+        "y": 1522.4378483505147
+      },
+      "calls": 2,
+      "distance": 669.1001850118229
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1177.370422894308,
+        "y": 1542.4170530737024
+      },
+      "calls": 6,
+      "distance": 710.5751392516429
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1678.6150058844878,
+        "y": 1696.647857983833
+      },
+      "calls": 2,
+      "distance": 511.26647810740786
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1112.6183232271253,
+        "y": 821.2023405571671
+      },
+      "calls": 2,
+      "distance": 784.8447211789459
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2078.6617905181233,
+        "y": 1597.9373476934725
+      },
+      "calls": 2,
+      "distance": 485.8050289818767
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1566.4254384686267,
+        "y": 538.1538692847486
+      },
+      "calls": 2,
+      "distance": 701.8528168621416
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2567.1215944665887,
+        "y": 1348.5346883151292
+      },
+      "calls": 4,
+      "distance": 781.3693712514165
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1237.8688666674734,
+        "y": 951.1776168655847
+      },
+      "calls": 2,
+      "distance": 614.7389603810715
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2251.7367126893105,
+        "y": 1414.623123123187
+      },
+      "calls": 2,
+      "distance": 500.129125896998
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1388.5792843773468,
+        "y": 589.9502120951431
+      },
+      "calls": 8,
+      "distance": 735.8177416767123
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 1659.9014083818458,
+        "y": 1728.1364278807255
+      },
+      "calls": 2,
+      "distance": 546.4025089876537
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1152.6818989003582,
+        "y": 1482.8440340267368
+      },
+      "calls": 8,
+      "distance": 706.4145182509799
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1197.4642326956778,
+        "y": 1404.3582294608368
+      },
+      "calls": 2,
+      "distance": 636.2480937726857
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2018.1294542916442,
+        "y": 1797.593976776318
+      },
+      "calls": 4,
+      "distance": 636.1595868246466
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1572.4752130701206,
+        "y": 772.1940384132563
+      },
+      "calls": 2,
+      "distance": 484.5466638381132
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2504.789612138127,
+        "y": 896.012017043421
+      },
+      "calls": 2,
+      "distance": 767.5526634438972
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2439.9115388193104,
+        "y": 1491.2731516422093
+      },
+      "calls": 10,
+      "distance": 703.0837975530964
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1848.0284792132234,
+        "y": 1827.3936160469502
+      },
+      "calls": 2,
+      "distance": 629.2292779837911
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1273.4352404247386,
+        "y": 1568.6190497269806
+      },
+      "calls": 2,
+      "distance": 642.7678039915932
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2353.6739682674697,
+        "y": 978.6612122422467
+      },
+      "calls": 4,
+      "distance": 596.2765483423935
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2369.32379226142,
+        "y": 1448.764790360509
+      },
+      "calls": 2,
+      "distance": 621.2998481876785
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 1811.680374870666,
+        "y": 675.8134753126192
+      },
+      "calls": 18,
+      "distance": 524.3166446155924
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 1435.121525908155,
+        "y": 804.5534866247895
+      },
+      "calls": 2,
+      "distance": 538.0652802367049
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 1809.1662200403844,
+        "y": 576.0186248965457
+      },
+      "calls": 2,
+      "distance": 624.0486968705459
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 1539.1584744362326,
+        "y": 1612.8259002681293
+      },
+      "calls": 2,
+      "distance": 488.32727283106453
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2414.0047562861555,
+        "y": 947.6667574452965
+      },
+      "calls": 2,
+      "distance": 663.8327395061139
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 1800,
+        "y": 1200
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2099.0417576663435,
+        "y": 1923.427416418157
+      },
+      "calls": 2,
+      "distance": 782.7983135224716
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 736.2618854256555,
+        "y": 160
+      },
+      "calls": 6,
+      "distance": 576.2618854256555
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 564.2459333959625,
+        "y": 642.0363898238204
+      },
+      "calls": 8,
+      "distance": 629.1055998650427
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 168.43079701916866,
+        "y": 701.8572780084941
+      },
+      "calls": 2,
+      "distance": 541.9228617332478
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 217.58731172813194,
+        "y": 955.1935114036867
+      },
+      "calls": 48,
+      "distance": 797.2759992942207
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 431.4631783875209,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 271.4631783875209
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 160,
+        "y": 814.9340331295713
+      },
+      "calls": 4,
+      "distance": 654.9340331295713
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 655.2564952814574,
+        "y": 160
+      },
+      "calls": 2,
+      "distance": 495.25649528145743
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 545.5348049505901,
+        "y": 560.4733766554384
+      },
+      "calls": 18,
+      "distance": 555.8920859646216
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 872.0019950128694,
+        "y": 508.90851995652844
+      },
+      "calls": 48,
+      "distance": 792.8959554699225
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 550.235351532858
+      },
+      "calls": 48,
+      "distance": 390.235351532858
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 160,
+        "y": 833.4883490360528
+      },
+      "calls": 10,
+      "distance": 673.4883490360528
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 841.1690971880687,
+        "y": 160
+      },
+      "calls": 18,
+      "distance": 681.1690971880687
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 509.13330432615777,
+        "y": 669.1240652083914
+      },
+      "calls": 4,
+      "distance": 617.3340894232391
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 497.1068387720852
+      },
+      "calls": 48,
+      "distance": 337.1068387720852
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 527.5261751234293,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 367.5261751234293
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 697.2648715982093,
+        "y": 160
+      },
+      "calls": 2,
+      "distance": 537.2648715982093
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 250.9704376972192,
+        "y": 665.614933740854
+      },
+      "calls": 2,
+      "distance": 513.7334734632267
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 861.3269003684187,
+        "y": 530.7214878001673
+      },
+      "calls": 4,
+      "distance": 793.2804313085907
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 635.8339559205726,
+        "y": 788.1523919494002
+      },
+      "calls": 48,
+      "distance": 788.0313325742667
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 531.2132965068034,
+        "y": 514.9378881262054
+      },
+      "calls": 48,
+      "distance": 513.5953815319397
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 291.60312250651816,
+        "y": 844.3498109361558
+      },
+      "calls": 4,
+      "distance": 696.8888330155808
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 751.642470255088,
+        "y": 510.58514928143035
+      },
+      "calls": 2,
+      "distance": 687.7141553772362
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 629.9011752520955,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 469.9011752520955
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 484.676252811979,
+        "y": 637.7545332359955
+      },
+      "calls": 48,
+      "distance": 577.6366186172514
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 640.0216466142665
+      },
+      "calls": 48,
+      "distance": 480.0216466142665
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 939.1775383758093,
+        "y": 182.22200937413376
+      },
+      "calls": 8,
+      "distance": 779.4943579077463
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 940.0943290512309
+      },
+      "calls": 16,
+      "distance": 780.0943290512309
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 678.2826946835503,
+        "y": 490.85439047305863
+      },
+      "calls": 36,
+      "distance": 614.8833867521071
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 505.27496225814394
+      },
+      "calls": 48,
+      "distance": 345.27496225814394
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 496.663443877672,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 336.663443877672
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 664.3780279527944,
+        "y": 197.1605600200196
+      },
+      "calls": 2,
+      "distance": 505.74509617251977
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 701.8185897824959
+      },
+      "calls": 10,
+      "distance": 541.8185897824959
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 853.7280679677165,
+        "y": 510.83027478552765
+      },
+      "calls": 18,
+      "distance": 777.393410052021
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 503.4037631954127,
+        "y": 568.7429201455172
+      },
+      "calls": 48,
+      "distance": 533.8510272968067
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 672.6006186061909,
+        "y": 772.2616765664787
+      },
+      "calls": 48,
+      "distance": 798.5134656268766
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 547.3346784634457,
+        "y": 740.043616457533
+      },
+      "calls": 2,
+      "distance": 697.48028655548
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 841.8857216672533
+      },
+      "calls": 2,
+      "distance": 681.8857216672533
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 785.3006804688063,
+        "y": 319.17460149169233
+      },
+      "calls": 22,
+      "distance": 645.2421985229975
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 537.3101881104981
+      },
+      "calls": 48,
+      "distance": 377.3101881104981
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 531.6657124436304,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 371.66571244363035
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 400.92105829689456,
+        "y": 881.8122926516527
+      },
+      "calls": 2,
+      "distance": 760.9572538283152
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 892.8972709978806,
+        "y": 388.47086811225734
+      },
+      "calls": 26,
+      "distance": 767.6831035082831
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 584.7748534608481,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 424.77485346084814
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 702.67440821053
+      },
+      "calls": 48,
+      "distance": 542.67440821053
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 531.8507645280425,
+        "y": 561.4218854166775
+      },
+      "calls": 48,
+      "distance": 547.1860023534683
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 311.9178866497207,
+        "y": 651.4749831614822
+      },
+      "calls": 8,
+      "distance": 514.4188015204116
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 940.8578584372884,
+        "y": 330.0498263648036
+      },
+      "calls": 2,
+      "distance": 799.1595200771671
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 629.8168905439352,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 469.8168905439352
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 613.616055793244,
+        "y": 588.6818539484011
+      },
+      "calls": 48,
+      "distance": 624.1279179607797
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 873.3398681560087
+      },
+      "calls": 48,
+      "distance": 713.3398681560087
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 746.2839683412346,
+        "y": 482.4378483505146
+      },
+      "calls": 8,
+      "distance": 669.1001850118226
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 414.480457804139,
+        "y": 687.9515719977635
+      },
+      "calls": 10,
+      "distance": 586.0829000910313
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 601.2392629830442,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 441.2392629830442
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 927.7347407809204,
+        "y": 201.4959249243464
+      },
+      "calls": 48,
+      "distance": 768.8553465947117
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 492.5224975062228
+      },
+      "calls": 48,
+      "distance": 332.5224975062228
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 160,
+        "y": 656.6478579838331
+      },
+      "calls": 2,
+      "distance": 496.6478579838331
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 927.1215944665887,
+        "y": 308.5346883151292
+      },
+      "calls": 10,
+      "distance": 781.3693712514165
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 531.4306938507009,
+        "y": 657.2810778944672
+      },
+      "calls": 38,
+      "distance": 620.6844856819737
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 380.9099417811069,
+        "y": 895.0812357271669
+      },
+      "calls": 48,
+      "distance": 767.5582228703637
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 519.8261751846817,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 359.8261751846817
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 611.7367126893107,
+        "y": 374.62312312318716
+      },
+      "calls": 4,
+      "distance": 500.1291258969983
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 160,
+        "y": 688.1364278807254
+      },
+      "calls": 10,
+      "distance": 528.1364278807254
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 516.6789614131901,
+        "y": 803.4905594329211
+      },
+      "calls": 36,
+      "distance": 735.7309165680656
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 897.4433803583328,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 737.4433803583328
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 534.8460072680275,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 374.8460072680275
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 378.12945429164415,
+        "y": 757.5939767763181
+      },
+      "calls": 6,
+      "distance": 636.1595868246467
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 864.7896121381268,
+        "y": 160
+      },
+      "calls": 4,
+      "distance": 704.7896121381268
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 701.4685497211507,
+        "y": 455.3097734744157
+      },
+      "calls": 48,
+      "distance": 616.762557753498
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 475.34404510134675
+      },
+      "calls": 48,
+      "distance": 315.34404510134675
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 538.2798946381581,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 378.2798946381581
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 208.02847921322345,
+        "y": 787.3936160469503
+      },
+      "calls": 2,
+      "distance": 629.2292779837912
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 713.6739682674698,
+        "y": 160
+      },
+      "calls": 6,
+      "distance": 553.6739682674698
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 801.2321645355427,
+        "y": 616.4993853238124
+      },
+      "calls": 10,
+      "distance": 787.1279296505465
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 477.07325348133764,
+        "y": 571.5759180164436
+      },
+      "calls": 48,
+      "distance": 519.5480578005454
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 160,
+        "y": 462.6244445844514
+      },
+      "calls": 48,
+      "distance": 302.6244445844514
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 774.0047562861553,
+        "y": 160
+      },
+      "calls": 8,
+      "distance": 614.0047562861553
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 459.0417576663435,
+        "y": 883.4274164181569
+      },
+      "calls": 2,
+      "distance": 782.7983135224715
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 632.8981805926253,
+        "y": 510.5985272880176
+      },
+      "calls": 40,
+      "distance": 588.6866879285975
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 160,
+        "y": 533.8614516617124
+      },
+      "calls": 48,
+      "distance": 373.8614516617124
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 160,
+        "y": 160
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 425.0087417492615,
+        "y": 160
+      },
+      "calls": 48,
+      "distance": 265.0087417492615
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3104.226737539374,
+        "y": 1895.3597997737872
+      },
+      "calls": 2,
+      "distance": 481.16582525717314
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2656.660387461578,
+        "y": 2103.5539384791464
+      },
+      "calls": 2,
+      "distance": 795.1342504737156
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3440,
+        "y": 1684.566086750177
+      },
+      "calls": 28,
+      "distance": 555.433913249823
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3036.824483207623,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 403.17551679237704
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 1,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 2021.7135121673255
+      },
+      "calls": 48,
+      "distance": 218.28648783267454
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3380.435272168139,
+        "y": 1640.023832914735
+      },
+      "calls": 2,
+      "distance": 602.9256652954901
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2826.2264831319267,
+        "y": 2240
+      },
+      "calls": 6,
+      "distance": 613.7735168680733
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2971.7585166506665,
+        "y": 1977.4999864526317
+      },
+      "calls": 48,
+      "distance": 536.8019596103882
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1930.8610502136112
+      },
+      "calls": 48,
+      "distance": 309.1389497863888
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 2,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3106.99269969963,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 333.00730030036993
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3347.7119653164086,
+        "y": 1752.4357072131484
+      },
+      "calls": 2,
+      "distance": 496.22174574125887
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2948.2644955288215,
+        "y": 2240
+      },
+      "calls": 2,
+      "distance": 491.7355044711785
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2849.3297442205603,
+        "y": 1893.8761793424133
+      },
+      "calls": 48,
+      "distance": 684.6116054297896
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3091.7429046466928,
+        "y": 1533.382717259575
+      },
+      "calls": 48,
+      "distance": 787.7759762339698
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 3,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2924.027452668498,
+        "y": 1689.3575133574793
+      },
+      "calls": 48,
+      "distance": 754.609049571775
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2924.022791419434,
+        "y": 1742.8827819168362
+      },
+      "calls": 10,
+      "distance": 716.4900615426128
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1626.2703310917523
+      },
+      "calls": 2,
+      "distance": 613.7296689082477
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2720.564382966904,
+        "y": 2108.520045340173
+      },
+      "calls": 4,
+      "distance": 731.3512053269222
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3114.426369658096,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 325.57363034190394
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 4,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 1931.5281376140697
+      },
+      "calls": 48,
+      "distance": 308.4718623859303
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3166.7859155550723,
+        "y": 1552.7811783703983
+      },
+      "calls": 2,
+      "distance": 739.5374532375344
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2859.462561360676,
+        "y": 2240
+      },
+      "calls": 14,
+      "distance": 580.5374386393241
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3066.3672659951662,
+        "y": 1933.1981749192832
+      },
+      "calls": 34,
+      "distance": 483.4550442314007
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1732.210000922628
+      },
+      "calls": 48,
+      "distance": 507.78999907737193
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 5,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2802.713732211265,
+        "y": 1815.6914302080847
+      },
+      "calls": 48,
+      "distance": 765.6184098563435
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2965.2812270922896,
+        "y": 2162.527402676758
+      },
+      "calls": 2,
+      "distance": 480.9988738937043
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3149.6003946463243,
+        "y": 1761.5923166224657
+      },
+      "calls": 2,
+      "distance": 559.6479628339853
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2761.214258925577,
+        "y": 1876.21348139375
+      },
+      "calls": 48,
+      "distance": 770.1238299167279
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3365.00998920691,
+        "y": 1470.2212696427096
+      },
+      "calls": 26,
+      "distance": 773.4227792283014
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 6,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 1874.6635988900186
+      },
+      "calls": 48,
+      "distance": 365.33640110998135
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2816.0238629709474,
+        "y": 2155.410025155433
+      },
+      "calls": 6,
+      "distance": 629.6837963818851
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1577.2203953252283
+      },
+      "calls": 8,
+      "distance": 662.7796046747717
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2886.621547269456,
+        "y": 1690.911847927725
+      },
+      "calls": 22,
+      "distance": 779.5675151599102
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1927.155842899802
+      },
+      "calls": 48,
+      "distance": 312.8441571001979
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 7,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3108.579152270839,
+        "y": 1884.389314963974
+      },
+      "calls": 48,
+      "distance": 486.10568565005224
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2885.87610507182,
+        "y": 1912.2492711733794
+      },
+      "calls": 6,
+      "distance": 643.796420599523
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1719.7359769180332
+      },
+      "calls": 2,
+      "distance": 520.2640230819668
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3023.853244581251,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 416.14675541874885
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3060.376511606469,
+        "y": 1549.1233961291543
+      },
+      "calls": 26,
+      "distance": 788.3048107909697
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 8,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3277.910012007199,
+        "y": 1503.4946767348388
+      },
+      "calls": 48,
+      "distance": 754.1307946274479
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3322.6948847387143,
+        "y": 1533.7442209476383
+      },
+      "calls": 6,
+      "distance": 715.9313622906333
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2685.908332136249,
+        "y": 2068.7210076247056
+      },
+      "calls": 14,
+      "distance": 773.298607764575
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3012.934165239746,
+        "y": 1716.048264688683
+      },
+      "calls": 48,
+      "distance": 675.9516611084056
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1824.4997735120953
+      },
+      "calls": 48,
+      "distance": 415.5002264879047
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 9,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3036.61510380395,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 403.3848961960498
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2661.4708510352516,
+        "y": 2230.2552813530024
+      },
+      "calls": 2,
+      "distance": 778.5901330798409
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3170.5485439750996,
+        "y": 1542.6212154227385
+      },
+      "calls": 2,
+      "distance": 747.6237398132815
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2811.2995458884925,
+        "y": 1797.9586184121597
+      },
+      "calls": 46,
+      "distance": 768.5472295416217
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1803.319588430219
+      },
+      "calls": 48,
+      "distance": 436.680411569781
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 10,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2999.220856747079,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 440.77914325292113
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2772.8429683438408,
+        "y": 2191.342586129053
+      },
+      "calls": 2,
+      "distance": 668.9290312229438
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 2905.4274482143255,
+        "y": 1808.3047897266288
+      },
+      "calls": 2,
+      "distance": 687.1161238798126
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3440,
+        "y": 1698.7607558741338
+      },
+      "calls": 2,
+      "distance": 541.2392441258662
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3072.497144578842,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 367.5028554211581
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 11,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3132.009857381753,
+        "y": 1847.5515565389926
+      },
+      "calls": 48,
+      "distance": 498.87243732739495
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2752.618323227125,
+        "y": 1861.2023405571672
+      },
+      "calls": 4,
+      "distance": 784.844721178946
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3206.4254384686265,
+        "y": 1578.1538692847485
+      },
+      "calls": 4,
+      "distance": 701.8528168621419
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2954.8387399587023,
+        "y": 2240
+      },
+      "calls": 16,
+      "distance": 485.16126004129774
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1759.5127361248944
+      },
+      "calls": 48,
+      "distance": 480.48726387510555
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 12,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3004.6952840088134,
+        "y": 1778.9418424744968
+      },
+      "calls": 48,
+      "distance": 634.0858146851888
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2877.8688666674734,
+        "y": 1991.1776168655847
+      },
+      "calls": 2,
+      "distance": 614.7389603810715
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3028.579284377347,
+        "y": 1629.9502120951431
+      },
+      "calls": 10,
+      "distance": 735.8177416767122
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3423.567688891494,
+        "y": 1611.2100787397653
+      },
+      "calls": 14,
+      "distance": 629.0045992890822
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3009.995523842534,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 430.0044761574659
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 13,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3440,
+        "y": 1931.5115597641304
+      },
+      "calls": 48,
+      "distance": 308.4884402358696
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2837.4642326956778,
+        "y": 2240
+      },
+      "calls": 2,
+      "distance": 602.5357673043222
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3212.4752130701204,
+        "y": 1812.1940384132563
+      },
+      "calls": 6,
+      "distance": 484.5466638381133
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 3440,
+        "y": 1540.4185486334131
+      },
+      "calls": 48,
+      "distance": 699.5814513665869
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 2787.706716948628,
+        "y": 1800.4957827606822
+      },
+      "calls": 20,
+      "distance": 786.5433771160257
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 14,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3028.5118600808887,
+        "y": 1590.224248493038
+      },
+      "calls": 48,
+      "distance": 769.1105359703034
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 2913.4352404247384,
+        "y": 2240
+      },
+      "calls": 4,
+      "distance": 526.5647595752616
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1715.8134753126192
+      },
+      "calls": 24,
+      "distance": 524.1865246873808
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2980.06994960454,
+        "y": 1732.9608577663919
+      },
+      "calls": 4,
+      "distance": 684.5614238428598
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3191.711325643888,
+        "y": 1603.8606648467817
+      },
+      "calls": 48,
+      "distance": 682.8766503129933
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 15,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 2673.1222633341113,
+        "y": 2033.1962564342898
+      },
+      "calls": 48,
+      "distance": 794.2727814463922
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.spawn_surge",
+      "point": {
+        "x": 3075.121525908155,
+        "y": 1844.5534866247895
+      },
+      "calls": 2,
+      "distance": 538.0652802367049
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.greed",
+      "point": {
+        "x": 3440,
+        "y": 1616.0186248965456
+      },
+      "calls": 2,
+      "distance": 623.9813751034544
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.multiplicity",
+      "point": {
+        "x": 2784.624211802055,
+        "y": 2240
+      },
+      "calls": 22,
+      "distance": 655.375788197945
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.duplication",
+      "point": {
+        "x": 3440,
+        "y": 1932.4374121150818
+      },
+      "calls": 48,
+      "distance": 307.56258788491823
+    },
+    {
+      "theme": "knight-magic",
+      "seed": 16,
+      "player": {
+        "x": 3440,
+        "y": 2240
+      },
+      "id": "shrine.escalation",
+      "point": {
+        "x": 3144.5147219179835,
+        "y": 2240
+      },
+      "calls": 48,
+      "distance": 295.4852780820165
+    }
+  ],
+  "minDistance": 218.28648783267454,
+  "maxDistance": 799.1595200771673,
+  "maxCalls": 48,
+  "withinInteraction": 0
+}

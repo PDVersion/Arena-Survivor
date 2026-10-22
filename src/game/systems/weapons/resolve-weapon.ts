@@ -1,3 +1,4 @@
+import type { UpgradeId } from "../../core/archetypes/ids";
 import type { WeaponDefinition } from "../../core/archetypes/contracts";
 import type { WeaponStatModifiers } from "../upgrades";
 
@@ -11,10 +12,13 @@ export function resolveWeaponDefinition(
   definition: WeaponDefinition,
   modifiers: WeaponStatModifiers,
   owned?: WeaponStatModifiers,
+  selectedUpgradeIds: readonly UpgradeId[] = [],
 ): WeaponDefinition {
   if (definition.deliveryKind === "melee") {
     return Object.freeze({
       ...definition,
+      targetCap: definition.targetCap === null ? null : definition.targetCap + (definition.targetGrowth
+        ? Math.min(definition.targetGrowth.maxPicks, selectedUpgradeIds.filter((id) => id === definition.targetGrowth!.upgradeId).length) * definition.targetGrowth.perPick : 0),
       range: definition.range + (modifiers.range + (owned?.range ?? 0)),
       reach: definition.reach + (modifiers.range + (owned?.range ?? 0)),
     });

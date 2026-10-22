@@ -18,7 +18,7 @@ as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
 
 [BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
 Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
-[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; Session21 identifies player-motion/cone-feedback corrections and selects vacuum target-cap growth for the next bounded correction gate below. These corrections remain unimplemented. F16 is delivered and other optional proposals remain unselected.
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; Session21 identifies player-motion/cone-feedback corrections and selects vacuum target-cap growth for the next bounded correction gate below. Q6 subsequently passed in `44585dd`; G1–G4 then passed through `a10e3eb`. See the [completed log](MASTER_BUILD_PLAN.md#readable-gameplay); earlier future-tense sections below are historical. F16 is delivered and other optional proposals remain unselected.
 
 ## Performance prerequisites — P0–P6
 
@@ -378,141 +378,41 @@ difficulty are things the player opts into. It also means `RunState` needs a
 status for "the boss is up" that is distinct from `time_up`, since the timer
 expiring no longer holds the simulation — the boss fight is live play.
 
-## Next step — Q6 player motion, cone feedback and vacuum progression
+## Completed correction and follow-on disposition
 
-Session21 documentation ownership (claimed before edits):
-`build/{BUILD_PLAN_V0.4,BUILD_PLAN_V0.4.3,BUILD_STATUS,SESSION_21_PROMPT,PLAN,THEME_ARCHETYPES,EDUCATION_PIVOT,AUTONOMOUS_DEVELOPMENT_PLAN}.md`,
-`AUTONOMOUS_PROGRESS.md` and `RECONCILIATION.md`. This cycle records review and
-owner direction only; no runtime/assets/tests are edited. The subsequent owner
-request to wrap up and create the V0.4.3 PR authorizes committing these selected
-planning changes and publishing the existing branch. Claim exact runtime/test
-ownership before implementing Q6.
+Q6 is complete in `44585dd`; G1–G4 are locally complete through `a10e3eb`.
+Their original claims/checklists and final outcomes are consolidated in the
+[master log](MASTER_BUILD_PLAN.md#readable-gameplay). PR27 CI repair/delivery
+history remains in Git, the master, status, progress and its retained
+[report](performance/PR27_CI_REPAIR.md). No Q6 or gameplay follow-on gate is open.
 
-C1–C7 local gates pass at C7 `88f220b`. Owner reports continuing player-sprite
-jitter and enemies inside the visible vacuum cone receiving no hit. The next
-local correction gate remains open. The later owner request authorizes a draft
-PR for completed work before Q6; it does not complete Q6 or start V0.4.4:
+Remaining work is [cumulative delivery and owner-selected V0.4.4 planning](NEXT_READABLE_GAMEPLAY_HANDOFF.md).
+The historical external waiver remains unverified; no current broad CI/browser/
+stress/soak acceptance or new publication is established by this consolidation.
 
-- [ ] Reproduce player movement against a fixed actor/body anchor. Inspect walk,
-  idle and hit transitions in both horizontal directions and diagonal movement.
-  Independent per-pose bounding-box centring is a candidate cause, not a proved
-  live diagnosis. Correct presentation without changing physics or hand-editing
-  generated art; preserve facing, rate0.5 and Phaser shutdown ownership.
-- [ ] Reconcile the visible cone with actual pulse timing, origin and hit selection.
-  Current drawing and collision share resolved reach/angle; no separate-radius
-  defect was established. Damage resolves once at firing, while a stationary cone
-  fades for280ms. A target entering the fade is not a new hit. Verify base/upgraded/
-  evolved boundaries and make actual affected targets/pulse timing readable.
-- [ ] Implement owner-selected vacuum primary-target growth with its own weapon
-  upgrade progression. A small early target limit is accepted; it must increase
-  at later weapon levels rather than stay at three until evolution. Use the
-  existing owner-track model, not automatic growth with unrelated player levels.
-  Exact thresholds/increments/ceiling and evolution carryover need theme-owned
-  tuning and balance verification; they are not settled or implemented here.
-  Keep finite integer caps and deterministic target ordering. Preserve independent
-  clocks, direct/splash provenance and exact XP; growth does not remove caps or
-  automatically increase splash targets. Both production themes must satisfy the
-  generic contract. Evolution must retain earned growth without reducing it.
-- [ ] Add affected deterministic coverage for cap steps, boundaries, evolution/
-  reset and attack ownership; run typecheck, affected units, lint, build and diff
-  checks. Use `npm run balance` for the changed pacing, including packed targets.
-  Run only necessary serial browser cases, one worker/zero automatic retries,
-  with declared bounds and images under testInfo.outputPath; inspect motion and
-  cone-hit correspondence. Record deferred broad/stress/native/long checks.
-- [ ] Record implementation, actual verification, remaining limits and reconciliation
-  together in one reviewed local correction commit. Keep C1–C7 historical passes
-  intact; Q6 is open until its own gate passes.
+## PR28 CI repair — claimed before edits / 2026-10-22
 
-Read-only Session21 review reran25 animation/melee/second-tool units across3files:
-all pass. This does not verify the reported motion/cone behavior or the proposed
-cap progression. No new browser campaign or runtime fix occurred.
+Owner requests diagnosing/fixing failed Actions. Active bounded repair ownership:
+`tests/e2e/{enemy-roster,phase-six-v02,readable-contact-v0421,sprites}.spec.ts`,
+`build/performance/PR28_CI_REPAIR.md`, this plan, BUILD_STATUS, MASTER_BUILD_PLAN,
+AUTONOMOUS_PROGRESS and RECONCILIATION; Git/PR metadata for the existing PR28.
+Failed run39705612316 on dd30186 reports four failures,138passes/6skips.
+All four fail old five-role fixture expectations against eight configured
+non-boss roles. Derive exact expected IDs/counts from activeTheme, retain the
+existing semantic assertions and do not change runtime, retries, skips or timeouts.
+Run affected browser cases serially/zero retries, types/units/lint/build/whitespace;
+push one repair commit and verify matching-head Actions. No new content/art,
+manual stress campaign, merge or physical/browser acceptance is selected.
 
-## Delivery and remaining acceptance disposition
+## PR28 roster CI repair — local verification / 2026-10-22
 
-No unrelated content, dependencies, new sprites or optional work is selected.
-[Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
-authorized draft PR delivery. Q6 and the newly observed high-severity Vite audit
-finding remain open; no merge or deployment is authorized. External actual
-Safari/browserOS/older physical-device checks
-remain temporarily waived/unverified, not passed. No current-head remote CI is
-inferred from run39189877476 on2806720 or merge CI39193504359 on c6daeb6.
-A later owner-approved delivery/check campaign
-must use these changed sources; regenerate the historical device pack if needed.
-
-Session21 delivery ownership extends the same10 documentation paths plus Git/PR
-metadata. Owner explicitly requests “wrap this up and create PR for t4.3”, resolved
-as existing `codex/v0.4.3`. Commit the selected planning decisions separately from
-the completed phase commits and publish a draft PR into main. Local delivery
-checks:655units/67files, typecheck, lint and build pass; audit fails with one high
-Vite finding (GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw,
-GHSA-587h-7wmj-h5pm). Vite remains6.4.3; suggested6.4.4 is outside its exact pin.
-No dependency change or audit bypass is made. Full browser regression is deferred
-to PR Actions; report its actual matching head/status, never a historical pass.
-
-## Planned follow-on after Q6 — readable gameplay and rubbish roster
-
-Owner direction2026-10-21 is recorded in
-[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md). Q6 remains first and
-unchanged. Follow-on G1 measures/rebalances current enemies against corrected
-tools, G2 trials outdoor litter behaviour, G3 refines encounters/sites, G4 adds
-mastery goals using existing surfaces. New candidates are not current runtime
-content. Assign the appropriate milestone/branch and exact phase ownership before
-implementation; do not silently expand this increment or reopen completed C1–C7.
-
-The [planning baseline](content/READABLE_ROSTER_BASELINE.md) executes120 model
-scenarios with no tuning changes. Parked eco projectile/explosion builds are
-labelled nonrepresentative. This does not pass Q6/G1 or certify new balance,
-browser/device performance or current-head CI. Existing acceptance/delivery
-restrictions remain; the owner request authorizes planning and necessary measured
-roster rebalancing in its proper phase, not wholesale optional content/art.
-
-
-## PR27 CI repair — owner-authorized scope
-
-Owner requests fixing failed Actions checks. Start2026-10-21T01:32:46UTC
-/12:32:46AEDT; deadline03:02:46UTC /14:02:46AEDT; final20reserve02:42:46UTC.
-Claim before edits: package.json/package-lock.json; tests/e2e/{frame-measurements,
-phase-six,profile-persistence-v043,second-tool-v043,shrines-curses-v043}.spec.ts;
-build/performance/PR27_CI_REPAIR.md and repair-only appended sections of this plan,
-BUILD_STATUS, MASTER_BUILD_PLAN, AUTONOMOUS_PROGRESS and RECONCILIATION. Preserve
-all pre-existing genre/roster roadmap edits and untracked reports unstaged.
-No production gameplay, Q6, sprites or tuning changes are selected. Run affected
-browsers serially/one worker/zero retries with bounded waits and owned cleanup;
-full regression stays in Actions. Apply only the necessary Vite audit patch.
-
-Local repair gate passes as recorded in performance/PR27_CI_REPAIR.md:655units/
-67files, types/lint/build/diff/audit0, seven unique affected serial browser cases
-verified cumulatively/zero retries. Full current-head PR Actions must confirm
-after push. Q6 stays open; pre-existing roadmap edits remain unstaged.
-
-
-PR27 repair continuation: run39528406842 on a87f57f passes116browser cases/6skips/
-no flaky tests; only both C3 cases fail a later dense-load wall-time assumption
-(258–275simulation-ms/10s, target1000ms). Use the same bounded90s progress/120s
-test budget there, preserving all assertions. Two affected serial cases pass12.5s
-locally/zero retries; types/affected lint/diff pass. Remote confirmation pending.
-
-
-PR27 second continuation ownership: add tests/e2e/{capacity-probe,phase-four-v02}.spec.ts
-for newly observed slow-runner failures in39531764460; retain original exact actor/
-clock/reset assertions. Existing phase-six ownership covers spawn-time reward
-isolation after another valid adjacent-shrine interaction. No runtime/tuning change.
-
-
-PR27 second continuation:39531764460 on df75471 passes both C3 cases but has
-115passes/6skips/1flaky/2failures. Newly affected benchmark and short terminal
-need bounded simulation-completion waits. Horde Space interaction changes world
-modifiers after tagged enemies spawn; move it after exact spawn-time reward
-assertions, then assert surge activation1/scheduled100. Three affected cases
-pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
-current-head full Actions remains unverified until its own run completes.
-
-## Post-merge correction handoff and G1 claim
-
-PR27 merged the completed checkpoint as9837158. The owner now requests the
-readable-gameplay plan/claim on main plus a G1 start prompt. Q6 remains open with
-its existing checklist; the next implementation uses the follow-on
-`codex/readable-gameplay-g1` branch and separate Q6/G1 verified commits rather
-than reopening the merged milestone branch. [G1 ownership](READABLE_GAMEPLAY_ROADMAP.md)
-and [start prompt](PHASE_G1_PROMPT.md) own continuation. Old draft/local-only
-statements above describe historical delivery checkpoints, not this new request.
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.

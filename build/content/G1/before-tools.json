@@ -1,0 +1,1209 @@
+{
+  "source": "44585dde4de87a79f0407cdf807923d6de90e8da",
+  "scenarioCount": 120,
+  "durationSimulatedMs": 300000,
+  "nominalWallMs": 600000,
+  "rate": 0.5,
+  "cases": [
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "evolved-single",
+      "world": "baseline",
+      "finalLevel": 21,
+      "kills": 485,
+      "peakLive": 300,
+      "roundedXp": 579
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "evolved-packed",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 885,
+      "peakLive": 15,
+      "roundedXp": 2083
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "two-tools-single",
+      "world": "baseline",
+      "finalLevel": 20,
+      "kills": 437,
+      "peakLive": 300,
+      "roundedXp": 511
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "two-tools-packed",
+      "world": "baseline",
+      "finalLevel": 29,
+      "kills": 754,
+      "peakLive": 135,
+      "roundedXp": 1527
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "passive",
+      "world": "baseline",
+      "finalLevel": 19,
+      "kills": 363,
+      "peakLive": 300,
+      "roundedXp": 418
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "damage-rush",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 867,
+      "peakLive": 24,
+      "roundedXp": 2040
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "crit",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 889,
+      "peakLive": 1,
+      "roundedXp": 2133
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "spread",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 889,
+      "peakLive": 1,
+      "roundedXp": 2133
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "collection-sweep",
+      "world": "baseline",
+      "finalLevel": 25,
+      "kills": 603,
+      "peakLive": 287,
+      "roundedXp": 970
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "explosion",
+      "world": "baseline",
+      "finalLevel": 31,
+      "kills": 821,
+      "peakLive": 76,
+      "roundedXp": 1820
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "evolved-single",
+      "world": "baseline",
+      "finalLevel": 19,
+      "kills": 391,
+      "peakLive": 300,
+      "roundedXp": 415
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "evolved-packed",
+      "world": "baseline",
+      "finalLevel": 31,
+      "kills": 973,
+      "peakLive": 173,
+      "roundedXp": 1945
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "two-tools-single",
+      "world": "baseline",
+      "finalLevel": 18,
+      "kills": 345,
+      "peakLive": 300,
+      "roundedXp": 366
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "two-tools-packed",
+      "world": "baseline",
+      "finalLevel": 27,
+      "kills": 752,
+      "peakLive": 300,
+      "roundedXp": 1179
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "passive",
+      "world": "baseline",
+      "finalLevel": 16,
+      "kills": 280,
+      "peakLive": 300,
+      "roundedXp": 292
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "damage-rush",
+      "world": "baseline",
+      "finalLevel": 27,
+      "kills": 738,
+      "peakLive": 300,
+      "roundedXp": 1158
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "crit",
+      "world": "baseline",
+      "finalLevel": 27,
+      "kills": 733,
+      "peakLive": 300,
+      "roundedXp": 1141
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "spread",
+      "world": "baseline",
+      "finalLevel": 35,
+      "kills": 1146,
+      "peakLive": 1,
+      "roundedXp": 2746
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "collection-sweep",
+      "world": "baseline",
+      "finalLevel": 21,
+      "kills": 508,
+      "peakLive": 300,
+      "roundedXp": 595
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "explosion",
+      "world": "baseline",
+      "finalLevel": 29,
+      "kills": 873,
+      "peakLive": 273,
+      "roundedXp": 1525
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "evolved-single",
+      "world": "baseline",
+      "finalLevel": 19,
+      "kills": 397,
+      "peakLive": 300,
+      "roundedXp": 414
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "evolved-packed",
+      "world": "baseline",
+      "finalLevel": 31,
+      "kills": 1082,
+      "peakLive": 300,
+      "roundedXp": 1904
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "two-tools-single",
+      "world": "baseline",
+      "finalLevel": 18,
+      "kills": 353,
+      "peakLive": 300,
+      "roundedXp": 361
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "two-tools-packed",
+      "world": "baseline",
+      "finalLevel": 26,
+      "kills": 777,
+      "peakLive": 300,
+      "roundedXp": 1098
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "passive",
+      "world": "baseline",
+      "finalLevel": 16,
+      "kills": 275,
+      "peakLive": 300,
+      "roundedXp": 276
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "damage-rush",
+      "world": "baseline",
+      "finalLevel": 26,
+      "kills": 748,
+      "peakLive": 300,
+      "roundedXp": 1044
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "crit",
+      "world": "baseline",
+      "finalLevel": 25,
+      "kills": 727,
+      "peakLive": 300,
+      "roundedXp": 990
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "spread",
+      "world": "baseline",
+      "finalLevel": 37,
+      "kills": 1463,
+      "peakLive": 9,
+      "roundedXp": 3491
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "collection-sweep",
+      "world": "baseline",
+      "finalLevel": 21,
+      "kills": 520,
+      "peakLive": 300,
+      "roundedXp": 552
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "explosion",
+      "world": "baseline",
+      "finalLevel": 29,
+      "kills": 921,
+      "peakLive": 300,
+      "roundedXp": 1450
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "evolved-single",
+      "world": "baseline",
+      "finalLevel": 21,
+      "kills": 411,
+      "peakLive": 300,
+      "roundedXp": 550
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "evolved-packed",
+      "world": "baseline",
+      "finalLevel": 33,
+      "kills": 866,
+      "peakLive": 23,
+      "roundedXp": 2425
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "two-tools-single",
+      "world": "baseline",
+      "finalLevel": 19,
+      "kills": 352,
+      "peakLive": 300,
+      "roundedXp": 441
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "two-tools-packed",
+      "world": "baseline",
+      "finalLevel": 30,
+      "kills": 709,
+      "peakLive": 181,
+      "roundedXp": 1710
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "passive",
+      "world": "baseline",
+      "finalLevel": 16,
+      "kills": 259,
+      "peakLive": 300,
+      "roundedXp": 295
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "damage-rush",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 793,
+      "peakLive": 96,
+      "roundedXp": 2128
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "crit",
+      "world": "baseline",
+      "finalLevel": 33,
+      "kills": 849,
+      "peakLive": 40,
+      "roundedXp": 2374
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "spread",
+      "world": "baseline",
+      "finalLevel": 34,
+      "kills": 889,
+      "peakLive": 1,
+      "roundedXp": 2575
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "collection-sweep",
+      "world": "baseline",
+      "finalLevel": 25,
+      "kills": 520,
+      "peakLive": 300,
+      "roundedXp": 911
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "explosion",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 809,
+      "peakLive": 81,
+      "roundedXp": 2123
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "evolved-single",
+      "world": "baseline",
+      "finalLevel": 17,
+      "kills": 289,
+      "peakLive": 300,
+      "roundedXp": 312
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "evolved-packed",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 920,
+      "peakLive": 226,
+      "roundedXp": 2168
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "two-tools-single",
+      "world": "baseline",
+      "finalLevel": 15,
+      "kills": 235,
+      "peakLive": 300,
+      "roundedXp": 235
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "two-tools-packed",
+      "world": "baseline",
+      "finalLevel": 27,
+      "kills": 663,
+      "peakLive": 300,
+      "roundedXp": 1269
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "passive",
+      "world": "baseline",
+      "finalLevel": 13,
+      "kills": 165,
+      "peakLive": 300,
+      "roundedXp": 165
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "damage-rush",
+      "world": "baseline",
+      "finalLevel": 26,
+      "kills": 599,
+      "peakLive": 300,
+      "roundedXp": 1088
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "crit",
+      "world": "baseline",
+      "finalLevel": 25,
+      "kills": 571,
+      "peakLive": 300,
+      "roundedXp": 987
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "spread",
+      "world": "baseline",
+      "finalLevel": 37,
+      "kills": 1146,
+      "peakLive": 29,
+      "roundedXp": 3305
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "collection-sweep",
+      "world": "baseline",
+      "finalLevel": 20,
+      "kills": 422,
+      "peakLive": 300,
+      "roundedXp": 520
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "explosion",
+      "world": "baseline",
+      "finalLevel": 30,
+      "kills": 822,
+      "peakLive": 300,
+      "roundedXp": 1741
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "evolved-single",
+      "world": "baseline",
+      "finalLevel": 15,
+      "kills": 240,
+      "peakLive": 300,
+      "roundedXp": 240
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "evolved-packed",
+      "world": "baseline",
+      "finalLevel": 32,
+      "kills": 1022,
+      "peakLive": 300,
+      "roundedXp": 2132
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "two-tools-single",
+      "world": "baseline",
+      "finalLevel": 14,
+      "kills": 203,
+      "peakLive": 300,
+      "roundedXp": 203
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "two-tools-packed",
+      "world": "baseline",
+      "finalLevel": 27,
+      "kills": 746,
+      "peakLive": 300,
+      "roundedXp": 1240
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "passive",
+      "world": "baseline",
+      "finalLevel": 12,
+      "kills": 143,
+      "peakLive": 300,
+      "roundedXp": 143
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "damage-rush",
+      "world": "baseline",
+      "finalLevel": 25,
+      "kills": 608,
+      "peakLive": 300,
+      "roundedXp": 902
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "crit",
+      "world": "baseline",
+      "finalLevel": 23,
+      "kills": 548,
+      "peakLive": 300,
+      "roundedXp": 735
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "spread",
+      "world": "baseline",
+      "finalLevel": 39,
+      "kills": 1463,
+      "peakLive": 72,
+      "roundedXp": 4120
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "collection-sweep",
+      "world": "baseline",
+      "finalLevel": 18,
+      "kills": 345,
+      "peakLive": 300,
+      "roundedXp": 391
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "explosion",
+      "world": "baseline",
+      "finalLevel": 30,
+      "kills": 905,
+      "peakLive": 300,
+      "roundedXp": 1692
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "evolved-single",
+      "world": "c3",
+      "finalLevel": 30,
+      "kills": 373,
+      "peakLive": 300,
+      "roundedXp": 1655
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "evolved-packed",
+      "world": "c3",
+      "finalLevel": 50,
+      "kills": 1142,
+      "peakLive": 300,
+      "roundedXp": 11650
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "two-tools-single",
+      "world": "c3",
+      "finalLevel": 27,
+      "kills": 297,
+      "peakLive": 300,
+      "roundedXp": 1237
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "two-tools-packed",
+      "world": "c3",
+      "finalLevel": 44,
+      "kills": 773,
+      "peakLive": 300,
+      "roundedXp": 6499
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "passive",
+      "world": "c3",
+      "finalLevel": 23,
+      "kills": 199,
+      "peakLive": 300,
+      "roundedXp": 752
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "damage-rush",
+      "world": "c3",
+      "finalLevel": 49,
+      "kills": 1033,
+      "peakLive": 300,
+      "roundedXp": 10278
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "crit",
+      "world": "c3",
+      "finalLevel": 57,
+      "kills": 1687,
+      "peakLive": 48,
+      "roundedXp": 21967
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "spread",
+      "world": "c3",
+      "finalLevel": 58,
+      "kills": 1735,
+      "peakLive": 12,
+      "roundedXp": 22826
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "collection-sweep",
+      "world": "c3",
+      "finalLevel": 34,
+      "kills": 463,
+      "peakLive": 300,
+      "roundedXp": 2555
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "beginner",
+      "build": "explosion",
+      "world": "c3",
+      "finalLevel": 52,
+      "kills": 1268,
+      "peakLive": 300,
+      "roundedXp": 13587
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "evolved-single",
+      "world": "c3",
+      "finalLevel": 23,
+      "kills": 204,
+      "peakLive": 300,
+      "roundedXp": 771
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "evolved-packed",
+      "world": "c3",
+      "finalLevel": 46,
+      "kills": 956,
+      "peakLive": 300,
+      "roundedXp": 7900
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "two-tools-single",
+      "world": "c3",
+      "finalLevel": 22,
+      "kills": 168,
+      "peakLive": 300,
+      "roundedXp": 635
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "two-tools-packed",
+      "world": "c3",
+      "finalLevel": 39,
+      "kills": 669,
+      "peakLive": 300,
+      "roundedXp": 4330
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "passive",
+      "world": "c3",
+      "finalLevel": 19,
+      "kills": 118,
+      "peakLive": 300,
+      "roundedXp": 446
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "damage-rush",
+      "world": "c3",
+      "finalLevel": 40,
+      "kills": 698,
+      "peakLive": 300,
+      "roundedXp": 4793
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "crit",
+      "world": "c3",
+      "finalLevel": 45,
+      "kills": 912,
+      "peakLive": 300,
+      "roundedXp": 7515
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "spread",
+      "world": "c3",
+      "finalLevel": 61,
+      "kills": 2229,
+      "peakLive": 47,
+      "roundedXp": 29437
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "collection-sweep",
+      "world": "c3",
+      "finalLevel": 27,
+      "kills": 295,
+      "peakLive": 300,
+      "roundedXp": 1195
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "normal",
+      "build": "explosion",
+      "world": "c3",
+      "finalLevel": 47,
+      "kills": 1033,
+      "peakLive": 300,
+      "roundedXp": 8905
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "evolved-single",
+      "world": "c3",
+      "finalLevel": 22,
+      "kills": 175,
+      "peakLive": 300,
+      "roundedXp": 661
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "evolved-packed",
+      "world": "c3",
+      "finalLevel": 45,
+      "kills": 1005,
+      "peakLive": 300,
+      "roundedXp": 7343
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "two-tools-single",
+      "world": "c3",
+      "finalLevel": 21,
+      "kills": 145,
+      "peakLive": 300,
+      "roundedXp": 548
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "two-tools-packed",
+      "world": "c3",
+      "finalLevel": 38,
+      "kills": 687,
+      "peakLive": 300,
+      "roundedXp": 3900
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "passive",
+      "world": "c3",
+      "finalLevel": 18,
+      "kills": 102,
+      "peakLive": 300,
+      "roundedXp": 386
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "damage-rush",
+      "world": "c3",
+      "finalLevel": 38,
+      "kills": 654,
+      "peakLive": 300,
+      "roundedXp": 3767
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "crit",
+      "world": "c3",
+      "finalLevel": 41,
+      "kills": 738,
+      "peakLive": 300,
+      "roundedXp": 5001
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "spread",
+      "world": "c3",
+      "finalLevel": 64,
+      "kills": 2852,
+      "peakLive": 88,
+      "roundedXp": 37776
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "collection-sweep",
+      "world": "c3",
+      "finalLevel": 25,
+      "kills": 246,
+      "peakLive": 300,
+      "roundedXp": 930
+    },
+    {
+      "theme": "knight_magic",
+      "difficulty": "experienced",
+      "build": "explosion",
+      "world": "c3",
+      "finalLevel": 46,
+      "kills": 1054,
+      "peakLive": 300,
+      "roundedXp": 8043
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "evolved-single",
+      "world": "c3",
+      "finalLevel": 32,
+      "kills": 504,
+      "peakLive": 300,
+      "roundedXp": 2127
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "evolved-packed",
+      "world": "c3",
+      "finalLevel": 49,
+      "kills": 1243,
+      "peakLive": 300,
+      "roundedXp": 10957
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "two-tools-single",
+      "world": "c3",
+      "finalLevel": 31,
+      "kills": 476,
+      "peakLive": 300,
+      "roundedXp": 1887
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "two-tools-packed",
+      "world": "c3",
+      "finalLevel": 43,
+      "kills": 890,
+      "peakLive": 300,
+      "roundedXp": 6348
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "passive",
+      "world": "c3",
+      "finalLevel": 29,
+      "kills": 391,
+      "peakLive": 300,
+      "roundedXp": 1482
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "damage-rush",
+      "world": "c3",
+      "finalLevel": 49,
+      "kills": 1194,
+      "peakLive": 300,
+      "roundedXp": 10616
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "crit",
+      "world": "c3",
+      "finalLevel": 56,
+      "kills": 1735,
+      "peakLive": 1,
+      "roundedXp": 19034
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "spread",
+      "world": "c3",
+      "finalLevel": 56,
+      "kills": 1735,
+      "peakLive": 2,
+      "roundedXp": 19034
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "collection-sweep",
+      "world": "c3",
+      "finalLevel": 36,
+      "kills": 568,
+      "peakLive": 300,
+      "roundedXp": 2993
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "beginner",
+      "build": "explosion",
+      "world": "c3",
+      "finalLevel": 51,
+      "kills": 1374,
+      "peakLive": 300,
+      "roundedXp": 12642
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "evolved-single",
+      "world": "c3",
+      "finalLevel": 29,
+      "kills": 422,
+      "peakLive": 300,
+      "roundedXp": 1598
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "evolved-packed",
+      "world": "c3",
+      "finalLevel": 45,
+      "kills": 1063,
+      "peakLive": 300,
+      "roundedXp": 7548
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "two-tools-single",
+      "world": "c3",
+      "finalLevel": 28,
+      "kills": 360,
+      "peakLive": 300,
+      "roundedXp": 1362
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "two-tools-packed",
+      "world": "c3",
+      "finalLevel": 39,
+      "kills": 751,
+      "peakLive": 300,
+      "roundedXp": 4186
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "passive",
+      "world": "c3",
+      "finalLevel": 25,
+      "kills": 263,
+      "peakLive": 300,
+      "roundedXp": 994
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "damage-rush",
+      "world": "c3",
+      "finalLevel": 43,
+      "kills": 907,
+      "peakLive": 300,
+      "roundedXp": 5942
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "crit",
+      "world": "c3",
+      "finalLevel": 49,
+      "kills": 1313,
+      "peakLive": 300,
+      "roundedXp": 10922
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "spread",
+      "world": "c3",
+      "finalLevel": 59,
+      "kills": 2229,
+      "peakLive": 12,
+      "roundedXp": 24578
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "collection-sweep",
+      "world": "c3",
+      "finalLevel": 32,
+      "kills": 545,
+      "peakLive": 300,
+      "roundedXp": 2068
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "normal",
+      "build": "explosion",
+      "world": "c3",
+      "finalLevel": 47,
+      "kills": 1129,
+      "peakLive": 300,
+      "roundedXp": 8392
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "evolved-single",
+      "world": "c3",
+      "finalLevel": 29,
+      "kills": 390,
+      "peakLive": 300,
+      "roundedXp": 1475
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "evolved-packed",
+      "world": "c3",
+      "finalLevel": 45,
+      "kills": 1119,
+      "peakLive": 300,
+      "roundedXp": 7086
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "two-tools-single",
+      "world": "c3",
+      "finalLevel": 27,
+      "kills": 324,
+      "peakLive": 300,
+      "roundedXp": 1225
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "two-tools-packed",
+      "world": "c3",
+      "finalLevel": 39,
+      "kills": 838,
+      "peakLive": 300,
+      "roundedXp": 4050
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "passive",
+      "world": "c3",
+      "finalLevel": 24,
+      "kills": 227,
+      "peakLive": 300,
+      "roundedXp": 858
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "damage-rush",
+      "world": "c3",
+      "finalLevel": 41,
+      "kills": 930,
+      "peakLive": 300,
+      "roundedXp": 5257
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "crit",
+      "world": "c3",
+      "finalLevel": 47,
+      "kills": 1243,
+      "peakLive": 300,
+      "roundedXp": 9002
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "spread",
+      "world": "c3",
+      "finalLevel": 61,
+      "kills": 2852,
+      "peakLive": 21,
+      "roundedXp": 31391
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "collection-sweep",
+      "world": "c3",
+      "finalLevel": 31,
+      "kills": 504,
+      "peakLive": 300,
+      "roundedXp": 1910
+    },
+    {
+      "theme": "eco_guardian",
+      "difficulty": "experienced",
+      "build": "explosion",
+      "world": "c3",
+      "finalLevel": 46,
+      "kills": 1189,
+      "peakLive": 300,
+      "roundedXp": 7897
+    }
+  ]
+}

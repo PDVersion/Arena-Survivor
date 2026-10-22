@@ -15,11 +15,11 @@ and **Parked** is not offered by this theme.
 | --- | --- | --- | --- | --- |
 | `character.starter` | Environment Protector | Character | A field operative clearing an overflowing waste site. | Live |
 | `weapon.starter` | Cleanup Grabber | Melee weapon | A mechanical grabber that extends through every item in its narrow path, then retracts. | Live |
-| `weapon.secondary_evolved` | Cyclone Vacuum | Evolved melee cone | Replace Cleanup Vacuum after four owned reach picks; wider four-target cone and stronger nearby splash, keeping earned reach. | V0.4.3 C2 |
+| `weapon.secondary_evolved` | Cyclone Vacuum | Evolved melee cone | Replace Cleanup Vacuum after four owned reach picks; wider cone and stronger nearby splash, keeping earned reach/capacity and adding one target. | V0.4.3 C2 |
 | `upgrade.evolve_secondary` | Evolve to Cyclone Vacuum | Evolution choice | One normal level-up choice; replaces in the same slot, no extra slot. | V0.4.3 C2 |
-| `weapon.secondary` | Cleanup Vacuum | Melee cone | Automatically clears up to three targets in a short cone; each hit splashes nearby targets. | V0.4.3 C1 |
+| `weapon.secondary` | Cleanup Vacuum | Melee cone | Pulses a short cone, starting with three targets and growing to seven; each selected hit splashes nearby targets. | V0.4.3 C1 |
 | `upgrade.equip_secondary` | Equip Cleanup Vacuum | Weapon acquisition | Fill the empty second automatic-tool slot through a normal level-up choice. | V0.4.3 C1 |
-| `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum; appears after it is equipped. | V0.4.3 C1 |
+| `upgrade.secondary_range` | Longer Vacuum Nozzle | Weapon-owned track | Extend only the Vacuum and add one primary target per pick; appears after it is equipped. | V0.4.3 C1 |
 | `upgrade.weapon_range` | Longer Grabber | Weapon track, owned level 1 | Extend the Cleanup Grabber's reach. Four upgrades raise it from level 1 to level 5. | Live |
 | `upgrade.weapon_collection_sweep` | Collection Sweep | Weapon track, starts unowned | Periodically sweep a wider area at the grabber's jaws. Higher levels trigger more often and add sweeps along extension and retraction. | Live |
 
@@ -37,6 +37,9 @@ Collection Sweep level wording:
 
 | Stable role | Eco name | Identity and behavior | Can create | Status |
 | --- | --- | --- | --- | --- |
+| `enemy.cluster_fodder` | Cigarette Butts | Slow weak individuals in spaced groups; clear a lane or use a cone. | Nothing | G2A local keep |
+| `enemy.gust_drifter` | Packets / Wrappers | Announced oblique gust, then pause for interception. | Nothing | G2B local keep |
+| `enemy.committed_charger` | Aluminium Can | Announced direct roll through old player position; sidestep then clear in recovery. | Nothing | G2C local keep |
 | `enemy.swarm_basic` | Plastic Bottle | Common moving plastic waste; the baseline crowd role. | Microplastics through Fragmentation | Live |
 | `enemy.fast_fragile` | Microplastics | Small, fast, multicolour shards and pieces of plastic waste. This replaces Plastic Bag. | Nothing | Live |
 | `enemy.slow_durable` | Glass Bottle | Slow, durable glass waste. | Glass Shards through Fragmentation | Live |
@@ -156,3 +159,114 @@ G1 evaluates current health/armour, speed/harm, rewards and arrival mix against
 corrected tools. Changes require before/after balance evidence; no spawn shares
 are copied from tonnes or survey percentages. The historical C1/C2 fixed-cap
 wording remains subject to the pending Q6 owner-track capacity correction.
+
+## Q6 implemented correction — 2026-10-21
+
+The second tool's own four reach picks each add one primary target, independent
+of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
+adds its authored extra target (8). Splash remains finite and unchanged. The
+short filled cue marks a single pulse, followed by a faint historical outline
+and selected-hit rings; entering the fade causes no new damage. Frame-specific
+presentation anchors align player poses without editing accepted art or bodies.
+This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
+fact, effectiveness matrix, persisted state or new sprite is added.
+[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.
+
+## G1 accepted balance — 2026-10-21
+
+After verified Q6, the existing-roster comparison selects only eco Glass armour
+40→20 and its director base weight12→8. Glass retains96health, slow70movement,
+9contact harm and7XP; the health ordering/material relationships stay intact.
+The calm late natural selection mix is approximately45%Bottle/30%Microplastics/
+11%Glass/14%Bagged, replacing the historical43/28/16/13rounded mix. These are game
+weights, never litter-survey probabilities. Microplastics still open one-hit;
+Bottles remain the numerical baseline, Shards stationary/clearable and bag
+families finite. Knight tuning, other roles, weapon damage, progression, presets,
+cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
+[G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
+retains all scenarios and records the bounded local gate and its limits. G1 is
+locally complete; G2–G4 and sprite generation remain unstarted.
+
+## G2A weak groups — kept locally 2026-10-22
+
+`enemy.cluster_fodder` maps to eco Cigarette Butts and knight Ashling. Individual
+weak actors approach slowly in groups of three; clear a narrow lane or catch the
+group in a cone. First introduction at25% is three retained requests, then sparse
+natural groups.6HP/64speed/3harm/1XP are game tuning, unrelated to surveyed item
+percentages or factual toxicity/persistence. Visible pale/orange primitive parts
+and separate20px bodies replace neither Microplastics nor any material family.
+No post-cleanup contamination patch, new art, saved discovery or effectiveness
+matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
+
+[Reviewed plan](BUILD_PLAN_G2.md), [candidate report](content/G2A_REPORT.md).
+G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
+a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
+
+## G2B wrapper role — local keep 2026-10-22
+
+`enemy.gust_drifter`: eco Packets / Wrappers; knight Paper Wisp. One introduction
+at32% and sparse later arrivals. Approach → visible fixed-bearing warning → short
+oblique gust → stationary recovery gives an interception choice. Generic capability,
+theme-owned timings/stats/essential cue, code-native packet silhouette. Fictional
+movement/harm, no real handling/abundance claim, automatic waste patch, new guide
+surface, sprite or save field. Existing material families/IDs unchanged.
+[G2B_REPORT](content/G2B_REPORT.md) records keep and measured limits. Can next;
+G2 in progress, G3/G4/art unstarted. Historical earlier status remains historical.
+
+## G2C kept / G2 complete — 2026-10-22
+
+`enemy.committed_charger`: eco Aluminium Can; knight Barrel Construct. A visible
+fixed line captures the player's old position, then a fast direct roll passes it
+and stops for recovery. Sideways movement avoids that route; cleanup rewards the
+return. This differs from the wrapper's oblique gust and weak-group lane clearing.
+One introduction at55%, sparse natural weight2; timings/stats/cue/body/presentation
+are theme-authored and use the shared capability. The primitive can's body/label/
+end caps are code-native presentation, never physics input. No generated art,
+material/harm/handling fact, new information surface, saved field or ID remap.
+
+All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
+[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written/reviewed. G3 ready/unstarted;
+G4/art unstarted, external evidence still deferred/waived/unverified. This is the
+current state; earlier staged continuation paragraphs are historical checkpoints.
+
+## G3 rhythm and informed voluntary pressure — 2026-10-22
+
+Locally kept after owner-requested execution: shared later roles unlock25/34/44/
+52/60%, mini72%, baseline elites82%, final100%. Eco Microplastics0/Bottle10 and
+knight Grunt0/Runner20 remain distinct. First Glass/Tank4, Bag/Broodmother2 use
+existing retained causal introductions. Five optional sites at16/40/66/84/90%
+replace the repeated Multiplicity arrival; definitions/cost/reward values stay.
+
+Existing prompts now name the choice and show resolved current-world arrivals,
+durability/harm/XP/elite chance before acceptance; walk away to ignore. Named
+edge pointers remain, with distinct minimap site diamonds and a shorter authored
+placement band. Bosses stop pursuit during their fixed-circle warning, then resume
+in recovery; no new attack/counter/health/damage/body. These are game decisions,
+not real material/handling/abundance claims. No quiz, currency, new roster, saved
+field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
+verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
+complete; [reviewed G4 handoff](PHASE_G4_PROMPT.md) is current, G4/art unstarted.
+
+## G4 — useful reviews and optional reference / 2026-10-22
+
+Locally verified G4 adds a concise run review: actual committed direct/splash
+damage by tool, other effects as the remaining partition, recorded voluntary
+site/curse pressure and an attainable next experiment. The old damage ledger,
+metrics and upgrade tally remain in Details (click or Tab); R/Enter restarts.
+A death source describes the recorded final hit at elapsed time, including
+endless overtime; it is not a diagnosis of the whole run. Final-boss success
+appears only from its recorded flag and can coexist with a later death.
+
+Info and the pause Field Guide/Grimoire now include one paged enemy entry at a
+time and read-only progress toward the existing finished-attempt/kill unlocks.
+Enemy descriptions/relations come from the current theme; health, speed and
+contact harm come from difficulty-resolved definitions, displayed to two decimals
+and explicitly labelled game values. They are reference values, not every live
+actor's time/world/elite-scaled state. Previous/Next and PgUp/PgDn navigate;
+Tab/arrows switch sections and Escape returns. Reading is optional and changes
+no progress. No new fact, ranking, disposal/handling advice, discovered-material
+record, ID remap or permanent stat economy was selected. Existing environmental
+copy has not received a new factual review in this phase.
+
+[Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
+is current. G1–G4 are locally complete; new sprite generation remains unstarted.

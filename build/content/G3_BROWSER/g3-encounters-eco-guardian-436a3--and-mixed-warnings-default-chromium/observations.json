@@ -1,0 +1,178 @@
+{
+  "browser": "151.0.7922.34",
+  "initial": {
+    "themeKey": "eco-guardian",
+    "quality": "default",
+    "placedDistance": 687.8935367277824,
+    "arrived": {
+      "count": 2,
+      "markers": 2,
+      "minimap": true,
+      "planned": 5
+    },
+    "before": {
+      "world": {
+        "chaos": 1,
+        "enemySpawnMultiplier": 1,
+        "xpMultiplier": 1,
+        "acceptedCurseIds": [],
+        "shrineActivations": {}
+      },
+      "prompt": "E / Space: authorise · walk away to ignore\nFast Fashion Boom\nWaste arriving ×1 → ×1.65\nWaste durability ×1.2 → ×1.3\nWaste harm ×1.08 → ×1.14\nImpact gain ×1 → ×1.38\nIllegal dumping 0% → 1.6%",
+      "promptVisible": true,
+      "activated": false,
+      "minimapSites": 2,
+      "promptBounds": {
+        "left": 1786.25,
+        "right": 1993.75,
+        "top": 1192.457763671875,
+        "bottom": 1291.542236328125
+      },
+      "view": {
+        "left": 1400,
+        "right": 2200,
+        "top": 975,
+        "bottom": 1425
+      }
+    },
+    "rate": 0.5
+  },
+  "ignored": {
+    "world": {
+      "chaos": 1,
+      "enemySpawnMultiplier": 1,
+      "xpMultiplier": 1,
+      "acceptedCurseIds": [],
+      "shrineActivations": {}
+    },
+    "prompt": "E / Space: authorise · walk away to ignore\nFast Fashion Boom\nWaste arriving ×1 → ×1.65\nWaste durability ×1.2 → ×1.3\nWaste harm ×1.08 → ×1.14\nImpact gain ×1 → ×1.38\nIllegal dumping 0% → 1.6%",
+    "promptVisible": false,
+    "activated": false,
+    "minimapSites": 2,
+    "promptBounds": {
+      "left": 1786.25,
+      "right": 1993.75,
+      "top": 1192.457763671875,
+      "bottom": 1291.542236328125
+    },
+    "view": {
+      "left": 1400,
+      "right": 2200,
+      "top": 975,
+      "bottom": 1425
+    }
+  },
+  "accepted": {
+    "world": {
+      "chaos": 1.4,
+      "enemySpawnMultiplier": 1.5,
+      "xpMultiplier": 1.25,
+      "acceptedCurseIds": [],
+      "shrineActivations": {
+        "shrine.greed": 1
+      }
+    },
+    "prompt": "E / Space: authorise · walk away to ignore\nFast Fashion Boom\nWaste arriving ×1 → ×1.65\nWaste durability ×1.2 → ×1.3\nWaste harm ×1.08 → ×1.14\nImpact gain ×1 → ×1.38\nIllegal dumping 0% → 1.6%",
+    "promptVisible": false,
+    "activated": true,
+    "minimapSites": 1,
+    "promptBounds": {
+      "left": 1786.25,
+      "right": 1993.75,
+      "top": 1192.457763671875,
+      "bottom": 1291.542236328125
+    },
+    "view": {
+      "left": 1400,
+      "right": 2200,
+      "top": 975,
+      "bottom": 1425
+    }
+  },
+  "repeated": {
+    "world": {
+      "chaos": 1.4,
+      "enemySpawnMultiplier": 1.5,
+      "xpMultiplier": 1.25,
+      "acceptedCurseIds": [],
+      "shrineActivations": {
+        "shrine.greed": 1
+      }
+    },
+    "prompt": "E / Space: authorise · walk away to ignore\nFast Fashion Boom\nWaste arriving ×1 → ×1.65\nWaste durability ×1.2 → ×1.3\nWaste harm ×1.08 → ×1.14\nImpact gain ×1 → ×1.38\nIllegal dumping 0% → 1.6%",
+    "promptVisible": false,
+    "activated": true,
+    "minimapSites": 1,
+    "promptBounds": {
+      "left": 1786.25,
+      "right": 1993.75,
+      "top": 1192.457763671875,
+      "bottom": 1291.542236328125
+    },
+    "view": {
+      "left": 1400,
+      "right": 2200,
+      "top": 975,
+      "bottom": 1425
+    }
+  },
+  "encounter": {
+    "introductions": [
+      {
+        "id": "enemy.slow_durable",
+        "queued": 4,
+        "admitted": 4,
+        "backlog": 0
+      },
+      {
+        "id": "enemy.death_spawner",
+        "queued": 2,
+        "admitted": 2,
+        "backlog": 0
+      }
+    ],
+    "held": {
+      "velocity": [
+        0,
+        0
+      ],
+      "warning": {
+        "x": 1900,
+        "y": 1200,
+        "releaseAtMs": 219400
+      },
+      "cueCommands": 27,
+      "count": 1,
+      "health": 100
+    },
+    "paused": {
+      "elapsed": 218200,
+      "expected": 218200,
+      "warning": {
+        "x": 1900,
+        "y": 1200,
+        "releaseAtMs": 219400
+      }
+    },
+    "directional": [
+      {
+        "id": "enemy.gust_drifter",
+        "phase": "telegraph",
+        "commands": 38
+      },
+      {
+        "id": "enemy.committed_charger",
+        "phase": "telegraph",
+        "commands": 38
+      }
+    ]
+  },
+  "release": {
+    "health": 100,
+    "pulses": 1,
+    "speed": 62.099999999999994,
+    "warning": null,
+    "commands": 0
+  },
+  "errors": []
+}

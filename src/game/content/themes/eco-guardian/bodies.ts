@@ -37,6 +37,9 @@ export const bodies = {
   contactKnockbackImpulse: 18,
   contactKnockbackCooldownMs: 350,
   roles: [
+    { enemyId: archetypeIds.enemy.committedCharger, separationScale: 0.95, mass: 1.3 },
+    { enemyId: archetypeIds.enemy.gustDrifter, separationScale: 0.9, mass: 0.7 },
+    { enemyId: archetypeIds.enemy.clusterFodder, separationScale: 0.9, mass: 0.6 },
     { enemyId: archetypeIds.enemy.miniBoss, separationScale: 1, mass: 6 },
     { enemyId: archetypeIds.enemy.finalBoss, separationScale: 1, mass: 8 },
     { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.72, mass: 0.6 },

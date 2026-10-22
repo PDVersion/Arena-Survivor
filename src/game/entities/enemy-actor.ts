@@ -1,4 +1,7 @@
 import Phaser from "phaser";
+import { advanceCommittedMotion, createMotionState } from "../systems/enemies/committed-motion";
+import { EnemyMotionCue } from "./enemy-motion-cue";
+import { EnemyPrimitiveView } from "./enemy-primitive-view";
 import type { EliteDefinition, EnemyDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import { applyDamage, type HitResult } from "../systems/combat";
 import type { ContentId, ShrineId } from "../core/archetypes/ids";
@@ -29,8 +32,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   defeated = false;
   /** Present only when this pack has a sprite for the role. */
   readonly view?: SpriteView;
+  readonly primitiveView?: EnemyPrimitiveView;
   readonly eliteMarker?: Phaser.GameObjects.Text;
   private readonly baseColour: number;
+  readonly motionCue?: EnemyMotionCue;
+  motionState = createMotionState();
   private launched = false;
   private ageMs = 0;
   eliteSplitDepth = 0;
@@ -112,6 +118,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       diameter: this.displayDiameter,
       animateMovement: true,
     });
+    if (!this.view && definition.primitiveParts) this.primitiveView = new EnemyPrimitiveView(this, definition.primitiveParts, tokens);
+    if (definition.committedMotion) this.motionCue = new EnemyMotionCue(this, tokens);
   }
 
   /** Stable identity for the shared spatial index and targeting. */
@@ -134,6 +142,16 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     this.ageMs += Math.max(0, deltaMs);
     if (this.moveSpeed <= 0) {
       this.arcadeBody.setVelocity(0, 0);
+      return;
+    }
+    if (this.definition.committedMotion) {
+      this.motionState = advanceCommittedMotion(this.motionState, this.definition.committedMotion, deltaMs, this, target);
+      const state = this.motionState;
+      if (state.phase === "approach") this.chase(target);
+      else if (state.phase === "travel") {
+        const speed = this.moveSpeed * this.definition.committedMotion.speedMultiplier;
+        this.arcadeBody.setVelocity(state.headingX * speed, state.headingY * speed);
+      } else this.arcadeBody.setVelocity(0, 0);
       return;
     }
     if (this.movement === "drift") {
@@ -175,6 +193,8 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       // A fill colour does nothing to a texture, so a sprite tints instead.
       if (this.view) {
         this.view.flash(0xffffff, 70);
+      } else if (this.primitiveView) {
+        this.primitiveView.flash(0xffffff, 70);
       } else {
         this.setFillStyle(0xffffff);
         this.scene.time.delayedCall(70, () => {

@@ -145,3 +145,36 @@ stat bonus, active-run suspension, sprite or new factual content is added.
 Corrupt storage is preserved; denied/quota storage falls back to memory with visible
 warnings. Schema1 migration is deterministic. C7 portable export/import/preview/
 explicit backup recovery remains next; use the same validated profile model.
+
+## G2A compatibility note — 2026-10-22
+
+New neutral enemy ID `enemy.cluster_fodder` adds content only. No existing ID,
+schema2 field, profile adapter, unlock or discovery record is changed. Current
+portable unknown-ID preservation remains; no migration is required for this
+addition. G2A reruns affected profile/codec/replacement units as part of its278
+unit gate. This does not imply implementation of saved discoveries or new fields.
+
+## G2B compatibility — 2026-10-22
+
+`enemy.gust_drifter` is an additive content ID with actor-local transient motion.
+No saved ID remap, schema/field/migration/profile/unlock/discovery change. Existing
+unknown-ID portable round trips still pass in the affected persistence suite.
+
+## G2C compatibility / complete roster — 2026-10-22
+
+`enemy.committed_charger` is additive content, with fresh actor-local transient
+motion; no field/schema/profile/migration/import/export/unlock/discovery change.
+Existing IDs and unknown-ID round trips retain their meanings. Final686unit suite
+includes current persistence compatibility; no saved discovery system is implied.
+
+## G4 compatibility — 2026-10-22
+
+`RunStatistics.damageByWeapon` is transient run-local actual direct/splash damage.
+Session/profile folding still selects existing aggregate fields explicitly; no
+per-tool map enters schema2, exports, import previews or backups. No stable ID,
+unlock rule, setting, adapter, migration or discovery field changes. Results use
+the already-folded current profile for advice, and redraw/tab/resize/guide reads
+never fold/grant/write. Reset clears the map. Existing persistence/portable-save/
+replacement/unknown-ID units pass; browser fixtures demonstrate one terminal fold,
+read-only redraws, exact memory-adapter reload and restart. No portable save UI
+changed, so a new import/export browser campaign was not needed.

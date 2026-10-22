@@ -13,9 +13,11 @@ export const damageCategories = [
 export type DamageCategory = (typeof damageCategories)[number];
 export type DamageBreakdown = Readonly<Record<DamageCategory, number>>;
 
-import type { UpgradeId } from "../../core/archetypes/ids";
+import type { UpgradeId, WeaponId } from "../../core/archetypes/ids";
 
 export interface RunStatistics {
+  /** Run-local actual direct/splash damage. Never folded into durable profile fields. */
+  readonly damageByWeapon: Readonly<Partial<Record<WeaponId, number>>>;
   readonly kills: number;
   readonly liveEnemies: number;
   readonly peakEnemiesAlive: number;
@@ -32,6 +34,7 @@ export interface RunStatistics {
 }
 
 export interface DamageRecord {
+  readonly weaponId?: WeaponId;
   readonly amount: number;
   readonly source: "direct" | "splash" | "explosion" | "chained_explosion";
   readonly directBase?: number;
@@ -41,6 +44,7 @@ export interface DamageRecord {
 
 export function createRunStatistics(initialCritChance = 0): RunStatistics {
   return Object.freeze({
+    damageByWeapon: Object.freeze({}),
     kills: 0,
     liveEnemies: 0,
     peakEnemiesAlive: 0,
@@ -148,7 +152,10 @@ export function recordCommittedDamage(statistics: RunStatistics, record: DamageR
     damageCategories.map((category) => [category, statistics.damageBreakdown[category] + additions[category]]),
   ) as Record<DamageCategory, number>;
   const frozenBreakdown = Object.freeze(damageBreakdown);
-  return { ...statistics, totalDamage: sumDamageBreakdown(frozenBreakdown), damageBreakdown: frozenBreakdown };
+  const attributed = record.weaponId && (record.source === "direct" || record.source === "splash")
+    ? Object.freeze({ ...statistics.damageByWeapon, [record.weaponId]: (statistics.damageByWeapon[record.weaponId] ?? 0) + amount })
+    : statistics.damageByWeapon;
+  return { ...statistics, damageByWeapon: attributed, totalDamage: sumDamageBreakdown(frozenBreakdown), damageBreakdown: frozenBreakdown };
 }
 
 export function sumDamageBreakdown(breakdown: DamageBreakdown): number {

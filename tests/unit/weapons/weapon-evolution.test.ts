@@ -137,6 +137,6 @@ describe.each([ecoGuardianTheme, knightMagicTheme])("evolution in $id", (theme) 
       liveEnemies: 20, secondaryWeapon: oldWeapon, evolvedWeapon: newWeapon, evolutionLevel: 7 };
     expect(model.damagePerSecond(6, context)).toBeCloseTo(10 + 6 / 1.4);
     expect(model.damagePerSecond(7, context)).toBeCloseTo(17.5);
-    expect(findBuildModel("evolved-packed")!.damagePerSecond(7, context)).toBeCloseTo(76);
+    expect(findBuildModel("evolved-packed")!.damagePerSecond(7, context)).toBeCloseTo(142);
   });
 });

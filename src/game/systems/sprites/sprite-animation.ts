@@ -1,4 +1,4 @@
-import type { SpriteState } from "../../core/archetypes/contracts";
+import type { SpriteDefinition, SpriteState } from "../../core/archetypes/contracts";
 
 /** Presentation timing only: no simulation reads these values. */
 export const SPRITE_MOVE_FRAME_MS = 320;
@@ -69,4 +69,11 @@ export function advancePlayerMovementFrame(
 export function resolveSpriteFlipX(previous: boolean, horizontalMotion: number, authoredFacing: "left" | "right" = "left"): boolean {
   if (Math.abs(horizontalMotion) <= 0.01) return previous;
   return authoredFacing === "left" ? horizontalMotion > 0 : horizontalMotion < 0;
+}
+
+/** Keep an authored anatomical anchor fixed through a pose change or mirror. */
+export function resolveFrameOrigin(definition: SpriteDefinition, frame: number, mirrored: boolean): Readonly<{ x: number; y: number }> {
+  const anchor = definition.frameAnchors?.[frame];
+  const x = anchor ? anchor.x / definition.frameWidth : 0.5;
+  return { x: mirrored ? 1 - x : x, y: anchor ? anchor.y / definition.frameHeight : 0.5 };
 }

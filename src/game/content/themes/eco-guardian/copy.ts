@@ -2,6 +2,34 @@ import { archetypeIds } from "../../../core/archetypes/ids";
 import type { ThemeCopy } from "../../../core/archetypes/contracts";
 
 export const copy = {
+  mastery: {
+    "review": "Run review",
+    "details": "Details",
+    "tools": "Tool contributions",
+    "choices": "Pressure chosen",
+    "nextExperiment": "Next experiment",
+    "noDamage": "No committed damage this run.",
+    "otherDamage": "Other effects / unattributed",
+    "noChoices": "No optional site or curse accepted.",
+    "capabilities": "Capabilities",
+    "enemies": "Enemies",
+    "health": "Health",
+    "speed": "Move speed",
+    "harm": "Contact harm",
+    "fractures": "Can fragment into",
+    "releases": "Releases on defeat",
+    "gameValues": "Game values, not environmental measurements.",
+    "previous": "Previous",
+    "nextPage": "Next",
+    "tryFirst": "Finish an attempt to make {name} available.",
+    "tryEquip": "Look for the {name} equip choice, then try clearing a weak group.",
+    "tryReady": "Look for the {name} evolution choice; the owned track is ready.",
+    "tryEvolve": "Look for {name}: {picked}/{required} owned picks towards {evolved}.",
+    "tryRisk": "Try one optional site, then compare its extra pressure and reward.",
+    "tryRecovery": "Practise leaving a marked attack area, then returning during recovery.",
+    "tryCalm": "Try a run without optional bargains and compare your tool contributions.",
+    "bossDefeated": "Final threat defeated"
+},
   saveManager: {
     "manageSave": "Manage Save",
     "title": "Manage Save",
@@ -86,7 +114,7 @@ export const copy = {
     restartAction: "New Shift",
     startAction: "Begin Shift",
     startHint: "Press Enter or Space, or click to begin",
-    shrinePrompt: "Press E or Space to authorise",
+    shrinePrompt: "E / Space: authorise · walk away to ignore",
     shrineArrived: "A site event has opened",
     surgeActive: "The landfill gives way",
     statisticsTitle: "Shift Report",
@@ -124,6 +152,7 @@ export const copy = {
     projectiles: "Charges",
     pierce: "Pass-through",
     range: "Range",
+    primaryTargets: "Primary targets",
     knockback: "Knockback",
     armourPierce: "Armour pierce",
     moveSpeed: "Move speed",
@@ -166,6 +195,18 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.committedCharger]: {
+      name: "Aluminium Can",
+      description: "Watch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.",
+    },
+    [archetypeIds.enemy.gustDrifter]: {
+      name: "Packets / Wrappers",
+      description: "Watch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.",
+    },
+    [archetypeIds.enemy.clusterFodder]: {
+      name: "Cigarette Butts",
+      description: "Slow groups of weak litter. Clear a lane or catch several in one tool action.",
+    },
     [archetypeIds.character.starter]: {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",
@@ -177,7 +218,7 @@ export const copy = {
     [archetypeIds.upgrade.acceptEscalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
     [archetypeIds.weapon.secondaryEvolved]: {
       name: "Cyclone Vacuum",
-      description: "A wider automatic cone with stronger hits and nearby splash.",
+      description: "A wider automatic pulse with stronger hits, one extra primary target and nearby splash. Keeps earned capacity.",
     },
     [archetypeIds.upgrade.evolveSecondary]: {
       name: "Evolve to Cyclone Vacuum",
@@ -185,7 +226,7 @@ export const copy = {
     },
     [archetypeIds.weapon.secondary]: {
       name: "Cleanup Vacuum",
-      description: "Automatically clear a short cone of up to three targets. Each hit splashes nearby targets.",
+      description: "Pulse a short cone, starting at three targets. Owned reach upgrades add targets; each selected hit splashes nearby targets.",
     },
     [archetypeIds.upgrade.equipSecondary]: {
       name: "Equip Cleanup Vacuum",
@@ -193,7 +234,7 @@ export const copy = {
     },
     [archetypeIds.upgrade.secondaryRange]: {
       name: "Longer Vacuum Nozzle",
-      description: "Increase only the second tool's reach. The starter keeps its own range.",
+      description: "Increase the second tool's reach and primary-target capacity. Each pick adds one target, up to four additional targets.",
     },
     [archetypeIds.weapon.starter]: {
       name: "Cleanup Grabber",

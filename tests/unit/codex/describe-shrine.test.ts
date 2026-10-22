@@ -1,8 +1,10 @@
+import { applyWorldChoice, createWorldState, selectWorldModifiers } from "../../../src/game/systems/chaos/world-modifiers";
 import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
 import {
+  describeShrineChoice,
   selectEnemyCodex,
   selectSessionCodex,
   selectShrineCodex,
@@ -194,4 +196,24 @@ describe("session codex", () => {
 
     expect(selectSessionCodex(ecoGuardianTheme, session)[2]?.display).toBe("123.5");
   });
+});
+
+for (const theme of [ecoGuardianTheme, knightMagicTheme]) it(`${theme.id} previews current stacked world cost/reward without accepting`, () => {
+  const greed = theme.shrines.find((s) => s.id === archetypeIds.shrine.greed)!;
+  const world = applyWorldChoice(createWorldState(), { ...greed, shrineId: greed.id });
+  const original = JSON.stringify(world);
+  const preview = describeShrineChoice(theme, greed, world, .5, 9);
+  const current = selectWorldModifiers(world, theme.tuning.difficulty, .5);
+  const after = selectWorldModifiers(applyWorldChoice(world, { ...greed, shrineId: greed.id }), theme.tuning.difficulty, .5);
+  const rounded = (value: number) => Math.round(value * 100) / 100;
+  expect(preview).toContain(`${theme.copy.world.enemySpawn} ×${rounded(current.enemySpawnMultiplier)} → ×${rounded(after.enemySpawnMultiplier)}`);
+  expect(preview).toContain(`${theme.copy.world.xpGain} ×${rounded(current.xpMultiplier)} → ×${rounded(after.xpMultiplier)}`);
+  expect(JSON.stringify(world)).toBe(original);
+  const duplicate = theme.shrines.find((s) => s.effectKind === "duplicate_living")!;
+  expect(describeShrineChoice(theme, duplicate, world, 1, 9)).toContain(`${theme.copy.codex.duplicates}: 9`);
+  const surge = theme.shrines.find((s) => s.effectKind === "spawn_surge")!;
+  expect(describeShrineChoice(theme, surge, world, .5, 9)).toContain(`${surge.spawnCount} / ${surge.spawnDurationMs / 1000}s`);
+  // Late baseline elites are already at8%; a small extra Chaos contribution
+  // cannot lower the resolved probability shown in the preview.
+  expect(describeShrineChoice(theme, greed, createWorldState(), 1, 0)).toContain(`${theme.copy.world.eliteChance} 8% → 8%`);
 });

@@ -1,0 +1,1347 @@
+{
+  "themeKey": "knight-magic",
+  "quality": "low",
+  "browser": "151.0.7922.34",
+  "initial": {
+    "writesBefore": 5,
+    "capabilities": {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Runic Fan · 0/1 finished runs\nPulse a short cone, starting at three targets. Owned reach upgrades add targets; each selected hit splashes nearby targets.",
+        "Bloodlust · 0/25 lifetime kills\nRecent kills increase attack speed.",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 5,
+      "listeners": 1
+    },
+    "firstEnemy": {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Grunt\n\nA frail creature dangerous in great numbers.\n\nAuthored game values.\nHealth: 19 · Move speed: 104 · Contact harm: 8.5\nCan fragment into: Runner ×1",
+        "Previous",
+        "Next",
+        "1 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 5,
+      "listeners": 1
+    },
+    "enemyCount": 10
+  },
+  "paged": {
+    "texts": [
+      "The arena is paused",
+      "STATS",
+      "BLESSINGS TAKEN",
+      "CHAOS",
+      "GRIMOIRE",
+      "SETTINGS",
+      "SHRINES",
+      "ENEMIES",
+      "RELICS",
+      "CAPABILITIES",
+      "LIFETIME",
+      "Runner\n\nA swift, fragile hunter that forces constant movement.\n\nAuthored game values.\nHealth: 9.5 · Move speed: 190 · Contact harm: 6.8\n",
+      "Previous",
+      "Next",
+      "2 / 10 · PgUp / PgDn",
+      "Tab / arrows to switch · Escape to resume"
+    ],
+    "page": 1,
+    "writes": 5,
+    "bodyBottom": 462.4375,
+    "navigationTop": 660,
+    "listeners": 1,
+    "scroll": 0
+  },
+  "allPages": [
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Grunt\n\nA frail creature dangerous in great numbers.\n\nAuthored game values.\nHealth: 19 · Move speed: 104 · Contact harm: 8.5\nCan fragment into: Runner ×1",
+        "Previous",
+        "Next",
+        "1 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 0,
+      "writes": 5,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Runner\n\nA swift, fragile hunter that forces constant movement.\n\nAuthored game values.\nHealth: 9.5 · Move speed: 190 · Contact harm: 6.8\n",
+        "Previous",
+        "Next",
+        "2 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 1,
+      "writes": 5,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Tank\n\nA slow, durable obstacle that anchors the horde.\n\nAuthored game values.\nHealth: 76 · Move speed: 70 · Contact harm: 17\nCan fragment into: Runner ×1",
+        "Previous",
+        "Next",
+        "3 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 2,
+      "writes": 5,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Broodmother\n\nA swollen creature whose defeat releases a fresh brood.\n\nAuthored game values.\nHealth: 47.5 · Move speed: 80 · Contact harm: 10.2\nReleases on defeat: Runner ×5",
+        "Previous",
+        "Next",
+        "4 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 3,
+      "writes": 5,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Rune Shards\n\nBroken sigil fragments linger where they fall until destroyed.\n\nAuthored game values.\nHealth: 17.1 · Move speed: 0 · Contact harm: 5.95\n",
+        "Previous",
+        "Next",
+        "5 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 4,
+      "writes": 5,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Runic Sentinel\n\nA unique mid-run threat. Step clear of its marked circle before the pulse.\n\nAuthored game values.\nHealth: 228 · Move speed: 60 · Contact harm: 10.2\n",
+        "Previous",
+        "Next",
+        "6 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 5,
+      "writes": 5,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Chaos Warden\n\nThe final encounter. Escape its marked pulse, then defeat it to choose how the run finishes.\n\nAuthored game values.\nHealth: 1140 · Move speed: 55 · Contact harm: 13.6\n",
+        "Previous",
+        "Next",
+        "7 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 6,
+      "writes": 5,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Ashling\n\nA slow, weak enemy that approaches in small groups. Clear a lane through them.\n\nAuthored game values.\nHealth: 5.7 · Move speed: 64 · Contact harm: 2.55\n",
+        "Previous",
+        "Next",
+        "8 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 7,
+      "writes": 5,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Paper Wisp\n\nWatch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.\n\nAuthored game values.\nHealth: 11.4 · Move speed: 80 · Contact harm: 4.25\n",
+        "Previous",
+        "Next",
+        "9 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 8,
+      "writes": 5,
+      "bodyBottom": 462.4375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    },
+    {
+      "texts": [
+        "The arena is paused",
+        "STATS",
+        "BLESSINGS TAKEN",
+        "CHAOS",
+        "GRIMOIRE",
+        "SETTINGS",
+        "SHRINES",
+        "ENEMIES",
+        "RELICS",
+        "CAPABILITIES",
+        "LIFETIME",
+        "Barrel Construct\n\nWatch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.\n\nAuthored game values.\nHealth: 17.1 · Move speed: 90 · Contact harm: 5.95\n",
+        "Previous",
+        "Next",
+        "10 / 10 · PgUp / PgDn",
+        "Tab / arrows to switch · Escape to resume"
+      ],
+      "page": 9,
+      "writes": 5,
+      "bodyBottom": 487.34375,
+      "navigationTop": 660,
+      "listeners": 1,
+      "scroll": 0
+    }
+  ],
+  "canPage": {
+    "texts": [
+      "The arena is paused",
+      "STATS",
+      "BLESSINGS TAKEN",
+      "CHAOS",
+      "GRIMOIRE",
+      "SETTINGS",
+      "SHRINES",
+      "ENEMIES",
+      "RELICS",
+      "CAPABILITIES",
+      "LIFETIME",
+      "Barrel Construct\n\nWatch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.\n\nAuthored game values.\nHealth: 17.1 · Move speed: 90 · Contact harm: 5.95\n",
+      "Previous",
+      "Next",
+      "10 / 10 · PgUp / PgDn",
+      "Tab / arrows to switch · Escape to resume"
+    ],
+    "page": 9,
+    "writes": 5,
+    "bodyBottom": 487.34375,
+    "navigationTop": 660,
+    "listeners": 1,
+    "scroll": 0
+  },
+  "result": {
+    "hits": [
+      {
+        "health": 5.699999999999999,
+        "defeated": true
+      },
+      {
+        "health": 6.156,
+        "defeated": true
+      },
+      {
+        "health": 6.156,
+        "defeated": true
+      }
+    ],
+    "beforeRuns": 0,
+    "first": {
+      "texts": [
+        "Arena Cleared",
+        "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+        "Battle review · Tab",
+        "Details · Tab",
+        "Weapon contributions\nRunic Fan: 6.16\nRunic Tempest: 6.16\nMagic Needle: 5.7",
+        "Pressure chosen\nShrine of Greed ×1\nFrenzy Pact",
+        "Final foe defeated\nNext experiment\nTry a run without optional bargains and compare your tool contributions.",
+        "Begin Again · R / Enter"
+      ],
+      "page": "review",
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "knight_magic",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "low",
+          "detailedUpgradeCards": true,
+          "reducedMotion": true,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 3,
+          "totalDamage": 18.011999999999997,
+          "bestLevel": 1,
+          "bestKills": 3,
+          "bestDamage": 18.011999999999997,
+          "upgrades": {
+            "upgrade.accept_frenzy": {
+              "total": 1,
+              "bestInRun": 1
+            },
+            "upgrade.equip_secondary": {
+              "total": 1,
+              "bestInRun": 1
+            },
+            "upgrade.secondary_range": {
+              "total": 4,
+              "bestInRun": 4
+            },
+            "upgrade.evolve_secondary": {
+              "total": 1,
+              "bestInRun": 1
+            }
+          }
+        },
+        "completedRuns": 1,
+        "deaths": 0,
+        "bestDurationMs": 301000,
+        "createdAt": "2026-10-22T00:23:49.879Z",
+        "updatedAt": "2026-10-22T00:23:49.997Z"
+      },
+      "writes": 7,
+      "statistics": {
+        "damageByWeapon": {
+          "weapon.starter": 5.699999999999999,
+          "weapon.secondary": 6.156,
+          "weapon.secondary_evolved": 6.156
+        },
+        "kills": 3,
+        "liveEnemies": 0,
+        "peakEnemiesAlive": 1,
+        "highestChaos": 1.4,
+        "highestCritChance": 0.05,
+        "highestCritTier": 0,
+        "longestPierceChain": 1,
+        "largestKillChain": 3,
+        "recentKillTimesMs": [
+          0,
+          0,
+          0
+        ],
+        "totalDamage": 18.011999999999997,
+        "damageBreakdown": {
+          "direct": 18.011999999999997,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "splash": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        },
+        "upgradeCounts": {
+          "upgrade.accept_frenzy": 1,
+          "upgrade.equip_secondary": 1,
+          "upgrade.secondary_range": 4,
+          "upgrade.evolve_secondary": 1
+        }
+      },
+      "review": {
+        "tools": [
+          "Runic Fan: 6.16",
+          "Runic Tempest: 6.16",
+          "Magic Needle: 5.7"
+        ],
+        "choices": [
+          "Shrine of Greed ×1",
+          "Frenzy Pact"
+        ],
+        "next": "Try a run without optional bargains and compare your tool contributions.",
+        "bossDefeated": true
+      },
+      "tabPoints": [
+        {
+          "page": "review",
+          "x": 535,
+          "y": 168
+        },
+        {
+          "page": "details",
+          "x": 745,
+          "y": 168
+        }
+      ],
+      "boxes": [
+        {
+          "text": "Arena Cleared",
+          "left": 670.5,
+          "top": 116.80859375,
+          "right": 929.5,
+          "bottom": 167.19140625
+        },
+        {
+          "text": "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+          "left": 586.5,
+          "top": 170,
+          "right": 1013.5,
+          "bottom": 220.05078125
+        },
+        {
+          "text": "Battle review · Tab",
+          "left": 605,
+          "top": 241.83984375,
+          "right": 785,
+          "bottom": 274.16015625
+        },
+        {
+          "text": "Details · Tab",
+          "left": 843.5,
+          "top": 241.83984375,
+          "right": 966.5,
+          "bottom": 274.16015625
+        },
+        {
+          "text": "Weapon contributions\nRunic Fan: 6.16\nRunic Tempest: 6.16\nMagic Needle: 5.7",
+          "left": 410,
+          "top": 296,
+          "right": 576,
+          "bottom": 388.625
+        },
+        {
+          "text": "Pressure chosen\nShrine of Greed ×1\nFrenzy Pact",
+          "left": 810,
+          "top": 296,
+          "right": 951,
+          "bottom": 367.71875
+        },
+        {
+          "text": "Final foe defeated\nNext experiment\nTry a run without optional bargains and compare your tool contributions.",
+          "left": 410,
+          "top": 585,
+          "right": 904,
+          "bottom": 653.361328125
+        },
+        {
+          "text": "Begin Again · R / Enter",
+          "left": 678.5,
+          "top": 724.7109375,
+          "right": 921.5,
+          "bottom": 759.2890625
+        }
+      ]
+    },
+    "repeated": {
+      "texts": [
+        "Arena Cleared",
+        "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+        "Battle review · Tab",
+        "Details · Tab",
+        "Weapon contributions\nRunic Fan: 6.16\nRunic Tempest: 6.16\nMagic Needle: 5.7",
+        "Pressure chosen\nShrine of Greed ×1\nFrenzy Pact",
+        "Final foe defeated\nNext experiment\nTry a run without optional bargains and compare your tool contributions.",
+        "Begin Again · R / Enter"
+      ],
+      "page": "review",
+      "profile": {
+        "schemaVersion": 2,
+        "gameVersion": "0.4.3",
+        "activeThemeId": "knight_magic",
+        "contentSchemaVersion": 1,
+        "selectedCharacterId": "character.starter",
+        "unlockedCharacterIds": [
+          "character.starter"
+        ],
+        "unlockedWeaponIds": [
+          "weapon.starter",
+          "weapon.secondary"
+        ],
+        "unlockedUpgradeIds": [],
+        "settings": {
+          "difficulty": "normal",
+          "presentationQuality": "low",
+          "detailedUpgradeCards": true,
+          "reducedMotion": true,
+          "muted": false,
+          "minimapOpacity": 0.6
+        },
+        "statistics": {
+          "runsPlayed": 1,
+          "totalKills": 3,
+          "totalDamage": 18.011999999999997,
+          "bestLevel": 1,
+          "bestKills": 3,
+          "bestDamage": 18.011999999999997,
+          "upgrades": {
+            "upgrade.accept_frenzy": {
+              "total": 1,
+              "bestInRun": 1
+            },
+            "upgrade.equip_secondary": {
+              "total": 1,
+              "bestInRun": 1
+            },
+            "upgrade.secondary_range": {
+              "total": 4,
+              "bestInRun": 4
+            },
+            "upgrade.evolve_secondary": {
+              "total": 1,
+              "bestInRun": 1
+            }
+          }
+        },
+        "completedRuns": 1,
+        "deaths": 0,
+        "bestDurationMs": 301000,
+        "createdAt": "2026-10-22T00:23:49.879Z",
+        "updatedAt": "2026-10-22T00:23:49.997Z"
+      },
+      "writes": 7,
+      "statistics": {
+        "damageByWeapon": {
+          "weapon.starter": 5.699999999999999,
+          "weapon.secondary": 6.156,
+          "weapon.secondary_evolved": 6.156
+        },
+        "kills": 3,
+        "liveEnemies": 0,
+        "peakEnemiesAlive": 1,
+        "highestChaos": 1.4,
+        "highestCritChance": 0.05,
+        "highestCritTier": 0,
+        "longestPierceChain": 1,
+        "largestKillChain": 3,
+        "recentKillTimesMs": [
+          0,
+          0,
+          0
+        ],
+        "totalDamage": 18.011999999999997,
+        "damageBreakdown": {
+          "direct": 18.011999999999997,
+          "criticalBonus": 0,
+          "piercingMomentum": 0,
+          "splash": 0,
+          "explosion": 0,
+          "chainedExplosion": 0,
+          "remainder": 0
+        },
+        "upgradeCounts": {
+          "upgrade.accept_frenzy": 1,
+          "upgrade.equip_secondary": 1,
+          "upgrade.secondary_range": 4,
+          "upgrade.evolve_secondary": 1
+        }
+      },
+      "review": {
+        "tools": [
+          "Runic Fan: 6.16",
+          "Runic Tempest: 6.16",
+          "Magic Needle: 5.7"
+        ],
+        "choices": [
+          "Shrine of Greed ×1",
+          "Frenzy Pact"
+        ],
+        "next": "Try a run without optional bargains and compare your tool contributions.",
+        "bossDefeated": true
+      },
+      "tabPoints": [
+        {
+          "page": "review",
+          "x": 535,
+          "y": 168
+        },
+        {
+          "page": "details",
+          "x": 745,
+          "y": 168
+        }
+      ],
+      "boxes": [
+        {
+          "text": "Arena Cleared",
+          "left": 670.5,
+          "top": 116.80859375,
+          "right": 929.5,
+          "bottom": 167.19140625
+        },
+        {
+          "text": "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+          "left": 586.5,
+          "top": 170,
+          "right": 1013.5,
+          "bottom": 220.05078125
+        },
+        {
+          "text": "Battle review · Tab",
+          "left": 605,
+          "top": 241.83984375,
+          "right": 785,
+          "bottom": 274.16015625
+        },
+        {
+          "text": "Details · Tab",
+          "left": 843.5,
+          "top": 241.83984375,
+          "right": 966.5,
+          "bottom": 274.16015625
+        },
+        {
+          "text": "Weapon contributions\nRunic Fan: 6.16\nRunic Tempest: 6.16\nMagic Needle: 5.7",
+          "left": 410,
+          "top": 296,
+          "right": 576,
+          "bottom": 388.625
+        },
+        {
+          "text": "Pressure chosen\nShrine of Greed ×1\nFrenzy Pact",
+          "left": 810,
+          "top": 296,
+          "right": 951,
+          "bottom": 367.71875
+        },
+        {
+          "text": "Final foe defeated\nNext experiment\nTry a run without optional bargains and compare your tool contributions.",
+          "left": 410,
+          "top": 585,
+          "right": 904,
+          "bottom": 653.361328125
+        },
+        {
+          "text": "Begin Again · R / Enter",
+          "left": 678.5,
+          "top": 724.7109375,
+          "right": 921.5,
+          "bottom": 759.2890625
+        }
+      ]
+    },
+    "keyboardListenersAfterGuide": 0
+  },
+  "details": {
+    "texts": [
+      "Arena Cleared",
+      "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+      "Foes Vanquished: 3\nPeak Foes: 1\nHighest Chaos: 1.4×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 3",
+      "Damage Ledger\nTotal Damage: 18.01\nDirect: 18.01\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+      "Blessings Taken\nWider Runic Reach ×4\nFrenzy Pact ×1\nEquip Runic Fan ×1\nEvolve to Runic Tempest ×1",
+      "Battle review · Tab",
+      "Details · Tab",
+      "Begin Again · R / Enter"
+    ],
+    "page": "details",
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "low",
+        "detailedUpgradeCards": true,
+        "reducedMotion": true,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 3,
+        "totalDamage": 18.011999999999997,
+        "bestLevel": 1,
+        "bestKills": 3,
+        "bestDamage": 18.011999999999997,
+        "upgrades": {
+          "upgrade.accept_frenzy": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.equip_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.secondary_range": {
+            "total": 4,
+            "bestInRun": 4
+          },
+          "upgrade.evolve_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          }
+        }
+      },
+      "completedRuns": 1,
+      "deaths": 0,
+      "bestDurationMs": 301000,
+      "createdAt": "2026-10-22T00:23:49.879Z",
+      "updatedAt": "2026-10-22T00:23:49.997Z"
+    },
+    "writes": 7,
+    "statistics": {
+      "damageByWeapon": {
+        "weapon.starter": 5.699999999999999,
+        "weapon.secondary": 6.156,
+        "weapon.secondary_evolved": 6.156
+      },
+      "kills": 3,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1.4,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 1,
+      "largestKillChain": 3,
+      "recentKillTimesMs": [
+        0,
+        0,
+        0
+      ],
+      "totalDamage": 18.011999999999997,
+      "damageBreakdown": {
+        "direct": 18.011999999999997,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {
+        "upgrade.accept_frenzy": 1,
+        "upgrade.equip_secondary": 1,
+        "upgrade.secondary_range": 4,
+        "upgrade.evolve_secondary": 1
+      }
+    },
+    "review": {
+      "tools": [
+        "Runic Fan: 6.16",
+        "Runic Tempest: 6.16",
+        "Magic Needle: 5.7"
+      ],
+      "choices": [
+        "Shrine of Greed ×1",
+        "Frenzy Pact"
+      ],
+      "next": "Try a run without optional bargains and compare your tool contributions.",
+      "bossDefeated": true
+    },
+    "tabPoints": [
+      {
+        "page": "review",
+        "x": 535,
+        "y": 168
+      },
+      {
+        "page": "details",
+        "x": 745,
+        "y": 168
+      }
+    ],
+    "boxes": [
+      {
+        "text": "Arena Cleared",
+        "left": 670.5,
+        "top": 116.80859375,
+        "right": 929.5,
+        "bottom": 167.19140625
+      },
+      {
+        "text": "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+        "left": 586.5,
+        "top": 170,
+        "right": 1013.5,
+        "bottom": 220.05078125
+      },
+      {
+        "text": "Foes Vanquished: 3\nPeak Foes: 1\nHighest Chaos: 1.4×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 3",
+        "left": 375,
+        "top": 296,
+        "right": 581,
+        "bottom": 463.34375
+      },
+      {
+        "text": "Damage Ledger\nTotal Damage: 18.01\nDirect: 18.01\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+        "left": 665,
+        "top": 296,
+        "right": 838,
+        "bottom": 509.15625
+      },
+      {
+        "text": "Blessings Taken\nWider Runic Reach ×4\nFrenzy Pact ×1\nEquip Runic Fan ×1\nEvolve to Runic Tempest ×1",
+        "left": 955,
+        "top": 296,
+        "right": 1160,
+        "bottom": 417.53125
+      },
+      {
+        "text": "Battle review · Tab",
+        "left": 605,
+        "top": 241.83984375,
+        "right": 785,
+        "bottom": 274.16015625
+      },
+      {
+        "text": "Details · Tab",
+        "left": 843.5,
+        "top": 241.83984375,
+        "right": 966.5,
+        "bottom": 274.16015625
+      },
+      {
+        "text": "Begin Again · R / Enter",
+        "left": 678.5,
+        "top": 724.7109375,
+        "right": 921.5,
+        "bottom": 759.2890625
+      }
+    ]
+  },
+  "resized": {
+    "texts": [
+      "Arena Cleared",
+      "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+      "Foes Vanquished: 3\nPeak Foes: 1\nHighest Chaos: 1.4×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 3",
+      "Damage Ledger\nTotal Damage: 18.01\nDirect: 18.01\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+      "Blessings Taken\nWider Runic Reach ×4\nFrenzy Pact ×1\nEquip Runic Fan ×1\nEvolve to Runic Tempest ×1",
+      "Battle review · Tab",
+      "Details · Tab",
+      "Begin Again · R / Enter"
+    ],
+    "page": "details",
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "low",
+        "detailedUpgradeCards": true,
+        "reducedMotion": true,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 3,
+        "totalDamage": 18.011999999999997,
+        "bestLevel": 1,
+        "bestKills": 3,
+        "bestDamage": 18.011999999999997,
+        "upgrades": {
+          "upgrade.accept_frenzy": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.equip_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.secondary_range": {
+            "total": 4,
+            "bestInRun": 4
+          },
+          "upgrade.evolve_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          }
+        }
+      },
+      "completedRuns": 1,
+      "deaths": 0,
+      "bestDurationMs": 301000,
+      "createdAt": "2026-10-22T00:23:49.879Z",
+      "updatedAt": "2026-10-22T00:23:49.997Z"
+    },
+    "writes": 7,
+    "statistics": {
+      "damageByWeapon": {
+        "weapon.starter": 5.699999999999999,
+        "weapon.secondary": 6.156,
+        "weapon.secondary_evolved": 6.156
+      },
+      "kills": 3,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 1,
+      "highestChaos": 1.4,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 1,
+      "largestKillChain": 3,
+      "recentKillTimesMs": [
+        0,
+        0,
+        0
+      ],
+      "totalDamage": 18.011999999999997,
+      "damageBreakdown": {
+        "direct": 18.011999999999997,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {
+        "upgrade.accept_frenzy": 1,
+        "upgrade.equip_secondary": 1,
+        "upgrade.secondary_range": 4,
+        "upgrade.evolve_secondary": 1
+      }
+    },
+    "review": {
+      "tools": [
+        "Runic Fan: 6.16",
+        "Runic Tempest: 6.16",
+        "Magic Needle: 5.7"
+      ],
+      "choices": [
+        "Shrine of Greed ×1",
+        "Frenzy Pact"
+      ],
+      "next": "Try a run without optional bargains and compare your tool contributions.",
+      "bossDefeated": true
+    },
+    "tabPoints": [
+      {
+        "page": "review",
+        "x": 535,
+        "y": 168
+      },
+      {
+        "page": "details",
+        "x": 745,
+        "y": 168
+      }
+    ],
+    "boxes": [
+      {
+        "text": "Arena Cleared",
+        "left": 670.5,
+        "top": 116.80859375,
+        "right": 929.5,
+        "bottom": 167.19140625
+      },
+      {
+        "text": "You stayed past the hour and put down the last of them.\nUnlocked: Runic Fan",
+        "left": 586.5,
+        "top": 170,
+        "right": 1013.5,
+        "bottom": 220.05078125
+      },
+      {
+        "text": "Foes Vanquished: 3\nPeak Foes: 1\nHighest Chaos: 1.4×\nHighest Critical Chance: 5%\nHighest Overcrit Tier: 0\nLongest Pierce: 1\nLargest Kill Chain: 3",
+        "left": 375,
+        "top": 296,
+        "right": 581,
+        "bottom": 463.34375
+      },
+      {
+        "text": "Damage Ledger\nTotal Damage: 18.01\nDirect: 18.01\nCritical Bonus: 0\nPiercing Momentum: 0\nImpact splash: 0\nExplosion: 0\nChained Explosion: 0\nOther / Remainder: 0",
+        "left": 665,
+        "top": 296,
+        "right": 838,
+        "bottom": 509.15625
+      },
+      {
+        "text": "Blessings Taken\nWider Runic Reach ×4\nFrenzy Pact ×1\nEquip Runic Fan ×1\nEvolve to Runic Tempest ×1",
+        "left": 955,
+        "top": 296,
+        "right": 1160,
+        "bottom": 417.53125
+      },
+      {
+        "text": "Battle review · Tab",
+        "left": 605,
+        "top": 241.83984375,
+        "right": 785,
+        "bottom": 274.16015625
+      },
+      {
+        "text": "Details · Tab",
+        "left": 843.5,
+        "top": 241.83984375,
+        "right": 966.5,
+        "bottom": 274.16015625
+      },
+      {
+        "text": "Begin Again · R / Enter",
+        "left": 678.5,
+        "top": 724.7109375,
+        "right": 921.5,
+        "bottom": 759.2890625
+      }
+    ]
+  },
+  "reload": {
+    "before": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "low",
+        "detailedUpgradeCards": true,
+        "reducedMotion": true,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 3,
+        "totalDamage": 18.011999999999997,
+        "bestLevel": 1,
+        "bestKills": 3,
+        "bestDamage": 18.011999999999997,
+        "upgrades": {
+          "upgrade.accept_frenzy": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.equip_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.secondary_range": {
+            "total": 4,
+            "bestInRun": 4
+          },
+          "upgrade.evolve_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          }
+        }
+      },
+      "completedRuns": 1,
+      "deaths": 0,
+      "bestDurationMs": 301000,
+      "createdAt": "2026-10-22T00:23:49.879Z",
+      "updatedAt": "2026-10-22T00:23:49.997Z"
+    },
+    "after": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "low",
+        "detailedUpgradeCards": true,
+        "reducedMotion": true,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 3,
+        "totalDamage": 18.011999999999997,
+        "bestLevel": 1,
+        "bestKills": 3,
+        "bestDamage": 18.011999999999997,
+        "upgrades": {
+          "upgrade.accept_frenzy": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.equip_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.secondary_range": {
+            "total": 4,
+            "bestInRun": 4
+          },
+          "upgrade.evolve_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          }
+        }
+      },
+      "completedRuns": 1,
+      "deaths": 0,
+      "bestDurationMs": 301000,
+      "createdAt": "2026-10-22T00:23:49.879Z",
+      "updatedAt": "2026-10-22T00:23:49.997Z"
+    }
+  },
+  "reset": {
+    "state": {
+      "damageByWeapon": {},
+      "kills": 0,
+      "liveEnemies": 0,
+      "peakEnemiesAlive": 0,
+      "highestChaos": 1,
+      "highestCritChance": 0.05,
+      "highestCritTier": 0,
+      "longestPierceChain": 0,
+      "largestKillChain": 0,
+      "recentKillTimesMs": [],
+      "totalDamage": 0,
+      "damageBreakdown": {
+        "direct": 0,
+        "criticalBonus": 0,
+        "piercingMomentum": 0,
+        "splash": 0,
+        "explosion": 0,
+        "chainedExplosion": 0,
+        "remainder": 0
+      },
+      "upgradeCounts": {}
+    },
+    "profile": {
+      "schemaVersion": 2,
+      "gameVersion": "0.4.3",
+      "activeThemeId": "knight_magic",
+      "contentSchemaVersion": 1,
+      "selectedCharacterId": "character.starter",
+      "unlockedCharacterIds": [
+        "character.starter"
+      ],
+      "unlockedWeaponIds": [
+        "weapon.starter",
+        "weapon.secondary"
+      ],
+      "unlockedUpgradeIds": [],
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "low",
+        "detailedUpgradeCards": true,
+        "reducedMotion": true,
+        "muted": false,
+        "minimapOpacity": 0.6
+      },
+      "statistics": {
+        "runsPlayed": 1,
+        "totalKills": 3,
+        "totalDamage": 18.011999999999997,
+        "bestLevel": 1,
+        "bestKills": 3,
+        "bestDamage": 18.011999999999997,
+        "upgrades": {
+          "upgrade.accept_frenzy": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.equip_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          },
+          "upgrade.secondary_range": {
+            "total": 4,
+            "bestInRun": 4
+          },
+          "upgrade.evolve_secondary": {
+            "total": 1,
+            "bestInRun": 1
+          }
+        }
+      },
+      "completedRuns": 1,
+      "deaths": 0,
+      "bestDurationMs": 301000,
+      "createdAt": "2026-10-22T00:23:49.879Z",
+      "updatedAt": "2026-10-22T00:23:49.997Z"
+    },
+    "pool": [
+      "upgrade.damage",
+      "upgrade.attack_speed",
+      "upgrade.crit_chance",
+      "upgrade.pierce",
+      "upgrade.projectile_count",
+      "upgrade.move_speed",
+      "upgrade.health",
+      "upgrade.pickup_radius",
+      "upgrade.piercing_momentum",
+      "upgrade.on_kill_explosion",
+      "upgrade.fracture",
+      "upgrade.chain_reaction",
+      "upgrade.armour",
+      "upgrade.regeneration",
+      "upgrade.luck",
+      "upgrade.world_surge",
+      "upgrade.world_brittle",
+      "upgrade.accept_frenzy",
+      "upgrade.accept_escalation",
+      "upgrade.equip_secondary",
+      "upgrade.evolve_secondary",
+      "upgrade.secondary_range"
+    ]
+  },
+  "errors": []
+}

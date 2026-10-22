@@ -1,5 +1,8 @@
+import { selectCapabilityProgress } from "../systems/mastery/run-review";
 import Phaser from "phaser";
-import { advanceBossAttack, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
+import { describeShrineChoice } from "../systems/codex/describe-shrine";
+import { arrivalClusterAngles, introductionCount } from "../systems/director/arrival-cluster";
+import { advanceBossAttack, bossHoldsPosition, createBossAttack, dueBosses, type BossAttackState } from "../systems/bosses/bosses";
 import { BossHealthUi } from "../ui/boss-health-ui";
 import { SpawnStatistics, spawnOrigins, type SpawnOrigin } from "../systems/statistics/spawn-statistics";
 import { activeTheme } from "../content/active-theme";
@@ -23,7 +26,7 @@ import { ProjectileActor } from "../entities/projectile-actor";
 import { GrabberActor } from "../entities/grabber-actor";
 import { ShrineActor } from "../entities/shrine-actor";
 import type { EnemySpawnSource } from "../entities/enemy-actor";
-import { ensureProfile, selectRunUpgradePool, recordProfileFinishedRun, describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
+import { ensureProfile, getProfile, selectRunUpgradePool, recordProfileFinishedRun, describeProfile, getProfileStatus } from "../systems/persistence/profile-service";
 import {
   advanceRunState,
   isRunActive,
@@ -57,7 +60,6 @@ import {
 import { createDeathSpawns } from "../systems/spawning";
 import {
   crossedUnlocks,
-  enemiesInWave,
   resolveDirectorPlan,
   runProgress,
   selectRole,
@@ -119,6 +121,7 @@ import {
 } from "../systems/shrine-surge";
 import {
   selectSessionCodex,
+  selectEnemyCodex,
   selectShrineCodex,
   selectUpgradeCodex,
 } from "../systems/codex/describe-shrine";
@@ -1117,6 +1120,7 @@ export class RunScene extends Phaser.Scene {
     elite?: boolean | EliteId,
     movement: WaveMovement = "chase",
     eliteSplitDepth = 0,
+    angleRadians?: number,
   ): void {
     this.eventSequence += 1;
     this.eventQueue.enqueue({
@@ -1129,7 +1133,7 @@ export class RunScene extends Phaser.Scene {
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : reason === "elite_split" ? "elite.split" : undefined,
       },
       entityId: parentEntityId,
-      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement, eliteSplitDepth },
+      payload: { enemyId, spawnSource, rewardMultiplier, reason, point, elite, movement, eliteSplitDepth, angleRadians },
     });
   }
 
@@ -1144,11 +1148,11 @@ export class RunScene extends Phaser.Scene {
     if (capacity <= 0 || remaining <= 0) return;
     this.eventQueue.processMatching(remaining, (event) => event.kind === "spawn.requested", (event) => {
       if (capacity <= 0) return false;
-      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean | EliteId; eliteSplitDepth?: number; movement?: WaveMovement };
+      const payload = event.payload as { enemyId?: string; spawnSource?: EnemySpawnSource; rewardMultiplier?: number; reason?: string; point?: Readonly<{ x: number; y: number }>; elite?: boolean | EliteId; eliteSplitDepth?: number; movement?: WaveMovement; angleRadians?: number };
       if (!payload.enemyId) return;
       const definition = this.enemyDefinitions.find((candidate) => candidate.id === payload.enemyId);
       if (!definition) return;
-      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, undefined, payload.movement,
+      if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, payload.angleRadians, payload.movement,
         payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
           payload.reason === "duplication" || payload.reason === "elite_split" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural", payload.eliteSplitDepth)) {
         capacity -= 1;
@@ -1341,10 +1345,14 @@ export class RunScene extends Phaser.Scene {
     const obstacles = this.activeObstacles();
     for (const enemy of this.enemies) {
       if (!enemy.active || enemy.defeated) continue;
+      if (enemy.definition.boss && bossHoldsPosition(this.bossAttacks.get(enemy), enemy.definition.boss)) {
+        enemy.arcadeBody.setVelocity(0, 0);
+        continue;
+      }
       enemy.advance(target, deltaMs);
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
-      if (obstacles.length > 0 && enemy.movement === "chase") {
+      if (obstacles.length > 0 && enemy.movement === "chase" && enemy.motionState.phase === "approach") {
         const body = enemy.arcadeBody;
         let velocity = { x: body.velocity.x, y: body.velocity.y };
         for (const obstacle of obstacles) {
@@ -1402,6 +1410,13 @@ export class RunScene extends Phaser.Scene {
       this.runTheme.tuning.shrines,
       this.runState?.durationMs ?? 1,
     );
+    // Preserve the explicitly requested legacy two-instance stress fixture.
+    // Natural G3 scheduling has only one; production testWorldScenario is null.
+    if (testWorldScenario() === "multiplicity2") {
+      const instances = this.shrineArrivals.filter((arrival) => arrival.shrineId === archetypeIds.shrine.multiplicity);
+      if (instances.length === 1) this.shrineArrivals = [...this.shrineArrivals, { ...instances[0]!, appearAtMs: 0 }]
+        .sort((a, b) => a.appearAtMs - b.appearAtMs);
+    }
     this.shrinesRevealed = 0;
     if (testShrineLayout() === "adjacent") this.revealAllShrines();
   }
@@ -1490,7 +1505,11 @@ export class RunScene extends Phaser.Scene {
     let activated: ShrineActor | undefined;
     for (const shrine of this.shrineActors) {
       const inRange = Phaser.Math.Distance.Between(this.player.x, this.player.y, shrine.x, shrine.y) <= shrine.definition.interactionRadius;
-      shrine.setInRange(inRange);
+      const detail = inRange && !shrine.activated ? describeShrineChoice(this.runTheme, shrine.definition,
+        this.runState.world, runEscalationProgress(this.runState),
+        shrine.definition.effectKind === "duplicate_living"
+          ? [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated && !enemy.definition.boss).length : 0) : undefined;
+      shrine.setInRange(inRange, detail);
       if (interact && inRange && !shrine.activated && !activated) activated = shrine;
     }
     this.updateShrineMarkers();
@@ -1689,8 +1708,13 @@ export class RunScene extends Phaser.Scene {
     this.lastDirectorProgress = progress;
     if (crossed.length === 0) return;
 
-    const burst = enemiesInWave(this.runTheme.tuning.director, progress);
     for (const role of crossed) {
+      const burst = introductionCount(role, this.runTheme.tuning.director, progress);
+      const definition = this.enemyDefinitions.find((enemy) => enemy.id === role.enemyId);
+      const angles = definition?.arrivalCluster ? arrivalClusterAngles(
+        { arrivalCluster: { ...definition.arrivalCluster, count: burst } }, burst,
+        this.spawnSequence * GOLDEN_ANGLE, testSpawnRadius() ?? offScreenSpawnRadius(this.viewRect(), this.runTheme.tuning.director.spawnMargin),
+      ) : undefined;
       this.milestoneWaves += 1;
       for (let index = 0; index < burst; index += 1) {
         this.enqueueSpawnRequest(
@@ -1703,6 +1727,8 @@ export class RunScene extends Phaser.Scene {
           undefined,
           undefined,
           role.waveMovement,
+          0,
+          angles?.[index],
         );
       }
       this.announceWave(this.runTheme.copy.content[role.enemyId]?.name ?? role.enemyId);
@@ -1756,7 +1782,11 @@ export class RunScene extends Phaser.Scene {
       const spread = plan.batchSize === 1
         ? 0
         : (index / (plan.batchSize - 1) - 0.5) * this.runTheme.tuning.director.batchSpreadRadians;
-      this.spawnEnemy("ambient", 1, definition, undefined, undefined, arc + spread);
+      const view = this.viewRect();
+      const radius = testSpawnRadius() ?? offScreenSpawnRadius(view, this.runTheme.tuning.director.spawnMargin);
+      for (const angle of arrivalClusterAngles(definition, this.enemyCapacity - this.enemies.size, arc + spread, radius)) {
+        this.spawnEnemy("ambient", 1, definition, undefined, undefined, angle);
+      }
     }
 
     this.spawnIntervalMs = plan.intervalMs;
@@ -1937,7 +1967,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.player || !this.runState || !isRunActive(this.runState) || !this.projectileGroup) return;
     // The index is pre-filtered to targetable enemies, so the actors go straight
     // in. V0.2 allocated a snapshot of the whole swarm on every shot.
-    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id]);
+    const weapon = resolveWeaponDefinition(definition, this.runState.weaponModifiers, this.runState.ownedWeaponModifiers[definition.id], this.runState.selectedUpgradeIds);
     const target = weapon.deliveryKind === "melee"
       ? selectMeleeAim(this.player, this.enemies, weapon.reach)
       : findNearestTarget(this.player, this.enemies);
@@ -1962,15 +1992,16 @@ export class RunScene extends Phaser.Scene {
       );
       if (hits.length === 0) return;
       this.activeGrabbers += 1;
-      const AttackActor = weapon.arcRadians === undefined ? GrabberActor : ConeAttackActor;
-      new AttackActor(
+      const onComplete = () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); };
+      if (weapon.arcRadians !== undefined) new ConeAttackActor(this, this.player.x, this.player.y, baseAngle, weapon, this.runTheme.tokens, onComplete, hits);
+      else new GrabberActor(
         this,
         this.player.x,
         this.player.y,
         baseAngle,
         weapon,
         this.runTheme.tokens,
-        () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); },
+        onComplete,
       );
       this.meleeStrikes += 1;
       this.shotsFired += 1;
@@ -2253,6 +2284,7 @@ export class RunScene extends Phaser.Scene {
     this.hitFlashes += 1;
     this.runState = recordRunDamage(this.runState, {
       amount: appliedDamage,
+      weaponId: direct?.weapon.id,
       source: damageSource,
       directBase: direct?.directBase,
       criticalBonus: direct?.criticalBonus,
@@ -2727,6 +2759,8 @@ export class RunScene extends Phaser.Scene {
           }))]
         : [],
       upgrades: summary?.upgrades ?? [],
+      codexEnemies: selectEnemyCodex(this.runTheme),
+      capabilities: selectCapabilityProgress(this.runTheme, getProfile()),
       codex: selectShrineCodex(this.runTheme),
       codexUpgrades: selectUpgradeCodex(this.runTheme, session),
       codexSession: [...selectSessionCodex(this.runTheme, session), ...describeProfile(this.runTheme)],
@@ -2955,7 +2989,7 @@ export class RunScene extends Phaser.Scene {
       level: this.runState.progression.level,
       statistics: this.runState.statistics,
     });
-    this.runEndOverlay?.show(this.runState, () => this.restartRun(), newUnlocks, getProfileStatus().mode === "saved" ? undefined : getProfileStatus().message);
+    this.runEndOverlay?.show(this.runState, () => this.restartRun(), newUnlocks, getProfileStatus().mode === "saved" ? undefined : getProfileStatus().message, getProfile().unlockedWeaponIds);
   }
 
   private restartRun(): void {

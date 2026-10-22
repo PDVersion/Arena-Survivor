@@ -13,6 +13,34 @@ export const alternateTheme = defineTheme({
   id: "alternate_test",
   schemaVersion: 1,
   copy: {
+    mastery: {
+      "review": "Run review",
+      "details": "Details",
+      "tools": "Tool contributions",
+      "choices": "Pressure chosen",
+      "nextExperiment": "Next experiment",
+      "noDamage": "No committed damage this run.",
+      "otherDamage": "Other effects / unattributed",
+      "noChoices": "No optional site or curse accepted.",
+      "capabilities": "Capabilities",
+      "enemies": "Enemies",
+      "health": "Health",
+      "speed": "Move speed",
+      "harm": "Contact harm",
+      "fractures": "Can fragment into",
+      "releases": "Releases on defeat",
+      "gameValues": "Game values, not environmental measurements.",
+      "previous": "Previous",
+      "nextPage": "Next",
+      "tryFirst": "Finish an attempt to make {name} available.",
+      "tryEquip": "Look for the {name} equip choice, then try clearing a weak group.",
+      "tryReady": "Look for the {name} evolution choice; the owned track is ready.",
+    "tryEvolve": "Look for {name}: {picked}/{required} owned picks towards {evolved}.",
+      "tryRisk": "Try one optional site, then compare its extra pressure and reward.",
+      "tryRecovery": "Practise leaving a marked attack area, then returning during recovery.",
+      "tryCalm": "Try a run without optional bargains and compare your tool contributions.",
+      "bossDefeated": "Final threat defeated"
+},
     saveManager: {
       "manageSave": "Manage Save",
       "title": "Manage Save",
@@ -235,6 +263,7 @@ export const alternateTheme = defineTheme({
     },
   ],
   enemies: [
+
     {
       id: archetypeIds.enemy.swarmBasic,
       maxHealth: 20,
@@ -253,6 +282,17 @@ export const alternateTheme = defineTheme({
     { id: archetypeIds.enemy.slowDurable, maxHealth: 80, moveSpeed: 70, contactDamage: 20, contactCooldownMs: 1000, radius: 22, displayDiameter: 44, xpReward: 7, armour: 40, geometry: "square", presentationToken: "enemyTank", fragmentInto: archetypeIds.enemy.fastFragile },
     { id: archetypeIds.enemy.deathSpawner, maxHealth: 50, moveSpeed: 80, contactDamage: 12, contactCooldownMs: 1000, radius: 25, displayDiameter: 50, xpReward: 5, armour: 10, geometry: "hexagon", presentationToken: "enemySpawner", deathSpawns: [{ enemyId: archetypeIds.enemy.fastFragile, count: 5, rewardMultiplier: 0.5 }] },
     { id: archetypeIds.enemy.stationaryFragment, maxHealth: 18, moveSpeed: 0, contactDamage: 7, contactCooldownMs: 1000, radius: 12, displayDiameter: 24, xpReward: 0, armour: 12, geometry: "triangle", presentationToken: "enemyTank" },
+    { id: archetypeIds.enemy.clusterFodder, maxHealth: 6, moveSpeed: 64, contactDamage: 3, contactCooldownMs: 1000,
+      radius: 10, displayDiameter: 28, xpReward: 1, armour: 0, geometry: "circle", presentationToken: "enemyFast",
+      arrivalCluster: { count: 3, spacing: 34 } },
+    { id: archetypeIds.enemy.committedCharger, maxHealth: 18, moveSpeed: 90, contactDamage: 7, contactCooldownMs: 1000,
+      radius: 14, displayDiameter: 38, xpReward: 3, armour: 0, geometry: "circle", presentationToken: "enemyTank",
+      committedMotion: { triggerRange: 150, telegraphMs: 1000, travelMs: 1000, recoveryMs: 1400,
+        speedMultiplier: 3.5, aimOffsetRadians: 0, cueToken: "critical", cueWidth: 3 } },
+    { id: archetypeIds.enemy.gustDrifter, maxHealth: 12, moveSpeed: 80, contactDamage: 5, contactCooldownMs: 1000,
+      radius: 12, displayDiameter: 34, xpReward: 2, armour: 0, geometry: "square", presentationToken: "enemySpawner",
+      committedMotion: { triggerRange: 150, telegraphMs: 900, travelMs: 900, recoveryMs: 1300,
+        speedMultiplier: 2.5, aimOffsetRadians: 0.8, cueToken: "critical", cueWidth: 3 } },
   ],
   pickups: [
     {
@@ -393,6 +433,9 @@ export const alternateTheme = defineTheme({
       contactKnockbackImpulse: 18,
       contactKnockbackCooldownMs: 350,
       roles: [
+        { enemyId: archetypeIds.enemy.committedCharger, separationScale: 0.95, mass: 1.3 },
+        { enemyId: archetypeIds.enemy.gustDrifter, separationScale: 0.9, mass: 0.7 },
+        { enemyId: archetypeIds.enemy.clusterFodder, separationScale: 0.9, mass: 0.6 },
         { enemyId: archetypeIds.enemy.fastFragile, separationScale: 0.55, mass: 0.6 },
         { enemyId: archetypeIds.enemy.swarmBasic, separationScale: 0.7, mass: 1 },
         { enemyId: archetypeIds.enemy.slowDurable, separationScale: 1, mass: 4 },

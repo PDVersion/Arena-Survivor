@@ -45,11 +45,24 @@ const maxLevelFor = (skillId: Parameters<typeof skillMaxLevel>[1]): number =>
   skillMaxLevel(theme.skills, skillId);
 
 describe("player stat lines", () => {
-  it("covers every declared stat key exactly once", () => {
+  it("covers every applicable starter stat key exactly once", () => {
     const lines = selectPlayerStats(state(), theme);
     expect(lines.map((line) => line.key)).toEqual(
-      statKeys.filter((key) => key !== "projectiles" && key !== "pierce"),
+      statKeys.filter((key) => key !== "projectiles" && key !== "pierce" && key !== "primaryTargets"),
     );
+  });
+
+  it("shows capacity only for a capped tool and preserves projectile delivery stats", () => {
+    for (const pack of [ecoGuardianTheme, knightMagicTheme]) {
+      const starter = selectPlayerStats(state(), pack);
+      expect(starter.some((line) => line.key === "primaryTargets")).toBe(false);
+      const secondary = selectPlayerStats(state(), pack, archetypeIds.weapon.secondary);
+      expect(secondary.find((line) => line.key === "primaryTargets")).toMatchObject({ value: 3, label: pack.copy.stats.primaryTargets });
+      expect(secondary.some((line) => line.key === "projectiles" || line.key === "pierce")).toBe(false);
+    }
+    const projectile = selectPlayerStats(state(), knightMagicTheme);
+    expect(projectile.find((line) => line.key === "projectiles")?.value).toBe(1);
+    expect(projectile.find((line) => line.key === "pierce")?.value).toBe(0);
   });
 
   it("resolves what the player experiences, not the raw stat", () => {

@@ -5,6 +5,7 @@ import {
   resolveAnimatedSpriteState,
   advancePlayerMovementFrame,
   resolveSpriteFlipX,
+  resolveFrameOrigin,
   SPRITE_DEATH_FRAME_MS,
   SPRITE_MOVE_FRAME_MS,
   type SpriteAnimationState,
@@ -217,6 +218,10 @@ export class SpriteView {
       this.animation.moving = this.animateMovement && moving;
       const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
       this.setState(state);
+    }
+    if (this.definition.frameAnchors) {
+      const origin = resolveFrameOrigin(this.definition, this.renderedFrame, this.image.flipX);
+      this.image.setOrigin(origin.x, origin.y);
     }
   }
 

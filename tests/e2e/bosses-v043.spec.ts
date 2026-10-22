@@ -44,7 +44,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const ending of ["
         const ordinary = theme.enemies.find((enemy: { id: string }) => enemy.id === "enemy.swarm_basic");
         scene.enemyCapacity = 1;
         scene.spawnEnemy("ambient", 1, ordinary, { x: scene.player.x + 200, y: scene.player.y }, false);
-        scene.runState = rules.advanceRunState(scene.runState, scene.runState.durationMs * 0.5);
+        scene.runState = rules.advanceRunState(scene.runState, scene.runState.durationMs * theme.enemies.find((enemy: { boss?: { kind: string } }) => enemy.boss?.kind === "mini").boss.appearAt);
         scene.releaseBossMilestones();
         observations.capacity = { live: actors().length, spawned: [...scene.spawnedBossIds] };
         actors()[0]!.destroy(); scene.releaseBossMilestones(); scene.releaseBossMilestones();

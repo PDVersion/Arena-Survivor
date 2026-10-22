@@ -1,23 +1,20 @@
 # Autonomous progress
 
-Updated: 2026-10-21 (Australia/Sydney).
+Updated: 2026-10-22 (Australia/Sydney).
 
 ## Objective and current state
 
-Current milestone dates/statuses and published CI evidence are consolidated in
-[build/BUILD_STATUS.md](build/BUILD_STATUS.md). C1–C7 scoped local gates are
-verified through C7 `88f220b`. Next is the open
-Session21 Q6 correction gate: player motion, cone feedback and owner-selected
-vacuum target-cap progression. The owner's subsequent genre/rubbish request is
-recorded in [the four-phase roadmap](build/READABLE_GAMEPLAY_ROADMAP.md): G1–G4
-follow Q6, with current-enemy rebalancing measured against corrected tools.
-G1 is now claimed to Codex on `codex/readable-gameplay-g1`; the owner authorizes
-publishing the plan/claim/start prompt to main. No follow-on runtime implementation
-has started. PR27 has merged as9837158; Q6 remains open. Remaining external checks
-are temporarily waived/unverified. The session records below are historical
-checkpoints, including their then-current delivery constraints and dirty-file
-notes. Those are superseded where the current summary records later evidence
-or the owner's documentation cleanup.
+G1–G4 are locally complete through G4 `a10e3eb` on
+`codex/readable-gameplay-g4`, with Q6 separately verified in `44585dd`.
+The [single completed build log](build/MASTER_BUILD_PLAN.md#readable-gameplay)
+now owns all four phase plans, original claims/checklists and evidence links.
+[BUILD_STATUS](build/BUILD_STATUS.md) owns dates/acceptance state; the
+[next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) owns delivery and
+owner-selected sprite planning. No further G1–G4 gameplay gate is open.
+Broad current-app checks remain deferred and existing external checks remain
+waived/unverified. This closure is documentation only, with no publication,
+new remote CI, gameplay/art selection or merge. Historical sessions below retain
+their original checkpoint meanings.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -1643,3 +1640,162 @@ pass:15 documentation-only paths,9 local links in new roadmap/handoff/report,
 whitespace. Existing bundle-size advisory remains; no local browser suite is
 needed for this documentation-only publication. Older delivery statements above
 retain historical meaning; no later gameplay merge is authorized here.
+
+## Q6 prerequisite — verified 2026-10-21
+
+Recovered clean main c200b21, refreshed origin/main, confirmed PR27 merged9837158
+with successful head CI39535388393; created `codex/readable-gameplay-g1`. Claimed
+exact paths before edits. Corrected measured hood-anchor shifts through per-frame
+presentation metadata, truthfully separated a cone pulse from its fade, and added
+finite owner-track primary targets3→7/evolved8 in both themes. No body/art/save
+changes.146units/16files, types/lint/build/diff, final2serial Canvas browser cases
+(5.3s/no retries), four both-theme/all-preset baseline/C3 commands120scenarios pass.
+Early motion fixture failures/limits are in build/content/Q6_REPORT.md. Games and
+test server cleaned up; broad stress/soak/device checks deferred, existing external
+checks waived/unverified. Q6 gate passes; G1 baseline/assessment is next. Nothing
+pushed/merged by this local phase. Exact source digest: Q6/results.json.
+
+## G1 — verified 2026-10-21
+
+Started only after Q6 commit44585dd passed. Claimed exact tuning/model/test/report
+paths. Fresh120Q6-tools scenarios preserved, then repaired actual model omissions
+(armour, spawn-time cohorts, natural cadence, empty attack banking), retaining
+role-priority semantics. Independent120before/after captures isolate Glass
+armour40→20/director weight12→8; other eco/knight balance stays unchanged.
+Existing roles, stationary Shards, normal/split bag families and their exact
+rewards reviewed.187units/21files, types/lint/build/diff, final1bounded serial
+Canvas contact case1.7s/no retries and36fifty-ms sensitivity cases pass. Visual
+artifacts inspected and owned game/browser/server cleaned up. Detailed numbers,
+source hashes, regression trade-offs and model omissions: build/content/G1_REPORT.md.
+Full-app/stress/soak/native/device campaigns remain deferred; actual Safari/
+browser-OS/older device evidence waived/unverified. Prompt retired after durable
+result; G2–G4/art not started. Next handoff is selected G2 work on a separately
+claimed branch/scope; no implied publication/merge of these gameplay commits.
+
+## G2A — prompt reviewed, candidate implemented/kept 2026-10-22
+
+Owner requests a G2 prompt/plan, review and start of work. Created/reviewed
+build/PHASE_G2_PROMPT.md and BUILD_PLAN_G2.md before code. New branch
+codex/readable-gameplay-g2 from verified local G154e9b2f; clean initial checkout.
+Neutral weak-group role maps to Cigarette Butts/Ashling. Three individual actors,
+three-member retained introduction at25%, sparse later groups, primitive-only
+presentation. No automatic harmful patch, recursive group expansion, new saved
+field, generated sprite, global tuning/cap/rate change. Trial speed revised50→64
+against the existing approach envelope; old assertions stay meaningful.
+278units/29files, types/lint/build,240before/after scenarios and4final serial
+mixed-roster Canvas cases2.0s/no retries pass. Final source/results, fixture
+failures, reward/mix trade-offs and waived/deferred evidence are in G2A_REPORT.
+Keep the first candidate; G2 overall remains in progress. G2B wrapper gust/
+interception requires a fresh bounded claim/prompt review; Can/G3/G4/art unstarted.
+Owned resources cleaned up. No push/PR/merge or broad/device acceptance inferred.
+
+## G2B local continuation — 2026-10-22
+
+Wrapper/Paper Wisp interception is **kept** after its separate local gate:
+282units/30files, types/lint/build,120before+120after ambient cases/four balance
+commands and4serial both-theme Default/Low+reduced-motion browser cases pass.
+[Report](build/content/G2B_REPORT.md) owns source, trade-offs and aided-fixture limits.
+G2 remains in progress; G2C Can next under a reviewed claim. G3/G4/art unstarted;
+broad/native/device evidence remains deferred/waived/unverified. No push/merge.
+
+## G2 complete; G3 ready/unstarted — 2026-10-22
+
+G2A weak groups, G2B wrapper gust/interception and G2C direct Can roll/recovery
+are all **kept** after separate verified local candidate gates. G2Ab4d61ae and
+G2B7ce03c5 precede the G2C commit owning this checkpoint. Final686units/72files,
+types/lint/build/whole-branch whitespace,12serial Chromium Canvas candidate cases
+(4.2s,1worker,0retries) and per-candidate before/after balance evidence pass.
+[G2C report](build/content/G2C_REPORT.md) records all decisions, actual sources,
+initial test-only failures, trade-offs and aided-fixture/model limits.
+[Reviewed G3 handoff](build/PHASE_G3_PROMPT.md) is prepared; **G3 implementation
+has not started**. G4/new sprites remain unstarted. Broad regression/stress/soak
+checks deferred; actual Safari/missing browser-OS/older physical GPU evidence
+remains waived/unverified. No new remote CI, push, PR or main merge claim.
+
+## G3 complete locally / G4 ready, unstarted — 2026-10-22
+
+Owner requests execution of PHASE_G3_PROMPT. G3 runs on `codex/readable-gameplay-g3`
+from G2C5b50d7b: spaced teaching/mini/elite thresholds,4Glass/2Bag first waves,
+five optional destinations, current-world site cost/reward, minimap diamonds and
+boss pursuit holds during fixed warnings. Rate/camera/bodies/caps/weapons/stable
+IDs/saves/art remain. Final342short tests/35files and696full units/73files,
+types/lint/build/whitespace,13unique affected serial browser cases and120before+
+120after ambient /90before+90after timed balance scenarios pass. Initial old
+schedule/roster fixture failures and actual aided/model limits are recorded in
+[G3_REPORT](build/content/G3_REPORT.md); this is no natural survival/device claim.
+[PHASE_G4_PROMPT](build/PHASE_G4_PROMPT.md) is written/reviewed; G4 implementation
+and new sprites remain unstarted. Broad browser/stress/soak checks deferred;
+external browser/OS/older physical GPU evidence waived/unverified. Local phase
+commit only, no new CI/push/PR/main merge. Earlier open-G3 entries are historical.
+
+## G4 complete locally — 2026-10-22
+
+Owner requests G4 implementation. `codex/readable-gameplay-g4` starts at verified
+G3 `d8ae891`. Results now default to actual tool contributions, accepted optional
+pressure and one attainable next experiment, with the existing ledger/tally in
+Details. Death clocks use elapsed time, including overtime. The shared optional
+guide adds ten paged enemies and current progress toward the existing two unlocks.
+Both themes use authored copy; no new progression, saved fields, tuning or art.
+
+Final **703 unit tests/74 files**, **283 focused tests/25 files**, types/lint/build
+and whitespace pass. All **five** bounded serial Chromium cases pass together in
+4.3s, one worker, zero retries; screenshots inspected. All120 ambient balance
+cases exactly match G3. [G4_REPORT](build/content/G4_REPORT.md) records actual sources,
+input-fixture corrections and limits. G1–G4 are locally complete, with no new
+remote CI/push/PR/main merge claim. Broad app/stress/soak and physical/native
+checks remain deferred; previously waived external evidence remains unverified.
+[Next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers delivery/owner-selected
+sprite planning. V0.4.4 roster reconciliation is documented; generation is unstarted.
+Earlier unstarted-G4 entries above are historical checkpoints.
+
+## Four-phase local closure — 2026-10-22
+
+Owner requests wrap-up and a single completed plan log. Confirmed clean branch
+and G4 report-owning commit `a10e3eb` with Git. Consolidated Q6/G1 and G2–G4
+ownership/decisions/checklists into MASTER_BUILD_PLAN; old G2–G4 plan paths are
+compatibility pointers. Roadmap retains priorities/source context, current plans
+and status point to accepted closure. Detailed captures/reports/digests are intact.
+No runtime/tests/assets/packages changed and no browser campaign repeated.
+Next is delivery review when selected, then bounded V0.4.4 art planning; no new
+phase/manifest claim/generation. External acceptance remains waived/unverified.
+
+Closure verification: 482 repository-local Markdown links checked with no new
+broken targets/anchors; 321 retained G4 source/evidence SHA256 hashes match.
+Only 11 Markdown files change; whitespace checks pass. No runtime/build/browser
+suite was rerun for this documentation-only consolidation, and no new gameplay
+or external acceptance is claimed. Existing phase commits remain intact.
+
+## Readable gameplay PR delivery — 2026-10-22
+
+Owner explicitly requests creating the cumulative PR. Delivery ownership is
+limited to Git/PR metadata and appended status/progress/reconciliation notes;
+no runtime, dependency, art or test change is selected. Fresh remote inspection:
+`origin/main` is `c200b21`, with no open PR and no main-only commits; local
+`4bac071` contains the seven Q6/G1/G2A/G2B/G2C/G3/G4 phase commits plus the
+consolidation. Preserve these commits and publish one PR into main.
+
+Fresh delivery verification passes all703unit tests/74files, typecheck, lint,
+production build and whole-branch whitespace. The existing bundle-size advisory
+remains. `npm audit --audit-level=high` exits0 with two moderate findings in
+Vitest/@vitest/mocker (GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp); this is not a
+zero-findings audit. Pins/lockfile are unchanged and no audit bypass is used.
+
+Select the existing automatic PR CI as the consolidated browser regression
+campaign; no repeated heavy local browser run or manual stress dispatch. Remote
+current-head CI is pending until its own run completes. Prior scoped reports
+retain source/aided-fixture limits. Actual Safari/missing browser-OS/older physical
+GPU evidence remains waived/unverified. PR creation does not merge or deploy;
+V0.4.4 inventory/frame/canvas/style selection remains next after delivery.
+
+## PR28 roster CI repair — local verification / 2026-10-22
+
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](build/performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.

@@ -1,0 +1,76 @@
+{
+  "parent": "5b50d7b",
+  "branch": "codex/readable-gameplay-g3",
+  "scope": "local G3 selected gate, no publication/merge",
+  "unit": {
+    "focused": {
+      "passed": 342,
+      "files": 35
+    },
+    "full": {
+      "passed": 696,
+      "files": 73
+    },
+    "initialFull": {
+      "passed": 695,
+      "failed": 1,
+      "cause": "old Glass sample before new unlock; sampled actual threshold without weakening budget guard"
+    }
+  },
+  "software": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass; existing size advisory",
+    "whitespace": "whole branch and staged checked before commit",
+    "production": "static emitted diagnostic marker scan only; no additional browser production campaign"
+  },
+  "browser": {
+    "engine": "151.0.7922.34",
+    "workers": 1,
+    "automaticRetries": 0,
+    "uniquePassed": 13,
+    "runs": [
+      {
+        "cases": 8,
+        "passed": 8,
+        "failed": 0,
+        "wallSeconds": 10.4,
+        "scope": "G3 new cases plus boss ending/reset"
+      },
+      {
+        "cases": 9,
+        "passed": 8,
+        "failed": 1,
+        "wallSeconds": 24.6,
+        "scope": "refined G3 panel and affected old site/curse fixtures"
+      },
+      {
+        "cases": 1,
+        "passed": 1,
+        "failed": 0,
+        "wallSeconds": 2.0,
+        "scope": "all-site copy count corrected from old5 to roster-derived8"
+      }
+    ],
+    "limits": [
+      "aided clocks/positions/physics and synthetic pressure",
+      "no natural first-contact/upgrade timing or human survival",
+      "serial owned resources cleaned;4173/4174 closed"
+    ]
+  },
+  "balance": {
+    "ambientBefore": 120,
+    "ambientAfter": 120,
+    "applicablePerSide": 108,
+    "timedBefore": 90,
+    "timedAfter": 90,
+    "cliRuns": 8,
+    "scenariosPerCli": 30,
+    "placementSamples": 480
+  },
+  "deferred": [
+    "full app/browser stress/soak",
+    "actual Safari/missing browser-OS and older physical GPU waived/unverified"
+  ],
+  "next": "G4 reviewed handoff only; no G4 runtime/art"
+}

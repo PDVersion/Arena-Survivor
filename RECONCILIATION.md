@@ -6,7 +6,7 @@ This is not a daily diary or a duplicate issue tracker. Add an entry when a deci
 
 - Current milestone: **V0.4**
 - Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
-- Release-blocking open entries: **REC-113 audit is resolved and Q5 Actions repair is verified. REC-117 pickup retention is resolved by Session 6; P5/P6 software slices are verified; Session15 owner temporarily waives missing actual Safari/browser-OS/older physical-device checks. These remain unverified, never passed; C1–C7 local gates verified; Session21 authorizes draft PR delivery with Q6 and a new Vite audit finding open.**
+- Current disposition: **REC-113 audit/Q5 Actions repair resolved; REC-117 pickup retention resolved; P5/P6 software slices verified. Session15 temporarily waives missing actual Safari/browser-OS/older physical-device checks, which remain unverified. C1–C7 delivered in PR27; subsequent Q6/G1–G4 scoped local gates complete through G4 `a10e3eb`. Current broad branch CI/delivery and selected V0.4.4 art work remain outstanding; see the [completed log](build/MASTER_BUILD_PLAN.md#readable-gameplay) and BUILD_STATUS.**
 
 ## How to maintain this file
 
@@ -3739,3 +3739,278 @@ then G1 after verification, with separate phase commits. Do not treat a claim,
 main publication or prior milestone CI as a completed gameplay gate. The current
 request supersedes older local-only/draft-only delivery restrictions for this
 planning publication; it does not authorize merging subsequent gameplay changes.
+
+## REC-105 / REC-102 continuation — Q6 fixed anchors and finite owner capacity
+
+Accepted/resolved local Q6 gate2026-10-21, on `codex/readable-gameplay-g1`.
+Fixed-body pose inspection measures upper-hood centres25.5/26/25/25/28px in
+walk0/1/2/idle4/hit5; the hit pose's opposite facing compounds the visible shift.
+Authored per-frame anchors, mirrored with the rendered frame, keep that feature
+fixed. This is a presentation correction, never a body/pipeline/generated-pixel
+change. A175-frame completed-Arcade trace covers both directions/diagonals/idle/hit.
+The incomplete-input NaN fixture failure is not a game movement diagnosis.
+
+Cone damage still resolves once at firing. Filled/nozzle cue ends at80simulation-ms;
+a faint outline/selected-hit rings remain during200ms retraction at the captured
+origin. A fade entrant takes no damage. Target growth resolves from actual owned
+reach-pick history, theme +1 per pick/four max,3→7 then evolved8. Tiered reach is
+retained, but quality/other levels never add capacity. Same history survives
+replacement/reset; splash stays3 and clocks/provenance stay independent. New
+capacity rows use the same resolver as combat/card/pause. Validate finite attainable
+owned references, including evolution source, rather than infer levels from range.
+
+146units/16files, types/lint/build/diff, two final bounded serial Canvas cases and
+120balance scenarios pass; [report](build/content/Q6_REPORT.md) binds source/limits.
+Packed gains support bounded capacity payoff, not survival/performance. G1 still
+must assess health+armour and existing role budgets. Broad native/stress/device
+checks deferred; actual Safari/browser-OS/older-device evidence waived/unverified.
+This closes the preceding Session21 Q6 correction gate without reopening C1–C7.
+
+## REC-101 continuation — G1 corrected measurement and bounded Glass tuning
+
+Accepted2026-10-21, after Q6 prerequisite44585dd. G1 comparison must distinguish
+a model repair from a balance change. The old ambient simulator spent health
+without armour, reused the first surviving role cohort's health/reward for later
+arrivals, banked attacks across empty time and repaid natural capacity debt unlike
+the scene. Correct these against current contracts; keep same-role cohorts separate
+without changing densest-role priority. TTK and kill spending now both include
+armour. Sample cap dwell/due-natural blocking separately; neither is a causal
+backlog or runtime survival/performance metric. Ambient model still omits elites,
+children, milestone waves and bosses; review finite family budgets separately.
+
+Eco Glass retains96health but armour40→20 and base weight12→8. This lowers
+compounded work14.3% and calm late natural share16.2%→11.4%, preserving clear
+material durability and all speed/harm/reward/child contracts. No blanket weapon/
+XP/health/cadence/cap adjustment. Corrected Normal packed-base kills648→739 and
+cap dwell14.4→1.2simulation seconds, with level25→26; global damage/crit builds
+retain a generalist fallback. Some contact-only/Sweep outcomes lose a few XP and
+Beginner packed evolution loses one level as high-XP Glass becomes less common;
+record that trade-off, never assert universal improvement from lower work.
+
+Normal bag family is6lethals/10.5XP; inherited split bag family is28lethals/80XP
+before time/world/Fracture. Source halves and elite/world application must not
+compound twice; authored role offspring keep their fixed half reward and inherited
+depth. Existing24-event retention/dedup/ledger ownership remains unchanged. The
+new family budget guards finite rewards/work, not an invented simulated lineage.
+
+Fresh Q6-tools120, corrected before120/after120 and36fifty-ms sensitivity scenarios
+are retained with source hashes.187units/21files, types/lint/build/diff and one
+bounded serial Canvas contact case pass. [Report](build/content/G1_REPORT.md)
+records exact values, isolated/packed limits and body/camera/rate/save preservation.
+Owned test resources cleaned up; broad stress/soak/native/device checks deferred;
+actual Safari/browser-OS/older-device checks waived/unverified. G1 locally complete;
+G2–G4/new art unstarted, no gameplay merge authorization from planning publication.
+
+## REC-101 continuation — G2A individual weak arrival groups
+
+Accepted/keep2026-10-22. Owner explicitly requests a G2 prompt, its review and
+implementation. Reviewed BUILD_PLAN_G2 before edits. Neutral enemy.cluster_fodder
+maps to Cigarette Butts/Ashling;3individuals,6HP/64speed/3harm/1XP, radius10,
+display28 and34-unit arc spacing. Initial50speed violates the existing16s
+maximum-ring approach band;64 satisfies it without weakening the check.
+
+Group admission belongs only to natural director selection, not spawnEnemy.
+Otherwise introduction/split/duplication would recursively multiply requests.
+At25% use a theme-authored3-member milestone count instead of the general~19.
+Capture formation angles in retained causal requests; resolve off-screen safety
+against current view at admission. Capacity truncates ordinary natural batches,
+while causal requests stay queued. Keep the existing24-event processing budget.
+One shared count helper lets ambient simulation model the actual per-roll actor
+counts; roll shares and actor shares differ. Model still omits intro/geometry/
+survival/elites/children/bosses, so never infer those passes from pacing output.
+
+Generic theme-authored primitive parts follow position/rotation/scale/alpha/depth,
+flash and source destruction, with sprite precedence and no body feedback. Body
+radius remains definition-owned. Low/reduced-motion preserve essential parts.
+No generated art, environmental harm/persistence claim, contamination-on-cleanup,
+material ID remap, save schema/field or new unlock/discovery is introduced.
+Existing material families and rewards stay unchanged.
+
+278units/29files, types/lint/build/whole-branch whitespace,240before/after scenarios
+and4serial Chromium Canvas mixed-roster cases pass. Intro capacity1 retains2→1→0
+requests; three exact lethals pay3.15XP/18.81actual health at25%Normal. Duplicate
+lethals add nothing; natural group plus independent outsiders verifies cone3
+versus Grabber1 while outsiders survive. Earlier noXp flag and undrained final
+death-event fixtures were corrected, not product XP/retention rules weakened.
+[G2A_REPORT](build/content/G2A_REPORT.md) binds final sources, images, trade-offs
+and limitations. G2A kept; G2 remains in progress with G2B next under a new claim.
+Broad stress/native/device evidence deferred/waived, never newly passed; no merge.
+
+## REC-101 continuation — G2B fixed-bearing interception
+
+G2B kept locally2026-10-22 after reviewed exact ownership. Generic committed
+motion captures bearing when a nearby enemy begins warning, not at offscreen
+spawn or at launch. Re-aiming during warning/travel contradicts the visible arrow;
+obstacle steering therefore applies only during approach. Positive durations,
+range/speed/cue and bounded angle are theme-validated. One transition per update
+prevents long-frame warning/recovery erasure; zero delta freezes state. All phases
+remain ordinary contactable/targetable enemies with existing caps/source/XP.
+
+Essential arrow/ring reads gameplay state, never drives physics, and survives
+Low/reduced-motion. Actor destruction removes the view and cue scene hooks.
+Arrow shortens during travel and disappears in recovery. No sprite/body coupling,
+new save field or factual environmental claim. G2B_REPORT binds282units/30files,
+software/fourCLI/240scenario and4serial browser passes plus trade-offs/limits.
+The observer initially read removed physics after death; fix observer, not actor
+cleanup. The aided integration does not prove natural survival or device speed.
+G2B complete, G2C requires a new claim before edits; G3/art remain unstarted.
+
+## REC-101 continuation — G2C direct pass and complete roster gate
+
+G2C kept locally2026-10-22, reusing G2B's generic fixed-bearing motion unchanged.
+Can/Barrel Construct uses zero offset/longer faster travel, while Wrappers/Paper
+Wisp uses oblique shorter crossing. Capture at warning start allows a sideways
+step to miss; launch-time re-aim would invalidate the announced route. All phases
+retain ordinary contact/targets/XP, independent source identity and body data.
+Finite one-actor intro at55% and sparse weight2 avoid grouping or later cap growth.
+Balance adds costs to some weak builds; retain the measured trade-off, not blanket
+XP/weapon buffs.108attainable cases (of120) lose no final levels, but cap dwell can
+increase. Geometry/avoidance and survival remain outside the ambient model.
+
+Final12serial both-theme/default-low-reduced-motion Canvas candidate cases pass;
+mixed Can scenes include both prior new roles and old Bottle/Microplastics.
+Can rolls past captured player position and yields exact spawn21.375health/
+3.375XP at55%Normal, once. Views/cues/hooks release on death. Aid/clock/source/
+platform limits and screenshots are in G2C_REPORT; these are not natural survival
+or physical performance results. No listener remains on owned4173 after checks.
+
+Consolidated full units found an unchanged Q6 starter-stat expectation requiring
+vacuum-only primaryTargets. Exact narrow test ownership was added before editing;
+correct the applicable-key expectation and explicitly assert capped secondary and
+projectile display contracts. No runtime UI/weapon change. Initial684pass/1fail,
+final686pass/72files; targeted288/30files, types/lint/build/whitespace also pass.
+All three G2 candidates kept under separate gates/commits. G2 complete locally;
+reviewed PHASE_G3_PROMPT is next, G3/G4/art unstarted. Outstanding broad/external
+checks stay deferred/waived/unverified; no push/merge or new release claim.
+
+## REC-101 continuation — G3 rhythm, voluntary costs and fixed warnings
+
+Owner requests PHASE_G3_PROMPT execution after G2C5b50d7b. Claim exact G3 paths
+before code. Later shared roles34/44/52/60%, mini72%, baseline elites82% separate
+teaching from the old mini50%/second Multiplicity52%/Can55% stack. Eco and knight
+retain their different original openings. Use existing finite count overrides
+for4Glass/2Bag, not a new scheduler. Five optional sites16/40/66/84/90% eliminate
+the repeated permanent doubling arrival while preserving all definition values.
+
+Read-only in-range preview must resolve the current world and threat step, not
+repeat base multipliers. Elite preview includes the timer floor as well as Chaos.
+The same acceptance path still owns input/exact-once changes. Details clamp to
+view, stay above actors, and destroy with the source; minimap destinations use
+diamonds. Keep per-enemy dot projection allocation-free and avoid scanning enemy
+collections for previews that do not use a duplication count. Placement480–800/
+separation360 keeps traversal short; existing finite corner fallback can relax
+that band.480seeded samples min218.29/max799.16/≤48randomcalls, none within120;
+no universal distance or natural first-contact claim.
+
+Boss pursuit hold is optional theme data read from the active warning state.
+The announced circle stays fixed; AI resumes after its single pulse. It is not
+a kinematic lock against crowd separation/knockback, invulnerability or new attack.
+Existing capped unique admission, overlays, source XP, final/endless/clearing and
+reset remain. Explicit timed pacing choices model only existing world-multiplier
+sites/curses; reject actor-producing surge/duplication rather than invent lineage.
+Keep spawn-time cohorts, current collection multiplier and idempotent curses.
+
+Preserve named multiplicity2 as an explicit synthetic two-instance fixture even
+though the natural schedule has one. The all-site fixture follows actual five
+sites; duplication counts all8non-boss roles after G2, not the historic5. Updated
+old6site/258000ms and pre-unlock Glass fixtures; one legacy all-site browser5vs8
+failure corrected to roster-derived expectation without weakening caps/rewards.
+Final342short/35files and696full/73files, types/lint/build/whitespace,13unique
+affected serial browser passes and420before/after ambient/timed summaries pass.
+Some applicable ambient cases lose one final level; optional repeated-site XP/
+dwell drops substantially, while deliberate stacks still offer power and cost.
+Do not hide those trade-offs with XP/cap buffs or claim natural upgrade timing.
+
+G3_REPORT binds sources, images, initial fixture/type failures and measurement
+limits. G3 locally complete; PHASE_G4_PROMPT reviewed, G4/art unstarted. No broad
+app/stress/soak/hardware campaign; external checks remain deferred/waived/
+unverified, never newly passed. No push/PR/merge or new release acceptance.
+
+## REC-101 continuation — G4 evidence-based mastery and optional reference
+
+Owner requests G4 after G3d8ae891. Exact paths/design claimed in BUILD_PLAN_G4
+before code; completed implementation is consolidated in MASTER_BUILD_PLAN.
+Prefer a useful review plus optional reference over new achievements/discoveries.
+Reuse existing unlock thresholds/IDs; unknown saved IDs retain their meanings.
+
+Actual damage attribution must enter at `commitEnemyDamage` after health clamping
+and defeated guards, retaining the originating weapon for direct/splash only.
+The map partitions the existing damage total; it is not another category to add.
+Skills/unattributed effects remain the difference. Never infer payoff from being
+equipped, kills from pending work, or source-specific historical profile totals
+from old saves. Base and evolved tools retain their actual IDs/names. The map is
+run-local, resets fresh and is excluded by explicit durable aggregate folding.
+
+Results default to tool/pressure/next-experiment evidence. Details preserves the
+old ledger; Tab and clicks switch without re-recording the terminal. Advice uses
+current entitlement after the terminal fold, owned picks and the existing random
+evolution/equip choices, not guaranteed offers or new grind. Correct the old death
+clock from `durationMs - cause.atMs` to elapsed `cause.atMs`; overtime is not0:00.
+Final-boss flag may be true on a later endless death; do not relabel that as clear.
+
+Expose existing enemy catalogue in bounded pages. Game stats are difficulty-
+resolved definitions, not real material facts or every current actor's multipliers.
+Round only displayed values to two decimals to remove binary floating tails.
+Current capability progress is read-only and never grants. No new ranking/factual
+or handling surface, saved discovery, schema/ID/tuning/content/art change.
+
+Phaser3 keyboard events are PAGE_UP/PAGE_DOWN. Prevent the browser default only
+while enemy paging owns that input; otherwise a scrollable host can scroll after
+PageDown and invalidate canvas coordinates. Remove stable listeners on redraw/
+hide. Actual title smoke uses public canvas/telemetry: Phaser.GAMES is unavailable
+in this runtime; do not add a production global to support a test assumption.
+
+703full/74files,283focused/25files, types/lint/build/diff and final5serial browser
+cases4.3s/zero retries pass.120G3/G4 ambient cases exactly match. Report retains
+initial wrong-key/input/unsupported-test-global failures and aided-fixture/model
+limits. G4 locally complete; next handoff is delivery/owner-selected V0.4.4 art
+planning, with settled roster documented and generation unstarted. Broad/stress/
+soak/device checks are deferred; existing external waiver remains unverified.
+No new CI/push/PR/merge or natural survival/retention/offer-frequency claim.
+
+## REC-101 continuation — single completed gameplay log / 2026-10-22
+
+Owner requests local closure of all four phases. Git identifies G4 `a10e3eb`,
+not its G3 parent `d8ae891`. Consolidate completed Q6/G1–G4 ownership, reviewed
+scope, checklists, outcomes and source-bound evidence links in MASTER_BUILD_PLAN.
+Retain evidence reports/digests unchanged; old phase plan paths are compatibility
+pointers and the roadmap keeps research/priorities only. Historical intermediate
+“unstarted/next” wording inside archived specifications is not current authority.
+No additional gameplay gate is implied. Delivery review and separately selected
+V0.4.4 art scope remain next choices; scoped passes are not current full-app CI
+or natural retention/device evidence. No runtime change or new campaign/publication.
+
+## REC-101 continuation — readable gameplay PR delivery — 2026-10-22
+
+Owner explicitly requests creating the cumulative PR. Delivery ownership is
+limited to Git/PR metadata and appended status/progress/reconciliation notes;
+no runtime, dependency, art or test change is selected. Fresh remote inspection:
+`origin/main` is `c200b21`, with no open PR and no main-only commits; local
+`4bac071` contains the seven Q6/G1/G2A/G2B/G2C/G3/G4 phase commits plus the
+consolidation. Preserve these commits and publish one PR into main.
+
+Fresh delivery verification passes all703unit tests/74files, typecheck, lint,
+production build and whole-branch whitespace. The existing bundle-size advisory
+remains. `npm audit --audit-level=high` exits0 with two moderate findings in
+Vitest/@vitest/mocker (GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp); this is not a
+zero-findings audit. Pins/lockfile are unchanged and no audit bypass is used.
+
+Select the existing automatic PR CI as the consolidated browser regression
+campaign; no repeated heavy local browser run or manual stress dispatch. Remote
+current-head CI is pending until its own run completes. Prior scoped reports
+retain source/aided-fixture limits. Actual Safari/missing browser-OS/older physical
+GPU evidence remains waived/unverified. PR creation does not merge or deploy;
+V0.4.4 inventory/frame/canvas/style selection remains next after delivery.
+
+## REC-114 continuation — PR28 roster CI repair — local verification / 2026-10-22
+
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](build/performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.

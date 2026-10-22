@@ -1,0 +1,243 @@
+{
+  "candidate": "roll",
+  "themeKey": "knight-magic",
+  "quality": "default",
+  "browser": "151.0.7922.34",
+  "initial": {
+    "retained": 1,
+    "repeated": 1,
+    "initialMotionPhase": "approach",
+    "offscreenDistance": 498.93899376714535,
+    "warning": {
+      "phase": "telegraph",
+      "heading": [
+        -1,
+        1.2246467991473532e-16
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1940,
+        1200
+      ],
+      "cueCommands": 0,
+      "cueActive": true,
+      "viewActive": true,
+      "bodyWidth": 28,
+      "health": 21.374999999999996,
+      "xp": 0,
+      "kills": 0,
+      "damage": 0,
+      "breakdown": 0,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "first": {
+      "phase": "telegraph",
+      "heading": [
+        -1,
+        1.2246467991473532e-16
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1940,
+        1200
+      ],
+      "cueCommands": 38,
+      "cueActive": true,
+      "viewActive": true,
+      "bodyWidth": 28,
+      "health": 21.374999999999996,
+      "xp": 0,
+      "kills": 0,
+      "damage": 0,
+      "breakdown": 0,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "zeroDeltaFrozen": true,
+    "motion": {
+      "triggerRange": 150,
+      "telegraphMs": 1000,
+      "travelMs": 1000,
+      "recoveryMs": 1400,
+      "speedMultiplier": 3.5,
+      "aimOffsetRadians": 0,
+      "cueToken": "critical",
+      "cueWidth": 3
+    },
+    "capturedPlayer": [
+      1800,
+      1200
+    ],
+    "playerRadius": 18,
+    "enemyRadius": 14,
+    "health": 21.374999999999996,
+    "expectedXp": 3.375,
+    "speed": 94.5,
+    "rate": 0.5
+  },
+  "launch": {
+    "phase": "travel",
+    "heading": [
+      -1,
+      1.2246467991473532e-16
+    ],
+    "velocity": [
+      0,
+      0
+    ],
+    "position": [
+      1933.385,
+      1200
+    ],
+    "cueCommands": 38,
+    "cueActive": true,
+    "viewActive": true,
+    "bodyWidth": 28,
+    "health": 21.374999999999996,
+    "xp": 0,
+    "kills": 0,
+    "damage": 0,
+    "breakdown": 0,
+    "backlog": 0,
+    "settings": {
+      "difficulty": "normal",
+      "presentationQuality": "default",
+      "detailedUpgradeCards": true,
+      "reducedMotion": false,
+      "muted": false,
+      "minimapOpacity": 0.6
+    }
+  },
+  "recovery": {
+    "phase": "recover",
+    "heading": [
+      -1,
+      1.2246467991473532e-16
+    ],
+    "velocity": [
+      0,
+      0
+    ],
+    "position": [
+      1609.2499999999995,
+      1200
+    ],
+    "cueCommands": 14,
+    "cueActive": true,
+    "viewActive": true,
+    "bodyWidth": 28,
+    "health": 21.374999999999996,
+    "xp": 0,
+    "kills": 0,
+    "damage": 0,
+    "breakdown": 0,
+    "backlog": 0,
+    "settings": {
+      "difficulty": "normal",
+      "presentationQuality": "default",
+      "detailedUpgradeCards": true,
+      "reducedMotion": false,
+      "muted": false,
+      "minimapOpacity": 0.6
+    }
+  },
+  "distance": 330.75000000000045,
+  "pulse": {
+    "lethal": {
+      "phase": "recover",
+      "heading": [
+        -1,
+        1.2246467991473532e-16
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1609.2499999999995,
+        1200
+      ],
+      "cueCommands": 0,
+      "cueActive": false,
+      "viewActive": false,
+      "bodyWidth": 0,
+      "health": 0,
+      "xp": 3.375,
+      "kills": 1,
+      "damage": 21.374999999999996,
+      "breakdown": 21.374999999999996,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "duplicate": {
+      "phase": "recover",
+      "heading": [
+        -1,
+        1.2246467991473532e-16
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1609.2499999999995,
+        1200
+      ],
+      "cueCommands": 0,
+      "cueActive": false,
+      "viewActive": false,
+      "bodyWidth": 0,
+      "health": 0,
+      "xp": 3.375,
+      "kills": 1,
+      "damage": 21.374999999999996,
+      "breakdown": 21.374999999999996,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "outside": [
+      23.75,
+      11.875,
+      7.124999999999999,
+      14.249999999999998
+    ],
+    "viewDestroyed": true,
+    "cueDestroyed": true
+  },
+  "errors": []
+}

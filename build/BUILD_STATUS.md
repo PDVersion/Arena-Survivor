@@ -1,6 +1,6 @@
 # Build dates and status
 
-Updated **2026-10-21 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-22 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -17,7 +17,7 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 remains open; [plan](BUILD_PLAN_V0.4.3.md) |
+| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](BUILD_PLAN_V0.4.3.md) |
 | V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
@@ -57,11 +57,11 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | C7 portable saves | **Verified local phase,2026-10-20** | Canonical codec, preview/backup/recovery/reset,655units/67files and five affected serial browser cases; [report](content/C7_REPORT.md) |
 | C1–C7 / optional content | **C1–C7 local gates verified** | Owner approves planned content; Session15 temporarily waives outstanding browser/device checks without marking them passed. F16 delivered; unrelated optional proposals remain unselected |
 
-## Session21 correction disposition
+## Session21 correction disposition (historical)
 
 C7 is committed locally as `88f220b`; clean branch review found ten commits ahead
 of the local origin tracking ref. C1–C7 scoped local gates remain verified.
-Q6 is the next open correction gate in [the active plan](BUILD_PLAN_V0.4.3.md#next-step--q6-player-motion-cone-feedback-and-vacuum-progression):
+Q6 is the next open correction gate in [the active plan](MASTER_BUILD_PLAN.md#readable-gameplay-q6):
 player-motion/alignment diagnosis, truthful cone feedback, and owner-selected
 vacuum primary-target growth with weapon upgrades. Modest early caps are accepted;
 exact later cap steps/evolution tuning remain undecided and unimplemented.
@@ -87,11 +87,11 @@ added local-link checks,120-record validation, runtime/test/asset hash preservat
 production build and whitespace checks. Existing bundle-size advisory remains;
 no browser suite was run and no new browser/device/CI pass is claimed.
 
-## Planning claim and next implementation — 2026-10-21
+## Historical planning claim and next implementation — 2026-10-21
 
 Owner explicitly requests publishing the planning amendment to main as a claim.
 G1 is claimed to Codex on future `codex/readable-gameplay-g1`, with Q6 still its
-first prerequisite. [Ownership/gates](READABLE_GAMEPLAY_ROADMAP.md#phase-g1--reliable-power-growth-and-existing-roster-rebalance)
+first prerequisite. [Ownership/gates](MASTER_BUILD_PLAN.md#readable-gameplay-g1)
 and [start prompt](PHASE_G1_PROMPT.md) are durable. No Q6/G1 code is implemented
 or verified by this publication; G2–G4 and new art remain future work.
 
@@ -194,3 +194,62 @@ modifiers after tagged enemies spawn; move it after exact spawn-time reward
 assertions, then assert surge activation1/scheduled100. Three affected cases
 pass17.9s locally, one worker/zero retries; types/affected lint/diff pass. Final
 current-head full Actions remains unverified until its own run completes.
+
+## Readable gameplay — completed local build / 2026-10-22
+
+Q6 `44585dd`; G1 `54e9b2f`; G2A `b4d61ae`, G2B `7ce03c5`, G2C `5b50d7b`;
+G3 `d8ae891`; G4 **`a10e3eb`** on `codex/readable-gameplay-g4`.
+All four scoped local gates pass. The [single master log](MASTER_BUILD_PLAN.md#readable-gameplay)
+contains completed ownership/checklists, decisions, verification and report links.
+Final G4 evidence records 703 full units/74 files, 283 focused/25 files, types,
+lint/build/whitespace, five serial browser cases and 120 unchanged ambient cases.
+These are source-bound phase passes, not a new current full-app CI pass.
+
+Next: cumulative delivery review/one PR when requested, then owner-selected
+V0.4.4 inventory/frame/canvas/style planning. Art generation remains unstarted.
+Broad regression/stress/soak deferred; actual Safari/missing browser-OS/older
+physical-GPU evidence temporarily waived/unverified. V0.4 overall is incomplete.
+
+Documentation-only closure consolidates the phase plans without changing runtime,
+tests, assets, packages or retained evidence. No push/PR/merge or CI dispatch.
+
+Closure verification: 482 repository-local Markdown links checked with no new
+broken targets/anchors; 321 retained G4 source/evidence SHA256 hashes match.
+Only 11 Markdown files change; whitespace checks pass. No runtime/build/browser
+suite was rerun for this documentation-only consolidation, and no new gameplay
+or external acceptance is claimed. Existing phase commits remain intact.
+
+## Readable gameplay PR delivery — 2026-10-22
+
+Owner explicitly requests creating the cumulative PR. Delivery ownership is
+limited to Git/PR metadata and appended status/progress/reconciliation notes;
+no runtime, dependency, art or test change is selected. Fresh remote inspection:
+`origin/main` is `c200b21`, with no open PR and no main-only commits; local
+`4bac071` contains the seven Q6/G1/G2A/G2B/G2C/G3/G4 phase commits plus the
+consolidation. Preserve these commits and publish one PR into main.
+
+Fresh delivery verification passes all703unit tests/74files, typecheck, lint,
+production build and whole-branch whitespace. The existing bundle-size advisory
+remains. `npm audit --audit-level=high` exits0 with two moderate findings in
+Vitest/@vitest/mocker (GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp); this is not a
+zero-findings audit. Pins/lockfile are unchanged and no audit bypass is used.
+
+Select the existing automatic PR CI as the consolidated browser regression
+campaign; no repeated heavy local browser run or manual stress dispatch. Remote
+current-head CI is pending until its own run completes. Prior scoped reports
+retain source/aided-fixture limits. Actual Safari/missing browser-OS/older physical
+GPU evidence remains waived/unverified. PR creation does not merge or deploy;
+V0.4.4 inventory/frame/canvas/style selection remains next after delivery.
+
+## PR28 roster CI repair — local verification / 2026-10-22
+
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.

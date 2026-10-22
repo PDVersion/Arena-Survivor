@@ -7,7 +7,7 @@ import type { DirectorTuning } from "../../../core/archetypes/tuning";
  *
  * Microplastics open the run. Bottles quietly enter at 10% progress (30 s on
  * the five-minute timer), with a low initial weight and a gradual ramp.
- * Heavier material arrivals retain their existing thresholds.
+ * G3 spaces heavier introductions before the later mini-boss.
  */
 export const director = {
   baseIntervalMs: 900,
@@ -15,12 +15,17 @@ export const director = {
   intervalDecayK: 1,
   batchRamp: 3,
   batchSpreadRadians: 0.5,
-  eliteUnlockAt: 0.6,
+  eliteUnlockAt: 0.82,
   maxBaselineEliteChance: 0.08,
   waveBurstBase: 15,
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+    { enemyId: archetypeIds.enemy.committedCharger, waveMovement: "chase", unlockAt: 0.60,
+      introductionCount: 1, baseWeight: 2, weightGrowth: 0.4, chaosWeightBias: 0 },
+    { enemyId: archetypeIds.enemy.gustDrifter, waveMovement: "chase", unlockAt: 0.34,
+      introductionCount: 1, baseWeight: 3, weightGrowth: 0.5, chaosWeightBias: 0 },
+
     // Bottles start sporadically and become more prevalent.
     {
       enemyId: archetypeIds.enemy.swarmBasic,
@@ -44,18 +49,23 @@ export const director = {
     {
       enemyId: archetypeIds.enemy.slowDurable,
       waveMovement: "chase",
-      unlockAt: 0.4,
-      baseWeight: 12,
+      unlockAt: 0.44,
+      introductionCount: 4,
+      // G1 keeps Glass distinct without dominating retained combat work.
+      baseWeight: 8,
       weightGrowth: 0.9,
       chaosWeightBias: 0.35,
     },
     {
       enemyId: archetypeIds.enemy.deathSpawner,
       waveMovement: "chase",
-      unlockAt: 0.45,
+      unlockAt: 0.52,
+      introductionCount: 2,
       baseWeight: 5,
       weightGrowth: 2.6,
       chaosWeightBias: 0.5,
     },
+    { enemyId: archetypeIds.enemy.clusterFodder, waveMovement: "chase", unlockAt: 0.25,
+      introductionCount: 3, baseWeight: 2, weightGrowth: 0.5, chaosWeightBias: 0 },
   ],
 } as const satisfies DirectorTuning;

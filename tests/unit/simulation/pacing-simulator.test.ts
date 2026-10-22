@@ -1,3 +1,4 @@
+import { acceptCurse, applyWorldChoice, createWorldState } from "../../../src/game/systems/chaos/world-modifiers";
 import { describe, expect, it } from "vitest";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
@@ -8,6 +9,7 @@ import {
   findBuildModel,
 } from "../../../src/game/systems/simulation/build-models";
 import {
+  applyPacingWorldChoice,
   levelAt,
   simulatePacing,
   timeToKillTable,
@@ -275,5 +277,86 @@ describe("V0.3 balance pass", () => {
     expect(long.peakLiveEnemies).toBeLessThanOrEqual(300);
     // Levels keep arriving rather than stalling out past the tuned length.
     expect(long.levelTimestampsMs.length).toBe(long.finalLevel - 1);
+  });
+});
+
+describe("G1 model contract corrections", () => {
+  const noDamage = { id: "fixture", description: "No attacks", damagePerSecond: () => 0 };
+  const singleRole = (health: number, armour: number) => ({ ...ecoGuardianTheme,
+    enemies: ecoGuardianTheme.enemies.map((enemy) => ({ ...enemy, maxHealth: health, armour })),
+    tuning: { ...ecoGuardianTheme.tuning, director: { ...ecoGuardianTheme.tuning.director,
+      baseIntervalMs: 900, minIntervalMs: 900, intervalDecayK: 0, batchRamp: 0,
+      roles: [{ ...ecoGuardianTheme.tuning.director.roles[0]!, unlockAt: 0, baseWeight: 1, weightGrowth: 0 }] } } });
+
+  it("spends the same work for equivalent health-plus-armour without changing rewards", () => {
+    const armoured = run({ theme: singleRole(100, 100) });
+    const health = run({ theme: singleRole(200, 0) });
+    expect(armoured.totalKills).toBe(health.totalKills);
+    expect(armoured.totalXp).toBe(health.totalXp);
+    expect(armoured.capDwellMs).toBe(health.capDwellMs);
+  });
+
+  it("retains each arrival's spawn-time health instead of copying the first survivor", () => {
+    const theme = singleRole(100, 0);
+    const report = run({ theme: { ...theme, tuning: { ...theme.tuning, difficulty: { ...theme.tuning.difficulty,
+      time: { ...theme.tuning.difficulty.time, steps: 2, enemyHealthAtEnd: 1 } } } },
+      build: noDamage, durationMs: 2000, stepMs: 1000 });
+    // Two same-role arrivals: 150 and 200 HP before Normal's 0.95 preset.
+    expect(Object.values(report.remainingEffectiveWorkByRole)).toEqual([350 * 0.95]);
+    expect(Object.values(report.remainingByRole)).toEqual([2]);
+  });
+
+  it("does not store attacks during an empty interval", () => {
+    const theme = singleRole(100, 0);
+    const report = run({ theme: { ...theme, tuning: { ...theme.tuning, director: {
+      ...theme.tuning.director, baseIntervalMs: 20_000, minIntervalMs: 20_000 } } },
+      build: { ...noDamage, damagePerSecond: () => 10 }, durationMs: 40_000, bucketMs: 1000 });
+    expect(report.buckets.filter((b) => b.endMs <= 25_000).reduce((n, b) => n + b.kills, 0)).toBe(1);
+  });
+
+  it("admits at most one natural batch per step rather than a catch-up storm", () => {
+    const theme = singleRole(100, 0);
+    const report = run({ theme: { ...theme, tuning: { ...theme.tuning, director: {
+      ...theme.tuning.director, baseIntervalMs: 1, minIntervalMs: 1 } } }, build: noDamage, durationMs: 1000, stepMs: 1000 });
+    expect(Object.values(report.buckets[0]!.spawnedByRole)).toEqual([1]);
+    expect(report.peakLiveEnemies).toBe(1);
+  });
+
+  it("accounts sampled cap dwell and natural blocking separately from an unmodelled causal queue", () => {
+    const report = run({ build: noDamage });
+    expect(report.capDwellMs).toBeGreaterThan(0);
+    expect(report.naturalSpawnBlockedMs).toBeGreaterThan(0);
+    expect(report.capDwellMs).toBeLessThanOrEqual(report.durationMs);
+    expect(Object.values(report.remainingByRole).reduce((n, count) => n + count, 0)).toBe(300);
+    expect(Object.values(report.killsByRole).reduce((n, count) => n + count, 0)).toBe(report.totalKills);
+  });
+});
+
+for (const theme of [ecoGuardianTheme, knightMagicTheme]) describe(`${theme.id} explicit timed world-choice fixtures`, () => {
+  const shrine = theme.shrines.find((s) => s.id === archetypeIds.shrine.greed)!;
+  const options = { theme, build: findBuildModel("damage-rush")!, durationMs: 60000, bucketMs: 1000 };
+  it("leaves every pre-acceptance bucket unchanged, while ignored choices remain exactly baseline", () => {
+    const baseline = simulatePacing(options);
+    expect(simulatePacing({ ...options, worldChoices: [] })).toEqual(baseline);
+    const choice = { atMs: 30000, kind: "shrine" as const, id: shrine.id };
+    const accepted = simulatePacing({ ...options, worldChoices: [choice] });
+    expect(accepted.buckets.filter((b) => b.endMs < choice.atMs)).toEqual(baseline.buckets.filter((b) => b.endMs < choice.atMs));
+    expect(accepted.chaos).toBeGreaterThan(baseline.chaos);
+    const early = simulatePacing({ ...options, worldChoices: [{ ...choice, atMs: 0 }] });
+    const initial = applyWorldChoice(createWorldState(), { ...shrine, shrineId: shrine.id });
+    expect(early).toEqual(simulatePacing({ ...options, initialWorld: initial }));
+    const timedTtk = timeToKillTable(accepted, { ...options, worldChoices: [choice] });
+    const baseTtk = timeToKillTable(baseline, options);
+    expect(timedTtk[0]).toEqual(baseTtk[0]);
+  });
+  it("keeps repeated curse acceptance idempotent and rejects unsupported actor-producing events", () => {
+    const curse = theme.curses[0]!;
+    const choice = { atMs: 1000, kind: "curse" as const, id: curse.id };
+    const first = applyPacingWorldChoice(createWorldState(), choice, theme);
+    expect(first).toEqual(acceptCurse(createWorldState(), curse));
+    expect(applyPacingWorldChoice(first, choice, theme)).toBe(first);
+    expect(simulatePacing({ ...options, worldChoices: [choice, { ...choice, atMs: 2000 }] })).toEqual(simulatePacing({ ...options, worldChoices: [choice] }));
+    for (const id of [archetypeIds.shrine.spawnSurge, archetypeIds.shrine.duplication]) expect(() => simulatePacing({ ...options, worldChoices: [{ atMs: 0, kind: "shrine", id }] })).toThrow(/only model/);
+    for (const atMs of [-1, NaN, Infinity, options.durationMs + 1]) expect(() => simulatePacing({ ...options, worldChoices: [{ atMs, kind: "shrine", id: shrine.id }] })).toThrow(/time/);
   });
 });

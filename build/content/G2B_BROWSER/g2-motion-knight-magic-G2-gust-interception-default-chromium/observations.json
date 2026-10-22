@@ -1,0 +1,233 @@
+{
+  "themeKey": "knight-magic",
+  "quality": "default",
+  "browser": "151.0.7922.34",
+  "initial": {
+    "retained": 1,
+    "repeated": 1,
+    "offscreenDistance": 498.93899376714535,
+    "warning": {
+      "phase": "telegraph",
+      "heading": [
+        -0.6967067093471656,
+        -0.7173560908995226
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1940,
+        1200
+      ],
+      "cueCommands": 0,
+      "cueActive": true,
+      "viewActive": true,
+      "bodyWidth": 24,
+      "health": 13.109999999999998,
+      "xp": 0,
+      "kills": 0,
+      "damage": 0,
+      "breakdown": 0,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "first": {
+      "phase": "telegraph",
+      "heading": [
+        -0.6967067093471656,
+        -0.7173560908995226
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1940,
+        1200
+      ],
+      "cueCommands": 38,
+      "cueActive": true,
+      "viewActive": true,
+      "bodyWidth": 24,
+      "health": 13.109999999999998,
+      "xp": 0,
+      "kills": 0,
+      "damage": 0,
+      "breakdown": 0,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "zeroDeltaFrozen": true,
+    "motion": {
+      "triggerRange": 150,
+      "telegraphMs": 900,
+      "travelMs": 900,
+      "recoveryMs": 1300,
+      "speedMultiplier": 2.5,
+      "aimOffsetRadians": 0.8,
+      "cueToken": "critical",
+      "cueWidth": 3
+    },
+    "health": 13.109999999999998,
+    "expectedXp": 2.15,
+    "speed": 82.4,
+    "rate": 0.5
+  },
+  "launch": {
+    "phase": "travel",
+    "heading": [
+      -0.6967067093471656,
+      -0.7173560908995226
+    ],
+    "velocity": [
+      0,
+      0
+    ],
+    "position": [
+      1937.1295683574897,
+      1197.044492905494
+    ],
+    "cueCommands": 38,
+    "cueActive": true,
+    "viewActive": true,
+    "bodyWidth": 24,
+    "health": 13.109999999999998,
+    "xp": 0,
+    "kills": 0,
+    "damage": 0,
+    "breakdown": 0,
+    "backlog": 0,
+    "settings": {
+      "difficulty": "normal",
+      "presentationQuality": "default",
+      "detailedUpgradeCards": true,
+      "reducedMotion": false,
+      "muted": false,
+      "minimapOpacity": 0.6
+    }
+  },
+  "recovery": {
+    "phase": "recover",
+    "heading": [
+      -0.6967067093471656,
+      -0.7173560908995226
+    ],
+    "velocity": [
+      0,
+      0
+    ],
+    "position": [
+      1810.830576087036,
+      1067.0021807472324
+    ],
+    "cueCommands": 14,
+    "cueActive": true,
+    "viewActive": true,
+    "bodyWidth": 24,
+    "health": 13.109999999999998,
+    "xp": 0,
+    "kills": 0,
+    "damage": 0,
+    "breakdown": 0,
+    "backlog": 0,
+    "settings": {
+      "difficulty": "normal",
+      "presentationQuality": "default",
+      "detailedUpgradeCards": true,
+      "reducedMotion": false,
+      "muted": false,
+      "minimapOpacity": 0.6
+    }
+  },
+  "distance": 185.3999999999969,
+  "pulse": {
+    "lethal": {
+      "phase": "recover",
+      "heading": [
+        -0.6967067093471656,
+        -0.7173560908995226
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1810.830576087036,
+        1067.0021807472324
+      ],
+      "cueCommands": 0,
+      "cueActive": false,
+      "viewActive": false,
+      "bodyWidth": 0,
+      "health": 0,
+      "xp": 2.15,
+      "kills": 1,
+      "damage": 13.109999999999998,
+      "breakdown": 13.109999999999998,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "duplicate": {
+      "phase": "recover",
+      "heading": [
+        -0.6967067093471656,
+        -0.7173560908995226
+      ],
+      "velocity": [
+        0,
+        0
+      ],
+      "position": [
+        1810.830576087036,
+        1067.0021807472324
+      ],
+      "cueCommands": 0,
+      "cueActive": false,
+      "viewActive": false,
+      "bodyWidth": 0,
+      "health": 0,
+      "xp": 2.15,
+      "kills": 1,
+      "damage": 13.109999999999998,
+      "breakdown": 13.109999999999998,
+      "backlog": 0,
+      "settings": {
+        "difficulty": "normal",
+        "presentationQuality": "default",
+        "detailedUpgradeCards": true,
+        "reducedMotion": false,
+        "muted": false,
+        "minimapOpacity": 0.6
+      }
+    },
+    "outside": [
+      21.849999999999998,
+      10.924999999999999
+    ],
+    "viewDestroyed": true,
+    "cueDestroyed": true
+  },
+  "errors": []
+}

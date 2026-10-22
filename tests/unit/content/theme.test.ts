@@ -96,7 +96,12 @@ describe("theme manifests", () => {
     expect(knightMagicTheme.characters[0]?.radius).toBe(alternateTheme.characters[0]?.radius);
     expect(knightMagicTheme.weapons[0]).toEqual(alternateTheme.weapons[0]);
     expect(knightMagicTheme.weapons[1]?.id).toBe(archetypeIds.weapon.secondary);
-    expect(knightMagicTheme.enemies.filter((enemy) => !("boss" in enemy))).toEqual(alternateTheme.enemies);
+    // This historical fixture comparison owns the original five roles. New
+    // capabilities have their own both-theme content/behaviour checks.
+    const originalRoles = [archetypeIds.enemy.swarmBasic, archetypeIds.enemy.fastFragile,
+      archetypeIds.enemy.slowDurable, archetypeIds.enemy.deathSpawner, archetypeIds.enemy.stationaryFragment];
+    expect(knightMagicTheme.enemies.filter((enemy) => originalRoles.some((id) => id === enemy.id)))
+      .toEqual(alternateTheme.enemies.filter((enemy) => originalRoles.some((id) => id === enemy.id)));
     expect(knightMagicTheme.shrines.filter((shrine) => shrine.id !== archetypeIds.shrine.escalation)).toEqual(alternateTheme.shrines);
     expect(knightMagicTheme.copy.vocabulary.health).not.toBe(alternateTheme.copy.vocabulary.health);
     expect(currentShrine.name).not.toBe(alternateShrine.name);
@@ -293,4 +298,14 @@ describe("theme manifests", () => {
       "elite.baseline references missing presentation token: missing",
     ]));
   });
+});
+
+
+it("rejects incomplete/nonfinite/out-of-frame presentation anchors", () => {
+  const sprite = ecoGuardianTheme.tokens.sprites![archetypeIds.character.starter]!;
+  for (const frameAnchors of [[], [{ x: NaN, y: 0 }], Array(8).fill({ x: 49, y: 0 })]) {
+    expect(validateTheme({ ...ecoGuardianTheme, tokens: { ...ecoGuardianTheme.tokens, sprites: {
+      ...ecoGuardianTheme.tokens.sprites, [archetypeIds.character.starter]: { ...sprite, frameAnchors },
+    } } }).join()).toContain("frame anchors must cover the sheet within frame bounds");
+  }
 });
