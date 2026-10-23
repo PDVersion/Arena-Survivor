@@ -1,0 +1,60 @@
+{
+  "source": "build/sprites/raw/pickup_experience.a1.png",
+  "sourceSha256": "2caf6730f4819388766f0bd253d61c1858343009cb97066491a54a5e74860321",
+  "output": "build/sprites/review/style2/pickup_experience.a1.png",
+  "outputSha256": "6a084ad29f95974e45129fc156370c7fada40c03e81e1bdc40d2235e07cec8d8",
+  "width": 96,
+  "height": 32,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 13,
+      "top": 8,
+      "width": 16,
+      "height": 17,
+      "opaquePixels": 157
+    },
+    {
+      "frame": 1,
+      "left": 8,
+      "top": 8,
+      "width": 16,
+      "height": 17,
+      "opaquePixels": 158
+    },
+    {
+      "frame": 2,
+      "left": 4,
+      "top": 8,
+      "width": 16,
+      "height": 17,
+      "opaquePixels": 158
+    }
+  ],
+  "recipe": {
+    "contentId": "pickup.experience",
+    "source": "build/sprites/raw/pickup_experience.a1.png",
+    "output": "build/sprites/review/style2/pickup_experience.a1.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 0,
+      "cellWidth": 724,
+      "cellHeight": 724
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#365314",
+        "#65a30d",
+        "#a3e635",
+        "#d9f99d"
+      ]
+    ],
+    "outline": "#365314"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "contentId": "icon.weapon.secondary_evolved",
+  "source": "build/sprites/raw/icon_weapon_secondary_evolved.a1.png",
+  "output": "build/sprites/review/style2/icon_weapon_secondary_evolved.a1.png",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 1,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 0,
+    "cellWidth": 1254,
+    "cellHeight": 1254
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#164e63",
+      "#3893b5",
+      "#7dd3fc",
+      "#bae6fd"
+    ],
+    [
+      "#14532d",
+      "#22a34e",
+      "#4ade80",
+      "#8df0ac"
+    ],
+    [
+      "#111827",
+      "#374151",
+      "#6b7280",
+      "#d1d5db"
+    ],
+    [
+      "#713f12",
+      "#b7791f",
+      "#facc15",
+      "#fde68a"
+    ]
+  ],
+  "outline": "#164e63"
+}

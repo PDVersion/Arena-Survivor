@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-23",
+  "contentId": "pickup.experience",
+  "attempt": 1,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/pickup_experience.a1.png",
+  "sourceSha256": "2caf6730f4819388766f0bd253d61c1858343009cb97066491a54a5e74860321",
+  "prompt": "build/sprites/raw/pickup_experience.a1.prompt.txt",
+  "promptSha256": "467d40b450daf15a1c1362ebd9f0b0a69611b33f60008275dee30c94cea4a7bd",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    }
+  ],
+  "originalToolOutput": "/Users/pdv/.codex/generated_images/01a1661b-a76a-79a2-9839-731cfd4d1889/exec-65e56a29-1c5c-490a-82f0-9dd669f8be3d.png",
+  "status": "review",
+  "reviewOutput": "build/sprites/review/style2/pickup_experience.a1.png",
+  "intendedFrameWidth": 32,
+  "intendedFrameHeight": 32,
+  "intendedFrames": 3,
+  "visualConstructionReferences": [],
+  "notes": "Generated first pass. Common fixed source grid, uniform scale and deterministic palette/binary-alpha/2px outline conversion only; no hand-painted repairs. Strict frame anchors, continuity, silhouette occupancy, UI composition and in-game acceptance remain pending. Production assets unchanged. Equipment uses practical familiar-object construction; vacuum function remains game abstraction.",
+  "deferredReviewFinding": "Format passes. Diamond16x17 at x13,8,4 in successive32px cells; visible leftward drift violates intended common centre and footprint~50percent is smaller than80-85percent new-subject target. Retained unchanged for owner review; regenerate later if selected."
+}

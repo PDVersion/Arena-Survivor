@@ -5,10 +5,11 @@ This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
 [style/acceptance](../SPRITE_STYLE_GUIDE.md), [copyable prompts](../SPRITE_PROMPTS.md).
 
 **Shipped: five accepted style1 sheets. Target: 23 style2 primary sheets plus
-three selected static tool icons (owner selects entire catalog2026-10-23). Style2 generated/accepted: 26/0 (27 preserved style2 sources including both glass designs).**
+three selected static tool icons (owner selects entire catalog 2026-10-23). Style2 generated/accepted: 26/0 (27 preserved style2 sources including both glass designs).**
 Existing sheets remain live; all five are scheduled for regeneration. The target
 queue does not retroactively revoke their original acceptance or overwrite raw
-attempts. Glass Shards currently reuse Glass frame3. Batch1 claims are tracked below.
+attempts. Glass Shards currently reuse Glass frame3. All catalog rows have generated review assets. [Review gallery](review/style2/index.html)
+and [full report](review/style2/FULL_ROSTER_REPORT.md) record sources and deferred checks.
 
 ## Existing accepted baseline (unchanged)
 
@@ -44,7 +45,8 @@ not content/saved IDs. Same-world-size regeneration never creates a new archetyp
 
 All rows use style2; attempts and claimant are empty until actual generation.
 Next attempt is computed from preserved raw files, not reset to a1 for replacements.
-Exact prompts and frame roles live only in the catalog to avoid conflicting copies.
+Current descriptions and frame roles live in the catalog; immutable assembled prompts
+for actual generated attempts are preserved beside their raw sources.
 
 | ID | Subject | Target frame | Frames | Next attempt | Claimed by | Target status |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -59,10 +61,10 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | `enemy.committed_charger` | Aluminium Can | 64×64 | 4 | a1 | Codex actors 2026-10-23 | review |
 | `enemy.mini_boss` | Compacted Waste | 128×128 | 4 | a1 | Codex actors 2026-10-23 | review |
 | `enemy.final_boss` | Dumping Colossus | 192×192 | 4 | a1 | Codex actors 2026-10-23 | review |
-| `weapon.starter` | Cleanup Grabber action | 128×32 | 3 | a1 | Codex equipment 2026-10-23 | generating |
-| `weapon.secondary` | Cleanup Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | generating |
-| `weapon.secondary_evolved` | Cyclone Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | generating |
-| `pickup.experience` | Impact Point | 32×32 | 3 | a1 | Codex equipment 2026-10-23 | generating |
+| `weapon.starter` | Cleanup Grabber action | 128×32 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `weapon.secondary` | Cleanup Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `weapon.secondary_evolved` | Cyclone Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `pickup.experience` | Impact Point | 32×32 | 3 | a1 | Codex equipment 2026-10-23 | review |
 | `shrine.spawn_surge` | Landfill Breach | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
 | `shrine.greed` | Fast Fashion Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
 | `shrine.multiplicity` | Single-Use Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
@@ -71,9 +73,9 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | `hazard.damage_zone` | Contamination Spill | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
 | `hazard.obstacle` | Debris Pile | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
 | `hazard.periodic_burst` | Methane Vent | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
-| `icon.weapon.starter` | Cleanup Grabber icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
-| `icon.weapon.secondary` | Cleanup Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
-| `icon.weapon.secondary_evolved` | Cyclone Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
+| `icon.weapon.starter` | Cleanup Grabber icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | review |
+| `icon.weapon.secondary` | Cleanup Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | review |
+| `icon.weapon.secondary_evolved` | Cyclone Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | review |
 
 ## Retired inventory
 
@@ -120,6 +122,13 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-10-23 | `hazard.obstacle` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
 | 2026-10-23 | `hazard.periodic_burst` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
 | 2026-10-23 | `enemy.slow_durable` | 4 | 2 | n/a (built-in) | review | Familiar wine-bottle alternative; previous angular a3 retained for comparison. |
+| 2026-10-23 | `weapon.starter` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `weapon.secondary` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `weapon.secondary_evolved` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `pickup.experience` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `icon.weapon.starter` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `icon.weapon.secondary` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `icon.weapon.secondary_evolved` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
 
 ## Runtime inspection follow-up — 2026-10-12 Q2
 

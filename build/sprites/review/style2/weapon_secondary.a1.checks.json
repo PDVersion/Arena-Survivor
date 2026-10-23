@@ -1,0 +1,72 @@
+{
+  "source": "build/sprites/raw/weapon_secondary.a1.png",
+  "sourceSha256": "88b7a6502c22dcefef6e1b7d978ca921a35f9b37d7a2cee1cbcfca43d3c13c39",
+  "output": "build/sprites/review/style2/weapon_secondary.a1.png",
+  "outputSha256": "8a4be5a91860dd425485950b8da92293ad0985d5ac990ee9bbdfe20b80c6abfe",
+  "width": 384,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 12,
+      "top": 7,
+      "width": 106,
+      "height": 53,
+      "opaquePixels": 3774
+    },
+    {
+      "frame": 1,
+      "left": 12,
+      "top": 7,
+      "width": 106,
+      "height": 53,
+      "opaquePixels": 3801
+    },
+    {
+      "frame": 2,
+      "left": 12,
+      "top": 7,
+      "width": 106,
+      "height": 53,
+      "opaquePixels": 3781
+    }
+  ],
+  "recipe": {
+    "contentId": "weapon.secondary",
+    "source": "build/sprites/raw/weapon_secondary.a1.png",
+    "output": "build/sprites/review/style2/weapon_secondary.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 64,
+    "frames": 3,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 190,
+      "cellWidth": 724,
+      "cellHeight": 362
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#164e63",
+        "#3893b5",
+        "#7dd3fc",
+        "#bae6fd"
+      ],
+      [
+        "#14532d",
+        "#22a34e",
+        "#4ade80",
+        "#8df0ac"
+      ],
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ]
+    ],
+    "outline": "#164e63"
+  }
+}

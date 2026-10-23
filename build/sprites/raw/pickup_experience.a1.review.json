@@ -1,0 +1,25 @@
+{
+  "contentId": "pickup.experience",
+  "source": "build/sprites/raw/pickup_experience.a1.png",
+  "output": "build/sprites/review/style2/pickup_experience.a1.png",
+  "frameWidth": 32,
+  "frameHeight": 32,
+  "frames": 3,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 0,
+    "cellWidth": 724,
+    "cellHeight": 724
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#365314",
+      "#65a30d",
+      "#a3e635",
+      "#d9f99d"
+    ]
+  ],
+  "outline": "#365314"
+}
