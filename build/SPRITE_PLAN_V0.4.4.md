@@ -205,3 +205,12 @@ count and world display size remain fixed. Shared style/light/palette discipline
 continues; use neutral ordinary materials with theme-colour accents rather than
 turning mundane objects into magical/futuristic constructs. No new game facts,
 disposal rules or prevalence-driven balance are introduced.
+
+
+Root conversion ownership extension before code: sprite-pipeline.ts, its unit
+file and shared converter documentation for opt-in fixed-grid `fit: contain`.
+A rectangular common source cell may be letterboxed into the target using the
+existing uniform min-scale and the same centering offset for every cell, without
+per-pose bounding-box fitting, distortion or clipping. Default strict aspect
+validation stays unchanged. This supports generated boards taller than the
+requested strip; extra padding is a review concern, never a gameplay-size change.

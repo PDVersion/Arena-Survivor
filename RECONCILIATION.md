@@ -3150,6 +3150,42 @@ display diameter changes, per-frame recentering or hand-painted pose fixes.
 Generation checkpoint does not pass in-game continuity or authorize later roster
 content. No browser/device result is inferred; Knights and Magic stays paused.
 
+### REC-123 — Owner selects parallel source generation and familiar Australian shapes
+
+- Status: Accepted
+- Date: 2026-10-23
+- Affects: V0.4.4 remaining roster, local appearance references, review conversion
+- Blocks: None for generation; production/live acceptance remains separate
+
+Owner likes the three initial designs and explicitly requests subagents to
+create the entire remaining roster simultaneously, with individual fixes and
+in-game testing later. Select all23remaining subjects including3icons, and permit
+parallel source generation before Batch1's alignment/live gate passes. Claims
+are committed centrally before dispatch; three agents own disjoint actors,
+equipment and world assets. Root owns shared files and Git. No knight work,
+new gameplay, accepted/public replacement or new live acceptance is implied.
+
+The owner also asks for recognisable everyday Australian/Sydney shapes. Current
+catalog wording must not force angular fantasy glass when a wine bottle/jar is
+more familiar. Primary local context and explicit inference boundaries live in
+[appearance notes](build/sprites/AUSTRALIAN_REFERENCE_NOTES.md). Real silhouettes,
+ordinary materials and practical equipment guide prompts; palettes supply accents.
+Keep original sources/exact augmented prompts and previousGlass a3. Root creates
+Glass a4 wine-bottle alternative without changing stable ID or world diameter.
+No prevalence rankings, recycling eligibility lesson or disposal claim enters UI.
+
+Generator boards have equal rectangular cells that do not always match requested
+cell aspect. Opt-in `sourceGrid.fit=contain` permits the existing uniform min-scale
+and identical letterbox offset across all cells. It never independently fits a
+pose, distorts geometry, erases opaque source content or changes default strict
+aspect handling.36sprite tests (including exact-alpha letterboxing), types/lint/
+build pass; existing bundle advisory remains. Default crops still reject aspect
+changes or discarded opaque pixels. This is review formatting, not proof of same
+normalized in-game footprint, anchor continuity or warning/contact correctness.
+
+Revisit individual art after owner's visual/in-game review. Do not reopen the
+paused knight pack or silently promote all generated sources to accepted assets.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

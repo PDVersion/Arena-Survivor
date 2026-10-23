@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-23",
+  "contentId": "enemy.slow_durable",
+  "attempt": 4,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/enemy_slow_durable.a4.png",
+  "prompt": "build/sprites/raw/enemy_slow_durable.a4.prompt.txt",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/review/style2/enemy_slow_durable.a3.png",
+      "sha256": "aa56eb692eea440b276e4483dcca12ebd06b6526f1c8bc83734a6bd3c9214592"
+    }
+  ],
+  "visualConstructionReferences": [
+    "https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling/Waste-Resources/A-to-Z-Guide-of-Waste-and-Recycling",
+    "https://productcatalogue.visy.com/products/750ml-bvs-bordeaux/pdf"
+  ],
+  "status": "review",
+  "notes": "Familiar wine-bottle alternative requested by owner; a3 angular version preserved. No live acceptance. Neutral label ramp mechanically preserves the requested blank paper-label material."
+}

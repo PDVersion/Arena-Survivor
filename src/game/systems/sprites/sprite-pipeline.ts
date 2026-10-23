@@ -19,6 +19,8 @@ export interface SpriteBuildDefinition {
     readonly top: number;
     readonly cellWidth: number;
     readonly cellHeight: number;
+    /** Uniformly letterbox an unequal-aspect cell; every pose keeps the same grid transform. */
+    readonly fit?: "contain";
   };
   /** Outer opaque pixel layers recoloured without growing the silhouette. */
   readonly outlineWidth?: 1 | 2;
@@ -159,7 +161,8 @@ function fixedSourceCells(
     || grid.top + grid.cellHeight > source.height) {
     throw new Error(`${definition.contentId}: source grid is outside the image`);
   }
-  if (grid.cellWidth / grid.cellHeight !== definition.frameWidth / definition.frameHeight) {
+  if (grid.fit !== "contain"
+    && grid.cellWidth / grid.cellHeight !== definition.frameWidth / definition.frameHeight) {
     throw new Error(`${definition.contentId}: source grid must preserve target aspect ratio`);
   }
   for (let y = 0; y < source.height; y += 1) {

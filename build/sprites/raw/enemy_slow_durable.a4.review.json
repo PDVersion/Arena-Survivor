@@ -1,0 +1,32 @@
+{
+  "contentId": "enemy.slow_durable",
+  "source": "build/sprites/raw/enemy_slow_durable.a4.png",
+  "output": "build/sprites/review/style2/enemy_slow_durable.a4.png",
+  "frameWidth": 96,
+  "frameHeight": 96,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 30,
+    "cellWidth": 543,
+    "cellHeight": 680,
+    "fit": "contain"
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#0f4f52",
+      "#169b91",
+      "#2dd4bf",
+      "#82eadc"
+    ],
+    [
+      "#4b5563",
+      "#9ca3af",
+      "#e2e8f0",
+      "#f8fafc"
+    ]
+  ],
+  "outline": "#0f4f52"
+}

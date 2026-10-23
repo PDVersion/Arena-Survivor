@@ -121,6 +121,24 @@ describe("fixed-grid review conversion", () => {
     } finally { await rm(directory, { recursive: true, force: true }); }
   });
 
+  it("letterboxes an explicit rectangular grid with one uniform transform", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "arena-sprite-contain-"));
+    try {
+      const source = "build/sprites/accepted/enemy_swarm_basic.png";
+      const output = join(directory, "contain.png");
+      await buildSpriteSheet({ contentId: "fixture", source, output,
+        frameWidth: 64, frameHeight: 64, frames: 1,
+        sourceGrid: { left: 0, top: 0, cellWidth: 128, cellHeight: 32, fit: "contain" } });
+      const before = await readSpritePng(source), after = await readSpritePng(output);
+      for (let y = 0; y < 64; y += 1) {
+        for (let x = 0; x < 64; x += 1) {
+          const expected = y < 24 || y >= 40 ? 0 : before.data[((y - 24) * 2 * 128 + x * 2) * 4 + 3];
+          expect(after.data[(y * 64 + x) * 4 + 3]).toBe(expected);
+        }
+      }
+    } finally { await rm(directory, { recursive: true, force: true }); }
+  });
+
   it("rejects a grid that clips source artwork or changes aspect", async () => {
     const base = { contentId: "fixture", source: "build/sprites/accepted/enemy_swarm_basic.png",
       output: "/tmp/unused-arena-clipped.png", frameWidth: 32, frameHeight: 32, frames: 4 };
