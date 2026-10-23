@@ -5,7 +5,7 @@ This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
 [style/acceptance](../SPRITE_STYLE_GUIDE.md), [copyable prompts](../SPRITE_PROMPTS.md).
 
 **Shipped: five accepted style1 sheets. Target: 23 style2 primary sheets plus
-three optional static tool icons. Style2 generated/accepted: 3/0.**
+three selected static tool icons (owner selects entire catalog2026-10-23). Style2 generated/accepted: 3/0.**
 Existing sheets remain live; all five are scheduled for regeneration. The target
 queue does not retroactively revoke their original acceptance or overwrite raw
 attempts. Glass Shards currently reuse Glass frame3. Batch1 claims are tracked below.
@@ -51,29 +51,29 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | review |
 | `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | Codex 2026-10-23 | review |
-| `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | — | todo |
-| `character.starter` | Environment Protector | 96×96 | 8 | a3 | — | todo |
-| `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | — | todo |
-| `enemy.cluster_fodder` | Cigarette Butts | 48×48 | 4 | a1 | — | todo |
-| `enemy.gust_drifter` | Packets / Wrappers | 64×64 | 4 | a1 | — | todo |
-| `enemy.committed_charger` | Aluminium Can | 64×64 | 4 | a1 | — | todo |
-| `enemy.mini_boss` | Compacted Waste | 128×128 | 4 | a1 | — | todo |
-| `enemy.final_boss` | Dumping Colossus | 192×192 | 4 | a1 | — | todo |
-| `weapon.starter` | Cleanup Grabber action | 128×32 | 3 | a1 | — | todo |
-| `weapon.secondary` | Cleanup Vacuum action | 128×64 | 3 | a1 | — | todo |
-| `weapon.secondary_evolved` | Cyclone Vacuum action | 128×64 | 3 | a1 | — | todo |
-| `pickup.experience` | Impact Point | 32×32 | 3 | a1 | — | todo |
-| `shrine.spawn_surge` | Landfill Breach | 128×128 | 4 | a1 | — | todo |
-| `shrine.greed` | Fast Fashion Boom | 128×128 | 4 | a1 | — | todo |
-| `shrine.multiplicity` | Single-Use Boom | 128×128 | 4 | a1 | — | todo |
-| `shrine.duplication` | Overproduction Order | 128×128 | 4 | a1 | — | todo |
-| `shrine.escalation` | Unmanaged Dump | 128×128 | 4 | a1 | — | todo |
-| `hazard.damage_zone` | Contamination Spill | 128×128 | 4 | a1 | — | todo |
-| `hazard.obstacle` | Debris Pile | 128×128 | 4 | a1 | — | todo |
-| `hazard.periodic_burst` | Methane Vent | 128×128 | 4 | a1 | — | todo |
-| `icon.weapon.starter` | Cleanup Grabber icon | 64×64 | 1 | a1 | — | optional |
-| `icon.weapon.secondary` | Cleanup Vacuum icon | 64×64 | 1 | a1 | — | optional |
-| `icon.weapon.secondary_evolved` | Cyclone Vacuum icon | 64×64 | 1 | a1 | — | optional |
+| `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | Codex actors 2026-10-23 | generating |
+| `character.starter` | Environment Protector | 96×96 | 8 | a3 | Codex actors 2026-10-23 | generating |
+| `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `enemy.cluster_fodder` | Cigarette Butts | 48×48 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `enemy.gust_drifter` | Packets / Wrappers | 64×64 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `enemy.committed_charger` | Aluminium Can | 64×64 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `enemy.mini_boss` | Compacted Waste | 128×128 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `enemy.final_boss` | Dumping Colossus | 192×192 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `weapon.starter` | Cleanup Grabber action | 128×32 | 3 | a1 | Codex equipment 2026-10-23 | generating |
+| `weapon.secondary` | Cleanup Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | generating |
+| `weapon.secondary_evolved` | Cyclone Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | generating |
+| `pickup.experience` | Impact Point | 32×32 | 3 | a1 | Codex equipment 2026-10-23 | generating |
+| `shrine.spawn_surge` | Landfill Breach | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `shrine.greed` | Fast Fashion Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `shrine.multiplicity` | Single-Use Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `shrine.duplication` | Overproduction Order | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `shrine.escalation` | Unmanaged Dump | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `hazard.damage_zone` | Contamination Spill | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `hazard.obstacle` | Debris Pile | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `hazard.periodic_burst` | Methane Vent | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `icon.weapon.starter` | Cleanup Grabber icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
+| `icon.weapon.secondary` | Cleanup Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
+| `icon.weapon.secondary_evolved` | Cyclone Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
 
 ## Retired inventory
 

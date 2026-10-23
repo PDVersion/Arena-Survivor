@@ -160,3 +160,34 @@ checkpoint is complete; strict footprint/idle-hit alignment and final live
 acceptance are not passed. All 3stay review,0 accepted. Refine prompts/regenerate
 from measured bounds before production promotion; no hand-painted pose repairs.
 No runtime replacement, new browser/device pass or next-content scope follows.
+
+
+## Owner-selected parallel full-roster generation — 2026-10-23
+
+Owner likes Batch1 designs and explicitly requests subagents to generate all
+remaining sprites simultaneously, deferring individual corrections and in-game
+review. This lifts the earlier sequential acceptance gate for generation only;
+Batch1 stays review and is not silently production-accepted. Select all23remaining
+catalog rows, including3previously optional icons. No further layout refinement,
+production binding, balance, saved IDs, knight-theme work or browser campaign.
+
+Three agents own disjoint asset IDs: actors (Bag, Player, Shards, Butt, Wrapper,
+Can, mini/final bosses); equipment (Grabber/Vacuum/evolution, pickup,3icons); world
+(five sites, three hazards). Each owns only its assigned raw PNG/prompt/metadata/
+review-recipe files and review outputs. Root owns manifest claims, shared reports,
+plans/status/progress/reconciliation, validation and commits. Do not concurrently
+stage or commit from agents. Root records all claims before dispatch in one claim
+commit to make ownership visible; one subject per acceptance commit still applies
+if art is accepted later. No acceptance occurs in this generation pass.
+
+Use imagegen skill, built-in tool, one distinct subject per call, true transparency,
+style2 lock/catalog and Batch1 as references. Preserve each actual source and exact
+prompt/reference hashes with honest tool/seed metadata. Save native review strips
+when deterministic format conversion can preserve one common source grid/scale.
+If generator layout prevents safe conversion, retain source for review and record
+that specifically; do not hand-paint, invent frames or hide a skipped check.
+
+Gate: all26catalogsubjects have preserved generated sources/prompt evidence (3old
+plus23new); intended dimensions/frame counts catalogued; available native outputs
+pass format checks; shared source/runtime/accepted assets remain unchanged. Owner
+visual testing, alignment and live/performance acceptance remain explicitly pending.
