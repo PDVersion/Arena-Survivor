@@ -113,3 +113,29 @@ processed/game-size review and necessary bounded serial gameplay cases. Review
 300-actor texture cost once cumulatively, not for every prompt/art session. Check
 atlas page/texture limits and startup bytes: doubled dimensions cost4× texels.
 No full browser/device campaign is passed by this documentation change.
+
+
+## Batch 1 generation claim — 2026-10-23
+
+Owner explicitly requests creating the first batch. Branch `codex/v0.4.4`, based
+on current checkout71c9b1b plus documentation preparation584ba62. Scope: Plastic
+Bottle baseline, then Microplastics and Glass Bottle. Own this plan, manifest,
+raw attempt PNG/prompt/metadata sidecars, versioned review sheets under
+build/sprites/review/style2/, batch report, progress/status/reconciliation and
+master completion record. Existing accepted/public assets and runtime remain
+unchanged until the configured pipeline and live acceptance phase is verified.
+
+Art generation may proceed for this bounded batch using reviewed Bottle as the
+style reference after source-level review. Source-level review is not final
+in-game acceptance. If the existing normalizer would recenter poses or lose the
+requested resolution, preserve the raw outputs and use a deterministic fixed-cell
+review conversion recorded with the batch; no painted repairs. Any additional
+pipeline/code ownership must be claimed before editing. No player, other content
+or knight-magic work in this batch.
+
+Gate: preserve actual tool output and exact prompt/reference hashes; inspect all
+four poses for material/geometry continuity, transparent background and one-row
+layout; verify final review dimensions/alpha/palettes if converted, record review
+versus accepted honestly, retain old source/runtime hashes. No broad browser run
+for generation-only assets. Runtime integration/performance acceptance remains
+open rather than implied by source-art review.

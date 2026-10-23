@@ -8,7 +8,7 @@ This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
 three optional static tool icons. Style2 generated/accepted: 0/0.**
 Existing sheets remain live; all five are scheduled for regeneration. The target
 queue does not retroactively revoke their original acceptance or overwrite raw
-attempts. Glass Shards currently reuse Glass frame3. No sprite is claimed here.
+attempts. Glass Shards currently reuse Glass frame3. Batch1 claims are tracked below.
 
 ## Existing accepted baseline (unchanged)
 
@@ -48,7 +48,7 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 
 | ID | Subject | Target frame | Frames | Next attempt | Claimed by | Target status |
 | --- | --- | --- | --- | --- | --- | --- |
-| `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | — | todo |
+| `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | generating |
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | — | todo |
 | `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | — | todo |
 | `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | — | todo |
