@@ -5,7 +5,7 @@ This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
 [style/acceptance](../SPRITE_STYLE_GUIDE.md), [copyable prompts](../SPRITE_PROMPTS.md).
 
 **Shipped: five accepted style1 sheets. Target: 23 style2 primary sheets plus
-three optional static tool icons. Style2 generated/accepted: 0/0.**
+three optional static tool icons. Style2 generated/accepted: 3/0.**
 Existing sheets remain live; all five are scheduled for regeneration. The target
 queue does not retroactively revoke their original acceptance or overwrite raw
 attempts. Glass Shards currently reuse Glass frame3. Batch1 claims are tracked below.
@@ -50,7 +50,7 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | --- | --- | --- | --- | --- | --- | --- |
 | `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | review |
-| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | Codex 2026-10-23 | generating |
+| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | Codex 2026-10-23 | review |
 | `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | — | todo |
 | `character.starter` | Environment Protector | 96×96 | 8 | a3 | — | todo |
 | `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | — | todo |
@@ -124,3 +124,5 @@ original sheet and matching world display size. See REC-111.
 | 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |
 
 | 2026-10-23 | `enemy.fast_fragile` | 4 | 2 | n/a (built-in) | review | New connected multicolour four-pose source;48px fixed-grid review. Final alignment/live scale acceptance pending. |
+
+| 2026-10-23 | `enemy.slow_durable` | 3 | 2 | n/a (built-in) | review | New teal four-pose source;96px fixed-grid review. Intact source silhouettes clean; final alignment/live scale acceptance pending. |

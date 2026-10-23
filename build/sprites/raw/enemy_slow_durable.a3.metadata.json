@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-23",
+  "contentId": "enemy.slow_durable",
+  "attempt": 3,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/enemy_slow_durable.a3.png",
+  "prompt": "build/sprites/raw/enemy_slow_durable.a3.prompt.txt",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/accepted/enemy_slow_durable.png",
+      "sha256": "e4e764040c76def34334afbbb6ed1f357e4cce21b78f231ade41963a5fdd93ac"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    }
+  ],
+  "status": "review",
+  "notes": "Original2172x724 retained; intact silhouettes free of detached glass specks. Final alignment/live scale acceptance pending."
+}
