@@ -149,3 +149,11 @@ The shattered frame intentionally contains angular fragments. No pixels, source
 attempts, atlas or acceptance state were changed. Future remediation must use the
 claim/prompt/regeneration/acceptance workflow after the roster gate, retaining the
 original sheet and matching world display size. See REC-111.
+
+## Owner-selected ranged addition —2026-10-23
+
+`enemy.ranged_attacker` / Takeaway Cup: Codex root claims a1, generating.
+Seven 64×64 frames: idle, move, hit, death, prepare, release, recover.
+Owner explicitly selects concept, sheet and live integration; this addition alone
+may pass into production while the previous 26 review subjects stay deferred.
+No knight-magic changes. See active ranged phase in the sprite plan.
