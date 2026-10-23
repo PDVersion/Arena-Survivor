@@ -1,7 +1,7 @@
 # Existing-roster balance baseline for the readable gameplay roadmap
 
 Captured 2026-10-21 (Australia/Sydney), before any new balance change. This is a
-planning baseline, not a G1/Q6 gate pass. [Roadmap](../READABLE_GAMEPLAY_ROADMAP.md).
+planning baseline, not a G1/Q6 gate pass. [Roadmap](../MASTER_BUILD_PLAN.md#readable-gameplay-design-context).
 
 ## Source and scope
 

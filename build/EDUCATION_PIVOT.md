@@ -1,5 +1,18 @@
 # Education Pivot — Design Exploration
 
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+
 This document explores how far the environment theme can be pushed toward genuinely teaching something, and what that would be worth.
 
 It is **not a scheduled milestone**. The primary work remains building a fun game. The education angle is a wider-audience and monetisation option layered on top of a game that must stand on its own first.
@@ -215,7 +228,7 @@ bottles are the most commonly counted litter item. The verified FY25 litter
 survey ranks cigarette butts first; plastic beverage bottles are fifth. Plastic
 material prevalence and individual-item prevalence are different measures. The
 current opening is Microplastics under REC-112, not a bottle-only opening. See the
-[Australian evidence and roster roadmap](READABLE_GAMEPLAY_ROADMAP.md).
+[Australian evidence and roster roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context).
 
 Plastic also comes in enormous variety, which gives the roster room to grow — bottles, bags, films, foams, fragments, textiles — all one type, all mechanically different.
 
@@ -650,7 +663,7 @@ content, material identity or progression category is introduced here.
 
 ## Australian rubbish and readable gameplay — 2026-10-21 planning amendment
 
-The [four-phase roadmap](READABLE_GAMEPLAY_ROADMAP.md) records the owner-requested
+The [four-phase roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) records the owner-requested
 priorities, source review, candidate roster and phase gates. The promotion here is
 planning direction, not implementation of the broader six-type/knowledge systems.
 Waste generation uses tonnes; surveyed litter uses item counts and a site sample.
@@ -708,7 +721,7 @@ and separate20px bodies replace neither Microplastics nor any material family.
 No post-cleanup contamination patch, new art, saved discovery or effectiveness
 matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
 
-[Reviewed plan](BUILD_PLAN_G2.md), [candidate report](content/G2A_REPORT.md).
+[Reviewed plan](MASTER_BUILD_PLAN.md#readable-gameplay-g2), [candidate report](content/G2A_REPORT.md).
 G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
 a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
 
@@ -735,7 +748,7 @@ end caps are code-native presentation, never physics input. No generated art,
 material/harm/handling fact, new information surface, saved field or ID remap.
 
 All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
-[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written/reviewed. G3 ready/unstarted;
+[G3 master record](MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed. G3 ready/unstarted;
 G4/art unstarted, external evidence still deferred/waived/unverified. This is the
 current state; earlier staged continuation paragraphs are historical checkpoints.
 
@@ -755,7 +768,7 @@ in recovery; no new attack/counter/health/damage/body. These are game decisions,
 not real material/handling/abundance claims. No quiz, currency, new roster, saved
 field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
 verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
-complete; [reviewed G4 handoff](PHASE_G4_PROMPT.md) is current, G4/art unstarted.
+complete; [reviewed G4 handoff](MASTER_BUILD_PLAN.md#readable-gameplay-g4) is current, G4/art unstarted.
 
 ## G4 — useful reviews and optional reference / 2026-10-22
 

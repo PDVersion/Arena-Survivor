@@ -1,5 +1,28 @@
 # Build dates and status
 
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+## Current selected work — 2026-10-22
+
+Completed multistage V0.4.3 and Q6/G1–G4 records now live in the master only;
+completed G1–G4/Session21 prompts and redundant G2–G4 pointer plans are deleted.
+Current art authority: [V0.4.4](SPRITE_PLAN_V0.4.4.md),
+[shared style](SPRITE_STYLE_GUIDE.md), [26 subject prompts](SPRITE_PROMPTS.md).
+All five existing sheets will be regenerated at 2× width and 2× height, preserving
+world display/layout. Prompt preparation is selected; generation/integration and
+style2 acceptance remain unstarted. No new runtime/CI/merge/device claim.
+
+
 Updated **2026-10-22 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
@@ -17,8 +40,8 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](BUILD_PLAN_V0.4.3.md) |
-| V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
+| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](MASTER_BUILD_PLAN.md#v0-4-3-source-plan) |
+| V0.4.4 | No build date | No merge | Selected eco style2 preparation; art/integration unstarted; [sprite plan](SPRITE_PLAN_V0.4.4.md) |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
 V0.4.3's plan was introduced on 2026-09-17 (`6b1e56b`); that is a planning
@@ -76,7 +99,7 @@ deployment is authorized.
 
 ## Readable gameplay planning amendment — 2026-10-21
 
-[Four-phase roadmap](READABLE_GAMEPLAY_ROADMAP.md) records owner-requested genre
+[Four-phase roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) records owner-requested genre
 priorities, verified Australian waste/litter context, candidate enemies and measured
 rebalance requirements. Q6 remains next; G1–G4 are planned, not implemented or
 assigned a new milestone. No enemy stats or live roster changed in this amendment.
@@ -92,7 +115,7 @@ no browser suite was run and no new browser/device/CI pass is claimed.
 Owner explicitly requests publishing the planning amendment to main as a claim.
 G1 is claimed to Codex on future `codex/readable-gameplay-g1`, with Q6 still its
 first prerequisite. [Ownership/gates](MASTER_BUILD_PLAN.md#readable-gameplay-g1)
-and [start prompt](PHASE_G1_PROMPT.md) are durable. No Q6/G1 code is implemented
+and [start prompt](MASTER_BUILD_PLAN.md#readable-gameplay-g1) are durable. No Q6/G1 code is implemented
 or verified by this publication; G2–G4 and new art remain future work.
 
 PR27 is verified merged at2026-10-21T04:35:26Z as `9837158`, head `c735cb8`.
@@ -253,3 +276,23 @@ Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
 expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
 Matching-head automatic full Actions remains pending until its actual result.
 Existing external waiver/unverified state remains; no merge or art selection.
+
+
+## Documentation and sprite preparation — 2026-10-22
+
+REC-120 pauses Knights and Magic indefinitely until explicit owner reopening.
+REC-121 selects eco style2 prompts at twice both frame dimensions while keeping
+world size, layout and simulation fixed. [Prompt catalog](SPRITE_PROMPTS.md):
+23 primary sheets plus3 optional icons, including regeneration of all 5 existing
+sheets. Style2 generated/accepted 0/0; pipeline integration unstarted.
+
+Completed execution plans and original design/source context are in the master.
+Removed 5 completed prompt files and 5 redundant completed plan/roadmap files.
+Unselected proposals, product/exploration references, SAVE_DATA, evidence reports
+and current sprite plans remain separate. Historic report links are redirected;
+raw evidence and source digests are retained. No publication/merge/CI is run.
+
+Preparation checks: 489 local Markdown links resolve;26 prompt/manifest dimension/
+frame rows match; 298 source/test/script/public-asset hashes unchanged; whitespace
+passes. Runtime/build/browser checks were not rerun for Markdown-only work.
+Existing external browser/device checks remain waived/unverified.

@@ -1,320 +1,200 @@
-# Sprite Style Guide and Prompt System
+# Sprite art bible — style 2, double-resolution eco roster
 
-The art bible for V0.4. It exists so that a sprite generated in three months sits
-next to one generated today and reads as the same game.
+Owner direction: 2026-10-22. Knights and Magic is paused indefinitely until the
+owner explicitly reopens it. All prompts here are for `eco-guardian` only.
+The [sprite plan](SPRITE_PLAN_V0.4.4.md) owns scope and integration gates;
+[copyable prompts](SPRITE_PROMPTS.md) own individual subjects;
+the [manifest](sprites/MANIFEST.md) owns attempts and acceptance.
+[Master pipeline record](MASTER_BUILD_PLAN.md#v0-4-1) and REC-071–078 explain the seam.
+Style 1 remains the shipped baseline until reviewed style 2 replacements pass.
 
-Two things make that work, and they are the whole document: a **style lock** that
-never changes between prompts, and a **subject slot** that is the only thing that
-does. Everything else here is scaffolding around those two ideas.
+## Resolution and scale contract
 
-Read this alongside [`MASTER_BUILD_PLAN.md#v0-4-1`](./MASTER_BUILD_PLAN.md#v0-4-1), for the completed pipeline, and
-[SPRITE_PLAN_V0.4.4.md](SPRITE_PLAN_V0.4.4.md) for the gated remaining inventory.
-This file owns the look.
+Double **both dimensions** of every logical frame, not the number of frames.
+A 24×24 frame becomes 48×48; a four-frame 96×24 strip becomes 192×48.
+This supplies four times the pixels. Regenerate with finer shape detail at the
+new native grid; merely nearest-neighbour enlarging the old sheet adds no detail.
+Nearest-neighbour remains the runtime texture filter.
 
-> **On the reference.** The target was given as "HoloCure-like, somewhat 2-bit but
-> still detailed enough", with an ArtStation link. The specification below is
-> written from that description, not from an analysis of the image — nobody
-> should treat these numbers as measured from the reference. They are a starting
-> point to be corrected once the first batch exists. Correcting them is expected;
-> see [Tuning the style lock](#8-tuning-the-style-lock).
+World display diameter, camera, body radius, mass, separation, speeds, reach,
+contact geometry and animation timing do not change. The existing view uses
+`diameter / frameWidth` and `diameter / frameHeight`, so doubling the frame
+halves its base scale. Preserve the old normalized silhouette footprint too:
+more transparent padding would make the visible subject smaller despite an
+unchanged display diameter. Compare alpha bounds against the old accepted sheet.
+Never resize the actor or hitbox to compensate for incorrect art.
 
----
+For a replacement, use the old accepted strip as the pose/layout reference and
+preserve each frame's normalized placement, dimensions, facing and equipment.
+Transfer a measured old anchor `(x,y)` initially to `(2x,2y)`; remeasure against
+the new silhouette before binding. Player anchors are per frame, not inferred
+from a bounding-box centre. Q6 hood alignment must remain stable in motion.
+One common normalization scale for the whole strip; never fit each pose to its
+own box. No frame-by-frame recentering that erases authored movement or makes
+heads, feet, caps or tool grips jump.
 
-## 1. The style in one paragraph
+## Art direction
 
-Chunky pixel art at a low native resolution, upscaled with nearest-neighbour so
-every pixel stays square and visible. Each sprite is built from a **small number
-of flat tonal steps per material** — the "somewhat 2-bit" read — but the shapes
-themselves are detailed and specific, so a plastic bottle is unmistakably a
-plastic bottle and not a generic blob. Bold, dark, fully-opaque outlines around
-every silhouette. Saturated colour with clear value separation. No gradients, no
-soft shadows, no anti-aliasing, no motion blur. Readability at a glance beats
-fidelity: this is a sprite that will appear two hundred times on screen at once.
+Chunky, clean pixel art for an outdoor cleanup arena. Recognizable discarded
+objects and practical workwear; object enemies gain personality through tilt,
+crumples and movement, without faces, arms, weapons or fantasy ornaments.
+Preserve the existing player's face and gear identity. Straight-on objects with
+a slight top-down tilt, fixed across the roster; ground features use that same
+arena view. One top-left light source, saturated readable shapes against the
+dark green floor, flat shading, no photographic textures or soft light.
 
-## 2. Hard constraints
+Use a nominal **2px outer outline at the new native resolution**, equivalent to
+style 1's 1px outline. Use the darkest material hue, never pure black. Finer
+interior details may use 1px accents, without dithering or scattered noise.
+Exactly four available tones per material ramp; a small region need not use all
+four. Opaque artwork and binary alpha only; empty pixels have alpha 0.
+No semi-transparent glass, edge smoothing, glow haze, ground shadows, detached
+speed lines, sparks, labels, text, logos, UI borders or painted checkerboards.
+Breakage belongs only in death/cleared frames. Keep intact poses free of debris
+(the old Glass Bottle detached-pixel defect must not recur).
 
-These are the non-negotiables. A sprite that breaks one of them is rejected in QA
-regardless of how good it looks in isolation.
+## Palette lock
 
-| Constraint | Value | Why |
-| --- | --- | --- |
-| Native canvas | Per class, see §4 | Fixed sizes keep the whole roster in proportion |
-| Upscale | Nearest-neighbour only | Any smoothing destroys the pixel read |
-| Tonal steps per material | **4** (base, shadow, highlight, deep shadow) | The "2-bit" feel; more steps and it drifts into painterly |
-| Outline | 1px at native res, fully opaque | The single strongest cue that sprites belong together |
-| Outline colour | Darkest value of the sprite's own hue, never pure black | Pure black flattens a saturated palette |
-| Anti-aliasing | None | Half-pixels destroy the grid |
-| Background | Fully transparent | Composited over the arena floor |
-| Light direction | Top-left, consistent across every sprite | The most common source of "these don't match" |
-| Perspective | Straight-on, very slight top-down tilt | Matches the existing top-down arena |
-| Palette | Drawn from the theme's tokens, see §3 | The sprites must not fight the UI |
+These are explicit palette values already used by the build, not ambiguous
+instructions to darken a hex by a percentage. Copy ramps unchanged. A new material
+must select and record its ramp before generation, not invent it per attempt.
+Order: deep/outline, shadow, base, highlight.
 
-### The 4-step rule, precisely
-
-For each *material region* in a sprite — a bottle's plastic body, its cap, its
-label — pick one hue and use exactly four values of it:
-
-1. **Deep shadow** — the outline colour and the deepest occlusion
-2. **Shadow** — the bottom-right ~30% of the form
-3. **Base** — the dominant value, roughly half the region
-4. **Highlight** — a small top-left accent, no more than ~15% of the region
-
-Four steps is what produces the chunky, poster-like read. A sprite may contain
-several material regions, each with its own four-step ramp — that is how it stays
-detailed without becoming painterly.
-
-## 3. Palette discipline
-
-Sprites are theme content, so their colours come from the theme's existing token
-palette rather than being invented per sprite. The `eco-guardian` pack already
-defines the anchors:
-
-| Token | Hex | Used by |
-| --- | --- | --- |
-| `enemy` | `#60a5fa` | Plastic bottle family |
-| `enemyFast` | `#e2e8f0` | Plastic bag family |
-| `enemyTank` | `#2dd4bf` | Glass bottle family |
-| `enemySpawner` | `#c084fc` | Bagged waste family |
-| `player` | `#4ade80` | The Environment Protector |
-| `projectile` | `#7dd3fc` | Cleanup Grabber and reusable weapon effects |
-| `pickup` | `#a3e635` | Impact points |
-| `shrine` | `#fb7185` | Site events |
-| `elite` | `#fde047` | Elite outline treatment |
-
-**Rule:** a sprite's base value is its token colour. The other three steps are
-derived from it, not chosen freely:
-
-```
-deep shadow  = token darkened 45%, saturation +10%
-shadow       = token darkened 22%
-base         = token exactly
-highlight    = token lightened 25%, saturation −8%
-```
-
-Deriving rather than picking is what stops the roster drifting apart over dozens
-of generations. Record every derived ramp in the manifest so it is reproducible.
-
-### Colour variants
-
-A variant ("bottle enemy colour 2") is **the same sprite with a rotated hue**,
-never a redraw. Rotate the base hue by a fixed amount and re-derive the ramp:
-
-| Variant | Hue rotation | Intended use |
-| --- | --- | --- |
-| `c1` | 0° (the token) | Default |
-| `c2` | +40° | Second material of the same family |
-| `c3` | −35° | Third material |
-| `elite` | 0°, plus a 1px `elite` outline outside the normal outline | Elites, per REC-037 |
-
-This means variants are a **post-process, not a prompt**. Generate `c1`, then
-produce `c2` and `c3` by hue rotation in the pipeline. It is faster, free, and
-guarantees they match.
-
-## 4. Canvas sizes and sheet layout
-
-Native canvas per class, chosen against the gameplay radii already in the theme:
-
-| Class | Native canvas | Game radius | Notes |
-| --- | --- | --- | --- |
-| Small enemy (bag) | 24×24 | 10 | |
-| Standard enemy (bottle) | 32×32 | 14 | The baseline everything is judged against |
-| Large enemy (glass, bagged) | 48×48 | 22–25 | |
-| Player | 48×48 | 18 | More detail budget; see §5 |
-| Weapon / projectile | 16×16 | 6 | Reads at speed, so silhouette over detail |
-| Pickup | 16×16 | 8 | |
-| Shrine | 64×64 | 24 | Static, so it can carry the most detail |
-| Hazard | 64×64 | 46–110 | Tiled or scaled; see the plan |
-
-### Sheet layout
-
-One horizontal strip per subject, frames left to right, no padding, no margin.
-Frame `n` occupies `x = n * frameWidth`. This is the simplest thing Phaser's
-`spritesheet` loader consumes and the easiest to verify by eye.
-
-**Enemy states — 4 frames, and only 4:**
-
-| Frame | State | Content |
-| --- | --- | --- |
-| 0 | `idle` | The rest pose |
-| 1 | `move` | One alternate pose; idle/move alternate to walk |
-| 2 | `hit` | Idle silhouette, flashed to near-white, used for the damage flash |
-| 3 | `death` | A broken or scattered version of the silhouette |
-
-Four states is deliberate. Two hundred enemies on screen means animation is noise
-above a certain frame count, and the existing damage flash already substitutes a
-colour rather than a frame.
-
-**Player — 8 frames**, the one subject that gets a real animation budget:
-
-| Frames | State |
+| Material | Four colours |
 | --- | --- |
-| 0–3 | `walk` cycle (contact, down, pass, up) |
-| 4 | `idle` |
-| 5 | `hit` |
-| 6–7 | `dash`/`hurt` reserved |
+| Plastic blue | `#173b73 #356fae #60a5fa #9ac8fb` |
+| Pale plastic / filter paper | `#172d5f #64748b #e2e8f0 #f8fafc` |
+| Glass / teal paint | `#0f4f52 #169b91 #2dd4bf #82eadc` |
+| Mixed-waste violet | `#3b1762 #8050bd #c084fc #dcb5fd` |
+| Protective green | `#14532d #22a34e #4ade80 #8df0ac` |
+| Gear grey / metal | `#111827 #374151 #6b7280 #d1d5db` |
+| Bottle neutral label | `#4b5563 #9ca3af #e2e8f0 #f8fafc` |
+| Yellow plastic / trim | `#713f12 #b7791f #facc15 #fde68a` |
+| Red plastic | `#7f1d1d #b91c1c #ef4444 #fca5a5` |
+| Blue microplastic | `#173b73 #356fae #2563eb #93c5fd` |
+| Orange waste / tool trim | `#7c2d12 #c65d1a #fb923c #fdba74` |
+| Waste neutral | `#374151 #6b7280 #d1d5db #f8fafc` |
+| Waste olive | `#3f4b26 #68753b #91a657 #c0d187` |
+| Tool cyan (style 2) | `#164e63 #3893b5 #7dd3fc #bae6fd` |
+| Impact lime (style 2) | `#365314 #65a30d #a3e635 #d9f99d` |
+| Site rose (style 2) | `#881337 #be3459 #fb7185 #fecdd3` |
+| Debris green (style 2) | `#101c15 #1b2b20 #23372a #51644c` |
 
-**Weapons — 3 frames:** `ready`, `fire`, `spent`.
+The new ramps are art specifications for future recipes; this document does not
+claim they are already supported by the five-sheet build configuration. Do not
+paint elite markers into base sprites. Preserve runtime elite/shield/acceleration
+cues. Colour variants, when selected, use deterministic palette rotation rather
+than new generated drawings. No new collectible reward tiers or content IDs.
 
-## 5. Detail budget
+## Copy this shared style block verbatim
 
-Not every sprite deserves the same amount of work, and saying so explicitly stops
-the roster from looking uneven:
-
-- **Player and weapons** — highest. Multiple material regions, visible small
-  features (a strap, a nozzle, a boot), readable silhouette asymmetry.
-- **Shrines** — high, but static. They can afford ornament because there is only
-  ever one of each on screen.
-- **Standard and large enemies** — medium. Two or three material regions. The
-  silhouette must be identifiable at 100% zoom in one glance.
-- **Small enemies, pickups, projectiles** — low. Silhouette and colour only. At
-  24×24 with a 1px outline there is barely room for anything else, and these are
-  the ones that appear in the hundreds.
-
----
-
-## 6. The prompt
-
-This is the part to paste into an image tool. **The style block never changes.**
-Only the subject block changes between sprites.
-
-### 6.1 Style lock (constant — copy verbatim every time)
-
-```text
-STYLE LOCK — do not deviate:
-Pixel art sprite, chunky low-resolution pixel style, drawn on a {CANVAS} pixel grid.
-Limited palette: exactly 4 flat tonal steps per material region (deep shadow, shadow,
-base, highlight). No gradients, no anti-aliasing, no dithering, no soft shadows,
-no blur, no texture noise. Every pixel is a hard square edge.
-1-pixel fully opaque outline around the entire silhouette, in the darkest tone of
-the subject's own colour — never pure black.
-Light source top-left, consistent. Straight-on view with a very slight top-down
-tilt, as seen in a top-down arena game.
-Bold saturated colour, strong value separation, poster-like readability at small size.
-Detailed and specific in shape, simple in shading.
-Fully transparent background. Subject centred, filling roughly 85% of the canvas,
-with at least 2 pixels of clear space on every side.
-No text, no logos, no watermark, no border, no drop shadow, no ground shadow,
-no background scenery, no UI frame.
-Reference feel: modern indie pixel-art roguelite character sprites — clean,
-saturated, chunky, high-contrast.
-```
-
-### 6.2 Subject slot (the only part that changes)
+Combine this block with ONE complete subject block from SPRITE_PROMPTS.md.
+Attach the current accepted Bottle and Player as style references; for a
+replacement also attach that subject's accepted strip as the layout reference.
+Once accepted, the style 2 Bottle becomes the new roster style reference.
+Record the actual reference paths/digests with each attempt.
 
 ```text
-SUBJECT: {SUBJECT_DESCRIPTION}
-BASE COLOUR: {HEX} — build the 4-step ramp from this exact hue.
-SILHOUETTE: {SILHOUETTE_NOTE}
-DETAIL BUDGET: {low | medium | high} — {DETAIL_NOTE}
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
 ```
 
-### 6.3 Sheet slot (for a multi-frame request)
+## Frame contracts and continuity
 
-```text
-SHEET: a single horizontal strip of {N} frames, each exactly {CANVAS} pixels,
-no padding or gaps between frames, no frame borders or numbering.
-Frames left to right: {FRAME_LIST}.
-Every frame shares the identical palette, outline weight, light direction, and
-subject scale. Only the pose changes between frames.
-```
+Enemies: four cells `0 idle / 1 move / 2 hit / 3 death`. Idle and move are two
+poses of one object, not stages of damage or different rotations of the camera.
+Frame 2 has frame 0 geometry; a slight material highlight is allowed inside the
+same ramp. Death is presentation only, never a reason to retain an enemy body.
+Glass Shards remain stationary; their first three frames have identical placement.
 
-### 6.4 Worked example — Plastic Bottle, the baseline enemy
+Player: eight cells retained. `0–3` walk poses, `4` idle, `5` hit, `6` unused
+reserved pose, `7` death. Runtime walks `0→1→2→1` by distance, not `0→1→2→3`.
+Preserve that loop's matching contact poses. Frames 0–4 face right; existing hit
+frame 5 is authored left and uses `stateFacing.hit = left`. Keep it left for this
+layout-preserving regeneration. Frame 7 is a terminal/death pose, never a second
+walk/hurt cell. No new dash mechanic or animation timing follows from frame 6.
 
-```text
-STYLE LOCK — do not deviate:
-Pixel art sprite, chunky low-resolution pixel style, drawn on a 32x32 pixel grid.
-Limited palette: exactly 4 flat tonal steps per material region (deep shadow, shadow,
-base, highlight). No gradients, no anti-aliasing, no dithering, no soft shadows,
-no blur, no texture noise. Every pixel is a hard square edge.
-1-pixel fully opaque outline around the entire silhouette, in the darkest tone of
-the subject's own colour — never pure black.
-Light source top-left, consistent. Straight-on view with a very slight top-down
-tilt, as seen in a top-down arena game.
-Bold saturated colour, strong value separation, poster-like readability at small size.
-Detailed and specific in shape, simple in shading.
-Fully transparent background. Subject centred, filling roughly 85% of the canvas,
-with at least 2 pixels of clear space on every side.
-No text, no logos, no watermark, no border, no drop shadow, no ground shadow,
-no background scenery, no UI frame.
-Reference feel: modern indie pixel-art roguelite character sprites — clean,
-saturated, chunky, high-contrast.
+Committed-motion enemies and bosses still use four cells. Telegraph direction,
+fixed damage circles, warning/pulse/recovery timing remain code-owned; no new
+attack frames are presumed reachable by the current idle/move/hit/death seam.
+Validate existing cues over each new sheet. A six/eight-frame attack redesign
+would require a separate presentation contract change, not just a prompt.
 
-SUBJECT: a discarded single-use plastic drink bottle, crumpled slightly, cap still on,
-faded peeling label band around the middle, seen as a small hostile creature-object.
-BASE COLOUR: #60a5fa — build the 4-step ramp from this exact hue.
-SILHOUETTE: tall rounded rectangle, narrower neck at the top, wider base, one dent
-in the left side so it is not symmetrical.
-DETAIL BUDGET: medium — cap, neck ridge, and label band are the only interior detail.
+Tools, sites, pickups and hazards below have proposed explicit frame semantics.
+Their current runtime may map only idle/move/hit/death or draw procedural
+geometry. Integration must map each reachable phase deliberately; do not map an
+idle/move loop to activate/spent, collection, or damaging states by accident.
+No art can claim an attack hit, collected reward or site choice occurred.
 
-SHEET: a single horizontal strip of 4 frames, each exactly 32x32 pixels,
-no padding or gaps between frames, no frame borders or numbering.
-Frames left to right: idle upright; leaning forward mid-tumble; same as idle;
-crushed flat and split into two pieces.
-Every frame shares the identical palette, outline weight, light direction, and
-subject scale. Only the pose changes between frames.
-```
+## Acceptance — reject and regenerate on mismatch
 
-### 6.5 Prompt rules
+1. Preserve untouched raw attempt, exact assembled prompt, tool/model when exposed,
+   seed when exposed (otherwise `n/a`), references, style version and attempt ID.
+   Keep old accepted/source sheets until replacements have passed review.
+2. Check exact final frame/strip dimensions, order, binary alpha, approved ramps,
+   outline and margins; inspect each crop for accidental second subjects or debris.
+3. Overlay corresponding poses/anchors at 50% opacity in a review viewer. Compare
+   normalized alpha bounds, centre/hood/grip, proportions, cap/label/seams and
+   silhouette width/height; record per-frame bounds and measured anchor offsets.
+   Enemy idle/hit geometry must coincide; player recoil retains its authored anchor
+   and facing. Walk/contact loop must not snap at wrap.
+4. Compare old/new at the SAME in-game display size and camera, against the real
+   floor, alongside the accepted Bottle/Player. Approve extra detail only if the
+   silhouette, material and danger remain readable at that size.
+5. Inspect right/left mirrored movement, idle→move→hit→move and death, reduced
+   motion and Default/Low. Check player hood stays aligned with the actor and
+   existing held-tool origin; no sliding, growing, flipping discontinuity or
+   immortal visual hitbox. Stationary shards must never appear to chase.
+6. Tool contact must coincide with actual reach/pulse; cones and Collection Sweep
+   keep their true geometry. Site available/spent and hazard warning/active/clear
+   are visually distinct without obscuring runtime prompts, borders or warnings.
+7. `npm run sprites -- check --theme eco-guardian` checks configured output only,
+   not whether these prompts were followed. Run after recipe integration. Review
+   `/sprite-browser.html` and necessary bounded live cases, then a consolidated
+   eco roster/performance gate. Never label manual continuity checks automated.
 
-1. **Never edit the style lock to fix one sprite.** If a sprite comes out wrong,
-   fix the subject slot. If the style lock genuinely needs a change, change it for
-   the whole roster and regenerate — see §8.
-2. **One subject per generation.** Do not ask for a family in one image.
-3. **Seed if the tool supports it.** Record the seed in the manifest.
-4. **Never ask for colour variants.** They are a hue rotation in the pipeline.
-5. **The base colour is quoted as hex and repeated.** Models drift on colour more
-   than on anything else; naming it twice measurably helps.
-6. **Negatives stay in the style lock**, not scattered through the subject.
+Do not hand-paint repairs. Fix the subject prompt and regenerate; common style
+changes bump the style version and return to Bottle first. Mechanical format,
+palette and alpha conversion may be deterministic pipeline steps (REC-074/076),
+but must not redraw forms, invent missing frames or independently reposition
+poses. The current normalizer may need revision to retain this alignment and 2px
+outline; measure it before replacing any shipped art. A doubled source normalized
+back to style 1 dimensions does not satisfy the request.
 
----
+## Pipeline and reproducibility limits
 
-## 7. Acceptance checklist
-
-Every sprite is checked against this before it enters the manifest as `accepted`.
-It is deliberately mechanical — a subjective bar produces an inconsistent roster.
-
-- [ ] Canvas is exactly the declared size, and the strip is exactly `N × width`
-- [ ] Background is fully transparent (no white or checkerboard fill)
-- [ ] Outline is present, 1px, closed all the way round, not pure black
-- [ ] No more than 4 tonal steps in any single material region
-- [ ] No anti-aliased or semi-transparent edge pixels
-- [ ] Light reads as top-left in every frame
-- [ ] Subject scale is identical across every frame in the strip
-- [ ] Silhouette is identifiable against the arena floor at 100% zoom
-- [ ] Base colour matches the declared token within a small tolerance
-- [ ] Sits beside the current baseline sprite without either looking out of place
-
-The last item is the one that matters most and the only one a script cannot
-check. Keep the accepted Plastic Bottle open in a second window as the yardstick.
-
-## 8. Tuning the style lock
-
-The numbers in this document are a starting point. Expect to change them after the
-first batch — that is the process working, not a failure.
-
-**How to change the style lock safely:**
-
-1. Change it in this file, in one commit, with the reason.
-2. Bump `styleVersion` in the manifest.
-3. Regenerate the **baseline sprite** first, and only that one.
-4. Compare against the previous baseline side by side.
-5. If accepted, mark every sprite at the old `styleVersion` as `stale` and
-   regenerate in batches.
-
-**Never** hand-fix a single sprite to match a style the prompt does not produce.
-That is how a roster ends up unreproducible: the moment the file is lost, nobody
-can make another one like it.
-
-## 9. Known unknowns
-
-Stated plainly rather than discovered later:
-
-- **Consistency across generations is not guaranteed by any current image tool.**
-  The style lock materially improves it; it does not make it deterministic. Budget
-  for regenerating a sprite several times and picking the best.
-- **Text and small symbols are unreliable at these sizes.** Nothing in the roster
-  depends on generated text; the label band is a colour band, not lettering.
-- **Exact hex adherence is approximate.** The pipeline's palette-snap step (see
-  the plan, §4) exists because of this and is not optional.
-- **4-frame death animations may generate as 4 unrelated drawings.** The sheet
-  slot's "only the pose changes" line is the mitigation; verify per strip.
+The build currently hardcodes five style 1 recipes in `scripts/sprites.ts`;
+editing this document or manifest does not update their sizes, palettes or source
+paths. Preserve existing attempt numbers and avoid overwriting accepted outputs
+until the replacement recipe is reviewed. Larger frame metadata, anchor data,
+atlas packing and style 2 outline handling are required integration work.
+An image model may return larger separated subjects rather than exact cells.
+Keep that raw file as evidence; accept only a deterministic final strip whose
+layout and continuity pass all checks. Prompt consistency cannot guarantee a
+correct sprite; exact dimensions and visual acceptance are separate gates.

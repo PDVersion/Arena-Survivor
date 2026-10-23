@@ -1,8 +1,8 @@
 # G2A — weak arrival groups, keep decision /2026-10-22
 
 Owner requested a G2 start prompt, its review and implementation. Created
-[PHASE_G2_PROMPT](../PHASE_G2_PROMPT.md), reviewed its scope/risk assumptions in
-[BUILD_PLAN_G2](../BUILD_PLAN_G2.md), then implemented the first candidate only.
+[PHASE_G2_PROMPT](../MASTER_BUILD_PLAN.md#readable-gameplay-g2), reviewed its scope/risk assumptions in
+[BUILD_PLAN_G2](../MASTER_BUILD_PLAN.md#readable-gameplay-g2), then implemented the first candidate only.
 Branch `codex/readable-gameplay-g2` starts at verified local G1 `54e9b2f` after
 Q6 `44585dd`. Dependencies remain local/unmerged; no publication is implied.
 

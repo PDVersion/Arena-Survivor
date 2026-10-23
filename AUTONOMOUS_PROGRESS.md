@@ -4,17 +4,25 @@ Updated: 2026-10-22 (Australia/Sydney).
 
 ## Objective and current state
 
-G1–G4 are locally complete through G4 `a10e3eb` on
-`codex/readable-gameplay-g4`, with Q6 separately verified in `44585dd`.
-The [single completed build log](build/MASTER_BUILD_PLAN.md#readable-gameplay)
-now owns all four phase plans, original claims/checklists and evidence links.
-[BUILD_STATUS](build/BUILD_STATUS.md) owns dates/acceptance state; the
-[next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) owns delivery and
-owner-selected sprite planning. No further G1–G4 gameplay gate is open.
-Broad current-app checks remain deferred and existing external checks remain
-waived/unverified. This closure is documentation only, with no publication,
-new remote CI, gameplay/art selection or merge. Historical sessions below retain
-their original checkpoint meanings.
+2026-10-22 owner-selected documentation preparation is complete: Knights and
+Magic is paused indefinitely until explicit owner reopening (REC-120), and the
+current eco style2 art plan/prompt catalog selects doubled frame dimensions with
+unchanged game scale and layout (REC-121). Five accepted sheets are queued for
+regeneration, with 23 primary subjects and 3 optional tool icons; generation and
+integration are unstarted. No active sprite claims or runtime/asset changes.
+
+Completed V0.4.3/Q6/G1–G4 work is consolidated in the master; completed prompts,
+G2–G4 pointer plans and the superseded V0.4.3/roadmap execution files are removed.
+Future optional proposals remain separate, with old completed session estimates
+moved to master. BUILD_STATUS owns delivery evidence; the current handoff points
+to SPRITE_PLAN_V0.4.4, SPRITE_STYLE_GUIDE, SPRITE_PROMPTS and the manifest.
+
+Checks:489 local Markdown links resolve;26 prompt/manifest dimension/frame rows
+agree; 298 source/test/script/public-asset hashes are unchanged; whitespace passes.
+Documentation-only pass; no build/browser rerun, generated art, publication,
+matching-head CI, merge or external acceptance claim. Existing external actual
+Safari/browser-OS/older physical-GPU checks remain waived/unverified. Historical
+session checkpoints below are superseded where they describe future work.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -1707,7 +1715,7 @@ types/lint/build/whole-branch whitespace,12serial Chromium Canvas candidate case
 (4.2s,1worker,0retries) and per-candidate before/after balance evidence pass.
 [G2C report](build/content/G2C_REPORT.md) records all decisions, actual sources,
 initial test-only failures, trade-offs and aided-fixture/model limits.
-[Reviewed G3 handoff](build/PHASE_G3_PROMPT.md) is prepared; **G3 implementation
+[Reviewed G3 handoff](build/MASTER_BUILD_PLAN.md#readable-gameplay-g3) is prepared; **G3 implementation
 has not started**. G4/new sprites remain unstarted. Broad regression/stress/soak
 checks deferred; actual Safari/missing browser-OS/older physical GPU evidence
 remains waived/unverified. No new remote CI, push, PR or main merge claim.
@@ -1723,7 +1731,7 @@ types/lint/build/whitespace,13unique affected serial browser cases and120before+
 120after ambient /90before+90after timed balance scenarios pass. Initial old
 schedule/roster fixture failures and actual aided/model limits are recorded in
 [G3_REPORT](build/content/G3_REPORT.md); this is no natural survival/device claim.
-[PHASE_G4_PROMPT](build/PHASE_G4_PROMPT.md) is written/reviewed; G4 implementation
+[PHASE_G4_PROMPT](build/MASTER_BUILD_PLAN.md#readable-gameplay-g4) is written/reviewed; G4 implementation
 and new sprites remain unstarted. Broad browser/stress/soak checks deferred;
 external browser/OS/older physical GPU evidence waived/unverified. Local phase
 commit only, no new CI/push/PR/main merge. Earlier open-G3 entries are historical.

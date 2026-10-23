@@ -2,7 +2,7 @@
 
 Local gate accepted 2026-10-22. Branch `codex/readable-gameplay-g4`, from verified
 G3 `d8ae891`. The owner requested G4. Exact ownership and prompt self-review were
-recorded in [BUILD_PLAN_G4](../BUILD_PLAN_G4.md) before code; the completed slice
+recorded in [BUILD_PLAN_G4](../MASTER_BUILD_PLAN.md#readable-gameplay-g4) before code; the completed slice
 is consolidated in [the master](../MASTER_BUILD_PLAN.md#readable-gameplay-g4).
 This report's owning commit is the final phase source, not a main merge.
 

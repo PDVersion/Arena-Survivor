@@ -5,7 +5,7 @@ Read this file immediately after the current milestone sequence, `build/BUILD_PL
 This is not a daily diary or a duplicate issue tracker. Add an entry when a decision, discovered constraint, failed approach, defect cause, workaround, measurement, or external dependency is likely to matter again.
 
 - Current milestone: **V0.4**
-- Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; unfinished acceptance/ownership remains in `build/BUILD_PLAN_V0.4.3.md`.
+- Active work and milestone dates/statuses: **see `build/BUILD_STATUS.md`**; current eco sprite scope/ownership is in `build/SPRITE_PLAN_V0.4.4.md`; completed V0.4.3 specifications are in the master.
 - Current disposition: **REC-113 audit/Q5 Actions repair resolved; REC-117 pickup retention resolved; P5/P6 software slices verified. Session15 temporarily waives missing actual Safari/browser-OS/older physical-device checks, which remain unverified. C1–C7 delivered in PR27; subsequent Q6/G1–G4 scoped local gates complete through G4 `a10e3eb`. Current broad branch CI/delivery and selected V0.4.4 art work remain outstanding; see the [completed log](build/MASTER_BUILD_PLAN.md#readable-gameplay) and BUILD_STATUS.**
 
 ## How to maintain this file
@@ -3050,7 +3050,80 @@ separate from desirable gameplay density and keep the gameplay clock unchanged.
 
 ## V0.4.4 entries — reconciled sprite roster
 
-<!-- V0.4.4 appends here. Reserved ids: REC-120 onward. No row #6–19 claim before its plan lifts REC-078. -->
+<!-- V0.4.4 reserved ids: REC-120 onward. REC-120/121 replace the old row #6–19 gate with the current eco style2 plan. -->
+
+### REC-120 — Knights and Magic is paused until explicit owner reopening
+
+- Status: Accepted
+- Date: 2026-10-22
+- Affects: Every future plan, theme workflow, content/art and dedicated verification
+- Blocks: Further knight-magic development until the owner explicitly reopens it
+
+Owner direction pauses all further Knights and Magic work indefinitely. Retain
+existing sources and historical evidence, but do not add themed content, balance,
+copy, sprites, feature parity or dedicated acceptance campaigns. The old policy
+of developing both production packs in step (REC-046 and historical master
+conventions) is suspended. Existing generic contract tests may read the frozen
+pack; changes requiring themed edits must be recorded/deferred, not used as an
+excuse to resume it. A date, new milestone, old checklist or automated failure
+cannot reopen the theme. Only an explicit owner instruction can do that.
+
+AGENTS and current product/design/build authorities carry the override before
+historical text. No runtime/theme files or selection change in this session.
+Revisit only on explicit owner reopening; preserve stable neutral contracts.
+
+### REC-121 — Double sprite dimensions, preserve world scale and frame continuity
+
+- Status: Accepted
+- Date: 2026-10-22
+- Affects: V0.4.4 eco roster, style guide, manifest, future generation/pipeline work
+- Blocks: Style2 art acceptance until configured output and visual gates pass
+
+Owner requests generation prompts after G1–G4, including regeneration of every
+existing sheet at twice its width and height, with unchanged game size/layout.
+Style2 selects23 primary sheets plus3 optional static tool icons; all10 current
+enemy IDs, player, tools, pickup, five sites and three hazards are covered.
+The prompt catalog and style guide replace the obsolete32-sheet inventory,
+retired fragment trio, four-site list and incorrect reserved player death role.
+
+Existing four/eight-cell strips retain their order. World display diameter is
+independent of texture size: SpriteView already scales diameter/frameDimension.
+Preserve normalized alpha footprint, per-frame hood/grip anchors, material
+landmarks and authored facing as well; a bigger canvas with extra padding can
+still shrink the visible subject. Player distance cycle stays0→1→2→1; hit keeps
+its existing left-facing metadata and frame7 remains death. A nominal2px outline
+preserves style1 weight at doubled resolution while allowing finer interior detail.
+New art must add detail, not just enlarge old pixels. No gameplay timing, hitbox,
+body, balance or saved-ID change follows from the asset work.
+
+Inspection finds scripts/sprites.ts hardcodes five style1 recipes. Merely writing
+prompts or providing larger raw images does not update final resolution. Future
+pipeline/atlas/frame metadata/anchors and outline normalization must be changed
+and verified together, without independent per-pose fitting. Warnings, tool hit
+geometry, pulse/fade and elite cues remain code-owned. New tool/site/hazard
+frame lists need deliberate runtime phase mapping; ordinary walking loops cannot
+stand in for activation, collection or damaging phases.
+
+All current art/raw attempts remain untouched and five style1 acceptances remain
+historically valid; style2 generation/acceptance is 0/0. The manifest queues their
+replacements without claiming generation. Exact assembled prompts/reference
+hashes and honest tool/seed metadata accompany future numbered attempts; reject
+bad alignment/style and regenerate, never hand-paint a repair.
+
+Documentation-only audit consolidates completed V0.4.3 specification, performance
+session sequencing, gameplay roadmap/source context and old sprite specifications
+in the master. Deletes five completed prompt files (G1–G4, Session21), three
+redundant G2–G4 plan pointers, the completed V0.4.3 plan and gameplay roadmap.
+Future selected sprite work and unselected proposals stay separate. Markdown
+links are redirected, including two pre-existing retired Session13 report links;
+raw measurement/source-digest evidence is retained. No new CI/browser/device,
+art, runtime, merge or publication is claimed. External checks stay waived/unverified.
+
+Verification: 489 repository-local Markdown links pass; 26 exact prompt/manifest
+frame-dimension/count rows pass (all 10 enemy IDs); 298 source/test/script/public
+asset SHA256 hashes unchanged. Final whitespace check is recorded in status.
+No runtime/build/browser suite is needed for this Markdown-only preparation.
+Revisit when the Bottle/pipeline phase begins or the owner changes art direction.
 
 ## Open questions to reconcile during implementation
 
@@ -3660,7 +3733,7 @@ head browser/audit evidence; no merge/deployment/manual dispatch is authorized.
 The owner asks to add the ranked survivor-game ideas to planning in a few phases,
 consider two Australian rubbish rankings for enemies, and rebalance current
 enemies as required. Preserve Session21/Q6 and the C1–C7 verified foundations.
-The [four-phase roadmap](build/READABLE_GAMEPLAY_ROADMAP.md) now owns Q6 → G1
+The [four-phase roadmap](build/MASTER_BUILD_PLAN.md#readable-gameplay-design-context) now owns Q6 → G1
 existing-roster balance → G2 small outdoor roster → G3 rhythm/optional sites →
 G4 mastery/results/optional guide. Milestone/branch placement is TBC; no runtime
 phase is started or completed here. This continuation uses REC-101's ideation
@@ -3734,7 +3807,7 @@ for G1. Remote inspection confirms PR27 merged c735cb8 as9837158 with successful
 head CI39535388393. Publish only the planning amendment/claim/handoff on top;
 Q6/G1 implementation and G2–G4/art remain unstarted. G1 is claimed to Codex on
 `codex/readable-gameplay-g1`, under the roadmap's bounded ownership. The successor
-[PHASE_G1_PROMPT](build/PHASE_G1_PROMPT.md) authorizes doing Q6 first if still open,
+[PHASE_G1_PROMPT](build/MASTER_BUILD_PLAN.md#readable-gameplay-g1) authorizes doing Q6 first if still open,
 then G1 after verification, with separate phase commits. Do not treat a claim,
 main publication or prior milestone CI as a completed gameplay gate. The current
 request supersedes older local-only/draft-only delivery restrictions for this

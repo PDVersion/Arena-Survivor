@@ -1,5 +1,28 @@
 # V0.4 — Readable Baseline Before Content Growth
 
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+## Current selected work — 2026-10-22
+
+Completed multistage V0.4.3 and Q6/G1–G4 records now live in the master only;
+completed G1–G4/Session21 prompts and redundant G2–G4 pointer plans are deleted.
+Current art authority: [V0.4.4](SPRITE_PLAN_V0.4.4.md),
+[shared style](SPRITE_STYLE_GUIDE.md), [26 subject prompts](SPRITE_PROMPTS.md).
+All five existing sheets will be regenerated at 2× width and 2× height, preserving
+world display/layout. Prompt preparation is selected; generation/integration and
+style2 acceptance remain unstarted. No new runtime/CI/merge/device claim.
+
+
 Current milestone dates and statuses: [BUILD_STATUS.md](BUILD_STATUS.md).
 
 V0.4 is now a sequence, not two live parallel streams. The sprite checkpoint
@@ -13,7 +36,7 @@ better than the simpler educational game.
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`MASTER_BUILD_PLAN.md#v0-4-1`](./MASTER_BUILD_PLAN.md#v0-4-1) |
 | **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`MASTER_BUILD_PLAN.md#v0-4-2`](./MASTER_BUILD_PLAN.md#v0-4-2) |
 | **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`MASTER_BUILD_PLAN.md#v0-4-2-1`](./MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./MASTER_BUILD_PLAN.md#v0-4-3-source-plan) |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | [`SPRITE_PLAN_V0.4.4.md`](./SPRITE_PLAN_V0.4.4.md) |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -110,8 +133,7 @@ preserving the permanent presentation/simulation boundary above.
 ## V0.4 definition of done
 
 V0.4 is complete when the readable baseline has merged, content growth has been
-revalidated against it, the reconciled sprite roster is complete, both
-production themes still satisfy their contracts, and every accepted balance
+revalidated against it, the reconciled sprite roster is complete, the active eco theme satisfies its contracts and the frozen knight pack is preserved, and every accepted balance
 value remains theme-owned data. A 300-enemy stress test must still pass, but the
 game no longer treats reaching 300 enemies—or filling the screen with effects—as
 a design goal.
@@ -121,7 +143,7 @@ a design goal.
 Q6 and all four follow-on phases G1–G4 pass their scoped local gates. The
 [single completed build log](MASTER_BUILD_PLAN.md#readable-gameplay) owns commits,
 implementation/checklists, evidence and limits, ending at G4 `a10e3eb`.
-[Roadmap](READABLE_GAMEPLAY_ROADMAP.md) retains design priorities/source context.
+[Roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) retains design priorities/source context.
 [Next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers delivery and V0.4.4 selection.
 No further G1–G4 gameplay phase remains. No new publication/CI/merge or sprite
 claim/generation follows from local closure. Broad current-app checks remain

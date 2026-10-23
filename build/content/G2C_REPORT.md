@@ -101,7 +101,7 @@ unverified. No new CI/main merge or production hardware claim.
 |G2C Aluminium Can / Barrel Construct|Keep (this commit)|Sidestep old-position direct pass; return during recovery|
 
 **G2's scoped local gate is complete; ready to start G3. G3 is unstarted.**
-[PHASE_G3_PROMPT](../PHASE_G3_PROMPT.md) is written/reviewed and deliberately
+[PHASE_G3_PROMPT](../MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed and deliberately
 leaves implementation for the next owner instruction. It flags the55% Can vs50%
 mini-boss/52%shrine overlap, warning crowding and pressure/XP snowball risks.
 No G4, new sprites, world generator, currency, material matrix or factual content

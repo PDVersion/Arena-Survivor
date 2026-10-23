@@ -1,8 +1,21 @@
 # Theme and Archetype System
 
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+
 This document is the design reference for making Arena Survivor's fiction replaceable without rewriting its game systems.
 
-From V0.3 Phase 2 the production theme is **environment/nature** (`eco-guardian`). The original **knights and magic** pack (`knight-magic`) is retained as a second, complete production theme. It is not a fixture: it must keep satisfying every contract and passing every rule test, which makes it a far stronger boundary regression target than a synthetic stub.
+From V0.3 Phase 2 the production theme is **environment/nature** (`eco-guardian`). The original **knights and magic** pack (`knight-magic`) is retained frozen for historical compatibility. Its earlier role as a continuously developed second production pack is suspended by the owner direction above.
 
 The source-level authority is the active theme manifest under `src/game/content/themes/`. `active-theme.ts` selects one pack for the runtime; `theme-registry.ts` lists every pack for tooling and validation and is deliberately kept out of the runtime path so the production bundle never carries a theme it does not render.
 
@@ -337,7 +350,7 @@ or sprites are selected by this planning decision.
 
 ## Readable roster roadmap — 2026-10-21 planning boundary
 
-[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md) owns the staged candidate
+[Master gameplay design record](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) owns the staged candidate
 assessment and G1–G4 gates. Existing Plastic Bottle, Microplastics, Glass Bottle,
 Bagged Waste and stationary Glass Shards keep their stable IDs and finite material
 relationships. No current role is renamed to match a survey ranking. Plastic Bag
@@ -391,7 +404,7 @@ and separate20px bodies replace neither Microplastics nor any material family.
 No post-cleanup contamination patch, new art, saved discovery or effectiveness
 matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
 
-[Reviewed plan](BUILD_PLAN_G2.md), [candidate report](content/G2A_REPORT.md).
+[Reviewed plan](MASTER_BUILD_PLAN.md#readable-gameplay-g2), [candidate report](content/G2A_REPORT.md).
 G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
 a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
 
@@ -418,7 +431,7 @@ end caps are code-native presentation, never physics input. No generated art,
 material/harm/handling fact, new information surface, saved field or ID remap.
 
 All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
-[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written/reviewed. G3 ready/unstarted;
+[G3 master record](MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed. G3 ready/unstarted;
 G4/art unstarted, external evidence still deferred/waived/unverified. This is the
 current state; earlier staged continuation paragraphs are historical checkpoints.
 
@@ -438,7 +451,7 @@ in recovery; no new attack/counter/health/damage/body. These are game decisions,
 not real material/handling/abundance claims. No quiz, currency, new roster, saved
 field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
 verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
-complete; [reviewed G4 handoff](PHASE_G4_PROMPT.md) is current, G4/art unstarted.
+complete; [reviewed G4 handoff](MASTER_BUILD_PLAN.md#readable-gameplay-g4) is current, G4/art unstarted.
 
 ## G4 — useful reviews and optional reference / 2026-10-22
 
