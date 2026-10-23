@@ -50,7 +50,7 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | --- | --- | --- | --- | --- | --- | --- |
 | `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | review |
-| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | — | todo |
+| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | Codex 2026-10-23 | generating |
 | `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | — | todo |
 | `character.starter` | Environment Protector | 96×96 | 8 | a3 | — | todo |
 | `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | — | todo |
