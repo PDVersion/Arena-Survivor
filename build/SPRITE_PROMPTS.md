@@ -1,5 +1,17 @@
 # Copyable sprite subject prompts — eco-guardian style 2
 
+## Familiar Australian appearance —2026-10-23
+
+Use recognisable ordinary Australian/Sydney objects before abstract/fantasy
+silhouettes. Read [appearance references](sprites/AUSTRALIAN_REFERENCE_NOTES.md).
+Wine bottles/jars, drink cans, snack packets, household rubbish bags and practical
+cleanup equipment guide the shapes. Theme colours accent credible materials;
+they do not erase object identity. This is appearance direction, not a new factual
+lesson, prevalence ranking, disposal claim, tuning change or saved content ID.
+Older angular/squat Glass Bottle art is retained for comparison; a wine-bottle
+alternative follows the owner direction. World display size remains unchanged.
+
+
 Prepared 2026-10-22. Knights and Magic is paused indefinitely until the owner
 explicitly reopens it. This catalog covers the current eco roster, including
 regeneration of all five shipped sheets. It requests prompts/specifications;
@@ -108,7 +120,7 @@ SUBJECT ID: enemy.slow_durable — Glass Bottle. Eco-guardian only.
 TASK: replacement. Logical baseline 48×48; final native frame 96×96px.
 SHEET: 4 equal cells, ONE horizontal 384×96px strip; no gutters.
 IN-GAME CONTRACT: 50; unchanged by image resolution.
-DESCRIPTION: One heavy squat teal glass bottle, broad thick base ring, abrupt shoulders, short neck, moulded seam and a single top-left hard highlight. Visibly heavier than Plastic Bottle. Opaque pixel glass, not transparent shading. Keep every intact edge clean: no floating cyan specks or debris.
+DESCRIPTION: One familiar discarded green/teal wine bottle: rounded cylindrical body, recognisable sloping shoulders, long narrow neck and plain screw cap. A simple blank paper label band may contrast the dark glass. Use the ordinary household bottle silhouette seen in Australia, never a squat angular potion flask or crystal. Opaque pixel glass with top-left highlight; no floating cyan specks or intact-pose debris. Preserve one identical bottle between states.
 PALETTE (deep/shadow/base/highlight):
 Glass: #0f4f52 #169b91 #2dd4bf #82eadc
 FRAMES, left to right, indexed from 0:

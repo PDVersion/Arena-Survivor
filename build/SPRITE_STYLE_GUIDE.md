@@ -1,5 +1,17 @@
 # Sprite art bible — style 2, double-resolution eco roster
 
+## Familiar Australian appearance —2026-10-23
+
+Use recognisable ordinary Australian/Sydney objects before abstract/fantasy
+silhouettes. Read [appearance references](sprites/AUSTRALIAN_REFERENCE_NOTES.md).
+Wine bottles/jars, drink cans, snack packets, household rubbish bags and practical
+cleanup equipment guide the shapes. Theme colours accent credible materials;
+they do not erase object identity. This is appearance direction, not a new factual
+lesson, prevalence ranking, disposal claim, tuning change or saved content ID.
+Older angular/squat Glass Bottle art is retained for comparison; a wine-bottle
+alternative follows the owner direction. World display size remains unchanged.
+
+
 Owner direction: 2026-10-22. Knights and Magic is paused indefinitely until the
 owner explicitly reopens it. All prompts here are for `eco-guardian` only.
 The [sprite plan](SPRITE_PLAN_V0.4.4.md) owns scope and integration gates;

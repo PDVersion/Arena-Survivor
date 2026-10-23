@@ -191,3 +191,17 @@ Gate: all26catalogsubjects have preserved generated sources/prompt evidence (3ol
 plus23new); intended dimensions/frame counts catalogued; available native outputs
 pass format checks; shared source/runtime/accepted assets remain unchanged. Owner
 visual testing, alignment and live/performance acceptance remain explicitly pending.
+
+
+### Familiar Australian appearance — owner amendment during parallel generation
+
+Owner asks that items resemble familiar everyday Australian/Sydney examples,
+explicitly contrasting the angular glass shape with wine bottles or jars. Read
+the design prompt and local primary reference context before generation. Root
+owns Australian reference notes and a further Glass Bottle a4 wine-bottle review
+alternative, retaining a3 unchanged. The familiar-object silhouette supersedes
+older squat/angular art descriptors, while stable IDs, material role, frame
+count and world display size remain fixed. Shared style/light/palette discipline
+continues; use neutral ordinary materials with theme-colour accents rather than
+turning mundane objects into magical/futuristic constructs. No new game facts,
+disposal rules or prevalence-driven balance are introduced.
