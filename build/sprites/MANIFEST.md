@@ -49,7 +49,7 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | ID | Subject | Target frame | Frames | Next attempt | Claimed by | Target status |
 | --- | --- | --- | --- | --- | --- | --- |
 | `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
-| `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | generating |
+| `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | review |
 | `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | — | todo |
 | `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | — | todo |
 | `character.starter` | Environment Protector | 96×96 | 8 | a3 | — | todo |
@@ -122,3 +122,5 @@ claim/prompt/regeneration/acceptance workflow after the roster gate, retaining t
 original sheet and matching world display size. See REC-111.
 
 | 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |
+
+| 2026-10-23 | `enemy.fast_fragile` | 4 | 2 | n/a (built-in) | review | New connected multicolour four-pose source;48px fixed-grid review. Final alignment/live scale acceptance pending. |

@@ -1,0 +1,86 @@
+{
+  "source": "build/sprites/raw/enemy_fast_fragile.a4.png",
+  "sourceSha256": "be17cde4e49ea326748a7f4dd2700d86f921b626fdc3f2202d5e49048722919c",
+  "output": "build/sprites/review/style2/enemy_fast_fragile.a4.png",
+  "outputSha256": "7a6c18cd5807b15bec9b05dcd36365ee29c922a591ebf22521cb7ddf76ff99b1",
+  "width": 192,
+  "height": 48,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 9,
+      "top": 13,
+      "width": 30,
+      "height": 23,
+      "opaquePixels": 423
+    },
+    {
+      "frame": 1,
+      "left": 8,
+      "top": 17,
+      "width": 36,
+      "height": 19,
+      "opaquePixels": 395
+    },
+    {
+      "frame": 2,
+      "left": 9,
+      "top": 13,
+      "width": 31,
+      "height": 23,
+      "opaquePixels": 424
+    },
+    {
+      "frame": 3,
+      "left": 10,
+      "top": 13,
+      "width": 31,
+      "height": 25,
+      "opaquePixels": 419
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.fast_fragile",
+    "source": "build/sprites/raw/enemy_fast_fragile.a4.png",
+    "output": "build/sprites/review/style2/enemy_fast_fragile.a4.png",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 90,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d5f",
+        "#64748b",
+        "#e2e8f0",
+        "#f8fafc"
+      ],
+      [
+        "#7f1d1d",
+        "#b91c1c",
+        "#ef4444",
+        "#fca5a5"
+      ],
+      [
+        "#173b73",
+        "#356fae",
+        "#2563eb",
+        "#93c5fd"
+      ],
+      [
+        "#713f12",
+        "#b7791f",
+        "#facc15",
+        "#fde68a"
+      ]
+    ],
+    "outline": "#172d5f"
+  }
+}
