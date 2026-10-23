@@ -1,0 +1,46 @@
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: enemy.swarm_basic — Plastic Bottle. Eco-guardian only.
+TASK: replacement. Logical baseline 32×32; final native frame 64×64px.
+SHEET: 4 equal cells, ONE horizontal 256×64px strip; no gutters.
+IN-GAME CONTRACT: 36; unchanged by image resolution.
+DESCRIPTION: One discarded crumpled single-use drink bottle; cap attached, narrow ridged neck, faded unlettered label band, broad base and distinctive dent on its left side. Keep exactly the same cap, label height and dent in every intact pose. Medium detail: neck ridge, band and dent only.
+PALETTE (deep/shadow/base/highlight):
+Plastic blue: #173b73 #356fae #60a5fa #9ac8fb
+Bottle neutral label: #4b5563 #9ca3af #e2e8f0 #f8fafc
+FRAMES, left to right, indexed from 0:
+0: upright idle.
+1: small forward rocking/tumbling pose, same bottle.
+2: exact idle geometry for hit.
+3: crushed split body, with cap and label still recognizable.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+REFERENCE ROLES: image1 is the old accepted Plastic Bottle four-frame layout and material reference. Image2 is the accepted Player style reference only, never draw the player. Regenerate the bottle with genuine finer contour detail at64px per frame, retaining the exact normalized per-frame pose layout. Preserve old idle and hit matching silhouette. Four bottles only, one row; no characters. Canvas transparent, strict4:1 strip. If tool exports at larger resolution, keep four equal square cells with artwork aligned within them, no surrounding presentation sheet.

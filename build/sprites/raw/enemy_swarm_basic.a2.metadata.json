@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-23",
+  "contentId": "enemy.swarm_basic",
+  "attempt": 2,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/enemy_swarm_basic.a2.png",
+  "prompt": "build/sprites/raw/enemy_swarm_basic.a2.prompt.txt",
+  "references": [
+    {
+      "path": "build/sprites/accepted/enemy_swarm_basic.png",
+      "sha256": "b57bda0060acf056708f151f70ade00ff64f69b384f0a000795982d6219319b7"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    }
+  ],
+  "status": "review",
+  "notes": "Source style reference approved; not accepted into runtime. Original2172x724 retained. Final continuity/live scale acceptance pending."
+}

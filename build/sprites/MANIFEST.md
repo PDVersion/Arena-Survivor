@@ -48,7 +48,7 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 
 | ID | Subject | Target frame | Frames | Next attempt | Claimed by | Target status |
 | --- | --- | --- | --- | --- | --- | --- |
-| `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | generating |
+| `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | — | todo |
 | `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a3 | — | todo |
 | `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | — | todo |
@@ -120,3 +120,5 @@ The shattered frame intentionally contains angular fragments. No pixels, source
 attempts, atlas or acceptance state were changed. Future remediation must use the
 claim/prompt/regeneration/acceptance workflow after the roster gate, retaining the
 original sheet and matching world display size. See REC-111.
+
+| 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |

@@ -139,3 +139,12 @@ layout; verify final review dimensions/alpha/palettes if converted, record revie
 versus accepted honestly, retain old source/runtime hashes. No broad browser run
 for generation-only assets. Runtime integration/performance acceptance remains
 open rather than implied by source-art review.
+
+
+Batch1 ownership extension before code: `src/game/systems/sprites/sprite-pipeline.ts`,
+`tests/unit/sprites/sprite-pipeline.test.ts`, and `scripts/sprite-review.ts` for
+an opt-in fixed source-cell grid, requested2px outline and reproducible review
+conversion only. Existing recipes/default normalization stay unchanged. Explicit
+source-grid coordinates are recorded per attempt; one common scale, no per-frame
+recentering. Verify meaningful fixed-offset/outline tests and unchanged current
+five-sheet rebuild bytes. Review output never enters public/accepted automatically.
