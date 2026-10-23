@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-23",
+  "contentId": "character.starter",
+  "attempt": 3,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/character_starter.a3.png",
+  "rawWidth": 2172,
+  "rawHeight": 724,
+  "rawSha256": "2cd6506ee39a6f0b557f22276b270da90c031d4cac84b16e97caff0c910d108a",
+  "prompt": "build/sprites/raw/character_starter.a3.prompt.txt",
+  "promptSha256": "a2150b56caae5ac29e720f5fe462c4016ad32f77b433d9c77b6ff279a952b12a",
+  "generatedOutput": "/Users/pdv/.codex/generated_images/01a1661b-7b8a-75d3-a292-1334241a1983/exec-652210ef-2849-4112-941b-86761239dd1c.png",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/review/style2/enemy_slow_durable.a3.png",
+      "sha256": "aa56eb692eea440b276e4483dcca12ebd06b6526f1c8bc83734a6bd3c9214592"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    }
+  ],
+  "localReferenceUrls": [
+    "https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling/Waste-Resources/A-to-Z-Guide-of-Waste-and-Recycling",
+    "https://returnandearn.org.au/what-you-can-return",
+    "https://www.cleanup.org.au/litter-report/",
+    "https://www.cityofsydney.nsw.gov.au/waste-recycling-services/book-pick-up-for-bulky-items"
+  ],
+  "referenceNotes": "Shape context only, no factual prevalence ranking/disposal advice. Exact owner realism overrides preserved at end of prompt.",
+  "status": "review",
+  "notes": "Generation only; user defers individual alignment and in-game review; no production acceptance. Native review format gates pass; common-grid conversion only, no per-pose fitting. Native silhouette occupancy and idle/hit equality remain unaccepted. Source-grid fit contain uses uniform letterboxing for all frames; target ratio mismatch retained honestly.",
+  "reviewSourceGrid": {
+    "left": 0,
+    "top": 238,
+    "cellWidth": 271,
+    "cellHeight": 309,
+    "fit": "contain"
+  },
+  "reviewOutput": "build/sprites/review/style2/character_starter.a3.png",
+  "reviewWidth": 768,
+  "reviewHeight": 96,
+  "reviewSha256": "fd28a38bad43fef6ccc8f9aad7db49e8c657d326cc680efd78fea7e324654ae0",
+  "formatIssues": []
+}

@@ -1,0 +1,80 @@
+{
+  "source": "build/sprites/raw/shrine_escalation.a1.png",
+  "sourceSha256": "18fa9d3aa2997c1466eadd1a99b60f291e42130b59bae38233d726960d00f2f0",
+  "output": "build/sprites/review/style2/shrine_escalation.a1.png",
+  "outputSha256": "82d5f423cf996fa489f243d4e12c3463dd6697d8de5c122548319ee1dd882d3d",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 6,
+      "top": 18,
+      "width": 117,
+      "height": 94,
+      "opaquePixels": 8530
+    },
+    {
+      "frame": 1,
+      "left": 6,
+      "top": 18,
+      "width": 117,
+      "height": 93,
+      "opaquePixels": 8544
+    },
+    {
+      "frame": 2,
+      "left": 6,
+      "top": 18,
+      "width": 122,
+      "height": 93,
+      "opaquePixels": 8580
+    },
+    {
+      "frame": 3,
+      "left": 6,
+      "top": 18,
+      "width": 117,
+      "height": 93,
+      "opaquePixels": 8548
+    }
+  ],
+  "recipe": {
+    "contentId": "shrine.escalation",
+    "source": "build/sprites/raw/shrine_escalation.a1.png",
+    "output": "build/sprites/review/style2/shrine_escalation.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 105,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#881337",
+        "#be3459",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ]
+    ],
+    "outline": "#3f4b26"
+  }
+}

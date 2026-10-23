@@ -1,0 +1,74 @@
+{
+  "source": "build/sprites/raw/hazard_obstacle.a1.png",
+  "sourceSha256": "39bc4f40aecc90486319f0efd078c1b4735712e1ceffdf1c1ac0ceab6d251d45",
+  "output": "build/sprites/review/style2/hazard_obstacle.a1.png",
+  "outputSha256": "8f711fedbd708b458f7e04a73e154877375e98bb9d8eed81fce1feb57d3e3cbe",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 5,
+      "top": 22,
+      "width": 118,
+      "height": 85,
+      "opaquePixels": 7063
+    },
+    {
+      "frame": 1,
+      "left": 7,
+      "top": 24,
+      "width": 114,
+      "height": 81,
+      "opaquePixels": 6467
+    },
+    {
+      "frame": 2,
+      "left": 7,
+      "top": 24,
+      "width": 115,
+      "height": 81,
+      "opaquePixels": 6533
+    },
+    {
+      "frame": 3,
+      "left": 9,
+      "top": 52,
+      "width": 113,
+      "height": 55,
+      "opaquePixels": 4384
+    }
+  ],
+  "recipe": {
+    "contentId": "hazard.obstacle",
+    "source": "build/sprites/raw/hazard_obstacle.a1.png",
+    "output": "build/sprites/review/style2/hazard_obstacle.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 90,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#101c15",
+        "#1b2b20",
+        "#23372a",
+        "#51644c"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ]
+    ],
+    "outline": "#374151"
+  }
+}

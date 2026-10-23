@@ -1,0 +1,31 @@
+{
+  "contentId": "enemy.committed_charger",
+  "source": "build/sprites/raw/enemy_committed_charger.a1.png",
+  "output": "build/sprites/review/style2/enemy_committed_charger.a1.png",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 113,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#111827",
+      "#374151",
+      "#6b7280",
+      "#d1d5db"
+    ],
+    [
+      "#0f4f52",
+      "#169b91",
+      "#2dd4bf",
+      "#82eadc"
+    ]
+  ],
+  "outline": "#111827"
+}

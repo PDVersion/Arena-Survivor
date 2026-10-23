@@ -1,0 +1,80 @@
+{
+  "source": "build/sprites/raw/enemy_cluster_fodder.a1.png",
+  "sourceSha256": "67a1207036307e05bc23ff772ff162bac08667ae77d549a78f6f58e1df70c19d",
+  "output": "build/sprites/review/style2/enemy_cluster_fodder.a1.png",
+  "outputSha256": "1ec59120f517e58a9e7f966e164c51070da1e13b8d6571123b55f9ef8c6c05e2",
+  "width": 192,
+  "height": 48,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 10,
+      "top": 10,
+      "width": 32,
+      "height": 30,
+      "opaquePixels": 478
+    },
+    {
+      "frame": 1,
+      "left": 11,
+      "top": 9,
+      "width": 31,
+      "height": 31,
+      "opaquePixels": 469
+    },
+    {
+      "frame": 2,
+      "left": 10,
+      "top": 10,
+      "width": 32,
+      "height": 30,
+      "opaquePixels": 477
+    },
+    {
+      "frame": 3,
+      "left": 10,
+      "top": 12,
+      "width": 29,
+      "height": 28,
+      "opaquePixels": 470
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.cluster_fodder",
+    "source": "build/sprites/raw/enemy_cluster_fodder.a1.png",
+    "output": "build/sprites/review/style2/enemy_cluster_fodder.a1.png",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 85,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d5f",
+        "#64748b",
+        "#e2e8f0",
+        "#f8fafc"
+      ],
+      [
+        "#7c2d12",
+        "#c65d1a",
+        "#fb923c",
+        "#fdba74"
+      ],
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ]
+    ],
+    "outline": "#172d5f"
+  }
+}

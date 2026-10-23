@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-23",
+  "contentId": "shrine.escalation",
+  "attempt": 1,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/shrine_escalation.a1.png",
+  "prompt": "build/sprites/raw/shrine_escalation.a1.prompt.txt",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    }
+  ],
+  "constructionReferenceUrls": [
+    "https://www.cityofsydney.nsw.gov.au/waste-recycling-services/book-pick-up-for-bulky-items",
+    "https://www.cityofsydney.nsw.gov.au/waste-recycling-services/recycle-household-items",
+    "https://www.cleanup.org.au/litter-report/"
+  ],
+  "status": "review",
+  "notes": "Generated source and deterministic review only. Common fixed-cell crop/transform; no manual pixel or pose edits. Native palette conversion is not art acceptance. Individual alignment/frame continuity and in-game review deferred by owner. Activation frame has generated detached signal rays; retained for individual review.",
+  "rawDimensions": [
+    2172,
+    724
+  ],
+  "reviewRecipe": "build/sprites/raw/shrine_escalation.a1.review.json",
+  "reviewOutput": "build/sprites/review/style2/shrine_escalation.a1.png",
+  "sourceGrid": {
+    "left": 0,
+    "top": 105,
+    "cellWidth": 543,
+    "cellHeight": 543
+  }
+}

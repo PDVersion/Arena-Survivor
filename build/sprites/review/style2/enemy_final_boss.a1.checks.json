@@ -1,0 +1,93 @@
+{
+  "source": "build/sprites/raw/enemy_final_boss.a1.png",
+  "sourceSha256": "f62de93648e76f264b2e4a94363d7f83d0491dc2d43712aa443957f51331dc2a",
+  "output": "build/sprites/review/style2/enemy_final_boss.a1.png",
+  "outputSha256": "deb408b0f4dec2c77dc661a404283511f98a8ebe104ef32c0f337179be3c7938",
+  "width": 768,
+  "height": 192,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 11,
+      "top": 2,
+      "width": 172,
+      "height": 180,
+      "opaquePixels": 21934
+    },
+    {
+      "frame": 1,
+      "left": 11,
+      "top": 5,
+      "width": 172,
+      "height": 177,
+      "opaquePixels": 21993
+    },
+    {
+      "frame": 2,
+      "left": 10,
+      "top": 2,
+      "width": 173,
+      "height": 180,
+      "opaquePixels": 21987
+    },
+    {
+      "frame": 3,
+      "left": 10,
+      "top": 69,
+      "width": 172,
+      "height": 122,
+      "opaquePixels": 14596
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.final_boss",
+    "source": "build/sprites/raw/enemy_final_boss.a1.png",
+    "output": "build/sprites/review/style2/enemy_final_boss.a1.png",
+    "frameWidth": 192,
+    "frameHeight": 192,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 95,
+      "cellWidth": 543,
+      "cellHeight": 582,
+      "fit": "contain"
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#3b1762",
+        "#8050bd",
+        "#c084fc",
+        "#dcb5fd"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ],
+      [
+        "#173b73",
+        "#356fae",
+        "#60a5fa",
+        "#9ac8fb"
+      ],
+      [
+        "#0f4f52",
+        "#169b91",
+        "#2dd4bf",
+        "#82eadc"
+      ]
+    ],
+    "outline": "#3b1762"
+  }
+}

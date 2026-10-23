@@ -1,0 +1,37 @@
+{
+  "contentId": "enemy.mini_boss",
+  "source": "build/sprites/raw/enemy_mini_boss.a1.png",
+  "output": "build/sprites/review/style2/enemy_mini_boss.a1.png",
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 105,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#0f4f52",
+      "#169b91",
+      "#2dd4bf",
+      "#82eadc"
+    ],
+    [
+      "#374151",
+      "#6b7280",
+      "#d1d5db",
+      "#f8fafc"
+    ],
+    [
+      "#173b73",
+      "#356fae",
+      "#60a5fa",
+      "#9ac8fb"
+    ]
+  ],
+  "outline": "#0f4f52"
+}

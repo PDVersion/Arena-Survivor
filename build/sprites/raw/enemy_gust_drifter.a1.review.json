@@ -1,0 +1,31 @@
+{
+  "contentId": "enemy.gust_drifter",
+  "source": "build/sprites/raw/enemy_gust_drifter.a1.png",
+  "output": "build/sprites/review/style2/enemy_gust_drifter.a1.png",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 100,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#3b1762",
+      "#8050bd",
+      "#c084fc",
+      "#dcb5fd"
+    ],
+    [
+      "#713f12",
+      "#b7791f",
+      "#facc15",
+      "#fde68a"
+    ]
+  ],
+  "outline": "#3b1762"
+}

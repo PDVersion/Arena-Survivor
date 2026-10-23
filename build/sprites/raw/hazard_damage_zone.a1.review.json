@@ -1,0 +1,31 @@
+{
+  "contentId": "hazard.damage_zone",
+  "source": "build/sprites/raw/hazard_damage_zone.a1.png",
+  "output": "build/sprites/review/style2/hazard_damage_zone.a1.png",
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 117,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#7c2d12",
+      "#c65d1a",
+      "#fb923c",
+      "#fdba74"
+    ],
+    [
+      "#3f4b26",
+      "#68753b",
+      "#91a657",
+      "#c0d187"
+    ]
+  ],
+  "outline": "#3f4b26"
+}

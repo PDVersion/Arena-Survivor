@@ -1,0 +1,74 @@
+{
+  "source": "build/sprites/raw/enemy_committed_charger.a1.png",
+  "sourceSha256": "e48e2db11a171a3598b678ff53ace5d69b2d6d30e665b345ca259fd3ebab9793",
+  "output": "build/sprites/review/style2/enemy_committed_charger.a1.png",
+  "outputSha256": "b8b7f141fb9b2319817b4f80e053c391608324fd2a0b920c9fbbfb7a3abd835a",
+  "width": 256,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 7,
+      "top": 19,
+      "width": 51,
+      "height": 34,
+      "opaquePixels": 1300
+    },
+    {
+      "frame": 1,
+      "left": 11,
+      "top": 11,
+      "width": 46,
+      "height": 43,
+      "opaquePixels": 1276
+    },
+    {
+      "frame": 2,
+      "left": 7,
+      "top": 19,
+      "width": 51,
+      "height": 34,
+      "opaquePixels": 1300
+    },
+    {
+      "frame": 3,
+      "left": 7,
+      "top": 20,
+      "width": 51,
+      "height": 34,
+      "opaquePixels": 1229
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.committed_charger",
+    "source": "build/sprites/raw/enemy_committed_charger.a1.png",
+    "output": "build/sprites/review/style2/enemy_committed_charger.a1.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 113,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ],
+      [
+        "#0f4f52",
+        "#169b91",
+        "#2dd4bf",
+        "#82eadc"
+      ]
+    ],
+    "outline": "#111827"
+  }
+}

@@ -5,7 +5,7 @@ This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
 [style/acceptance](../SPRITE_STYLE_GUIDE.md), [copyable prompts](../SPRITE_PROMPTS.md).
 
 **Shipped: five accepted style1 sheets. Target: 23 style2 primary sheets plus
-three selected static tool icons (owner selects entire catalog2026-10-23). Style2 generated/accepted: 3/0.**
+three selected static tool icons (owner selects entire catalog2026-10-23). Style2 generated/accepted: 26/0 (27 preserved style2 sources including both glass designs).**
 Existing sheets remain live; all five are scheduled for regeneration. The target
 queue does not retroactively revoke their original acceptance or overwrite raw
 attempts. Glass Shards currently reuse Glass frame3. Batch1 claims are tracked below.
@@ -50,27 +50,27 @@ Exact prompts and frame roles live only in the catalog to avoid conflicting copi
 | --- | --- | --- | --- | --- | --- | --- |
 | `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | review |
-| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a4 | Codex root 2026-10-23 | generating |
-| `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | Codex actors 2026-10-23 | generating |
-| `character.starter` | Environment Protector | 96×96 | 8 | a3 | Codex actors 2026-10-23 | generating |
-| `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | Codex actors 2026-10-23 | generating |
-| `enemy.cluster_fodder` | Cigarette Butts | 48×48 | 4 | a1 | Codex actors 2026-10-23 | generating |
-| `enemy.gust_drifter` | Packets / Wrappers | 64×64 | 4 | a1 | Codex actors 2026-10-23 | generating |
-| `enemy.committed_charger` | Aluminium Can | 64×64 | 4 | a1 | Codex actors 2026-10-23 | generating |
-| `enemy.mini_boss` | Compacted Waste | 128×128 | 4 | a1 | Codex actors 2026-10-23 | generating |
-| `enemy.final_boss` | Dumping Colossus | 192×192 | 4 | a1 | Codex actors 2026-10-23 | generating |
+| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a4 | Codex root 2026-10-23 | review |
+| `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | Codex actors 2026-10-23 | review |
+| `character.starter` | Environment Protector | 96×96 | 8 | a3 | Codex actors 2026-10-23 | review |
+| `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.cluster_fodder` | Cigarette Butts | 48×48 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.gust_drifter` | Packets / Wrappers | 64×64 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.committed_charger` | Aluminium Can | 64×64 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.mini_boss` | Compacted Waste | 128×128 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.final_boss` | Dumping Colossus | 192×192 | 4 | a1 | Codex actors 2026-10-23 | review |
 | `weapon.starter` | Cleanup Grabber action | 128×32 | 3 | a1 | Codex equipment 2026-10-23 | generating |
 | `weapon.secondary` | Cleanup Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | generating |
 | `weapon.secondary_evolved` | Cyclone Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | generating |
 | `pickup.experience` | Impact Point | 32×32 | 3 | a1 | Codex equipment 2026-10-23 | generating |
-| `shrine.spawn_surge` | Landfill Breach | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `shrine.greed` | Fast Fashion Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `shrine.multiplicity` | Single-Use Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `shrine.duplication` | Overproduction Order | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `shrine.escalation` | Unmanaged Dump | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `hazard.damage_zone` | Contamination Spill | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `hazard.obstacle` | Debris Pile | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
-| `hazard.periodic_burst` | Methane Vent | 128×128 | 4 | a1 | Codex world 2026-10-23 | generating |
+| `shrine.spawn_surge` | Landfill Breach | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.greed` | Fast Fashion Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.multiplicity` | Single-Use Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.duplication` | Overproduction Order | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.escalation` | Unmanaged Dump | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `hazard.damage_zone` | Contamination Spill | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `hazard.obstacle` | Debris Pile | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `hazard.periodic_burst` | Methane Vent | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
 | `icon.weapon.starter` | Cleanup Grabber icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
 | `icon.weapon.secondary` | Cleanup Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
 | `icon.weapon.secondary_evolved` | Cyclone Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | generating |
@@ -103,6 +103,23 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |
 | 2026-10-23 | `enemy.fast_fragile` | 4 | 2 | n/a (built-in) | review | New connected multicolour four-pose source;48px fixed-grid review. Final alignment/live scale acceptance pending. |
 | 2026-10-23 | `enemy.slow_durable` | 3 | 2 | n/a (built-in) | review | New teal four-pose source;96px fixed-grid review. Intact source silhouettes clean; final alignment/live scale acceptance pending. |
+| 2026-10-23 | `enemy.death_spawner` | 3 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `character.starter` | 3 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.stationary_fragment` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.cluster_fodder` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.gust_drifter` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.committed_charger` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.mini_boss` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.final_boss` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.spawn_surge` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.greed` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.multiplicity` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.duplication` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.escalation` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `hazard.damage_zone` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `hazard.obstacle` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `hazard.periodic_burst` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.slow_durable` | 4 | 2 | n/a (built-in) | review | Familiar wine-bottle alternative; previous angular a3 retained for comparison. |
 
 ## Runtime inspection follow-up — 2026-10-12 Q2
 
