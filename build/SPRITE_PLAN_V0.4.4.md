@@ -187,7 +187,7 @@ when deterministic format conversion can preserve one common source grid/scale.
 If generator layout prevents safe conversion, retain source for review and record
 that specifically; do not hand-paint, invent frames or hide a skipped check.
 
-Gate: all26catalogsubjects have preserved generated sources/prompt evidence (3old
+Gate: all 26 catalog subjects have preserved generated sources/prompt evidence (3old
 plus23new); intended dimensions/frame counts catalogued; available native outputs
 pass format checks; shared source/runtime/accepted assets remain unchanged. Owner
 visual testing, alignment and live/performance acceptance remain explicitly pending.
@@ -214,3 +214,18 @@ existing uniform min-scale and the same centering offset for every cell, without
 per-pose bounding-box fitting, distortion or clipping. Default strict aspect
 validation stays unchanged. This supports generated boards taller than the
 requested strip; extra padding is a review concern, never a gameplay-size change.
+
+
+### Parallel full-roster generation gate — complete 2026-10-23
+
+All 26 catalog subjects have generated sources and native review strips:23 primary
+plus 3icons.27 style2source/recipe sets include angular Glass a3 and familiar wine
+alternative a4. Three subagents delivered their disjoint 8/7/8 groups. Root checked
+26 native formats,27 deterministic rebuilds and source/reference/output digests;
+36 sprite units, types/lint/build and whitespace pass. Gallery syntax/asset targets
+pass; no gallery browser or in-game acceptance is claimed. [Full report](sprites/review/style2/FULL_ROSTER_REPORT.md)
+and [gallery](sprites/review/style2/index.html) own inventory, evidence and known
+individual review notes. Pre-existing public/accepted/runtime assets remain
+unchanged. All 26stay review,0 accepted; alignment/live/performance gates remain
+for later owner testing. Generation objective complete; no knight work or art
+correction campaign is silently selected.

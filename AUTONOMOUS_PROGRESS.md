@@ -4,23 +4,24 @@ Updated: 2026-10-23 (Australia/Sydney).
 
 ## Objective and current state
 
-2026-10-23: owner requests creating the first eco sprite batch. Work is on
-`codex/v0.4.4`; prior documentation preparation is committed 584ba62. Bottle a2,
-Microplastics a4 and Glass a3 are generated, with untouched raw sources, exact
-prompts/reference evidence and native64/48/96px four-cell review strips.
-[Batch1 report](build/sprites/review/style2/BATCH_1_REPORT.md) owns evidence and
-measured layout findings. Generation checkpoint complete; all 3remain review,
-none production-accepted. Final normalized footprints/idle-hit alignment need
-prompt refinement/regeneration and live acceptance before replacing shipped art.
+2026-10-23: owner-selected full eco sprite generation is complete on
+`codex/v0.4.4`. Three subagents generated all 23 remaining subjects in parallel;
+together with the initial three, all 26 catalog subjects have native review
+strips. There are 27 preserved style2 attempts including both angular Glass a3
+and familiar wine-bottle a4. Exact raw sources, prompts, reference hashes,
+metadata, recipes and checks are saved. No sources are production-accepted.
 
-An opt-in fixed-cell converter and 2px outline preserve per-pose offsets without
-hand editing;35 sprite tests, types/lint/build/whitespace and current 5-sheet checks
-pass. Rebuilding existing recipes preserves 12accepted/public file hashes. No
-runtime map, balance, save, knight-theme or live asset change. No browser campaign,
-publication or device acceptance. External checks remain waived/unverified.
-Next: resolve measured layout differences using prompts/regeneration, not body
-changes or per-pose manual repositioning. Knights and Magic remains paused until
-explicit owner reopening. Historical session checkpoints below retain their dates.
+[Review gallery](build/sprites/review/style2/index.html) and
+[full report](build/sprites/review/style2/FULL_ROSTER_REPORT.md) own inventory,
+validation and deferred per-subject findings. All 26 native format checks and
+27 deterministic rebuilds/hash checks pass; 36 sprite tests, types/lint/build
+and whitespace pass. Gallery JavaScript syntax/asset links pass; no browser run.
+Only the opt-in pipeline/its tests change pre-existing source files; all public,
+accepted art and runtime behaviour remain unchanged. No dependencies/save/tuning/
+knight-theme changes or new remote/device acceptance. External checks remain
+waived/unverified. The owner defers individual art and in-game review; do not
+launch a correction campaign or production integration without further direction.
+Knights and Magic remains indefinitely paused until explicit owner reopening.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.

@@ -12,16 +12,17 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
-## Current selected work — 2026-10-22
+## Current selected work — 2026-10-23
 
-Completed multistage V0.4.3 and Q6/G1–G4 records now live in the master only;
-completed G1–G4/Session21 prompts and redundant G2–G4 pointer plans are deleted.
-Current art authority: [V0.4.4](SPRITE_PLAN_V0.4.4.md),
-[shared style](SPRITE_STYLE_GUIDE.md), [26 subject prompts](SPRITE_PROMPTS.md).
-All five existing sheets will be regenerated at 2× width and 2× height, preserving
-world display/layout. Prompt preparation is selected; generation/integration and
-style2 acceptance remain unstarted. No new runtime/CI/merge/device claim.
-
+Completed V0.4.3 and Q6/G1–G4 execution history is in the master. Owner-requested
+full eco sprite generation is now complete: all 26 subjects, 27 preserved style2
+attempts including the wine-bottle alternative. Three subagents generated the
+23 remaining rows in parallel. All are review assets; individual corrections,
+production integration and in-game acceptance are deferred to owner review.
+[Gallery](sprites/review/style2/index.html) ·
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) ·
+[current art plan](SPRITE_PLAN_V0.4.4.md). World/physics values and live assets
+are unchanged. Knights and Magic remains indefinitely paused.
 
 Current milestone dates and statuses: [BUILD_STATUS.md](BUILD_STATUS.md).
 

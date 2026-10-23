@@ -5801,3 +5801,32 @@ Opt-in fixed source cells avoid independent pose recentering;2px outline never
 changes alpha. Generation checkpoint complete; production art acceptance remains
 open due measured footprint/idle-hit differences (REC-122). No live replacement,
 new browser/device evidence or knight-themed work. Prior art remains shipped.
+
+
+<a id="sprite-full-generation-2026-10-23"></a>
+## 2026-10-23 — full eco roster generated through parallel subagents
+
+Owner likes Batch1 and explicitly requests generating the rest simultaneously,
+deferring individual fixes/in-game review. Three agents own disjoint 8-actor,
+7-equipment and 8-world groups; root owns claims/shared documentation/Git and
+an additional familiar wine-bottle alternative. All 26 catalog subjects now have
+native review sheets, with 27 preserved style2 source/prompt/metadata/recipe sets.
+The [gallery](sprites/review/style2/index.html) and
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) retain inventory,
+known individual findings and source-bound evidence. All sources use built-in
+imagegen; seeds/models are not invented. No hand-painted correction or acceptance.
+
+Owner promotes recognisable everyday Australian/Sydney shapes over uncommon
+angular/fantasy forms. Local primary context and authored inference boundaries
+are in [reference notes](sprites/AUSTRALIAN_REFERENCE_NOTES.md). Glass a4 has a
+wine-bottle silhouette; a3 remains intact. Stable IDs and world/gameplay values
+are unchanged. The paused knight pack is not reopened or developed.
+
+26 native format checks, 27 deterministic rebuilds/reference/source/output hash
+checks, 36 sprite units, types/lint/build and whitespace pass. Gallery script syntax
+and local asset targets pass; no gallery browser/in-game/stress/device campaign.
+The opt-in common-grid contain mode uses one identical uniform transform across
+cells and leaves strict defaults intact. Existing public/accepted/runtime assets
+are unchanged; no dependencies/save/balance changes. All 26 remain review,
+production integration/individual alignment/live acceptance pending. External
+browser/OS/older physical-GPU evidence remains waived/unverified. No publication.

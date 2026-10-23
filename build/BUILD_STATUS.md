@@ -14,6 +14,21 @@ core contracts. This overrides older instructions to keep both packs in step.
 
 ## Current selected work — 2026-10-23
 
+**All 26 eco catalog subjects generated for review.** Three subagents completed
+23 remaining subjects simultaneously; 27 preserved style2 attempts include the
+wine-bottle alternative. The owner likes the initial designs and requests only
+complete generation now, with individual revisions/in-game testing later.
+[Gallery](sprites/review/style2/index.html),
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) and manifest own paths,
+known issues and evidence. All 26 native format checks, 27 deterministic rebuilds/
+hash checks, 36 sprite units, types/lint/build and whitespace pass. Gallery syntax
+and local asset targets checked, no browser run. All remain review, none accepted.
+Live/public/accepted assets unchanged; integration and live acceptance remain
+open. Familiar Australian construction notes guide subjects; Knights and Magic
+stays paused. External browser/device checks remain waived/unverified.
+
+## Earlier first-batch checkpoint — 2026-10-23
+
 First sprite generation batch is saved on `codex/v0.4.4`: Bottle a2,
 Microplastics a4 and Glass a3. Style2 generated/accepted 3/0; native four-cell
 review strips at 64/48/96px. Exact sources/prompts/recipes and

@@ -1,34 +1,32 @@
-# Current handoff — eco sprite generation preparation
+# Current handoff — generated eco roster ready for owner review
 
-Owner direction 2026-10-22: Knights and Magic is paused indefinitely until the
-owner explicitly reopens it. Read AGENTS, milestone sequence, reconciliation,
-master conventions, BUILD_STATUS and AUTONOMOUS_PROGRESS first.
+2026-10-23: all 26 catalog subjects have generated native review strips. Three
+subagents generated 23 remaining subjects in parallel; root also generated a
+familiar wine-bottle alternative to the angular Glass design. There are 27 raw
+style2 attempts with exact prompts/reference evidence, recipes and checks.
 
-Q6/G1–G4 are locally complete; their completed phase plans/prompts are retired
-into the [master log](MASTER_BUILD_PLAN.md#readable-gameplay). Historical PR28
-and CI observations remain in BUILD_STATUS; inspect actual current remote state
-if delivery work is requested. This documentation pass publishes nothing.
+Start with AGENTS required authorities, BUILD_STATUS and AUTONOMOUS_PROGRESS.
+[Gallery](sprites/review/style2/index.html),
+[inventory](sprites/review/style2/ALL_SPRITES_INVENTORY.json) and
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) are the current entry
+points. The owner likes the first three designs and defers individual fixes and
+in-game testing. Generation objective complete; do not automatically regenerate
+individual sheets or promote them into production. All stay review, zero accepted.
 
-The selected next art direction is [V0.4.4](SPRITE_PLAN_V0.4.4.md). Use the
-[style lock](SPRITE_STYLE_GUIDE.md), [26 copyable prompts](SPRITE_PROMPTS.md) and
-[manifest](sprites/MANIFEST.md). All five shipped sheets are queued for actual
-regeneration, not nearest-neighbour enlargement. Frame width/height double;
-frame count, layout, normalized footprint, world display and physics stay fixed.
+When an individual revision is requested, use its preserved prompt/raw/reference
+metadata; increment its attempt, record the claim and update the catalog if the
+brief changes. Keep ordinary familiar Australian object silhouettes. For Glass,
+retain a3 angular and a4 wine-shaped options for comparison. No hand-painted fixes.
 
-First-pass generation now exists for Bottle a2, Microplastics a4 and Glass a3.
-Read the [batch report](sprites/review/style2/BATCH_1_REPORT.md) and measured bounds.
-All three stay review; strict footprint/idle-hit alignment is not passed and
-no live assets are replaced. Next refine the prompts and regenerate to the
-measured envelopes, then run scoped live acceptance. Existing fixed-grid review
-conversion is verified and preserves source offsets. For later implementation,
-implementation create/claim the bounded V0.4.4 phase from the actual current
-base, and claim the next attempt in the manifest. Preserve existing attempts. The production sprite script still builds five
-style1 recipes: larger recipe dimensions, outline/normalization, atlas metadata
-and Q6 anchors must be handled together. Do not overwrite old accepted art before
-the replacement passes review. Preserve raw attempts and exact assembled prompts.
-The plan orders Bottle/pipeline, existing replacements, remaining actors, then
-other presentation assets and one consolidated eco gate. No knight-themed work.
+Future live integration needs scoped ownership, configured recipes/frame metadata/
+atlas updates, unchanged authored world diameters, anchor/facing/footprint checks,
+deliberate tool/site/hazard state mapping and necessary serial game acceptance.
+The gallery's generic frame cycling is not gameplay animation or an attack/event
+claim. Original public/accepted/runtime assets remain untouched today.
 
-Broad browser/stress/soak is not rerun for docs. Necessary future browser checks
-stay serial and bounded, with owned resource cleanup. External actual Safari,
-browser/OS and older physical-GPU checks remain waived/unverified.
+All 26 native checks, 27 deterministic rebuilds/reference/source/output digests,
+36 sprite tests, types/lint/build and whitespace pass. Gallery JavaScript syntax
+and local asset links checked; no browser campaign. Existing external actual
+Safari/browser-OS/older physical-GPU checks remain waived/unverified. No new
+publication/merge/CI. Knights and Magic is paused indefinitely until the owner
+explicitly reopens it; no themed parity work is selected.

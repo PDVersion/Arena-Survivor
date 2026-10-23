@@ -10,7 +10,8 @@ merge dates, current PR/CI evidence and remaining acceptance limits.
 V0.4.3 software/content and Q6/G1–G4 scoped local gates are complete; their
 history is in the master log. Current selected work is eco sprite preparation:
 regenerate the five existing sheets and cover the settled roster at twice each
-frame dimension, keeping game display scale fixed. Art integration is unstarted.
+frame dimension, keeping game display scale fixed. All 26 catalog subjects are now generated for review; art integration is unstarted.
+Use the [sprite gallery](build/sprites/review/style2/index.html) to inspect them.
 Knights and Magic is paused indefinitely until the owner explicitly reopens it.
 External device/browser evidence remains waived/unverified; see status for actual
 source-bound PR/CI observations.

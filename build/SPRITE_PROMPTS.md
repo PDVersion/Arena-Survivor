@@ -17,10 +17,13 @@ explicitly reopens it. This catalog covers the current eco roster, including
 regeneration of all five shipped sheets. It requests prompts/specifications;
 no generation, acceptance or runtime replacement is claimed here.
 
-Current checkpoint (2026-10-23): Bottle a2, Microplastics a4 and Glass a3 are
-[generated for review](sprites/review/style2/BATCH_1_REPORT.md). They are not
-production-accepted; measured layout differences must inform the next prompt
-refinement. The original assembled prompts remain beside their raw attempts.
+Current checkpoint (2026-10-23): all 26subjects are generated for review, with
+27 preserved style2 attempts including the wine-bottle alternative. Owner likes
+the first 3designs and explicitly defers individual fixes/in-game review.
+[Gallery](sprites/review/style2/index.html) ·
+[Generation report](sprites/review/style2/FULL_ROSTER_REPORT.md).
+No production acceptance or live replacement is implied. Exact assembled prompts
+and references for actual attempts remain beside the untouched raw outputs.
 
 ## How to copy
 

@@ -3159,7 +3159,7 @@ content. No browser/device result is inferred; Knights and Magic stays paused.
 
 Owner likes the three initial designs and explicitly requests subagents to
 create the entire remaining roster simultaneously, with individual fixes and
-in-game testing later. Select all23remaining subjects including3icons, and permit
+in-game testing later. Select all 23 remaining subjects including 3 icons, and permit
 parallel source generation before Batch1's alignment/live gate passes. Claims
 are committed centrally before dispatch; three agents own disjoint actors,
 equipment and world assets. Root owns shared files and Git. No knight work,
@@ -3178,13 +3178,41 @@ Generator boards have equal rectangular cells that do not always match requested
 cell aspect. Opt-in `sourceGrid.fit=contain` permits the existing uniform min-scale
 and identical letterbox offset across all cells. It never independently fits a
 pose, distorts geometry, erases opaque source content or changes default strict
-aspect handling.36sprite tests (including exact-alpha letterboxing), types/lint/
+aspect handling.36 sprite tests (including exact-alpha letterboxing), types/lint/
 build pass; existing bundle advisory remains. Default crops still reject aspect
 changes or discarded opaque pixels. This is review formatting, not proof of same
 normalized in-game footprint, anchor continuity or warning/contact correctness.
 
 Revisit individual art after owner's visual/in-game review. Do not reopen the
 paused knight pack or silently promote all generated sources to accepted assets.
+
+### REC-124 — Preserve raw material recognition through palette review
+
+- Status: Accepted
+- Date: 2026-10-23
+- Affects: Full eco sprite generation, palette acceptance and individual follow-up
+- Blocks: None for generation; individual production acceptance remains pending
+
+All 26 catalog subjects now have preserved sources/prompts/reference hashes and
+native review strips, with 27 style2 versions including both Glass designs. Three
+parallel agents complete 23 remaining subjects; root verifies 26 format checks and
+27 deterministic rebuilds/reference/source/output digests.36 sprite units, types/
+lint/build/whitespace,521 local Markdown links and130 gallery asset targets pass.
+Gallery JavaScript syntax passes; no browser/in-game/device campaign is claimed.
+Generation objective is complete, not production art acceptance. Owner explicitly
+defers individual corrections and in-game review. Full findings/paths are in
+[report](build/sprites/review/style2/FULL_ROSTER_REPORT.md).
+
+Reusable finding: a correct palette snap can undermine a familiar real-world
+material. Restricted site/boss ramps turn brown cardboard/timber olive even when
+the untouched source clearly depicts brown material. Retain both raw and native
+views. For later recognition-focused revisions, review allowed material ramps
+alongside silhouette prompts; never repair by hand-painting individual sprites
+or changing gameplay values. Agent metadata retains other frame/grip/activation
+cue findings rather than declaring them passed because format checks succeed.
+No knight art, live/accepted asset, runtime tuning, save/dependency or new
+publication change. Revisit each subject only with owner-directed refinement or
+production integration scope; keep all exact attempt evidence available.
 
 ## Open questions to reconcile during implementation
 

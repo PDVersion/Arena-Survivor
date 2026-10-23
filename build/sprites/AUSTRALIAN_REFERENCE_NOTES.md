@@ -1,11 +1,11 @@
 # Familiar Australian sprite construction references
 
-Owner direction2026-10-23: recognisable everyday items take priority over unusual
+Owner direction 2026-10-23: recognisable everyday items take priority over unusual
 angular/fantasy silhouettes. These are appearance references and contextual
 examples, not statistically measured Sydney prevalence or disposal guidance.
 The existing game IDs, behaviours, tuning and material families do not change.
 
-## Primary context reviewed2026-10-23
+## Primary context reviewed 2026-10-23
 
 - [City of Ryde household A–Z](https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling/Waste-Resources/A-to-Z-Guide-of-Waste-and-Recycling)
   explicitly lists wine/soft-drink bottles and pasta-sauce jars as ordinary glass
@@ -15,8 +15,8 @@ The existing game IDs, behaviours, tuning and material families do not change.
   names water/soft-drink/juice/sports-drink plastic bottles, glass beer/water/
   soft-drink/juice/kombucha bottles and drink cans as on-the-go containers.
   This use is visual context only, not an eligibility lesson in the game.
-- [Visy750ml Bordeaux bottle specification](https://productcatalogue.visy.com/products/750ml-bvs-bordeaux/pdf)
-  confirms a750ml wine-container form (295mm tall,74.5mm diameter) and green/flint
+- [Visy 750ml Bordeaux bottle specification](https://productcatalogue.visy.com/products/750ml-bvs-bordeaux/pdf)
+  confirms a 750ml wine-container form (295 mm tall,74.5 mm diameter) and green/flint
   glass. Use a generic cylinder/shoulder/long-neck silhouette, no copied label,
   logo, proprietary surface graphics or claims about market share.
 - [Clean Up Australia litter report](https://www.cleanup.org.au/litter-report/)

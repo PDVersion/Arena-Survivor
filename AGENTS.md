@@ -36,8 +36,9 @@ Consult `build/BUILD_PLAN_V0.4.md` before starting any V0.4 work. V0.4.1–V0.4.
 are merged. V0.4.3 P0–P6 software/C1–C7 and subsequent Q6/G1–G4 completed
 records are consolidated in `build/MASTER_BUILD_PLAN.md`. External waived checks
 remain unverified. Read `AUTONOMOUS_PROGRESS.md` and `build/SPRITE_PLAN_V0.4.4.md`
-after the required order. Current work is eco-only style2 sprite preparation:
-double each frame dimension, same world scale/layout. Use `build/SPRITE_PROMPTS.md`
+after the required order. Current eco-only style2 generation is complete for all 26 subjects; individual
+review/live integration is deferred to owner direction. File dimensions double
+while world scale/layout contracts stay fixed. Use `build/SPRITE_PROMPTS.md`
 for copyable subjects. Claim a bounded art/integration phase before code or generation.
 Do not edit outside that phase's ownership block.
 
