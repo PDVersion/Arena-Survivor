@@ -5,6 +5,11 @@ explicitly reopens it. This catalog covers the current eco roster, including
 regeneration of all five shipped sheets. It requests prompts/specifications;
 no generation, acceptance or runtime replacement is claimed here.
 
+Current checkpoint (2026-10-23): Bottle a2, Microplastics a4 and Glass a3 are
+[generated for review](sprites/review/style2/BATCH_1_REPORT.md). They are not
+production-accepted; measured layout differences must inform the next prompt
+refinement. The original assembled prompts remain beside their raw attempts.
+
 ## How to copy
 
 Copy the [shared STYLE LOCK](SPRITE_STYLE_GUIDE.md#copy-this-shared-style-block-verbatim),

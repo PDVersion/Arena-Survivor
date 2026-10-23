@@ -12,7 +12,18 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
-## Current selected work — 2026-10-22
+## Current selected work — 2026-10-23
+
+First sprite generation batch is saved on `codex/v0.4.4`: Bottle a2,
+Microplastics a4 and Glass a3. Style2 generated/accepted 3/0; native four-cell
+review strips at 64/48/96px. Exact sources/prompts/recipes and
+[batch report](sprites/review/style2/BATCH_1_REPORT.md) are retained. Automated
+image-format gates pass; strict normalized footprint/idle-hit alignment remains
+open. Production assets are unchanged.35 sprite units, types/lint/build,
+5current-sheet checks and 12unchanged accepted/public hashes pass. No new browser/
+performance/device acceptance. Source art review is not live acceptance.
+
+## Previous preparation checkpoint — 2026-10-22
 
 Completed multistage V0.4.3 and Q6/G1–G4 records now live in the master only;
 completed G1–G4/Session21 prompts and redundant G2–G4 pointer plans are deleted.
@@ -23,7 +34,7 @@ world display/layout. Prompt preparation is selected; generation/integration and
 style2 acceptance remain unstarted. No new runtime/CI/merge/device claim.
 
 
-Updated **2026-10-22 (Australia/Sydney)**. This file replaces the scattered
+Updated **2026-10-23 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -73,7 +84,7 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | C1 foundation | **Verified local slice, 2026-10-20** | Serializable slots, independent attack clocks and attack-owned hit data; [report](content/C1_FOUNDATION_REPORT.md). Foundation retained; the completed C1 gate is recorded below |
 | C1 second-tool gate | **Verified local phase, 2026-10-20** | Cleanup Vacuum/Runic Fan, owner-only upgrades, hit splash/ledger/number flush, simulator and bounded gameplay/readability/stress;509units/59files and15 unique affected browser cases. [Report](content/C1_SECOND_TOOL_REPORT.md) |
 | C2 evolution | **Verified local phase, 2026-10-20** | Same-slot Cyclone Vacuum/Runic Tempest after four reach picks, exact clock/modifier carryover;527units/60files, eight unique affected browser cases; [report](content/C2_REPORT.md) |
-| C3 shrines/curses | **Verified local phase, 2026-10-20** | One scheduled shrine and two run-local one-time curses per theme; visible resolved reward/cost, exact fractional XP/reset;547units/61files, seven unique affected browser cases and120 balance scenarios. [Report](content/C3_REPORT.md) |
+| C3 shrines/curses | **Verified local phase, 2026-10-20** | One scheduled shrine and two run-local one-time curses per theme; visible resolved reward/cost, exact fractional XP/reset;547units/61files, seven unique affected browser cases and 120 balance scenarios. [Report](content/C3_REPORT.md) |
 | C4 elite family | **Verified local phase,2026-10-20** | Both-theme split/shield/acceleration with inherited identity and finite causal work;561units/63files,six unique affected browser cases; [report](content/C4_REPORT.md) |
 | C5 bosses | **Verified local phase,2026-10-20** | Unique capped mini/final, live boss_fight and post-kill endless/clearing,583units/64files, six unique affected serial browser cases and60 coarse TTK scenarios; [report](content/C5_REPORT.md) |
 | C6 local profile | **Verified local phase,2026-10-20** | Schema2 local persistence, terminal lifetime stats, two theme-owned unlocks,595units/65files,10 unique affected serial browser cases; [report](content/C6_REPORT.md) |

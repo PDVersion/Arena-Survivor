@@ -5788,3 +5788,16 @@ rows and 298 unchanged source/test/script/public-asset hashes; whitespace passes
 No runtime/build/browser rerun, art acceptance, publication or new remote evidence.
 External Safari/browser-OS/older physical-GPU checks remain waived/unverified.
 Current authority: [sprite plan](SPRITE_PLAN_V0.4.4.md) and [handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md).
+
+
+## 2026-10-23 — first eco sprite generation checkpoint
+
+On `codex/v0.4.4`, Bottle a2, Microplastics a4 and Glass a3 are generated and
+saved with exact prompts/reference hashes/metadata and native four-cell review
+strips at64/48/96px. [Batch1 report](sprites/review/style2/BATCH_1_REPORT.md)
+records sources, bounds, review limits and35passing sprite tests, types/lint/
+build/whitespace,5current-sheet checks and12unchanged shipped sprite file hashes.
+Opt-in fixed source cells avoid independent pose recentering;2px outline never
+changes alpha. Generation checkpoint complete; production art acceptance remains
+open due measured footprint/idle-hit differences (REC-122). No live replacement,
+new browser/device evidence or knight-themed work. Prior art remains shipped.

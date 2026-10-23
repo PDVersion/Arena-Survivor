@@ -1,28 +1,26 @@
 # Autonomous progress
 
-Updated: 2026-10-22 (Australia/Sydney).
+Updated: 2026-10-23 (Australia/Sydney).
 
 ## Objective and current state
 
-2026-10-22 owner-selected documentation preparation is complete: Knights and
-Magic is paused indefinitely until explicit owner reopening (REC-120), and the
-current eco style2 art plan/prompt catalog selects doubled frame dimensions with
-unchanged game scale and layout (REC-121). Five accepted sheets are queued for
-regeneration, with 23 primary subjects and 3 optional tool icons; generation and
-integration are unstarted. No active sprite claims or runtime/asset changes.
+2026-10-23: owner requests creating the first eco sprite batch. Work is on
+`codex/v0.4.4`; prior documentation preparation is committed 584ba62. Bottle a2,
+Microplastics a4 and Glass a3 are generated, with untouched raw sources, exact
+prompts/reference evidence and native64/48/96px four-cell review strips.
+[Batch1 report](build/sprites/review/style2/BATCH_1_REPORT.md) owns evidence and
+measured layout findings. Generation checkpoint complete; all 3remain review,
+none production-accepted. Final normalized footprints/idle-hit alignment need
+prompt refinement/regeneration and live acceptance before replacing shipped art.
 
-Completed V0.4.3/Q6/G1–G4 work is consolidated in the master; completed prompts,
-G2–G4 pointer plans and the superseded V0.4.3/roadmap execution files are removed.
-Future optional proposals remain separate, with old completed session estimates
-moved to master. BUILD_STATUS owns delivery evidence; the current handoff points
-to SPRITE_PLAN_V0.4.4, SPRITE_STYLE_GUIDE, SPRITE_PROMPTS and the manifest.
-
-Checks:489 local Markdown links resolve;26 prompt/manifest dimension/frame rows
-agree; 298 source/test/script/public-asset hashes are unchanged; whitespace passes.
-Documentation-only pass; no build/browser rerun, generated art, publication,
-matching-head CI, merge or external acceptance claim. Existing external actual
-Safari/browser-OS/older physical-GPU checks remain waived/unverified. Historical
-session checkpoints below are superseded where they describe future work.
+An opt-in fixed-cell converter and 2px outline preserve per-pose offsets without
+hand editing;35 sprite tests, types/lint/build/whitespace and current 5-sheet checks
+pass. Rebuilding existing recipes preserves 12accepted/public file hashes. No
+runtime map, balance, save, knight-theme or live asset change. No browser campaign,
+publication or device acceptance. External checks remain waived/unverified.
+Next: resolve measured layout differences using prompts/regeneration, not body
+changes or per-pose manual repositioning. Knights and Magic remains paused until
+explicit owner reopening. Historical session checkpoints below retain their dates.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -1727,7 +1725,7 @@ from G2C5b50d7b: spaced teaching/mini/elite thresholds,4Glass/2Bag first waves,
 five optional destinations, current-world site cost/reward, minimap diamonds and
 boss pursuit holds during fixed warnings. Rate/camera/bodies/caps/weapons/stable
 IDs/saves/art remain. Final342short tests/35files and696full units/73files,
-types/lint/build/whitespace,13unique affected serial browser cases and120before+
+types/lint/build/whitespace,13unique affected serial browser cases and 120before+
 120after ambient /90before+90after timed balance scenarios pass. Initial old
 schedule/roster fixture failures and actual aided/model limits are recorded in
 [G3_REPORT](build/content/G3_REPORT.md); this is no natural survival/device claim.

@@ -100,6 +100,9 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-09-18 | `character.starter` | 2 | 1 | n/a (built-in) | accepted | Deterministic normalization now retains the largest connected subject per frame, removing detached generator marks without hand-editing the preserved raw attempt; runtime uses the clean 0→1→2→1 walk cycle. |
 | 2026-09-21 | `enemy.fast_fragile` | 3 | 1 | n/a (built-in) | accepted | Replaced the obsolete Plastic Bag with a transparent four-pose Microplastics cluster; deterministic normalization preserves the multicolour material regions and compact connected silhouette. |
 
+| 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |
+| 2026-10-23 | `enemy.fast_fragile` | 4 | 2 | n/a (built-in) | review | New connected multicolour four-pose source;48px fixed-grid review. Final alignment/live scale acceptance pending. |
+| 2026-10-23 | `enemy.slow_durable` | 3 | 2 | n/a (built-in) | review | New teal four-pose source;96px fixed-grid review. Intact source silhouettes clean; final alignment/live scale acceptance pending. |
 
 ## Runtime inspection follow-up — 2026-10-12 Q2
 
@@ -120,9 +123,3 @@ The shattered frame intentionally contains angular fragments. No pixels, source
 attempts, atlas or acceptance state were changed. Future remediation must use the
 claim/prompt/regeneration/acceptance workflow after the roster gate, retaining the
 original sheet and matching world display size. See REC-111.
-
-| 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |
-
-| 2026-10-23 | `enemy.fast_fragile` | 4 | 2 | n/a (built-in) | review | New connected multicolour four-pose source;48px fixed-grid review. Final alignment/live scale acceptance pending. |
-
-| 2026-10-23 | `enemy.slow_durable` | 3 | 2 | n/a (built-in) | review | New teal four-pose source;96px fixed-grid review. Intact source silhouettes clean; final alignment/live scale acceptance pending. |

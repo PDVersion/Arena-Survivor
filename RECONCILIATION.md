@@ -3125,6 +3125,31 @@ asset SHA256 hashes unchanged. Final whitespace check is recorded in status.
 No runtime/build/browser suite is needed for this Markdown-only preparation.
 Revisit when the Bottle/pipeline phase begins or the owner changes art direction.
 
+### REC-122 — Generated source layout needs measured review before promotion
+
+- Status: Accepted
+- Date: 2026-10-23
+- Affects: V0.4.4 batch1, sprite review normalization and production acceptance
+- Blocks: Promotion of the three first-pass candidates until layout/live gates pass
+
+Owner requests first-batch creation. Built-in imagegen returns three2172×724
+RGBA strips, not requested exact native dimensions. Preserve sources/prompts/
+reference hashes and honest absent seed/model metadata. An opt-in fixed-cell grid
+and2px outline produce native64/48/96px review cells without per-pose fitting.
+Legacy defaults rebuild12accepted/public files byte-identically;35sprite tests,
+types/lint/build/whitespace/current5sheet checks pass. Crop validation tests must
+actually cut alpha, not merely trim transparent margins (initial31px fixture
+wrongly expected rejection;24px correct fixture rejects).
+
+Visual consistency alone does not establish layout acceptance. Actual alpha
+measurements reveal wider Bottle motion, smaller Microplastics footprint and
+Glass idle/hit shifts. [Batch report](build/sprites/review/style2/BATCH_1_REPORT.md)
+records exact comparisons and hashes. All3candidates stay review,0accepted;
+refine prompts and regenerate before promotion, never compensate through bodies,
+display diameter changes, per-frame recentering or hand-painted pose fixes.
+Generation checkpoint does not pass in-game continuity or authorize later roster
+content. No browser/device result is inferred; Knights and Magic stays paused.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

@@ -15,9 +15,14 @@ The selected next art direction is [V0.4.4](SPRITE_PLAN_V0.4.4.md). Use the
 regeneration, not nearest-neighbour enlargement. Frame width/height double;
 frame count, layout, normalized footprint, world display and physics stay fixed.
 
-Prompt preparation is complete; generation/integration are unstarted. Before
+First-pass generation now exists for Bottle a2, Microplastics a4 and Glass a3.
+Read the [batch report](sprites/review/style2/BATCH_1_REPORT.md) and measured bounds.
+All three stay review; strict footprint/idle-hit alignment is not passed and
+no live assets are replaced. Next refine the prompts and regenerate to the
+measured envelopes, then run scoped live acceptance. Existing fixed-grid review
+conversion is verified and preserves source offsets. For later implementation,
 implementation create/claim the bounded V0.4.4 phase from the actual current
-base, then claim Bottle in the manifest. The existing script still builds five
+base, and claim the next attempt in the manifest. Preserve existing attempts. The production sprite script still builds five
 style1 recipes: larger recipe dimensions, outline/normalization, atlas metadata
 and Q6 anchors must be handled together. Do not overwrite old accepted art before
 the replacement passes review. Preserve raw attempts and exact assembled prompts.

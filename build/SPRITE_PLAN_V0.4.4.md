@@ -148,3 +148,15 @@ conversion only. Existing recipes/default normalization stay unchanged. Explicit
 source-grid coordinates are recorded per attempt; one common scale, no per-frame
 recentering. Verify meaningful fixed-offset/outline tests and unchanged current
 five-sheet rebuild bytes. Review output never enters public/accepted automatically.
+
+
+### Batch1 first-pass result — 2026-10-23
+
+Three subjects generated: Bottle a2, Microplastics a4, Glass a3; native review
+strips 256×64/192×48/384×96. [Batch report](sprites/review/style2/BATCH_1_REPORT.md)
+owns exact checks and remaining layout findings.35 sprite units, types/lint/build,
+current 5-sheet checks and 12unchanged accepted/public file hashes pass. Generation
+checkpoint is complete; strict footprint/idle-hit alignment and final live
+acceptance are not passed. All 3stay review,0 accepted. Refine prompts/regenerate
+from measured bounds before production promotion; no hand-painted pose repairs.
+No runtime replacement, new browser/device pass or next-content scope follows.
