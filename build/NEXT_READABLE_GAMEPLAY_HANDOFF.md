@@ -1,29 +1,27 @@
-# Current handoff — live cup draft and remaining eco art
+# Current handoff — generation complete, art acceptance/integration open
 
-## Latest handoff —2026-10-23
+Fresh audit2026-10-23 confirms **27/27 subjects generated,102 frames,31 raw attempts**.
+All27 native format/hash/rebuild checks pass; no generation claim or missing subject.
+[Audit/remaining work](sprites/review/style2/PROGRESS_REPORT.md),
+[evidence JSON](sprites/review/style2/PROGRESS_AUDIT.json),
+[gallery](sprites/review/style2/index.html), [manifest](sprites/MANIFEST.md).
 
-Takeaway Cup eco ranged addition is complete as a **live draft**, with enemy
-sheet, seven64px frames and real locked-bearing shot/warning/recovery. See
-[master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23) and [report](content/RANGED_ENEMY_REPORT.md)
-for719units,3 serial Chromium cases and scoped software evidence. New role is
-optional; knight files remain frozen. Catalog27 subjects,31 immutable attempts.
-Owner art acceptance, stricter idle/hit contour matching, broader mirrored art
-review and extended pacing remain open; next art attempt is cup a5. Original26
-subjects remain review-only. Do not automatically promote them or select further
-content from this handoff. Individual sprite fixes/owner playtest and selected
-remaining integration follow the active sprite plan. Earlier notes below retain
-their historical status; no session prompt needs executing for completed cup work.
+Takeaway Cup alone is live style2 draft;26 others remain review-only. Five original
+style1 sheets still ship; Shards aliases old Glass death art.719units/three cup
+browser cases remain historical runtime evidence, not a new full-app pass.
 
+Next: owner playtest/individual corrections, then a bounded claim for doubled
+replacement/remaining integration under [active plan](SPRITE_PLAN_V0.4.4.md).
+Check Impact Point drift, grip/nozzle/hood anchors, idle-hit/movement matching,
+world painted cues/palettes, and cup mirrored poses/ranged pacing. Do not regenerate
+or promote all subjects automatically. Cup next attempta5, preserve old sources.
 
-Start with AGENTS required authorities, BUILD_STATUS and the active sprite plan.
-[Gallery](sprites/review/style2/index.html), [manifest](sprites/MANIFEST.md) and
-[cup sheet](enemies/TAKEAWAY_CUP.md) are current entry points. Prior generation
-and tool/menu implementation history lives in the master and linked reports.
+Tools/sites/hazards need real phase mappings; keep physics/damage/areas independent
+of sprites. After several integrations, perform one necessary serial consolidated
+roster/quality/fallback/texture-performance gate. External Safari/browser-OS/older
+physical-GPU evidence stays waived/unverified. Inspect remote/head CI when delivery
+is selected; this audit does not publish/merge/deploy or select optional features.
 
-When a revision is selected, increment its attempt, record/commit the claim and
-update the subject prompt when the brief changes. Preserve sources and references;
-never hand-paint a style repair. Keep familiar Australian silhouettes, authored
-world dimensions and physics independent of image resolution. Gallery Play cycles
-art for inspection only; gameplay owns action/attack timing. Existing external
-Safari/browser-OS/older physical-GPU checks remain waived/unverified. No new
-publication/merge/CI claim. Knights and Magic stays paused until explicit reopening.
+Completed contracts/history live in the [master](MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23).
+Raw prompt files are immutable reproduction evidence, not stale session prompts.
+Knights and Magic remains paused indefinitely until explicit owner reopening.

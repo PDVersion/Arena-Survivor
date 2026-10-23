@@ -16,8 +16,27 @@ core contracts. This overrides older instructions to keep both packs in step.
 Completed performance/session sequencing is in the [master build log](MASTER_BUILD_PLAN.md#performance-original-sequencing).
 P0–P6 software, C1–C7 and Q6/G1–G4 are completed records, not a new backlog.
 F16 is delivered; other menu entries require checking current code and explicit
-owner selection before becoming a bounded phase. The current selected work is
-[V0.4.4 sprite preparation](SPRITE_PLAN_V0.4.4.md).
+owner selection before becoming a bounded phase. The current remaining work is
+[V0.4.4 art acceptance/integration](SPRITE_PLAN_V0.4.4.md); selected generation
+is complete.
+
+## Current backlog disposition —2026-10-23 audit
+
+Completed foundations are not pending tasks: F1–F7 delivered through C1–C7;
+F16 difficulty presets delivered; Q6/G1–G4, vacuum/claws/attack-guide/menu quit,
+and eco Takeaway Cup ranged slice delivered with scoped software evidence.
+F13 already has selected Can/Wrapper/Butt/Cup additions; any further enemy is a
+new selection. Existing Field Guide, run review and weapon slots are implemented;
+persistent discovery, sourced facts and material effectiveness are still proposals.
+
+Remaining optional choices: F8 seeds/challenges; F9 remaining accessibility and
+remapping; F10 discovery/facts; F11 touch; F12 types/layers; further F13 content;
+F14 resources; F15 restoration; F17 collection objectives; F18 gamepad. Education
+E2–E8 remains exploratory except already promoted slices. No option is selected
+by this audit. Complete selected art review/integration before assuming more
+content is required. [Verified inventory/remaining work](sprites/review/style2/PROGRESS_REPORT.md).
+Historical assessment/estimates below retain context, not current implementation
+status. Knights and Magic remains paused until explicit owner reopening.
 
 ## Recycling ideation — assessed against the existing game
 

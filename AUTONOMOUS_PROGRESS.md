@@ -2,7 +2,24 @@
 
 Updated: 2026-10-23 (Australia/Sydney).
 
-## Latest selected addition —2026-10-23
+## Latest progress audit —2026-10-23
+
+**All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved
+style2 raw attempts.** Fresh file/format/hash audit and deterministic rebuilds pass
+for every current native output. No selected generation is missing or still claimed.
+Takeaway Cup is the only live style2 draft;26 subjects remain review-only and owner
+art acceptance/integration remains open. Current runtime uses five original style1
+sheets plus cup, with Glass Shards aliasing old Glass death art.
+
+[Audit report](build/sprites/review/style2/PROGRESS_REPORT.md) lists remaining
+visual fixes, production bindings, consolidated acceptance and unselected future
+features. [Master checkpoint](build/MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23)
+records completion; [active plan](build/SPRITE_PLAN_V0.4.4.md) now contains only
+remaining execution. No runtime/art change or new browser/stress/device/remote-CI
+pass;719units/three cup browser cases remain the last runtime gate. Knight theme
+stays indefinitely paused. V0.4.4/overall V0.4 are not complete.
+
+## Earlier selected addition —2026-10-23
 
 **Takeaway Cup is a live eco ranged-enemy draft.** Seven64px frames include real
 prepare/release/recover animation; a marked locked-bearing coffee shot is dodgeable,
@@ -27,7 +44,7 @@ and [master](build/MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23) own scoped
 evidence and fixture corrections. No broad browser/device pass, new publication,
 knight work or generated/live sprite promotion. External checks remain unverified.
 
-## Objective and current state
+## Earlier generation objective and state
 
 2026-10-23: owner-selected full eco sprite generation is complete on
 `codex/v0.4.4`. Three subagents generated all 23 remaining subjects in parallel;

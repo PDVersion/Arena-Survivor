@@ -12,7 +12,24 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
-## Latest selected addition —2026-10-23
+## Latest progress audit —2026-10-23
+
+**All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved
+style2 raw attempts.** Fresh file/format/hash audit and deterministic rebuilds pass
+for every current native output. No selected generation is missing or still claimed.
+Takeaway Cup is the only live style2 draft;26 subjects remain review-only and owner
+art acceptance/integration remains open. Current runtime uses five original style1
+sheets plus cup, with Glass Shards aliasing old Glass death art.
+
+[Audit report](sprites/review/style2/PROGRESS_REPORT.md) lists remaining
+visual fixes, production bindings, consolidated acceptance and unselected future
+features. [Master checkpoint](MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23)
+records completion; [active plan](SPRITE_PLAN_V0.4.4.md) now contains only
+remaining execution. No runtime/art change or new browser/stress/device/remote-CI
+pass;719units/three cup browser cases remain the last runtime gate. Knight theme
+stays indefinitely paused. V0.4.4/overall V0.4 are not complete.
+
+## Earlier selected addition —2026-10-23
 
 [Takeaway Cup](enemies/TAKEAWAY_CUP.md) is now a live eco ranged-enemy draft:
 seven64px frames including real preparation/release/recovery and a locked-bearing

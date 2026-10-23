@@ -4238,3 +4238,24 @@ reduced for this owner-selected addition. Lowweight intro one; later pacing open
 Live draft does not close owner pixel-continuity/art acceptance. Full report:
 [Takeaway Cup](build/content/RANGED_ENEMY_REPORT.md). Original26 review assets and
 indefinite knight pause remain; no broad campaign/CI/publication/external pass.
+
+### REC-127 — Generation inventory is complete; integration remains distinct
+
+- Status: Accepted
+- Date:2026-10-23
+- Affects: V0.4.4 documentation/status/remaining-work authority
+- Blocks: None
+
+Fresh audit verifies27 selected subjects/102 cells,31 preserved raw attempts,
+all27 native format/hash/rebuild checks and their source/reference evidence.
+Only cup style2 draft is live;26 outputs are review-only, zero owner-accepted
+style2. Five original style1 sheets and old Glass-Shards alias still ship.
+Do not equate generation, format validity, owner visual acceptance or live binding.
+
+Active sprite plan still contained completed preparation/generation ownership and
+"unstarted" gates. Move those contracts into the completed master, leave only
+remaining work in the active plan, and keep status/handoff current. Raw prompt
+sidecars are immutable reproduction evidence and must survive session cleanup.
+Optional foundations F1–F7/F16 are already delivered; expanded discovery/types/
+resources/accessibility/controls remain unselected. No knight reopening or new
+browser/device/CI pass follows from a file audit. [Report](build/sprites/review/style2/PROGRESS_REPORT.md).

@@ -14,6 +14,10 @@ kept in accepted/ for rebuild parity; that path does not imply owner art approva
 [verification](../content/RANGED_ENEMY_REPORT.md). Existing five replacements stay
 pending and their shipped sources/atlas remain unchanged.
 
+Fresh2026-10-23 [file audit](review/style2/PROGRESS_REPORT.md):27/27 native outputs,
+102 cells and31 raw attempts verified; all27 format/hash/rebuild checks pass.
+No active generation claim. Art acceptance and live integration remain separate.
+
 ## Existing accepted baseline (unchanged)
 
 | ID | Frame | Frames | Style | Latest raw attempt | Status |

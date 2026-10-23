@@ -14,6 +14,8 @@ frame dimension, keeping game display scale fixed. The original26 catalog subjec
 [Takeaway Cup](build/enemies/TAKEAWAY_CUP.md), is integrated as a live ranged-enemy
 draft with seven64px frames; owner art acceptance and remaining integration stay open.
 Use the [sprite gallery](build/sprites/review/style2/index.html) to inspect them.
+The [progress audit](build/sprites/review/style2/PROGRESS_REPORT.md) confirms all27
+subjects/102 frames and lists remaining art acceptance, integration and future options.
 Knights and Magic is paused indefinitely until the owner explicitly reopens it.
 External device/browser evidence remains waived/unverified; see status for actual
 source-bound PR/CI observations.
