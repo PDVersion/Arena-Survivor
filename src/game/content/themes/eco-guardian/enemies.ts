@@ -46,6 +46,16 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  */
 export const enemies = [
   {
+    // Fictional coffee flick, authored gameplay values rather than material facts.
+    id: archetypeIds.enemy.rangedAttacker,
+    maxHealth: 16, moveSpeed: 68, contactDamage: 4, contactCooldownMs: 1000,
+    radius: 14, displayDiameter: 40, xpReward: 3, armour: 0,
+    geometry: "circle", presentationToken: "enemySpawner",
+    rangedAttack: { muzzleForward: 10, muzzleVertical: -10, triggerRange: 320, telegraphMs: 1000, releaseMs: 180, recoveryMs: 1820,
+      projectileSpeed: 210, projectileLifetimeMs: 1800, projectileRadius: 7, damage: 8,
+      maxActiveProjectiles: 32, projectileColour: "#713f12", cueToken: "critical", cueWidth: 3 },
+  },
+  {
     // Plastic Bottle is the numerical baseline, not a litter-count ranking.
     id: archetypeIds.enemy.swarmBasic,
     maxHealth: 20,

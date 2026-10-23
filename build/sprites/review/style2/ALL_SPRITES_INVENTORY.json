@@ -362,5 +362,19 @@
     "metadata": "../../raw/icon_weapon_secondary_evolved.a1.metadata.json",
     "checks": "icon_weapon_secondary_evolved.a1.checks.json",
     "status": "review"
+  },
+  {
+    "id": "enemy.ranged_attacker",
+    "name": "Takeaway Cup",
+    "attempt": 3,
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 7,
+    "native": "enemy_ranged_attacker.a3.png",
+    "raw": "../../raw/enemy_ranged_attacker.a3.png",
+    "prompt": "../../raw/enemy_ranged_attacker.a3.prompt.txt",
+    "metadata": "../../raw/enemy_ranged_attacker.a3.metadata.json",
+    "checks": "enemy_ranged_attacker.a3.checks.json",
+    "status": "live draft"
   }
 ]

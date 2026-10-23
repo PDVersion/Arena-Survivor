@@ -1,3 +1,5 @@
+import { EnemyShot } from "../entities/enemy-shot";
+import { shotHitFraction } from "../systems/enemies/ranged-attack";
 import { selectCapabilityProgress } from "../systems/mastery/run-review";
 import Phaser from "phaser";
 import { describeShrineChoice } from "../systems/codex/describe-shrine";
@@ -379,6 +381,7 @@ export class RunScene extends Phaser.Scene {
   private enemyDefinition?: EnemyDefinition;
   private bossHealthUi?: BossHealthUi;
   private spawnedBossIds = new Set<string>();
+  private enemyShots = new Set<EnemyShot>();
   private bossAttacks = new Map<EnemyActor, BossAttackState>();
   private bossCues = new Map<EnemyActor, Phaser.GameObjects.Graphics>();
   private bossPulses = 0;
@@ -766,6 +769,8 @@ export class RunScene extends Phaser.Scene {
         movementInput,
         this.runState.player.stats.moveSpeed * this.hazardSlow,
       );
+      this.updateEnemyShots(delta);
+      if (!isRunActive(this.runState)) { this.publishTelemetry(); return; }
       this.updateEnemies(delta);
       this.rebuildEnemyIndex();
       this.resolveCrowd();
@@ -835,6 +840,7 @@ export class RunScene extends Phaser.Scene {
     for (const cue of this.bossCues.values()) cue.destroy();
     this.bossCues.clear();
     this.bossAttacks.clear();
+    this.clearEnemyShots();
     this.spawnedBossIds.clear();
     this.hud?.destroy();
     this.levelUpUi?.hide();
@@ -1351,6 +1357,17 @@ export class RunScene extends Phaser.Scene {
         continue;
       }
       enemy.advance(target, deltaMs);
+      if (enemy.consumeRangedShot()) {
+        const attack = enemy.definition.rangedAttack;
+        if (attack && this.enemyShots.size < attack.maxActiveProjectiles) {
+          const shot = new EnemyShot(this, enemy.x + enemy.rangedState.headingX * attack.muzzleForward,
+            enemy.y + enemy.rangedState.headingY * attack.muzzleForward + attack.muzzleVertical,
+            { x: enemy.rangedState.headingX, y: enemy.rangedState.headingY }, attack, enemy.definition.id,
+            attack.damage * enemy.contactDamage / enemy.definition.contactDamage, Boolean(enemy.elite), this.runTheme.tokens);
+          this.enemyShots.add(shot);
+          shot.once(Phaser.GameObjects.Events.DESTROY, () => this.enemyShots.delete(shot));
+        }
+      }
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
       if (obstacles.length > 0 && enemy.movement === "chase" && enemy.motionState.phase === "approach") {
@@ -1910,13 +1927,13 @@ export class RunScene extends Phaser.Scene {
       enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
         cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy);
       });
-      this.announceWave(this.runTheme.copy.content[definition.id].name);
+      this.announceWave(this.runTheme.copy.content[definition.id]!.name);
     }
   }
 
   private bossHealthValues() {
     return [...this.bossAttacks.keys()].filter((enemy) => enemy.active && !enemy.defeated).map((enemy) => ({
-      id: enemy.targetId, name: this.runTheme.copy.content[enemy.definition.id].name,
+      id: enemy.targetId, name: this.runTheme.copy.content[enemy.definition.id]!.name,
       health: enemy.health, maxHealth: enemy.maxHealth,
     }));
   }
@@ -1945,6 +1962,40 @@ export class RunScene extends Phaser.Scene {
         this.player.flashDamage(this.runTheme.tokens.palette.critical);
         if (this.runState.status === "dead") { this.enterTerminalState(); break; }
       }
+    }
+  }
+
+  private clearEnemyShots(): void {
+    for (const shot of this.enemyShots) shot.destroy();
+    this.enemyShots.clear();
+  }
+
+  private updateEnemyShots(deltaMs: number): void {
+    if (!this.player || !this.runState) return;
+    const obstacles = this.activeObstacles();
+    for (const shot of this.enemyShots) {
+      const from = { x: shot.x, y: shot.y };
+      shot.advance(deltaMs);
+      const playerHit = shotHitFraction(from, shot,
+        { x: this.player.x, y: this.player.y, radius: this.player.definition.radius }, shot.attack.projectileRadius);
+      const obstacleHit = Math.min(Infinity, ...obstacles.map((obstacle) => shotHitFraction(from, shot,
+        { x: obstacle.x, y: obstacle.y, radius: obstacle.hazardState.radius }, shot.attack.projectileRadius)));
+      // Resolve the first collision along the swept path, not iteration order.
+      if (obstacleHit !== Infinity && obstacleHit <= playerHit) {
+        shot.destroy(); continue;
+      }
+      if (playerHit !== Infinity) {
+        if (this.runState.elapsedMs >= this.invulnerableUntilMs) {
+          this.runState = damageRunPlayer(this.runState, reduceByArmour(shot.damage, this.runState.player.stats.armour),
+            { sourceId: shot.sourceId, elite: shot.elite });
+          this.lastContactDamageAtMs = this.runState.elapsedMs;
+          const source = this.enemyDefinitions.find((enemy) => enemy.id === shot.sourceId)!;
+          this.invulnerableUntilMs = this.runState.elapsedMs + source.contactCooldownMs;
+          this.player.flashDamage(this.runTheme.tokens.palette.critical);
+        }
+        shot.destroy();
+        if (this.runState.status === "dead") { this.enterTerminalState(); return; }
+      } else if (shot.expired) shot.destroy();
     }
   }
 
@@ -2939,7 +2990,7 @@ export class RunScene extends Phaser.Scene {
    * player was told they had to clear.
    */
   private isFieldClear(): boolean {
-    return this.enemies.size === 0 && this.eventQueue.snapshot().backlog === 0;
+    return this.enemies.size === 0 && this.enemyShots.size === 0 && this.eventQueue.snapshot().backlog === 0;
   }
 
   /** The end-of-timer decision. Simulation is frozen until it is answered. */
@@ -2979,6 +3030,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || this.terminalShown) return;
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
     this.terminalShown = true;
+    this.clearEnemyShots();
     this.player?.stop();
     for (const entry of drainAll(this.damageNumbers)) {
       this.renderDamageNumber(entry.x, entry.y, entry.amount, entry.tier);

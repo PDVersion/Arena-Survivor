@@ -8,6 +8,7 @@ import {
   upgradeRarities,
   worldKeys,
   type EnemyPrimitivePart,
+  type EnemyDefinition,
   type ThemeManifest,
   type UpgradeDefinition,
 } from "../core/archetypes/contracts";
@@ -311,9 +312,22 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
 
   const enemyIds = new Set<string>();
-  const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
+  const enemies: readonly EnemyDefinition[] = Array.isArray(theme.enemies) ? theme.enemies : [];
   if (!Array.isArray(theme.enemies)) issues.push("enemies registry is required");
   for (const enemy of enemies) {
+    const enemyCopy = theme.copy.content[enemy.id];
+    if (!enemyCopy?.name?.trim() || !enemyCopy.description?.trim()) issues.push(`${enemy.id} name/description is required`);
+    if (enemy.rangedAttack) {
+      const attack = enemy.rangedAttack;
+      if ([attack.triggerRange, attack.telegraphMs, attack.releaseMs, attack.recoveryMs,
+        attack.projectileSpeed, attack.projectileLifetimeMs, attack.projectileRadius,
+        attack.damage, attack.cueWidth].some((value) => !Number.isFinite(value) || value <= 0) ||
+        !Number.isFinite(attack.muzzleForward) || attack.muzzleForward < 0 || !Number.isFinite(attack.muzzleVertical) ||
+        !Number.isSafeInteger(attack.maxActiveProjectiles) || attack.maxActiveProjectiles < 1 ||
+        !HEX_COLOUR.test(attack.projectileColour) || !(attack.cueToken in theme.tokens.palette) ||
+        attack.projectileSpeed * attack.projectileLifetimeMs / 1000 < attack.triggerRange ||
+        enemy.boss || enemy.committedMotion) issues.push(`${enemy.id} invalid ranged attack`);
+    }
     if (enemy.boss) {
       const { kind, appearAt, attack } = enemy.boss;
       if (!["mini", "final"].includes(kind) || !Number.isFinite(appearAt) || appearAt <= 0 || appearAt > 1 || (kind === "final" && appearAt !== 1)) issues.push(`${enemy.id} invalid boss milestone`);
@@ -390,7 +404,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
   }
-  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss)) {
+  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss && id !== archetypeIds.enemy.rangedAttacker)) {
     if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
   }
   for (const enemy of enemies) {
@@ -401,7 +415,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
       issues.push(`${enemy.id} references missing fragment enemy: ${enemy.fragmentInto}`);
     }
   }
-  const spawnEdges = new Map(enemies.map((enemy) => [
+  const spawnEdges = new Map<string, string[]>(enemies.map((enemy) => [
     enemy.id,
     [...(enemy.deathSpawns ?? []).map((child: { enemyId: string }) => child.enemyId), ...(enemy.fragmentInto ? [enemy.fragmentInto] : [])],
   ]));
@@ -828,6 +842,9 @@ function validateSprites(
         issues.push(`sprites.${contentId} atlas frame alias must match an existing direct atlas row`);
       }
     }
+    if (sprite.attackFrames && (["prepare", "release", "recover"] as const).some((phase) => { const frame = sprite.attackFrames![phase]; return !Number.isInteger(frame) || frame < 0 || frame >= sprite.frames; })) {
+      issues.push(`sprites.${contentId} attack frames must be within sheet bounds`);
+    }
     for (const state of spriteStates) {
       const frame = sprite.states?.[state];
       if (frame === undefined) {
@@ -870,7 +887,7 @@ function validateTuning(
 ): readonly string[] {
   const issues: string[] = [];
   const tuning = theme.tuning;
-  const enemies = Array.isArray(theme.enemies) ? theme.enemies : [];
+  const enemies: readonly EnemyDefinition[] = Array.isArray(theme.enemies) ? theme.enemies : [];
   if (!tuning) {
     issues.push("tuning pack is required");
     return issues;

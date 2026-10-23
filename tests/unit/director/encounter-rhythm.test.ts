@@ -9,7 +9,10 @@ for (const { theme } of themeRegistry) it(`${theme.id} teaches roles before the 
     expect(roles[i]!.unlockAt - roles[i - 1]!.unlockAt).toBeGreaterThanOrEqual((retainedOpeningPair ? .05 : .06) - 1e-9);
   }
   const mini = theme.enemies.find((e) => e.boss?.kind === "mini")!.boss!;
-  expect(mini.appearAt - roles.at(-1)!.unlockAt).toBeGreaterThanOrEqual(.1);
+  // Owner-selected cup gets 18 simulation seconds before the existing boss.
+  // Earlier authored introductions retain their original 30-second window.
+  const last = roles.at(-1)!;
+  expect(mini.appearAt - last.unlockAt).toBeGreaterThanOrEqual((last.enemyId === "enemy.ranged_attacker" ? .06 : .1) - 1e-9);
   expect(theme.tuning.director.eliteUnlockAt).toBeGreaterThan(mini.appearAt);
   for (const role of roles.filter((r) => r.enemyId === "enemy.slow_durable" || r.enemyId === "enemy.death_spawner")) {
     expect(introductionCount(role, theme.tuning.director, role.unlockAt)).toBeLessThanOrEqual(4);

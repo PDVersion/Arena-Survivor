@@ -1,0 +1,106 @@
+{
+  "source": "build/sprites/raw/enemy_ranged_attacker.a3.png",
+  "sourceSha256": "e346619be0e120118562ac6411d7cd08911b87c86d88e86306bf7958a20e106a",
+  "output": "build/sprites/review/style2/enemy_ranged_attacker.a3.png",
+  "outputSha256": "74fbd0a70ae6042f2e86d4c1fb95bd464ab07989075cdb96914456103b4512fe",
+  "width": 448,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 22,
+      "top": 7,
+      "width": 33,
+      "height": 51,
+      "opaquePixels": 1354
+    },
+    {
+      "frame": 1,
+      "left": 18,
+      "top": 7,
+      "width": 39,
+      "height": 51,
+      "opaquePixels": 1396
+    },
+    {
+      "frame": 2,
+      "left": 19,
+      "top": 7,
+      "width": 34,
+      "height": 51,
+      "opaquePixels": 1366
+    },
+    {
+      "frame": 3,
+      "left": 12,
+      "top": 26,
+      "width": 36,
+      "height": 33,
+      "opaquePixels": 937
+    },
+    {
+      "frame": 4,
+      "left": 7,
+      "top": 6,
+      "width": 39,
+      "height": 52,
+      "opaquePixels": 1417
+    },
+    {
+      "frame": 5,
+      "left": 14,
+      "top": 8,
+      "width": 42,
+      "height": 50,
+      "opaquePixels": 1391
+    },
+    {
+      "frame": 6,
+      "left": 10,
+      "top": 7,
+      "width": 34,
+      "height": 51,
+      "opaquePixels": 1364
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.ranged_attacker",
+    "source": "build/sprites/raw/enemy_ranged_attacker.a3.png",
+    "output": "build/sprites/review/style2/enemy_ranged_attacker.a3.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 7,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": -30,
+      "top": 170,
+      "cellWidth": 323,
+      "cellHeight": 400,
+      "fit": "contain",
+      "allowTransparentPadding": true
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d5f",
+        "#64748b",
+        "#e2e8f0",
+        "#f8fafc"
+      ],
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ],
+      [
+        "#713f12",
+        "#b7791f",
+        "#facc15",
+        "#fde68a"
+      ]
+    ],
+    "outline": "#111827"
+  }
+}

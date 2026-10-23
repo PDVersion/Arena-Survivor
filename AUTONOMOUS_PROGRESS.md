@@ -2,7 +2,21 @@
 
 Updated: 2026-10-23 (Australia/Sydney).
 
-## Latest verified correction — 2026-10-23
+## Latest selected addition —2026-10-23
+
+**Takeaway Cup is a live eco ranged-enemy draft.** Seven64px frames include real
+prepare/release/recover animation; a marked locked-bearing coffee shot is dodgeable,
+finite and paused/cleared with the run. [Enemy sheet](build/enemies/TAKEAWAY_CUP.md)
+and [master](build/MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23) own behavior.
+719units/75files, types/lint/build, six sprite builds/checks,3 unique serial
+Chromium cases/five inspected images and30 eco throughput scenarios pass.
+[Report](build/content/RANGED_ENEMY_REPORT.md) records limits: model omits ranged
+combat; owner art/extended pacing review remains pending. Original26 style2
+subjects remain review-only. Old five sheets/atlas unchanged; no knight changes,
+save migration, publication, broad browser/stress/device or external acceptance.
+Next handoff: owner playtest/individual art fixes and remaining roster integration.
+
+## Earlier verified correction — 2026-10-23
 
 Owner-requested vacuum suction/dust, off-by-default attack guides, snapping extra
 Grabber claws and Escape→Quit to Main Menu are implemented on codex/v0.4.4.

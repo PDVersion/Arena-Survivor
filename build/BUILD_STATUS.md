@@ -12,7 +12,21 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
-## Latest verified correction — 2026-10-23
+## Latest selected addition —2026-10-23
+
+**Takeaway Cup is a live eco ranged-enemy draft.** Seven64px frames include real
+prepare/release/recover animation; a marked locked-bearing coffee shot is dodgeable,
+finite and paused/cleared with the run. [Enemy sheet](enemies/TAKEAWAY_CUP.md)
+and [master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23) own behavior.
+719units/75files, types/lint/build, six sprite builds/checks,3 unique serial
+Chromium cases/five inspected images and30 eco throughput scenarios pass.
+[Report](content/RANGED_ENEMY_REPORT.md) records limits: model omits ranged
+combat; owner art/extended pacing review remains pending. Original26 style2
+subjects remain review-only. Old five sheets/atlas unchanged; no knight changes,
+save migration, publication, broad browser/stress/device or external acceptance.
+Next handoff: owner playtest/individual art fixes and remaining roster integration.
+
+## Earlier verified correction — 2026-10-23
 
 Vacuum suction/dust, off-by-default Show attack radius, snapping extra Grabber
 claws and Escape-menu Quit to Main Menu are implemented. Quitting abandons the
@@ -77,7 +91,7 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
 | V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](MASTER_BUILD_PLAN.md#v0-4-3-source-plan) |
-| V0.4.4 | No build date | No merge | Selected eco style2 preparation; art/integration unstarted; [sprite plan](SPRITE_PLAN_V0.4.4.md) |
+| V0.4.4 | 2026-10-23 selected local slices | No merge | Full review roster generated; Takeaway Cup live draft/software slice verified, owner art acceptance and remaining integration open; [sprite plan](SPRITE_PLAN_V0.4.4.md) |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
 V0.4.3's plan was introduced on 2026-09-17 (`6b1e56b`); that is a planning

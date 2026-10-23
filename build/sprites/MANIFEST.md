@@ -4,12 +4,15 @@ Knights and Magic is paused indefinitely until the owner explicitly reopens it.
 This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
 [style/acceptance](../SPRITE_STYLE_GUIDE.md), [copyable prompts](../SPRITE_PROMPTS.md).
 
-**Shipped: five accepted style1 sheets. Target: 23 style2 primary sheets plus
-three selected static tool icons (owner selects entire catalog 2026-10-23). Style2 generated/accepted: 26/0 (27 preserved style2 sources including both glass designs).**
-Existing sheets remain live; all five are scheduled for regeneration. The target
-queue does not retroactively revoke their original acceptance or overwrite raw
-attempts. Glass Shards currently reuse Glass frame3. All catalog rows have generated review assets. [Review gallery](review/style2/index.html)
-and [full report](review/style2/FULL_ROSTER_REPORT.md) record sources and deferred checks.
+**Live: five accepted style1 sheets plus one style2 Takeaway Cup draft.**
+Style2 catalog27 subjects /31 preserved attempts /0 owner-accepted subjects.
+The original26 are review-only. The new ranged cup alone is live by explicit
+owner request to draft and integrate it. Format checks/software gate pass;
+owner art/strict continuity acceptance is pending. Its normalized live copy is
+kept in accepted/ for rebuild parity; that path does not imply owner art approval.
+[Gallery](review/style2/index.html) · [cup sheet](../enemies/TAKEAWAY_CUP.md) ·
+[verification](../content/RANGED_ENEMY_REPORT.md). Existing five replacements stay
+pending and their shipped sources/atlas remain unchanged.
 
 ## Existing accepted baseline (unchanged)
 
@@ -152,8 +155,14 @@ original sheet and matching world display size. See REC-111.
 
 ## Owner-selected ranged addition —2026-10-23
 
-`enemy.ranged_attacker` / Takeaway Cup: Codex root claims a1, generating.
-Seven 64×64 frames: idle, move, hit, death, prepare, release, recover.
-Owner explicitly selects concept, sheet and live integration; this addition alone
-may pass into production while the previous 26 review subjects stay deferred.
-No knight-magic changes. See active ranged phase in the sprite plan.
+`enemy.ranged_attacker` / Takeaway Cup: Codex root claim8718bcb, a1–a4 generated;
+**a3 live draft, owner art acceptance pending**, next attempt a5. Seven64×64
+frames: idle/move/hit/death/prepare/release/recover. Review, normalized baseline
+and public PNG SHA256 `74fbd0a70ae6042f2e86d4c1fb95bd464ab07989075cdb96914456103b4512fe`.
+[Exact prompt](raw/enemy_ranged_attacker.a3.prompt.txt),
+[metadata](raw/enemy_ranged_attacker.a3.metadata.json),
+[recipe](raw/enemy_ranged_attacker.a3.review.json),
+[native checks](review/style2/enemy_ranged_attacker.a3.checks.json).
+One fixed equal grid with virtual transparent margins; measured paper-base
+anchors. Small generated idle/hit contour differences and extended art/pacing
+review remain open. No prior catalog art promoted. Knights and Magic stays paused.

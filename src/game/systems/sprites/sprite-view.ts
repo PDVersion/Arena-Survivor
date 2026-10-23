@@ -73,6 +73,12 @@ export class SpriteView {
   private playerStep = 0;
   private playerDistance = 0;
   private detached = false;
+  private attackPhase?: "prepare" | "release" | "recover";
+
+  setAttackPhase(phase?: "prepare" | "release" | "recover", headingX = 0): void {
+    this.attackPhase = phase;
+    if (phase && Math.abs(headingX) > 0.01) this.flipX = headingX < 0;
+  }
 
   /** Read-only presentation state used by the browser verification bridge. */
   get frame(): number {
@@ -178,7 +184,7 @@ export class SpriteView {
     const moving =
       movedDistance > 0.01 || Math.abs(velocityX) + Math.abs(velocityY) > 0.01;
     const horizontalMotion = Math.abs(velocityX) > 0.01 ? velocityX : deltaX;
-    if (usesPlayerCycle || this.animateMovement) {
+    if ((usesPlayerCycle || this.animateMovement) && !this.attackPhase) {
       this.flipX = resolveSpriteFlipX(this.flipX, horizontalMotion, this.definition.authoredFacing ?? "left");
     }
     this.previousX = source.x;
@@ -218,6 +224,10 @@ export class SpriteView {
       this.animation.moving = this.animateMovement && moving;
       const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
       this.setState(state);
+    }
+    if (this.attackPhase && this.definition.attackFrames &&
+      !(this.animation.transient && this.image.scene.time.now < this.animation.transient.untilMs)) {
+      this.setFrame(this.definition.attackFrames[this.attackPhase]);
     }
     if (this.definition.frameAnchors) {
       const origin = resolveFrameOrigin(this.definition, this.renderedFrame, this.image.flipX);

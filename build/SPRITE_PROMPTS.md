@@ -17,6 +17,11 @@ explicitly reopens it. This catalog covers the current eco roster, including
 regeneration of all five shipped sheets. It requests prompts/specifications;
 no generation, acceptance or runtime replacement is claimed here.
 
+Latest addition (2026-10-23): [Takeaway Cup](#takeaway-cup-ranged-addition) adds
+one eco ranged subject, now a live seven-frame draft. Catalog27 subjects with31
+preserved style2 attempts; owner art acceptance remains pending. Original26
+subjects below retain their review-only status.
+
 Current checkpoint (2026-10-23): all 26subjects are generated for review, with
 27 preserved style2 attempts including the wine-bottle alternative. Owner likes
 the first 3designs and explicitly defers individual fixes/in-game review.
@@ -606,4 +611,41 @@ FRAMES, left to right, indexed from 0:
 0: static ready icon.
 CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
 material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+```
+
+<a id="takeaway-cup-ranged-addition"></a>
+## Takeaway Cup — ranged addition
+
+Combine the shared style block with this subject. Attach Bottle a2 for style and
+[cup a3](sprites/review/style2/enemy_ranged_attacker.a3.png) for design/poses.
+For exact reproduction inputs use the immutable [assembled a3 prompt](sprites/raw/enemy_ranged_attacker.a3.prompt.txt)
+and [reference hashes](sprites/raw/enemy_ranged_attacker.a3.metadata.json).
+Next attempt a5; claim before generating. [Enemy sheet](enemies/TAKEAWAY_CUP.md)
+owns runtime tuning and pending art review.
+
+```text
+SUBJECT: enemy.ranged_attacker — Takeaway Cup, eco only. New ranged role.
+One unbranded takeaway coffee cup: tapered cream paper, brown cardboard sleeve,
+dark snap-on lid, drinking opening RIGHT, stable small lower-left crease.
+Familiar café cup proportions, no handle, straw, face, limbs or fantasy details.
+SHEET: seven64×64 cells, one horizontal448×64 strip. Already double logical32.
+Shared scale/camera/light and base anchor; every object stays in its own equal
+cell with4px clearance. Centre x positions32,96,160,224,288,352,416.
+No per-pose auto-fit. Keep idle/hit geometry and base position pixel-identical.
+FRAMES:
+0 upright idle, lid closed.
+1 modest right rock, same cup/sleeve/lid/crease and base anchor.
+2 exact idle geometry, runtime supplies hit flash.
+3 compact crushed cup with lid on top, not wide detached side-by-side pieces.
+4 backward LEFT tip, lid centre left of base; dry lip, no floating coffee.
+5 forward RIGHT tip, lid centre right of base; tiny coffee bead connected at lip.
+6 upright recovery, slight depressed lid, same base and scale.
+Paper ramp: #172d5f #64748b #e2e8f0 #f8fafc.
+Lid ramp: #111827 #374151 #6b7280 #d1d5db.
+Sleeve/coffee ramp: #713f12 #b7791f #facc15 #fde68a; deep brown dominates.
+2px hue-dark outline, top-left light, chunky clean outdoor-cleanup pixel style.
+True RGBA transparency, binary alpha; no backgrounds, shadows, glow, labels,
+text, logo, checkerboard, detached motion marks or independent projectile.
+Code draws warning/shot; prepare/release/recover must stay visibly distinct.
+References are style/design only; do not include the reference bottles/player.
 ```

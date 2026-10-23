@@ -12,7 +12,18 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
-## Latest verified correction — 2026-10-23
+## Latest selected addition —2026-10-23
+
+[Takeaway Cup](enemies/TAKEAWAY_CUP.md) is now a live eco ranged-enemy draft:
+seven64px frames including real preparation/release/recovery and a locked-bearing
+coffee projectile. [Completed slice](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+and [report](content/RANGED_ENEMY_REPORT.md) record719units/three scoped browser
+cases and remaining art/pacing limits. Catalog27 subjects /31 preserved style2
+attempts; original26 remain review-only. Next: individual art corrections/owner
+playtest and remaining integration. Frozen knight content and prior external
+waiver/unverified state remain. Earlier preparation checkpoints below are history.
+
+## Earlier verified correction — 2026-10-23
 
 Vacuum suction/dust, off-by-default Show attack radius, snapping extra Grabber
 claws and Escape-menu Quit to Main Menu are implemented. Quitting abandons the
@@ -22,7 +33,7 @@ types/lint/build and four scoped serial browser cases pass; five images inspecte
 [report](content/TOOL_PRESENTATION_REPORT.md) own evidence/limits. Generated sheets
 remain review assets; knight content stays paused and external checks unverified.
 
-## Current selected work — 2026-10-23
+## Earlier generation checkpoint — 2026-10-23
 
 Completed V0.4.3 and Q6/G1–G4 execution history is in the master. Owner-requested
 full eco sprite generation is now complete: all 26 subjects, 27 preserved style2

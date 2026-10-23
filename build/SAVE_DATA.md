@@ -191,3 +191,10 @@ settings remain required. No schema bump, adapter or stable-ID change. Earlier
 strict binaries may reject exports containing the new setting; downgrade import
 compatibility is not promised. Quitting to menu does not call finished-run folding
 or grant finish-based unlocks; existing profile/settings remain authoritative.
+
+## Optional ranged content —2026-10-23
+
+`enemy.ranged_attacker` is an additive eco enemy ID with transient actor/shot state.
+No persistent field, schema2 adapter/migration, unlock, discovery or import/export
+change. Existing unknown-ID preservation remains; current full persistence units
+pass. Frozen knight content does not acquire the new optional role.

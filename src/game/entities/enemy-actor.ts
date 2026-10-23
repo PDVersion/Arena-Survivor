@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { advanceRangedAttack, createRangedAttackState } from "../systems/enemies/ranged-attack";
 import { advanceCommittedMotion, createMotionState } from "../systems/enemies/committed-motion";
 import { EnemyMotionCue } from "./enemy-motion-cue";
 import { EnemyPrimitiveView } from "./enemy-primitive-view";
@@ -39,6 +40,16 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   motionState = createMotionState();
   private launched = false;
   private ageMs = 0;
+  rangedState = createRangedAttackState();
+  private pendingShot = false;
+  readonly rangedCue?: Phaser.GameObjects.Graphics;
+  private readonly rangedCueColour?: number;
+
+  consumeRangedShot(): boolean {
+    const pending = this.pendingShot;
+    this.pendingShot = false;
+    return pending;
+  }
   eliteSplitDepth = 0;
   sourceRewardMultiplier = 1;
 
@@ -119,6 +130,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
       animateMovement: true,
     });
     if (!this.view && definition.primitiveParts) this.primitiveView = new EnemyPrimitiveView(this, definition.primitiveParts, tokens);
+    if (definition.rangedAttack) {
+      this.rangedCueColour = Phaser.Display.Color.HexStringToColor(tokens.palette[definition.rangedAttack.cueToken]).color;
+      this.rangedCue = scene.add.graphics().setDepth(19);
+      this.once(Phaser.GameObjects.Events.DESTROY, () => this.rangedCue?.destroy());
+    }
     if (definition.committedMotion) this.motionCue = new EnemyMotionCue(this, tokens);
   }
 
@@ -140,6 +156,23 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
    */
   advance(target: Phaser.Math.Vector2, deltaMs = 0): void {
     this.ageMs += Math.max(0, deltaMs);
+    if (this.definition.rangedAttack) {
+      const attack = this.definition.rangedAttack;
+      const result = advanceRangedAttack(this.rangedState, attack, deltaMs, this, target);
+      this.rangedState = result.state;
+      this.pendingShot = result.fire;
+      const { phase, headingX, headingY } = result.state;
+      this.view?.setAttackPhase(phase === "approach" ? undefined : phase, headingX);
+      this.rangedCue?.clear();
+      if (phase === "prepare") {
+        this.rangedCue?.lineStyle(attack.cueWidth, this.rangedCueColour!, 0.9)
+          .lineBetween(this.x + headingX * attack.muzzleForward, this.y + headingY * attack.muzzleForward + attack.muzzleVertical,
+            this.x + headingX * attack.triggerRange, this.y + headingY * attack.triggerRange + attack.muzzleVertical);
+      }
+      if (phase === "approach") this.chase(target);
+      else this.arcadeBody.setVelocity(0, 0);
+      return;
+    }
     if (this.moveSpeed <= 0) {
       this.arcadeBody.setVelocity(0, 0);
       return;

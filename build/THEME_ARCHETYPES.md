@@ -500,3 +500,12 @@ variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
 active run without counting a finished run or granting an unlock. Saved settings/
 progress remain. Generated sprite sheets remain in review and knight content
 stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
+## Owner-selected eco ranged role —2026-10-23
+
+Optional `enemy.ranged_attacker` maps only to eco **Takeaway Cup**. Familiar paper
+cup, sleeve and dark lid; fictional single coffee projectile. Stable gameplay
+capability/phase contracts are core, identity/tuning/sprite remain eco-owned.
+No corresponding knight role/copy is required or added while indefinitely paused.
+[Enemy sheet](enemies/TAKEAWAY_CUP.md) and [master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+record role, live draft, timing and limits. Cigarette Butts stay weak groups.

@@ -21,6 +21,8 @@ export interface SpriteBuildDefinition {
     readonly cellHeight: number;
     /** Uniformly letterbox an unequal-aspect cell; every pose keeps the same grid transform. */
     readonly fit?: "contain";
+    /** Permit virtual transparent margins beyond the source canvas; never crop art. */
+    readonly allowTransparentPadding?: boolean;
   };
   /** Outer opaque pixel layers recoloured without growing the silhouette. */
   readonly outlineWidth?: 1 | 2;
@@ -156,9 +158,10 @@ function fixedSourceCells(
 ): readonly Bounds[] {
   const grid = definition.sourceGrid!;
   if (![grid.left, grid.top, grid.cellWidth, grid.cellHeight].every(Number.isInteger)
-    || grid.left < 0 || grid.top < 0 || grid.cellWidth <= 0 || grid.cellHeight <= 0
-    || grid.left + grid.cellWidth * definition.frames > source.width
-    || grid.top + grid.cellHeight > source.height) {
+    || grid.cellWidth <= 0 || grid.cellHeight <= 0
+    || (!grid.allowTransparentPadding && (grid.left < 0 || grid.top < 0
+      || grid.left + grid.cellWidth * definition.frames > source.width
+      || grid.top + grid.cellHeight > source.height))) {
     throw new Error(`${definition.contentId}: source grid is outside the image`);
   }
   if (grid.fit !== "contain"
@@ -343,7 +346,7 @@ async function readRaw(path: string): Promise<{
 }
 
 function blitNearest(
-  source: { readonly data: Buffer; readonly width: number },
+  source: { readonly data: Buffer; readonly width: number; readonly height: number },
   bounds: Bounds,
   output: Buffer,
   outputWidth: number,
@@ -356,6 +359,7 @@ function blitNearest(
     const sourceY = bounds.top + Math.min(bounds.height - 1, Math.floor((y * bounds.height) / height));
     for (let x = 0; x < width; x += 1) {
       const sourceX = bounds.left + Math.min(bounds.width - 1, Math.floor((x * bounds.width) / width));
+      if (sourceX < 0 || sourceX >= source.width || sourceY < 0 || sourceY >= source.height) continue;
       const sourceOffset = (sourceY * source.width + sourceX) * 4;
       const outputOffset = ((top + y) * outputWidth + left + x) * 4;
       source.data.copy(output, outputOffset, sourceOffset, sourceOffset + 4);

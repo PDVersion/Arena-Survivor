@@ -4205,3 +4205,36 @@ Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
 expectation corrections are recorded in [repair report](build/performance/PR28_CI_REPAIR.md).
 Matching-head automatic full Actions remains pending until its actual result.
 Existing external waiver/unverified state remains; no merge or art selection.
+
+## REC-126 — Optional eco ranged capability and equal-grid transparent margins /2026-10-23
+
+**Decision:** owner selects a new Takeaway Cup ranged enemy and its live draft.
+`enemy.ranged_attacker` is optional content: keep historical required-copy/role
+inventory frozen, validate copy for every actually registered enemy, and compare
+shared roles in generic parity tests. Never reopen paused knight content to
+satisfy a dynamically expanding ID list. No save field or migration follows.
+
+Ranged attack phases/aim/projectiles are simulation-owned. Sprite attackFrames
+is optional presentation only; three real states map to prepare/release/recover,
+with hit transient priority. One boundary per update preserves the warning after
+stalls. Hostile shots cannot enter player projectile collision/effect ownership.
+Swept first-impact ordering matters: checking every obstacle before the player
+would wrongly block an earlier player hit with a later obstacle. Cap/lifetime and
+cleanup are explicit; clearing cannot complete while hostile shots remain.
+
+**Pipeline pitfall:** generated seven-cell art may have irregular spacing. a1–a4
+preserved; a3 is the compact-death draft. A single fixed grid may need margins
+outside the source canvas to keep boundaries between poses. Explicit
+allowTransparentPadding permits these margins, still rejects opaque art outside
+the full grid, and bounds-checks every sample to prevent row wrapping. It never
+repositions/fits poses independently. Authored measured foot anchors then keep
+rendered contact stable. No hand-painted fixes. Existing assets rebuilt unchanged.
+
+**Verification/limits:**719units/75files, types/lint/build, six sprite checks,
+3 scoped serial Chromium cases/five inspected images,30 eco throughput scenarios.
+The model omits ranged shots; no fairness/survival/performance claim. New role at66%
+gets18sim seconds before existing72% mini; prior30second last-role gap is narrowly
+reduced for this owner-selected addition. Lowweight intro one; later pacing open.
+Live draft does not close owner pixel-continuity/art acceptance. Full report:
+[Takeaway Cup](build/content/RANGED_ENEMY_REPORT.md). Original26 review assets and
+indefinite knight pause remain; no broad campaign/CI/publication/external pass.

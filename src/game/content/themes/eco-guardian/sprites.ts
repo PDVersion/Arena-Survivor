@@ -13,6 +13,14 @@ import { archetypeIds } from "../../../core/archetypes/ids";
  * Entries are optional: every actor without one falls back to its primitive.
  */
 export const sprites = {
+  [archetypeIds.enemy.rangedAttacker]: {
+    key: "eco_guardian.enemy.ranged_attacker", path: "sprites/eco-guardian/enemy_ranged_attacker.png",
+    frameWidth: 64, frameHeight: 64, frames: 7, authoredFacing: "right",
+    states: { idle: 0, move: 1, hit: 2, death: 3 },
+    attackFrames: { prepare: 4, release: 5, recover: 6 },
+    // Measured paper-base anchors; raw poses keep their shared grid transform.
+    frameAnchors: [38, 31, 35, 31, 31, 26, 27].map((x) => ({ x, y: 32 })),
+  },
   [archetypeIds.enemy.swarmBasic]: {
     key: "eco_guardian.enemy.swarm_basic",
     path: "sprites/eco-guardian/atlas.png",

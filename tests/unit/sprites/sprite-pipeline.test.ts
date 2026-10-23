@@ -147,4 +147,21 @@ describe("fixed-grid review conversion", () => {
     await expect(buildSpriteSheet({ ...base,
       sourceGrid: { left: 0, top: 0, cellWidth: 32, cellHeight: 31 } })).rejects.toThrow("aspect ratio");
   });
+  it("adds explicit virtual margins without wrapping pixels or moving individual poses", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "arena-sprite-padding-"));
+    try {
+      const source = "build/sprites/accepted/enemy_swarm_basic.png";
+      const recipe = { contentId: "fixture", source, output: join(directory, "padded.png"),
+        frameWidth: 36, frameHeight: 32, frames: 4,
+        sourceGrid: { left: -8, top: 0, cellWidth: 36, cellHeight: 32, allowTransparentPadding: true } };
+      await buildSpriteSheet(recipe);
+      const before = await readSpritePng(source), after = await readSpritePng(recipe.output);
+      for (let y = 0; y < 32; y++) for (let x = 0; x < 144; x++) {
+        expect(after.data[(y * 144 + x) * 4 + 3]).toBe(x < 8 || x >= 136 ? 0 : before.data[(y * 128 + x - 8) * 4 + 3]);
+      }
+      await expect(buildSpriteSheet({ ...recipe, sourceGrid: { ...recipe.sourceGrid, allowTransparentPadding: false } })).rejects.toThrow("outside the image");
+      await expect(buildSpriteSheet({ ...recipe, sourceGrid: { ...recipe.sourceGrid, cellWidth: 24 } })).rejects.toThrow();
+    } finally { await rm(directory, { recursive: true, force: true }); }
+  });
+
 });

@@ -1,39 +1,29 @@
-# Current handoff — generated eco roster ready for owner review
+# Current handoff — live cup draft and remaining eco art
 
-2026-10-23: all 26 catalog subjects have generated native review strips. Three
-subagents generated 23 remaining subjects in parallel; root also generated a
-familiar wine-bottle alternative to the angular Glass design. There are 27 raw
-style2 attempts with exact prompts/reference evidence, recipes and checks.
+## Latest handoff —2026-10-23
 
-Start with AGENTS required authorities, BUILD_STATUS and AUTONOMOUS_PROGRESS.
-[Gallery](sprites/review/style2/index.html),
-[inventory](sprites/review/style2/ALL_SPRITES_INVENTORY.json) and
-[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) are the current entry
-points. The owner likes the first three designs and defers individual fixes and
-in-game testing. Generation objective complete; do not automatically regenerate
-individual sheets or promote them into production. All stay review, zero accepted.
+Takeaway Cup eco ranged addition is complete as a **live draft**, with enemy
+sheet, seven64px frames and real locked-bearing shot/warning/recovery. See
+[master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23) and [report](content/RANGED_ENEMY_REPORT.md)
+for719units,3 serial Chromium cases and scoped software evidence. New role is
+optional; knight files remain frozen. Catalog27 subjects,31 immutable attempts.
+Owner art acceptance, stricter idle/hit contour matching, broader mirrored art
+review and extended pacing remain open; next art attempt is cup a5. Original26
+subjects remain review-only. Do not automatically promote them or select further
+content from this handoff. Individual sprite fixes/owner playtest and selected
+remaining integration follow the active sprite plan. Earlier notes below retain
+their historical status; no session prompt needs executing for completed cup work.
 
-When an individual revision is requested, use its preserved prompt/raw/reference
-metadata; increment its attempt, record the claim and update the catalog if the
-brief changes. Keep ordinary familiar Australian object silhouettes. For Glass,
-retain a3 angular and a4 wine-shaped options for comparison. No hand-painted fixes.
 
-Future live integration needs scoped ownership, configured recipes/frame metadata/
-atlas updates, unchanged authored world diameters, anchor/facing/footprint checks,
-deliberate tool/site/hazard state mapping and necessary serial game acceptance.
-The gallery's generic frame cycling is not gameplay animation or an attack/event
-claim. Original public/accepted/runtime assets remain untouched today.
+Start with AGENTS required authorities, BUILD_STATUS and the active sprite plan.
+[Gallery](sprites/review/style2/index.html), [manifest](sprites/MANIFEST.md) and
+[cup sheet](enemies/TAKEAWAY_CUP.md) are current entry points. Prior generation
+and tool/menu implementation history lives in the master and linked reports.
 
-All 26 native checks, 27 deterministic rebuilds/reference/source/output digests,
-36 sprite tests, types/lint/build and whitespace pass. Gallery JavaScript syntax
-and local asset links checked; no browser campaign. Existing external actual
+When a revision is selected, increment its attempt, record/commit the claim and
+update the subject prompt when the brief changes. Preserve sources and references;
+never hand-paint a style repair. Keep familiar Australian silhouettes, authored
+world dimensions and physics independent of image resolution. Gallery Play cycles
+art for inspection only; gameplay owns action/attack timing. Existing external
 Safari/browser-OS/older physical-GPU checks remain waived/unverified. No new
-publication/merge/CI. Knights and Magic is paused indefinitely until the owner
-explicitly reopens it; no themed parity work is selected.
-
-
-Tool presentation follow-up is now verified: see the [master correction](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
-Vacuum uses procedural suction with optional guides off by default; extra Grabber
-cues snap mechanically; Escape pause has pointer/Q Quit to Main Menu. This does
-not integrate the generated review roster. 714 units and four scoped serial browser
-cases pass, with five images inspected; no broad/device acceptance inferred.
+publication/merge/CI claim. Knights and Magic stays paused until explicit reopening.

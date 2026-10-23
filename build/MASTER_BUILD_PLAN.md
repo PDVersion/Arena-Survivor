@@ -5908,3 +5908,38 @@ for complete settings round-trip and historical schema2 missing-field coverage.
 Completed 2026-10-23. See content/TOOL_PRESENTATION_REPORT.md for 714 full / 231 targeted
 unit evidence, three final serial browser cases plus existing Q6 vacuum regression,
 inspected images, initial fixture corrections and deferred external checks.
+
+<a id="ranged-enemy-2026-10-23"></a>
+## Takeaway Cup — selected ranged enemy/live draft /2026-10-23
+
+Owner requested concept, enemy sheet, generated sprite and game integration.
+Codex completed the bounded V0.4.4 addition on codex/v0.4.4. Claim8718bcb recorded
+scope before generation. The previous26 catalog subjects remain review-only.
+
+- [x] Eco-only optional `enemy.ranged_attacker`: familiar unbranded takeaway cup,
+  16HP,68speed,4contact,3XP; body14/display40 independent of art. Introduction
+  one at66%, low weight1 +0.2 growth; no other role/boss timing changed. New role
+  gets18sim seconds before mini; original spacing elsewhere retained.
+- [x] Core optional ranged capability, authored theme tuning, full locked-bearing
+  1000ms preparation, one210speed/7radius/8damage shot,180ms release/1820ms rest.
+  Shot lifetime1800ms, global cap32; swept first impact, obstacles, armour/shared
+  invulnerability, causal source and finite cleanup. Pause freezes; pre-release
+  defeat cancels; committed shots survive; clearing waits for them.
+- [x] Built-in imagegen: four immutable drafts; a3 compact death selected.
+  Seven64×64 poses (448×64 sheet); attack-frame metadata follows simulation phase,
+  hit overrides, independent authored base anchors/facing. Standalone texture;
+  optional padded equal-cell pipeline prevents wrapping/clipping without hand edits
+  or per-pose fitting. Existing five-sheet atlas/outputs remain byte-identical.
+- [x] [Enemy sheet](enemies/TAKEAWAY_CUP.md), catalog, manifest, gallery and current
+  handoff updated. Gallery's malformed historical contact-sheet href repaired
+  while adding cup. Old raw prompts remain reproducibility evidence, not pending
+  session tasks. No persistent field/schema or knight content changed.
+- [x] 719units/75files; typecheck/lint/build; six sprite build/check and deterministic
+  equal hashes;3 unique serial Chromium cases, five inspected images;30 eco pacing
+  scenarios. [Report](content/RANGED_ENEMY_REPORT.md) owns precise evidence/limits.
+
+Owner art acceptance remains pending: small idle/hit contour differences, broader
+mirrored continuity and extended playtest may be revised later. All original26
+review subjects remain unpromoted; no broad performance/device/CI/publication or
+new external acceptance claim. Coarse pacing model omits ranged shots and cannot
+prove survival/fairness. REC-126 retains optional-content and padded-grid decisions.

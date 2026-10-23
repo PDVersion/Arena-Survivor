@@ -1692,3 +1692,14 @@ variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
 active run without counting a finished run or granting an unlock. Saved settings/
 progress remain. Generated sprite sheets remain in review and knight content
 stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
+## Selected eco ranged addition —2026-10-23
+
+Takeaway Cup is an owner-selected live draft: familiar cream café cup/brown sleeve/
+dark lid. It stops to tip back, warns along a fixed bearing, flicks one dodgeable
+coffee blob, then recovers. This fictional attack offers sidestep-and-close
+counterplay; Cigarette Butts retain their weak-group identity. [Enemy sheet](enemies/TAKEAWAY_CUP.md)
+owns current values and [master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+records the verified software slice. All existing style2 roster replacements
+remain review-only; owner individual art/playtest corrections may follow.
+No new educational/disposal/toxicity claim. Knights and Magic remains paused.

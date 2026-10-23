@@ -210,3 +210,14 @@ An image model may return larger separated subjects rather than exact cells.
 Keep that raw file as evidence; accept only a deterministic final strip whose
 layout and continuity pass all checks. Prompt consistency cannot guarantee a
 correct sprite; exact dimensions and visual acceptance are separate gates.
+
+## Selected ranged exception —2026-10-23
+
+Takeaway Cup alone uses seven64px cells:0idle/1move/2hit/3death/4prepare/5release/
+6recover. Optional attackFrames metadata is driven by actual simulation phases;
+hit flash takes priority. Never infer the player walk cycle from this strip or
+add attack states to old sheets without an explicit selected change. Brown/gold
+shots remain procedural. [Enemy sheet](enemies/TAKEAWAY_CUP.md) records live draft
+and pending owner continuity acceptance. Measured base anchors are presentation
+only. Explicit virtual source-grid padding uses one common transform and no
+per-pose fitting; no hand-painted source fixes. Old five outputs/atlas unchanged.

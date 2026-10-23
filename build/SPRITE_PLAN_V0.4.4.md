@@ -230,21 +230,12 @@ unchanged. All 26stay review,0 accepted; alignment/live/performance gates remain
 for later owner testing. Generation objective complete; no knight work or art
 correction campaign is silently selected.
 
-## Active owner-selected ranged phase —2026-10-23
+## Ranged addition completed; next open work
 
-Owner requests a new eco ranged enemy, enemy sheet, generated sprite and live
-integration. Selected Takeaway Cup, neutral optional `enemy.ranged_attacker`.
-This explicitly advances one new subject beyond the earlier review-only batch.
-Claimant Codex root on codex/v0.4.4. Ownership: additive enemy ID/contracts and
-validation, eco enemies/copy/director/bodies/sprites, pure ranged attack/shot
-logic, EnemyActor/SpriteView and RunScene integration, standalone reproducible
-sprite recipe/script/assets, scoped tests and matching documents. No frozen
-knight content, other roster art or save fields.
-
-Gate: exact seven-cell native64px conversion, source/prompt/reference hashes;
-inspect game-size art and prepare/release/recover; pure timing/locked aim/shot
-collision/expiry tests; content and persistence compatibility; typecheck, full
-units, lint, production build, balance model and one bounded serial Chromium
-fixture for actual harm, dodge, pause, cancellation and clean menu/restart.
-Full stress/device/browser campaigns deferred under owner resource budget.
-Consolidate completion in master after gates pass.
+Owner-selected Takeaway Cup concept, enemy sheet, generated art and live runtime
+slice is complete; [master record](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+and [report](content/RANGED_ENEMY_REPORT.md) own implementation and evidence.
+The live draft is not owner art acceptance. Catalog now27 subjects (24 primary
+sheets +3 icons). Previous26 stay review-only; their individual corrections,
+acceptance and remaining integration are the next open handoff. No other content
+is selected by this completion, and Knights and Magic remains indefinitely paused.

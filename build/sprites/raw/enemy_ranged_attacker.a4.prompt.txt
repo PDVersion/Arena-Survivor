@@ -1,0 +1,79 @@
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT: enemy.ranged_attacker — Takeaway Cup. New eco ranged enemy.
+SHEET: SEVEN equal square cells, one horizontal 448×64 native pixel strip.
+Frame size64×64 (already doubled from logical32). World display40 units.
+An ordinary unbranded takeaway coffee cup: tapered cream paper cup, plain brown
+cardboard sleeve around middle, dark charcoal snap-on lid with tiny drinking
+opening towards RIGHT. Familiar cafe cup proportions, no handle, no straw,
+no face or limbs. Slight crease on lower left persists in every intact pose.
+PALETTE: Paper #172d5f #64748b #e2e8f0 #f8fafc; lid #111827 #374151 #6b7280 #d1d5db;
+sleeve/coffee #713f12 #b7791f #facc15 #fde68a (brown deep/shadow dominate sleeve,
+small warm highlights only; do not make cup yellow).
+FRAMES 0–6 left to right:
+0 idle: upright cup, lid closed, centered same anchor at(32,34).
+1 move: same cup rocks 6 degrees right, same size and base anchor.
+2 hit: EXACT frame0 silhouette, placement, sleeve, lid and crease.
+3 death: crushed paper cup and detached dark lid, contained within cell; no splatter.
+4 prepare: cup tips back 12 degrees LEFT, lid drinking opening lifts slightly,
+  no coffee outside cup, same central anchor and scale.
+5 release: cup tips forward 15 degrees RIGHT, lid opening at right; small brown
+  coffee bead still CONNECTED at lip, no detached projectile or speed lines.
+6 recover: cup upright again with slight depressed lid, same footprint as idle.
+One consistent individual cup. Keep every pose inside shared80% envelope,
+transparent pixels between cells. Draw precisely7 poses, no separate projectile.
+Reference image is the previously reviewed Plastic Bottle: use only style,
+outline weight, perspective and shading; draw only the cup, no bottle.
+
+CRITICAL POSE CORRECTION: Cell4 PREPARE must lean clearly LEFT: lid centre
+x=26, base centre x=35, a backwards lean opposite to release. Cell5 RELEASE
+leans RIGHT: lid centre x=38, base centre x=30. Do not repeat the same right
+lean in move, prepare and release. Idle/hit/recover should remain upright.
+Keep whole-strip common scale and even cell spacing.
+
+LAYOUT REPAIR for attached draft: preserve the cup design and7 poses, but
+regenerate on a precisely regular SEVEN-SQUARE-CELL strip. The old image crowds
+the middle cells and crosses boundaries. Fix that through generation.
+Each of the7 pose centres must be at horizontal fractions 1/14,3/14,5/14,7/14,
+9/14,11/14,13/14 of full canvas width. No art outside its assigned square.
+Death frame3 must be a COMPACT crushed cup with lid resting on top, maximum
+width70% of cell, no wide side-by-side lid. Leave clear blank gutters inside
+each cell's left/right10%. Every cell uses the same camera, upright object
+height76% of cell. Transparent padding above/below is fine. Image1 here is
+the target draft cup design, not a bottle. Preserve design, repair regular layout.
+
+FINAL SPACING OVERRIDE: Keep the transparent wide canvas, but reduce EVERY
+pose to70% of its current drawn size, uniformly with the same scale for all
+poses. In a2206px-wide canvas, each of7cells is315px wide: each UPRIGHT CUP
+should be only220px TALL and145px WIDE. Death maximumwidth160px.
+Centre each pose exactly at x=157,472,787,1102,1417,1732,2047. All bases
+align at y=470. Clear empty space must separate every object, including
+release's coffee bead and the final upright cup. Do NOT fill allavailableheight.
+Preserve seven poses and familiar design. No markings on transparency.
