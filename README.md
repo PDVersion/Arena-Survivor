@@ -16,6 +16,10 @@ Knights and Magic is paused indefinitely until the owner explicitly reopens it.
 External device/browser evidence remains waived/unverified; see status for actual
 source-bound PR/CI observations.
 
+The latest correction adds vacuum suction/dust, optional attack-radius guides
+(default OFF), snapping extra Grabber claws and Escape-menu Quit to Main Menu.
+See the [verified correction](build/MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
 ## Project documents
 
 - [Master build plan — completed work](build/MASTER_BUILD_PLAN.md): consolidated V0.1–V0.4.2.1 implementation/architecture records and verified V0.4.3 slices.

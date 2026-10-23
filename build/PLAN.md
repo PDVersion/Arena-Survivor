@@ -1,6 +1,6 @@
 # Arena Survival — Game Plan
 
-## Familiar Australian appearance —2026-10-23
+## Familiar Australian appearance — 2026-10-23
 
 Use recognisable ordinary Australian/Sydney objects before abstract/fantasy
 silhouettes. Read [appearance references](sprites/AUSTRALIAN_REFERENCE_NOTES.md).
@@ -1680,3 +1680,15 @@ copy has not received a new factual review in this phase.
 
 [Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
 is current. G1–G4 are locally complete; new sprite generation remains unstarted.
+
+
+## Tool presentation and menu exit — 2026-10-23
+
+Owner selects bounded procedural suction/dust on eco vacuum pulses and snapping
+multi-prong Collection Sweep cues. Precise attack guides are presentation only,
+behind Show attack radius (default OFF). Actual hit selection, reach/caps, damage,
+clocks and material identities remain unchanged. Reduced motion/Low have quieter
+variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
+active run without counting a finished run or granting an unlock. Saved settings/
+progress remain. Generated sprite sheets remain in review and knight content
+stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).

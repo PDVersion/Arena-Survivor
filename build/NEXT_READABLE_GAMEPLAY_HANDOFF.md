@@ -30,3 +30,10 @@ and local asset links checked; no browser campaign. Existing external actual
 Safari/browser-OS/older physical-GPU checks remain waived/unverified. No new
 publication/merge/CI. Knights and Magic is paused indefinitely until the owner
 explicitly reopens it; no themed parity work is selected.
+
+
+Tool presentation follow-up is now verified: see the [master correction](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+Vacuum uses procedural suction with optional guides off by default; extra Grabber
+cues snap mechanically; Escape pause has pointer/Q Quit to Main Menu. This does
+not integrate the generated review roster. 714 units and four scoped serial browser
+cases pass, with five images inspected; no broad/device acceptance inferred.

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import type { ToolEffectOptions } from "./tool-effects";
 import type { MeleeWeaponDefinition, ThemeTokens } from "../core/archetypes/contracts";
 
 /** Primitive fallback for the future grabber sprite: shaft, handle, and open jaws. */
@@ -11,6 +12,7 @@ export class GrabberActor extends Phaser.GameObjects.Container {
     definition: MeleeWeaponDefinition,
     tokens: ThemeTokens,
     onComplete: () => void,
+    options: ToolEffectOptions = {},
   ) {
     super(scene, x, y);
     const shaftColour = Phaser.Display.Color.HexStringToColor(tokens.palette.text).color;
@@ -24,6 +26,11 @@ export class GrabberActor extends Phaser.GameObjects.Container {
       .setAlpha(0);
     const upperJaw = scene.add.rectangle(definition.reach, -6, 18, 5, accentColour).setRotation(-0.45);
     const lowerJaw = scene.add.rectangle(definition.reach, 6, 18, 5, accentColour).setRotation(0.45);
+    if (options.effects) {
+      upperJaw.setRotation(-options.effects.claw.openingRadians);
+      lowerJaw.setRotation(options.effects.claw.openingRadians);
+      contact.setVisible(Boolean(options.showAttackRadius));
+    }
     this.add([outline, shaft, handle, contact, upperJaw, lowerJaw]);
     this.setRotation(angle).setDepth(45).setScale(0.08, 1);
     scene.add.existing(this);
@@ -35,6 +42,10 @@ export class GrabberActor extends Phaser.GameObjects.Container {
       ease: "Quad.Out",
       onComplete: () => {
         contact.setAlpha(1);
+        if (options.effects) {
+          upperJaw.setRotation(0).setY(0);
+          lowerJaw.setRotation(0).setY(0);
+        }
         scene.tweens.add({
           targets: this,
           scaleX: 0.08,

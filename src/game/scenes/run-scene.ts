@@ -166,6 +166,7 @@ import {
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
+import { ClawSnapActor } from "../entities/tool-effects";
 import { ConeAttackActor } from "../entities/cone-attack-actor";
 import { selectSplashHits } from "../systems/weapons/on-hit-splash";
 import { recordWeaponAttack } from "../systems/weapons/weapon-loadout";
@@ -1993,7 +1994,8 @@ export class RunScene extends Phaser.Scene {
       if (hits.length === 0) return;
       this.activeGrabbers += 1;
       const onComplete = () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); };
-      if (weapon.arcRadians !== undefined) new ConeAttackActor(this, this.player.x, this.player.y, baseAngle, weapon, this.runTheme.tokens, onComplete, hits);
+      if (weapon.arcRadians !== undefined) new ConeAttackActor(this, this.player.x, this.player.y, baseAngle, weapon, this.runTheme.tokens, onComplete, hits, {
+        effects: this.runTheme.tuning.view.toolEffects, ...getSessionSettings(), quality: getSessionSettings().presentationQuality });
       else new GrabberActor(
         this,
         this.player.x,
@@ -2002,6 +2004,7 @@ export class RunScene extends Phaser.Scene {
         weapon,
         this.runTheme.tokens,
         onComplete,
+        { effects: this.runTheme.tuning.view.toolEffects, ...getSessionSettings() },
       );
       this.meleeStrikes += 1;
       this.shotsFired += 1;
@@ -2148,8 +2151,17 @@ export class RunScene extends Phaser.Scene {
   }
 
   /** Presentation follows the attack timing, while hit geometry remains pure. */
-  private renderCollectionSweepCue(x: number, y: number, radius: number): void {
+  private renderCollectionSweepCue(x: number, y: number, radius: number, splash = false): void {
     if (!this.scene.isActive()) return;
+    const effects = this.runTheme.tuning.view.toolEffects;
+    if (effects) {
+      const settings = getSessionSettings();
+      if (!splash) {
+        new ClawSnapActor(this, x, y, radius, this.runTheme.tokens, { effects, ...settings });
+        return;
+      }
+      if (!settings.showAttackRadius) return;
+    }
     const colour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.player).color;
     const cue = this.add.circle(x, y, radius, colour, 0.14)
       .setStrokeStyle(3, colour, 0.9)
@@ -2219,7 +2231,7 @@ export class RunScene extends Phaser.Scene {
         weapon, directBase: 0, criticalBonus: 0, piercingMomentum: 0,
       });
     }
-    if (targets.length > 0) this.renderCollectionSweepCue(primary.x, primary.y, weapon.splash.radius);
+    if (targets.length > 0) this.renderCollectionSweepCue(primary.x, primary.y, weapon.splash.radius, true);
   }
 
   /** Valid enemy contact nudges the player without turning an enemy into a wall. */
@@ -3099,13 +3111,21 @@ export class RunScene extends Phaser.Scene {
     };
   }
 
+  /** Abandon transient run state; finished-run statistics/unlocks are never folded. */
+  private quitToMenu(): void {
+    if (this.runState?.status !== "paused") return;
+    this.pauseMenu?.hide();
+    this.physics.world.resume();
+    this.scene.start("menu");
+  }
+
   private togglePause(): void {
     if (!this.runState || !this.player) return;
     if (isRunActive(this.runState)) {
       this.runState = setRunStatus(this.runState, "paused");
       this.player.stop();
       this.physics.world.pause();
-      this.pauseMenu?.show(this.pauseMenuView(), (key) => this.applySetting(key));
+      this.pauseMenu?.show(this.pauseMenuView(), (key) => this.applySetting(key), { onQuit: () => this.quitToMenu() });
     } else if (this.runState.status === "paused") {
       this.pauseMenu?.hide();
       this.runState = setRunStatus(this.runState, "playing");

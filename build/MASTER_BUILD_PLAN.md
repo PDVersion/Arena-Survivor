@@ -5830,3 +5830,81 @@ cells and leaves strict defaults intact. Existing public/accepted/runtime assets
 are unchanged; no dependencies/save/balance changes. All 26 remain review,
 production integration/individual alignment/live acceptance pending. External
 browser/OS/older physical-GPU evidence remains waived/unverified. No publication.
+
+
+<a id="tool-presentation-2026-10-23"></a>
+## 2026-10-23 — suction, optional attack guides and Escape-menu quit
+
+Owner-selected runtime correction after full sprite generation. Eco vacuum uses
+bounded inward air/dust during the existing pulse; Low reduces streams and reduced
+motion keeps a static cue. Show attack radius defaults off and reveals precise
+sector/selected-hit/splash guides when on. Grabber jaws close and extra Sweep cues
+use three snapping prongs at existing resolved positions. Combat selection, damage,
+clocks, balance, saved IDs and generated/live sprite assets are unchanged.
+
+Pause gains pointer/Q Quit to Main Menu, abandoning transient run state through
+normal scene shutdown without recording a finished run/unlock. Start creates a
+fresh run. Panel/setting layout uses authored UI viewport and reserves the footer.
+Persistent showAttackRadius is an additive optional schema2 boolean: historical
+saves default off, invalid present values reject, current codec round-trips it.
+Only eco owns the optional tool effects; knight definitions stay frozen.
+
+[Report](content/TOOL_PRESENTATION_REPORT.md) owns231targeted/714fullunits, types/
+lint/build/whitespace, three final serial browser cases and the existing Q6 real
+vacuum regression, five inspected images, initial fixture failures/corrections and
+cleanup/deferred limits. No broad browser/stress/device or new publication claim.
+
+### Original bounded ownership and completed checklist
+
+# Tool presentation and return-to-menu correction
+
+Owner-selected2026-10-23, on codex/v0.4.4 after full sprite generation. This
+bounded runtime correction does not promote generated sheets or reopen Knights
+and Magic. Art review inventory remains intact.
+
+## Ownership before code
+
+- src/game/entities/{cone-attack-actor,grabber-actor}.ts and a new presentation-only
+  claw cue actor; run-scene.ts only presentation wiring and paused menu exit.
+- content/define-theme.ts validates optional presentation data;
+  core/archetypes/tuning.ts optional tool-presentation tuning; eco-guardian/view.ts
+  alone supplies it. No knight definition, balance value, hit timing or target change.
+- state/settings-state.ts and persistence/profile-validation.ts: optional additive
+  showAttackRadius boolean defaults false, old schema2 imports remain valid,
+  malformed present values reject. No schema bump, lost profile fields or unlock
+  grants on abandoning a live run. SAVE_DATA documents additive compatibility.
+- ui/pause-menu-ui.ts: setting plus keyboard/pointer Quit to Main Menu, with normal
+  teardown and resize; menu-scene setting dispatch already generic.
+- Relevant settings/persistence units and one bounded serial browser file covering
+  real effects/guide toggle/reduced motion/quality and actual quit/restart lifecycle.
+- This plan, sequence/status/progress/master/reconciliation, product/design/theme
+  compatibility notes and SAVE_DATA; no generated/public/accepted asset changes.
+
+## Behaviour
+
+Vacuum: bounded cyan air streaks/dust travel toward the nozzle during the actual
+pulse, no damage implied during fade. Exact sector/selected-hit guide appears
+only when Show attack radius is on (off by default). Low uses fewer streams;
+reduced motion uses a quiet static pulse. Geometry and combat clocks stay unchanged.
+Grabber: jaws close at extension contact; Collection Sweep extras become two/three
+claw snaps at their resolved positions. Debug area circles are optional, no new hits.
+Paused Escape menu adds Quit to Main Menu, pointer and Q; quit abandons the active
+run and cleans scene/audio/timers without finishing/granting a run. Existing saved
+progress/settings survive; Start reconstructs a fresh run. No confirmation modal.
+
+## Gate
+
+- [x] Meaningful setting legacy-import/invalid/round-trip persistence tests.
+- [x] Targeted units, types/lint/build/whitespace.
+- [x] Bounded serial browser: real pulse/guide toggle, reduced-motion/Low, claw
+  cues, Escape quit/title/new run and unchanged finished-run counter. No broad
+  browser/stress/device campaign; external checks remain waived/unverified.
+- [x] Record findings/status/checks with code; no full sprite acceptance inferred.
+
+Verification fixture ownership extension: tests/unit/persistence/save-codec.test.ts
+for complete settings round-trip and historical schema2 missing-field coverage.
+
+
+Completed 2026-10-23. See content/TOOL_PRESENTATION_REPORT.md for 714 full / 231 targeted
+unit evidence, three final serial browser cases plus existing Q6 vacuum regression,
+inspected images, initial fixture corrections and deferred external checks.

@@ -2,6 +2,17 @@
 
 Updated: 2026-10-23 (Australia/Sydney).
 
+## Latest verified correction — 2026-10-23
+
+Owner-requested vacuum suction/dust, off-by-default attack guides, snapping extra
+Grabber claws and Escape→Quit to Main Menu are implemented on codex/v0.4.4.
+714 full / 231 targeted units, types/lint/build/whitespace and four unique serial browser
+cases pass; five images inspected. Quit abandons transient run state without
+finish rewards; profile progress/settings survive. [Report](build/content/TOOL_PRESENTATION_REPORT.md)
+and [master](build/MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23) own scoped
+evidence and fixture corrections. No broad browser/device pass, new publication,
+knight work or generated/live sprite promotion. External checks remain unverified.
+
 ## Objective and current state
 
 2026-10-23: owner-selected full eco sprite generation is complete on

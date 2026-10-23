@@ -280,8 +280,23 @@ export interface UpgradeTiersTuning {
   readonly luckWeightBias: number;
 }
 
+/** Optional theme-authored tool artwork. Never consumed by combat selectors. */
+export interface ToolEffectsTuning {
+  readonly suction: {
+    readonly streams: number; readonly lowStreams: number; readonly strokeWidth: number;
+    readonly dustRadius: number; readonly opacity: number; readonly nozzleLength: number;
+    readonly nozzleWidth: number; readonly twist: number; readonly tailFraction: number;
+    readonly innerFraction: number;
+  };
+  readonly claw: {
+    readonly prongs: 2 | 3; readonly strokeWidth: number; readonly durationMs: number;
+    readonly openingRadians: number; readonly tipFraction: number; readonly closeFraction: number;
+  };
+}
+
 /** Camera presentation that changes how much world is visible, never actor geometry. */
 export interface ViewTuning {
+  readonly toolEffects?: ToolEffectsTuning;
   /** World camera zoom. The fixed renderer and screen-space UI are unchanged. */
   readonly zoom: number;
   /** Cheaper geometry for optional overview markers; never actor/body art. */

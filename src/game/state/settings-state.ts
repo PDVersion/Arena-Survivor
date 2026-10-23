@@ -12,6 +12,8 @@ export interface RunSettings {
   readonly difficulty: DifficultyId;
   /** Show before/after numbers on upgrade cards. Badges are always shown. */
   readonly detailedUpgradeCards: boolean;
+  /** Optional visual geometry guides; never affects hit selection. */
+  readonly showAttackRadius: boolean;
   readonly reducedMotion: boolean;
   readonly muted: boolean;
   /** Screen-space minimap opacity. Zero hides it. */
@@ -25,6 +27,7 @@ export const settingKeys: readonly SettingKey[] = Object.freeze([
   "difficulty",
   "detailedUpgradeCards",
   "reducedMotion",
+  "showAttackRadius",
   "muted",
   "minimapOpacity",
   "presentationQuality",
@@ -38,6 +41,7 @@ export function createSettings(overrides: Partial<RunSettings> = {}): RunSetting
     // for players who prefer clean cards.
     detailedUpgradeCards: true,
     reducedMotion: false,
+    showAttackRadius: false,
     muted: false,
     minimapOpacity: 0.6,
     ...overrides,

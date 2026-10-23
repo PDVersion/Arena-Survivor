@@ -3214,6 +3214,35 @@ No knight art, live/accepted asset, runtime tuning, save/dependency or new
 publication change. Revisit each subject only with owner-directed refinement or
 production integration scope; keep all exact attempt evidence available.
 
+### REC-125 — Tool artwork, optional guides and abandoning a run stay non-authoritative
+
+- Status: Accepted
+- Date: 2026-10-23
+- Affects: Eco vacuum/Grabber feedback, settings/save compatibility, pause lifecycle
+- Blocks: None
+
+Owner requests suction/dust, mechanical extra grabs, optional exact geometry off
+by default, and returning from Escape to the main menu. Implement bounded procedural
+cues using optional eco-owned view tuning; preserve existing combat selectors and
+pulse/fade boundaries. No generated sprite/live asset promotion or knight edits.
+showAttackRadius defaults false, validates as an optional schema2 boolean, and
+round-trips current local/portable profiles; absent historical values hydrate off.
+Old strict clients may reject new-field exports, so do not claim downgrade support.
+
+Quit to main menu uses existing scene shutdown, never finished-run accounting:
+abandoning an active run must not farm run-completion unlocks or duplicate totals.
+Pointer and Q are available only while the run pause overlay is open; listeners
+are cleaned on render/hide and Start reconstructs a fresh run. UI rows/quit footer
+fit the authored viewport. [Report](build/content/TOOL_PRESENTATION_REPORT.md)
+records 714 full / 231 targeted units, types/lint/build, three serial Chromium cases and
+the existing Q6 real-vacuum regression, inspected images and initial fixture issues.
+Graphics command buffers retain default styles after clear: use actual visibility
+for whether a guide is drawn. Canvas pointer tests must include CSS FIT scaling;
+Escape readiness must span an actual game frame rather than rely on sleeps/retries.
+No full browser/performance/device or new publication claim. External waivers stay
+unverified. Revisit only when tool art, persistence schema or run-abandonment rules
+change; never derive damage or completion from visual effects/menu navigation.
+
 ## Open questions to reconcile during implementation
 
 - The longer-run spawn ramp and five-minute balance are not settled; Phase 3's 400 ms spawn cadence and 1000 ms contact immunity remain provisional smoke-test baselines.

@@ -876,6 +876,18 @@ function validateTuning(
     return issues;
   }
 
+  if (tuning.view?.toolEffects) {
+    const { suction, claw } = tuning.view.toolEffects;
+    for (const [key, value] of Object.entries({ ...suction, ...claw })) {
+      if (!Number.isFinite(value) || value <= 0) issues.push(`tuning.view.toolEffects.${key} must be positive`);
+    }
+    if (![2, 3].includes(claw.prongs) || !Number.isInteger(suction.streams)
+      || !Number.isInteger(suction.lowStreams) || suction.lowStreams > suction.streams
+      || suction.opacity > 1 || suction.innerFraction >= 1 || suction.tailFraction >= 1
+      || claw.tipFraction >= 1 || claw.closeFraction >= 1) {
+      issues.push("tuning.view.toolEffects has invalid counts or fractions");
+    }
+  }
   if (!Number.isFinite(tuning.view?.zoom) || tuning.view.zoom <= 0) {
     issues.push("tuning.view.zoom must be greater than zero");
   }

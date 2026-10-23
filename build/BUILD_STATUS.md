@@ -12,6 +12,16 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Latest verified correction — 2026-10-23
+
+Vacuum suction/dust, off-by-default Show attack radius, snapping extra Grabber
+claws and Escape-menu Quit to Main Menu are implemented. Quitting abandons the
+active run without finish rewards; saved settings/progress remain.714 unit tests,
+types/lint/build and four scoped serial browser cases pass; five images inspected.
+[Master record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23) and
+[report](content/TOOL_PRESENTATION_REPORT.md) own evidence/limits. Generated sheets
+remain review assets; knight content stays paused and external checks unverified.
+
 ## Current selected work — 2026-10-23
 
 **All 26 eco catalog subjects generated for review.** Three subagents completed
