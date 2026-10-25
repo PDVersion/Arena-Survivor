@@ -6246,3 +6246,17 @@ acceptance and remaining integration are the next open handoff. No other content
 is selected by this completion, and Knights and Magic remains indefinitely paused.
 
 </details>
+
+## V0.4.4 owner-authorized delivery verification —2026-10-26
+
+Owner requests all current sprites/features be published through a PR into main.
+Fresh remote inspection finds PR28 merged as9e29ca6 and no open PR. Preserve18
+subsequent phase commits and merge main's marker without content conflicts
+(78cd2e7). Fresh719units/75files, typecheck/lint/build, six sprite checks,27native/
+31raw/prompt hashes and branch whitespace pass. High-severity audit gate passes
+with two existing moderate Vitest findings. Automatic PR CI owns consolidated
+browser regression; current matching-head result pending at pre-push checkpoint.
+[Status](BUILD_STATUS.md) records delivery scope and limitations. Publication
+includes all generated assets, keeps26 style2 outputs review-only and cup live
+draft, and preserves indefinite knight pause. Remaining art/integration and
+external device evidence stay open. No new runtime change in this delivery slice.

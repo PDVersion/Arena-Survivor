@@ -12,6 +12,28 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Owner-authorized V0.4.4 PR delivery —2026-10-26
+
+Owner requests pushing all created sprites/features toward main and creating a PR
+if missing. Fresh origin/main9e29ca6 confirms PR28 already merged; no open PR.
+Local codex/v0.4.4 contains18 subsequent phase/audit commits. Merge78cd2e7 brings
+main's merge marker into the feature branch without content conflicts or rewrites.
+Publication covers all27 generated subjects/31 preserved sources and prompts,
+vacuum/claw effects, default-off attack guides, Escape-menu quit, Takeaway Cup
+ranged live draft and consolidated plans.26 other style2 outputs remain review
+assets; publication does not imply owner art acceptance or new runtime bindings.
+
+Fresh719units/75files, explicit typecheck, lint, production build, six configured
+sprite checks,27 native/31 source/prompt recorded hashes and cumulative whitespace
+pass. Existing bundle-size advisory remains. npm audit --audit-level=high exits0
+with two moderate Vitest/mocker findings; pins unchanged, no bypass. Select the
+automatic PR workflow for the consolidated full browser regression; no repeated
+heavy local campaign. Matching-head CI/publication is pending at this pre-push
+checkpoint; actual PR URL/status is recorded in the task artifact after creation.
+No knight files changed. External Safari/browser-OS/older physical-GPU checks
+remain waived/unverified. Art approval/remaining integration and V0.4 overall
+stay open; no new gameplay scope or deployment is selected.
+
 ## Latest progress audit —2026-10-23
 
 **All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved

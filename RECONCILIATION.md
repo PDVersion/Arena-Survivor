@@ -4259,3 +4259,14 @@ sidecars are immutable reproduction evidence and must survive session cleanup.
 Optional foundations F1–F7/F16 are already delivered; expanded discovery/types/
 resources/accessibility/controls remain unselected. No knight reopening or new
 browser/device/CI pass follows from a file audit. [Report](build/sprites/review/style2/PROGRESS_REPORT.md).
+
+## REC-101 continuation — V0.4.4 publication /2026-10-26
+
+Owner explicitly requests sprites/features into main via PR if missing. Fresh
+origin/main9e29ca6 has PR28; no open PR. Delivery scope is existing18 phase commits,
+main-marker reconciliation and status/PR metadata. Preserve review-vs-live art
+states and frozen knight files. Fresh719units/types/lint/build/six sprite checks,
+27native/31raw-prompt hashes/branch whitespace pass. Audit high gate passes with
+two existing moderate Vitest findings. Use automatic PR workflow for consolidated
+browser regression; do not claim current-head CI from old local/browser evidence.
+No asset promotion, additional gameplay, device acceptance or deployment follows.
