@@ -12,6 +12,23 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Owner playtest corrections complete locally —2026-10-26
+
+Player a4/four-step gait is committed708259a. B adds slower cloud-like vacuum air,
+clipped scrolling menu bodies/measured Equipment rows and fixed-upgrade tool
+identity with meaningful STAT quality labels. Actual damage/rolls/caps/progression/
+saves and frozen knight files are unchanged. [Report](content/PLAYTEST_CORRECTIONS_REPORT.md)
+records723unit tests/75files, types/lint/build/whitespace and11unique scoped serial
+browser cases passing cumulatively; new scroll/card cases verify actualWebGLand
+Canvas/Default/Low/reduced-motion/resized800×600. A separately passed39sprite
+units/27checks/three scoped gait browser cases. Captures inspected; owned resources
+cleaned. Full-app/stress/soak/device/remote-CI remain deferred/waived/unverified.
+
+[Separate-session progression prompt](prompts/PROGRESSION_SYSTEM_RESEARCH.md)
+is ready; writing it does not redesign or rebalance the game or create a chat.
+Next is owner retest/remaining V0.4.4 acceptance, or separately selected research.
+No push/merge/deployment; overallV0.4 remains open.
+
 ## Player gait correction a4 —2026-10-26
 
 Regenerated player has two distinct passing steps; runtime now plays0→1→2→3.

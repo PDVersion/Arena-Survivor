@@ -901,7 +901,7 @@ function validateTuning(
 
   if (tuning.view?.toolEffects) {
     const { suction, claw } = tuning.view.toolEffects;
-    for (const [key, value] of Object.entries({ ...suction, ...claw })) {
+    for (const [key, value] of [...Object.entries(suction), ...Object.entries(claw)]) {
       if (!Number.isFinite(value) || value <= 0) issues.push(`tuning.view.toolEffects.${key} must be positive`);
     }
     if (![2, 3].includes(claw.prongs) || !Number.isInteger(suction.streams)

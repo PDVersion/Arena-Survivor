@@ -38,7 +38,9 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
           new Phaser.Game({ ...createGameConfig(root.id), type: Phaser.CANVAS, audio: { noAudio: true }, scene: [Load, Run] });
         });
         if (quality === "low") { scene!.applySetting("presentationQuality"); scene!.applySetting("reducedMotion"); }
-        const text = (container: { list: { text?: string; visible: boolean }[] } | undefined) => container?.list.filter((c) => c.visible && typeof c.text === "string").map((c) => c.text) ?? [];
+        type UiNode = { text?: string; visible: boolean; list?: UiNode[] };
+        const flatten = (nodes: UiNode[]): UiNode[] => nodes.flatMap((node) => [node, ...flatten(node.list ?? [])]);
+        const text = (container: { list: UiNode[] } | undefined) => flatten(container?.list ?? []).filter((c) => c.visible && typeof c.text === "string").map((c) => c.text);
         const guide = (section: string) => {
           scene!.pauseMenu.codexSection = section;
           scene!.pauseMenu.show(scene!.pauseMenuView(), () => {}, { tab: "codex" });
@@ -48,7 +50,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
         const capabilities = guide("capabilities");
         const firstEnemy = guide("enemies");
         const guideSnapshot = () => {
-          const body = scene!.pauseMenu.container?.list.find((c: { text?: string }) => c.text?.includes(theme.copy.mastery.gameValues));
+          const body = scene!.pauseMenu.scrollBody?.list.find((c: { text?: string }) => c.text?.includes(theme.copy.mastery.gameValues));
           return { texts: text(scene!.pauseMenu.container), page: scene!.pauseMenu.enemyPage, writes,
             bodyBottom: body ? body.y + body.height : 0, navigationTop: scene!.pauseMenu.enemyPageBounds[0]?.bounds.top ?? 0,
             listeners: scene!.input.keyboard.listenerCount("keydown-PAGE_DOWN"), scroll: window.scrollY };

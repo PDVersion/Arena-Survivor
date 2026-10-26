@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import type { ThemeManifest, UpgradeDefinition } from "../core/archetypes/contracts";
+import { isTiered } from "../systems/upgrades/upgrade-tiers";
 import type { UpgradeTier } from "../core/archetypes/tiers";
 import type { UpgradeDescription } from "../systems/upgrades/describe-upgrade";
 import { addUiText, configureUiContainer, uiPointer, uiViewport } from "./ui-text";
@@ -42,9 +43,10 @@ export class LevelUpChoiceUi {
   }
 
   /**
-   * A card's border is its roll, not the upgrade's identity.
+   * A tier-sensitive card's border communicates its rolled gain.
    *
-   * The same upgrade can come up white or yellow, and the colour is the whole
+   * Fixed-value cards use the theme accent instead. For a tier-sensitive card,
+   * the same upgrade can come up white or yellow, and the colour is the whole
    * point of the roll: it has to be readable before any of the text is.
    */
   private tierColour(tier: UpgradeTier): number {
@@ -71,6 +73,8 @@ export class LevelUpChoiceUi {
     tierNote?: Phaser.GameObjects.Text;
     detailText?: Phaser.GameObjects.Text;
     tier: UpgradeTier;
+    colour: number;
+    associationText?: Phaser.GameObjects.Text;
     height: number;
     contentHeight: number;
   }> {
@@ -81,7 +85,8 @@ export class LevelUpChoiceUi {
     const levelBadge = description?.isNew
       ? "NEW"
       : `Lv ${description?.level ?? 0}→${description?.nextLevel ?? 1}`;
-    const trackBadge = description?.track === "weapon" ? "WEAPON" : "GENERAL";
+    const trackBadge = (description?.track ?? choice.track) === "weapon" ? "WEAPON"
+      : choice.effects.every((effect) => effect.kind === "stat.add") ? "STAT" : "GENERAL";
     const badge = `${trackBadge} · ${description?.maxLevel === null ? "∞" : levelBadge}`;
     const badgeText = addUiText(this.scene, 0, 0, badge, {
       color: description?.isNew ? palette.overcritical : palette.text,
@@ -91,8 +96,15 @@ export class LevelUpChoiceUi {
     }).setOrigin(1, 0);
 
     const tier = description?.tier ?? "common";
+    const qualityRelevant = description?.qualityRelevant ?? isTiered(choice);
+    const colour = qualityRelevant ? this.tierColour(tier)
+      : Phaser.Display.Color.HexStringToColor(palette.accent).color;
+    const association = description?.association ?? this.theme.copy.content[choice.ownerWeaponId ?? choice.id]?.name;
+    const associationText = association && (!qualityRelevant || choice.track === "weapon")
+      ? addUiText(this.scene, 0, 0, association, { color: palette.accent, fontFamily: "Georgia, serif",
+        fontSize: "14px", fontStyle: "bold", wordWrap: { width: innerWidth } }) : undefined;
     const heading = addUiText(this.scene, 0, 0, `${index + 1}. ${description?.name ?? choice.id}`, {
-      color: this.theme.tokens.tiers[tier],
+      color: qualityRelevant ? this.theme.tokens.tiers[tier] : palette.accent,
       fontFamily: "Georgia, serif",
       fontSize: "21px",
       fontStyle: "bold",
@@ -102,7 +114,7 @@ export class LevelUpChoiceUi {
 
     // Only worth saying when the roll actually changed the numbers; a common
     // card would just be reading the baseline back to the player.
-    const tierNote = description && description.tierMultiplier > 1
+    const tierNote = qualityRelevant && description && description.tierMultiplier > 1
       ? addUiText(this.scene, 0, 0, `${description.tierLabel}  ×${description.tierMultiplier}`, {
           color: this.theme.tokens.tiers[tier],
           fontFamily: "Georgia, serif",
@@ -120,8 +132,11 @@ export class LevelUpChoiceUi {
 
     const texts = [heading, badgeText, summary];
     if (tierNote) texts.push(tierNote);
+    if (associationText) texts.push(associationText);
     let height = CARD_PADDING + Math.max(heading.height, badgeText.height) + CARD_ROW_GAP +
       Math.max(summary.height, tierNote?.height ?? 0);
+
+    if (associationText) height += associationText.height + CARD_ROW_GAP;
 
     let detailText: Phaser.GameObjects.Text | undefined;
     if (view.showDetail && description && description.lines.length > 0) {
@@ -149,6 +164,8 @@ export class LevelUpChoiceUi {
       tierNote,
       detailText,
       tier,
+      colour,
+      associationText,
       contentHeight,
       height: Math.max(MIN_CARD_HEIGHT, contentHeight),
     };
@@ -223,7 +240,7 @@ export class LevelUpChoiceUi {
       children.push(
         this.scene.add
           .rectangle(width / 2, cardTop + cardHeight / 2, cardWidth, cardHeight, floorColour, 1)
-          .setStrokeStyle(3, this.tierColour(cards[index]!.tier))
+          .setStrokeStyle(3, cards[index]!.colour)
           .setInteractive({ useHandCursor: true }),
       );
 
@@ -235,6 +252,10 @@ export class LevelUpChoiceUi {
       heading!.setPosition(left + CARD_PADDING, y);
       badgeText!.setPosition(left + cardWidth - CARD_PADDING, y);
       y += Math.max(heading!.height, badgeText!.height) + CARD_ROW_GAP;
+      if (card.associationText) {
+        card.associationText.setPosition(left + CARD_PADDING, y);
+        y += card.associationText.height + CARD_ROW_GAP;
+      }
       summary!.setPosition(left + CARD_PADDING, y);
       // Bottom-right of the card, clear of the summary text's wrap width.
       tierNote?.setPosition(left + cardWidth - CARD_PADDING, y);

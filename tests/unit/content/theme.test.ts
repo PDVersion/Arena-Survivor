@@ -309,3 +309,11 @@ it("rejects incomplete/nonfinite/out-of-frame presentation anchors", () => {
     } } }).join()).toContain("frame anchors must cover the sheet within frame bounds");
   }
 });
+
+it("validates suction timing independently of claw duration", () => {
+  const effects = ecoGuardianTheme.tuning.view.toolEffects!;
+  const broken = { ...ecoGuardianTheme, tuning: { ...ecoGuardianTheme.tuning, view: {
+    ...ecoGuardianTheme.tuning.view, toolEffects: { ...effects, suction: { ...effects.suction, durationMs: -1 } },
+  } } };
+  expect(validateTheme(broken)).toContain("tuning.view.toolEffects.durationMs must be positive");
+});

@@ -2,9 +2,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
 test.use({ viewport: { width: 1000, height: 700 } });
-async function setup(page: Page, low = false) {
+async function setup(page: Page, low = false, autoRenderer = false) {
   await page.goto("/sprite-browser.html?noAmbient&noContact&noHazards");
-  await page.evaluate(async (low) => {
+  await page.evaluate(async ({ low, autoRenderer }) => {
     const paths = ["/tests/fixtures/phaser-runtime.ts", "/src/game/scenes/run-scene.ts",
       "/src/game/scenes/menu-scene.ts", "/src/game/content/themes/eco-guardian/index.ts",
       "/src/game/systems/sprites/load-sprites.ts", "/src/game/state/settings-state.ts",
@@ -28,13 +28,13 @@ async function setup(page: Page, low = false) {
       preload() { loadThemeSprites(this, theme); }
       create() { this.scene.start("run"); }
     }
-    const game = new Phaser.Game({ ...createGameConfig(root.id), type: Phaser.CANVAS,
+    const game = new Phaser.Game({ ...createGameConfig(root.id), type: autoRenderer ? Phaser.AUTO : Phaser.CANVAS,
       scene: [Load, MenuScene, Run], audio: { noAudio: true } });
     await started;
     (window as any).__TOOL_REVIEW__ = { game, settings, profile, theme,
       run: () => game.scene.getScene("run"), menu: () => game.scene.getScene("menu"),
       async cleanup() { game.destroy(true); await new Promise<void>((r) => requestAnimationFrame(() => r())); root.remove(); } };
-  }, low);
+  }, { low, autoRenderer });
 }
 async function pause(page: Page) {
   await page.keyboard.down("Escape");
@@ -87,7 +87,13 @@ for (const low of [false, true]) {
       await new Promise<void>((r) => run.time.delayedCall(f.cues.weapon.extendMs + 5, () => r()));
       return { nozzle: f.cues.first.list[1].visible, air: f.cues.first.list[3].visible };
     });
-    expect(faded).toEqual({ nozzle: false, air: false });
+    expect(faded).toEqual({ nozzle: false, air: true });
+    const ended = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__, run = f.run();
+      await new Promise<void>((resolve) => run.time.delayedCall(f.theme.tuning.view.toolEffects.suction.durationMs + f.theme.tuning.view.toolEffects.suction.fadeMs + 10, resolve));
+      return f.cues.first.active;
+    });
+    expect(ended).toBe(false);
     await page.evaluate(() => (window as any).__TOOL_REVIEW__.cleanup());
   });
 }
@@ -221,5 +227,72 @@ for (const low of [false, true]) {
     expect(phases.evolvedIcons).toEqual(["eco_guardian.icon.weapon.starter/0", "eco_guardian.icon.weapon.secondary_evolved/0"]);
     await page.evaluate(() => (window as any).__TOOL_REVIEW__.cleanup());
     expect(errors).toEqual([]);
+  });
+}
+
+for (const low of [false, true]) {
+  test(`pause equipment scroll and fixed upgrade identity ${low ? "Low reduced motion" : "Default"}`, async ({ page }, info) => {
+    await setup(page, low, true);
+    await pause(page);
+    const open = () => page.evaluate(() => {
+      const r = (window as any).__TOOL_REVIEW__.run(), ui = r.pauseMenu;
+      ui.codexSection = "equipment";
+      ui.show(r.pauseMenuView(), () => {}, { tab: "codex", onQuit: () => {} });
+      const area = ui.scrollArea, cx = r.scale.width / 2, cy = r.scale.height / 2;
+      return { max: ui.maxScroll, offset: ui.scrollOffset, x: cx + (area.centerX - cx) * 1.25,
+        y: cy + (area.centerY - cy) * 1.25, width: r.scale.width, height: r.scale.height,
+        footer: ui.quitBounds.top, bottom: area.bottom, masked: Boolean(ui.scrollBody.mask), renderer: r.game.renderer.type };
+    });
+    const state = await open();
+    expect(state.renderer).toBe(2);
+    expect(state.max).toBeGreaterThan(0); expect(state.offset).toBe(0);
+    expect(state.masked).toBe(true); expect(state.bottom).toBeLessThan(state.footer);
+    const canvas = (await page.locator("#tool-review canvas").boundingBox())!;
+    await page.mouse.move(canvas.x + state.x * canvas.width / state.width, canvas.y + state.y * canvas.height / state.height);
+    await page.mouse.wheel(0, 260);
+    await expect.poll(() => page.evaluate(() => (window as any).__TOOL_REVIEW__.run().pauseMenu.scrollOffset)).toBeGreaterThan(0);
+    await page.keyboard.press("End");
+    const end = await page.evaluate(() => {
+      const ui = (window as any).__TOOL_REVIEW__.run().pauseMenu;
+      return { offset: ui.scrollOffset, max: ui.maxScroll, bodyY: ui.scrollBody.y };
+    });
+    expect(end.offset).toBe(end.max); expect(end.bodyY).toBe(-end.max);
+    await page.screenshot({ path: info.outputPath("equipment-scrolled-bottom.png") });
+    await page.keyboard.press("Home");
+    await expect.poll(() => page.evaluate(() => (window as any).__TOOL_REVIEW__.run().pauseMenu.scrollOffset)).toBe(0);
+    await page.keyboard.press("PageDown");
+    await expect.poll(() => page.evaluate(() => (window as any).__TOOL_REVIEW__.run().pauseMenu.scrollOffset)).toBeGreaterThan(0);
+    await page.setViewportSize({ width: 800, height: 600 });
+    const resized = await open();
+    expect(resized.bottom).toBeLessThan(resized.footer);
+    await page.keyboard.press("End");
+    await page.screenshot({ path: info.outputPath("equipment-small-bottom.png") });
+    const cards = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__, r = f.run(), theme = f.theme;
+      r.pauseMenu.hide();
+      const paths = ["/src/game/ui/level-up-choice-ui.ts", "/src/game/systems/upgrades/describe-upgrade.ts"];
+      const [{ LevelUpChoiceUi }, { describeUpgrade }] = await Promise.all(paths.map((p) => import(p)));
+      // Acquisition/evolution definitions are registered in the theme upgrade pool.
+      const ids = ["upgrade.equip_secondary", "upgrade.evolve_secondary", "upgrade.damage"];
+      const choices = ids.map((id) => theme.upgrades.find((entry: any) => entry.id === id));
+      const descriptions = choices.map((entry: any) => describeUpgrade(r.runState, entry, theme, "legendary"));
+      const ui = new LevelUpChoiceUi(r, theme);
+      ui.show(choices, { descriptions, pendingAfterThis: 0, showDetail: true }, () => {});
+      const texts = ui.container.list.filter((child: any) => child.type === "Text").map((child: any) => child.text);
+      const colours = ui.container.list.filter((child: any) => child.type === "Rectangle").slice(1).map((child: any) => child.strokeColor);
+      const listeners = r.input.listenerCount("wheel");
+      f.levelReview = ui;
+      return { texts, colours, descriptions: descriptions.map((d: any) => ({ relevant: d.qualityRelevant, association: d.association, multiplier: d.tierMultiplier })), listeners };
+    });
+    expect(cards.descriptions[0]).toEqual({ relevant: false, association: "Cleanup Vacuum", multiplier: 1 });
+    expect(cards.descriptions[1]).toEqual({ relevant: false, association: "Cyclone Vacuum", multiplier: 1 });
+    expect(cards.descriptions[2].relevant).toBe(true);
+    expect(cards.texts.some((text: string) => text.startsWith("STAT ·"))).toBe(true);
+    expect(cards.texts).toContain("Cleanup Vacuum"); expect(cards.texts).toContain("Cyclone Vacuum");
+    expect(cards.texts.filter((text: string) => text.includes("Legendary"))).toHaveLength(1);
+    expect(cards.colours[0]).toBe(cards.colours[1]); expect(cards.colours[2]).not.toBe(cards.colours[0]);
+    expect(cards.listeners).toBe(0);
+    await page.screenshot({ path: info.outputPath("fixed-and-stat-cards.png") });
+    await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.levelReview.hide(); return f.cleanup(); });
   });
 }

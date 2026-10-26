@@ -157,6 +157,10 @@ export interface UpgradeDescription {
   readonly name: string;
   readonly summary: string;
   readonly rarity: UpgradeRarity;
+  /** True when existing application rules allow the roll to change gains. */
+  readonly qualityRelevant: boolean;
+  /** Related tool/skill/item name for identity on fixed-value cards. */
+  readonly association: string;
   /** This offer's roll, which decides its colour and how much it gives. */
   readonly tier: UpgradeTier;
   /** Themed name for the tier, e.g. "Legendary". */
@@ -246,6 +250,9 @@ export function describeUpgrade(
     name: theme.copy.content[upgrade.id]?.name ?? upgrade.id,
     summary: theme.copy.content[upgrade.id]?.description ?? "",
     rarity: upgrade.rarity,
+    qualityRelevant: isTiered(upgrade),
+    association: theme.copy.content[upgrade.ownerWeaponId ?? acquisition?.weaponId ??
+      upgrade.effects.find((effect) => effect.kind === "skill.level")?.skillId ?? upgrade.id]?.name ?? "",
     tier: resolvedTier,
     tierLabel: theme.copy.tiers[resolvedTier],
     tierMultiplier: multiplier,

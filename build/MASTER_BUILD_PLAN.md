@@ -6360,3 +6360,46 @@ fixed-grid recipe and check evidence preserved; selected inventory/atlas updated
 39sprite units/27sprite checks/types/lint/build and3serial browser cases pass.
 REC-130 records integer-grid/footprint findings and remaining playtest limits.
 Next claimed B: gust/menu/card presentation and separate research-session prompt.
+
+## Owner playtest correction B —2026-10-26
+
+[Report](content/PLAYTEST_CORRECTIONS_REPORT.md) owns implementation, evidence,
+initial failures and limits. Completed B: slower broad eco gusts with unchanged
+actual pulses, measured/masked scrolling pause/title-guide content, truthful
+fixed-card tool identity/STAT labels and correct one-time guide caps. Research
+prompt is written for a separate future session, no redesign or chat creation.
+
+Historical exact claim (e0eccf2):
+
+## Owner playtest correction claim —2026-10-26, before edits
+
+Codex claims two bounded follow-ups on codex/v0.4.4 after46dbb17:
+A) one regenerated player subject, nexta4, distinct four-step gait, same8frame
+roles/dimensions/world scale and a distance-driven four-pose cycle. Own prompt/
+style-guide amendment, manifest, raw/review evidence, recipe registry, eco sprites,
+accepted/public player/atlas outputs, sprite units/scoped browser checks and docs.
+B) slower broad vacuum gusts (presentation only), scrolling/clipping pause/menu
+body content and measured equipment rows, truthful fixed-item/weapon labels in
+upgrade cards, and a separate-session research prompt. Own cone actor, tool-effects
+tuning contract/eco view/validation, pause/level-up UI, upgrade description selector,
+relevant tests and matching plan/status/master/reconciliation/handoff/report.
+No changes to damage, targeting, timing of actual attacks, rarity rolls/stat boosts,
+upgrade caps, persistence or knight files. Research prompt does not select a new
+progression system or create/message another chat.
+
+Short checks: selected sprite rebuild/format and exact atlas pixels; focused/full
+units, types/lint/build; necessary serial gait/gust/menu-scroll/card browser cases,
+Default/Low/reduced-motion and actual narrow/resized canvas. Preserve raw a3.
+Full app/stress/soak/device checks stay deferred/waived/unverified.
+
+- [x] A: a4 regenerated/reviewed/live;39sprite units/27checks/types/lint/build and3serial browser cases pass. See REC-130.
+- [x] B: implement requested presentation/UI corrections and research handoff;
+  verify and record findings in the same phase commit.
+
+Verified B gate:723full units/75files, types/lint/build/whitespace;11unique scoped
+serial browser cases pass cumulatively, one worker/zero retries. New scroll/card
+cases also pass in actual WebGLDefault/Low-reduced-motion and earlier Canvas,
+resizing to800×600. Three A sprite browser cases and39focused/27sprite checks are
+recorded separately in708259a. Captures inspected; owned resources cleaned up.
+REC-131 records wheel-event, measured-height and actual-tier discoveries. No
+full-app/stress/soak/remote-CI/device pass or publication. OverallV0.4 remains open.

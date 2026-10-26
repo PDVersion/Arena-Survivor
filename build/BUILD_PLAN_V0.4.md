@@ -12,6 +12,16 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Latest owner playtest correction —2026-10-26
+
+Player gait a4 now uses four distinct steps; vacuum air is a slower broad gust;
+menu bodies scroll/clamp above fixed footers; fixed cards identify related tools
+while stat gains retain quality. [Report](content/PLAYTEST_CORRECTIONS_REPORT.md)
+owns723units/types/lint/build and scoped serial Canvas/WebGL gates/limits.
+[Separate-session prompt](prompts/PROGRESSION_SYSTEM_RESEARCH.md) investigates
+unlimited stacking versus capped items; no redesign has been implemented.
+Owner retest, remaining V0.4.4 acceptance and selected delivery remain next.
+
 ## Current handoff —all eco style2 subjects live /2026-10-26
 
 Owner selects the full new roster and removal of old production sprites. All27

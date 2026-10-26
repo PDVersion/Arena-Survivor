@@ -42,27 +42,14 @@ Optional seeds/challenges, remaining controls/accessibility, discovery/facts,
 material layers, resources/restoration, collection objectives and controller
 support remain separate owner selections in AUTONOMOUS_DEVELOPMENT_PLAN.md.
 
-## Owner playtest correction claim —2026-10-26, before edits
 
-Codex claims two bounded follow-ups on codex/v0.4.4 after46dbb17:
-A) one regenerated player subject, nexta4, distinct four-step gait, same8frame
-roles/dimensions/world scale and a distance-driven four-pose cycle. Own prompt/
-style-guide amendment, manifest, raw/review evidence, recipe registry, eco sprites,
-accepted/public player/atlas outputs, sprite units/scoped browser checks and docs.
-B) slower broad vacuum gusts (presentation only), scrolling/clipping pause/menu
-body content and measured equipment rows, truthful fixed-item/weapon labels in
-upgrade cards, and a separate-session research prompt. Own cone actor, tool-effects
-tuning contract/eco view/validation, pause/level-up UI, upgrade description selector,
-relevant tests and matching plan/status/master/reconciliation/handoff/report.
-No changes to damage, targeting, timing of actual attacks, rarity rolls/stat boosts,
-upgrade caps, persistence or knight files. Research prompt does not select a new
-progression system or create/message another chat.
+## Latest verified owner corrections
 
-Short checks: selected sprite rebuild/format and exact atlas pixels; focused/full
-units, types/lint/build; necessary serial gait/gust/menu-scroll/card browser cases,
-Default/Low/reduced-motion and actual narrow/resized canvas. Preserve raw a3.
-Full app/stress/soak/device checks stay deferred/waived/unverified.
-
-- [x] A: a4 regenerated/reviewed/live;39sprite units/27checks/types/lint/build and3serial browser cases pass. See REC-130.
-- [ ] B: implement requested presentation/UI corrections and research handoff;
-  verify and record findings in the same phase commit.
+Player a4 has a real fourth gait pose in0→1→2→3. Vacuum air now drifts/fades as
+broad clouds; pause/title-guide bodies scroll in clipped viewports with measured
+Equipment rows and fixed controls. Fixed cards identify their related tool/item;
+actual stat-quality gains stay visible. [Correction report](content/PLAYTEST_CORRECTIONS_REPORT.md)
+records723units/27sprite checks, scoped serial Canvas/WebGL evidence and limits.
+No correction claim remains active. Existing owner acceptance/performance/delivery
+work above remains open. The [separate-session research prompt](prompts/PROGRESSION_SYSTEM_RESEARCH.md)
+is written; no progression redesign is selected by it.

@@ -4350,3 +4350,40 @@ Long-frame pose-skipping guard remains. First attempted fractional grid rejected
 by integer contract, corrected to common integer grid; no pipeline relaxation.
 A nullable telemetry typing error corrected. Owner continuous-play review remains;
 no broad stress/device/CI pass. B gust/menu/card corrections are next claimed work.
+
+### REC-131 — Scroll real measured menu content and label only real quality gains
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: eco playtest corrections, shared pause/card presentation
+- Blocks: None
+
+Owner screenshot shows Equipment descriptions below the footer. Minimum row pitch
+still overlaps wrapped text. Measure each title/description, then scroll/mask the
+body with fixed tabs/chips/pager/Quit/footer. Support wheel/page/home/end and track
+clicks; wrap chips as needed. Mask graphics need the sameUI/camera transform and
+separate cleanup. Existing G4 observers must recurse through the new body container.
+Phaser3scene wheel event has five arguments, not a sixthWheelEvent; use pointer.event
+for native preventDefault. Remove stable listeners/masks on redraw/hide.
+
+Owner asks for gentler vacuum air and fixed-card identity. Use theme-authored
+520ms broad translucent gusts/180msfade/1100mscycle; no thin streaks or dots.
+Do not extend the actual damage pulse. Optional timings preserve frozen packs;
+validate suction and claw independently so duplicate durationMs keys cannot mask
+bad suction data. Fixed equip/evolution cards use related tool names/accent, no
+quality promise; stat cards saySTAT and retain real quality gains. Reach/skill
+upgrades actually can scale in current code, so retain those facts rather than
+silently changing rolls or presenting them as fixed. One-time guide caps show1.
+
+723units/75files, types/lint/build/whitespace and11unique serial scoped browser
+cases pass cumulatively. Scroll/card cases verify both actualWebGLandCanvas,
+Default/Low/reduced-motion, wheel/page/home/end, resized800×600, safe footer,
+quality versus identity and listener cleanup. Initial wrong wheel signature and
+unused argument lint error corrected. Captures inspected; no retries/skips/
+timeouts increased. [Report](build/content/PLAYTEST_CORRECTIONS_REPORT.md).
+
+[Research prompt](build/prompts/PROGRESSION_SYSTEM_RESEARCH.md) audits unlimited/
+capped/hybrid progression in another session. No new progression, cap, balance,
+rarity weights, save schema/IDs, knight content or chat dispatch is selected here.
+Full-app300-actor/stress/soak/current-headCI and waived external device evidence
+remain unverified; no publication or release acceptance follows.

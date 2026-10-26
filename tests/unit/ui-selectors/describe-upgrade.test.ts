@@ -262,3 +262,15 @@ describe("session settings", () => {
     expect(resetSessionSettings().muted).toBe(false);
   });
 });
+
+it("labels fixed tool acquisition/evolution by their target while preserving real tier gains", () => {
+  const acquire = describeUpgrade(state(), upgrade(archetypeIds.upgrade.equipSecondary), theme, "legendary");
+  const evolve = describeUpgrade(state(), upgrade(archetypeIds.upgrade.evolveSecondary), theme, "legendary");
+  expect(acquire).toMatchObject({ qualityRelevant: false, association: "Cleanup Vacuum", tierMultiplier: 1 });
+  expect(evolve).toMatchObject({ qualityRelevant: false, association: "Cyclone Vacuum", tierMultiplier: 1 });
+  const damage = describeUpgrade(state(), upgrade(archetypeIds.upgrade.damage), theme, "legendary");
+  expect(damage.qualityRelevant).toBe(true);
+  expect(damage.tierMultiplier).toBeGreaterThan(1);
+  const reach = describeUpgrade(state(), upgrade(archetypeIds.upgrade.weaponRange), theme, "legendary");
+  expect(reach).toMatchObject({ qualityRelevant: true, association: "Cleanup Grabber" });
+});
