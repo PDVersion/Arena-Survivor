@@ -1,8 +1,10 @@
 import Phaser from "phaser";
-import type { ToolEffectOptions } from "./tool-effects";
+import { addToolSprite, type ToolEffectOptions } from "./tool-effects";
+import { resolveSprite } from "../systems/sprites/resolve-sprite";
+import { runtimeFrame } from "../systems/sprites/runtime-sprite";
 import type { MeleeWeaponDefinition, ThemeTokens } from "../core/archetypes/contracts";
 
-/** Primitive fallback for the future grabber sprite: shaft, handle, and open jaws. */
+/** Grabber action art with a shaft/jaw primitive fallback. */
 export class GrabberActor extends Phaser.GameObjects.Container {
   constructor(
     scene: Phaser.Scene,
@@ -32,6 +34,11 @@ export class GrabberActor extends Phaser.GameObjects.Container {
       contact.setVisible(Boolean(options.showAttackRadius));
     }
     this.add([outline, shaft, handle, contact, upperJaw, lowerJaw]);
+    const art = addToolSprite(this, tokens, definition.id, definition.reach);
+    const sprite = resolveSprite(tokens, definition.id);
+    if (art) {
+      for (const primitive of [outline, shaft, handle, upperJaw, lowerJaw]) primitive.setVisible(false);
+    }
     this.setRotation(angle).setDepth(45).setScale(0.08, 1);
     scene.add.existing(this);
 
@@ -42,10 +49,14 @@ export class GrabberActor extends Phaser.GameObjects.Container {
       ease: "Quad.Out",
       onComplete: () => {
         contact.setAlpha(1);
+        if (art && sprite) art.setFrame(runtimeFrame(sprite, sprite.states.hit));
         if (options.effects) {
           upperJaw.setRotation(0).setY(0);
           lowerJaw.setRotation(0).setY(0);
         }
+        if (art && sprite) scene.time.delayedCall(definition.retractMs / 2, () => {
+          if (art.active) art.setFrame(runtimeFrame(sprite, sprite.states.death));
+        });
         scene.tweens.add({
           targets: this,
           scaleX: 0.08,

@@ -1,76 +1,40 @@
+import { ecoSpriteRecipes } from "../../../scripts/eco-sprite-recipes";
 import { describe, expect, it } from "vitest";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { buildSpriteSheet, readSpritePng, checkSpriteSheet } from "../../../src/game/systems/sprites/sprite-pipeline";
 
 describe("sprite build output", () => {
+  it("ships only the selected 27 style2 outputs with exact atlas pixels", async () => {
+    const inventory = JSON.parse(await readFile("build/sprites/review/style2/ALL_SPRITES_INVENTORY.json", "utf8"));
+    const atlas = await readSpritePng("public/sprites/eco-guardian/atlas.png");
+    const metadata = JSON.parse(await readFile("public/sprites/eco-guardian/atlas.json", "utf8"));
+    expect(ecoSpriteRecipes).toHaveLength(27);
+    expect(atlas.width).toBeLessThanOrEqual(2048);
+    expect(atlas.height).toBeLessThanOrEqual(2048);
+    expect(Object.keys(metadata.frames)).toHaveLength(102);
+    for (const recipe of ecoSpriteRecipes) {
+      const selected = inventory.find((row: { id: string }) => row.id === recipe.contentId);
+      expect(await readFile(recipe.output)).toEqual(await readFile(`build/sprites/review/style2/${selected.native}`));
+      expect(await readFile(recipe.acceptedOutput)).toEqual(await readFile(recipe.output));
+      const sheet = await readSpritePng(recipe.output);
+      for (let index = 0; index < recipe.frames; index++) {
+        const frame = metadata.frames[`${recipe.textureKey}/${index}`].frame;
+        expect([frame.w, frame.h]).toEqual([recipe.frameWidth, recipe.frameHeight]);
+        expect(frame.x + frame.w).toBeLessThanOrEqual(atlas.width);
+        expect(frame.y + frame.h).toBeLessThanOrEqual(atlas.height);
+        for (let y = 0; y < frame.h; y++) {
+          expect(atlas.data.subarray(((frame.y + y) * atlas.width + frame.x) * 4,
+            ((frame.y + y) * atlas.width + frame.x + frame.w) * 4))
+            .toEqual(sheet.data.subarray((y * sheet.width + index * frame.w) * 4,
+              (y * sheet.width + (index + 1) * frame.w) * 4));
+        }
+      }
+    }
+  });
   it("keeps every accepted sheet within its runtime contract", async () => {
-    const definitions = [
-      {
-        contentId: "enemy.swarm_basic",
-        source: "build/sprites/raw/enemy_swarm_basic.a1.png",
-        output: "public/sprites/eco-guardian/enemy_swarm_basic.png",
-        frameWidth: 32,
-        frameHeight: 32,
-        frames: 4,
-      },
-      {
-        contentId: "enemy.fast_fragile",
-        source: "build/sprites/raw/enemy_fast_fragile.a3.png",
-        output: "public/sprites/eco-guardian/enemy_fast_fragile.png",
-        frameWidth: 24,
-        frameHeight: 24,
-        frames: 4,
-        palette: [
-          ["#172d5f", "#64748b", "#e2e8f0", "#f8fafc"],
-          ["#7f1d1d", "#b91c1c", "#ef4444", "#fca5a5"],
-          ["#173b73", "#356fae", "#2563eb", "#93c5fd"],
-          ["#713f12", "#b7791f", "#facc15", "#fde68a"],
-        ],
-        outline: "#172d5f",
-      },
-      {
-        contentId: "enemy.slow_durable",
-        source: "build/sprites/raw/enemy_slow_durable.a2.png",
-        output: "public/sprites/eco-guardian/enemy_slow_durable.png",
-        frameWidth: 48,
-        frameHeight: 48,
-        frames: 4,
-        palette: [["#0f4f52", "#169b91", "#2dd4bf", "#82eadc"]],
-        outline: "#0f4f52",
-      },
-      {
-        contentId: "enemy.death_spawner",
-        source: "build/sprites/raw/enemy_death_spawner.a2.png",
-        output: "public/sprites/eco-guardian/enemy_death_spawner.png",
-        frameWidth: 48,
-        frameHeight: 48,
-        frames: 4,
-        palette: [
-          ["#3b1762", "#8050bd", "#c084fc", "#dcb5fd"],
-          ["#374151", "#6b7280", "#d1d5db", "#f8fafc"],
-          ["#3f4b26", "#68753b", "#91a657", "#c0d187"],
-          ["#713f12", "#b7791f", "#fb923c", "#fdba74"],
-        ],
-        outline: "#3b1762",
-      },
-      {
-        contentId: "character.starter",
-        source: "build/sprites/raw/character_starter.a2.png",
-        output: "public/sprites/eco-guardian/character_starter.png",
-        frameWidth: 48,
-        frameHeight: 48,
-        frames: 8,
-        palette: [
-          ["#14532d", "#22a34e", "#4ade80", "#8df0ac"],
-          ["#111827", "#374151", "#6b7280", "#d1d5db"],
-          ["#713f12", "#b7791f", "#fde047", "#fef08a"],
-          ["#7c2d12", "#c65d1a", "#fb923c", "#fdba74"],
-        ],
-        outline: "#14532d",
-      },
-    ] as const;
+    const definitions = ecoSpriteRecipes;
 
     const issues = (await Promise.all(definitions.map(checkSpriteSheet))).flat();
     expect(issues).toEqual([]);
@@ -83,14 +47,14 @@ describe("fixed-grid review conversion", () => {
   it("doubles every source alpha pixel without recentering any pose", async () => {
     const directory = await mkdtemp(join(tmpdir(), "arena-sprite-grid-"));
     try {
-      const source = "build/sprites/accepted/enemy_swarm_basic.png";
+      const source = "build/sprites/review/style2/enemy_swarm_basic.a2.png";
       const output = join(directory, "double.png");
       await buildSpriteSheet({ contentId: "fixture", source, output,
-        frameWidth: 64, frameHeight: 64, frames: 4,
-        sourceGrid: { left: 0, top: 0, cellWidth: 32, cellHeight: 32 } });
+        frameWidth: 128, frameHeight: 128, frames: 4,
+        sourceGrid: { left: 0, top: 0, cellWidth: 64, cellHeight: 64 } });
       const before = await readSpritePng(source);
       const after = await readSpritePng(output);
-      expect([after.width, after.height]).toEqual([256, 64]);
+      expect([after.width, after.height]).toEqual([512, 128]);
       for (let y = 0; y < after.height; y += 1) {
         for (let x = 0; x < after.width; x += 1) {
           expect(after.data[(y * after.width + x) * 4 + 3]).toBe(
@@ -104,9 +68,9 @@ describe("fixed-grid review conversion", () => {
   it("thickens the internal outline without growing or erasing the silhouette", async () => {
     const directory = await mkdtemp(join(tmpdir(), "arena-sprite-outline-"));
     try {
-      const source = "build/sprites/accepted/enemy_swarm_basic.png";
+      const source = "build/sprites/review/style2/enemy_swarm_basic.a2.png";
       const base = { contentId: "fixture", source, frameWidth: 32, frameHeight: 32, frames: 4,
-        sourceGrid: { left: 0, top: 0, cellWidth: 32, cellHeight: 32 } };
+        sourceGrid: { left: 0, top: 0, cellWidth: 64, cellHeight: 64 } };
       const first = join(directory, "one.png"), second = join(directory, "two.png");
       await buildSpriteSheet({ ...base, output: first, outlineWidth: 1 });
       await buildSpriteSheet({ ...base, output: second, outlineWidth: 2 });
@@ -124,15 +88,15 @@ describe("fixed-grid review conversion", () => {
   it("letterboxes an explicit rectangular grid with one uniform transform", async () => {
     const directory = await mkdtemp(join(tmpdir(), "arena-sprite-contain-"));
     try {
-      const source = "build/sprites/accepted/enemy_swarm_basic.png";
+      const source = "build/sprites/review/style2/enemy_swarm_basic.a2.png";
       const output = join(directory, "contain.png");
       await buildSpriteSheet({ contentId: "fixture", source, output,
         frameWidth: 64, frameHeight: 64, frames: 1,
-        sourceGrid: { left: 0, top: 0, cellWidth: 128, cellHeight: 32, fit: "contain" } });
+        sourceGrid: { left: 0, top: 0, cellWidth: 256, cellHeight: 64, fit: "contain" } });
       const before = await readSpritePng(source), after = await readSpritePng(output);
       for (let y = 0; y < 64; y += 1) {
         for (let x = 0; x < 64; x += 1) {
-          const expected = y < 24 || y >= 40 ? 0 : before.data[((y - 24) * 2 * 128 + x * 2) * 4 + 3];
+          const expected = y < 24 || y >= 40 ? 0 : before.data[((y - 24) * 4 * 256 + x * 4) * 4 + 3];
           expect(after.data[(y * 64 + x) * 4 + 3]).toBe(expected);
         }
       }
@@ -140,7 +104,7 @@ describe("fixed-grid review conversion", () => {
   });
 
   it("rejects a grid that clips source artwork or changes aspect", async () => {
-    const base = { contentId: "fixture", source: "build/sprites/accepted/enemy_swarm_basic.png",
+    const base = { contentId: "fixture", source: "build/sprites/review/style2/enemy_swarm_basic.a2.png",
       output: "/tmp/unused-arena-clipped.png", frameWidth: 32, frameHeight: 32, frames: 4 };
     await expect(buildSpriteSheet({ ...base,
       sourceGrid: { left: 0, top: 0, cellWidth: 24, cellHeight: 24 } })).rejects.toThrow("clip opaque artwork");
@@ -150,14 +114,14 @@ describe("fixed-grid review conversion", () => {
   it("adds explicit virtual margins without wrapping pixels or moving individual poses", async () => {
     const directory = await mkdtemp(join(tmpdir(), "arena-sprite-padding-"));
     try {
-      const source = "build/sprites/accepted/enemy_swarm_basic.png";
+      const source = "build/sprites/review/style2/enemy_swarm_basic.a2.png";
       const recipe = { contentId: "fixture", source, output: join(directory, "padded.png"),
-        frameWidth: 36, frameHeight: 32, frames: 4,
-        sourceGrid: { left: -8, top: 0, cellWidth: 36, cellHeight: 32, allowTransparentPadding: true } };
+        frameWidth: 68, frameHeight: 64, frames: 4,
+        sourceGrid: { left: -8, top: 0, cellWidth: 68, cellHeight: 64, allowTransparentPadding: true } };
       await buildSpriteSheet(recipe);
       const before = await readSpritePng(source), after = await readSpritePng(recipe.output);
-      for (let y = 0; y < 32; y++) for (let x = 0; x < 144; x++) {
-        expect(after.data[(y * 144 + x) * 4 + 3]).toBe(x < 8 || x >= 136 ? 0 : before.data[(y * 128 + x - 8) * 4 + 3]);
+      for (let y = 0; y < 64; y++) for (let x = 0; x < 272; x++) {
+        expect(after.data[(y * 272 + x) * 4 + 3]).toBe(x < 8 || x >= 264 ? 0 : before.data[(y * 256 + x - 8) * 4 + 3]);
       }
       await expect(buildSpriteSheet({ ...recipe, sourceGrid: { ...recipe.sourceGrid, allowTransparentPadding: false } })).rejects.toThrow("outside the image");
       await expect(buildSpriteSheet({ ...recipe, sourceGrid: { ...recipe.sourceGrid, cellWidth: 24 } })).rejects.toThrow();

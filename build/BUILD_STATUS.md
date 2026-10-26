@@ -12,6 +12,24 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Full eco style2 live switch —2026-10-26
+
+Owner selects all new sprites and removal of old sprites. All27 subjects now live:
+24sheets/3equipped-tool icons/102frames, one2048×736 atlas. Old five style1 outputs
+and alias are replaced; raw sources/prompts/history and frozen knight files remain.
+Completed bounded claim on `codex/v0.4.4` from clean current main. No new generation,
+tuning, save/ID, content mechanics or publication. [Report/playthrough checklist](sprites/STYLE2_INTEGRATION_REPORT.md).
+
+720units/75files,27sprite checks/rebuilds, exact native/public/accepted/atlas pixels,
+types/lint/build/production guard/whitespace pass.13unique scoped serial browser
+cases pass cumulatively, one worker/zero retries; expanded Default/Low/reduced-motion
+world cases verify real state transitions and icons. Production no-error play/pause
+and sprite tools pass; two new captures/player/production image inspected. Full-app/
+300-actor/stress/soak/current-head CI deferred to consolidated delivery/selection;
+external Safari/browser-OS/older physical-GPU checks stay waived/unverified.
+Next: normal-play findings/selected art corrections, remaining consolidated V0.4.4
+acceptance and delivery when requested. V0.4 overall remains open.
+
 ## PR29 CI repair — locally verified /2026-10-26
 
 Failed run40245699120 on b861e8c has135browser passes/6skips/13failures. Corrected

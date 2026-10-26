@@ -1,112 +1,43 @@
-# V0.4.4 — remaining eco sprite acceptance and integration
+# V0.4.4 — remaining eco playtest and acceptance
 
-Generation is complete: **27/27 subjects,24 sheets +3 icons,102 cells**.
-[File audit](sprites/review/style2/PROGRESS_REPORT.md) and [JSON evidence](sprites/review/style2/PROGRESS_AUDIT.json)
-verify27 native formats/rebuilds/hashes and31 preserved style2 raw attempts.
-Takeaway Cup alone is live style2 draft;26 new subjects remain review-only.
-Owner art acceptance is still open. [Status](BUILD_STATUS.md) owns dates/delivery;
-[master](MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23) holds completed
-preparation/generation contracts and results. Do not execute their historical claims.
+All27 selected style2 subjects are now live by owner direction2026-10-26:
+24 sheets +3 equipped-tool icons,102frames. Five style1 outputs/atlas pixels are
+replaced; Shards has dedicated art. Raw sources/prompts and historical reports
+remain preserved. No knight content is changed; that theme stays paused indefinitely.
 
-Knights and Magic is paused indefinitely until explicit owner reopening. No
-content/art/parity/dedicated acceptance work for that theme is selected.
+[Integration/playthrough report](sprites/STYLE2_INTEGRATION_REPORT.md) owns current
+implementation, short checks, texture costs, limits and countdown-based test guide.
+[Manifest](sprites/MANIFEST.md) owns live selections; [master](MASTER_BUILD_PLAN.md#eco-style2-live-switch)
+records the completed claim/result. Generation backlog is empty.
 
-## PR29 repair checkpoint —2026-10-26
+## Remaining gates
 
-Failed CI's13affected cases now pass scoped local verification. Read-only rendered
-control telemetry and fixture updates preserve real pointer/phase/ledger tests.
-[Report](performance/PR29_CI_REPAIR.md) owns causes and cumulative verification;
-[master](MASTER_BUILD_PLAN.md#pr29-ci-repair) holds completed ownership. Automatic
-matching-head CI remains pending; no sprite acceptance/integration is advanced.
+1. **Owner normal-play acceptance/corrections.** Test current art at actual game
+   size: hood/mirror/walk/hit transitions, grip/nozzle/Impact Point continuity,
+   enemy silhouettes, world cues, Cup ranged pacing, bosses and terminal choices.
+   Use [the normal-play checklist](sprites/STYLE2_INTEGRATION_REPORT.md#normal-playthrough-checklist).
+   Bulk promotion does not certify individual art continuity. Claim each selected
+   correction in the manifest; fix prompts/regenerate rather than hand-paint.
+   Cup nexta5; compute other attempts from preserved sources, never overwrite.
+2. **Consolidated presentation/performance acceptance.** Current scoped gate passes
+   720units/75files,27sprite checks, types/lint/build/production and13unique serial
+   browser cases cumulatively, including Default/Low/reduced-motion and synthetic
+   fallback. Full-app300-actor/stress/soak/current-head CI has not been run here.
+   Use one consolidated serial campaign or delivery CI when selected, not a new
+   heavy campaign per art correction. All art shares one2048×736 texture (~5.75MiB
+   decoded RGBA before GPU overhead); increased storage is not a performance pass.
+   Actual Safari/browser-OS/older physical-GPU checks remain waived/unverified.
+3. **Delivery.** Inspect actual remote/head CI when publication is requested. This
+   local phase does not publish/merge/deploy or close overallV0.4 automatically.
 
-## Bulk live switch — claimed 2026-10-26 before code
+## Ownership for future work
 
-Owner selects all new eco sprites and deletion of old sprites. Codex claims a
-bounded integration phase on `codex/v0.4.4` from current clean main. This explicit
-bulk selection advances the individual-selection handoff: promote all 27 existing
-outputs together, with no generation or pixel repairs. Remove superseded style1
-production/accepted outputs through replacement, preserve raw attempts/prompts,
-historical reports and frozen knight files. Visual refinement stays owner playtest.
+No generation/integration claim remains active. Before further code/art edits,
+claim a bounded correction/acceptance phase with exact paths and short checks.
+Respect the style guide, theme-owned presentation, stable IDs and unchanged
+world/body contracts. P0–P6/C1–C7/Q6/G1–G4/tool effects/menu quit/Cup and full sprite
+integration are delivered; do not reschedule them as unbuilt foundations.
 
-Ownership: `scripts/sprites.ts`, new style2 recipe registry, eco `sprites.ts`,
-optional sprite presentation metadata/validation, atlas packing, SpriteView,
-pickup/shrine/hazard/grabber/cone actors, HUD tool icons, sprite browser fixture,
-relevant sprite units/scoped e2e and new integration case, accepted/public sprite
-outputs, manifest, this plan, BUILD_STATUS, sequence/handoff/master/reconciliation.
-No gameplay tuning, saved IDs/state, enemy logic or knight changes.
-
-Short checks: all configured sprite rebuild/format/hash/atlas bounds checks;
-unit suite, types/lint/build/production guard; one serial scoped eco campaign
-covering roster/facing, real tool phases, world states, fallback, Default/Low and
-reduced motion. Record texture/startup byte cost. Full-app stress/soak and external
-device checks deferred to consolidated CI/owner selection; never claim a pass.
-
-- [x] Claim scope and owner bulk selection before code.
-- [ ] Promote all 27 outputs, deliberate state bindings and remove old live art.
-- [ ] Pass short checks, inspect captures and document playthrough checklist.
-
-## Current authority and ownership
-
-- [Style guide](SPRITE_STYLE_GUIDE.md): palette, shared prompt, continuity and
-  acceptance requirements. Fix prompts/regenerate, never hand-paint repairs.
-- [Prompt catalog](SPRITE_PROMPTS.md):27 subjects; raw prompt sidecars preserve
-  exact generation inputs and must not be deleted as completed session prompts.
-- [Manifest](sprites/MANIFEST.md): claims/attempts/art acceptance. No generation
-  claim is active. Make a new bounded claim before any further sprite changes.
-- [Master pipeline](MASTER_BUILD_PLAN.md#v0-4-1) and REC-071–078/120–126: sprites
-  are presentation only. No system derives physics, damage or timing from art.
-
-This progress-audit phase owns documentation and its JSON evidence only. No new
-runtime/asset edits, acceptance campaigns or optional content are selected.
-
-<a id="settled-roster-checkpoint-after-g4--2026-10-22"></a>
-## Current inventory and scale contracts
-
-11enemies (including cup),1player,3tool action sheets,1pickup,5sites,3hazard centre
-tiles and3icons. [Gallery](sprites/review/style2/index.html) has every subject.
-Original replacements: Bottle32→64, Micro24→48, Glass48→96, Bag48→96,
-Player48→96 on both axes. All generated; none of these five replacements is live.
-Cup is64px/seven frames, display40/body14. Existing world display/physics stay
-unchanged when replacing art. Shards currently aliases Glass death frame until
-its generated dedicated48px sheet is integrated. Optional icons were selected
-for generation; this does not select new UI features.
-
-## Remaining execution gates
-
-1. **Individual visual acceptance/corrections.** Owner playtest; compare source,
-   native and actual game size, normalized silhouette occupancy, idle/hit matching,
-   moving loops, mirror/facing and anchors. Known issues include Impact Point
-   drift, Grabber grip, evolved nozzle width, world activation rays/obstacle cues,
-   olive-mapped natural materials and some icon orientations. Cup still needs
-   broader mirrored continuity/extended ranged pacing review. Use the manifest
-   to claim new attempts; cup nexta5. Preserve previous sources, prompts and hashes.
-2. **Five doubled replacements.** When selected, claim pipeline/config/eco sprites/
-   relevant actor-view/tests/accepted-public outputs with matching docs. Verify
-   style2 Bottle baseline, then Micro/Glass/Bag/Player. Update metadata, player
-   hood anchors/facing, atlas and loader configuration together; never change
-   world diameter, camera, bodies or combat to compensate for wrong art padding.
-3. **Remaining actors.** Dedicated Shards, Butts, Wrapper, Can and bosses. Preserve
-   stationary/fragment relationships and actual warnings. Accept one subject per
-   commit with source/prompt, recipe and relevant game evidence.
-4. **Tools/pickup/sites/hazards.** Bind frames deliberately to real phases; prevent
-   generic movement loops from showing false attacks, collection or activation.
-   Keep suction/claws, hit geometry, warning areas and collision code-owned.
-   Icon use needs selected UI scope; icons are not saved/content IDs.
-5. **Consolidated eco acceptance.** After several integrated subjects, necessary
-   serial roster/fallback/Default/Low/reduced-motion, startup/texture/performance
-   checks, with one worker/zero retries and owned-resource cleanup. Review4× pixel
-   storage/texture cost at doubled dimensions. Historical measurements are only
-   comparison. Full browser/stress checks deferred until that bounded campaign
-   or selected CI; external Safari/browser-OS/older physical-GPU evidence remains
-   waived/unverified. Frozen knight pack need not be edited for fallback proof.
-6. **Delivery.** Inspect actual remote/head CI before claiming publication/merge.
-   No current remote result, release or overall V0.4 completion follows from a
-   generation or file-format pass.
-
-## Next handoff
-
-Generation backlog is empty for the selected catalog. Next work is owner review
-and a separately claimed correction/integration slice. No general enemy attack
-animation expansion, new theme content, educational facts, saved discoveries or
-other optional proposal is selected automatically. Completed P0–P6/C1–C7/Q6/G1–G4,
-cone/claw/menu work and cup integration must not be rescheduled as unbuilt phases.
+Optional seeds/challenges, remaining controls/accessibility, discovery/facts,
+material layers, resources/restoration, collection objectives and controller
+support remain separate owner selections in AUTONOMOUS_DEVELOPMENT_PLAN.md.

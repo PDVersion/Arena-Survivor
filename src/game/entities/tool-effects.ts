@@ -1,4 +1,7 @@
 import Phaser from "phaser";
+import type { ContentId } from "../core/archetypes/ids";
+import { resolveSprite } from "../systems/sprites/resolve-sprite";
+import { runtimeFrame, runtimeTextureKey } from "../systems/sprites/runtime-sprite";
 import type { ThemeTokens } from "../core/archetypes/contracts";
 import type { ToolEffectsTuning } from "../core/archetypes/tuning";
 
@@ -42,4 +45,17 @@ export class ClawSnapActor extends Phaser.GameObjects.Container {
       },
       onComplete: () => this.destroy() });
   }
+}
+
+/** Tool artwork lives inside the already-resolved attack transform. */
+export function addToolSprite(container: Phaser.GameObjects.Container, tokens: ThemeTokens,
+  id: ContentId, width: number, state: "idle" | "hit" = "idle"): Phaser.GameObjects.Sprite | undefined {
+  const sprite = resolveSprite(tokens, id);
+  if (!sprite) return undefined;
+  const anchor = sprite.frameAnchors?.[sprite.states[state]] ?? { x: 0, y: sprite.frameHeight / 2 };
+  const image = container.scene.add.sprite(0, 0, runtimeTextureKey(sprite), runtimeFrame(sprite, sprite.states[state]))
+    .setOrigin(anchor.x / sprite.frameWidth, anchor.y / sprite.frameHeight)
+    .setScale(width / (sprite.toolSpan ?? sprite.frameWidth));
+  container.add(image);
+  return image;
 }

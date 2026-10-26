@@ -4292,3 +4292,38 @@ raising retries/timeouts, disabling ranged damage or changing gameplay balance.
 13affected eco/generic cases pass cumulatively serially;719units and build/types/
 lint/production guard pass. Full new-head Actions remains pending. Frozen knight
 content and all art remain unchanged. [Report](build/performance/PR29_CI_REPAIR.md).
+
+### REC-129 — Bulk sprite promotion needs explicit presentation states and bounded atlas packing
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: V0.4.4 eco presentation/pipeline/normal-play acceptance
+- Blocks: None
+
+Owner explicitly selects all27new subjects and removal of old production sprites.
+Promote the preserved native outputs without regeneration/pixel patches. Replace
+style1 accepted/public bytes and atlas rows; keep raw attempts/prompts/history and
+frozen knight files. Bulk live selection is distinct from individual continuity
+acceptance. No reason remains to keep the old Glass-death alias for Shards.
+
+Generic post-update animation previously overwrote explicit world states. Persist
+named states with transient hit priority so pickup collection and spent sites do
+not revert to idle. Tool action sprites live inside existing attack transforms;
+HUD icons use atlas rows, not new content/saved IDs. Tool pixel spans remain
+theme-owned presentation. Hazard centre tiles retain the primitive circle/border:
+square artwork must not replace the true area or simulation geometry.
+
+Whole-strip vertical stacking would exceed2048px with this roster. Use bounded
+shelf packing, preserve each frame's pixels and fail beyond2048on either axis.
+27outputs/102frames fit2048×736;211882resourcebytes/6029312decodedRGBAbytes versus
+21349/421888before. These are storage figures, not performance acceptance.
+
+720units/75files (including exact selected-output/atlas equality),27sprite checks,
+types/lint/build/production/whitespace and13unique scoped serial browser cases
+pass cumulatively. Initial stale48px/constructor/fallback and incorrectVector2
+fixtures were corrected without gameplay/retry/skip/timeout changes. Final two
+expanded Default/Low/reduced-motion cases verify actual tool phases/icons/world
+states/body contracts. Captures inspected; owned servers/browsers cleaned up.
+[Report/playtest handoff](build/sprites/STYLE2_INTEGRATION_REPORT.md) records limits.
+Full-app300-actor/stress/soak/current-head CI deferred to consolidated delivery/
+selection. External checks remain waived/unverified; no release/publication claim.

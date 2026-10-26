@@ -78,6 +78,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
   }
 
   magnetToward(target: Phaser.Math.Vector2): void {
+    this.view?.setState("move");
     const direction = target.clone().subtract(new Phaser.Math.Vector2(this.x, this.y));
     if (direction.lengthSq() === 0) return;
     direction.normalize().scale(this.definition.magnetSpeed);
@@ -85,12 +86,14 @@ export class PickupActor extends Phaser.GameObjects.Arc {
   }
 
   stop(): void {
+    if (!this.collected) this.view?.setState("idle");
     this.arcadeBody.setVelocity(0, 0);
   }
 
   claim(): number | null {
     if (this.collected || !this.active) return null;
     this.collected = true;
+    this.view?.setState("death");
     return this.xpValue;
   }
 

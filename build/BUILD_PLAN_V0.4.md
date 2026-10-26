@@ -12,6 +12,18 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Current handoff —all eco style2 subjects live /2026-10-26
+
+Owner selects the full new roster and removal of old production sprites. All27
+subjects are now live, including tools/pickup/sites/hazards/icons and dedicated
+Shards. Five old style1 outputs/atlas pixels are replaced; generation evidence
+and frozen knight files remain. [Report/playthrough guide](sprites/STYLE2_INTEGRATION_REPORT.md)
+and [remaining acceptance plan](SPRITE_PLAN_V0.4.4.md) supersede older live-binding
+counts below.720units/27sprite checks/types/lint/build/production and13unique scoped
+serial browser cases pass cumulatively. Individual normal-play refinements,
+consolidated full-app/performance/current-head CI and delivery remain open;
+no new external device pass or overallV0.4 completion is claimed.
+
 ## Latest progress audit —2026-10-23
 
 **All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved

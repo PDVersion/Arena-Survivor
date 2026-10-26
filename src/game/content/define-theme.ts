@@ -842,6 +842,12 @@ function validateSprites(
         issues.push(`sprites.${contentId} atlas frame alias must match an existing direct atlas row`);
       }
     }
+    if (sprite.toolSpan !== undefined && (!Number.isFinite(sprite.toolSpan) || sprite.toolSpan <= 0 || sprite.toolSpan > sprite.frameWidth)) {
+      issues.push(`sprites.${contentId} tool span must be within frame width`);
+    }
+    if (sprite.iconFrameKey !== undefined && (!sprite.path.endsWith("/atlas.png") || !sprite.iconFrameKey.trim())) {
+      issues.push(`sprites.${contentId} icon must name an atlas row`);
+    }
     if (sprite.attackFrames && (["prepare", "release", "recover"] as const).some((phase) => { const frame = sprite.attackFrames![phase]; return !Number.isInteger(frame) || frame < 0 || frame >= sprite.frames; })) {
       issues.push(`sprites.${contentId} attack frames must be within sheet bounds`);
     }

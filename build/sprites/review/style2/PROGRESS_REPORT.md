@@ -1,3 +1,7 @@
+> Superseded live-binding status2026-10-26: all27 subjects now live by owner
+> selection. See [current integration/playtest report](../../STYLE2_INTEGRATION_REPORT.md).
+> File/generation audit below remains historical evidence.
+
 # Eco sprite progress audit —2026-10-23
 
 **All27 selected catalog subjects have been created.** This closes generation,

@@ -39,14 +39,21 @@ export class HazardActor extends Phaser.GameObjects.Arc {
     // Under the enemies, so a crowd standing in a hazard stays readable.
     this.setDepth(10);
     scene.add.existing(this);
-    // Sized from the hazard's live radius, which is the same number the
-    // overlap tests use.
-    this.view = createSpriteView(this, tokens, definition.id, { diameter: state.radius * 2 });
+    // Decorate the centre; retain the full authored circle as the exact area.
+    // Artwork never defines collision or replaces the warning border.
+    this.view = createSpriteView(this, tokens, definition.id, { diameter: state.radius, keepPrimitive: true });
   }
 
   /** Returns true once the hazard has expired and should be reclaimed. */
   refresh(nowMs: number): boolean {
     const phase = hazardPhase(this.definition, this.hazardState, nowMs);
+    if (this.view) {
+      // The circle remains the exact area. This tile decorates only its centre.
+      const burst = this.definition.kind === "periodic_burst";
+      const due = burst && phase === "active" && nowMs >= this.hazardState.nextTickAtMs;
+      this.view.setState(phase === "expired" ? "death" : phase === "telegraphing"
+        ? (burst ? "move" : "idle") : due ? "hit" : burst ? "idle" : "move");
+    }
     if (phase !== this.lastPhase) {
       this.lastPhase = phase;
       if (phase === "telegraphing") {
@@ -77,6 +84,7 @@ export class HazardActor extends Phaser.GameObjects.Arc {
   /** Damage a destructible obstacle. Returns true when it is cleared. */
   damage(amount: number): boolean {
     if (this.definition.kind !== "obstacle" || this.hazardState.health <= 0) return false;
+    this.view?.flash(this.baseColour, 80);
     this.hazardState.health = Math.max(0, this.hazardState.health - Math.max(0, amount));
     return this.hazardState.health === 0;
   }

@@ -114,3 +114,112 @@ test("Escape menu toggles attack guide, quits by pointer and Q, starts clean run
   await page.screenshot({ path: info.outputPath("main-menu.png") });
   await page.evaluate(() => (window as any).__TOOL_REVIEW__.cleanup());
 });
+
+for (const low of [false, true]) {
+  test(`full style2 eco world states and fallback ${low ? "Low reduced motion" : "Default"}`, async ({ page }, info) => {
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await setup(page, low);
+    const result = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__, r = f.run(), theme = f.theme;
+      r.physics.world.pause(); r.runState.status = "paused";
+      r.time.timeScale = 0; r.tweens.timeScale = 0;
+      const paths = ["/src/game/entities/pickup-actor.ts", "/src/game/entities/shrine-actor.ts",
+        "/src/game/entities/hazard-actor.ts", "/src/game/entities/grabber-actor.ts",
+        "/src/game/entities/cone-attack-actor.ts"];
+      const [{ PickupActor }, { ShrineActor }, { HazardActor }, { GrabberActor }, { ConeAttackActor }] = await Promise.all(paths.map((p) => import(p)));
+      const x = r.player.x, y = r.player.y;
+      const frame = (actor: any) => { actor.view.sync(); return actor.view.frame; };
+      const enemies = theme.enemies.map((definition: any, i: number) => {
+        r.spawnEnemy("ambient", 1, definition, { x: x - 180 + i % 6 * 65, y: y - 100 + Math.floor(i / 6) * 80 }, false);
+        const actor = [...r.enemies].at(-1) as any;
+        return { id: definition.id, frame: frame(actor), width: actor.view.image.frame.width,
+          expectedWidth: theme.tokens.sprites[definition.id].frameWidth, radius: actor.arcadeBody.radius,
+          expectedRadius: definition.radius };
+      });
+      const pickup = new PickupActor(r, "style2", x - 70, y + 100, theme.pickups[0], theme.tokens, 1);
+      const pickupFrames = [frame(pickup)];
+      pickup.magnetToward(r.player.arcadeBody.velocity.clone().set(x, y)); pickupFrames.push(frame(pickup));
+      pickup.claim(); pickupFrames.push(frame(pickup));
+      const sites = theme.shrines.map((definition: any, i: number) => {
+        const actor = new ShrineActor(r, x - 160 + i * 80, y + 165, definition, theme.tokens,
+          theme.copy.content[definition.id].name, "");
+        const frames = [frame(actor)];
+        actor.setInRange(true); frames.push(frame(actor));
+        actor.activate(); frames.push(frame(actor));
+        // Complete the actual activation tween and verify its persistent spent pose.
+        r.tweens.getTweensOf(actor)[0].complete(); frames.push(frame(actor));
+        return frames;
+      });
+      const hazards = theme.hazards.map((definition: any, i: number) => {
+        const state = { id: `style2-${i}`, definitionId: definition.id, x: x - 150 + i * 145, y: y - 200,
+          radius: definition.radius, spawnedAtMs: 0, health: definition.health ?? 0, nextTickAtMs: definition.telegraphMs };
+        const actor = new HazardActor(r, definition, state, theme.tokens);
+        actor.refresh(0); const warning = frame(actor);
+        actor.refresh(definition.telegraphMs); const active = frame(actor);
+        return { warning, active, primitive: actor.visible, radius: actor.radius,
+          expectedRadius: definition.radius, tileWidth: actor.view.image.displayWidth };
+      });
+      const options = { effects: theme.tuning.view.toolEffects, ...f.settings.getSessionSettings() };
+      f.style2tools = [];
+      const tools = theme.weapons.map((definition: any, i: number) => {
+        const Actor = definition.arcRadians ? ConeAttackActor : GrabberActor;
+        const actor = definition.arcRadians
+          ? new Actor(r, x + 60 + i * 30, y + 35, 0, definition, theme.tokens, () => {}, [], options)
+          : new Actor(r, x + 60, y + 70, 0, definition, theme.tokens, () => {}, options);
+        f.style2tools.push(actor);
+        const sprite = actor.list.find((child: any) => child.type === "Sprite");
+        return { id: definition.id, hasArt: Boolean(sprite), frame: sprite?.frame.name };
+      });
+      const fallback = new PickupActor(r, "fallback", x + 130, y + 100, theme.pickups[0], { ...theme.tokens, sprites: {} }, 1);
+      f.style2 = { pickup, fallback };
+      return { enemies, pickupFrames, sites, hazards, tools, fallback: !fallback.view && fallback.visible,
+        icons: r.hud.toolIcons.map((icon: any) => icon.frame.name),
+        textureKeys: [...new Set(Object.values(theme.tokens.sprites).map((s: any) => s.path))] };
+    });
+    for (const enemy of result.enemies) {
+      expect(enemy.width).toBe(enemy.expectedWidth);
+      expect(enemy.radius).toBe(enemy.expectedRadius);
+    }
+    expect(result.pickupFrames).toEqual([0, 1, 2]);
+    for (const site of result.sites) expect(site).toEqual([0, 1, 2, 3]);
+    for (const hazard of result.hazards) {
+      expect(hazard.primitive).toBe(true);
+      expect(hazard.radius).toBe(hazard.expectedRadius);
+      expect(hazard.tileWidth).toBeLessThanOrEqual(hazard.radius);
+      expect(hazard.active).not.toBe(hazard.warning);
+    }
+    expect(result.tools.every((tool: { hasArt: boolean }) => tool.hasArt)).toBe(true);
+    expect(result.fallback).toBe(true);
+    expect(result.icons).toEqual(["eco_guardian.icon.weapon.starter/0"]);
+    expect(result.textureKeys).toEqual(["sprites/eco-guardian/atlas.png"]);
+    await page.screenshot({ path: info.outputPath("style2-world.png") });
+    const phases = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__, r = f.run();
+      const grabber = f.style2tools[0], vacuum = f.style2tools[1];
+      const art = (actor: any) => actor.list.find((child: any) => child.type === "Sprite");
+      r.tweens.getTweensOf(grabber)[0].complete();
+      const contact = art(grabber).frame.name;
+      r.time.timeScale = 1;
+      await new Promise<void>((resolve) => r.time.delayedCall(f.theme.weapons[0].retractMs / 2 + 10, resolve));
+      const recovery = art(grabber).frame.name;
+      const vacuumRecovery = art(vacuum).frame.name;
+      r.time.timeScale = 0;
+      const extras = { spawnCounts: { natural: 0, fragmentation: 0, environment: 0, baggedWaste: 0 },
+        threatStep: 0, killChain: 0, levelProgress: 0 };
+      const icons = (id: string) => {
+        r.hud.update({ ...r.runState, weaponSlots: [r.runState.weaponSlots[0], { weaponId: id, nextAttackAtMs: 0 }] }, extras);
+        return r.hud.toolIcons.map((icon: any) => icon.frame.name);
+      };
+      const secondaryIcons = icons("weapon.secondary"), evolvedIcons = icons("weapon.secondary_evolved");
+      return { contact, recovery, vacuumRecovery, secondaryIcons, evolvedIcons };
+    });
+    expect(phases.contact).toBe("eco_guardian.weapon.starter/1");
+    expect(phases.recovery).toBe("eco_guardian.weapon.starter/2");
+    expect(phases.vacuumRecovery).toBe("eco_guardian.weapon.secondary/2");
+    expect(phases.secondaryIcons).toEqual(["eco_guardian.icon.weapon.starter/0", "eco_guardian.icon.weapon.secondary/0"]);
+    expect(phases.evolvedIcons).toEqual(["eco_guardian.icon.weapon.starter/0", "eco_guardian.icon.weapon.secondary_evolved/0"]);
+    await page.evaluate(() => (window as any).__TOOL_REVIEW__.cleanup());
+    expect(errors).toEqual([]);
+  });
+}

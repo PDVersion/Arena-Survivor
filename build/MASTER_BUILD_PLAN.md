@@ -6293,3 +6293,60 @@ no retry/timeout increase, no disabled assertions or frozen knight edits.
 Gate: focused failed eco/generic cases serial1worker/0retries, fullunits,
 typecheck/lint/build/production guard, whitespace; push samePR and inspect CI.
 Heavy full browser/stress regression remains assigned to automatic PR workflow.
+
+<a id="eco-style2-live-switch"></a>
+## Full eco style2 live switch —2026-10-26
+
+Owner explicitly requests all new sprites and removal of old sprites. Claimed on
+`codex/v0.4.4` from clean main; separate claim commit29878a3 precedes code. Bulk
+promotion is one coherent presentation phase, not27claims of perfect individual
+art continuity. Future art corrections retain per-subject claim/acceptance rules.
+[Implementation/evidence/playtest report](sprites/STYLE2_INTEGRATION_REPORT.md).
+
+Completed claim (historical exact scope):
+
+## Bulk live switch — claimed 2026-10-26 before code
+
+Owner selects all new eco sprites and deletion of old sprites. Codex claims a
+bounded integration phase on `codex/v0.4.4` from current clean main. This explicit
+bulk selection advances the individual-selection handoff: promote all 27 existing
+outputs together, with no generation or pixel repairs. Remove superseded style1
+production/accepted outputs through replacement, preserve raw attempts/prompts,
+historical reports and frozen knight files. Visual refinement stays owner playtest.
+
+Ownership: `scripts/sprites.ts`, new style2 recipe registry, eco `sprites.ts`,
+optional sprite presentation metadata/validation, atlas packing, SpriteView,
+pickup/shrine/hazard/grabber/cone actors, HUD tool icons, sprite browser fixture,
+relevant sprite units/scoped e2e and new integration case, accepted/public sprite
+outputs, manifest, this plan, BUILD_STATUS, sequence/handoff/master/reconciliation.
+No gameplay tuning, saved IDs/state, enemy logic or knight changes.
+
+Short checks: all configured sprite rebuild/format/hash/atlas bounds checks;
+unit suite, types/lint/build/production guard; one serial scoped eco campaign
+covering roster/facing, real tool phases, world states, fallback, Default/Low and
+reduced motion. Record texture/startup byte cost. Full-app stress/soak and external
+device checks deferred to consolidated CI/owner selection; never claim a pass.
+
+- [x] Claim scope and owner bulk selection before code.
+- [ ] Promote all 27 outputs, deliberate state bindings and remove old live art.
+- [ ] Pass short checks, inspect captures and document playthrough checklist.
+
+
+### Verified outcome
+
+- [x] Promote all27 selected style2 outputs with explicit tool/pickup/site/hazard
+  phases and equipped icons; replace five old accepted/public sheets and atlas,
+  remove old Shards alias. No raw attempts/prompts or knight files deleted.
+- [x]27rebuilds/checks;720units/75files; every selected output byte and102atlas
+  frames verified. Types/lint/build/production/whitespace pass.
+- [x]13unique serial scoped browser cases pass cumulatively with no retries;
+  final expanded Default/Low/reduced-motion cases pass together. Actual tool
+  contact/recovery, site spent, collection, hazard borders, all11 enemy sizes/
+  bodies, icons and synthetic fallback verified. Captures inspected.
+- [x] Current remaining plan/handoff and normal-play checklist updated.
+
+One2048×736 atlas,211882PNG+JSONbytes,6029312decodedRGBAbytes. Storage increase
+is recorded without performance/latency claims. Full-app300-actor/stress/soak/
+current-head CI deferred; previously waived external checks remain unverified.
+No push/PR/merge/deployment/new gameplay/tuning/save changes. Owner playtest and
+selected corrections/consolidated acceptance remain; overallV0.4 stays open.

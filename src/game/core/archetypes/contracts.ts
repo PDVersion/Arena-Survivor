@@ -257,6 +257,10 @@ export type SpriteState = (typeof spriteStates)[number];
 
 /** Where a sprite sheet lives and how it is cut. Optional per theme. */
 export interface SpriteDefinition {
+  /** Optional tool icon row in the same atlas; not a content or saved ID. */
+  readonly iconFrameKey?: string;
+  /** Pixel distance represented by a tool action display width; presentation only. */
+  readonly toolSpan?: number;
   readonly attackFrames?: Readonly<Record<"prepare" | "release" | "recover", number>>;
   /** Actual facing of the authored pixels; never inferred by gameplay. */
   /** Authored pixel anchors; presentation only, never fed back to bodies. */

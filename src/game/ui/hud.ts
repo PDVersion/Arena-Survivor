@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { runtimeTextureKey } from "../systems/sprites/runtime-sprite";
 import type { SpawnCounts } from "../systems/statistics/spawn-statistics";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { RunState } from "../state/run-state";
@@ -51,6 +52,8 @@ export class Hud {
   private readonly container: Phaser.GameObjects.Container;
   private readonly barLeft: number;
   private readonly uiTop: number;
+  private readonly toolIcons: Phaser.GameObjects.Image[] = [];
+  private toolSignature = "";
   private textInputs?: HudTextInputs;
 
   private static readonly BAR_WIDTH = 200;
@@ -145,6 +148,21 @@ export class Hud {
   }
 
   update(state: RunState, extras: HudExtras): void {
+    const signature = state.weaponSlots.map((slot) => slot.weaponId).join(",");
+    if (signature !== this.toolSignature) {
+      this.toolSignature = signature;
+      for (const icon of this.toolIcons) icon.destroy();
+      this.toolIcons.length = 0;
+      for (const slot of state.weaponSlots) {
+        const sprite = this.theme.tokens.sprites?.[slot.weaponId];
+        if (!sprite?.iconFrameKey) continue;
+        const icon = this.scene.add.image(this.barLeft + this.toolIcons.length * 36,
+          this.uiTop + Hud.XP_BAR_Y + 56, runtimeTextureKey(sprite), `${sprite.iconFrameKey}/0`)
+          .setOrigin(0, 0.5).setDisplaySize(28, 28).setScrollFactor(0);
+        this.container.add(icon);
+        this.toolIcons.push(icon);
+      }
+    }
     const previous = this.textInputs;
     const health = Math.ceil(state.player.health);
     const maxHealthText = Math.ceil(state.player.stats.maxHealth);

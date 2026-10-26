@@ -1,5 +1,7 @@
 import Phaser from "phaser";
-import type { ToolEffectOptions } from "./tool-effects";
+import { addToolSprite, type ToolEffectOptions } from "./tool-effects";
+import { resolveSprite } from "../systems/sprites/resolve-sprite";
+import { runtimeFrame } from "../systems/sprites/runtime-sprite";
 import type { MeleeWeaponDefinition, ThemeTokens } from "../core/archetypes/contracts";
 
 /** Tool pulse artwork and optional geometry guide; never owns hit selection. */
@@ -29,6 +31,9 @@ export class ConeAttackActor extends Phaser.GameObjects.Container {
     this.add([sector, nozzle, marks]).setRotation(angle).setDepth(45);
     const air = scene.add.graphics();
     this.add(air);
+    const art = addToolSprite(this, tokens, definition.id, suction?.nozzleLength ?? nozzle.width, "hit");
+    const sprite = resolveSprite(tokens, definition.id);
+    if (art) nozzle.setVisible(false);
     let pulsing = true;
     if (suction) {
       const count = options.quality === "low" ? suction.lowStreams : suction.streams;
@@ -64,6 +69,7 @@ export class ConeAttackActor extends Phaser.GameObjects.Container {
         sector.slice(0, 0, definition.reach, -half, half, false).strokePath();
       }
       nozzle.setVisible(false);
+      if (art && sprite) art.setFrame(runtimeFrame(sprite, sprite.states.death));
     });
     scene.add.existing(this);
     scene.tweens.add({ targets: this, alpha: 0, duration: definition.extendMs + definition.retractMs,

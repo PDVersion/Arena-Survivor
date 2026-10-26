@@ -56,6 +56,7 @@ export class ShrineActor extends Phaser.GameObjects.Star {
 
   setInRange(inRange: boolean, detail?: string): void {
     const visible = inRange && !this.activated;
+    if (!this.activated) this.view?.setState(visible ? "move" : "idle");
     this.prompt.setVisible(visible);
     if (!visible) return;
     const text = detail ? `${this.interactionPrompt}\n${detail}` : this.interactionPrompt;
@@ -71,10 +72,10 @@ export class ShrineActor extends Phaser.GameObjects.Star {
   activate(): void {
     if (this.activated) return;
     this.activated = true;
+    this.view?.setState("hit");
     this.prompt.setVisible(false);
-    // The white fill is the primitive's "spent" cue. A sprite keeps its art
-    // and reads the same event from the spin below, which the view mirrors
-    // because it copies the whole transform rather than only the position.
+    // Primitive and sprite both follow the existing activation tween; the
+    // sprite then holds the spent pose instead of reverting to an idle loop.
     if (!this.view) this.setFillStyle(0xffffff);
     this.scene.tweens.add({
       targets: this,
@@ -83,6 +84,7 @@ export class ShrineActor extends Phaser.GameObjects.Star {
       duration: 260,
       yoyo: true,
       ease: "Quad.Out",
+      onComplete: () => this.view?.setState("death"),
     });
   }
 }

@@ -11,7 +11,7 @@
     "prompt": "../../raw/enemy_swarm_basic.a2.prompt.txt",
     "metadata": "../../raw/enemy_swarm_basic.a2.metadata.json",
     "checks": "enemy_swarm_basic.a2.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.fast_fragile",
@@ -25,7 +25,7 @@
     "prompt": "../../raw/enemy_fast_fragile.a4.prompt.txt",
     "metadata": "../../raw/enemy_fast_fragile.a4.metadata.json",
     "checks": "enemy_fast_fragile.a4.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.slow_durable",
@@ -39,7 +39,7 @@
     "prompt": "../../raw/enemy_slow_durable.a4.prompt.txt",
     "metadata": "../../raw/enemy_slow_durable.a4.metadata.json",
     "checks": "enemy_slow_durable.a4.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.death_spawner",
@@ -53,7 +53,7 @@
     "prompt": "../../raw/enemy_death_spawner.a3.prompt.txt",
     "metadata": "../../raw/enemy_death_spawner.a3.metadata.json",
     "checks": "enemy_death_spawner.a3.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "character.starter",
@@ -67,7 +67,7 @@
     "prompt": "../../raw/character_starter.a3.prompt.txt",
     "metadata": "../../raw/character_starter.a3.metadata.json",
     "checks": "character_starter.a3.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.stationary_fragment",
@@ -81,7 +81,7 @@
     "prompt": "../../raw/enemy_stationary_fragment.a1.prompt.txt",
     "metadata": "../../raw/enemy_stationary_fragment.a1.metadata.json",
     "checks": "enemy_stationary_fragment.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.cluster_fodder",
@@ -95,7 +95,7 @@
     "prompt": "../../raw/enemy_cluster_fodder.a1.prompt.txt",
     "metadata": "../../raw/enemy_cluster_fodder.a1.metadata.json",
     "checks": "enemy_cluster_fodder.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.gust_drifter",
@@ -109,7 +109,7 @@
     "prompt": "../../raw/enemy_gust_drifter.a1.prompt.txt",
     "metadata": "../../raw/enemy_gust_drifter.a1.metadata.json",
     "checks": "enemy_gust_drifter.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.committed_charger",
@@ -123,7 +123,7 @@
     "prompt": "../../raw/enemy_committed_charger.a1.prompt.txt",
     "metadata": "../../raw/enemy_committed_charger.a1.metadata.json",
     "checks": "enemy_committed_charger.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.mini_boss",
@@ -137,7 +137,7 @@
     "prompt": "../../raw/enemy_mini_boss.a1.prompt.txt",
     "metadata": "../../raw/enemy_mini_boss.a1.metadata.json",
     "checks": "enemy_mini_boss.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.final_boss",
@@ -151,7 +151,7 @@
     "prompt": "../../raw/enemy_final_boss.a1.prompt.txt",
     "metadata": "../../raw/enemy_final_boss.a1.metadata.json",
     "checks": "enemy_final_boss.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "weapon.starter",
@@ -165,7 +165,7 @@
     "prompt": "../../raw/weapon_starter.a1.prompt.txt",
     "metadata": "../../raw/weapon_starter.a1.metadata.json",
     "checks": "weapon_starter.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "weapon.secondary",
@@ -179,7 +179,7 @@
     "prompt": "../../raw/weapon_secondary.a1.prompt.txt",
     "metadata": "../../raw/weapon_secondary.a1.metadata.json",
     "checks": "weapon_secondary.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "weapon.secondary_evolved",
@@ -193,7 +193,7 @@
     "prompt": "../../raw/weapon_secondary_evolved.a1.prompt.txt",
     "metadata": "../../raw/weapon_secondary_evolved.a1.metadata.json",
     "checks": "weapon_secondary_evolved.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "pickup.experience",
@@ -207,7 +207,7 @@
     "prompt": "../../raw/pickup_experience.a1.prompt.txt",
     "metadata": "../../raw/pickup_experience.a1.metadata.json",
     "checks": "pickup_experience.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.spawn_surge",
@@ -221,7 +221,7 @@
     "prompt": "../../raw/shrine_spawn_surge.a1.prompt.txt",
     "metadata": "../../raw/shrine_spawn_surge.a1.metadata.json",
     "checks": "shrine_spawn_surge.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.greed",
@@ -235,7 +235,7 @@
     "prompt": "../../raw/shrine_greed.a1.prompt.txt",
     "metadata": "../../raw/shrine_greed.a1.metadata.json",
     "checks": "shrine_greed.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.multiplicity",
@@ -249,7 +249,7 @@
     "prompt": "../../raw/shrine_multiplicity.a1.prompt.txt",
     "metadata": "../../raw/shrine_multiplicity.a1.metadata.json",
     "checks": "shrine_multiplicity.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.duplication",
@@ -263,7 +263,7 @@
     "prompt": "../../raw/shrine_duplication.a1.prompt.txt",
     "metadata": "../../raw/shrine_duplication.a1.metadata.json",
     "checks": "shrine_duplication.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.escalation",
@@ -277,7 +277,7 @@
     "prompt": "../../raw/shrine_escalation.a1.prompt.txt",
     "metadata": "../../raw/shrine_escalation.a1.metadata.json",
     "checks": "shrine_escalation.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "hazard.damage_zone",
@@ -291,7 +291,7 @@
     "prompt": "../../raw/hazard_damage_zone.a1.prompt.txt",
     "metadata": "../../raw/hazard_damage_zone.a1.metadata.json",
     "checks": "hazard_damage_zone.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "hazard.obstacle",
@@ -305,7 +305,7 @@
     "prompt": "../../raw/hazard_obstacle.a1.prompt.txt",
     "metadata": "../../raw/hazard_obstacle.a1.metadata.json",
     "checks": "hazard_obstacle.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "hazard.periodic_burst",
@@ -319,7 +319,7 @@
     "prompt": "../../raw/hazard_periodic_burst.a1.prompt.txt",
     "metadata": "../../raw/hazard_periodic_burst.a1.metadata.json",
     "checks": "hazard_periodic_burst.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "icon.weapon.starter",
@@ -333,7 +333,7 @@
     "prompt": "../../raw/icon_weapon_starter.a1.prompt.txt",
     "metadata": "../../raw/icon_weapon_starter.a1.metadata.json",
     "checks": "icon_weapon_starter.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "icon.weapon.secondary",
@@ -347,7 +347,7 @@
     "prompt": "../../raw/icon_weapon_secondary.a1.prompt.txt",
     "metadata": "../../raw/icon_weapon_secondary.a1.metadata.json",
     "checks": "icon_weapon_secondary.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "icon.weapon.secondary_evolved",
@@ -361,7 +361,7 @@
     "prompt": "../../raw/icon_weapon_secondary_evolved.a1.prompt.txt",
     "metadata": "../../raw/icon_weapon_secondary_evolved.a1.metadata.json",
     "checks": "icon_weapon_secondary_evolved.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.ranged_attacker",
@@ -375,6 +375,6 @@
     "prompt": "../../raw/enemy_ranged_attacker.a3.prompt.txt",
     "metadata": "../../raw/enemy_ranged_attacker.a3.metadata.json",
     "checks": "enemy_ranged_attacker.a3.checks.json",
-    "status": "live draft"
+    "status": "live; playtest pending"
   }
 ]
