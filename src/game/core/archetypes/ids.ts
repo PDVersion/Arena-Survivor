@@ -6,6 +6,7 @@ export const archetypeIds = {
     starter: "weapon.starter",
     secondary: "weapon.secondary",
     secondaryEvolved: "weapon.secondary_evolved",
+    cleaningBin: "weapon.cleaning_bin", orbitingRake: "weapon.orbiting_rake",
   },
   enemy: {
     swarmBasic: "enemy.swarm_basic",
@@ -16,7 +17,7 @@ export const archetypeIds = {
     clusterFodder: "enemy.cluster_fodder",
     gustDrifter: "enemy.gust_drifter",
     committedCharger: "enemy.committed_charger",
-    rangedAttacker: "enemy.ranged_attacker",
+    rangedAttacker: "enemy.ranged_attacker", scavenger: "enemy.scavenger",
     miniBoss: "enemy.mini_boss",
     finalBoss: "enemy.final_boss",
   },
@@ -113,7 +114,7 @@ export const v01ContentIds = [
 
 // Historical required-copy inventory excludes selected optional capabilities.
 export const v02ContentIds = Object.values(archetypeIds).flatMap((category) =>
-  Object.values(category).filter((id) => !id.startsWith("upgrade.tool.") && ![archetypeIds.enemy.rangedAttacker, archetypeIds.pickup.magnet, archetypeIds.pickup.food, archetypeIds.pickup.impact].includes(id as never)),
+  Object.values(category).filter((id) => !id.startsWith("upgrade.tool.") && ![archetypeIds.weapon.cleaningBin, archetypeIds.weapon.orbitingRake, archetypeIds.enemy.scavenger, archetypeIds.enemy.rangedAttacker, archetypeIds.pickup.magnet, archetypeIds.pickup.food, archetypeIds.pickup.impact].includes(id as never)),
 ) as ContentId[];
 
 export type OptionalContentId = "enemy.ranged_attacker" | "enemy.scavenger" | "pickup.magnet" | "pickup.food" | "pickup.impact" | "weapon.cleaning_bin" | "weapon.orbiting_rake" | Extract<UpgradeId, `upgrade.tool.${string}`>;

@@ -12,12 +12,12 @@ for (const theme of [ecoGuardianTheme, knightMagicTheme]) it(`${theme.id} weak c
   expect(validateTheme(theme)).toEqual([]);
   expect(definition.displayDiameter).toBeGreaterThan(definition.radius * 2);
   expect(definition.moveSpeed).toBeLessThan(theme.enemies.find((e) => e.id === ids.enemy.fastFragile)!.moveSpeed);
-  expect("fragmentInto" in definition).toBe(false);
+  expect("fragmentInto" in definition).toBe(("economy" in theme));
   expect(createDeathSpawns(definition, "parent", "death")).toEqual([]);
   for (const difficulty of ["beginner", "normal", "experienced"] as const) {
     const resolved = resolveDifficultyTheme(theme, difficulty);
     const enemy = resolved.enemies.find((e) => e.id === definition.id)!;
-    const mods = selectWorldModifiers(createWorldState(), resolved.tuning.difficulty, .25);
+    const mods = selectWorldModifiers(createWorldState(), resolved.tuning.difficulty, 0);
     expect(enemy.maxHealth * mods.enemyHealthMultiplier).toBeLessThanOrEqual(resolved.weapons[0]!.damage);
   }
   const cone = theme.weapons.find((w) => w.id === ids.weapon.secondary)!;

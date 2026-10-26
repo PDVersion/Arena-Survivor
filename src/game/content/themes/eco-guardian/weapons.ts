@@ -1,3 +1,4 @@
+import { aura, bin, rake, toolUpgrades } from "./cleanup-tools";
 import { archetypeIds } from "../../../core/archetypes/ids";
 import type { WeaponDefinition, UpgradeDefinition } from "../../../core/archetypes/contracts";
 
@@ -10,11 +11,7 @@ const starterUpgrades = [
     maxLevel: 5, track: "weapon", rarity: "common", category: "offense", presentationToken: "accent" },
 ] as const satisfies readonly UpgradeDefinition[];
 
-const secondaryUpgrades = [
-  { id: archetypeIds.upgrade.secondaryRange, ownerWeaponId: archetypeIds.weapon.secondary,
-    effects: [{ kind: "stat.add", target: "weapon.range", value: 12 }],
-    maxLevel: 4, track: "weapon", rarity: "common", category: "offense", presentationToken: "accent" },
-] as const satisfies readonly UpgradeDefinition[];
+const secondaryUpgrades = toolUpgrades(archetypeIds.weapon.secondary, aura);
 
 export const weaponEvolution = {
   id: archetypeIds.upgrade.evolveSecondary,
@@ -49,6 +46,7 @@ export const weapons = [
   },
   {
     id: archetypeIds.weapon.secondary,
+    cleanup: aura,
     deliveryKind: "melee",
     upgrades: secondaryUpgrades,
     damage: 6,
@@ -57,17 +55,16 @@ export const weapons = [
     reach: 90,
     width: 18,
     arcRadians: 1.1,
-    targetCap: 3,
-    targetGrowth: { upgradeId: archetypeIds.upgrade.secondaryRange, perPick: 1, maxPicks: 4 },
+    targetCap: null,
     knockback: 0,
     armourPierce: 0,
     extendMs: 80,
     retractMs: 200,
-    splash: { radius: 24, damageMultiplier: 0.35, targetCap: 3 },
     presentationToken: "critical",
   },
   {
     id: archetypeIds.weapon.secondaryEvolved,
+    cleanup: { ...aura, radius: 110, damage: 6 },
     deliveryKind: "melee",
     upgrades: [],
     damage: 9,
@@ -76,16 +73,20 @@ export const weapons = [
     reach: 105,
     width: 18,
     arcRadians: 1.5,
-    targetCap: 4,
-    targetGrowth: { upgradeId: archetypeIds.upgrade.secondaryRange, perPick: 1, maxPicks: 4 },
+    targetCap: null,
     knockback: 0,
     armourPierce: 0,
     extendMs: 80,
     retractMs: 200,
-    splash: { radius: 32, damageMultiplier: 0.4, targetCap: 3 },
     presentationToken: "critical",
   },
+  { id: archetypeIds.weapon.cleaningBin, cleanup: bin, upgrades: toolUpgrades(archetypeIds.weapon.cleaningBin, bin),
+    deliveryKind: "melee", damage: bin.damage, cooldownMs: 3400, range: 210, reach: 210, width: 18, targetCap: null,
+    extendMs: 100, retractMs: 100, knockback: 0, armourPierce: 0, presentationToken: "projectile" },
+  { id: archetypeIds.weapon.orbitingRake, cleanup: rake, upgrades: toolUpgrades(archetypeIds.weapon.orbitingRake, rake),
+    deliveryKind: "melee", damage: rake.damage, cooldownMs: 650, range: 140, reach: 140, width: 18, targetCap: null,
+    extendMs: 100, retractMs: 100, knockback: 0, armourPierce: 0, presentationToken: "projectile" },
 ] as const satisfies readonly WeaponDefinition[];
 
 /** Two automatic tool slots; only the starter is equipped at run creation. */
-export const weaponSlotCount = 2;
+export const weaponSlotCount = 4;

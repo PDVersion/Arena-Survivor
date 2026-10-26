@@ -1,3 +1,4 @@
+import { resolveCleanupTool } from "../weapons/cleanup-tools";
 import type {
   StatKey,
   ThemeManifest,
@@ -118,7 +119,7 @@ export function selectEquippedWeaponStats(
 ): readonly StatLine[] {
   return Object.freeze((state.weaponSlots ?? []).filter((slot) => slot.weaponId !== archetypeIds.weapon.starter).flatMap((slot) =>
     selectPlayerStats(state, theme, slot.weaponId).filter((line) => ["damage", "attackRate", "primaryTargets", "range"].includes(line.key))
-      .map((line) => Object.freeze({ ...line, label: `${theme.copy.content[slot.weaponId].name} · ${line.label}` }))));
+      .map((line) => Object.freeze({ ...line, label: `${(theme.copy.content[slot.weaponId]?.name ?? slot.weaponId)} · ${line.label}` }))));
 }
 
 /** World pressure, as shown in the pause menu. */
@@ -186,7 +187,7 @@ export interface UpgradeDescription {
 export function describeUpgrade(
   state: UpgradeableState,
   upgrade: UpgradeDefinition,
-  theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning" | "curses">,
+  theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning" | "curses" | "economy">,
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
   const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
@@ -243,6 +244,14 @@ export function describeUpgrade(
       }
     }
   }
+  const tool = theme.weapons.find((weapon) => weapon.id === upgrade.ownerWeaponId)?.cleanup;
+  const toolTrack = tool?.tracks.find((track) => track.id === upgrade.id);
+  if (tool && toolTrack) {
+    const beforeTool = resolveCleanupTool(tool, state.selectedUpgradeIds);
+    const afterTool = resolveCleanupTool(tool, after.selectedUpgradeIds);
+    const labels = { radius: "Area radius", damage: "Damage per hit", tickMs: "Tick interval (ms)", slow: "Slow", count: "Number per row / throw", rows: "Orbit rows", speed: "Rotation (rad/s)", dotDamage: "Landing damage per tick" };
+    lines.push({ label: labels[toolTrack.stat], from: number(beforeTool[toolTrack.stat]), to: number(afterTool[toolTrack.stat]) });
+  }
   lines.push(...describeSkillChange(state, after, upgrade, theme));
 
   return Object.freeze({
@@ -271,7 +280,7 @@ function describeSkillChange(
   before: UpgradeableState,
   after: UpgradeableState,
   upgrade: UpgradeDefinition,
-  theme: Pick<ThemeManifest, "copy" | "skills">,
+  theme: Pick<ThemeManifest, "copy" | "skills" | "economy">,
 ): readonly UpgradeChangeLine[] {
   const lines: UpgradeChangeLine[] = [];
 
@@ -322,6 +331,10 @@ function describeSkillChange(
     }
 
     const fracture = findSkillEffect(theme.skills, effect.skillId, "fracture");
+    if (fracture && theme.economy) {
+      lines.push({ label: "Breakage chance reduction", from: percent(previous * theme.economy.fragmentation.cleanHitReduction), to: percent(next * theme.economy.fragmentation.cleanHitReduction) });
+      continue;
+    }
     if (fracture) {
       lines.push(Object.freeze({
         label: labels.luck,

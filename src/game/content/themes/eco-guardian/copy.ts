@@ -195,6 +195,23 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    "weapon.cleaning_bin": { name: "Cleaning Bin", description: "Tosses a small bin; cleans its landing area, then releases a cleaning burst." },
+    "weapon.orbiting_rake": { name: "Orbiting Rakes", description: "Two rakes sweep around you. Only the leading heads clean waste." },
+    "enemy.scavenger": { name: "Litter Rat", description: "Wanders with a stash of litter. Flees when disturbed and sheds money; cleanup releases its stash." },
+    "upgrade.tool.bin_equip": { name: "Equip Cleaning Bin", description: "Adds a thrown cleaning bin to an empty tool slot." },
+    "upgrade.tool.rake_equip": { name: "Equip Orbiting Rakes", description: "Adds two orbiting rakes to an empty tool slot." },
+    "upgrade.tool.aura_damage": { name: "Stronger Suction", description: "Raises vacuum damage per tick." },
+    "upgrade.tool.aura_tick": { name: "Steady Airflow", description: "Shortens the interval between vacuum ticks." },
+    "upgrade.tool.aura_slow": { name: "Holding Airflow", description: "Raises the vacuum slowing effect." },
+    "upgrade.tool.bin_damage": { name: "Bin Cleaning Power", description: "Raises the bin burst damage." },
+    "upgrade.tool.bin_count": { name: "More Bins", description: "Throws one additional bin per cycle." },
+    "upgrade.tool.bin_radius": { name: "Wider Bin Sweep", description: "Expands the landing and burst radius." },
+    "upgrade.tool.bin_dot": { name: "Lingering Cleanup", description: "Raises damage over time around a landed bin." },
+    "upgrade.tool.rake_damage": { name: "Sturdier Rakes", description: "Raises damage at each rake head." },
+    "upgrade.tool.rake_count": { name: "More Rakes", description: "Adds one rake to each orbit row." },
+    "upgrade.tool.rake_rows": { name: "Extra Rake Row", description: "Adds another circular row of rakes." },
+    "upgrade.tool.rake_speed": { name: "Faster Rotation", description: "Raises the rotation speed of all rake rows." },
+
     [archetypeIds.pickup.magnet]: { name: "Money Magnet", description: "Draws all money already on the map toward you." },
     [archetypeIds.pickup.food]: { name: "Drumstick", description: "Restores up to 20 health." },
     [archetypeIds.pickup.impact]: { name: "Impact Point", description: "Saved between runs for the Impact Shop." },
@@ -218,11 +235,11 @@ export const copy = {
       name: "Environment Protector",
       description: "A field operative sent to hold back an overflowing site.",
     },
-    [archetypeIds.shrine.escalation]: { name: "Unmanaged Dump", description: "Raise world pressure for the rest of this run in exchange for more XP." },
-    [archetypeIds.curse.frenzy]: { name: "Overflow Contract", description: "Accept more arrivals in exchange for more XP for the rest of this run. One choice per run." },
-    [archetypeIds.upgrade.acceptFrenzy]: { name: "Overflow Contract", description: "Accept more arrivals in exchange for more XP for the rest of this run. One choice per run." },
-    [archetypeIds.curse.escalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
-    [archetypeIds.upgrade.acceptEscalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more XP for the rest of this run. One choice per run." },
+    [archetypeIds.shrine.escalation]: { name: "Unmanaged Dump", description: "Raise world pressure for the rest of this run in exchange for more money." },
+    [archetypeIds.curse.frenzy]: { name: "Overflow Contract", description: "Accept more arrivals in exchange for more money for the rest of this run. One choice per run." },
+    [archetypeIds.upgrade.acceptFrenzy]: { name: "Overflow Contract", description: "Accept more arrivals in exchange for more money for the rest of this run. One choice per run." },
+    [archetypeIds.curse.escalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more money for the rest of this run. One choice per run." },
+    [archetypeIds.upgrade.acceptEscalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more money for the rest of this run. One choice per run." },
     [archetypeIds.weapon.secondaryEvolved]: {
       name: "Cyclone Vacuum",
       description: "A wider automatic pulse with stronger hits, one extra primary target and nearby splash. Keeps earned capacity.",
@@ -240,8 +257,8 @@ export const copy = {
       description: "Add a second automatic tool in an empty slot. Hits splash up to three neighbours without needing a kill.",
     },
     [archetypeIds.upgrade.secondaryRange]: {
-      name: "Longer Vacuum Nozzle",
-      description: "Increase the second tool's reach and primary-target capacity. Each pick adds one target, up to four additional targets.",
+      name: "Wider Vacuum Area",
+      description: "Expand the circular vacuum area around you.",
     },
     [archetypeIds.weapon.starter]: {
       name: "Cleanup Grabber",
@@ -298,7 +315,7 @@ export const copy = {
       description: "Cleared waste compacts hard enough to damage what is nearby.",
     },
     [archetypeIds.skill.fracture]: {
-      name: "Fragmentation",
+      name: "Careful Cleanup",
       description: "Some plastics break into smaller pieces instead of disappearing.",
     },
     [archetypeIds.skill.bloodlust]: {
@@ -374,8 +391,8 @@ export const copy = {
       description: "Cleared waste compacts and damages nearby items.",
     },
     [archetypeIds.upgrade.fracture]: {
-      name: "Fragmentation",
-      description: "Some cleared waste breaks into two smaller pieces.",
+      name: "Careful Cleanup",
+      description: "Reduce the chance of waste breaking into microplastics or shards.",
     },
     [archetypeIds.upgrade.bloodlust]: {
       name: "Cleanup Streak",

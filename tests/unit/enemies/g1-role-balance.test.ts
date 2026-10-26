@@ -65,5 +65,5 @@ it("keeps ordinary and splitting Bagged Waste reward/work finite including the i
   expect(split.xp / split.work).toBeLessThan(ordinary.xp / ordinary.work);
   const shards = theme.enemies.find((e) => e.id === ids.enemy.stationaryFragment)!;
   expect(shards.moveSpeed).toBe(0); expect(shards.maxHealth).toBeGreaterThan(0);
-  expect(shards.xpReward).toBe(0); expect(createDeathSpawns(shards, "shard", "death")).toEqual([]);
+  expect(shards.xpReward).toBe(1); expect(createDeathSpawns(shards, "shard", "death")).toEqual([]);
 });

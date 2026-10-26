@@ -404,7 +404,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
   }
-  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss && id !== archetypeIds.enemy.rangedAttacker)) {
+  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss && id !== archetypeIds.enemy.rangedAttacker && id !== archetypeIds.enemy.scavenger)) {
     if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
   }
   for (const enemy of enemies) {
@@ -536,6 +536,11 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
               issues.push(`${upgrade.id} world ${key} cannot be negative`);
             }
           }
+          continue;
+        }
+        if (effect.kind === "tool.upgrade") {
+          const tool = theme.weapons.find((weapon) => weapon.id === effect.weaponId)?.cleanup;
+          if (!tool?.tracks.some((track) => track.id === upgrade.id)) issues.push(`${upgrade.id} has no tool track`);
           continue;
         }
         if (effect.kind !== "stat.add") {

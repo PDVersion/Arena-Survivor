@@ -1,6 +1,7 @@
 import type { PlayerBaseStats } from "../../core/stats/player-stats";
 export type DropKind = "money" | "magnet" | "food" | "impact";
 export interface EconomyDefinition {
+  readonly criticalPresentation: readonly { readonly colour: string; readonly size: number }[];
   readonly denominations: readonly [number, number];
   readonly dropChances: Readonly<Record<"magnet" | "food" | "impact", number>>;
   readonly fortuneScale: number;

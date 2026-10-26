@@ -57,5 +57,7 @@ export interface AcceptCurseEffect {
   readonly curseId: CurseId;
 }
 
-export type UpgradeEffect = AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect | EvolveWeaponEffect | AcceptCurseEffect;
+export interface ToolUpgradeEffect { readonly kind: "tool.upgrade"; readonly weaponId: WeaponId }
+
+export type UpgradeEffect = ToolUpgradeEffect | AddStatEffect | LevelSkillEffect | WorldModifyEffect | EquipWeaponEffect | EvolveWeaponEffect | AcceptCurseEffect;
 import type { CurseId, SkillId, UpgradeId, WeaponId } from "./ids";

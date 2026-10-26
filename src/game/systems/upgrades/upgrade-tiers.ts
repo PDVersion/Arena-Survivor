@@ -48,7 +48,7 @@ export function tierMultiplier(tuning: UpgradeTiersTuning, tier: UpgradeTier): n
  * forget to opt out.
  */
 export function isTiered(upgrade: UpgradeDefinition): boolean {
-  return !upgrade.effects.some((effect) => effect.kind === "curse.accept" || effect.kind === "world.modify" || effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
+  return !upgrade.effects.some((effect) => effect.kind === "tool.upgrade" || effect.kind === "curse.accept" || effect.kind === "world.modify" || effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
 }
 
 /**

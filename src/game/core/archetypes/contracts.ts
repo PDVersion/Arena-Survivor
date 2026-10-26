@@ -418,7 +418,17 @@ export interface OnHitSplashDefinition {
   readonly targetCap: number;
 }
 
+export interface CleanupToolDefinition {
+  readonly kind: "aura" | "bin" | "orbit";
+  readonly radius: number; readonly damage: number; readonly tickMs: number; readonly slow: number;
+  readonly count: number; readonly rows: number; readonly speed: number;
+  readonly throwDistance: number; readonly flightMs: number; readonly fuseMs: number; readonly dotMs: number; readonly dotDamage: number;
+  readonly headRadius: number; readonly rowSpacing: number; readonly displayWidth: number;
+  readonly tracks: readonly { readonly id: UpgradeId; readonly stat: "radius" | "damage" | "tickMs" | "slow" | "count" | "rows" | "speed" | "dotDamage"; readonly step: number }[];
+}
+
 interface WeaponDefinitionBase {
+  readonly cleanup?: CleanupToolDefinition;
   /** Authored beside its weapon; manifest merges these into the offer registry. */
   readonly upgrades?: readonly UpgradeDefinition[];
   readonly splash?: OnHitSplashDefinition;
@@ -519,6 +529,7 @@ export interface RangedAttackDefinition {
 }
 
 export interface EnemyDefinition {
+  readonly scavenger?: Readonly<{ wanderMs: number; fleeMs: number; fleeSpeed: number; leakValue: number; leakBudget: number; itemMultiplier: number }>;
   readonly rangedAttack?: RangedAttackDefinition;
   readonly committedMotion?: CommittedMotionDefinition;
   /** Only natural director selections expand a group; causal spawns never do. */

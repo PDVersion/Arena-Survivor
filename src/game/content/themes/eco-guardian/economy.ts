@@ -1,5 +1,6 @@
 import type { EconomyDefinition } from "../../../systems/economy/economy";
 export const economy = {
+  criticalPresentation: [{ colour: "#facc15", size: 20 }, { colour: "#ffffff", size: 26 }, { colour: "#ef4444", size: 30 }],
   denominations: [4, 25], dropChances: { magnet: 0.003, food: 0.005, impact: 0.004 },
   fortuneScale: 0.01, maxDropChance: 0.08, foodHealth: 20, impactValue: 1, mergeDistance: 28,
   fragmentation: { chance: 0.75, fortuneReduction: 0.004, cleanHitReduction: 0.12, critReduction: 0.4,

@@ -1,3 +1,6 @@
+import { fragmentationChance } from "../systems/economy/economy";
+import { CleanupToolRuntime } from "../entities/cleanup-tool-runtime";
+import { resolveCleanupTool } from "../systems/weapons/cleanup-tools";
 import { applyImpactBonuses, dropChance, sampleActiveClock, type ActiveClock } from "../systems/economy/economy";
 import { creditImpact } from "../systems/persistence/profile-service";
 import { EnemyShot } from "../entities/enemy-shot";
@@ -530,6 +533,7 @@ export class RunScene extends Phaser.Scene {
   private damageNumbers = createDamageAggregator();
   private lastFrameMs = 16;
   private activeClock?: ActiveClock;
+  private cleanupRuntime?: CleanupToolRuntime;
   private deathSlowUntilMs = 0;
   private killChainDetuneCents = 0;
 
@@ -545,6 +549,14 @@ export class RunScene extends Phaser.Scene {
     this.resetTransientRuntime();
     this.runGeneration = ++runGenerationSequence;
     this.activeClock = undefined;
+    this.cleanupRuntime = new CleanupToolRuntime(this, this.runTheme.tokens, (enemy, amount, weapon) => {
+      if (!this.runState) return;
+      const roll = rollDamage({ baseDamage: amount, damageBonus: this.runState.player.stats.damageBonus,
+        critChance: this.runState.player.stats.critChance, critDamage: this.runState.player.stats.critDamage, random: Math.random, cappedLinear: true });
+      accumulateDamage(this.damageNumbers, { targetId: enemy.targetId, amount: roll.damage, tier: roll.tier, x: enemy.x, y: enemy.y }, this.runState.elapsedMs, DAMAGE_NUMBER_WINDOW_MS);
+      this.runState = observeRunCrit(this.runState, roll.tier);
+      this.commitEnemyDamage(enemy, roll.damage, "direct", undefined, { weapon, directBase: roll.baseDamage, criticalBonus: roll.bonusDamage, piercingMomentum: 0 });
+    });
     const keyboard = this.input.keyboard;
     if (!keyboard) throw new Error("Keyboard input is unavailable");
 
@@ -778,6 +790,10 @@ export class RunScene extends Phaser.Scene {
       this.updateEnemyShots(delta);
       if (!isRunActive(this.runState)) { this.publishTelemetry(); return; }
       this.updateEnemies(delta);
+      this.cleanupRuntime?.update(this.runState.elapsedMs, this.player, this.runState.weaponSlots.flatMap((slot) => {
+        const weapon = this.runTheme.weapons.find((entry) => entry.id === slot.weaponId);
+        return weapon?.cleanup ? [{ weapon, tool: resolveCleanupTool(weapon.cleanup, this.runState!.selectedUpgradeIds), attackRate: Math.max(.1, 1 + this.runState!.player.stats.attackSpeedBonus) }] : [];
+      }), this.enemies);
       this.rebuildEnemyIndex();
       this.resolveCrowd();
       this.updateHazards();
@@ -835,6 +851,8 @@ export class RunScene extends Phaser.Scene {
    * causal claims now rather than retaining a dead run until its next create.
    */
   private shutdownRuntime(): void {
+    this.cleanupRuntime?.destroy();
+    this.cleanupRuntime = undefined;
     this.scale.off(Phaser.Scale.Events.RESIZE, this.handleResize, this);
     this.game.events.off(Phaser.Core.Events.BLUR, this.handleGameBlur, this);
     this.game.events.off(Phaser.Core.Events.FOCUS, this.handleGameFocus, this);
@@ -1363,6 +1381,7 @@ export class RunScene extends Phaser.Scene {
         continue;
       }
       enemy.advance(target, deltaMs);
+      enemy.applyMovementSlow(this.runState?.elapsedMs ?? 0);
       if (enemy.consumeRangedShot()) {
         const attack = enemy.definition.rangedAttack;
         if (attack && this.enemyShots.size < attack.maxActiveProjectiles) {
@@ -2017,6 +2036,7 @@ export class RunScene extends Phaser.Scene {
       if (this.runState.elapsedMs < slot.nextAttackAtMs) continue;
       const definition = this.runTheme.weapons.find((weapon) => weapon.id === slot.weaponId);
       if (!definition) throw new Error(`Equipped weapon is unavailable: ${slot.weaponId}`);
+      if (definition.cleanup) continue;
       this.fireWeaponIfReady(definition);
     }
   }
@@ -2040,6 +2060,7 @@ export class RunScene extends Phaser.Scene {
       critChance: weapon.critChance ?? this.runState.player.stats.critChance,
       critDamage: weapon.critDamage ?? this.runState.player.stats.critDamage,
       random: Math.random,
+      cappedLinear: Boolean(this.runTheme.economy),
     });
     if (weapon.deliveryKind === "melee") {
       const hits = selectMeleeHits(
@@ -2350,6 +2371,11 @@ export class RunScene extends Phaser.Scene {
     const appliedDamage = Math.min(enemy.health, Math.max(0, reduced));
     const result = enemy.takeDamage(reduced);
     if (!result.applied) return;
+    const scavenger = enemy.definition.scavenger;
+    if (scavenger && enemy.leakedMoney < scavenger.leakBudget) {
+      const value = Math.min(scavenger.leakValue, scavenger.leakBudget - enemy.leakedMoney);
+      enemy.leakedMoney += value; this.dropExperience(enemy.x, enemy.y, value, enemy.spawnSource);
+    }
     this.hitFlashes += 1;
     this.runState = recordRunDamage(this.runState, {
       amount: appliedDamage,
@@ -2384,7 +2410,7 @@ export class RunScene extends Phaser.Scene {
           enemy.movement, enemy.eliteSplitDepth + 1);
       }
     }
-    const deathSpawns = createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
+    const deathSpawns = this.runTheme.economy ? [] : createDeathSpawns(enemy.definition, enemy.targetId, deathEventId);
     if (
       deathSpawns.length > 0 &&
       this.eventQueue.claimEffect(enemy.targetId, "enemy.death_spawn")
@@ -2421,8 +2447,25 @@ export class RunScene extends Phaser.Scene {
     // A big chain is worth a freeze, and the streak has an audible shape.
     if (chain >= 25 && chain % 25 === 0) this.requestImpactFreeze(60);
     this.killChainDetuneCents = killChainDetune(chain);
-    this.dropSpecialItems(enemy.x, enemy.y);
-    const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
+    const economy = this.runTheme.economy;
+    const fragment = economy && enemy.definition.fragmentInto && enemy.spawnSource !== archetypeIds.skill.fracture && !enemy.definition.boss &&
+      this.effectRandom() < fragmentationChance(economy, this.runState.player.stats.luck, enemy.hitsTaken,
+        reduced / enemy.maxHealth, (direct?.criticalBonus ?? 0) > 0, skillLevel(this.runState.skillLevels, archetypeIds.skill.fracture));
+    const cleanReward = enemy.definition.xpReward * enemy.rewardMultiplier;
+    if (fragment && economy && enemy.definition.fragmentInto) {
+      const child = this.enemyDefinitions.find((entry) => entry.id === enemy.definition.fragmentInto)!;
+      const f = economy.fragmentation;
+      // Source multiplier is normalized at child spawn; no compounded world/elite payout.
+      const childReward = cleanReward * (f.totalShare - f.parentShare) / f.childCount;
+      const toughness = 1 + (this.worldModifiers().enemyHealthMultiplier - 1) * this.runTheme.tuning.progression.toughnessRewardShare;
+      for (let i = 0; i < f.childCount; i++) {
+        this.enqueueSpawnRequest(child.id, archetypeIds.skill.fracture, childReward / child.xpReward / toughness,
+          enemy.targetId, deathEventId, "fracture", { x: enemy.x + (i === 0 ? -8 : 8), y: enemy.y }, false, "chase", 0);
+        this.fractureQueued++;
+      }
+    }
+    if (enemy.spawnSource !== archetypeIds.skill.fracture) this.dropSpecialItems(enemy.x, enemy.y, enemy.definition.scavenger?.itemMultiplier ?? 1);
+    const xpReward = cleanReward * (fragment && economy ? economy.fragmentation.parentShare : 1);
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
     if (enemy.spawnSource === archetypeIds.shrine.spawnSurge) {
       this.shrineEnemiesDefeated += 1;
@@ -2495,7 +2538,7 @@ export class RunScene extends Phaser.Scene {
     const fracture = findSkillEffect(this.runTheme.skills, archetypeIds.skill.fracture, "fracture");
     const fractureLevel = skillLevel(this.runState.skillLevels, archetypeIds.skill.fracture);
     if (
-      fracture &&
+      !this.runTheme.economy && fracture &&
       fractureLevel > 0 &&
       shouldFracture(
         resolveFractureChance(fracture, fractureLevel) * this.luckScale(),
@@ -2553,10 +2596,10 @@ export class RunScene extends Phaser.Scene {
 
   private renderDamageNumber(x: number, y: number, amount: number, tier: number): void {
     const category: FeedbackCategory = tier > 1 ? "overcritical" : tier === 1 ? "critical" : "damage";
-    this.emitFeedback(category, x, y, String(Math.round(amount)));
+    this.emitFeedback(category, x, y, String(Math.round(amount)), tier);
   }
 
-  private emitFeedback(category: FeedbackCategory, x: number, y: number, label: string): void {
+  private emitFeedback(category: FeedbackCategory, x: number, y: number, label: string, tier = 0): void {
     const nowMs = this.runState?.elapsedMs ?? 0;
     if (this.feedbackLimiter.allowAudio(category, nowMs)) {
       // Only kill-driven cues ramp; interface cues stay at their own pitch.
@@ -2567,15 +2610,16 @@ export class RunScene extends Phaser.Scene {
     }
     if (!this.feedbackLimiter.beginVisual()) return;
     const palette = this.runTheme.tokens.palette;
-    const colour = category === "critical"
+    const criticalStyle = tier > 0 ? this.runTheme.economy?.criticalPresentation[Math.min(2, tier - 1)] : undefined;
+    const colour = criticalStyle?.colour ?? (category === "critical"
       ? palette.critical
       : category === "overcritical" ? palette.overcritical
         : category === "explosion" ? palette.explosion
-          : category === "elite" ? palette.elite : palette.text;
+          : category === "elite" ? palette.elite : palette.text);
     const cue = this.add.text(x, y - 18, label, {
       color: colour,
       fontFamily: "Georgia, serif",
-      fontSize: category === "damage" ? "16px" : category === "overcritical" ? "26px" : "20px",
+      fontSize: criticalStyle ? `${criticalStyle.size}px` : category === "damage" ? "16px" : category === "overcritical" ? "26px" : "20px",
       fontStyle: "bold",
       stroke: palette.background,
       strokeThickness: 3,

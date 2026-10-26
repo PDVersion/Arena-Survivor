@@ -19,6 +19,14 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly spawnSource: EnemySpawnSource;
   readonly rewardMultiplier: number;
   health: number;
+  hitsTaken = 0;
+  leakedMoney = 0;
+  private slowUntil = 0;
+  private slowMultiplier = 1;
+  private wanderUntil = 0;
+  private wanderAngle = Math.random() * Math.PI * 2;
+  private fleeUntil = 0;
+  applySlow(until: number, multiplier: number): void { this.slowUntil = until; this.slowMultiplier = Math.min(this.slowMultiplier, multiplier); }
   /** Max health at spawn, after world and elite multipliers. */
   readonly maxHealth: number;
   private readonly baseMoveSpeed: number;
@@ -138,6 +146,11 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     if (definition.committedMotion) this.motionCue = new EnemyMotionCue(this, tokens);
   }
 
+  applyMovementSlow(now: number): void {
+    if (now < this.slowUntil) this.arcadeBody.velocity.scale(this.slowMultiplier);
+    else this.slowMultiplier = 1;
+  }
+
   /** Stable identity for the shared spatial index and targeting. */
   get id(): string {
     return this.targetId;
@@ -156,6 +169,20 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
    */
   advance(target: Phaser.Math.Vector2, deltaMs = 0): void {
     this.ageMs += Math.max(0, deltaMs);
+    if (this.definition.scavenger) {
+      const data = this.definition.scavenger;
+      if (this.ageMs < this.fleeUntil) {
+        const angle = Math.atan2(this.y - target.y, this.x - target.x);
+        this.arcadeBody.setVelocity(Math.cos(angle) * this.moveSpeed * data.fleeSpeed, Math.sin(angle) * this.moveSpeed * data.fleeSpeed);
+      } else {
+        if (this.ageMs >= this.wanderUntil || this.x < this.radius || this.y < this.radius || this.x > this.scene.physics.world.bounds.width - this.radius || this.y > this.scene.physics.world.bounds.height - this.radius) {
+          this.wanderAngle = Math.atan2(target.y - this.y, target.x - this.x) + (Math.random() - .5) * Math.PI * 2;
+          this.wanderUntil = this.ageMs + data.wanderMs;
+        }
+        this.arcadeBody.setVelocity(Math.cos(this.wanderAngle) * this.moveSpeed, Math.sin(this.wanderAngle) * this.moveSpeed);
+      }
+      return;
+    }
     if (this.definition.rangedAttack) {
       const attack = this.definition.rangedAttack;
       const result = advanceRangedAttack(this.rangedState, attack, deltaMs, this, target);
@@ -219,6 +246,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
 
   takeDamage(damage: number): HitResult {
     if (this.defeated) return { health: 0, killed: false, applied: false };
+    if (damage > 0) { this.hitsTaken++; if (this.definition.scavenger) this.fleeUntil = this.ageMs + this.definition.scavenger.fleeMs; }
     const result = applyDamage(this.health, damage);
     this.health = result.health;
     if (result.killed) this.defeated = true;

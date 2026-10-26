@@ -122,7 +122,7 @@ export interface CodexEnemyEntry {
 
 /** Enemy catalogue data comes only from live definitions and their themed copy. */
 export function selectEnemyCodex(
-  theme: Pick<ThemeManifest, "enemies" | "copy">,
+  theme: Pick<ThemeManifest, "enemies" | "copy" | "economy">,
 ): readonly CodexEnemyEntry[] {
   const enemyName = (id: EnemyId) => theme.copy.content[id]?.name ?? id;
   return Object.freeze(theme.enemies.map((enemy) => {
@@ -132,10 +132,10 @@ export function selectEnemyCodex(
         kind: "fractures_into" as const,
         enemyId: enemy.fragmentInto,
         name: enemyName(enemy.fragmentInto),
-        count: 1,
+        count: theme.economy?.fragmentation.childCount ?? 1,
       }));
     }
-    for (const child of enemy.deathSpawns ?? []) {
+    for (const child of theme.economy ? [] : enemy.deathSpawns ?? []) {
       relations.push(Object.freeze({
         kind: "releases_on_death" as const,
         enemyId: child.enemyId,

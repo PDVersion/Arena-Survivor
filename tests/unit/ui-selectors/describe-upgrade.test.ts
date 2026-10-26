@@ -57,7 +57,8 @@ describe("player stat lines", () => {
       const starter = selectPlayerStats(state(), pack);
       expect(starter.some((line) => line.key === "primaryTargets")).toBe(false);
       const secondary = selectPlayerStats(state(), pack, archetypeIds.weapon.secondary);
-      expect(secondary.find((line) => line.key === "primaryTargets")).toMatchObject({ value: 3, label: pack.copy.stats.primaryTargets });
+      if ("economy" in pack) expect(secondary.find((line) => line.key === "primaryTargets")).toBeUndefined();
+      else expect(secondary.find((line) => line.key === "primaryTargets")).toMatchObject({ value: 3, label: pack.copy.stats.primaryTargets });
       expect(secondary.some((line) => line.key === "projectiles" || line.key === "pierce")).toBe(false);
     }
     const projectile = selectPlayerStats(state(), knightMagicTheme);
@@ -189,8 +190,8 @@ describe("upgrade descriptions", () => {
     // The anti-drift guarantee: descriptions come from applying the upgrade and
     // diffing, so every stated line must be reproducible by applying it.
     for (const entry of theme.upgrades as readonly UpgradeDefinition[]) {
-      const before = state(entry.ownerWeaponId === archetypeIds.weapon.secondary
-        ? { weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }, { weaponId: archetypeIds.weapon.secondary, nextAttackAtMs: 0 }] } : {});
+      const before = state(entry.ownerWeaponId
+        ? { weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }, { weaponId: entry.ownerWeaponId!, nextAttackAtMs: 0 }] } : {});
       const description = describeUpgrade(before, entry, theme);
       const after = applyUpgrade(before, entry, maxLevelFor, 1, theme.weapons);
 

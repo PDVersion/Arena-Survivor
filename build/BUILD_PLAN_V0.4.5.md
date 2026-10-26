@@ -52,7 +52,7 @@ waiver remains unverified. No push/merge/deploy. Sprite per-subject source claim
 and evidence retained; current request selects all listed art/integration.
 
 - [x] Phase1 economy/save/clock. 729 unit tests, typecheck/lint/build and serial browser boot pass. Shop UI and targeted mixed-pickup acceptance remain phase3.
-- [ ] Phase2 tools/fragmentation/director/rat/crit.
+- [x] Phase2 tools/fragmentation/director/rat/crit. 728 units, typecheck/lint/build, balance/TTK and scoped serial boot pass.
 - [ ] Phase3 generated art/testing-area/trees/shop/consolidated acceptance.
 
 ## Research boundary
@@ -65,3 +65,13 @@ not an assertion that rat/wrapper/butt cleanup earns a real-world refund.
 Independent source-only art generation is permitted after its manifest claim while
 software phases run: it does not bind assets or start phase3runtime integration.
 This avoids blocking the mechanical work on image-generation latency.
+
+Phase2 verification: fixed five-level tracks have deterministic cap/rarity/preview
+checks; legacy cone-specific cases now read the preserved generic cone fixture,
+with eco cleanup tracks covered separately. Mixed-runtime contact, rat flight and
+pickup visuals will receive the single consolidated phase3 browser acceptance.
+Damage-rush balance/TTK model ran: report now uses eco's real active timer. Model
+still omits spatial tool coverage, scavenger movement and downside-fragment work;
+it is a pressure estimate, not a claim these new tools are balanced by simulation.
+Old cone runtime/accepted art remain historical/generic fallback; no eco equipped
+weapon takes that delivery path. No frozen-pack files changed.

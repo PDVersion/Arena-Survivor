@@ -13,7 +13,7 @@ describe("theme manifests", () => {
       expect(validateTheme({ ...alternateTheme, weaponSlotCount: capacity }))
         .toContain("weaponSlotCount must be a positive safe integer");
     }
-    expect(ecoGuardianTheme.weaponSlotCount).toBe(2);
+    expect(ecoGuardianTheme.weaponSlotCount).toBe(4);
     expect(knightMagicTheme.weaponSlotCount).toBe(2);
   });
 
@@ -35,7 +35,7 @@ describe("theme manifests", () => {
     // Both packs are production-shaped content, so the boundary is proven by
     // real themes rather than only by the synthetic fixture.
     const roleIds = (theme: ThemeManifest): readonly string[] =>
-      theme.enemies.filter((enemy) => enemy.id !== archetypeIds.enemy.rangedAttacker).map((enemy) => enemy.id).sort();
+      theme.enemies.filter((enemy) => enemy.id !== archetypeIds.enemy.scavenger && enemy.id !== archetypeIds.enemy.rangedAttacker).map((enemy) => enemy.id).sort();
 
     expect(roleIds(ecoGuardianTheme)).toEqual(roleIds(knightMagicTheme));
     expect(ecoGuardianTheme.characters[0]?.id).toBe(knightMagicTheme.characters[0]?.id);
@@ -80,7 +80,7 @@ describe("theme manifests", () => {
 
     // Glass is the highest health in the roster and among the lowest harm:
     // effectively permanent, but chemically inert.
-    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.filter((e) => !("boss" in e)).map((e) => e.maxHealth)));
+    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.filter((e) => !("boss" in e) && !("scavenger" in e)).map((e) => e.maxHealth)));
     expect(glass?.contactDamage).toBeLessThan(bottle!.contactDamage);
   });
 

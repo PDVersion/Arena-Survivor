@@ -45,9 +45,12 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
  * Phase 3 owns reward scaling and Phase 4 owns the spawn director.
  */
 export const enemies = [
+  { id: archetypeIds.enemy.scavenger, maxHealth: 180, moveSpeed: 110, contactDamage: 2, contactCooldownMs: 1000,
+    radius: 16, displayDiameter: 44, xpReward: 30, armour: 0, geometry: "circle", presentationToken: "enemyFast",
+    scavenger: { wanderMs: 1400, fleeMs: 2400, fleeSpeed: 1.6, leakValue: 1, leakBudget: 12, itemMultiplier: 8 } },
   {
     // Fictional coffee flick, authored gameplay values rather than material facts.
-    id: archetypeIds.enemy.rangedAttacker,
+    id: archetypeIds.enemy.rangedAttacker, fragmentInto: archetypeIds.enemy.fastFragile,
     maxHealth: 16, moveSpeed: 68, contactDamage: 4, contactCooldownMs: 1000,
     radius: 14, displayDiameter: 40, xpReward: 3, armour: 0,
     geometry: "circle", presentationToken: "enemySpawner",
@@ -109,7 +112,7 @@ export const enemies = [
     // Bagged mixed waste — ~1,000 years. Compaction and the anaerobic
     // conditions inside a sealed bag slow breakdown well past the bag film
     // itself. Its threat is what it releases, not its own durability.
-    id: archetypeIds.enemy.deathSpawner,
+    id: archetypeIds.enemy.deathSpawner, fragmentInto: archetypeIds.enemy.fastFragile,
     maxHealth: 24,
     moveSpeed: 80,
     contactDamage: 12,
@@ -136,7 +139,7 @@ export const enemies = [
     contactCooldownMs: 1000,
     radius: 12,
     displayDiameter: 28,
-    xpReward: 0,
+    xpReward: 1,
     armour: 12,
     geometry: "triangle",
     presentationToken: "enemyTank",
@@ -159,8 +162,8 @@ export const enemies = [
   },
   {
     // G2A authored weak-cluster game tuning; no persistence/harm fact is implied.
-    id: archetypeIds.enemy.clusterFodder,
-    maxHealth: 6, moveSpeed: 64, contactDamage: 3, contactCooldownMs: 1000,
+    id: archetypeIds.enemy.clusterFodder, fragmentInto: archetypeIds.enemy.fastFragile,
+    maxHealth: 9, moveSpeed: 110, contactDamage: 3, contactCooldownMs: 1000,
     radius: 10, displayDiameter: 28, xpReward: 1, armour: 0,
     geometry: "circle", presentationToken: "enemyFast",
     arrivalCluster: { count: 3, spacing: 34 },
@@ -169,7 +172,7 @@ export const enemies = [
   },
   {
     // G2B fictional gust/interception role; authored game values, not material facts.
-    id: archetypeIds.enemy.gustDrifter,
+    id: archetypeIds.enemy.gustDrifter, fragmentInto: archetypeIds.enemy.fastFragile,
     maxHealth: 12, moveSpeed: 80, contactDamage: 5, contactCooldownMs: 1000,
     radius: 12, displayDiameter: 34, xpReward: 2, armour: 0,
     geometry: "square", presentationToken: "enemySpawner",
@@ -180,7 +183,7 @@ export const enemies = [
   },
   {
     // G2C direct committed roll: sidestep the shown route, then clear in recovery.
-    id: archetypeIds.enemy.committedCharger,
+    id: archetypeIds.enemy.committedCharger, fragmentInto: archetypeIds.enemy.fastFragile,
     maxHealth: 18, moveSpeed: 90, contactDamage: 7, contactCooldownMs: 1000,
     radius: 14, displayDiameter: 38, xpReward: 3, armour: 0,
     geometry: "circle", presentationToken: "enemyTank",

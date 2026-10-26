@@ -307,10 +307,10 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     themeId: theme.id,
     buildId: options.build.id,
     durationMs: options.durationMs,
-    gameplayRate: theme.tuning.pace.gameplayRate,
+    gameplayRate: theme.economy ? 1 : theme.tuning.pace.gameplayRate,
     expectedRealDurationMs: expectedRealDurationMs(
       options.durationMs,
-      theme.tuning.pace.gameplayRate,
+      theme.economy ? 1 : theme.tuning.pace.gameplayRate,
     ),
     chaos: world.chaos,
     buckets: Object.freeze(buckets),

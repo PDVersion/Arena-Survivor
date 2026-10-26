@@ -21,6 +21,7 @@ export const director = {
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+    { enemyId: archetypeIds.enemy.scavenger, waveMovement: "chase", unlockAt: .20, milestoneWave: false, baseWeight: .25, weightGrowth: 0, chaosWeightBias: 0 },
     { enemyId: archetypeIds.enemy.rangedAttacker, waveMovement: "chase", unlockAt: 0.66,
       introductionCount: 1, baseWeight: 1, weightGrowth: 0.2, chaosWeightBias: 0 },
     { enemyId: archetypeIds.enemy.committedCharger, waveMovement: "chase", unlockAt: 0.60,
@@ -41,8 +42,8 @@ export const director = {
     // Small opening enemy. Keep drift for any authored milestone burst;
     // ordinary spawns chase but remain below player movement speed.
     {
-      enemyId: archetypeIds.enemy.fastFragile,
-      waveMovement: "drift",
+      enemyId: archetypeIds.enemy.clusterFodder,
+      waveMovement: "chase",
       unlockAt: 0,
       baseWeight: 100,
       weightGrowth: -0.6,
@@ -67,7 +68,7 @@ export const director = {
       weightGrowth: 2.6,
       chaosWeightBias: 0.5,
     },
-    { enemyId: archetypeIds.enemy.clusterFodder, waveMovement: "chase", unlockAt: 0.25,
+    { enemyId: archetypeIds.enemy.fastFragile, waveMovement: "drift", unlockAt: 0.28,
       introductionCount: 3, baseWeight: 2, weightGrowth: 0.5, chaosWeightBias: 0 },
   ],
 } as const satisfies DirectorTuning;

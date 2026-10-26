@@ -165,9 +165,7 @@ describe("enemy codex", () => {
     const bag = entries.find(({ id }) => id === archetypeIds.enemy.deathSpawner)!;
     expect(bag.name).toBe(ecoGuardianTheme.copy.content[bag.id].name);
     expect(bag.relations.map(({ enemyId, count }) => ({ enemyId, count }))).toEqual([
-      { enemyId: archetypeIds.enemy.swarmBasic, count: 2 },
       { enemyId: archetypeIds.enemy.fastFragile, count: 2 },
-      { enemyId: archetypeIds.enemy.slowDurable, count: 1 },
     ]);
     for (const entry of entries) {
       const definition = ecoGuardianTheme.enemies.find(({ id }) => id === entry.id)!;

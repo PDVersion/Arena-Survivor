@@ -1,3 +1,4 @@
+import { toolAcquisitions } from "./cleanup-tools";
 import { economy } from "./economy";
 import { unlocks } from "./unlocks";
 import type { UpgradeDefinition } from "../../../core/archetypes/contracts";
@@ -46,7 +47,7 @@ export const ecoGuardianTheme = defineTheme({
   weaponSlotCount,
   enemies,
   pickups,
-  upgrades: [...upgrades, ...curseOffers, weaponAcquisition, weaponEvolution, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
+  upgrades: [...upgrades, ...curseOffers, ...toolAcquisitions, weaponAcquisition, weaponEvolution, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
   shrines,
   curses,
   skills,

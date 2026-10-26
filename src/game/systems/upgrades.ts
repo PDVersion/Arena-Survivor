@@ -205,6 +205,7 @@ export function applyUpgrade<T extends UpgradeableState>(
   let world = state.world;
 
   for (const effect of upgrade.effects) {
+    if (effect.kind === "tool.upgrade") continue; // Resolved from earned picks by the tool runtime.
     if (effect.kind === "curse.accept") {
       const curse = curses.find((entry) => entry.id === effect.curseId);
       if (!curse) return state;
