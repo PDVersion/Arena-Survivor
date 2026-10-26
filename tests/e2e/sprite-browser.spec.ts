@@ -1,10 +1,11 @@
+import { activeTheme } from "../../src/game/content/active-theme";
 import { expect, test } from "@playwright/test";
 
 test("sprite browser freezes every frame, compares the set, filters and retains reviews", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/sprite-browser.html");
-  await expect(page.locator(".card")).toHaveCount(6);
+  await expect(page.locator(".card")).toHaveCount(Object.keys(activeTheme.tokens.sprites ?? {}).length);
   await page.locator('[data-id="character.starter"]').click();
   await expect(page.locator(".strip button")).toHaveCount(8);
   await page.getByRole("button", { name: "Frame 5", exact: true }).click();

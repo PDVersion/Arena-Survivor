@@ -1,3 +1,4 @@
+import { clickSettingControl } from "./settings-controls";
 import { expect, test, type Page } from "@playwright/test";
 import { archetypeIds } from "../../src/game/core/archetypes/ids";
 import { xpRequiredForLevelOn } from "../../src/game/systems/xp";
@@ -128,7 +129,7 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
     .toBe(true);
   expect((await snapshot(page))?.feedback?.muted).toBe(true);
 
-  // The minimap is the fourth row on the shared Settings page. Its opacity is
+  // The minimap control is resolved by key on the shared Settings page. Opacity is
   // a real session setting, not a visual-only test hook.
   await page.keyboard.press("Tab", { delay: 80 });
   await page.keyboard.press("Tab", { delay: 80 });
@@ -136,10 +137,7 @@ test("the pause menu cycles tabs, toggles settings, and never resumes by acciden
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab))
     .toBe("settings");
-  const canvas = page.locator("canvas");
-  const box = await canvas.boundingBox();
-  const scale = (box?.width ?? 1600) / 1600;
-  await canvas.click({ position: { x: 1230 * scale, y: 398 * scale } });
+  await clickSettingControl(page, "minimapOpacity");
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.settings?.minimapOpacity))
     .toBe(0.85);

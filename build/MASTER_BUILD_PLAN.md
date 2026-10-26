@@ -6260,3 +6260,36 @@ browser regression; current matching-head result pending at pre-push checkpoint.
 includes all generated assets, keeps26 style2 outputs review-only and cup live
 draft, and preserves indefinite knight pause. Remaining art/integration and
 external device evidence stay open. No new runtime change in this delivery slice.
+
+<a id="pr29-ci-repair"></a>
+## PR29 CI repair — local verification /2026-10-26
+
+Owner authorizes fixing failed run40245699120/b861e8c:135passes/6skips/13failures.
+Seven old settings-row clicks now use read-only rendered controls in MODE=test
+telemetry; counts/pages/resources derive from declared content; elite fracture
+uses stable role; clearing fixture stays inside tool reach and handles early
+terminal clock freeze. No gameplay/tuning/art/save/knight changes, retry/timeout
+increases or disabled assertions.13unique affected eco/generic cases pass
+cumulatively (9 + corrected4), one worker/zero retries;719units/75files,
+types/lint/build/production guard/whitespace, audit high gate pass (2existing
+moderate findings). [Report](performance/PR29_CI_REPAIR.md) owns first-run failures,
+production evidence and limits. Matching-head full CI remains pending until the
+actual automatic run finishes; no overall V0.4.4/device acceptance inferred.
+
+### Original pre-code bounded repair ownership (completed)
+
+#### PR29 CI repair —2026-10-26, claimed before code
+
+Owner requests fixing failed checks. Failed run40245699120 on b861e8c has135
+passes/6skips/13failures. Scope: outdated settings click coordinates after the
+new row/footer layout, fixed sprite/guide counts and atlas-only requests, a
+first-enemy fragmentation assumption, and clearing fixture range isolation.
+Ownership: pause-menu-ui.ts read-only control-point getter, existing test-only
+telemetry publication in run-scene.ts/menu-scene.ts and telemetry-bridge.ts;
+tests/e2e helper and affected difficulty/elite/G4/interface/overtime/phase-eight/
+presentation/save-portability/sprite-browser/sprites tests; matching status,
+master/progress/reconciliation and repair report. No tuning/art/save/theme change,
+no retry/timeout increase, no disabled assertions or frozen knight edits.
+Gate: focused failed eco/generic cases serial1worker/0retries, fullunits,
+typecheck/lint/build/production guard, whitespace; push samePR and inspect CI.
+Heavy full browser/stress regression remains assigned to automatic PR workflow.

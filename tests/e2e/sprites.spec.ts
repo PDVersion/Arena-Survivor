@@ -3,10 +3,9 @@ import { activeTheme } from "../../src/game/content/active-theme";
 
 const rosterIds = activeTheme.enemies.filter((enemy) => !("boss" in enemy && enemy.boss)).map((enemy) => enemy.id).sort();
 
-const spritePaths = [
-  "/sprites/eco-guardian/atlas.png",
-  "/sprites/eco-guardian/atlas.json",
-] as const;
+const spritePaths = [...new Set(Object.values(activeTheme.tokens.sprites ?? {}).flatMap((sprite) =>
+  sprite.path.endsWith("/atlas.png") ? [`/${sprite.path}`, `/${sprite.path.replace(/\.png$/, ".json")}`] : [`/${sprite.path}`],
+))].sort();
 
 test("the accepted player and enemy roster load together in a live run", async ({ page }) => {
   const errors: string[] = [];
@@ -24,7 +23,7 @@ test("the accepted player and enemy roster load together in a live run", async (
     performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
   );
   for (const path of spritePaths) expect(loaded).toContain(path);
-  expect(loaded.filter((path) => path.startsWith("/sprites/eco-guardian/"))).toHaveLength(2);
+  expect(loaded.filter((path) => path.startsWith("/sprites/eco-guardian/")).sort()).toEqual(spritePaths);
   expect(errors).toEqual([]);
 });
 

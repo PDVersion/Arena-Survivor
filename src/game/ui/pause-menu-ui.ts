@@ -9,7 +9,7 @@ import type {
   CodexSessionLine,
   CodexUpgradeEntry,
 } from "../systems/codex/describe-shrine";
-import { addUiText, configureUiContainer, uiPointer, uiViewport } from "./ui-text";
+import { addUiText, configureUiContainer, uiPointer, uiViewport, UI_SCALE } from "./ui-text";
 
 export const pauseTabs = ["stats", "upgrades", "world", "codex", "settings"] as const;
 export type PauseTab = (typeof pauseTabs)[number];
@@ -87,6 +87,18 @@ export class PauseMenuUi {
 
   get isOpen(): boolean {
     return this.container !== undefined;
+  }
+
+  /** Rendered control centres in logical canvas space for read-only UI inspection. */
+  get settingsControlPoints(): Readonly<Record<string, Readonly<{ x: number; y: number }>>> {
+    if (!this.isOpen || this.tab !== "settings") return {};
+    const centreX = this.scene.scale.width / 2, centreY = this.scene.scale.height / 2;
+    const controls = this.settingBounds.map(({ key, bounds }) => ({ key: String(key), bounds }));
+    if (this.manageSaveBounds) controls.push({ key: "manageSave", bounds: this.manageSaveBounds });
+    return Object.fromEntries(controls.map(({ key, bounds }) => [key, {
+      x: centreX + (bounds.centerX - centreX) * UI_SCALE,
+      y: centreY + (bounds.centerY - centreY) * UI_SCALE,
+    }]));
   }
 
   get activeTab(): PauseTab {

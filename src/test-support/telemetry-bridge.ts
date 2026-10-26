@@ -131,6 +131,7 @@ export interface ArenaTestSnapshot {
     terminalTitle: string | null;
     pauseTab: string | null;
     settings: RunSettings;
+    settingsControls?: Readonly<Record<string, Readonly<{ x: number; y: number }>>>;
     minimapShrines?: number;
     shrineTextResolution?: number;
     movementHintVisible: boolean;
@@ -355,6 +356,7 @@ export interface ArenaTestSnapshot {
     bestLevel: number;
     overlayOpen?: boolean;
     overlayTab?: string | null;
+    settingsControls?: Readonly<Record<string, Readonly<{ x: number; y: number }>>>;
     actions?: readonly string[];
     difficulty?: DifficultyId;
   }>;

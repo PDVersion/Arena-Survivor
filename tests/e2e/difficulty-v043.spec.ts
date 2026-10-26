@@ -1,3 +1,4 @@
+import { clickSettingControl } from "./settings-controls";
 import { expect, test } from "@playwright/test";
 import { activeTheme } from "../../src/game/content/active-theme";
 import { difficultyIds } from "../../src/game/core/archetypes/difficulty";
@@ -30,13 +31,13 @@ test("changing difficulty while paused takes effect on the next run", async ({ p
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.difficulty)).toBe("normal");
   const opening = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   await page.keyboard.press("Escape");
-  for (let index = 0; index < 4; index += 1) await page.keyboard.press("Tab");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
+  for (const tab of ["upgrades", "world", "codex", "settings"]) {
+    await page.keyboard.press("Tab");
+    await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe(tab);
+  }
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe("settings");
-  const canvas = page.locator("canvas");
-  const box = await canvas.boundingBox();
-  expect(box).not.toBeNull();
-  const scale = box!.width / 1600;
-  await canvas.click({ position: { x: 1230 * scale, y: 442 * scale } });
+  await clickSettingControl(page, "difficulty");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.settings.difficulty)).toBe("experienced");
   const paused = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(paused?.run?.difficulty).toBe("normal");

@@ -3419,6 +3419,7 @@ export class RunScene extends Phaser.Scene {
         overtimeOpen: Boolean(this.overtimeUi?.isOpen),
         terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
+        settingsControls: this.pauseMenu?.settingsControlPoints,
         settings: { ...getSessionSettings() },
         minimapShrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated).length,
         shrineTextResolution: this.shrineActors[0]?.textResolution ?? 0,

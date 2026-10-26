@@ -11,6 +11,14 @@ preparation/generation contracts and results. Do not execute their historical cl
 Knights and Magic is paused indefinitely until explicit owner reopening. No
 content/art/parity/dedicated acceptance work for that theme is selected.
 
+## PR29 repair checkpoint —2026-10-26
+
+Failed CI's13affected cases now pass scoped local verification. Read-only rendered
+control telemetry and fixture updates preserve real pointer/phase/ledger tests.
+[Report](performance/PR29_CI_REPAIR.md) owns causes and cumulative verification;
+[master](MASTER_BUILD_PLAN.md#pr29-ci-repair) holds completed ownership. Automatic
+matching-head CI remains pending; no sprite acceptance/integration is advanced.
+
 ## Current authority and ownership
 
 - [Style guide](SPRITE_STYLE_GUIDE.md): palette, shared prompt, continuity and

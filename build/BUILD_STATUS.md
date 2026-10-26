@@ -12,6 +12,18 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## PR29 CI repair — locally verified /2026-10-26
+
+Failed run40245699120 on b861e8c has135browser passes/6skips/13failures. Corrected
+stale settings coordinates, enemy/card/resource/page assumptions, elite role
+selection and clearing-fixture reach/early completion.13unique affected cases
+pass cumulatively, serial1worker/0retries;719units/75files, types/lint/build,
+production guard and whitespace pass. Audit high gate passes with2existing
+moderate findings. [Repair report](performance/PR29_CI_REPAIR.md) owns
+exact causes and evidence. SamePR29 receives repair; matching-head automatic
+full CI is pending at this local checkpoint. No gameplay/art/save/tuning/knight
+change, test skip/timeout/retry increase or new external-device acceptance.
+
 ## Owner-authorized V0.4.4 PR delivery —2026-10-26
 
 Owner requests pushing all created sprites/features toward main and creating a PR

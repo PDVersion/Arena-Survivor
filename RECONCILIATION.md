@@ -4270,3 +4270,25 @@ states and frozen knight files. Fresh719units/types/lint/build/six sprite checks
 two existing moderate Vitest findings. Use automatic PR workflow for consolidated
 browser regression; do not claim current-head CI from old local/browser evidence.
 No asset promotion, additional gameplay, device acceptance or deployment follows.
+
+### REC-128 — Evolving content and menu tests need semantic targets
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: PR29 CI/browser fixtures and read-only UI telemetry
+- Blocks: None
+
+Adding a settings row/footer moved old hardcoded clicks; adding cup invalidated
+fixed guide/card/request counts and the assumption that enemies[0] fragments.
+Use actual rendered control rectangles via existing test-only telemetry, stable
+content IDs, declared registry counts and exact atlas/standalone request sets.
+Keyboard tab steps must wait for observed state so several events cannot collapse
+into one JustDown update. Mode tests with a stationary player must keep enemies
+within tool reach; actual ranged harm/dodge has dedicated coverage. A terminal
+run freezes elapsed time, so waits for a simulated window must allow early
+completion and then assert the intended terminal outcome. Never fix these by
+raising retries/timeouts, disabling ranged damage or changing gameplay balance.
+
+13affected eco/generic cases pass cumulatively serially;719units and build/types/
+lint/production guard pass. Full new-head Actions remains pending. Frozen knight
+content and all art remain unchanged. [Report](build/performance/PR29_CI_REPAIR.md).

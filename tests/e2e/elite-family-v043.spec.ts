@@ -31,7 +31,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
       type Enemy = { elite?: { id: string }; targetId: string; health: number; maxHealth: number; moveSpeed: number; eliteSplitDepth: number; rewardMultiplier: number; sourceRewardMultiplier: number; movement: string; definition: { id: string }; eliteMarker?: { text: string; active: boolean }; advance(target: unknown, delta: number): void; destroy(): void };
       const actors = (): Enemy[] => Array.from(scene.enemies);
       const clear = () => { for (const enemy of actors()) enemy.destroy(); scene.eventQueue.clear(); };
-      const spawn = (eliteId: string, role = theme.enemies[0], reward = 1, depth = 0) => {
+      const baseRole = theme.enemies.find((e: { id: string }) => e.id === "enemy.swarm_basic");
+      const spawn = (eliteId: string, role = baseRole, reward = 1, depth = 0) => {
         const before = new Set(actors()); scene.spawnEnemy("shrine.spawn_surge", reward, role, { x: scene.player.x + 70, y: scene.player.y }, eliteId, undefined, "chase", "environment", depth);
         return actors().find((e) => !before.has(e))!;
       };
@@ -45,14 +46,14 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
       scene.commitEnemyDamage(shield, 2, "direct");
       observations.brokenShield = { lost: health - shield.health, ledger: scene.runState.statistics.totalDamage - ledger };
       clear();
-      const parentEnemy = spawn("elite.split", theme.enemies[0], 1.5);
+      const parentEnemy = spawn("elite.split", baseRole, 1.5);
       const parentReward = parentEnemy.rewardMultiplier;
       const rawXpBefore = scene.shrineXpDropped;
       scene.commitEnemyDamage(parentEnemy, 1000000, "direct");
       const queued = scene.eventQueue.pending.filter((e: { kind: string; provenance: { effectId?: string } }) => e.kind === "spawn.requested" && e.provenance.effectId === "elite.split");
       scene.processCausalEvents();
       const children = actors();
-      observations.split = { count: children.length, queued: queued.length, variants: children.map((e) => e.elite?.id), depth: children.map((e) => e.eliteSplitDepth), rewards: children.map((e) => e.rewardMultiplier), parentReward, parentXp: scene.shrineXpDropped - rawXpBefore, rawXp: theme.enemies[0].xpReward };
+      observations.split = { count: children.length, queued: queued.length, variants: children.map((e) => e.elite?.id), depth: children.map((e) => e.eliteSplitDepth), rewards: children.map((e) => e.rewardMultiplier), parentReward, parentXp: scene.shrineXpDropped - rawXpBefore, rawXp: baseRole.xpReward };
       for (const child of children) { scene.commitEnemyDamage(child, 1000000, "direct"); scene.commitEnemyDamage(child, 1000000, "direct"); }
       scene.processCausalEvents();
       observations.afterChildren = { live: actors().length, backlog: scene.eventQueue.snapshot().backlog, xp: scene.shrineXpDropped - rawXpBefore };
@@ -65,7 +66,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
       clear(); scene.enemyCapacity = 300;
       const inherited: Record<string, unknown> = {};
       for (const variant of ["elite.split", "elite.shield", "elite.acceleration"]) {
-        const enemy = spawn(variant, theme.enemies[0], 1, 1);
+        const enemy = spawn(variant, baseRole, 1, 1);
         const duplication = theme.shrines.find((s: { effectKind: string }) => s.effectKind === "duplicate_living");
         const shrine = new ShrineActor(scene, scene.player.x, scene.player.y, duplication, theme.tokens, "", "");
         scene.activateShrine(shrine); scene.processCausalEvents();
@@ -82,7 +83,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
         const offspring = actors().map((e) => ({ variant: e.elite?.id, depth: e.eliteSplitDepth }));
         clear();
         scene.runState = { ...scene.runState, skillLevels: { "skill.fracture": 1 } };
-        const parent = spawn(variant, theme.enemies[0], 1, 1);
+        const parent = spawn(variant, baseRole, 1, 1);
         scene.commitEnemyDamage(parent, 1000000, "direct"); scene.processCausalEvents();
         descendants[variant] = { offspring, expectedOffspring: spawnerRole.deathSpawns.reduce((n: number, d: { count: number }) => n + d.count, 0),
           fragments: actors().map((e) => ({ variant: e.elite?.id, depth: e.eliteSplitDepth, reward: e.rewardMultiplier })) };

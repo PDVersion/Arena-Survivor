@@ -1,3 +1,4 @@
+import { themeRegistry } from "../../src/game/content/theme-registry";
 import { writeFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
@@ -114,18 +115,19 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
         return { writesBefore, capabilities, firstEnemy, enemyCount: scene!.pauseMenuView().codexEnemies.length };
       }, { themeKey, quality });
       expect(initial.capabilities.texts.join("\n")).toContain("0/1"); expect(initial.capabilities.texts.join("\n")).toContain("0/25");
-      expect(initial.firstEnemy.writes).toBe(initial.writesBefore); expect(initial.enemyCount).toBe(10);
+      expect(initial.firstEnemy.writes).toBe(initial.writesBefore); expect(initial.enemyCount).toBe(themeRegistry.find((entry) => entry.key === themeKey)!.theme.enemies.length);
       expect(initial.firstEnemy.listeners).toBe(1);
       await page.keyboard.press("PageDown");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- bounded fixture
       const paged = await page.evaluate(() => (window as any).__G4__.guideSnapshot());
       expect(paged.page).toBe(1); expect(paged.listeners).toBe(1); expect(paged.scroll).toBe(0); expect(paged.writes).toBe(initial.writesBefore);
-      const allPages = await page.evaluate(() => {
+      const allPages = await page.evaluate((count) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- bounded page/layout inspection
-        return Array.from({ length: 10 }, (_, index) => (window as any).__G4__.guideIndex(index));
-      });
+        return Array.from({ length: count }, (_, index) => (window as any).__G4__.guideIndex(index));
+      }, initial.enemyCount);
       for (const entry of allPages) { expect(entry.bodyBottom).toBeLessThan(entry.navigationTop); expect(entry.texts.join("\n")).not.toMatch(/\d+\.\d{3,}/); expect(entry.writes).toBe(initial.writesBefore); }
-      const canPage = allPages[9];
+      const canIndex = themeRegistry.find((entry) => entry.key === themeKey)!.theme.enemies.findIndex((enemy) => enemy.id === "enemy.committed_charger");
+      const canPage = allPages[canIndex];
       expect(canPage.texts.join("\n")).toContain(themeKey === "eco-guardian" ? "Aluminium Can" : "Barrel Construct");
       await page.screenshot({ path: testInfo.outputPath("enemy-guide.png") });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- bounded fixture
