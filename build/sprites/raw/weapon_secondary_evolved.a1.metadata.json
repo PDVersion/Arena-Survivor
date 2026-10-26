@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-23",
+  "contentId": "weapon.secondary_evolved",
+  "attempt": 1,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/weapon_secondary_evolved.a1.png",
+  "sourceSha256": "0117ad9e170ab8c7b7d5ab23912962eff1a8157fc05f2ff713c3f2bae14d2173",
+  "prompt": "build/sprites/raw/weapon_secondary_evolved.a1.prompt.txt",
+  "promptSha256": "fdc400e99179b4f05a3e3ba8c121f3106e9504106c44c61b2c328a42dc9c3530",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    },
+    {
+      "path": "build/sprites/raw/weapon_secondary.a1.png",
+      "sha256": "88b7a6502c22dcefef6e1b7d978ca921a35f9b37d7a2cee1cbcfca43d3c13c39"
+    }
+  ],
+  "originalToolOutput": "/Users/pdv/.codex/generated_images/01a1661b-a76a-79a2-9839-731cfd4d1889/exec-4abc0b77-edb8-4a04-8b44-68acfcdafdae.png",
+  "status": "review",
+  "reviewOutput": "build/sprites/review/style2/weapon_secondary_evolved.a1.png",
+  "intendedFrameWidth": 128,
+  "intendedFrameHeight": 64,
+  "intendedFrames": 3,
+  "visualConstructionReferences": [
+    "https://www.bunnings.com.au/cleanstar-complete-vacuum-cleaner-hose-for-various-models-36mm-wet-dry_p1054850"
+  ],
+  "notes": "Generated first pass. Common fixed source grid, uniform scale and deterministic palette/binary-alpha/2px outline conversion only; no hand-painted repairs. Strict frame anchors, continuity, silhouette occupancy, UI composition and in-game acceptance remain pending. Production assets unchanged. Equipment uses practical familiar-object construction; vacuum function remains game abstraction.",
+  "deferredReviewFinding": "Format passes. Third frame alpha width112 vs114 in first two; exact ring/mount matching and footprint preservation versus base vacuum require later review."
+}

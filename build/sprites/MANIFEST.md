@@ -1,317 +1,94 @@
-# Sprite Manifest
-
-The working record for every sprite in the game: what was asked for, what came
-back, and whether it was accepted. One row per sheet.
-
-This is the file to open when generating. It answers "what do I paste in", "what
-did I paste in last time", and "what still needs doing", which are the only three
-questions that come up during an art pass.
-
-- The prompt and the rules: [`../SPRITE_STYLE_GUIDE.md`](../SPRITE_STYLE_GUIDE.md)
-- The milestone plan: [`../MASTER_BUILD_PLAN.md#v0-4-1`](../MASTER_BUILD_PLAN.md#v0-4-1)
-- The parallel-stream contract: [`../BUILD_PLAN_V0.4.md`](../BUILD_PLAN_V0.4.md)
-
-**Style version: `1`.** Every accepted sprite records the style version it was
-generated under. Bumping the style lock bumps this, and every sprite below the
-current version is `stale` and needs regenerating — see style guide §8.
-
----
-
-## Working across sessions
-
-**This file is the source of truth for what exists.** It is designed to be picked
-up cold — by a later session, or by a second agent working at the same time — and
-answer "what is done, what is being worked on, what is next" without reading
-anything else.
-
-### Claim before you generate
-
-Two agents generating the same sprite is wasted work, and two agents *accepting*
-different versions of the same sprite is worse. The protocol is one commit:
-
-1. Pick the highest-priority row whose Status is `todo`.
-2. Set its Status to `generating`, put your name or session id in **Claimed by**,
-   and commit **that line alone** with the message `sprites: claim {id}`.
-3. Generate, accept, and build.
-4. Set Status to `accepted`, fill in Attempts, Seed, and Style ver, and commit the
-   sprite files with it.
-
-A claim commit is a few bytes and takes seconds. It is the entire mechanism that
-lets this run in parallel, and skipping it is how two agents spend an hour on the
-same bottle.
-
-**A claim older than a day with no follow-up commit is stale** — take it, and note
-the takeover in the generation log.
-
-### One sprite, one commit
-
-Never batch several accepted sprites into one commit. One sprite per commit keeps
-the manifest line, the raw file, the accepted file, and the built output together,
-so any sprite can be reverted on its own when it turns out to be the odd one out.
-
-### Filenames
-
-`{id}` is the content id with dots replaced by underscores.
-
-| Stage | Path |
-| --- | --- |
-| Raw | `build/sprites/raw/{id}.a{attempt}.png` |
-| Accepted | `build/sprites/accepted/{id}.png` |
-| Built | `public/sprites/{theme}/{id}.png` |
-| Variants | `public/sprites/{theme}/{id}.c2.png`, `{id}.c3.png` |
-
-Raw files are attempt-numbered and never overwritten, so a rejected generation
-stays as evidence of what the prompt produced.
-
-## How to generate one
-
-1. Find the row. Copy the **style lock** from the style guide (§6.1), substituting
-   `{CANVAS}` from the Canvas column.
-2. Append the row's **Subject block** verbatim.
-3. Append the **sheet slot** (§6.3) with the row's Frames and Frame list.
-4. Generate. Save to `build/sprites/raw/{id}.a{attempt}.png`. Record the seed.
-5. Run the acceptance checklist (style guide §7). If it passes, copy to
-   `build/sprites/accepted/{id}.png` and set Status to `accepted`.
-6. `npm run sprites -- check`, then `npm run sprites -- build`.
-
-**To regenerate:** increment Attempts and save as `.a{n+1}.png`. Never edit a
-sprite by hand to fix it — fix the subject block, or the style lock if it is a
-roster-wide problem (style guide §8).
-
-**Status values:** `todo` · `generating` · `review` · `accepted` · `stale`
-
----
-
-## Checkpoint and next phase
-
-The 2026-09-02 V0.4.1 checkpoint accepts rows #1–5 and stops generation there.
-Rows #6–19 are intentionally left `todo` for **V0.4.4**, after the V0.4.2
-readability/pace/grabber redirect and V0.4.3 content growth. `todo` does not
-currently mean "available to claim": V0.4.4 must first compare every remaining
-row with the shipped content roster and revise IDs, subjects, canvas sizes, and
-frame lists where the game design changed.
-
-Rows #6 and #19 now describe the `weapon.starter` Cleanup Grabber. V0.4.2 settled
-its three presentation states as extend, contact, and retract. The old Sorting
-Pulse prompt remains below as parked knight-theme history. Do not claim or
-generate the replacement before V0.4.4 begins.
-
-Until that redirect is recorded, do not claim or generate rows #6–19. The five
-accepted sheets and their raw attempts remain the visual/style baseline.
-
----
-
-## Progress
-
-**5 of 19 accepted.** Update this line with every acceptance — it is what a cold
-session reads first.
-
-```
-todo        ██████████████░░░░░░  14
-generating  ░░░░░░░░░░░░░░░░░░░░   0
-review      ░░░░░░░░░░░░░░░░░░░░   0
-accepted    █████░░░░░░░░░░░░░░░  5
-```
-
-## Status
-
-| # | ID | Subject | Canvas | Frames | Detail | Style ver | Attempts | Seed | Claimed by | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | `enemy.swarm_basic` | Plastic Bottle | 32×32 | 4 | medium | 1 | 1 | n/a (built-in) | Codex | `accepted` |
-| 2 | `enemy.fast_fragile` | Microplastics | 24×24 | 4 | low | 1 | 3 | n/a (built-in) | Codex | `accepted` |
-| 3 | `enemy.slow_durable` | Glass Bottle | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
-| 4 | `enemy.death_spawner` | Bagged Waste | 48×48 | 4 | medium | 1 | 2 | n/a (built-in) | Codex | `accepted` |
-| 5 | `character.starter` | Environment Protector | 48×48 | 8 | high | 1 | 2 | n/a (built-in) | Codex | `accepted` |
-| 6 | `weapon.starter` | Cleanup Grabber — extend/contact/retract | 64×16 | 3 | medium | — | 0 | — | — | `todo` |
-| 7 | `pickup.experience` | Impact Point | 16×16 | 3 | low | — | 0 | — | — | `todo` |
-| 8 | `fragment.swarm_basic` | Bottle shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
-| 9 | `fragment.fast_fragile` | Bag scrap | 24×24 | 4 | low | — | 0 | — | — | `todo` |
-| 10 | `fragment.slow_durable` | Glass shard | 24×24 | 4 | low | — | 0 | — | — | `todo` |
-| 11 | `shrine.spawn_surge` | Landfill Breach | 64×64 | 4 | high | — | 0 | — | — | `todo` |
-| 12 | `shrine.greed` | Fast Fashion Boom | 64×64 | 4 | high | — | 0 | — | — | `todo` |
-| 13 | `shrine.multiplicity` | Single-Use Boom | 64×64 | 4 | high | — | 0 | — | — | `todo` |
-| 14 | `shrine.duplication` | Overproduction Order | 64×64 | 4 | high | — | 0 | — | — | `todo` |
-| 15 | `hazard.damage_zone` | Contamination Spill | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
-| 16 | `hazard.obstacle` | Debris Pile | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
-| 17 | `hazard.periodic_burst` | Methane Vent | 64×64 | 4 | medium | — | 0 | — | — | `todo` |
-| 18 | `overlay.elite` | Elite outline | per class | 1 | low | — | 0 | — | — | `todo` |
-| 19 | `weapon.starter_icon` | Cleanup Grabber icon | 32×32 | 3 | high | — | 0 | — | — | `todo` |
-
-Colour variants (`c2`, `c3`) are **not listed**: they are produced by hue rotation
-in `npm run sprites -- build` and never generated. See style guide §3.
-
----
-
-## Subject blocks
-
-Paste after the style lock. These are the authored half of each prompt, and the
-part to edit when a generation comes back wrong.
-
-### 1 · `enemy.swarm_basic` — Plastic Bottle · **baseline**
-
-```text
-SUBJECT: a discarded single-use plastic drink bottle, crumpled slightly, cap still on,
-faded peeling label band around the middle, seen as a small hostile creature-object.
-BASE COLOUR: #60a5fa — build the 4-step ramp from this exact hue.
-SILHOUETTE: tall rounded rectangle, narrower neck at the top, wider base, one dent
-in the left side so it is not symmetrical.
-DETAIL BUDGET: medium — cap, neck ridge, and label band are the only interior detail.
-```
-Frames: `idle upright; leaning forward mid-tumble; same as idle; crushed flat and split into two pieces`
-
-### 2 · `enemy.fast_fragile` — Microplastics
-
-```text
-SUBJECT: one compact cluster of typical multicolour microplastic waste pieces —
-three or four irregular snapped packaging shards fused into a readable hostile
-creature-object, with red, blue, yellow, and pale plastic regions. Not glitter,
-confetti, dust, sparkles, or detached motion particles.
-BASE COLOUR: #e2e8f0 — use this pale neutral for the shared outline ramp and keep
-the coloured shards saturated within the established eco-guardian palette.
-SILHOUETTE: one low jagged cluster with a broad base and several uneven angular
-peaks; every piece touches the cluster so the subject reads as one actor.
-DETAIL BUDGET: low — silhouette and distinct flat colour regions only.
-```
-Frames: `compact cluster; tipped forward in a quick scuttle; compact cluster; snapped apart into a few larger touching pieces`
-
-### 3 · `enemy.slow_durable` — Glass Bottle
-
-```text
-SUBJECT: a heavy glass bottle, thick-walled and squat, with a short neck and a
-moulded seam, seen as a slow armoured hostile creature-object.
-BASE COLOUR: #2dd4bf — build the 4-step ramp from this exact hue.
-SILHOUETTE: broad heavy base, sharply narrowing shoulder, short thick neck.
-Visibly heavier and wider than the plastic bottle at the same scale.
-DETAIL BUDGET: medium — moulded seam line, thick base ring, one bright highlight
-edge to read as glass rather than plastic.
-```
-Frames: `upright; rocking to one side; upright; shattered into large angular shards`
-
-### 4 · `enemy.death_spawner` — Bagged Waste
-
-```text
-SUBJECT: a sealed rubbish bag, over-full and bulging, tied off at the top with a
-twisted knot, contents straining against the film, seen as a hostile creature-object.
-BASE COLOUR: #c084fc — build the 4-step ramp from this exact hue.
-SILHOUETTE: heavy lumpy sphere, wider than it is tall, with a small twisted knot
-on top. The lumps must break the outline so it never reads as a plain circle.
-DETAIL BUDGET: medium — knot, two or three straining bulges, one taut crease.
-```
-Frames: `bulging and tied; leaning with the knot swinging; bulging and tied; split open with contents spilling out`
-
-### 5 · `character.starter` — Environment Protector
-
-```text
-SUBJECT: a field cleanup operative in practical protective work gear — hooded
-jacket, gloves, sturdy boots, a collection pack on the back — carrying a compact
-handheld sorting tool. Determined, capable, not military.
-BASE COLOUR: #4ade80 — build the 4-step ramp from this exact hue for the gear.
-SILHOUETTE: upright human figure, readable head-torso-legs at small size, the
-backpack breaking the silhouette on one side so facing is obvious.
-DETAIL BUDGET: high — this is the sprite the player looks at constantly. Gear
-straps, glove cuffs, boot soles, and the tool are all worth pixels. Face is
-suggested by two dark eye pixels only, no detailed features.
-```
-Frames (8): `walk contact; walk down; walk pass; walk up; idle standing; hit recoil; reserved dash; reserved hurt`
-
-### 6 · `weapon.starter` — Cleanup Grabber
-
-The primitive prototype settled the frame contract. V0.4.4 owns the final
-style-locked prompt; do not claim this row before that plan begins.
-
-```text
-SUBJECT: a practical litter pickup grabber with a long shaft, hand grip, and two
-clearly separated jaws. A cleanup tool, never a sword or gun.
-BASE COLOUR: #7dd3fc for the shaft with #4ade80 jaw accents.
-SILHOUETTE: long and narrow with a visibly forked pickup end.
-DETAIL BUDGET: medium — grip, shaft, hinge, and jaws only.
-```
-Frames: `extending; contact/closed jaws; retracting`
-
-### 7 · `pickup.experience` — Impact Point
-
-```text
-SUBJECT: a small floating collectible token representing recovered material credit —
-a faceted chip or shard with a clean bright centre.
-BASE COLOUR: #a3e635 — build the 4-step ramp from this exact hue.
-SILHOUETTE: compact angular diamond, clearly distinct from any round enemy.
-DETAIL BUDGET: low — two facets and a bright centre pixel cluster.
-```
-Frames: `resting; bright pulse; being collected, compressed and brightest`
-
-### 8–10 · Fragments
-
-Fragments are pieces of their parent (REC-067), and their sprites should say so:
-same palette and same material read, smaller and sharper-edged.
-
-```text
-SUBJECT: a broken-off piece of {a plastic drink bottle | a carrier bag | a glass
-bottle}, jagged and clearly a fragment of a larger object, tumbling.
-BASE COLOUR: {#60a5fa | #e2e8f0 | #2dd4bf} — build the 4-step ramp from this exact hue.
-SILHOUETTE: small, angular, deliberately irregular. Must read as part of the parent
-object rather than as its own creature.
-DETAIL BUDGET: low — one torn or fractured edge is the whole detail.
-```
-Frames: `tumbling A; tumbling B; tumbling A; disintegrating`
-
-### 11–14 · Shrines
-
-All four share a frame list and differ only in subject. They are static and
-one-per-arena, so they carry the most ornament in the game.
-
-```text
-SUBJECT: {see per-shrine line below}
-BASE COLOUR: #fb7185 — build the 4-step ramp from this exact hue for the active
-glow and marker elements; the structure itself may use one neutral material ramp.
-SILHOUETTE: a distinct standing arena marker, clearly interactive, readable from
-a distance as "go here". Taller than it is wide.
-DETAIL BUDGET: high — this is a landmark the player crosses the arena for.
-```
-- `shrine.spawn_surge` — **Landfill Breach**: a split in the ground with a buried refuse cell exposed beneath it, pressure venting from the gap
-- `shrine.greed` — **Fast Fashion Boom**: a toppling rack of discarded garments, tags still attached
-- `shrine.multiplicity` — **Single-Use Boom**: a dispensing crate endlessly spilling identical single-use items
-- `shrine.duplication` — **Overproduction Order**: a stamped shipping pallet with an order manifest pinned to it
-
-Frames: `dormant; pulsing ready; being activated, brightest; spent and dark`
-
-### 15–17 · Hazards
-
-```text
-SUBJECT: {see per-hazard line below}
-BASE COLOUR: {#fb923c | #23372a | #fb7185} — build the 4-step ramp from this exact hue.
-SILHOUETTE: ground-level arena feature, read from directly above, clearly not an
-enemy and clearly not walkable-through-safely.
-DETAIL BUDGET: medium — must telegraph its danger before it can hurt anyone.
-```
-- `hazard.damage_zone` — **Contamination Spill**: a spreading pool of contaminated runoff with a darker crusted edge
-- `hazard.obstacle` — **Debris Pile**: a heaped blockage of compacted mixed waste, solid and immovable
-- `hazard.periodic_burst` — **Methane Vent**: a cracked ground vent, gas building beneath it
-
-Frames: `telegraphing / warning; active; active alternate; expiring`
-
-### 18 · `overlay.elite` — Elite outline
-
-```text
-SUBJECT: an outline-only ring overlay marking an empowered enemy — no fill, just a
-bright hard-edged border that will be drawn on top of another sprite.
-BASE COLOUR: #fde047 — build the 4-step ramp from this exact hue.
-SILHOUETTE: a closed ring, evenly weighted, with the interior fully transparent.
-DETAIL BUDGET: low — weight and clarity only.
-```
-Frames: `1 — static`
-
-### 19 · `weapon.starter_icon` — Cleanup Grabber icon
-
-```text
-SUBJECT: a folded litter pickup grabber with a recognisable hand grip, hinge,
-shaft, and open jaws. Practical field equipment, not a weapon of war.
-BASE COLOUR: #7dd3fc with #4ade80 jaw accents; the grip may use one neutral ramp.
-SILHOUETTE: diagonal tool with forked jaws clearly separated from the grip.
-DETAIL BUDGET: high — appears in the Field Guide and on upgrade cards at rest.
-```
-Frames: `ready/open; gripping/closed; released`
-
----
+# Sprite manifest — accepted evidence and style 2 queue
+
+Knights and Magic is paused indefinitely until the owner explicitly reopens it.
+This queue covers `eco-guardian` only. [Plan](../SPRITE_PLAN_V0.4.4.md),
+[style/acceptance](../SPRITE_STYLE_GUIDE.md), [copyable prompts](../SPRITE_PROMPTS.md).
+
+**Live: five accepted style1 sheets plus one style2 Takeaway Cup draft.**
+Style2 catalog27 subjects /31 preserved attempts /0 owner-accepted subjects.
+The original26 are review-only. The new ranged cup alone is live by explicit
+owner request to draft and integrate it. Format checks/software gate pass;
+owner art/strict continuity acceptance is pending. Its normalized live copy is
+kept in accepted/ for rebuild parity; that path does not imply owner art approval.
+[Gallery](review/style2/index.html) · [cup sheet](../enemies/TAKEAWAY_CUP.md) ·
+[verification](../content/RANGED_ENEMY_REPORT.md). Existing five replacements stay
+pending and their shipped sources/atlas remain unchanged.
+
+Fresh2026-10-23 [file audit](review/style2/PROGRESS_REPORT.md):27/27 native outputs,
+102 cells and31 raw attempts verified; all27 format/hash/rebuild checks pass.
+No active generation claim. Art acceptance and live integration remain separate.
+
+## Existing accepted baseline (unchanged)
+
+| ID | Frame | Frames | Style | Latest raw attempt | Status |
+| --- | --- | --- | --- | --- | --- |
+| `enemy.swarm_basic` |32×32|4|1|a1|accepted, replacement pending|
+| `enemy.fast_fragile` |24×24|4|1|a3|accepted, replacement pending|
+| `enemy.slow_durable` |48×48|4|1|a2|accepted, replacement pending|
+| `enemy.death_spawner` |48×48|4|1|a2|accepted, replacement pending|
+| `character.starter` |48×48|8|1|a2|accepted, replacement pending|
+
+## Claim and acceptance workflow
+
+Before generation, select the next eligible row under the plan's ordered gate.
+Set target status `generating`, claimant/session and next attempt; commit that
+claim separately (`sprites: claim {id}`). One accepted subject per commit with
+raw source, prompt/reference evidence, configured build outputs and manifest row.
+No fresh generation follows just from the `todo` status; the baseline/pipeline
+phase must first be claimed. Do not take over an old claim without checking its
+actual progress and recording the handoff.
+
+Raw path: `build/sprites/raw/{id_with_underscores}.a{next}.png`, never overwritten.
+Record the EXACT assembled style+subject prompt, reference hashes, date, exposed
+model/seed (otherwise n/a), conversion recipe and acceptance observations in an
+attempt sidecar. A seed alone cannot reproduce stochastic generated art.
+Keep old accepted sheets until a replacement passes manual continuity/game-size
+review and configured deterministic checks. No hand-painted fixes.
+Status: `todo`, `generating`, `review`, `accepted`, `rejected`. Optional icons
+start `optional`, and become todo only when selected. Asset keys for icons are
+not content/saved IDs. Same-world-size regeneration never creates a new archetype.
+
+## Style 2 queue
+
+All rows use style2; attempts and claimant are empty until actual generation.
+Next attempt is computed from preserved raw files, not reset to a1 for replacements.
+Current descriptions and frame roles live in the catalog; immutable assembled prompts
+for actual generated attempts are preserved beside their raw sources.
+
+| ID | Subject | Target frame | Frames | Next attempt | Claimed by | Target status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `enemy.swarm_basic` | Plastic Bottle | 64×64 | 4 | a2 | Codex 2026-10-23 | review |
+| `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | review |
+| `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a4 | Codex root 2026-10-23 | review |
+| `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | Codex actors 2026-10-23 | review |
+| `character.starter` | Environment Protector | 96×96 | 8 | a3 | Codex actors 2026-10-23 | review |
+| `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.cluster_fodder` | Cigarette Butts | 48×48 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.gust_drifter` | Packets / Wrappers | 64×64 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.committed_charger` | Aluminium Can | 64×64 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.mini_boss` | Compacted Waste | 128×128 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `enemy.final_boss` | Dumping Colossus | 192×192 | 4 | a1 | Codex actors 2026-10-23 | review |
+| `weapon.starter` | Cleanup Grabber action | 128×32 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `weapon.secondary` | Cleanup Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `weapon.secondary_evolved` | Cyclone Vacuum action | 128×64 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `pickup.experience` | Impact Point | 32×32 | 3 | a1 | Codex equipment 2026-10-23 | review |
+| `shrine.spawn_surge` | Landfill Breach | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.greed` | Fast Fashion Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.multiplicity` | Single-Use Boom | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.duplication` | Overproduction Order | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `shrine.escalation` | Unmanaged Dump | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `hazard.damage_zone` | Contamination Spill | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `hazard.obstacle` | Debris Pile | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `hazard.periodic_burst` | Methane Vent | 128×128 | 4 | a1 | Codex world 2026-10-23 | review |
+| `icon.weapon.starter` | Cleanup Grabber icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | review |
+| `icon.weapon.secondary` | Cleanup Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | review |
+| `icon.weapon.secondary_evolved` | Cyclone Vacuum icon | 64×64 | 1 | a1 | Codex equipment 2026-10-23 | review |
+
+## Retired inventory
+
+Old fragment.* rows, Plastic Bag, four-site count, elite-overlay generation and
+Sorting Pulse are not this queue. Their original context is preserved in the
+[master history](../MASTER_BUILD_PLAN.md#sprite-style1-history).
 
 ## Generation log
 
@@ -332,6 +109,33 @@ seed and the style version, a sprite that gets lost cannot be remade to match.
 | 2026-09-18 | `character.starter` | 2 | 1 | n/a (built-in) | accepted | Deterministic normalization now retains the largest connected subject per frame, removing detached generator marks without hand-editing the preserved raw attempt; runtime uses the clean 0→1→2→1 walk cycle. |
 | 2026-09-21 | `enemy.fast_fragile` | 3 | 1 | n/a (built-in) | accepted | Replaced the obsolete Plastic Bag with a transparent four-pose Microplastics cluster; deterministic normalization preserves the multicolour material regions and compact connected silhouette. |
 
+| 2026-10-23 | `enemy.swarm_basic` | 2 | 2 | n/a (built-in) | review | New transparent four-pose source; fixed-grid64px review strip. Source style approved for batch references; final layout/live acceptance pending. |
+| 2026-10-23 | `enemy.fast_fragile` | 4 | 2 | n/a (built-in) | review | New connected multicolour four-pose source;48px fixed-grid review. Final alignment/live scale acceptance pending. |
+| 2026-10-23 | `enemy.slow_durable` | 3 | 2 | n/a (built-in) | review | New teal four-pose source;96px fixed-grid review. Intact source silhouettes clean; final alignment/live scale acceptance pending. |
+| 2026-10-23 | `enemy.death_spawner` | 3 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `character.starter` | 3 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.stationary_fragment` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.cluster_fodder` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.gust_drifter` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.committed_charger` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.mini_boss` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.final_boss` | 1 | 2 | n/a (built-in) | review | Parallel actors source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.spawn_surge` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.greed` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.multiplicity` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.duplication` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `shrine.escalation` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `hazard.damage_zone` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `hazard.obstacle` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `hazard.periodic_burst` | 1 | 2 | n/a (built-in) | review | Parallel world source/native strip preserved; familiar Australian appearance; individual/live review deferred by owner. |
+| 2026-10-23 | `enemy.slow_durable` | 4 | 2 | n/a (built-in) | review | Familiar wine-bottle alternative; previous angular a3 retained for comparison. |
+| 2026-10-23 | `weapon.starter` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `weapon.secondary` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `weapon.secondary_evolved` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `pickup.experience` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `icon.weapon.starter` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `icon.weapon.secondary` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
+| 2026-10-23 | `icon.weapon.secondary_evolved` | 1 | 2 | n/a (built-in) | review | Parallel equipment source/native strip preserved; familiar practical construction; individual/live review deferred. |
 
 ## Runtime inspection follow-up — 2026-10-12 Q2
 
@@ -352,3 +156,17 @@ The shattered frame intentionally contains angular fragments. No pixels, source
 attempts, atlas or acceptance state were changed. Future remediation must use the
 claim/prompt/regeneration/acceptance workflow after the roster gate, retaining the
 original sheet and matching world display size. See REC-111.
+
+## Owner-selected ranged addition —2026-10-23
+
+`enemy.ranged_attacker` / Takeaway Cup: Codex root claim8718bcb, a1–a4 generated;
+**a3 live draft, owner art acceptance pending**, next attempt a5. Seven64×64
+frames: idle/move/hit/death/prepare/release/recover. Review, normalized baseline
+and public PNG SHA256 `74fbd0a70ae6042f2e86d4c1fb95bd464ab07989075cdb96914456103b4512fe`.
+[Exact prompt](raw/enemy_ranged_attacker.a3.prompt.txt),
+[metadata](raw/enemy_ranged_attacker.a3.metadata.json),
+[recipe](raw/enemy_ranged_attacker.a3.review.json),
+[native checks](review/style2/enemy_ranged_attacker.a3.checks.json).
+One fixed equal grid with virtual transparent margins; measured paper-base
+anchors. Small generated idle/hit contour differences and extended art/pacing
+review remain open. No prior catalog art promoted. Knights and Magic stays paused.

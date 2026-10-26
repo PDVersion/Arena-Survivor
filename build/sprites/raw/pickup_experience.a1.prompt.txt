@@ -1,0 +1,46 @@
+Use case: stylized-concept
+Asset type: native pixel-art game sprite sheet
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: pickup.experience — Impact Point. Eco-guardian only.
+TASK: new proposed collectible strip. Logical baseline 16×16; final native frame 32×32px.
+SHEET: 3 equal cells, ONE horizontal 96×32px strip; no gutters.
+IN-GAME CONTRACT: current reward-derived diameter; unchanged by image resolution.
+DESCRIPTION: ONE small angular recovered-material credit token: compact lime diamond, two broad facets and a bright connected centre. Distinct from irregular microplastic and glass. Same outer silhouette and centre in all cells. No letters, number, halo or extra tiers. Runtime owns reward, magnetism, merge scale and collection.
+PALETTE (deep/shadow/base/highlight):
+Impact lime: #365314 #65a30d #a3e635 #d9f99d
+FRAMES, left to right, indexed from 0:
+0: idle facets.
+1: brighter internal facet pulse, unchanged size.
+2: collection highlight compressed inside same diamond envelope.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+INPUT IMAGE ROLES: Bottle and Player are style references only, not subjects. Exactly THREE matching angular lime diamond tokens across one row, equal square cells. No labels or numbers. Preserve identical outer contour in all three cells.

@@ -1,6 +1,130 @@
 # Build dates and status
 
-Updated **2026-10-22 (Australia/Sydney)**. This file replaces the scattered
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+## PR29 CI repair — locally verified /2026-10-26
+
+Failed run40245699120 on b861e8c has135browser passes/6skips/13failures. Corrected
+stale settings coordinates, enemy/card/resource/page assumptions, elite role
+selection and clearing-fixture reach/early completion.13unique affected cases
+pass cumulatively, serial1worker/0retries;719units/75files, types/lint/build,
+production guard and whitespace pass. Audit high gate passes with2existing
+moderate findings. [Repair report](performance/PR29_CI_REPAIR.md) owns
+exact causes and evidence. SamePR29 receives repair; matching-head automatic
+full CI is pending at this local checkpoint. No gameplay/art/save/tuning/knight
+change, test skip/timeout/retry increase or new external-device acceptance.
+
+## Owner-authorized V0.4.4 PR delivery —2026-10-26
+
+Owner requests pushing all created sprites/features toward main and creating a PR
+if missing. Fresh origin/main9e29ca6 confirms PR28 already merged; no open PR.
+Local codex/v0.4.4 contains18 subsequent phase/audit commits. Merge78cd2e7 brings
+main's merge marker into the feature branch without content conflicts or rewrites.
+Publication covers all27 generated subjects/31 preserved sources and prompts,
+vacuum/claw effects, default-off attack guides, Escape-menu quit, Takeaway Cup
+ranged live draft and consolidated plans.26 other style2 outputs remain review
+assets; publication does not imply owner art acceptance or new runtime bindings.
+
+Fresh719units/75files, explicit typecheck, lint, production build, six configured
+sprite checks,27 native/31 source/prompt recorded hashes and cumulative whitespace
+pass. Existing bundle-size advisory remains. npm audit --audit-level=high exits0
+with two moderate Vitest/mocker findings; pins unchanged, no bypass. Select the
+automatic PR workflow for the consolidated full browser regression; no repeated
+heavy local campaign. Matching-head CI/publication is pending at this pre-push
+checkpoint; actual PR URL/status is recorded in the task artifact after creation.
+No knight files changed. External Safari/browser-OS/older physical-GPU checks
+remain waived/unverified. Art approval/remaining integration and V0.4 overall
+stay open; no new gameplay scope or deployment is selected.
+
+## Latest progress audit —2026-10-23
+
+**All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved
+style2 raw attempts.** Fresh file/format/hash audit and deterministic rebuilds pass
+for every current native output. No selected generation is missing or still claimed.
+Takeaway Cup is the only live style2 draft;26 subjects remain review-only and owner
+art acceptance/integration remains open. Current runtime uses five original style1
+sheets plus cup, with Glass Shards aliasing old Glass death art.
+
+[Audit report](sprites/review/style2/PROGRESS_REPORT.md) lists remaining
+visual fixes, production bindings, consolidated acceptance and unselected future
+features. [Master checkpoint](MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23)
+records completion; [active plan](SPRITE_PLAN_V0.4.4.md) now contains only
+remaining execution. No runtime/art change or new browser/stress/device/remote-CI
+pass;719units/three cup browser cases remain the last runtime gate. Knight theme
+stays indefinitely paused. V0.4.4/overall V0.4 are not complete.
+
+## Earlier selected addition —2026-10-23
+
+**Takeaway Cup is a live eco ranged-enemy draft.** Seven64px frames include real
+prepare/release/recover animation; a marked locked-bearing coffee shot is dodgeable,
+finite and paused/cleared with the run. [Enemy sheet](enemies/TAKEAWAY_CUP.md)
+and [master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23) own behavior.
+719units/75files, types/lint/build, six sprite builds/checks,3 unique serial
+Chromium cases/five inspected images and30 eco throughput scenarios pass.
+[Report](content/RANGED_ENEMY_REPORT.md) records limits: model omits ranged
+combat; owner art/extended pacing review remains pending. Original26 style2
+subjects remain review-only. Old five sheets/atlas unchanged; no knight changes,
+save migration, publication, broad browser/stress/device or external acceptance.
+Next handoff: owner playtest/individual art fixes and remaining roster integration.
+
+## Earlier verified correction — 2026-10-23
+
+Vacuum suction/dust, off-by-default Show attack radius, snapping extra Grabber
+claws and Escape-menu Quit to Main Menu are implemented. Quitting abandons the
+active run without finish rewards; saved settings/progress remain.714 unit tests,
+types/lint/build and four scoped serial browser cases pass; five images inspected.
+[Master record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23) and
+[report](content/TOOL_PRESENTATION_REPORT.md) own evidence/limits. Generated sheets
+remain review assets; knight content stays paused and external checks unverified.
+
+## Earlier generation checkpoint — 2026-10-23
+
+**All 26 eco catalog subjects generated for review.** Three subagents completed
+23 remaining subjects simultaneously; 27 preserved style2 attempts include the
+wine-bottle alternative. The owner likes the initial designs and requests only
+complete generation now, with individual revisions/in-game testing later.
+[Gallery](sprites/review/style2/index.html),
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) and manifest own paths,
+known issues and evidence. All 26 native format checks, 27 deterministic rebuilds/
+hash checks, 36 sprite units, types/lint/build and whitespace pass. Gallery syntax
+and local asset targets checked, no browser run. All remain review, none accepted.
+Live/public/accepted assets unchanged; integration and live acceptance remain
+open. Familiar Australian construction notes guide subjects; Knights and Magic
+stays paused. External browser/device checks remain waived/unverified.
+
+## Earlier first-batch checkpoint — 2026-10-23
+
+First sprite generation batch is saved on `codex/v0.4.4`: Bottle a2,
+Microplastics a4 and Glass a3. Style2 generated/accepted 3/0; native four-cell
+review strips at 64/48/96px. Exact sources/prompts/recipes and
+[batch report](sprites/review/style2/BATCH_1_REPORT.md) are retained. Automated
+image-format gates pass; strict normalized footprint/idle-hit alignment remains
+open. Production assets are unchanged.35 sprite units, types/lint/build,
+5current-sheet checks and 12unchanged accepted/public hashes pass. No new browser/
+performance/device acceptance. Source art review is not live acceptance.
+
+## Previous preparation checkpoint — 2026-10-22
+
+Completed multistage V0.4.3 and Q6/G1–G4 records now live in the master only;
+completed G1–G4/Session21 prompts and redundant G2–G4 pointer plans are deleted.
+Current art authority: [V0.4.4](SPRITE_PLAN_V0.4.4.md),
+[shared style](SPRITE_STYLE_GUIDE.md), [26 subject prompts](SPRITE_PROMPTS.md).
+All five existing sheets will be regenerated at 2× width and 2× height, preserving
+world display/layout. Prompt preparation is selected; generation/integration and
+style2 acceptance remain unstarted. No new runtime/CI/merge/device claim.
+
+
+Updated **2026-10-23 (Australia/Sydney)**. This file replaces the scattered
 milestone date/status annotations. Git history establishes build/merge dates;
 phase reports establish the scope actually verified. A completed slice is not
 completion of its enclosing milestone, and a branch pass is not a merge.
@@ -17,8 +141,8 @@ completion of its enclosing milestone, and a branch pass is not a merge.
 | V0.4.1 | 2026-09-02, `0991a85` checkpoint | 2026-09-04, `5a0b55e` | Complete **five-sheet checkpoint**, not full roster; [master](MASTER_BUILD_PLAN.md#v0-4-1) |
 | V0.4.2 | Gameplay corrections by 2026-09-18, `3862082`; test fixes followed | 2026-09-21, `52db2ea` | Complete readable baseline; [master](MASTER_BUILD_PLAN.md#v0-4-2) |
 | V0.4.2.1 | 2026-09-21, `6e17cc0`; animation correction `7a3641c` | 2026-09-25, `103afa7` | Complete contact/material correction; [master](MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](BUILD_PLAN_V0.4.3.md) |
-| V0.4.4 | No build date | No merge | TBC; [sprite continuation](SPRITE_PLAN_V0.4.4.md), gated by roster reconciliation |
+| V0.4.3 | C1–C7 and CI repairs delivered on `codex/v0.4.3` | [PR #27](https://github.com/PDVersion/Arena-Survivor/pull/27) merged 2026-10-21 as `9837158`; head `c735cb8` | Delivered checkpoint; Q6 subsequently verified locally; [plan](MASTER_BUILD_PLAN.md#v0-4-3-source-plan) |
+| V0.4.4 | 2026-10-23 selected local slices | No merge | Full review roster generated; Takeaway Cup live draft/software slice verified, owner art acceptance and remaining integration open; [sprite plan](SPRITE_PLAN_V0.4.4.md) |
 | V0.4 overall | No overall completion date | No overall completion claim | In progress; [sequence/gates](BUILD_PLAN_V0.4.md) |
 
 V0.4.3's plan was introduced on 2026-09-17 (`6b1e56b`); that is a planning
@@ -50,7 +174,7 @@ and “next unbuilt increment” annotations are superseded by the evidence belo
 | C1 foundation | **Verified local slice, 2026-10-20** | Serializable slots, independent attack clocks and attack-owned hit data; [report](content/C1_FOUNDATION_REPORT.md). Foundation retained; the completed C1 gate is recorded below |
 | C1 second-tool gate | **Verified local phase, 2026-10-20** | Cleanup Vacuum/Runic Fan, owner-only upgrades, hit splash/ledger/number flush, simulator and bounded gameplay/readability/stress;509units/59files and15 unique affected browser cases. [Report](content/C1_SECOND_TOOL_REPORT.md) |
 | C2 evolution | **Verified local phase, 2026-10-20** | Same-slot Cyclone Vacuum/Runic Tempest after four reach picks, exact clock/modifier carryover;527units/60files, eight unique affected browser cases; [report](content/C2_REPORT.md) |
-| C3 shrines/curses | **Verified local phase, 2026-10-20** | One scheduled shrine and two run-local one-time curses per theme; visible resolved reward/cost, exact fractional XP/reset;547units/61files, seven unique affected browser cases and120 balance scenarios. [Report](content/C3_REPORT.md) |
+| C3 shrines/curses | **Verified local phase, 2026-10-20** | One scheduled shrine and two run-local one-time curses per theme; visible resolved reward/cost, exact fractional XP/reset;547units/61files, seven unique affected browser cases and 120 balance scenarios. [Report](content/C3_REPORT.md) |
 | C4 elite family | **Verified local phase,2026-10-20** | Both-theme split/shield/acceleration with inherited identity and finite causal work;561units/63files,six unique affected browser cases; [report](content/C4_REPORT.md) |
 | C5 bosses | **Verified local phase,2026-10-20** | Unique capped mini/final, live boss_fight and post-kill endless/clearing,583units/64files, six unique affected serial browser cases and60 coarse TTK scenarios; [report](content/C5_REPORT.md) |
 | C6 local profile | **Verified local phase,2026-10-20** | Schema2 local persistence, terminal lifetime stats, two theme-owned unlocks,595units/65files,10 unique affected serial browser cases; [report](content/C6_REPORT.md) |
@@ -76,7 +200,7 @@ deployment is authorized.
 
 ## Readable gameplay planning amendment — 2026-10-21
 
-[Four-phase roadmap](READABLE_GAMEPLAY_ROADMAP.md) records owner-requested genre
+[Four-phase roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) records owner-requested genre
 priorities, verified Australian waste/litter context, candidate enemies and measured
 rebalance requirements. Q6 remains next; G1–G4 are planned, not implemented or
 assigned a new milestone. No enemy stats or live roster changed in this amendment.
@@ -92,7 +216,7 @@ no browser suite was run and no new browser/device/CI pass is claimed.
 Owner explicitly requests publishing the planning amendment to main as a claim.
 G1 is claimed to Codex on future `codex/readable-gameplay-g1`, with Q6 still its
 first prerequisite. [Ownership/gates](MASTER_BUILD_PLAN.md#readable-gameplay-g1)
-and [start prompt](PHASE_G1_PROMPT.md) are durable. No Q6/G1 code is implemented
+and [start prompt](MASTER_BUILD_PLAN.md#readable-gameplay-g1) are durable. No Q6/G1 code is implemented
 or verified by this publication; G2–G4 and new art remain future work.
 
 PR27 is verified merged at2026-10-21T04:35:26Z as `9837158`, head `c735cb8`.
@@ -253,3 +377,23 @@ Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
 expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
 Matching-head automatic full Actions remains pending until its actual result.
 Existing external waiver/unverified state remains; no merge or art selection.
+
+
+## Documentation and sprite preparation — 2026-10-22
+
+REC-120 pauses Knights and Magic indefinitely until explicit owner reopening.
+REC-121 selects eco style2 prompts at twice both frame dimensions while keeping
+world size, layout and simulation fixed. [Prompt catalog](SPRITE_PROMPTS.md):
+23 primary sheets plus3 optional icons, including regeneration of all 5 existing
+sheets. Style2 generated/accepted 0/0; pipeline integration unstarted.
+
+Completed execution plans and original design/source context are in the master.
+Removed 5 completed prompt files and 5 redundant completed plan/roadmap files.
+Unselected proposals, product/exploration references, SAVE_DATA, evidence reports
+and current sprite plans remain separate. Historic report links are redirected;
+raw evidence and source digests are retained. No publication/merge/CI is run.
+
+Preparation checks: 489 local Markdown links resolve;26 prompt/manifest dimension/
+frame rows match; 298 source/test/script/public-asset hashes unchanged; whitespace
+passes. Runtime/build/browser checks were not rerun for Markdown-only work.
+Existing external browser/device checks remain waived/unverified.

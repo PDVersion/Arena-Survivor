@@ -1,0 +1,119 @@
+{
+  "source": "build/sprites/raw/character_starter.a3.png",
+  "sourceSha256": "2cd6506ee39a6f0b557f22276b270da90c031d4cac84b16e97caff0c910d108a",
+  "output": "build/sprites/review/style2/character_starter.a3.png",
+  "outputSha256": "fd28a38bad43fef6ccc8f9aad7db49e8c657d326cc680efd78fea7e324654ae0",
+  "width": 768,
+  "height": 96,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 19,
+      "top": 2,
+      "width": 67,
+      "height": 86,
+      "opaquePixels": 3659
+    },
+    {
+      "frame": 1,
+      "left": 21,
+      "top": 3,
+      "width": 66,
+      "height": 85,
+      "opaquePixels": 3488
+    },
+    {
+      "frame": 2,
+      "left": 21,
+      "top": 2,
+      "width": 66,
+      "height": 86,
+      "opaquePixels": 3483
+    },
+    {
+      "frame": 3,
+      "left": 20,
+      "top": 2,
+      "width": 66,
+      "height": 86,
+      "opaquePixels": 3515
+    },
+    {
+      "frame": 4,
+      "left": 20,
+      "top": 2,
+      "width": 65,
+      "height": 86,
+      "opaquePixels": 3436
+    },
+    {
+      "frame": 5,
+      "left": 17,
+      "top": 3,
+      "width": 62,
+      "height": 87,
+      "opaquePixels": 3568
+    },
+    {
+      "frame": 6,
+      "left": 11,
+      "top": 5,
+      "width": 77,
+      "height": 83,
+      "opaquePixels": 3659
+    },
+    {
+      "frame": 7,
+      "left": 17,
+      "top": 25,
+      "width": 65,
+      "height": 70,
+      "opaquePixels": 3019
+    }
+  ],
+  "recipe": {
+    "contentId": "character.starter",
+    "source": "build/sprites/raw/character_starter.a3.png",
+    "output": "build/sprites/review/style2/character_starter.a3.png",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "frames": 8,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 238,
+      "cellWidth": 271,
+      "cellHeight": 309,
+      "fit": "contain"
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#14532d",
+        "#22a34e",
+        "#4ade80",
+        "#8df0ac"
+      ],
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ],
+      [
+        "#713f12",
+        "#b7791f",
+        "#facc15",
+        "#fde68a"
+      ],
+      [
+        "#7c2d12",
+        "#c65d1a",
+        "#fb923c",
+        "#fdba74"
+      ]
+    ],
+    "outline": "#14532d"
+  }
+}

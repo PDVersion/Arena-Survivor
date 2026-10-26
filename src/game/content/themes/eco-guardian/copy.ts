@@ -195,6 +195,10 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.enemy.rangedAttacker]: {
+      name: "Takeaway Cup",
+      description: "Tips back, then flicks a coffee blob along the marked direction. Sidestep after it aims, then approach during recovery. Its attack is a game abstraction.",
+    },
     [archetypeIds.enemy.committedCharger]: {
       name: "Aluminium Can",
       description: "Watch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.",

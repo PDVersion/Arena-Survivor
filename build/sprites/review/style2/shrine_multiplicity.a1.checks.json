@@ -1,0 +1,80 @@
+{
+  "source": "build/sprites/raw/shrine_multiplicity.a1.png",
+  "sourceSha256": "df0b86b005d395f9b3abdf40f60968170e6edeeda880ae4f51486a7faa2f6d98",
+  "output": "build/sprites/review/style2/shrine_multiplicity.a1.png",
+  "outputSha256": "703e2bb1c4529780afe06bfdc4129d16efd9ff4e0bc20cb08aef2979a67cff78",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 4,
+      "top": 7,
+      "width": 121,
+      "height": 115,
+      "opaquePixels": 9218
+    },
+    {
+      "frame": 1,
+      "left": 5,
+      "top": 7,
+      "width": 120,
+      "height": 115,
+      "opaquePixels": 9221
+    },
+    {
+      "frame": 2,
+      "left": 4,
+      "top": 7,
+      "width": 120,
+      "height": 115,
+      "opaquePixels": 9273
+    },
+    {
+      "frame": 3,
+      "left": 4,
+      "top": 7,
+      "width": 120,
+      "height": 115,
+      "opaquePixels": 9220
+    }
+  ],
+  "recipe": {
+    "contentId": "shrine.multiplicity",
+    "source": "build/sprites/raw/shrine_multiplicity.a1.png",
+    "output": "build/sprites/review/style2/shrine_multiplicity.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 99,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#881337",
+        "#be3459",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ]
+    ],
+    "outline": "#3f4b26"
+  }
+}

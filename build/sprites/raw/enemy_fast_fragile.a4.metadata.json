@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-23",
+  "contentId": "enemy.fast_fragile",
+  "attempt": 4,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/enemy_fast_fragile.a4.png",
+  "prompt": "build/sprites/raw/enemy_fast_fragile.a4.prompt.txt",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/accepted/enemy_fast_fragile.png",
+      "sha256": "29f7e15764e963a9fa1d981c27c7e1db1353b6d26bf90426e5cab8a7796e9a3b"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    }
+  ],
+  "status": "review",
+  "notes": "Original2172x724 retained. Final alignment/live scale acceptance pending."
+}

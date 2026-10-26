@@ -1,0 +1,74 @@
+{
+  "source": "build/sprites/raw/enemy_gust_drifter.a1.png",
+  "sourceSha256": "de8a3667f7056324eacd0f64ca84e6e21b4fa28894a93a80bf5ac58e4d56acd2",
+  "output": "build/sprites/review/style2/enemy_gust_drifter.a1.png",
+  "outputSha256": "8b776c3f242ad927ccab8148fd0035844b65e9c3ff77056684db753a5d1d63a6",
+  "width": 256,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 7,
+      "top": 4,
+      "width": 55,
+      "height": 55,
+      "opaquePixels": 1446
+    },
+    {
+      "frame": 1,
+      "left": 7,
+      "top": 9,
+      "width": 55,
+      "height": 48,
+      "opaquePixels": 1370
+    },
+    {
+      "frame": 2,
+      "left": 3,
+      "top": 4,
+      "width": 54,
+      "height": 55,
+      "opaquePixels": 1448
+    },
+    {
+      "frame": 3,
+      "left": 0,
+      "top": 18,
+      "width": 59,
+      "height": 43,
+      "opaquePixels": 1291
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.gust_drifter",
+    "source": "build/sprites/raw/enemy_gust_drifter.a1.png",
+    "output": "build/sprites/review/style2/enemy_gust_drifter.a1.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 100,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#3b1762",
+        "#8050bd",
+        "#c084fc",
+        "#dcb5fd"
+      ],
+      [
+        "#713f12",
+        "#b7791f",
+        "#facc15",
+        "#fde68a"
+      ]
+    ],
+    "outline": "#3b1762"
+  }
+}

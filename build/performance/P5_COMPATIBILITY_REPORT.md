@@ -53,4 +53,4 @@ Final `typecheck`, **488 units / 57 files**, lint, build and whitespace pass. Ex
 
 Selected scope is now established; do not ask the owner to choose the list again. Still pending: actual Safari and Edge releases, current/previous branded release coverage where only engine builds ran, Windows/Linux platform combinations, and the physical older integrated-GPU target. No older hardware is connected/available in this workspace. Obtain a device/session or owner-run captured results for the selected missing combinations. Prior Linux Chromium CI remains historical evidence for `03965ef` only.
 
-P5 remains open with this substantive cross-engine slice accepted. P6/content remain gated; no implicit gate revision. Do not rerun accepted Chromium/native/long work for progress. Successor: [Session 13 / remaining gates](../SESSION_13_PROMPT.md).
+P5 remains open with this substantive cross-engine slice accepted. P6/content remain gated; no implicit gate revision. Do not rerun accepted Chromium/native/long work for progress. Successor: [Session 13 / remaining gates](../MASTER_BUILD_PLAN.md#v0-4-3-c1-foundation).

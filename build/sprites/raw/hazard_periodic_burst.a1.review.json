@@ -1,0 +1,31 @@
+{
+  "contentId": "hazard.periodic_burst",
+  "source": "build/sprites/raw/hazard_periodic_burst.a1.png",
+  "output": "build/sprites/review/style2/hazard_periodic_burst.a1.png",
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 111,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#881337",
+      "#be3459",
+      "#fb7185",
+      "#fecdd3"
+    ],
+    [
+      "#101c15",
+      "#1b2b20",
+      "#23372a",
+      "#51644c"
+    ]
+  ],
+  "outline": "#101c15"
+}

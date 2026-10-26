@@ -1,8 +1,21 @@
 # Master build plan — completed implementation record
 
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+
 This is the single build-plan record for work already delivered and verified.
 [BUILD_STATUS.md](BUILD_STATUS.md) owns milestone dates, completion/merge state
-and current acceptance limits. Ongoing work remains in [V0.4.3](BUILD_PLAN_V0.4.3.md),
+and current acceptance limits. Completed V0.4.3 records are below; ongoing work remains in
 [V0.4 sequence](BUILD_PLAN_V0.4.md), [V0.4.4 sprites](SPRITE_PLAN_V0.4.4.md) and
 the [optional roadmap](AUTONOMOUS_DEVELOPMENT_PLAN.md). No unfinished content or
 full-roster sprite target is promoted to completed work by this consolidation.
@@ -16,7 +29,32 @@ overrides them. No old device/performance result establishes current acceptance.
 The former individual plans are recoverable in Git history before this
 consolidation; duplicate plan files are removed rather than maintained in parallel.
 
+## Current verified progress checkpoint —2026-10-23
+
+**Sprite generation is complete:27/27 selected subjects,102 frames,31 preserved
+style2 attempts.** Audit independently checks all27 native formats, recorded
+source/output/reference hashes and deterministic rebuilds. Only Takeaway Cup is
+live style2 draft;26 remain review-only and owner art acceptance remains open.
+Five original style1 sheets still ship; Shards reuses old Glass death art.
+
+| Work | Current disposition |
+| --- | --- |
+| P0–P6 software, C1–C7, Q6/G1–G4 |Completed scoped records below; external limits retained|
+| All selected sprite generation |Complete;11enemies,1player,3tools,1pickup,5sites,3hazards,3icons|
+| Vacuum suction/claws, attack-radius setting, Escape quit |Implemented and scoped verified|
+| Takeaway Cup ranged enemy/sprite |Live draft/software verified; art and longer pacing review open|
+| Remaining art approval/integration and V0.4.4 acceptance |Open; active plan owns next steps|
+| Broad current-head CI/delivery and external device coverage |No new evidence in this audit; do not infer a pass|
+| Knights and Magic |Paused indefinitely until explicit owner reopening|
+
+[Audit report](sprites/review/style2/PROGRESS_REPORT.md) separates completed work,
+known individual art issues and optional future proposals. [Active sprite plan](SPRITE_PLAN_V0.4.4.md)
+owns remaining execution; [handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) stays current.
+This documentation/file audit changes no assets, runtime, tuning or save data.
+
 ## Contents
+
+- [Sprite progress audit —27/27 generated](#sprite-progress-audit-2026-10-23)
 
 - [V0.1 — First playable](#v0-1)
 - [V0.2 — Interaction milestone](#v0-2)
@@ -33,6 +71,11 @@ consolidation; duplicate plan files are removed rather than maintained in parall
 - [V0.4.3 — C3 shrines and curses](#v0-4-3-c3)
 - [V0.4.3 — C6 local profile and unlocks](#v0-4-3-c6)
 - [Readable gameplay — completed Q6 and G1–G4](#readable-gameplay)
+- [V0.4.3 original phase specification and delivery history](#v0-4-3-source-plan)
+- [Readable gameplay design context and sources](#readable-gameplay-design-context)
+- [Original performance session sequencing](#performance-original-sequencing)
+- [Superseded sprite style1 / inventory](#sprite-style1-history)
+- [Superseded content session estimates](#content-original-session-estimates)
 
 <a id="v0-1"></a>
 ## V0.1 — First playable
@@ -2044,7 +2087,7 @@ the runtime walk contract simply uses the three clean poses in a slower
   `npm run sprites -- check` before marking the correction complete.
 
 The old V0.4.2 content-growth plan had not started. It is now
-[`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md). The remaining sprite roster is
+[`BUILD_PLAN_V0.4.3.md`](./MASTER_BUILD_PLAN.md#v0-4-3-source-plan). The remaining sprite roster is
 V0.4.4 work, after this baseline and V0.4.3's content roster are settled.
 
 <a id="v0-4-2-product-decisions"></a>
@@ -2959,6 +3002,7 @@ on release-versus-build gate classification is pending; C1–C7 has not started.
 
 
 <a id="v0-4-3-c1-foundation"></a>
+<a id="v0-4-3-c1-foundation"></a>
 ### V0.4.3 C1 foundation — automatic slots and attack ownership (2026-10-20)
 
 Owner explicitly approves planned C1–C7 after verified software checks while
@@ -3341,7 +3385,7 @@ Historical P5/P6 and PR27 CI results do not certify this cumulative branch.
    open while its remaining sprite/acceptance work is unresolved.
 
 The [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) remains current. The
-[roadmap](READABLE_GAMEPLAY_ROADMAP.md) retains product priorities and Australian
+[roadmap](#readable-gameplay-design-context) retains product priorities and Australian
 source context; it no longer owns completed phase plans.
 
 <a id="readable-gameplay-q6"></a>
@@ -3444,7 +3488,7 @@ The unchecked/open language in Session21/delivery sections is historical.
 
 Claim: **Codex**, `codex/readable-gameplay-g1`; status **verified locally**,
 after Q6 prerequisite44585dd. See [G1_REPORT](content/G1_REPORT.md). No parallel roster or sprite
-work is claimed. The [start prompt](PHASE_G1_PROMPT.md) includes prerequisite
+work is claimed. The [start prompt](#readable-gameplay-g1) includes prerequisite
 recovery, ownership, implementation and verification.
 
 | G1 ownership | Paths permitted when needed |
@@ -3725,7 +3769,7 @@ disposition.288targeted units, final686units/72files, types/lint/build/whitespac
 G2C pass. Earlier G2A/G2B gates retain their own evidence. Broad/native/device
 limits remain as recorded, never silently passed. No push/PR/merge/art.
 
-[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written and reviewed. G3 remains unstarted;
+[PHASE_G3_PROMPT](#readable-gameplay-g3) is written and reviewed. G3 remains unstarted;
 its exact implementation ownership will be claimed at the next owner instruction.
 
 <a id="readable-gameplay-g3"></a>
@@ -3883,7 +3927,7 @@ No natural encounter timing or full-run survival acceptance is inferred.
 roster-derived correction passes. Initial typed/schedule/G1 fixture failures are
 recorded honestly in the report. Production emitted-marker static scan passes;
 no extra production/full browser or device campaign was run. G3 complete locally,
-G4 ready/unstarted with [reviewed handoff](PHASE_G4_PROMPT.md). No push/PR/merge/art.
+G4 ready/unstarted with [reviewed handoff](#readable-gameplay-g4). No push/PR/merge/art.
 
 <a id="readable-gameplay-g4"></a>
 ## Readable gameplay G4 — useful reviews and optional mastery reference /2026-10-22
@@ -4025,7 +4069,7 @@ Q6/G1–G4 disposition above and BUILD_STATUS own current status.
 #### Delivery and remaining acceptance disposition
 
 No unrelated content, dependencies, new sprites or optional work is selected.
-[Session21 handoff](SESSION_21_PROMPT.md) preserves current source and
+[Session21 handoff](#readable-gameplay-q6) preserves current source and
 authorized draft PR delivery. Q6 and the newly observed high-severity Vite audit
 finding remain open; no merge or deployment is authorized. External actual
 Safari/browserOS/older physical-device checks
@@ -4047,7 +4091,7 @@ to PR Actions; report its actual matching head/status, never a historical pass.
 #### Planned follow-on after Q6 — readable gameplay and rubbish roster
 
 Owner direction2026-10-21 is recorded in
-[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md). Q6 remains first and
+[READABLE_GAMEPLAY_ROADMAP.md](#readable-gameplay-design-context). Q6 remains first and
 unchanged. Follow-on G1 measures/rebalances current enemies against corrected
 tools, G2 trials outdoor litter behaviour, G3 refines encounters/sites, G4 adds
 mastery goals using existing surfaces. New candidates are not current runtime
@@ -4108,8 +4152,8 @@ PR27 merged the completed checkpoint as9837158. The owner now requests the
 readable-gameplay plan/claim on main plus a G1 start prompt. Q6 remains open with
 its existing checklist; the next implementation uses the follow-on
 `codex/readable-gameplay-g1` branch and separate Q6/G1 verified commits rather
-than reopening the merged milestone branch. [G1 ownership](READABLE_GAMEPLAY_ROADMAP.md)
-and [start prompt](PHASE_G1_PROMPT.md) own continuation. Old draft/local-only
+than reopening the merged milestone branch. [G1 ownership](#readable-gameplay-design-context)
+and [start prompt](#readable-gameplay-g1) own continuation. Old draft/local-only
 statements above describe historical delivery checkpoints, not this new request.
 
 ## PR28 roster CI repair — local verification / 2026-10-22
@@ -4124,3 +4168,2128 @@ Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
 expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
 Matching-head automatic full Actions remains pending until its actual result.
 Existing external waiver/unverified state remains; no merge or art selection.
+
+
+<a id="v0-4-3-source-plan"></a>
+## V0.4.3 — original phase specification and delivery history
+
+Consolidated 2026-10-22. P0–P6 software and C1–C7 are delivered; Q6/G1–G4
+results above supersede future-tense checkpoints below. External checks remain
+waived/unverified. This is historical evidence, not authority to restart phases.
+
+<a id="v043-source-v043--performance-readiness-and-selected-content-growth"></a>
+# V0.4.3 — Performance Readiness and Selected Content Growth
+
+This increment establishes browser performance readiness before selected content
+growth from [`PLAN.md`](./PLAN.md), after V0.4.2 proved the tighter, slower,
+real-world-tool baseline is worth growing.
+
+This plan was originally V0.4.2. It had not started when the readability,
+pacing, and real-world starter-weapon redirect was accepted, so that redirect
+now owns V0.4.2 and content growth moves back one number intact.
+
+Begin only after V0.4.2 has merged and its play-test gate has accepted the new
+camera, pace, and cleanup-grabber baseline. Read [`BUILD_PLAN_V0.4.md`](./BUILD_PLAN_V0.4.md)
+first. In particular: **never read a sprite from a system, and never derive a
+radius, hitbox, or separation value from one.** New content added here renders
+as a primitive until V0.4.4 sprites the reconciled roster, and that is correct.
+
+<a id="v043-source-execution-authority"></a>
+## Execution authority
+
+[BUILD_STATUS.md](BUILD_STATUS.md) is the single date/status summary. Completed
+Q1–Q5 and P0–P4 records, plus the verified P5 slices, are consolidated in
+[MASTER_BUILD_PLAN.md](MASTER_BUILD_PLAN.md#v0-4-3-corrections). On 2026-10-20 the owner explicitly approves planned C1–C7 in dependency order after the verified software gate, with missing browser/device acceptance initially release-blocking rather than build-blocking. Session15 explicitly temporarily waives those outstanding external checks; they remain unverified, never passed. C1–C7 local gates are verified; Session21 identifies player-motion/cone-feedback corrections and selects vacuum target-cap growth for the next bounded correction gate below. Q6 subsequently passed in `44585dd`; G1–G4 then passed through `a10e3eb`. See the [completed log](MASTER_BUILD_PLAN.md#readable-gameplay); earlier future-tense sections below are historical. F16 is delivered and other optional proposals remain unselected.
+
+<a id="v043-source-performance-prerequisites--p0p6"></a>
+## Performance prerequisites — P0–P6
+
+Use one milestone branch, `codex/v0.4.3`, with the following phase commits and
+ownership. Each phase also owns matching tests, its checklist, progress, and
+material reconciliation updates. Add any newly profiled path to its ownership
+before editing. Sprites, roster claims, product/content changes and persistence
+are excluded from these performance phases.
+
+| Phase | Ownership / permitted scope | Commit subject |
+| --- | --- | --- |
+| P0 | Active plans, `AGENTS.md`, `README.md`, `AUTONOMOUS_PROGRESS.md`, `RECONCILIATION.md`, roadmap status; known lint defect in `tests/unit/weapons/collection-sweep.test.ts`; `src/test-support/**`; frame sampling only in `src/game/scenes/run-scene.ts`; `tests/unit/performance/**`, `tests/e2e/frame-measurements.spec.ts`; opt-in `scripts/performance.ts`, measurement command only in `package.json`, measurement config/tests and `build/performance/**` reports | `build(v0.4.3): establish browser performance measurements` |
+| P1 | Telemetry call sites in scenes, main boot failure, test-support bridge, architecture/production guard tests; measurement reports/script and bench-only load/cap options per Q2 | `perf(v0.4.3): avoid production telemetry work` |
+| P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests; measured dependency: opt-in `scripts/performance.ts` and `build/performance/P2*` profiles/reports to compare visible/hidden/paused interface work without runtime diagnostics | `perf(v0.4.3): reduce repeated interface work` |
+| P3 | Profiled existing spatial/separation/effects/events/weapons hot paths and scene call sites; exact measurement dependencies: `scripts/performance-p3.ts`, `scripts/performance.ts`, `src/game/systems/statistics/run-statistics.ts`, `src/game/systems/effects/on-kill-effects.ts`, corresponding `tests/unit/statistics/**`, existing `tests/e2e/phase-{five,nine}-v03.spec.ts` and compound stress gates, and `build/performance/P3*`; measurement-only archived theme selection/fixture controls, no production content changes | `perf(v0.4.3): reduce measured simulation overhead` |
+| P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests; exact dependencies: `scripts/performance.ts`, `src/game/ui/{minimap-ui,pause-menu-ui}.ts`, setting dispatch in `src/game/scenes/{run,menu}-scene.ts`, `src/game/state/settings-state.ts`, `src/game/core/archetypes/tuning.ts`, both themes’ `view.ts`, `src/game/content/define-theme.ts`, matching settings/content/UI units, `tests/fixtures/alternate-theme.ts`, `tests/e2e/presentation-v043.spec.ts`, and `build/performance/P4*`. Repository testing policy in `AGENTS.md` follows owner’s limited-local-browser instruction | `feat(v0.4.3): add a lightweight presentation mode` |
+| P5 | Entity/feedback/scene lifecycle cleanup, restart tests, measured boot/asset-loading improvements outside the sprite pipeline. Session 6 exact dependencies: `src/game/scenes/run-scene.ts`, `src/game/entities/pickup-actor.ts`, `tests/unit/lifecycle/**`, `tests/e2e/lifecycle-v043.spec.ts`, `tests/fixtures/phaser-runtime.ts`, `build/performance/P5_LIFECYCLE_REPORT.md`, progress/reconciliation. Session 7 exact dependencies: `scripts/performance-startup.ts`, `src/main.ts`, `src/style.css`, `src/game/start-game.ts`, `src/game/scenes/boot-scene.ts`, `src/game/systems/boot/**`, `src/game/core/archetypes/contracts.ts`, `src/game/content/define-theme.ts`, both themes’ `copy.ts`, `tests/fixtures/alternate-theme.ts`, `tests/unit/boot/**`, affected architecture tests, and `build/performance/P5_STARTUP*`. Session 8 acceptance dependencies: `build/performance/P5_ACCEPTANCE_REPORT.md`, current/successor session handoffs, README handoff/status links, roadmap/status/master/progress and existing REC-119 continuation. Session 9 exact acceptance dependencies: `tests/e2e/native-visibility-v043.spec.ts`, `tests/unit/lifecycle/focus.test.ts`, `build/performance/P5_NATIVE_VISIBILITY.json`, acceptance report and current/successor handoffs. Session 10 owner-authorized consolidated campaign: `tests/e2e/lifecycle-campaign-v043.spec.ts`, `tests/fixtures/p5-campaign.{html,ts}`, `build/performance/P5_CAMPAIGN*`, acceptance/status/progress/master/reconciliation and successor handoff. Session 12 also owns `tests/native/firefox-compatibility.py`, `build/performance/P5_FIREFOX*` for two bounded unpatched Mozilla application smoke checks, without system installation/dependency changes. Session 12 P5 follow-up adds opt-in Edge executable/report selection in `tests/playwright.compatibility.config.ts`, native Safari driver support in `tests/native/safari-compatibility.py` and `build/performance/P5_{EDGE,SAFARI}*`. Session 11 owner-selected-by-delegation compatibility dependencies: `tests/playwright.compatibility.config.ts`, `tests/e2e/compatibility-environment-v043.spec.ts`, existing boot/phase-two/gameplay-rate/presentation/lifecycle specs (unchanged assertions), `build/performance/P5_COMPATIBILITY*` and acceptance/status/master/progress/reconciliation/handoffs. One bounded serial cross-engine run on available M5; no physical-device inference or P6. Session 10 authorization covered one serial M5 lifecycle campaign only. No runtime change without a reproduced defect. Existing sprite pipeline stays unchanged; startup changes require observed failure/cost | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P6 | Performance reports, browser harness, documentation and narrow regression fixes from the combined gate. Session 12 exact dependencies: `scripts/build-device-pack.ts`, `tests/device-pack/**`, `tests/e2e/device-pack-v043.spec.ts`, `tests/playwright.device-pack.config.ts`, `tests/e2e/phase-{five,eight-v03}.spec.ts`, `scripts/performance.ts` key-input holds, `tests/native/safari-compatibility.py`, `build/performance/P6*`, P5 acceptance/status/master/progress/reconciliation/handoffs. Owner explicitly requests starting P6 while finishing P5; software preparation may proceed, but no missing physical/browser evidence is marked passed and missing acceptance stays open (the later 2026-10-20 content-order revision is below). | `test(v0.4.3): verify browser performance readiness` |
+
+- [x] P0 — explicit raw wall-frame versus simulation units, focused half-rate /
+  hit-stop regression, lint repair, types/units/lint/build and browser boot/load
+  baseline; bounded percentiles / update CPU / metadata reporting if time permits.
+- [x] P1 — guard snapshot construction outside test mode; verify production
+  interface exclusion and working test snapshots; compare equivalent profiles.
+- [x] P2 — profile minimap/HUD, reduce confirmed repeated work; validate visibility,
+  resize, opacity, pause/restart and prompt critical status updates.
+- [x] P3 — improve measured simulation hotspot; preserve targets, causal order,
+  exact rewards/ledger, caps and stress; skip speculative optimization.
+- [x] P4 — measured Default/Low enemy minimap geometry; affected local gate accepted;
+  simulation, visible world and telegraphs remain equivalent. Read `SAVE_DATA.md`
+  before serializable settings; presentation budgets stay theme-owned.
+- [x] P5 — recorded lifecycle/startup/software slices verified; outstanding external checks temporarily waived by owner in Session15. This closes the current gate by explicit disposition, not by new physical/browser evidence.
+- [x] P5 lifecycle slice / Session 6 — REC-117 overflow tracking, paid-collect-cue
+  reward race and stopped-scene references; both-theme deterministic coverage and
+  bounded serial Phaser collection/stop/start ownership checks (REC-119).
+- [x] P5 startup affected gate / Session 7 — cold/warm transfer/render/upload/decode
+  evidence; WebGL/Canvas, unsupported graphics and declared asset/module network
+  failures with retry. See REC-010 continuation and `performance/P5_STARTUP_REPORT.md`.
+- [x] P5 acceptance inventory / Session 8 — inspected scenario assertions and
+  recorded covered/partial/pending evidence in `performance/P5_ACCEPTANCE_REPORT.md`.
+  Native tab-switch probe did not reach hidden state; no runtime defect reproduced.
+- [x] P5 native-event slice / Session 9 — actual same-window Chromium tabs with
+  focus emulation absent, trusted events, frozen hidden clock/spawns/queues and
+  7.493 ms first observed advancement; 14 both-theme deterministic state guards.
+  This brief light case does not accept native overlays, pending work or long play.
+- [x] P5 owner-authorized consolidated lifecycle / Session 10 — 20-minute M5
+  ownership campaign, authored 300,000 ms at 0.5, five-minute endless extension,
+  ten short terminal cycles, native overlays/pending spawn, ten presentation/
+  resize changes, twelve clean create/stops, thirteen actual closed AudioContexts.
+  Test-only survival/focus aids and measurement limits are explicit in
+  `performance/P5_CAMPAIGN_REPORT.md`; no runtime fix or broader readiness claim.
+- [x] P5 Session 11 available desktop-engine compatibility — owner delegates support selection; 52 serial focused checks pass in installed Chrome/pinned Chromium/Firefox/WebKit, with four final guard-only probes. Test input/resize readiness corrections only; no runtime defect. See `performance/P5_COMPATIBILITY_REPORT.md`.
+- [x] P5 Session12 branded follow-up —26 Edge155/154 focused passes and two unpatched headed Firefox158/157.0.1 smokes. Safari session blocked by its setting; no runtime change. See `performance/P5_COMPATIBILITY_FOLLOWUP.md`.
+- [x] P5 remaining external check disposition — Session15 owner temporarily waives missing actual Safari, selected browser/OS combinations and representative older integrated-GPU checks. Waived/unverified, never passed; prior source/aided-campaign limits remain. No repeated campaign.
+- [x] P6 software/readiness-tool slice —96 browser/stress passes/six explicit opt-in skips, zero retries;488units, types/lint/build/audit; portable device kit verified;18 warmed Default/Low windows at60/150/300, frozen sources. See `performance/P6_READINESS_REPORT.md`.
+- [x] P6 external check disposition — Session15 owner temporarily waives the same missing browser/platform/physical checks. Software verified; external checks waived, not accepted evidence. No older machine is available.
+- [x] Owner content-order revision (2026-10-20) — explicit “yes proceed” permits C1–C7 after verified software checks while missing acceptance remains release-blocking. No evidence was waived by that initial revision; the later explicit Session15
+  temporary external-check waiver supersedes its release classification.
+
+P0's short gate is `npm run typecheck`, `npm test -- --run`, `npm run lint`,
+`npm run build`, serial boot/load/frame-measurement browser tests and the existing
+serial stress path. Run `npm run test:e2e:ci` before committing P0. A blocked
+browser check has its actual reason and rerun command recorded; it does not become
+a passing gate. Later phases use affected units/browser tests, production build
+and serial stress where relevant; P6 runs the full roadmap verification suite.
+Use `npm run balance` for actual pacing/tuning changes and audit for dependency
+changes/milestone delivery. Hardware thresholds never enter required CI.
+
+Performance reports state device/OS/browser/renderer, viewport, mode, build,
+scenario, gameplay rate and sample exclusions. Warm up, sample sustained cases
+for at least 60 seconds and repeat comparisons three times serially. Targets are
+provisional: desktop p95 ≤20 ms, older device / worst supported 300-load p95
+≤40 ms; intervals >100 ms below 1%, plus p99/max. Profile production separately
+from test instrumentation. Throttled Chromium is comparative evidence only.
+P0–P6's software gate precedes C1; missing physical hardware leaves acceptance
+pending and must be reported before describing older-device readiness as complete.
+
+<a id="v043-source-content-scope-from-planmd"></a>
+## Content scope, from PLAN.md
+
+| # | Item | Phase | Notes |
+| --- | --- | --- | --- |
+| 1 | Additional weapons | C1 | Needs weapon slots first — the delivery-kind union deferred in REC-051 |
+| 2 | Weapon evolution | C2 | Depends on slots and on the upgrade tiers from REC-065 |
+| 3 | Additional shrine types | C3 | The arrival scheduler from REC-059 already takes any number |
+| 4 | Additional curses | C3 | New content category; the `world.modify` effect is the existing seam |
+| 5 | Elite modifiers | C4 | Today there is one baseline elite (REC-037); this makes it a family |
+| 6 | Mini-boss | C5 | Fires at a director milestone |
+| 7 | Final boss | C5 | Replaces the timer as the run's climax |
+| 8 | Unlockable weapons | C6 | Needs persistence |
+| 9 | Unlockable upgrade pool | C6 | Needs persistence |
+| 10 | Browser-local profile persistence | C6 | [`SAVE_DATA.md`](./SAVE_DATA.md) |
+| 11 | Export progress as encoded text | C7 | `SAVE_DATA.md` |
+| 12 | Import with validation, preview, backup, migration | C7 | `SAVE_DATA.md` |
+| 13 | Advanced statistics | C6 | The session slice from REC-062 is the foundation |
+| — | ~~Endless mode~~ | **Done** | Shipped early in V0.3.1 — REC-064, REC-068 |
+
+<a id="v043-source-phases"></a>
+## Phases
+
+Ordered by dependency, and sized so each ends in something playable.
+
+<a id="v043-source-c1--weapon-slots-and-a-second-weapon"></a>
+### C1 — Weapon slots and a second weapon
+
+**Owner gate-order revision — 2026-10-20:** the owner explicitly replied “yes
+proceed” to continuing planned C1–C7 with missing browser/device acceptance
+release-blocking rather than build-blocking. P5 and P6 acceptance stay open;
+software readiness is verified. This historical ordering note is superseded by
+Session15's explicit temporary external-check waiver below. No additional
+optional features or sprites are selected.
+
+C1 foundation ownership (claim before edits): `src/game/core/archetypes/contracts.ts`,
+`src/game/content/define-theme.ts`, both production themes' `{weapons,index}.ts`,
+`src/game/state/run-state.ts`, `src/game/systems/weapons/{weapon-loadout,resolve-weapon}.ts`,
+`src/game/entities/projectile-actor.ts`, `src/game/scenes/run-scene.ts`,
+`tests/fixtures/alternate-theme.ts`, `tests/unit/weapons/weapon-loadout.test.ts`,
+`tests/unit/content/theme.test.ts`, `tests/unit/run-state/run-state.test.ts`,
+`tests/e2e/weapon-slots-v043.spec.ts`, and plan/status/master/progress/README/
+`build/content/C1_FOUNDATION*`, acceptance reports/reconciliation/handoffs. This first verified slice establishes
+serializable slot state, independent scheduling and actual hit-source ownership.
+The second tool, owned upgrades, on-hit splash, balance and combined C1 gate
+remain subsequent C1 slices; C2 cannot begin before C1 passes.
+
+C1 Session14 ownership (2026-10-20, claimed before runtime edits):
+`src/game/core/archetypes/{ids,contracts,effects}.ts`, `src/game/content/define-theme.ts`,
+both themes' `{weapons,upgrades,index,copy}.ts`, `src/game/state/{run-state,statistics}.ts`,
+`src/game/systems/upgrades.ts`, `src/game/systems/upgrades/{describe-upgrade,upgrade-tiers}.ts`,
+`src/game/systems/weapons/{resolve-weapon,weapon-loadout,melee-stab,on-hit-splash}.ts`,
+`src/game/systems/statistics/run-statistics.ts`, `src/game/systems/effects/on-kill-effects.ts`, `src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`src/game/entities/{projectile-actor,cone-attack-actor}.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/ui/pause-menu-ui.ts`, `src/test-support/telemetry-bridge.ts`,
+`tests/fixtures/alternate-theme.ts`, corresponding units in `tests/unit/{weapons,upgrades,statistics,content,ui-selectors,simulation}/**`,
+`tests/e2e/{second-tool-v043,weapon-slots-v043,grabber-weapon}.spec.ts`,
+`scripts/balance.ts`, `build/content/C1_SECOND_TOOL*`, active plan/status/master,
+README/progress/reconciliation/current+successor handoffs, `build/AUTONOMOUS_DEVELOPMENT_PLAN.md`,
+`build/performance/P5_ACCEPTANCE_REPORT.md`, and the C1 sections of
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP. Reuse melee/projectile:
+add optional authored cone geometry to melee, bounded on-hit splash, owner-local
+progression and level-up acquisition. No factual education claim or bitmap work.
+
+- [x] C1 foundation — slot state/resolution, independent clocks and hit ownership.
+- [x] C1 second tool and weapon-conditioned upgrade offers.
+- [x] C1 on-hit splash ledger, simulator, balance/readability/affected stress gate.
+
+C1 gate verified locally on2026-10-20:509units/59files, types/lint/build/diff,
+15 unique affected serial browser cases (final feedback subset5), both themes/
+all models/all difficulties balance. Completed record and exact limits are in
+[master](MASTER_BUILD_PLAN.md#v0-4-3-c1) and
+[report](content/C1_SECOND_TOOL_REPORT.md). C2 is verified in Session15 below; C3 is verified in Session16; C4 verified in Session17; C5–C7 are verified below. The subsequent owner
+waiver supersedes the missing P5/P6 external checks' release-blocking classification.
+
+The delivery-kind union deliberately deferred in REC-051, because its shape
+depended on decisions slots had not made yet. Slots make it decidable: a melee
+weapon declares an arc and a target cap instead of a projectile speed and
+lifetime.
+
+V0.4.2 now lands that union early for the Cleanup Grabber. C1 must begin by
+reading the shipped contract and extending it rather than creating a second
+delivery abstraction. In the eco theme the second weapon—not the starter—is the
+first candidate for reviving a parked projectile or area mechanic, and it must
+still satisfy V0.4.2's simplicity/readability gate.
+
+Splash lands here too, and needs an explicit boundary against the existing
+on-kill detonation: **splash triggers on hit, detonation on kill**, and the
+damage ledger has to keep them apart or the Processing Ledger stops reconciling.
+
+Slots also decide what an upgrade offer is. Weapon-owned upgrades enter the pool
+only when their weapon is equipped, which is the one change to upgrade selection
+this phase makes — see "Decisions settled before C1" below.
+
+*Verification:* two weapons fire independently; the ledger reconciles to the
+same total it did with one; a weapon's own upgrades are absent from the draw
+until it is equipped and present afterwards; the pacing simulator's build models
+cover both.
+
+<a id="v043-source-c2--weapon-evolution"></a>
+### C2 — Weapon evolution
+
+Session15 ownership (2026-10-20, claimed before edits):
+`src/game/core/archetypes/{ids,effects}.ts`, `src/game/content/define-theme.ts`,
+both themes' `{weapons,index,copy}.ts`, `src/game/systems/upgrades.ts`,
+`src/game/systems/upgrades/{describe-upgrade,upgrade-tiers}.ts`,
+`src/game/systems/weapons/weapon-loadout.ts`,
+`src/game/systems/simulation/{build-models,pacing-simulator}.ts`,
+`tests/unit/weapons/weapon-evolution.test.ts`, affected content/tier/selector/simulation units,
+`tests/e2e/second-tool-v043.spec.ts`, `build/content/C2*`, `build/BUILD_PLAN_V0.4.md`, plan/status/master/progress/
+reconciliation/README/roadmap, product/theme/education/content map, P5 acceptance and
+P6 readiness reports/current handoff. No persistence, sprite, physics or dependency edits.
+
+- [x] Theme-owned evolution choice after four secondary-reach picks; replacement
+  preserves slot position/capacity/clock and transfers local gains to the new ID.
+- [x] Condition, stale/idempotent choice, reset, preview and combat/provenance rules.
+- [x] Both-theme bounded browser/readability, affected load, balance and software gate.
+
+Owner revision (2026-10-20): “yes waive those checks for now and continue with
+build for c2” temporarily waives the outstanding actual Safari, missing selected
+browser/OS combinations and older physical integrated-GPU acceptance checks.
+They are waived/unverified, never passed. This supersedes their release-blocking
+classification for now, without changing support evidence, historical results or
+other phase verification. No new browser/device campaign is authorized or needed.
+
+An evolved weapon is a new definition unlocked by a condition, not a mutated one.
+Upgrade tiers (REC-065) are the natural trigger surface.
+
+C2 verified locally2026-10-20:527units/60files, types/lint/build/diff;
+eight unique affected browser cases verified, corrected evolution subset2
+passes14.6s and final player-copy subset2 passes14.5s, one worker/zero retries. Both themes/ten models/three difficulties
+balance. See [report](content/C2_REPORT.md) and [master](MASTER_BUILD_PLAN.md#v0-4-3-c2).
+
+<a id="v043-source-c3--shrines-and-curses"></a>
+### C3 — Shrines and curses
+
+Session16 ownership (2026-10-20, claimed before edits):
+`src/game/core/archetypes/{ids,contracts,effects}.ts`, `src/game/content/define-theme.ts`,
+both production themes' `{shrines,curses,index,copy}.ts`,
+`src/game/systems/chaos/world-modifiers.ts`, `src/game/systems/upgrades.ts`,
+`src/game/systems/upgrades/{upgrade-tiers,describe-upgrade}.ts`,
+`src/game/state/run-state.ts`, `src/game/scenes/run-scene.ts`,
+`src/game/systems/simulation/pacing-simulator.ts`, `scripts/balance.ts`,
+`tests/fixtures/alternate-theme.ts`, affected world/content/shrine/tier/selector units,
+`tests/unit/chaos/curses.test.ts`, `tests/e2e/shrines-curses-v043.spec.ts`,
+`tests/e2e/{phase-five-v02,shrine-arrivals}.spec.ts` if catalog-size assertions change,
+`build/content/C3*`, status/plan/master/progress/reconciliation/README/roadmap,
+PLAN/THEME_ARCHETYPES/EDUCATION_PIVOT/ECO_CONTENT_MAP and current/successor handoffs.
+Retirement link-only dependencies: `build/content/C2_REPORT.md`,
+`build/performance/P5_ACCEPTANCE_REPORT.md`; preserve their historical evidence.
+
+- [x] Add scheduled pressure-for-XP shrine in both themes through existing world model.
+- [x] Add two one-time level-up curses, run-local acceptance/provenance/reset,
+  clear real-number offer preview and no repeat/tier-scaled bargain.
+- [x] Validate definitions/references/composition and preserve exact XP/caps/causal work.
+- [x] Both-theme affected browsers/readability, pacing and final software gate.
+
+A curse is the inverse of a shrine: pressure the player accepts for a reward,
+but persistent and chosen at a different moment. Both resolve through the world
+model from REC-035, which already takes any number of contributors.
+
+C3 verified locally2026-10-20:547units/61files, types/lint/build/diff; seven
+unique affected serial browser cases verified (initial7pass40.1s, final C3 subset2
+pass12.4s after visible-reward ordering correction and fixture XP correction).
+Both themes/ten models/three difficulties/baseline+combined world fixture balance
+(120scenarios; baseline output identical to C2). See [report](content/C3_REPORT.md)
+and [master](MASTER_BUILD_PLAN.md#v0-4-3-c3). C4–C7 are verified below.
+
+<a id="v043-source-c4--elite-modifiers-"></a>
+### C4 — Elite modifiers ✅
+
+Verified Session17: split/shield/acceleration family in both themes, exact inherited
+identity/depth and source rewards, bounded pending work, shield-capped ledger,
+simulation-age acceleration and readable markers.561units/63files and six unique
+affected serial browser cases pass; see [report](content/C4_REPORT.md) and
+[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c4). C5–C7 are verified below.
+
+<a id="v043-source-c5--mini-boss-and-final-boss-"></a>
+### C5 — Mini-boss and final boss ✅
+
+A boss is an enemy with a health bar, a telegraphed pattern, and a director
+milestone that spawns exactly one. The final boss replaces the end-of-timer
+prompt: it spawns where the decision used to appear, and REC-064's choice moves
+to after the kill rather than being removed. See "Decisions settled before C1".
+
+- [x] Unique capped mini/final milestones, theme-owned enemy and warning pattern.
+- [x] Live boss phase, retained pause/level intent and after-kill endless/clearing.
+- [x] Exact capped ledger/reward/reset, readable health/telegraph and affected checks.
+- [x]583units/64files, six unique affected serial browser cases,60 coarse TTK scenarios;
+  broader campaigns deferred, external checks waived/unverified. [Report](content/C5_REPORT.md),
+  [completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c5).
+
+<a id="v043-source-c6--persistence-unlocks-and-advanced-statistics-"></a>
+### C6 — Persistence, unlocks, and advanced statistics ✅
+
+- [x] Validated schema2, deterministic schema1 migration and safe local adapter.
+- [x] Durable settings/terminal-only lifetime totals and theme-owned next-run unlocks.
+- [x] Readable requirements/new rewards/failure warnings, affected browsers/software.
+
+595units/65files, types/lint/build/diff pass;10 unique affected serial browser cases
+verified cumulatively, including final five-case persistence capture and death-layout
+check. [Report](content/C6_REPORT.md), [completed ownership](MASTER_BUILD_PLAN.md#v0-4-3-c6).
+C7 is verified below; missing external device/browser checks remain waived/unverified.
+
+The first real slice of `SAVE_DATA.md`. The session statistics slice from REC-062
+is already shaped for the payload's lifetime-statistics field, so this is mostly
+adapter and migration work rather than new modelling.
+
+<a id="v043-source-c7--save-export-and-import-"></a>
+### C7 — Save export and import ✅
+- [x] Canonical codec, strict shared validation/migration and unknown-ID preservation.
+- [x] Title-only export/file/paste preview, explicit backup/recovery/reset and stale checks.
+- [x]655units/67files, five unique serial browser cases, types/lint/build/diff and production marker exclusion.
+
+See [report](content/C7_REPORT.md), [results](content/C7_RESULTS.json) and
+[completed ownership/record](MASTER_BUILD_PLAN.md#v0-4-3-c7).
+Encoded text export, import with validation, preview, backup, and migration.
+`SAVE_DATA.md` §"Verification required when implemented" is the acceptance list.
+
+<a id="v043-source-what-this-stream-must-not-do"></a>
+## What this stream must not do
+
+- Edit anything in V0.4.1's ownership block (`BUILD_PLAN_V0.4.md` §3)
+- Read a sprite in a system, or size a hitbox from one. The seam gives new
+  content this for free: an actor with no sheet renders its primitive, so
+  nothing added here needs art to ship
+- Assume every content id has a sprite — most will not, for a while
+- Reuse reconciliation ids below REC-100. REC-090 is preserved as a V0.4.3
+  implementation discovery even though it predates the renumbering; new V0.4.3
+  entries begin at REC-100.
+
+<a id="v043-source-decisions-settled-before-c1"></a>
+## Decisions settled before C1
+
+These were the open questions. They remain the intended content-growth model,
+but C1 must revalidate them after V0.4.2 rather than assuming the older
+high-density direction survived unchanged.
+
+<a id="v043-source-a-weapon-has-both-global-upgrades-and-its-own"></a>
+### A weapon has both global upgrades and its own
+
+Stat modifiers stay **global**: `WeaponStatModifiers` keeps its current shape and
+its gains apply to every equipped weapon, so `upgrade.pierce` and
+`upgrade.projectile_count` do not have to be re-authored per slot and do not
+become dead cards when a slot is empty.
+
+A weapon is **acquired from the normal level-up draw** — a weapon card fills an
+empty slot — rather than through a separate selection step. The level-up UI is
+unchanged.
+
+On top of that, **each weapon carries its own upgrade entries**, which affect
+only that weapon. They may raise its stats or change its mechanic slightly, and
+they enter the pool **only once that weapon is equipped**, so the draw never
+offers an upgrade for a weapon the player does not have. This is the part that
+makes a second weapon a build decision rather than a second damage number: the
+two weapons diverge through their own cards, not only through what they started
+with.
+
+Consequences for C1:
+
+- `isUpgradeAvailable` gains an equipped-weapon condition alongside its existing
+  cap check. That is the only change to `selectUpgradeChoices`' contract, and
+  the category-spread rule keeps working unchanged.
+- A weapon-owned upgrade needs somewhere to live in the theme. It belongs beside
+  the weapon in `weapons.ts`, not in the general `upgrades.ts` pool, so a weapon
+  and everything that improves it are read in one place.
+- Weapon-owned mechanical changes are the seam that later makes evolution
+  (C2) authorable, since an evolved weapon is a definition that a condition
+  unlocks rather than a mutated one.
+- The tier roll from REC-065 applies to weapon-owned upgrades exactly as it does
+  to the shared pool. Integer targets still round and still floor at the
+  authored value.
+
+<a id="v043-source-evolution-replaces-the-weapon-in-its-slot"></a>
+### Evolution replaces the weapon in its slot
+
+An evolved weapon takes the place of the one it grew from. It does not consume a
+second slot, and the slot count is unchanged by evolving.
+
+<a id="v043-source-the-final-boss-replaces-the-end-of-timer-prompt"></a>
+### The final boss replaces the end-of-timer prompt
+
+At the authored duration the final boss spawns **instead of** the `time_up`
+decision. Defeating it ends the run as cleared.
+
+The decision from REC-064 is not removed — it is **moved to after the kill**.
+The player still chooses how the run resolves; they simply make that choice
+having beaten the boss rather than instead of meeting one. Both options keep
+their current meaning: `endless` lifts the limit and plays until death,
+`clearing` stops new arrivals and ends on an empty field.
+
+This preserves REC-064's principle, which is that the run's length and its
+difficulty are things the player opts into. It also means `RunState` needs a
+status for "the boss is up" that is distinct from `time_up`, since the timer
+expiring no longer holds the simulation — the boss fight is live play.
+
+<a id="v043-source-completed-correction-and-follow-on-disposition"></a>
+## Completed correction and follow-on disposition
+
+Q6 is complete in `44585dd`; G1–G4 are locally complete through `a10e3eb`.
+Their original claims/checklists and final outcomes are consolidated in the
+[master log](MASTER_BUILD_PLAN.md#readable-gameplay). PR27 CI repair/delivery
+history remains in Git, the master, status, progress and its retained
+[report](performance/PR27_CI_REPAIR.md). No Q6 or gameplay follow-on gate is open.
+
+Remaining work is [cumulative delivery and owner-selected V0.4.4 planning](NEXT_READABLE_GAMEPLAY_HANDOFF.md).
+The historical external waiver remains unverified; no current broad CI/browser/
+stress/soak acceptance or new publication is established by this consolidation.
+
+<a id="v043-source-pr28-ci-repair--claimed-before-edits--2026-10-22"></a>
+## PR28 CI repair — claimed before edits / 2026-10-22
+
+Owner requests diagnosing/fixing failed Actions. Active bounded repair ownership:
+`tests/e2e/{enemy-roster,phase-six-v02,readable-contact-v0421,sprites}.spec.ts`,
+`build/performance/PR28_CI_REPAIR.md`, this plan, BUILD_STATUS, MASTER_BUILD_PLAN,
+AUTONOMOUS_PROGRESS and RECONCILIATION; Git/PR metadata for the existing PR28.
+Failed run39705612316 on dd30186 reports four failures,138passes/6skips.
+All four fail old five-role fixture expectations against eight configured
+non-boss roles. Derive exact expected IDs/counts from activeTheme, retain the
+existing semantic assertions and do not change runtime, retries, skips or timeouts.
+Run affected browser cases serially/zero retries, types/units/lint/build/whitespace;
+push one repair commit and verify matching-head Actions. No new content/art,
+manual stress campaign, merge or physical/browser acceptance is selected.
+
+<a id="v043-source-pr28-roster-ci-repair--local-verification--2026-10-22"></a>
+## PR28 roster CI repair — local verification / 2026-10-22
+
+Failed39705612316 on dd30186 has138browser passes/6skips/four failures: old
+five-role checks observe eight after G2. Four browser tests now derive exact
+non-boss IDs/counts from activeTheme, including zero-count bosses in the roster
+map and one elite per role. Sprite/contact/feedback semantics remain asserted;
+five-child family rules stay five. No runtime/retry/skip/timeout/dependency change.
+Final703units/74files, types/lint/build/whitespace and four affected serial
+Chromium cases3.8s/zero retries pass; port4173 clean. Initial typing/zero-boss
+expectation corrections are recorded in [repair report](performance/PR28_CI_REPAIR.md).
+Matching-head automatic full Actions remains pending until its actual result.
+Existing external waiver/unverified state remains; no merge or art selection.
+
+
+<a id="readable-gameplay-design-context"></a>
+## Readable gameplay — original priorities, candidate assessment and sources
+
+Consolidated 2026-10-22 after G1–G4. Candidate reserves remain unselected;
+historical statements about next work are superseded by the current sprite plan.
+
+<a id="readable-design-readable-cleanup-gameplay--four-phase-roadmap"></a>
+# Readable cleanup gameplay — four-phase roadmap
+
+Owner direction: 2026-10-21 (Australia/Sydney). Status: **Q6/G1 verified locally; G2 complete with three local keeps. G3/G4 locally complete; publication and new sprite work unstarted.**
+The owner requests the ranked survivor-game ideas in a few phases, consideration
+of Australian rubbish data as enemy candidates, and rebalancing existing enemies
+where required. Implementation evidence and limits are in [G1_REPORT](content/G1_REPORT.md).
+
+<a id="readable-design-authority-sequencing-and-ownership"></a>
+## Authority, sequencing and ownership
+
+Product intent lives in [PLAN.md](PLAN.md). This roadmap retains priorities,
+candidate assessment and source context. [BUILD_STATUS.md](BUILD_STATUS.md)
+owns actual completion; [the master log](MASTER_BUILD_PLAN.md#readable-gameplay)
+owns completed Q6/G1–G4 plans and gates. Do not reopen verified C1–C7.
+
+Sequence: **Q6 → G1 existing-roster balance → G2 bounded outdoor variety →
+G3 encounter rhythm and optional sites → G4 mastery and replay goals**.
+G1–G4 are phase labels, not saved IDs or retroactive V0.4.3 content.
+The completed implementation authority is the [master log](MASTER_BUILD_PLAN.md#readable-gameplay).
+Preserve theme-owned tuning, presentation/physics separation, stable IDs and
+existing persistence contracts. No additional content is selected by this record.
+
+<a id="readable-design-priorities-carried-forward-from-the-genre-analysis"></a>
+## Priorities carried forward from the genre analysis
+
+These are design judgments for this project, not measured retention results.
+
+| Rank | Feature | Owning phase / treatment |
+| --- | --- | --- |
+| 1 | Readable, satisfying tool actions | Q6 prerequisite; preserve through every gate |
+| 2 | Visible tool growth and transformation | Q6/G1; improve existing Grabber/Sweep/Vacuum/evolution |
+| 3 | Material behaviours that change decisions | G1 existing roles, then G2 candidates |
+| 4 | Player-controlled risk/reward | G3; refine existing shrines/curses |
+| 5 | Gradual introduction | G1–G3; teach before combining |
+| 6 | Pressure, upgrade, relief, renewed challenge | G1/G3; measure wall time as well as game time |
+| 7 | Complementary tools and viable choices | G1; avoid one compulsory build |
+| 8 | Worthwhile destinations | G3; use existing arena/sites/minimap |
+| 9 | Unlocks that encourage a new approach | G4; use existing profile/unlock services |
+| 10 | Bosses testing learned skills | G3; refine existing mini/final encounters |
+| 11 | Useful results and specific next goals | G4; existing results/Field Guide |
+| 12 | Optional discovery and sourced information | G2 descriptions; G4 optional guide depth |
+| 13 | Distinct playable characters | Deferred until tool/material choices justify expansion |
+| 14 | Permanent statistical growth | Secondary; no grind needed to make the opening enjoyable |
+| 15 | Large proc chains/spectacle | Bounded, readable effects only; parked eco chains stay parked |
+| 16 | Complex equipment economy/crafting | Deferred; no new resource economy in these phases |
+| 17 | 3D traversal/movement tricks | Outside current camera/control scope |
+| 18 | Maximum enemy density | Technical ceiling only, never a design success metric |
+
+<a id="readable-design-australian-waste-evidence--two-different-measures"></a>
+## Australian waste evidence — two different measures
+
+Reviewed against the supplied primary sources on **2026-10-21**. Keep source,
+region, reporting period, metric and denominator with any eventual fact entry.
+The datasets describe different populations: neither measures combat danger,
+health, speed, persistence or the right tool for a material.
+
+<a id="readable-design-a-waste-generated-by-weight"></a>
+### A. Waste generated by weight
+
+[DCCEEW, National waste and resource recovery report 2026](https://www.dcceew.gov.au/environment/protection/waste/publications/national-waste-resource-recovery-report-2026),
+published 22 September 2026; Australia, FY2024–25. Generation includes material
+subsequently recovered. These are the supplied leading material categories, not
+an exhaustive breakdown of the approximately 79.0 million tonnes total.
+
+| Rank | Category | Million tonnes generated |
+| --- | --- | --- |
+| 1 | Building/demolition materials: concrete, brick, asphalt, rubble, soil, rock | 27.4 |
+| 2 | Organics: food, garden material, timber, biosolids | 15.5 |
+| 3 | Ash, mainly coal-fired power stations | 10.3 |
+| 4 | Hazardous waste excluding tyres, largely contaminated soil | 8.0 |
+| 5 | Metals | 5.9 |
+| 6 | Paper/cardboard | 4.9 |
+| 7 | Plastics | 3.0 |
+| 8 | Glass | 1.5 |
+
+<a id="readable-design-b-outdoor-litter-collected-by-item-count"></a>
+### B. Outdoor litter collected by item count
+
+[Clean Up Australia, FY25 national litter fact sheet](https://www.cleanup.org.au/wp-content/uploads/2026/02/Clean-Up-Australia_Litter-Report-FY25_National-Fact-Sheet.pdf),
+page 1, individual-items table. Australia, FY2024–25; **1,358 surveyed locations**.
+These are shares of counted litter from participating surveyed sites, not a
+census of all Australian litter. Site types are combined; local mixes vary.
+
+| Rank | Item | Share of all counted litter |
+| --- | --- | --- |
+| 1 | Cigarette butts | 23.6% |
+| 2 | Soft-plastic packets/wrappers | 18.6% |
+| 3 | Plastic food/retail/garbage bags | 8.7% |
+| 4 | Aluminium beverage cans | 5.6% |
+| 5 | Plastic beverage bottles | 4.8% |
+| 6 | Takeaway coffee cups | 4.3% |
+| 7 | Plastic food containers/utensils | 4.1% |
+| 8 | Glass beverage bottles | 3.4% |
+| 9 | Hard-plastic fragments **larger than 5 mm** | 2.7% |
+| 10 | Other soft plastics | 2.5% |
+
+Plastics account for **80.8%** in the source's material classification, including
+plastic cigarette filters. Do not add this material share to the individual-item
+shares, normalize the top ten into a full distribution, or turn percentages into
+literal spawn chances. Hard fragments >5 mm are not the existing Microplastics
+identity. “Plastic dominates” does not mean “plastic bottles are the most counted
+item.” Rubble's tonnage does not make it the common outdoor swarm.
+
+<a id="readable-design-enemy-candidates-and-their-distinct-decisions"></a>
+## Enemy candidates and their distinct decisions
+
+The table preserves the original **candidate assessment**. Cigarette Butts,
+Wrappers and Can were subsequently accepted in G2; other candidates remain
+unselected. Names in this research table are editorial subjects, not runtime IDs. Motion, contact damage and danger cues are game abstractions.
+The sources above do not justify toxicity numbers, decay estimates, universal
+recycling rules or a tool-effectiveness matrix.
+
+| Subject / grouping | Proposed gameplay role and player decision | Placement / constraint |
+| --- | --- | --- |
+| Cigarette Butts | Readable clusters of weak litter: clear a route before a site becomes crowded | G2 first candidate; retain visible footprint and room to dodge; no tiny invisible contact damage or automatic harmful patch on every successful collection |
+| Packets / Wrappers | Telegraph a short gust, drift across the route, then pause: choose an interception point | G2 second candidate; distinct from continuously chasing Microplastics; finite movement, no off-screen unavoidable arrival |
+| Aluminium Can | Telegraph a roll toward the player's previous position, then roll past and recover: sidestep rather than simply flee | G2 alternative/next candidate after prior gates; neutral reusable movement capability |
+| Plastic Bags | Future gust-driven broad silhouette, only if distinguishable from wrappers | Candidate reserve; do not restore retired Plastic Bag mapping over `enemy.fast_fragile` or duplicate Bagged Waste |
+| Plastic Bottle | Familiar middle-durability baseline and a source of finite fragments | Existing; keep stable role, balance in G1 |
+| Coffee Cups | Recognizable composite packaging; possible cluster/site variant | Reserve until it creates a different decision; do not classify every cup as pure paper or universally recyclable |
+| Food containers / utensils | Rigid-packaging grouping with optional visual variation | Reserve; distinct mechanics required before another archetype |
+| Glass Bottle / Shards | Durable cleanup commitment followed by a stationary route hazard when fragmentation occurs | Existing; G1 preserves the finite material relationship |
+| Hard-plastic pieces >5 mm | Larger visible fragment/obstruction candidate | Reserve; separate identity from Microplastics; no arbitrary renaming of saved roles |
+| Other soft plastics | Visual/site variety within the wrapper/bag design space | Reserve, not a compulsory additional role |
+| Building rubble | Slow or stationary heavy obstruction in a marked construction cleanup site | Later site/encounter candidate, not a prevalent park chaser; no routine crushing/asbestos-handling lesson |
+| Organic waste | Low-durability food/garden grouping for a later market/park site | Later candidate; distinguish contexts, not all organics are ordinary litter or have one persistence time |
+| Paper / Cardboard | Weak sheet or unfolding obstruction for a later packaging site | Later candidate; keep coffee-cup composites separate |
+| Scrap metals | Heavy recoverable obstruction/encounter, distinct from light drink cans | Later industrial-site candidate; mass is not contact toxicity |
+| Ash | Marked industrial area/encounter rather than a household rubbish enemy | Deferred; these rankings establish prevalence only, not exposure or handling guidance |
+| Hazardous / contaminated waste | Clearly marked containment objective with a fictional specialist response | Deferred; no generic Grabber/Vacuum effectiveness or safe-disposal claim inferred |
+
+<a id="readable-design-completed-four-phase-build"></a>
+## Completed four-phase build
+
+The [master build log](MASTER_BUILD_PLAN.md#readable-gameplay) now owns all
+completed Q6/G1–G4 scope, exact ownership, decisions, checklists, commits and
+verification. G1–G4 scoped local gates are complete through G4 `a10e3eb`.
+Individual evidence reports remain linked there. Former phase prompts are retired.
+Historical proposed candidates above do not authorize additional content or art;
+the implemented settled roster is in [V0.4.4](SPRITE_PLAN_V0.4.4.md).
+
+<a id="readable-design-next-decision"></a>
+## Next decision
+
+The [current handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers cumulative local
+delivery and separately selected sprite inventory/frame/canvas/style work. No
+further gameplay phase is required by this roadmap. Broad current-app CI/browser/
+stress/soak remains deferred; external Safari/browser-OS/older physical-GPU checks
+remain waived/unverified. New facts, saved discoveries and additional content
+remain separately selected scope.
+
+
+<a id="performance-original-sequencing"></a>
+## Performance — original session sequence and acceptance contract
+
+Historical planning input; actual outcomes and waivers are recorded in the phase
+records above. Do not execute this superseded session backlog.
+
+<a id="performance-source-autonomous-development-plan--browser-performance-first"></a>
+# Autonomous development plan — browser performance first
+
+Current dates, statuses and gates: [BUILD_STATUS.md](BUILD_STATUS.md).
+Assessment date: 2026-10-11 (Australia/Sydney).
+Amended: 2026-10-11 with the owner's recycling-game ideation document.
+
+<a id="performance-source-resource-policy-for-every-future-session"></a>
+## Resource policy for every future session
+
+The owner's AGENTS.md limited-local-browser policy overrides older session
+command lists below. Prefer deterministic/source checks and existing matching-
+head Actions evidence. Run only necessary bounded affected browsers serially,
+one worker/zero retries; clean up owned processes. Full local Chromium/stress,
+long soaks and repeated performance campaigns require a separately scheduled
+consolidated run. Deferred requirements remain pending. Historical Session 1–7
+recipes are context, not permission to repeat those campaigns.
+
+<a id="performance-source-objective-and-authority"></a>
+## Objective and authority
+
+Make Arena Survivor run smoothly in a browser on older hardware while preserving
+the slower, readable environmental game. Work autonomously in **60–120 minute
+sessions**, measuring, implementing, testing, reviewing, and recording each
+completed cycle. Offer optional features for the owner to select before building
+them. The performance work below can proceed without another task-selection
+question; F16 difficulty is selected/delivered in Q1, with other optional content pending selection.
+
+This document is an execution roadmap, not a claim of completion. It does not
+create a recurring automation or launch a timed session. Existing milestone
+gates, ownership, theme contracts, and phase-commit rules still apply.
+
+Read, in order, `BUILD_PLAN_V0.4.md`, `../RECONCILIATION.md`, and
+`MASTER_BUILD_PLAN.md#v0-3` at the start of every development session. Then read
+`../AUTONOMOUS_PROGRESS.md`, the active increment plan, and the relevant code.
+Consult `PLAN.md`, `EDUCATION_PIVOT.md`, `THEME_ARCHETYPES.md`, and `SAVE_DATA.md`
+when their corresponding product/content/save boundaries are involved.
+
+<a id="performance-source-verified-starting-point--2026-10-11-assessment-snapshot"></a>
+## Verified starting point — 2026-10-11 assessment snapshot
+
+- Checkout: `main`, HEAD `103afa7`, the merge of V0.4.2.1. V0.4.0, V0.4.1,
+  V0.4.2, and V0.4.2.1 are merged; V0.4.3 is the next unbuilt increment.
+- Existing stack: TypeScript, Phaser 3.90, Vite, Vitest, ESLint, Playwright,
+  npm; no backend. Framework-independent rules feed Phaser scenes.
+- Existing features include automatic Cleanup Grabber combat, Collection Sweep,
+  progression, material-family death spawns, hazards, scheduled shrines,
+  minimap, title/settings/reference screens, run statistics, and endless/clearing
+  choices. Do not rebuild these.
+- Two production theme packs are validated. Spatial hashing already reuses
+  buckets; separation, causal queues, presentation cues, and audio have budgets.
+  Existing ceilings are 300 enemies, 192 projectiles, and 250 XP pickups.
+- Missing planned work: multiple weapon slots, a second weapon, evolution,
+  additional shrine/curse content, elite variants, bosses, persistent profiles,
+  unlocks, and portable save import/export. Remaining sprite work is V0.4.4.
+- README and parts of AGENTS.md still call V0.4.2 the next increment. The current
+  milestone plan, phase checklists, reconciliation, and Git history show otherwise.
+- The original seven status annotations have been consolidated into
+  `BUILD_STATUS.md`; the owner authorized their cleanup on 2026-10-16.
+
+Assessment checks actually executed:
+
+| Check | Result |
+| --- | --- |
+| `npm run typecheck` | Passed |
+| `npm test -- --run` | 403 tests passed across 46 files |
+| `npm run lint` | Failed: `prefer-const`, `tests/unit/weapons/collection-sweep.test.ts:56` |
+| `npm run build` | Passed; entry JS 1,669.77 kB, gzip 389.77 kB; large-chunk advisory |
+| `npm run test:e2e:ci` | Blocked before tests: localhost `127.0.0.1:4173` listener denied with `EPERM` |
+
+No current browser, stress, real-device, or dependency-audit pass is claimed.
+
+<a id="performance-source-findings-that-determine-the-first-tasks"></a>
+## Findings that determine the first tasks
+
+1. **Fix performance measurement before optimizing.** `RunScene.update` multiplies
+   frame delta by gameplay rate before storing `averageFrameMs`/`maxFrameMs`.
+   Those measurements represent simulated delta, not wall-clock frame spacing.
+   Historical 0.5-rate results cannot establish a 60 FPS hardware guarantee.
+   Record raw frame intervals and CPU work separately; exclude intentional
+   hit-stop, pauses, and hidden-tab intervals from active-play samples.
+2. **Remove unnecessary diagnostic work from production.** `publishTelemetry()`
+   runs every frame. The production build retains snapshot reads, array scans,
+   and selector calls even though the telemetry updater is inert. Gate work
+   before snapshot construction; prove that production has no test interface.
+3. **Profile minimap and UI update costs.** The minimap rebuilds arrays, parses
+   palette colours, and redraws graphics every frame, including allocation work
+   before discovering that it is hidden. HUD updates format values every frame;
+   text textures use resolution 4. These are candidates, not measured bottlenecks.
+4. **Profile crowd and actor churn rather than installing speculative pools.**
+   Spatial hashing and bounded separation already exist. Measure query visits,
+   dense-stack behaviour, deaths/spawns, effects, and cleanup before changing them.
+5. **Define older-device acceptance honestly.** Existing evidence comes from local
+   Chromium and synthetic fixtures. CPU throttling is useful for comparison;
+   it does not reproduce an old integrated GPU or prove real-device support.
+
+See REC-100 for the timing and production-telemetry findings.
+
+<a id="performance-source-performance-acceptance-contract"></a>
+## Performance acceptance contract
+
+Use these as **initial targets to validate**, not measured current results. Record
+the exact device, OS, browser, renderer, viewport, quality setting, build/commit,
+scenario, sample window, and measurement method with every result.
+
+| Area | Proposed acceptance |
+| --- | --- |
+| Reference desktop | Typical play near 60 FPS; active-play p95 frame interval ≤20 ms |
+| Older laptop/desktop | Supported integrated-graphics device, initially a 4–8 GB machine; typical play near 30 FPS or better, p95 ≤40 ms |
+| Worst supported load | 300 mixed enemies plus representative pickups, hazards, and equipped weapons; p95 ≤40 ms in the supported presentation mode |
+| Stalls | Active-play intervals over 100 ms below 1% of samples; report p99 and maximum too |
+| Startup | Proposed cold first-playable target ≤5 seconds on a recorded 10 Mbps/100 ms network profile; report transfer and decode costs separately |
+| Responsiveness | Movement and menus remain responsive, with no stuck input, missed choices, or catch-up burst after focus returns |
+| Lifecycle | Full authored run (about 10 real minutes at 0.5 rate), overtime sample, and 10 restarts; no growing retained actor/listener/queue population |
+| Correctness | Identical combat, XP, upgrade, and ledger outcomes across presentation modes; caps and causal exact-once rules hold |
+
+Use a quiet browser and one performance worker. Warm up first, measure at least
+60 seconds for sustained cases, and repeat comparisons three times on the same
+device/configuration. Report spread; never select only the fastest run. Short
+unit microbenchmarks cannot substitute for browser rendering measurements.
+
+Record 60/150/300 enemy scenarios, default eco gameplay, the retained projectile
+theme, pickup/fragment bursts, minimap on/off, pause/resize/focus, and restart.
+Compare test-mode correctness runs with production-build profiles; instrumentation
+overhead must not be mistaken for gameplay cost. Label scripted invulnerability
+or automatic upgrade selection explicitly.
+
+Hardware-sensitive FPS thresholds stay in the manual performance gate, following
+REC-040–042 and REC-057. Required CI tests deterministic correctness and bounded
+work, not the speed of a shared runner. Keep the 300-enemy ceiling unless evidence
+and a recorded product decision justify a change. Slowing the gameplay clock is
+not a performance fix; simulation/presentation timing must remain coherent.
+
+When a representative older device is unavailable, complete useful local work
+and publish a reproducible device checklist. Mark hardware acceptance **pending**;
+do not describe throttled Chromium as real-device validation. Mobile controls
+and mobile support are separate optional scope.
+
+<a id="performance-source-milestone-and-ownership-integration"></a>
+## Milestone and ownership integration
+
+The performance prerequisite is **P0–P6 within V0.4.3, before C1**, now promoted
+into the active plans by Session 1 (REC-102).
+This is justified by the new primary objective: content growth must not multiply
+work before browser performance is measured. At the beginning of Session 1,
+reconcile this addition into `BUILD_PLAN_V0.4.md` and `BUILD_PLAN_V0.4.3.md`, update
+stale entry-point status, and record phase gates/commit subjects. Preserve all
+existing C1–C7 dependencies; do not silently mark an old gate complete.
+
+Use `codex/v0.4.3`, one reviewable commit per completed numbered phase, one PR
+into `main`. Extend an existing suitable milestone branch rather than creating a
+duplicate. Do not push unrelated local edits. No merge, deployment, or production
+service changes are part of these sessions. No sprite generation or changes to
+the reserved sprite pipeline/roster are authorized by this performance plan.
+
+| Phase | Owned paths / permitted scope | Proposed commit subject |
+| --- | --- | --- |
+| P0 | Active plans, README/AGENTS status, progress/reconciliation, existing lint defect, `src/test-support/**`, frame sampling in `run-scene.ts`, measurement tests/scripts | `build(v0.4.3): establish browser performance measurements` |
+| P1 | Telemetry call sites in scenes, test-support bridge, architecture/production guard tests | `perf(v0.4.3): avoid production telemetry work` |
+| P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests | `perf(v0.4.3): reduce repeated interface work` |
+| P3 | Profiled hot paths in existing spatial/separation/effects/events/weapons systems and scene call sites, matching tests | `perf(v0.4.3): reduce measured simulation overhead` |
+| P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests | `feat(v0.4.3): add a lightweight presentation mode` |
+| P5 | Entity/feedback/scene lifecycle cleanup, matching restart tests, measured boot/asset-loading improvements outside the reserved sprite pipeline | `fix(v0.4.3): bound lifecycle and startup costs` |
+| P6 | Performance reports, browser harness, documentation and narrowly scoped regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
+
+Every phase owns its matching tests, plan status, progress file, and material
+reconciliation entry. Exact additional files discovered by profiling must be
+added to the phase ownership block before editing. Balance and presentation
+budgets belong to theme-owned data; systems consume neutral contracts. Read
+`SAVE_DATA.md` before P4 touches serializable settings; persistence still belongs
+to selected C6 work. The new presentation mode initially remains session-only.
+
+P3/P4 optimizations are evidence-dependent. If a proposed change has no useful
+benefit, document the measurement and skip that implementation. Do not invent
+busywork to fill a phase or weaken a gate to fit the session deadline.
+
+<a id="performance-source-session-execution-protocol"></a>
+## Session execution protocol
+
+Default duration is **90 minutes**; a session request may set 60 or 120. At start,
+read the available clock and write start/deadline into the progress file. Check
+elapsed time after every cycle and before starting a browser soak. Tools can
+measure time but cannot guarantee the host will keep a turn running. If execution
+is interrupted, preserve state and report actual elapsed time; never claim a
+full 1–2 hour run that did not occur.
+
+Budget each session as follows:
+
+| Duration | Restore/evaluate | Implement/profile/test cycles | Final validation, review, record |
+| --- | --- | --- | --- |
+| 60 min | 5–10 min | 35–40 min | 15 min |
+| 90 min | 5–10 min | 60–65 min | 20 min |
+| 120 min | 5–10 min | 85–90 min | 25 min |
+
+After each meaningful change: run affected checks, self-review the diff, resolve
+material defects, and update `AUTONOMOUS_PROGRESS.md`. Then evaluate the next
+eligible task automatically. Reserve the final window before accepting another
+large task. A task may span sessions; record partially implemented work accurately
+and keep it out of a completed-phase commit until the phase gate passes.
+
+The schedule below gives a 60-minute core and useful extensions for 90–120
+minutes. Estimates include testing/review. If the core finishes early, select
+from the extension or the next eligible phase; if it takes longer, carry its
+remaining work forward. Do not enter a dependent phase before the current gate
+passes. Do not stop after one small fix while useful authorized work remains.
+
+<a id="performance-source-selected-interruption-after-session-1"></a>
+## Selected interruption after Session 1
+
+The owner selected F16 as Beginner / Normal / Experienced (Normal slightly
+below the old baseline), plus player walk/facing, crisp background text and common
+tool-upgrade corrections. Q1 in the active plan owns this before Session 2/P1.
+This replaces F16's provisional Relaxed/Standard/Challenge naming and its
+unchanged-Standard assumption. Other optional features are unselected. After Q1
+verifies, resume P1, then P2–P6; refresh the P0 comparison scenario for the new
+Normal baseline rather than claim that old gameplay recordings are equivalent.
+
+<a id="performance-source-performance-session-backlog--approximately-816-hours"></a>
+## Performance session backlog — approximately 8–16 hours
+
+<a id="performance-source-session-1--p0-recover-a-trustworthy-baseline"></a>
+### Session 1 — P0: recover a trustworthy baseline
+
+**60-minute core:** reconcile milestone status/ownership; fix the known lint
+defect; separate raw wall-frame delta from scaled gameplay delta; add a focused
+0.5-rate/hit-stop timing regression; run types, units, lint, build, and a browser
+boot/load smoke where permissions allow. Save the baseline configuration/results.
+
+**90–120-minute extension:** add bounded p50/p95/p99 frame sampling and CPU
+update timing in opt-in measurement tooling; add scenario metadata/report output;
+run default gameplay and the existing 300-enemy stress fixture serially. Capture
+production versus instrumented costs and prioritize the next measured hotspot.
+
+**Exit:** measurement units are explicit and verified, production/test separation
+is understood, and each blocked check has a concrete reason and rerun command.
+
+Q2 event/roster inspection and immediate spawn accounting are verified in
+`7ff8bbf` (REC-107/108). The owner also authorized a test-only capacity sweep at
+150/300/450/600, reported with actual visible population and diagnostic overhead.
+Keep production at 300 until sustained mixed-combat and representative hardware
+results justify an increase. Bagged Waste's fixed composition awaits confirmation.
+
+<a id="performance-source-session-2--p1-remove-diagnostic-work-from-the-production-loop"></a>
+### Session 2 — P1: remove diagnostic work from the production loop
+
+**60-minute core:** prevent telemetry construction before any snapshot reads,
+selectors, or array scans outside test mode; inspect emitted production code;
+verify test-mode snapshots still support the existing browser paths. Profile
+before/after on the same build configuration.
+
+**90–120-minute extension:** inspect other per-frame test-only hooks; guard
+only confirmed unnecessary work; cover menu/run lifecycle and mode boundaries;
+run focused browser tests, stress, and production boot checks.
+
+**Exit:** production avoids diagnostic scans, test telemetry remains usable, and
+simulation/ledger behaviour is unchanged. Record measured benefit, including zero.
+
+<a id="performance-source-session-3--p2-reduce-repeated-minimap-and-hud-work"></a>
+### Session 3 — P2: reduce repeated minimap and HUD work
+
+The completed Session 3 handoff was retired; see the completed master record. Q3 wraps
+up card fitting/early skill caps and atlas navigation before P2; it does not
+start this phase. Half-speed timing and stationary Glass Shards are deliberate.
+
+**60-minute core:** profile minimap on/off and hidden overlays; skip hidden-map
+view construction, cache stable palette values, and avoid unchanged text work
+where Phaser does not already do so. Keep essential status/health/XP updates
+correct and prompt. Add focused visibility/change tests.
+
+**90–120-minute extension:** use a theme-owned minimap refresh cadence if
+profiling justifies it; reuse bounded buffers; test resize, opacity changes,
+pause, restart, and keyboard/pointer behaviour. Measure texture upload and CPU
+cost under 300 enemies. Preserve legible text and crisp actor art.
+
+**Exit:** less measured interface work with no stale critical HUD, altered
+viewport, hidden-map processing, or interaction regression.
+
+<a id="performance-source-session-4--p3-optimize-the-highest-measured-simulation-hotspot"></a>
+### Session 4 — P3: optimize the highest measured simulation hotspot
+
+**60-minute core:** trace crowd/index, targeting, queue processing, pickup
+merging, and fragment bursts; implement one measured improvement to repeated
+queries, scans, or allocations. Preserve causal ordering, hit targets, rewards,
+and damage accounting with relevant deterministic regressions.
+
+**90–120-minute extension:** address the next confirmed hotspot only after the
+first validates; compare dense versus distributed crowds and both weapon delivery
+kinds. Run bounded-work tests and serial stress; remove an optimization if it
+adds complexity without benefit.
+
+**Exit:** reproducible benefit under relevant load and all exact-once/cap/ledger
+invariants pass. Pool objects only if allocation traces justify reset complexity.
+
+<a id="performance-source-session-5--p4-a-lightweight-presentation-mode-for-older-devices"></a>
+### Session 5 — P4: a lightweight presentation mode for older devices
+
+**60-minute core:** based on traces, implement a small explicit Default/Low
+presentation setting using existing settings and theme contracts. Reduce costly
+optional cues, decorative work, or minimap frequency while preserving damage,
+XP, spawn rates, hitboxes, the visible world, and essential attack telegraphs.
+
+**90–120-minute extension:** assess safe backing-buffer/text-resolution options
+only if GPU or texture upload is the bottleneck; verify pointer transforms,
+resize, readability, reduced motion, and both themes. Compare identical scenarios
+across modes. Avoid automatic oscillating quality policies until measured need.
+
+**Exit:** Low improves measured cost, mode changes are reversible and session-safe,
+and deterministic gameplay outcomes do not depend on presentation settings.
+If no mode is needed, record why and spend the session on the next proven issue.
+
+<a id="performance-source-session-6--p5-first-slice-lifecycle-and-sustained-play-reliability"></a>
+### Session 6 — P5, first slice: lifecycle and sustained-play reliability
+
+**Completed slice reference:** inspect shutdown/restart for actors, sprite
+followers, timers, listeners, physics registrations, graphics, audio and queue
+retention. The affected slice is recorded in the master and P5 lifecycle report;
+remaining acceptance belongs to Session 8 under the resource policy above.
+Use available heap tools, explaining browser-specific measurement limits.
+
+**Remaining evidence:** overtime, focus/visibility, pause/resize and mode
+switching must show bounded retained ownership and no resumed-tab catch-up burst.
+Long-soak execution remains deferred; it is not locally authorized by this recipe.
+Add regressions for actual defects.
+
+**Exit:** resources return to the expected baseline and gameplay is stable through
+run endings and reconstruction. Do not call ordinary GC fluctuation a leak.
+
+<a id="performance-source-session-7--p5-second-slice-startup-and-browser-compatibility"></a>
+### Session 7 — P5, second slice: startup and browser compatibility
+
+**60-minute core:** measure production cold/warm startup, transfer/decode,
+initial textures, and first playable frame. Test existing WebGL/Canvas selection
+where available. Improve only the demonstrated bottleneck using existing tools.
+
+**90–120-minute extension:** test slow-network and smaller viewport cases;
+cover asset failures and supported-renderer boot errors with actionable recovery;
+lazy-load genuinely optional screens only if it improves first play. Run types,
+build, production guards, browser smoke, and both-theme content validation.
+
+**Exit:** startup/failure behaviour is measured and clear. Do not split Phaser
+arbitrarily or add a service worker merely to silence the large-chunk warning.
+
+<a id="performance-source-session-8--p5-remaining-lifecyclecompatibility-acceptance"></a>
+### Session 8 — P5: remaining lifecycle/compatibility acceptance
+
+The affected Session 6/7 gates do not complete P5. Session 8 completed the
+[acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
+probe could not reach hidden state. Sessions 9–10 subsequently verify native
+overlays and the scoped consolidated lifecycle campaign. Session15 explicitly
+temporarily waives the outstanding external browser/device checks; continue
+[current C7 work](MASTER_BUILD_PLAN.md#v0-4-3-c7). Historical evidence stays source-bound. Prefer
+existing evidence and deterministic checks; only a necessary bounded serial
+browser fixture is allowed. Long soaks/full local suites remain deferred, not
+passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
+
+<a id="performance-source-session-9--p5-continuation-native-events-and-remaining-acceptance"></a>
+### Session 9 — P5 continuation: native events and remaining acceptance
+
+Completed bounded slice: one trusted native same-window tab round trip passes
+on Chromium/Metal, with 7.493 ms first observed advancement after 1.33 s hidden,
+unchanged spawns/empty queues, and 14 deterministic focus-state checks. See the
+[acceptance report](performance/P5_ACCEPTANCE_REPORT.md). No runtime defect or
+change; authored/sustained/native-overlay/audio/device requirements remain open.
+
+<a id="performance-source-session-10--p5-authorized-consolidated-lifecycle-and-device-evidence"></a>
+### Session 10 — P5: authorized consolidated lifecycle and device evidence
+
+Owner explicitly authorized the consolidated M5 campaign on 2026-10-19. Its
+20-minute ownership window passes within explicit test-only survival/focus aids:
+authored clock, five-minute endless extension, ten short terminals, native
+paused/level-up/time-up/pending work, quality/resize and actual audio closure.
+See [campaign report](performance/P5_CAMPAIGN_REPORT.md). No runtime defect/fix.
+
+<a id="performance-source-session-11--p5-selected-desktop-support-and-engine-evidence"></a>
+### Session 11 — P5: selected desktop support and engine evidence
+
+Owner delegated support selection and authorized testing. Selected desktop
+Chrome/Edge/Firefox/Safari current/previous-major on vendor-supported OS; 52
+focused checks pass serially across installed Chrome and pinned Chromium/Firefox/
+WebKit. Test-only key-hold/resize-readiness corrections; no runtime fix. See
+[compatibility report](performance/P5_COMPATIBILITY_REPORT.md). Actual branded/
+platform/older physical-device coverage remains open.
+
+<a id="performance-source-session12--p5-branded-checks-and-p6-software-slice"></a>
+### Session12 — P5 branded checks and P6 software slice
+
+Owner requests P6 work alongside remaining P5.26 focused Edge155/154 checks
+and two unpatched Firefox158/157 smokes pass. Safari access remains blocked;
+owner confirms no older device. P6 software has96 browser/stress passes/six
+opt-in skips/zero retries,488units/types/lint/build/audit, a verified portable
+kit/manual checklist and18 frozen warmed Default/Low60/150/300 windows. See
+[readiness report](performance/P6_READINESS_REPORT.md). Physical/Safari/other
+release/platform acceptance remains pending, not passed.
+
+<a id="performance-source-session13--owner-approved-c1-foundation"></a>
+### Session13 — owner-approved C1 foundation
+
+On 2026-10-20 the owner explicitly approves planned C1–C7 after verified software
+checks, with missing browser/device evidence release-blocking. C1 is verified locally, including the second tool, owner-only progression,
+on-hit splash and the combined affected gate. Session15 verifies C2 evolution;
+Session16 verifies C3 shrines/curses; continue C4 using
+[SESSION_20_PROMPT.md](MASTER_BUILD_PLAN.md#v0-4-3-c7). Owner explicitly
+temporarily waives missing actual Safari/browser-OS/older physical-device checks;
+waived/unverified, never passed. Historical measurements remain source-bound.
+No optional/sprite scope is added.
+
+<a id="performance-source-after-p5--p6-combined-readiness-gate-and-real-device-report"></a>
+### After P5 — P6: combined readiness gate and real-device report
+
+**60-minute core:** inspect matching-head Actions evidence and the combined
+software gate; full local browser/stress runs require a separately scheduled
+consolidated run under the owner policy. Use affected serial checks only; compare baseline
+versus final results across default/low and 60/150/300 loads. Inspect the combined
+diff and fix regressions. Publish a reproducible manual device checklist.
+
+**90–120-minute extension:** measure on an available older integrated-graphics
+machine and an additional browser; repeat sustained/default and worst-load
+cases, then a restart/focus smoke. Include an actual playable run, not only an
+invulnerable harness. Record limitations and residual hotspots.
+
+**Exit:** software verification passes; hardware targets have evidence or remain
+explicitly pending. Summarize measured improvements, risks, and the next selected
+feature. Do not claim the overall older-device objective complete without device
+evidence. If hardware access is the only remaining blocker, stop and report it.
+
+
+
+<a id="sprite-style1-history"></a>
+## Sprite style 1 — superseded inventory and prompt contracts
+
+Preserved 2026-10-22 for build history. REC-120/121, the current style guide and
+V0.4.4 plan supersede these canvas sizes, old inventory and frame descriptions.
+The five accepted style1 sheets remain shipped pending reviewed replacements.
+These historical TBC/parked statements are not current generation instructions.
+
+# V0.4.4 — Sprite roster reconciliation (TBC)
+
+Current status and dates: [BUILD_STATUS.md](BUILD_STATUS.md). This is an ongoing,
+gated plan, not a claim list. Read REC-078, the [master pipeline record](MASTER_BUILD_PLAN.md#v0-4-1),
+[style guide](SPRITE_STYLE_GUIDE.md) and [manifest](sprites/MANIFEST.md).
+Before any claim or generation, reconcile the roster against settled V0.4.2 /
+V0.4.3 content; confirm stable IDs, subjects, sizes and frame roles. Optional
+content and new art remain unselected. Higher sprite resolution remains parked.
+
+## Settled roster checkpoint after G4 — 2026-10-22
+
+G1–G4 are locally verified, ending on `codex/readable-gameplay-g4`.
+[G4_REPORT](content/G4_REPORT.md) owns current limits. This reconciles identity,
+body and current presentation for planning; it is not an art claim or acceptance.
+Frame/canvas selections for remaining work are still TBC. The runtime definitions
+and current sprite map remain authoritative; never derive a body from this table
+or a generated sheet. Listed radius/display diameter are authored world units,
+independent of camera2× and sheet pixels. Elite rendering keeps the base identity.
+
+| Stable ID | Current eco subject | Radius / display diameter | Current presentation and frame constraint |
+| --- | --- | --- | --- |
+| `character.starter` | Environment Protector |18 /42| Accepted48px/8frame sheet; preserve Q6 per-frame hood anchors and existing walk/hit/death mapping |
+| `enemy.swarm_basic` | Plastic Bottle |14 /36| Accepted32px/4frames idle/move/hit/death |
+| `enemy.fast_fragile` | Microplastics |10 /26| Current24px/4frame sheet; never rename back to Plastic Bag or reinterpret old IDs |
+| `enemy.slow_durable` | Glass Bottle |22 /50| Accepted48px/4frames; G1 durability change does not require new art |
+| `enemy.death_spawner` | Bagged Waste |25 /56| Accepted48px/4frames; releases existing Bottle/Microplastics family |
+| `enemy.stationary_fragment` | Glass Shards |12 /28| Reuses Glass death pose/frame3; stationary, no walk animation requirement; dedicated sheet TBC |
+| `enemy.cluster_fodder` | Cigarette Butts |10 /28| G2 primitive individual, three actors per group; never draw a group as one body; sheet/frames TBC |
+| `enemy.gust_drifter` | Packets / Wrappers |12 /34| G2 primitive; warning, oblique committed gust and recovery must stay readable; sheet/frames TBC |
+| `enemy.committed_charger` | Aluminium Can |14 /38| G2 primitive; direct line warning, roll and recovery remain distinct; sheet/frames TBC |
+| `enemy.mini_boss` | Compacted Waste |26 /64| Primitive; fixed-circle warning/one pulse/recovery/pursuit hold; sheet/frames TBC |
+| `enemy.final_boss` | Dumping Colossus |32 /90| Primitive; same fixed-circle contract, unique terminal flag; sheet/frames TBC |
+
+Microplastics remain both the live opening role and Bottle's Fragmentation result;
+Glass Shards remain stationary. No independent Bottle/Bag/Glass fragment trio or
+retired Plastic Bag sheet follows from the historical inventory. G2 groups do not
+spawn new children. Knight-magic remains a complete primitive fallback pack; this
+checkpoint does not require a second generated roster.
+
+Other current presentation subjects, still unselected for generation:
+
+- `weapon.starter` Cleanup Grabber: procedural extension/contact/retraction and
+  Collection Sweep; base78reach/18width with earned growth. Historical64×16/3frame
+  and32px icon suggestions are not accepted specs. Tool frames must align with
+  real contact timing; no art-derived reach, width, target count or damage.
+- `weapon.secondary` Cleanup Vacuum /`weapon.secondary_evolved` Cyclone Vacuum:
+  melee cone pulses, primary caps3→7 /4→8 and nearby splash. Visual assets must
+  preserve pulse versus fade and same-slot evolution; canvas/frame roles TBC.
+  Sorting Pulse remains parked for eco.
+- `pickup.experience` Impact Point: current radius7 primitive. Existing fractional
+  reward/merge/magnet semantics do not create new stable orb-tier IDs. Sheet and
+  tiers TBC; no art-derived pickup radius/reward.
+- Five sites, not the old four: `shrine.spawn_surge` Landfill Breach,
+  `shrine.greed` Fast Fashion Boom, `shrine.multiplicity` Single-Use Boom,
+  `shrine.duplication` Overproduction Order, `shrine.escalation` Unmanaged Dump.
+  All radius24/interaction120; idle/available/spent distinctions and current
+  prompt/minimap/edge indicators must remain. Old64px/4frame specs are TBC.
+- `hazard.damage_zone` Contamination Spill radius110, `hazard.obstacle` Debris
+  Pile radius46, `hazard.periodic_burst` Methane Vent radius96. Warning/active/
+  recovery or cleared states need a selected tile/scaling/frame design. Never
+  replace fixed authored damage regions with sprite geometry.
+- Elite cues, optional variants and full-roster/fallback/performance acceptance
+  remain separate pending selections. G4 adds UI only; no new mastery sprites.
+
+Next: owner selection of bounded subjects and exact style/frame/canvas contracts,
+then the existing manifest claim/acceptance workflow. No manifest rows are claimed
+or changed here. No generated art, higher resolution or pipeline edits occurred.
+The historical tables below remain history, superseded where this checkpoint
+resolves a subject count/identity/role.
+
+## Remaining scope to reconcile
+
+- Dedicated fragment sheets and elite treatment.
+- Cleanup Grabber action/icon and pickup presentation.
+- Shrines, hazards, variants and full-roster/fallback/performance acceptance.
+- Keep accepted sheets as the style baseline, subject to promoted material changes.
+
+The following original inventory and S2–S5 targets are retained as historical
+inputs only. Their completed player/enemy portions are already in the master;
+remaining rows are not automatically approved or valid after roster changes.
+No original recommendation overrides REC-071–073 or current contracts.
+
+## 1. Inventory
+
+This was the original thirty-two-sheet inventory. It is retained as planning
+history, not as the V0.4.4 claim list: Sorting Pulse is now parked for the
+knight-magic theme and the Cleanup Grabber's sheet size/frame roles must come
+from the V0.4.2 prototype.
+
+| # | Subject | Class | Canvas | Frames | Detail | Priority |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Plastic Bottle | Standard enemy | 32×32 | 4 | medium | **Baseline — do first** |
+| 2 | Plastic Bag | Small enemy | 24×24 | 4 | low | 1 |
+| 3 | Glass Bottle | Large enemy | 48×48 | 4 | medium | 1 |
+| 4 | Bagged Waste | Large enemy | 48×48 | 4 | medium | 1 |
+| 5 | Environment Protector | Player | 48×48 | 8 | high | 1 |
+| 6 | Cleanup Grabber — V0.4.4 target | Melee tool | 64×16 | 3 | medium | — |
+| 7 | Impact Point | Pickup | 16×16 | 3 | low | 1 |
+| 8–10 | Bottle / Bag / Glass fragments | Small enemy | 24×24 | 4 | low | 2 |
+| 11–14 | Four shrines | Shrine | 64×64 | 4 | high | 2 |
+| 15–17 | Three hazards | Hazard | 64×64 | 4 | medium | 2 |
+| 18 | Elite outline overlay | Overlay | per class | 1 | low | 2 |
+| 19–30 | Colour variants `c2`/`c3` for enemies 1–4 and fragments | — | — | — | — | **Free** — hue rotation |
+| 31 | Cleanup Grabber icon — V0.4.4 target | Weapon | 32×32 | 3 | high | — |
+| 32 | Impact orb tiers (3 sizes) | Pickup | 16×16 | 3 | low | 3 |
+
+Twelve of the thirty-two are colour variants produced by hue rotation, so the
+real generation count is **twenty**.
+
+### The knight-magic problem
+
+`knight-magic` is a second complete production pack, and theme validation requires
+both to be complete. Generating a second full sprite roster doubles the work for a
+pack nobody plays.
+
+**Decision:** sprites are optional theme content. A pack without them falls back to
+the current primitives, which keeps `knight-magic` valid and playable at zero art
+cost. This has to be designed in from the start — see §3 — because retrofitting
+optionality after the entities assume a texture is much harder.
+
+---
+
+### Phase S2 — The rest of the enemy roster
+Bag, Glass, Bagged Waste, plus fragments and the elite overlay. Ends with every
+enemy sprited and the primitives unused for enemies.
+
+*Verification:* all four roles distinguishable in a 300-enemy crowd screenshot;
+fragments visibly derived from their parents; `check` passes for every sheet.
+
+### Phase S3 — Player, weapon, projectile, pickup (historical target)
+The high-detail work. The player is the only 8-frame sheet and the only real
+animation.
+
+*Verification:* the walk cycle reads at the player's actual move speed; the
+equipped weapon's full action is legible at the active camera and gameplay rate.
+For the eco theme that now means the Cleanup Grabber's extend/contact/retract
+cycle, not a travelling projectile.
+
+### Phase S4 — Shrines and hazards
+The static, high-ornament subjects. Hazards need a scaling decision — a 64×64
+sheet stretched to a 110-unit damage zone will look soft, so these are likely
+9-slice or tiled rather than scaled.
+
+*Verification:* a shrine reads from across the arena; hazard telegraphs are still
+unmistakable, which is the property REC-053 cares about.
+
+### Phase S5 — Variants, polish, and the fallback proof
+Colour variants, the `knight-magic` fallback path proven by running it with no
+sprites at all, a full-roster consistency review with every sheet side by side,
+and a final frame-time measurement against the S1 baseline.
+
+*Verification:* both production packs run; `knight-magic` renders primitives with
+no errors; the roster reads as one artist's work.
+
+---
+
+## 8. Risks
+
+| Risk | Likelihood | Mitigation |
+| --- | --- | --- |
+| Generated sprites do not match each other well enough | **High** | The style lock, the palette snap, and the baseline-comparison step. Budget several attempts per sprite |
+| A sprite implies a different hitbox than its radius | Medium | The rule in §3, plus a `check` assertion that the drawn silhouette fits the declared radius |
+| Two agents generate the same sprite twice | Medium | The claim protocol in the manifest, and attempt-numbered raw filenames so nothing is overwritten |
+| Frame time regresses with 300 textured sprites | **Low, now** | The atlas moved to S1 (§6), which removes the batching risk rather than mitigating it. Still measured in S1 and again in S5 |
+| The 4-step rule reads as flat rather than chunky | Medium | Tune the style lock after the first batch (style guide §8) — this is expected, not a failure |
+| Art work stalls the milestone's mechanical items | Medium | Phases are independently shippable; the fallback means a half-finished roster still runs |
+
+---
+
+## 9. What "done" looks like
+
+A run where every visible thing is a sprite drawn to the same style, the crowd is
+*more* readable than it was with primitives rather than less, `knight-magic` still
+runs on primitives with no errors, and any new sprite can be produced by pasting
+the style lock plus one subject block into an image tool and running
+`npm run sprites -- build`.
+
+The last clause is the real deliverable. A finished roster that cannot be extended
+is worth less than a half-finished one that can.
+
+For the 2026-09-02 checkpoint, "done" is narrower: sheets #1–5 are accepted and
+live from one atlas, the build is reproducible from untouched raw attempts, and
+the remaining inventory is clearly handed to the post-rebalance sprite phase.
+The full-roster definition above remains the target for that future phase after
+its inventory is revalidated.
+
+
+# Sprite Style Guide and Prompt System
+
+The art bible for V0.4. It exists so that a sprite generated in three months sits
+next to one generated today and reads as the same game.
+
+Two things make that work, and they are the whole document: a **style lock** that
+never changes between prompts, and a **subject slot** that is the only thing that
+does. Everything else here is scaffolding around those two ideas.
+
+Read this alongside [`MASTER_BUILD_PLAN.md#v0-4-1`](./MASTER_BUILD_PLAN.md#v0-4-1), for the completed pipeline, and
+[SPRITE_PLAN_V0.4.4.md](SPRITE_PLAN_V0.4.4.md) for the gated remaining inventory.
+This file owns the look.
+
+> **On the reference.** The target was given as "HoloCure-like, somewhat 2-bit but
+> still detailed enough", with an ArtStation link. The specification below is
+> written from that description, not from an analysis of the image — nobody
+> should treat these numbers as measured from the reference. They are a starting
+> point to be corrected once the first batch exists. Correcting them is expected;
+> see [Tuning the style lock](#8-tuning-the-style-lock).
+
+---
+
+## 1. The style in one paragraph
+
+Chunky pixel art at a low native resolution, upscaled with nearest-neighbour so
+every pixel stays square and visible. Each sprite is built from a **small number
+of flat tonal steps per material** — the "somewhat 2-bit" read — but the shapes
+themselves are detailed and specific, so a plastic bottle is unmistakably a
+plastic bottle and not a generic blob. Bold, dark, fully-opaque outlines around
+every silhouette. Saturated colour with clear value separation. No gradients, no
+soft shadows, no anti-aliasing, no motion blur. Readability at a glance beats
+fidelity: this is a sprite that will appear two hundred times on screen at once.
+
+## 2. Hard constraints
+
+These are the non-negotiables. A sprite that breaks one of them is rejected in QA
+regardless of how good it looks in isolation.
+
+| Constraint | Value | Why |
+| --- | --- | --- |
+| Native canvas | Per class, see §4 | Fixed sizes keep the whole roster in proportion |
+| Upscale | Nearest-neighbour only | Any smoothing destroys the pixel read |
+| Tonal steps per material | **4** (base, shadow, highlight, deep shadow) | The "2-bit" feel; more steps and it drifts into painterly |
+| Outline | 1px at native res, fully opaque | The single strongest cue that sprites belong together |
+| Outline colour | Darkest value of the sprite's own hue, never pure black | Pure black flattens a saturated palette |
+| Anti-aliasing | None | Half-pixels destroy the grid |
+| Background | Fully transparent | Composited over the arena floor |
+| Light direction | Top-left, consistent across every sprite | The most common source of "these don't match" |
+| Perspective | Straight-on, very slight top-down tilt | Matches the existing top-down arena |
+| Palette | Drawn from the theme's tokens, see §3 | The sprites must not fight the UI |
+
+### The 4-step rule, precisely
+
+For each *material region* in a sprite — a bottle's plastic body, its cap, its
+label — pick one hue and use exactly four values of it:
+
+1. **Deep shadow** — the outline colour and the deepest occlusion
+2. **Shadow** — the bottom-right ~30% of the form
+3. **Base** — the dominant value, roughly half the region
+4. **Highlight** — a small top-left accent, no more than ~15% of the region
+
+Four steps is what produces the chunky, poster-like read. A sprite may contain
+several material regions, each with its own four-step ramp — that is how it stays
+detailed without becoming painterly.
+
+## 3. Palette discipline
+
+Sprites are theme content, so their colours come from the theme's existing token
+palette rather than being invented per sprite. The `eco-guardian` pack already
+defines the anchors:
+
+| Token | Hex | Used by |
+| --- | --- | --- |
+| `enemy` | `#60a5fa` | Plastic bottle family |
+| `enemyFast` | `#e2e8f0` | Plastic bag family |
+| `enemyTank` | `#2dd4bf` | Glass bottle family |
+| `enemySpawner` | `#c084fc` | Bagged waste family |
+| `player` | `#4ade80` | The Environment Protector |
+| `projectile` | `#7dd3fc` | Cleanup Grabber and reusable weapon effects |
+| `pickup` | `#a3e635` | Impact points |
+| `shrine` | `#fb7185` | Site events |
+| `elite` | `#fde047` | Elite outline treatment |
+
+**Rule:** a sprite's base value is its token colour. The other three steps are
+derived from it, not chosen freely:
+
+```
+deep shadow  = token darkened 45%, saturation +10%
+shadow       = token darkened 22%
+base         = token exactly
+highlight    = token lightened 25%, saturation −8%
+```
+
+Deriving rather than picking is what stops the roster drifting apart over dozens
+of generations. Record every derived ramp in the manifest so it is reproducible.
+
+### Colour variants
+
+A variant ("bottle enemy colour 2") is **the same sprite with a rotated hue**,
+never a redraw. Rotate the base hue by a fixed amount and re-derive the ramp:
+
+| Variant | Hue rotation | Intended use |
+| --- | --- | --- |
+| `c1` | 0° (the token) | Default |
+| `c2` | +40° | Second material of the same family |
+| `c3` | −35° | Third material |
+| `elite` | 0°, plus a 1px `elite` outline outside the normal outline | Elites, per REC-037 |
+
+This means variants are a **post-process, not a prompt**. Generate `c1`, then
+produce `c2` and `c3` by hue rotation in the pipeline. It is faster, free, and
+guarantees they match.
+
+## 4. Canvas sizes and sheet layout
+
+Native canvas per class, chosen against the gameplay radii already in the theme:
+
+| Class | Native canvas | Game radius | Notes |
+| --- | --- | --- | --- |
+| Small enemy (bag) | 24×24 | 10 | |
+| Standard enemy (bottle) | 32×32 | 14 | The baseline everything is judged against |
+| Large enemy (glass, bagged) | 48×48 | 22–25 | |
+| Player | 48×48 | 18 | More detail budget; see §5 |
+| Weapon / projectile | 16×16 | 6 | Reads at speed, so silhouette over detail |
+| Pickup | 16×16 | 8 | |
+| Shrine | 64×64 | 24 | Static, so it can carry the most detail |
+| Hazard | 64×64 | 46–110 | Tiled or scaled; see the plan |
+
+### Sheet layout
+
+One horizontal strip per subject, frames left to right, no padding, no margin.
+Frame `n` occupies `x = n * frameWidth`. This is the simplest thing Phaser's
+`spritesheet` loader consumes and the easiest to verify by eye.
+
+**Enemy states — 4 frames, and only 4:**
+
+| Frame | State | Content |
+| --- | --- | --- |
+| 0 | `idle` | The rest pose |
+| 1 | `move` | One alternate pose; idle/move alternate to walk |
+| 2 | `hit` | Idle silhouette, flashed to near-white, used for the damage flash |
+| 3 | `death` | A broken or scattered version of the silhouette |
+
+Four states is deliberate. Two hundred enemies on screen means animation is noise
+above a certain frame count, and the existing damage flash already substitutes a
+colour rather than a frame.
+
+**Player — 8 frames**, the one subject that gets a real animation budget:
+
+| Frames | State |
+| --- | --- |
+| 0–3 | `walk` cycle (contact, down, pass, up) |
+| 4 | `idle` |
+| 5 | `hit` |
+| 6–7 | `dash`/`hurt` reserved |
+
+**Weapons — 3 frames:** `ready`, `fire`, `spent`.
+
+## 5. Detail budget
+
+Not every sprite deserves the same amount of work, and saying so explicitly stops
+the roster from looking uneven:
+
+- **Player and weapons** — highest. Multiple material regions, visible small
+  features (a strap, a nozzle, a boot), readable silhouette asymmetry.
+- **Shrines** — high, but static. They can afford ornament because there is only
+  ever one of each on screen.
+- **Standard and large enemies** — medium. Two or three material regions. The
+  silhouette must be identifiable at 100% zoom in one glance.
+- **Small enemies, pickups, projectiles** — low. Silhouette and colour only. At
+  24×24 with a 1px outline there is barely room for anything else, and these are
+  the ones that appear in the hundreds.
+
+---
+
+## 6. The prompt
+
+This is the part to paste into an image tool. **The style block never changes.**
+Only the subject block changes between sprites.
+
+### 6.1 Style lock (constant — copy verbatim every time)
+
+```text
+STYLE LOCK — do not deviate:
+Pixel art sprite, chunky low-resolution pixel style, drawn on a {CANVAS} pixel grid.
+Limited palette: exactly 4 flat tonal steps per material region (deep shadow, shadow,
+base, highlight). No gradients, no anti-aliasing, no dithering, no soft shadows,
+no blur, no texture noise. Every pixel is a hard square edge.
+1-pixel fully opaque outline around the entire silhouette, in the darkest tone of
+the subject's own colour — never pure black.
+Light source top-left, consistent. Straight-on view with a very slight top-down
+tilt, as seen in a top-down arena game.
+Bold saturated colour, strong value separation, poster-like readability at small size.
+Detailed and specific in shape, simple in shading.
+Fully transparent background. Subject centred, filling roughly 85% of the canvas,
+with at least 2 pixels of clear space on every side.
+No text, no logos, no watermark, no border, no drop shadow, no ground shadow,
+no background scenery, no UI frame.
+Reference feel: modern indie pixel-art roguelite character sprites — clean,
+saturated, chunky, high-contrast.
+```
+
+### 6.2 Subject slot (the only part that changes)
+
+```text
+SUBJECT: {SUBJECT_DESCRIPTION}
+BASE COLOUR: {HEX} — build the 4-step ramp from this exact hue.
+SILHOUETTE: {SILHOUETTE_NOTE}
+DETAIL BUDGET: {low | medium | high} — {DETAIL_NOTE}
+```
+
+### 6.3 Sheet slot (for a multi-frame request)
+
+```text
+SHEET: a single horizontal strip of {N} frames, each exactly {CANVAS} pixels,
+no padding or gaps between frames, no frame borders or numbering.
+Frames left to right: {FRAME_LIST}.
+Every frame shares the identical palette, outline weight, light direction, and
+subject scale. Only the pose changes between frames.
+```
+
+### 6.4 Worked example — Plastic Bottle, the baseline enemy
+
+```text
+STYLE LOCK — do not deviate:
+Pixel art sprite, chunky low-resolution pixel style, drawn on a 32x32 pixel grid.
+Limited palette: exactly 4 flat tonal steps per material region (deep shadow, shadow,
+base, highlight). No gradients, no anti-aliasing, no dithering, no soft shadows,
+no blur, no texture noise. Every pixel is a hard square edge.
+1-pixel fully opaque outline around the entire silhouette, in the darkest tone of
+the subject's own colour — never pure black.
+Light source top-left, consistent. Straight-on view with a very slight top-down
+tilt, as seen in a top-down arena game.
+Bold saturated colour, strong value separation, poster-like readability at small size.
+Detailed and specific in shape, simple in shading.
+Fully transparent background. Subject centred, filling roughly 85% of the canvas,
+with at least 2 pixels of clear space on every side.
+No text, no logos, no watermark, no border, no drop shadow, no ground shadow,
+no background scenery, no UI frame.
+Reference feel: modern indie pixel-art roguelite character sprites — clean,
+saturated, chunky, high-contrast.
+
+SUBJECT: a discarded single-use plastic drink bottle, crumpled slightly, cap still on,
+faded peeling label band around the middle, seen as a small hostile creature-object.
+BASE COLOUR: #60a5fa — build the 4-step ramp from this exact hue.
+SILHOUETTE: tall rounded rectangle, narrower neck at the top, wider base, one dent
+in the left side so it is not symmetrical.
+DETAIL BUDGET: medium — cap, neck ridge, and label band are the only interior detail.
+
+SHEET: a single horizontal strip of 4 frames, each exactly 32x32 pixels,
+no padding or gaps between frames, no frame borders or numbering.
+Frames left to right: idle upright; leaning forward mid-tumble; same as idle;
+crushed flat and split into two pieces.
+Every frame shares the identical palette, outline weight, light direction, and
+subject scale. Only the pose changes between frames.
+```
+
+### 6.5 Prompt rules
+
+1. **Never edit the style lock to fix one sprite.** If a sprite comes out wrong,
+   fix the subject slot. If the style lock genuinely needs a change, change it for
+   the whole roster and regenerate — see §8.
+2. **One subject per generation.** Do not ask for a family in one image.
+3. **Seed if the tool supports it.** Record the seed in the manifest.
+4. **Never ask for colour variants.** They are a hue rotation in the pipeline.
+5. **The base colour is quoted as hex and repeated.** Models drift on colour more
+   than on anything else; naming it twice measurably helps.
+6. **Negatives stay in the style lock**, not scattered through the subject.
+
+---
+
+## 7. Acceptance checklist
+
+Every sprite is checked against this before it enters the manifest as `accepted`.
+It is deliberately mechanical — a subjective bar produces an inconsistent roster.
+
+- [ ] Canvas is exactly the declared size, and the strip is exactly `N × width`
+- [ ] Background is fully transparent (no white or checkerboard fill)
+- [ ] Outline is present, 1px, closed all the way round, not pure black
+- [ ] No more than 4 tonal steps in any single material region
+- [ ] No anti-aliased or semi-transparent edge pixels
+- [ ] Light reads as top-left in every frame
+- [ ] Subject scale is identical across every frame in the strip
+- [ ] Silhouette is identifiable against the arena floor at 100% zoom
+- [ ] Base colour matches the declared token within a small tolerance
+- [ ] Sits beside the current baseline sprite without either looking out of place
+
+The last item is the one that matters most and the only one a script cannot
+check. Keep the accepted Plastic Bottle open in a second window as the yardstick.
+
+## 8. Tuning the style lock
+
+The numbers in this document are a starting point. Expect to change them after the
+first batch — that is the process working, not a failure.
+
+**How to change the style lock safely:**
+
+1. Change it in this file, in one commit, with the reason.
+2. Bump `styleVersion` in the manifest.
+3. Regenerate the **baseline sprite** first, and only that one.
+4. Compare against the previous baseline side by side.
+5. If accepted, mark every sprite at the old `styleVersion` as `stale` and
+   regenerate in batches.
+
+**Never** hand-fix a single sprite to match a style the prompt does not produce.
+That is how a roster ends up unreproducible: the moment the file is lost, nobody
+can make another one like it.
+
+## 9. Known unknowns
+
+Stated plainly rather than discovered later:
+
+- **Consistency across generations is not guaranteed by any current image tool.**
+  The style lock materially improves it; it does not make it deterministic. Budget
+  for regenerating a sprite several times and picking the best.
+- **Text and small symbols are unreliable at these sizes.** Nothing in the roster
+  depends on generated text; the label band is a colour band, not lettering.
+- **Exact hex adherence is approximate.** The pipeline's palette-snap step (see
+  the plan, §4) exists because of this and is not optional.
+- **4-frame death animations may generate as 4 unrelated drawings.** The sheet
+  slot's "only the pose changes" line is the mitigation; verify per strip.
+
+
+
+<a id="content-original-session-estimates"></a>
+## Content — superseded session estimates and sequencing
+
+Historical estimates, not a live C1–C7 backlog. Outcomes are recorded above.
+
+## How selected content becomes hour-sized work
+
+For each selected feature, add precise ownership, commit subjects, acceptance,
+and short checks to the active build plan before implementation. Use these
+session slices as the starting backlog:
+
+| Existing phase | Session slices, each with an implementation plus tests/review |
+| --- | --- |
+| C1 / F1 | (1) slot state/resolution and contract tests; (2) independent scheduling and ledger provenance; (3) second tool, equip-conditioned upgrades, simulator; (4) combined browser, balance, readability, and stress gate |
+| C2 / F2 | (1) pure evolution conditions/replacement and slot invariants; (2) theme definitions, descriptions, browser acquisition, simulator/stress |
+| C3 / F3 | (1) curse contract and contributor rules; (2) bounded content, reward copy, choice availability, balance/browser integration |
+| C4 / F4 | (1) modifier/inheritance rules; (2) two bounded behaviours and telegraphs; (3) fragmentation/duplication, queue, browser/stress integration if needed |
+| C5 / F5 | (1) boss state/director exact-once spawn; (2) one mini-boss pattern and tests; (3) final boss and post-kill decision; (4) ledger, restart, balance and presentation-mode stress |
+| C6 / F6 | (1) schema/validation and migration fixtures; (2) safe storage adapter and unavailable/quota/corrupt cases; (3) lifetime stats/unlock conditions and menu wiring; (4) reload, settings, double-count prevention, browser gate |
+| C7 / F7 | (1) canonical codec, limits, checksum, malformed/hostile-input tests; (2) export and import-preview UI; (3) cancellation, backup, confirmation, migration/reload verification |
+
+The same 60-minute core / 90–120-minute extension rule applies to these added
+packages. Each numbered slice below is one session's work, with related tests
+and review included; use profiling, edge cases, browser integration, and the next
+eligible slice as extensions. Commit at the declared phase boundary, not simply
+because a session ended.
+
+| Optional package | Session slices and acceptance |
+| --- | --- |
+| F10 — Guide expansion | (1) encounter/defeat state and exact-once committed-event tests, then reference selectors; (2) enemy/material sections in the existing guide, discovered-state filtering, counts, keyboard/pointer navigation and resize; (3) a small sourced/reviewed fact set with distinct game/fact copy and validation; (4) reload/import compatibility, opt-in debrief, and complete guide/browser gate if selected |
+| F13 — One enemy | (1) author one role's theme contract, reusable movement/spawn/hazard behaviour and deterministic tests; (2) director integration, readable primitive cues, offspring/cap/ledger browser checks and balance; (3) dense mixed-roster/default-low stress, edge cases and corrections if needed |
+| F14 — Resources | (1) finite theme-owned resource definitions, reward provenance and exact-once run counters alongside XP; (2) run-end/session summary and storage/schema migration, with restart/double-count/import fixtures; (3) browser collection/reload/recovery and stress with no new collectible actors; (4) narrowly scoped eligibility/recovery rules only if selected, plus full economy gate |
+| F15 — Restoration | (1) three milestone conditions, costs/unlocks and pure insufficient-resource/idempotence tests; (2) existing-menu progress screen and bounded before/after scene presentation; (3) persist spend/unlock safely, handle storage failure and import compatibility; (4) complete restore/reload/browser/low-mode gate and adjust the progression economy using evidence |
+| F16 — Difficulty | (1) neutral preset contracts, theme tuning and ordering and baseline-comparison tests; (2) pre-run choice, clear copy, settings compatibility and browser lifecycle; (3) simulator comparisons, escape/telegraph/readability checks and per-preset stress; difficulty never changes implicitly with graphics quality |
+| F17 — Station/objective | (1) one optional objective's state/reward/expiry rules and duplicate-completion tests; (2) bounded placement/telegraph and existing interaction prompt; (3) committed resource deposit or zone-clear reward, helpful failure feedback and factual-content review when applicable; (4) ignore/complete/restart/reload, balance and stress gate |
+| F18 — Controller | (1) input adapter with deadzones, action mapping, repeat behaviour and disconnect tests; (2) title/pause/guide/level-up/overtime/end-screen navigation and device-switch browser checks; (3) focus/unplug/reconnect, remapping compatibility and real-controller smoke if hardware is available |
+
+### Suggested subsequent iterations, conditional on feature selection
+
+1. **Performance readiness:** the existing eight P0–P6 sessions stay first.
+2. **Readable variety:** selected F1 and/or F13; one new tool/role, then balance
+   and performance verification. No mandatory material matrix or resource economy.
+3. **Progress and reference:** selected F6/F7 and F10; preserve progress and
+   expand the current Field Guide. Bringing C6 earlier requires the documented
+   small persistence prerequisite described above.
+4. **Build depth and climax:** selected F2–F5, keeping approved C-phase order
+   and the post-boss choice. Avoid introducing every boss/weapon pitch together.
+5. **Restoration experiment:** selected F14 followed by F15; start with one park,
+   three milestones, and cosmetic/sidegrade unlocks. Permanent numerical power
+   increases need a separately selected design and renewed balance testing.
+6. **Additional access or depth:** selected F9/F11/F16/F18 can be scoped once
+   their seams are stable; F12/F17 remain later experiments with their own fun,
+   accuracy, and performance gates.
+
+These are dependency-aware groupings, not new approved milestones or a strict
+feature-selection order. F13–F18 require named phases/ownership in an appropriate
+future build plan; do not append them silently to C1–C7 or pull them into P0–P6.
+Keep the established V0.4.4 roster gate when scheduling art after content choices.
+
+If only a subset is selected, build its necessary foundations without adding
+unselected content. Resolve substantial design choices from the selection and
+existing authorities; ask only when those cannot determine a safe outcome.
+
+
+
+<a id="sprite-preparation-2026-10-22"></a>
+## 2026-10-22 — build-folder cleanup and eco style2 sprite preparation
+
+Owner pauses Knights and Magic indefinitely until explicit reopening (REC-120).
+Prompt preparation is complete (REC-121):26 subjects,23 primary plus3 optional
+icons; all five existing sheets queued for regeneration at 2× each dimension with
+same game scale/layout. Exact palettes, anchors, facing, frame continuity and
+manual/automated acceptance are specified. Art generation/integration unstarted.
+
+Completed G1–G4/Session21 prompts, redundant G2–G4 pointer plans, V0.4.3 plan
+and gameplay roadmap are removed. Original V0.4.3 phase specifications, performance
+sequencing, gameplay priorities/sources, superseded sprite inventory/style and
+content session estimates are preserved in this log. Future sprite phases and
+unselected ideas remain separate. Changed report links point to durable records;
+raw measurements/source digests, source code, tests and assets are preserved.
+
+Preparation verifies 489 local Markdown links,26 matching prompt/manifest frame
+rows and 298 unchanged source/test/script/public-asset hashes; whitespace passes.
+No runtime/build/browser rerun, art acceptance, publication or new remote evidence.
+External Safari/browser-OS/older physical-GPU checks remain waived/unverified.
+Current authority: [sprite plan](SPRITE_PLAN_V0.4.4.md) and [handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md).
+
+
+## 2026-10-23 — first eco sprite generation checkpoint
+
+On `codex/v0.4.4`, Bottle a2, Microplastics a4 and Glass a3 are generated and
+saved with exact prompts/reference hashes/metadata and native four-cell review
+strips at64/48/96px. [Batch1 report](sprites/review/style2/BATCH_1_REPORT.md)
+records sources, bounds, review limits and35passing sprite tests, types/lint/
+build/whitespace,5current-sheet checks and12unchanged shipped sprite file hashes.
+Opt-in fixed source cells avoid independent pose recentering;2px outline never
+changes alpha. Generation checkpoint complete; production art acceptance remains
+open due measured footprint/idle-hit differences (REC-122). No live replacement,
+new browser/device evidence or knight-themed work. Prior art remains shipped.
+
+
+<a id="sprite-full-generation-2026-10-23"></a>
+## 2026-10-23 — full eco roster generated through parallel subagents
+
+Owner likes Batch1 and explicitly requests generating the rest simultaneously,
+deferring individual fixes/in-game review. Three agents own disjoint 8-actor,
+7-equipment and 8-world groups; root owns claims/shared documentation/Git and
+an additional familiar wine-bottle alternative. All 26 catalog subjects now have
+native review sheets, with 27 preserved style2 source/prompt/metadata/recipe sets.
+The [gallery](sprites/review/style2/index.html) and
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) retain inventory,
+known individual findings and source-bound evidence. All sources use built-in
+imagegen; seeds/models are not invented. No hand-painted correction or acceptance.
+
+Owner promotes recognisable everyday Australian/Sydney shapes over uncommon
+angular/fantasy forms. Local primary context and authored inference boundaries
+are in [reference notes](sprites/AUSTRALIAN_REFERENCE_NOTES.md). Glass a4 has a
+wine-bottle silhouette; a3 remains intact. Stable IDs and world/gameplay values
+are unchanged. The paused knight pack is not reopened or developed.
+
+26 native format checks, 27 deterministic rebuilds/reference/source/output hash
+checks, 36 sprite units, types/lint/build and whitespace pass. Gallery script syntax
+and local asset targets pass; no gallery browser/in-game/stress/device campaign.
+The opt-in common-grid contain mode uses one identical uniform transform across
+cells and leaves strict defaults intact. Existing public/accepted/runtime assets
+are unchanged; no dependencies/save/balance changes. All 26 remain review,
+production integration/individual alignment/live acceptance pending. External
+browser/OS/older physical-GPU evidence remains waived/unverified. No publication.
+
+
+<a id="tool-presentation-2026-10-23"></a>
+## 2026-10-23 — suction, optional attack guides and Escape-menu quit
+
+Owner-selected runtime correction after full sprite generation. Eco vacuum uses
+bounded inward air/dust during the existing pulse; Low reduces streams and reduced
+motion keeps a static cue. Show attack radius defaults off and reveals precise
+sector/selected-hit/splash guides when on. Grabber jaws close and extra Sweep cues
+use three snapping prongs at existing resolved positions. Combat selection, damage,
+clocks, balance, saved IDs and generated/live sprite assets are unchanged.
+
+Pause gains pointer/Q Quit to Main Menu, abandoning transient run state through
+normal scene shutdown without recording a finished run/unlock. Start creates a
+fresh run. Panel/setting layout uses authored UI viewport and reserves the footer.
+Persistent showAttackRadius is an additive optional schema2 boolean: historical
+saves default off, invalid present values reject, current codec round-trips it.
+Only eco owns the optional tool effects; knight definitions stay frozen.
+
+[Report](content/TOOL_PRESENTATION_REPORT.md) owns231targeted/714fullunits, types/
+lint/build/whitespace, three final serial browser cases and the existing Q6 real
+vacuum regression, five inspected images, initial fixture failures/corrections and
+cleanup/deferred limits. No broad browser/stress/device or new publication claim.
+
+### Original bounded ownership and completed checklist
+
+# Tool presentation and return-to-menu correction
+
+Owner-selected2026-10-23, on codex/v0.4.4 after full sprite generation. This
+bounded runtime correction does not promote generated sheets or reopen Knights
+and Magic. Art review inventory remains intact.
+
+## Ownership before code
+
+- src/game/entities/{cone-attack-actor,grabber-actor}.ts and a new presentation-only
+  claw cue actor; run-scene.ts only presentation wiring and paused menu exit.
+- content/define-theme.ts validates optional presentation data;
+  core/archetypes/tuning.ts optional tool-presentation tuning; eco-guardian/view.ts
+  alone supplies it. No knight definition, balance value, hit timing or target change.
+- state/settings-state.ts and persistence/profile-validation.ts: optional additive
+  showAttackRadius boolean defaults false, old schema2 imports remain valid,
+  malformed present values reject. No schema bump, lost profile fields or unlock
+  grants on abandoning a live run. SAVE_DATA documents additive compatibility.
+- ui/pause-menu-ui.ts: setting plus keyboard/pointer Quit to Main Menu, with normal
+  teardown and resize; menu-scene setting dispatch already generic.
+- Relevant settings/persistence units and one bounded serial browser file covering
+  real effects/guide toggle/reduced motion/quality and actual quit/restart lifecycle.
+- This plan, sequence/status/progress/master/reconciliation, product/design/theme
+  compatibility notes and SAVE_DATA; no generated/public/accepted asset changes.
+
+## Behaviour
+
+Vacuum: bounded cyan air streaks/dust travel toward the nozzle during the actual
+pulse, no damage implied during fade. Exact sector/selected-hit guide appears
+only when Show attack radius is on (off by default). Low uses fewer streams;
+reduced motion uses a quiet static pulse. Geometry and combat clocks stay unchanged.
+Grabber: jaws close at extension contact; Collection Sweep extras become two/three
+claw snaps at their resolved positions. Debug area circles are optional, no new hits.
+Paused Escape menu adds Quit to Main Menu, pointer and Q; quit abandons the active
+run and cleans scene/audio/timers without finishing/granting a run. Existing saved
+progress/settings survive; Start reconstructs a fresh run. No confirmation modal.
+
+## Gate
+
+- [x] Meaningful setting legacy-import/invalid/round-trip persistence tests.
+- [x] Targeted units, types/lint/build/whitespace.
+- [x] Bounded serial browser: real pulse/guide toggle, reduced-motion/Low, claw
+  cues, Escape quit/title/new run and unchanged finished-run counter. No broad
+  browser/stress/device campaign; external checks remain waived/unverified.
+- [x] Record findings/status/checks with code; no full sprite acceptance inferred.
+
+Verification fixture ownership extension: tests/unit/persistence/save-codec.test.ts
+for complete settings round-trip and historical schema2 missing-field coverage.
+
+
+Completed 2026-10-23. See content/TOOL_PRESENTATION_REPORT.md for 714 full / 231 targeted
+unit evidence, three final serial browser cases plus existing Q6 vacuum regression,
+inspected images, initial fixture corrections and deferred external checks.
+
+<a id="ranged-enemy-2026-10-23"></a>
+## Takeaway Cup — selected ranged enemy/live draft /2026-10-23
+
+Owner requested concept, enemy sheet, generated sprite and game integration.
+Codex completed the bounded V0.4.4 addition on codex/v0.4.4. Claim8718bcb recorded
+scope before generation. The previous26 catalog subjects remain review-only.
+
+- [x] Eco-only optional `enemy.ranged_attacker`: familiar unbranded takeaway cup,
+  16HP,68speed,4contact,3XP; body14/display40 independent of art. Introduction
+  one at66%, low weight1 +0.2 growth; no other role/boss timing changed. New role
+  gets18sim seconds before mini; original spacing elsewhere retained.
+- [x] Core optional ranged capability, authored theme tuning, full locked-bearing
+  1000ms preparation, one210speed/7radius/8damage shot,180ms release/1820ms rest.
+  Shot lifetime1800ms, global cap32; swept first impact, obstacles, armour/shared
+  invulnerability, causal source and finite cleanup. Pause freezes; pre-release
+  defeat cancels; committed shots survive; clearing waits for them.
+- [x] Built-in imagegen: four immutable drafts; a3 compact death selected.
+  Seven64×64 poses (448×64 sheet); attack-frame metadata follows simulation phase,
+  hit overrides, independent authored base anchors/facing. Standalone texture;
+  optional padded equal-cell pipeline prevents wrapping/clipping without hand edits
+  or per-pose fitting. Existing five-sheet atlas/outputs remain byte-identical.
+- [x] [Enemy sheet](enemies/TAKEAWAY_CUP.md), catalog, manifest, gallery and current
+  handoff updated. Gallery's malformed historical contact-sheet href repaired
+  while adding cup. Old raw prompts remain reproducibility evidence, not pending
+  session tasks. No persistent field/schema or knight content changed.
+- [x] 719units/75files; typecheck/lint/build; six sprite build/check and deterministic
+  equal hashes;3 unique serial Chromium cases, five inspected images;30 eco pacing
+  scenarios. [Report](content/RANGED_ENEMY_REPORT.md) owns precise evidence/limits.
+
+Owner art acceptance remains pending: small idle/hit contour differences, broader
+mirrored continuity and extended playtest may be revised later. All original26
+review subjects remain unpromoted; no broad performance/device/CI/publication or
+new external acceptance claim. Coarse pacing model omits ranged shots and cannot
+prove survival/fairness. REC-126 retains optional-content and padded-grid decisions.
+
+<a id="sprite-progress-audit-2026-10-23"></a>
+## Sprite inventory/progress audit —2026-10-23
+
+Owner requests confirmation of created sprites, remaining future work and master
+progress update. Inspected current catalog, raw metadata, native recipes/checks,
+live eco sprite bindings, active plan, completed reports and optional roadmap.
+No generation/integration or gameplay expansion is selected by this audit.
+
+- [x]27/27 subjects present:24 sheets +3 icons;102 cells.31 immutable raw sources
+  and prompt sidecars present; recorded source/prompt/reference hashes checked.
+- [x]All27 configured native format checks and deterministic rebuilds pass;
+  recorded source/output SHA256 match. [JSON](sprites/review/style2/PROGRESS_AUDIT.json)
+  records every subject and current live binding.
+- [x]Confirmed runtime distinction: six unique sheets, five original style1 plus
+  cup style2 draft; seven bindings include old Glass-Shards alias.26 new subjects
+  remain review-only, zero owner-accepted style2. No full sprite milestone closure.
+- [x]Audited remaining work: individual continuity/scale/anchor/palette corrections,
+  deliberate live state mapping, remaining integration and consolidated acceptance.
+  Optional roadmap/education expansions stay unselected, knight theme stays paused.
+- [x]Documentation verification:343 local links, no new explicit master anchor
+  collisions, six runtime sheet checks, production build and whitespace pass.
+  Existing bundle-size advisory retained; no runtime/assets changed.
+- [x]Removed misleading preparation-only/unstarted generation wording from active
+  sprite execution plan and synchronized status/handoff. Historical claims below
+  are retained once in this master; raw prompt files remain reproducibility data.
+
+[Report](sprites/review/style2/PROGRESS_REPORT.md) gives known issues, remaining
+order and future-option inventory. No new browser/stress/device/remote-CI claim;
+last runtime evidence remains6c17610's719units/75files/three scoped browser cases.
+V0.4.4 and V0.4 overall stay open until the remaining art/integration gates pass.
+
+<details>
+<summary>Historical sprite preparation and generation ownership/contracts (superseded execution instructions)</summary>
+
+# V0.4.4 — eco sprite regeneration and completed-roster art
+
+Owner-selected direction, 2026-10-22: prepare prompts for the settled roster,
+regenerate all existing sheets at twice each frame dimension, preserve the same
+in-game scale and layout, and enforce consistent art and functional frames.
+Knights and Magic is paused indefinitely until the owner explicitly reopens it.
+
+[Status](BUILD_STATUS.md) owns completion/delivery evidence. Q6/G1–G4 are locally
+complete in the [master log](MASTER_BUILD_PLAN.md#readable-gameplay). Their runtime
+IDs and roles settle this inventory. Historical S2–S5 and obsolete 32-sheet
+inventories have been retired into the master; they do not add work here.
+
+## Current authority and ownership
+
+- [Style guide](SPRITE_STYLE_GUIDE.md): style 2, exact shared prompt, palettes,
+  resolution/anchor rules and acceptance checklist.
+- [Prompt catalog](SPRITE_PROMPTS.md): 26 complete subject blocks with target
+  frame/strip dimensions and ordered frame content, including five replacements.
+- [Manifest](sprites/MANIFEST.md): existing accepted evidence, replacement queue,
+  attempts, claims and future acceptance. Historical attempts are never overwritten.
+- [Master pipeline](MASTER_BUILD_PLAN.md#v0-4-1), REC-071–078 and REC-120/121:
+  sprites follow actors, never drive simulation; nearest filtering is per texture.
+
+This session owns documentation only: AGENTS/README, build Markdown and sprite
+manifest, status/progress/reconciliation, obsolete completed prompt/plan removal
+and link repairs. No runtime, generated art, recipes, dependencies or evidence
+files change. Prompt preparation is complete after the documentation checks below.
+The request prepares generation inputs; it does not claim generated or accepted
+art. No active generation claim is created by writing the catalog.
+
+<a id="sprite-audit-historical-settled-roster"></a>
+## Inventory and scale decisions
+
+All ten current eco enemies receive sheets: Plastic Bottle, Microplastics, Glass
+Bottle, Bagged Waste, Glass Shards, Cigarette Butts, Packets / Wrappers, Aluminium
+Can, Compacted Waste and Dumping Colossus. Add the Environment Protector, Grabber,
+Vacuum, Cyclone Vacuum, Impact Point, five sites and three hazard centre tiles.
+Three static tool icons are optional companion assets, not required new UI work.
+Total: **23 primary sheets + 3 optional icons**. The catalog owns exact dimensions.
+
+Existing replacements: Bottle32→64, Microplastics24→48, Glass48→96,
+Bagged Waste48→96, Player48→96 (each axis). Existing enemy4/player8 frame counts
+and horizontal order remain. New subjects use the catalog's selected logical
+baseline doubled in both axes; those baseline files never previously existed.
+Glass Shards get a dedicated48px four-frame sheet instead of the Glass death
+pose alias; preserve stationary identity and28-world-unit display.
+
+Authored world display diameters stay: player42; Bottle36; Microplastics26;
+Glass50; Bag56; Shards28; Butts28; Wrappers34; Can38; mini64; final90.
+For the player retain normalized Q6 hood anchors and actual facing metadata.
+Doubled canvas alone is insufficient: preserve normalized silhouette occupancy.
+No new bodies, caps, skills, saved IDs, tuning, tool geometry or timings.
+
+Procedural grabber reach/Sweep, vacuum cone/pulse/fade/splash, warning circles,
+directional cues, elite/shield/acceleration treatment and grid remain code-native.
+Hazard sprites are centre decoration, never authoritative area masks. Tool/site/
+pickup/hazard frame lists are explicit art contracts pending runtime mapping;
+they must not be driven through a generic walking loop into false gameplay states.
+There are five sites, including `shrine.escalation`. Do not revive retired
+Plastic Bag, fictional fragment IDs, reward tiers or Sorting Pulse.
+
+## Ordered execution handoff
+
+1. **Preparation (this session):** audit/consolidate completed plans; record theme
+   pause; write inventory, palettes, shared lock, subjects and acceptance rules.
+2. **Baseline and pipeline:** before code, claim a bounded `codex/v0.4.4` phase
+   from the actual current base. Own scripts/sprites.ts, sprite pipeline/resolver/
+   loader/view only as required, eco sprites.ts, relevant units, browser inspector,
+   raw/accepted/public sprite outputs, manifest and matching docs. Inspect current
+   normalization/atlas code: dimensions and source recipes are hardcoded, and
+   outline/placement handling must support 2px style2 without per-pose auto-fit.
+   Generate/accept the new Bottle baseline first with a manifest claim, keeping
+   old assets until acceptance. Preserve numbered raw attempts and exact prompts.
+3. **Player and five-sheet replacement checkpoint:** regenerate Microplastics,
+   Glass, Bag and Player to match accepted style2 Bottle; review all same-frame
+   overlays, anchors, facing, walk/hit/death transitions and actual display sizes.
+   Keep world values unchanged; update frame metadata, anchor coordinates and
+   atlas entries together. Do not double camera or physical actor sizes.
+4. **Remaining actors:** dedicated Glass Shards, individual Butt, Wrapper, Can,
+   mini and final boss. Preserve parent materials and code-owned warnings;
+   accept one subject per commit and inspect each beside the current roster.
+5. **Tools, pickup, sites and hazards:** integrate only with deliberate state
+   mapping. Keep geometric hit/interaction/warning truth in code. Review tile
+   edges/coverage before hazard integration and grip/pulse alignment before tools.
+   Optional icons may follow without adding UI scope automatically.
+6. **Consolidated eco acceptance:** one bounded serial roster/fallback/performance
+   campaign for changed presentation; Default/Low and reduced motion, one worker,
+   zero retries, inspect images and clean owned resources. Use old source-bound
+   measurements only as comparison, not a current pass. Existing external Safari/
+   browser-OS/older physical-GPU checks remain waived/unverified.
+
+No new knight-themed art, balancing, copy, feature parity or dedicated knight
+campaign is permitted by these steps. Retained generic contract checks may read
+its frozen fixture; any required themed edits must wait for explicit reopening.
+An empty/synthetic sprite map can prove generic fallback without expanding that pack.
+
+## Verification and completion
+
+Preparation gate:
+
+- [x] Completed prompts removed only after their durable results are in master.
+- [x] Completed multistage execution records consolidated; future proposals kept
+  separately and clearly unselected; links redirected to retained master anchors.
+- [x] Indefinite theme pause recorded in AGENTS and active design/plan authorities.
+- [x] All current subjects and five replacements have copyable descriptions,
+  exact doubled dimensions, frame roles, palettes and continuity instructions.
+- [x] Documentation link/dimension/inventory checks, unchanged code/assets hashes,
+  and whitespace validation pass: 489 links, 26 dimension/frame rows and 298 hashes.
+
+Later art gate (unstarted): configured sprite checks, relevant content/architecture/
+sprite units, types/lint/build, atlas/dimension/alpha verification; manual source/
+processed/game-size review and necessary bounded serial gameplay cases. Review
+300-actor texture cost once cumulatively, not for every prompt/art session. Check
+atlas page/texture limits and startup bytes: doubled dimensions cost4× texels.
+No full browser/device campaign is passed by this documentation change.
+
+
+## Batch 1 generation claim — 2026-10-23
+
+Owner explicitly requests creating the first batch. Branch `codex/v0.4.4`, based
+on current checkout71c9b1b plus documentation preparation584ba62. Scope: Plastic
+Bottle baseline, then Microplastics and Glass Bottle. Own this plan, manifest,
+raw attempt PNG/prompt/metadata sidecars, versioned review sheets under
+build/sprites/review/style2/, batch report, progress/status/reconciliation and
+master completion record. Existing accepted/public assets and runtime remain
+unchanged until the configured pipeline and live acceptance phase is verified.
+
+Art generation may proceed for this bounded batch using reviewed Bottle as the
+style reference after source-level review. Source-level review is not final
+in-game acceptance. If the existing normalizer would recenter poses or lose the
+requested resolution, preserve the raw outputs and use a deterministic fixed-cell
+review conversion recorded with the batch; no painted repairs. Any additional
+pipeline/code ownership must be claimed before editing. No player, other content
+or knight-magic work in this batch.
+
+Gate: preserve actual tool output and exact prompt/reference hashes; inspect all
+four poses for material/geometry continuity, transparent background and one-row
+layout; verify final review dimensions/alpha/palettes if converted, record review
+versus accepted honestly, retain old source/runtime hashes. No broad browser run
+for generation-only assets. Runtime integration/performance acceptance remains
+open rather than implied by source-art review.
+
+
+Batch1 ownership extension before code: `src/game/systems/sprites/sprite-pipeline.ts`,
+`tests/unit/sprites/sprite-pipeline.test.ts`, and `scripts/sprite-review.ts` for
+an opt-in fixed source-cell grid, requested2px outline and reproducible review
+conversion only. Existing recipes/default normalization stay unchanged. Explicit
+source-grid coordinates are recorded per attempt; one common scale, no per-frame
+recentering. Verify meaningful fixed-offset/outline tests and unchanged current
+five-sheet rebuild bytes. Review output never enters public/accepted automatically.
+
+
+### Batch1 first-pass result — 2026-10-23
+
+Three subjects generated: Bottle a2, Microplastics a4, Glass a3; native review
+strips 256×64/192×48/384×96. [Batch report](sprites/review/style2/BATCH_1_REPORT.md)
+owns exact checks and remaining layout findings.35 sprite units, types/lint/build,
+current 5-sheet checks and 12unchanged accepted/public file hashes pass. Generation
+checkpoint is complete; strict footprint/idle-hit alignment and final live
+acceptance are not passed. All 3stay review,0 accepted. Refine prompts/regenerate
+from measured bounds before production promotion; no hand-painted pose repairs.
+No runtime replacement, new browser/device pass or next-content scope follows.
+
+
+## Owner-selected parallel full-roster generation — 2026-10-23
+
+Owner likes Batch1 designs and explicitly requests subagents to generate all
+remaining sprites simultaneously, deferring individual corrections and in-game
+review. This lifts the earlier sequential acceptance gate for generation only;
+Batch1 stays review and is not silently production-accepted. Select all23remaining
+catalog rows, including3previously optional icons. No further layout refinement,
+production binding, balance, saved IDs, knight-theme work or browser campaign.
+
+Three agents own disjoint asset IDs: actors (Bag, Player, Shards, Butt, Wrapper,
+Can, mini/final bosses); equipment (Grabber/Vacuum/evolution, pickup,3icons); world
+(five sites, three hazards). Each owns only its assigned raw PNG/prompt/metadata/
+review-recipe files and review outputs. Root owns manifest claims, shared reports,
+plans/status/progress/reconciliation, validation and commits. Do not concurrently
+stage or commit from agents. Root records all claims before dispatch in one claim
+commit to make ownership visible; one subject per acceptance commit still applies
+if art is accepted later. No acceptance occurs in this generation pass.
+
+Use imagegen skill, built-in tool, one distinct subject per call, true transparency,
+style2 lock/catalog and Batch1 as references. Preserve each actual source and exact
+prompt/reference hashes with honest tool/seed metadata. Save native review strips
+when deterministic format conversion can preserve one common source grid/scale.
+If generator layout prevents safe conversion, retain source for review and record
+that specifically; do not hand-paint, invent frames or hide a skipped check.
+
+Gate: all 26 catalog subjects have preserved generated sources/prompt evidence (3old
+plus23new); intended dimensions/frame counts catalogued; available native outputs
+pass format checks; shared source/runtime/accepted assets remain unchanged. Owner
+visual testing, alignment and live/performance acceptance remain explicitly pending.
+
+
+### Familiar Australian appearance — owner amendment during parallel generation
+
+Owner asks that items resemble familiar everyday Australian/Sydney examples,
+explicitly contrasting the angular glass shape with wine bottles or jars. Read
+the design prompt and local primary reference context before generation. Root
+owns Australian reference notes and a further Glass Bottle a4 wine-bottle review
+alternative, retaining a3 unchanged. The familiar-object silhouette supersedes
+older squat/angular art descriptors, while stable IDs, material role, frame
+count and world display size remain fixed. Shared style/light/palette discipline
+continues; use neutral ordinary materials with theme-colour accents rather than
+turning mundane objects into magical/futuristic constructs. No new game facts,
+disposal rules or prevalence-driven balance are introduced.
+
+
+Root conversion ownership extension before code: sprite-pipeline.ts, its unit
+file and shared converter documentation for opt-in fixed-grid `fit: contain`.
+A rectangular common source cell may be letterboxed into the target using the
+existing uniform min-scale and the same centering offset for every cell, without
+per-pose bounding-box fitting, distortion or clipping. Default strict aspect
+validation stays unchanged. This supports generated boards taller than the
+requested strip; extra padding is a review concern, never a gameplay-size change.
+
+
+### Parallel full-roster generation gate — complete 2026-10-23
+
+All 26 catalog subjects have generated sources and native review strips:23 primary
+plus 3icons.27 style2source/recipe sets include angular Glass a3 and familiar wine
+alternative a4. Three subagents delivered their disjoint 8/7/8 groups. Root checked
+26 native formats,27 deterministic rebuilds and source/reference/output digests;
+36 sprite units, types/lint/build and whitespace pass. Gallery syntax/asset targets
+pass; no gallery browser or in-game acceptance is claimed. [Full report](sprites/review/style2/FULL_ROSTER_REPORT.md)
+and [gallery](sprites/review/style2/index.html) own inventory, evidence and known
+individual review notes. Pre-existing public/accepted/runtime assets remain
+unchanged. All 26stay review,0 accepted; alignment/live/performance gates remain
+for later owner testing. Generation objective complete; no knight work or art
+correction campaign is silently selected.
+
+## Ranged addition completed; next open work
+
+Owner-selected Takeaway Cup concept, enemy sheet, generated art and live runtime
+slice is complete; [master record](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+and [report](content/RANGED_ENEMY_REPORT.md) own implementation and evidence.
+The live draft is not owner art acceptance. Catalog now27 subjects (24 primary
+sheets +3 icons). Previous26 stay review-only; their individual corrections,
+acceptance and remaining integration are the next open handoff. No other content
+is selected by this completion, and Knights and Magic remains indefinitely paused.
+
+</details>
+
+## V0.4.4 owner-authorized delivery verification —2026-10-26
+
+Owner requests all current sprites/features be published through a PR into main.
+Fresh remote inspection finds PR28 merged as9e29ca6 and no open PR. Preserve18
+subsequent phase commits and merge main's marker without content conflicts
+(78cd2e7). Fresh719units/75files, typecheck/lint/build, six sprite checks,27native/
+31raw/prompt hashes and branch whitespace pass. High-severity audit gate passes
+with two existing moderate Vitest findings. Automatic PR CI owns consolidated
+browser regression; current matching-head result pending at pre-push checkpoint.
+[Status](BUILD_STATUS.md) records delivery scope and limitations. Publication
+includes all generated assets, keeps26 style2 outputs review-only and cup live
+draft, and preserves indefinite knight pause. Remaining art/integration and
+external device evidence stay open. No new runtime change in this delivery slice.
+
+<a id="pr29-ci-repair"></a>
+## PR29 CI repair — local verification /2026-10-26
+
+Owner authorizes fixing failed run40245699120/b861e8c:135passes/6skips/13failures.
+Seven old settings-row clicks now use read-only rendered controls in MODE=test
+telemetry; counts/pages/resources derive from declared content; elite fracture
+uses stable role; clearing fixture stays inside tool reach and handles early
+terminal clock freeze. No gameplay/tuning/art/save/knight changes, retry/timeout
+increases or disabled assertions.13unique affected eco/generic cases pass
+cumulatively (9 + corrected4), one worker/zero retries;719units/75files,
+types/lint/build/production guard/whitespace, audit high gate pass (2existing
+moderate findings). [Report](performance/PR29_CI_REPAIR.md) owns first-run failures,
+production evidence and limits. Matching-head full CI remains pending until the
+actual automatic run finishes; no overall V0.4.4/device acceptance inferred.
+
+### Original pre-code bounded repair ownership (completed)
+
+#### PR29 CI repair —2026-10-26, claimed before code
+
+Owner requests fixing failed checks. Failed run40245699120 on b861e8c has135
+passes/6skips/13failures. Scope: outdated settings click coordinates after the
+new row/footer layout, fixed sprite/guide counts and atlas-only requests, a
+first-enemy fragmentation assumption, and clearing fixture range isolation.
+Ownership: pause-menu-ui.ts read-only control-point getter, existing test-only
+telemetry publication in run-scene.ts/menu-scene.ts and telemetry-bridge.ts;
+tests/e2e helper and affected difficulty/elite/G4/interface/overtime/phase-eight/
+presentation/save-portability/sprite-browser/sprites tests; matching status,
+master/progress/reconciliation and repair report. No tuning/art/save/theme change,
+no retry/timeout increase, no disabled assertions or frozen knight edits.
+Gate: focused failed eco/generic cases serial1worker/0retries, fullunits,
+typecheck/lint/build/production guard, whitespace; push samePR and inspect CI.
+Heavy full browser/stress regression remains assigned to automatic PR workflow.

@@ -31,11 +31,11 @@ describe("theme manifests", () => {
     expect(activeTheme).toBe(ecoGuardianTheme);
   });
 
-  it("keeps two real production themes interchangeable on stable roles", () => {
+  it("keeps shared production roles interchangeable while allowing the selected eco-only role", () => {
     // Both packs are production-shaped content, so the boundary is proven by
     // real themes rather than only by the synthetic fixture.
     const roleIds = (theme: ThemeManifest): readonly string[] =>
-      theme.enemies.map((enemy) => enemy.id).sort();
+      theme.enemies.filter((enemy) => enemy.id !== archetypeIds.enemy.rangedAttacker).map((enemy) => enemy.id).sort();
 
     expect(roleIds(ecoGuardianTheme)).toEqual(roleIds(knightMagicTheme));
     expect(ecoGuardianTheme.characters[0]?.id).toBe(knightMagicTheme.characters[0]?.id);

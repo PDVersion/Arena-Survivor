@@ -1,8 +1,33 @@
 # Theme and Archetype System
 
+## Familiar Australian appearance — 2026-10-23
+
+Use recognisable ordinary Australian/Sydney objects before abstract/fantasy
+silhouettes. Read [appearance references](sprites/AUSTRALIAN_REFERENCE_NOTES.md).
+Wine bottles/jars, drink cans, snack packets, household rubbish bags and practical
+cleanup equipment guide the shapes. Theme colours accent credible materials;
+they do not erase object identity. This is appearance direction, not a new factual
+lesson, prevalence ranking, disposal claim, tuning change or saved content ID.
+Older angular/squat Glass Bottle art is retained for comparison; a wine-bottle
+alternative follows the owner direction. World display size remains unchanged.
+
+
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+
 This document is the design reference for making Arena Survivor's fiction replaceable without rewriting its game systems.
 
-From V0.3 Phase 2 the production theme is **environment/nature** (`eco-guardian`). The original **knights and magic** pack (`knight-magic`) is retained as a second, complete production theme. It is not a fixture: it must keep satisfying every contract and passing every rule test, which makes it a far stronger boundary regression target than a synthetic stub.
+From V0.3 Phase 2 the production theme is **environment/nature** (`eco-guardian`). The original **knights and magic** pack (`knight-magic`) is retained frozen for historical compatibility. Its earlier role as a continuously developed second production pack is suspended by the owner direction above.
 
 The source-level authority is the active theme manifest under `src/game/content/themes/`. `active-theme.ts` selects one pack for the runtime; `theme-registry.ts` lists every pack for tooling and validation and is deliberately kept out of the runtime path so the production bundle never carries a theme it does not render.
 
@@ -337,7 +362,7 @@ or sprites are selected by this planning decision.
 
 ## Readable roster roadmap — 2026-10-21 planning boundary
 
-[READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md) owns the staged candidate
+[Master gameplay design record](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) owns the staged candidate
 assessment and G1–G4 gates. Existing Plastic Bottle, Microplastics, Glass Bottle,
 Bagged Waste and stationary Glass Shards keep their stable IDs and finite material
 relationships. No current role is renamed to match a survey ranking. Plastic Bag
@@ -391,7 +416,7 @@ and separate20px bodies replace neither Microplastics nor any material family.
 No post-cleanup contamination patch, new art, saved discovery or effectiveness
 matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
 
-[Reviewed plan](BUILD_PLAN_G2.md), [candidate report](content/G2A_REPORT.md).
+[Reviewed plan](MASTER_BUILD_PLAN.md#readable-gameplay-g2), [candidate report](content/G2A_REPORT.md).
 G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
 a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
 
@@ -418,7 +443,7 @@ end caps are code-native presentation, never physics input. No generated art,
 material/harm/handling fact, new information surface, saved field or ID remap.
 
 All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
-[PHASE_G3_PROMPT](PHASE_G3_PROMPT.md) is written/reviewed. G3 ready/unstarted;
+[G3 master record](MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed. G3 ready/unstarted;
 G4/art unstarted, external evidence still deferred/waived/unverified. This is the
 current state; earlier staged continuation paragraphs are historical checkpoints.
 
@@ -438,7 +463,7 @@ in recovery; no new attack/counter/health/damage/body. These are game decisions,
 not real material/handling/abundance claims. No quiz, currency, new roster, saved
 field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
 verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
-complete; [reviewed G4 handoff](PHASE_G4_PROMPT.md) is current, G4/art unstarted.
+complete; [reviewed G4 handoff](MASTER_BUILD_PLAN.md#readable-gameplay-g4) is current, G4/art unstarted.
 
 ## G4 — useful reviews and optional reference / 2026-10-22
 
@@ -463,3 +488,24 @@ copy has not received a new factual review in this phase.
 
 [Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
 is current. G1–G4 are locally complete; new sprite generation remains unstarted.
+
+
+## Tool presentation and menu exit — 2026-10-23
+
+Owner selects bounded procedural suction/dust on eco vacuum pulses and snapping
+multi-prong Collection Sweep cues. Precise attack guides are presentation only,
+behind Show attack radius (default OFF). Actual hit selection, reach/caps, damage,
+clocks and material identities remain unchanged. Reduced motion/Low have quieter
+variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
+active run without counting a finished run or granting an unlock. Saved settings/
+progress remain. Generated sprite sheets remain in review and knight content
+stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
+## Owner-selected eco ranged role —2026-10-23
+
+Optional `enemy.ranged_attacker` maps only to eco **Takeaway Cup**. Familiar paper
+cup, sleeve and dark lid; fictional single coffee projectile. Stable gameplay
+capability/phase contracts are core, identity/tuning/sprite remain eco-owned.
+No corresponding knight role/copy is required or added while indefinitely paused.
+[Enemy sheet](enemies/TAKEAWAY_CUP.md) and [master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+record role, live draft, timing and limits. Cigarette Butts stay weak groups.

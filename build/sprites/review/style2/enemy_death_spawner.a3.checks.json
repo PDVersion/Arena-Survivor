@@ -1,0 +1,86 @@
+{
+  "source": "build/sprites/raw/enemy_death_spawner.a3.png",
+  "sourceSha256": "f354c29eb360c92325dab339f8600fabf78338ed78905b5ff1d8dc9b8cd55fc5",
+  "output": "build/sprites/review/style2/enemy_death_spawner.a3.png",
+  "outputSha256": "34eaffc54799af15d5072b0e8e82c6cef8a1df85fd6fb1631bb823b1aa81a2e8",
+  "width": 384,
+  "height": 96,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 7,
+      "top": 6,
+      "width": 83,
+      "height": 82,
+      "opaquePixels": 5004
+    },
+    {
+      "frame": 1,
+      "left": 10,
+      "top": 5,
+      "width": 84,
+      "height": 85,
+      "opaquePixels": 4881
+    },
+    {
+      "frame": 2,
+      "left": 7,
+      "top": 6,
+      "width": 83,
+      "height": 82,
+      "opaquePixels": 5005
+    },
+    {
+      "frame": 3,
+      "left": 4,
+      "top": 6,
+      "width": 88,
+      "height": 86,
+      "opaquePixels": 5180
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.death_spawner",
+    "source": "build/sprites/raw/enemy_death_spawner.a3.png",
+    "output": "build/sprites/review/style2/enemy_death_spawner.a3.png",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 125,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#3b1762",
+        "#8050bd",
+        "#c084fc",
+        "#dcb5fd"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ],
+      [
+        "#7c2d12",
+        "#c65d1a",
+        "#fb923c",
+        "#fdba74"
+      ]
+    ],
+    "outline": "#3b1762"
+  }
+}

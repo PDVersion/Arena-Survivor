@@ -1,0 +1,74 @@
+{
+  "source": "build/sprites/raw/enemy_swarm_basic.a2.png",
+  "sourceSha256": "54f94fd1eee4f5096da4591fd497e5e82f3e20ba72d261ff569c0a94e8cb5a35",
+  "output": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+  "outputSha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092",
+  "width": 256,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 20,
+      "top": 3,
+      "width": 25,
+      "height": 60,
+      "opaquePixels": 1185
+    },
+    {
+      "frame": 1,
+      "left": 10,
+      "top": 11,
+      "width": 47,
+      "height": 50,
+      "opaquePixels": 1139
+    },
+    {
+      "frame": 2,
+      "left": 19,
+      "top": 3,
+      "width": 26,
+      "height": 60,
+      "opaquePixels": 1186
+    },
+    {
+      "frame": 3,
+      "left": 16,
+      "top": 13,
+      "width": 36,
+      "height": 50,
+      "opaquePixels": 1130
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.swarm_basic",
+    "source": "build/sprites/raw/enemy_swarm_basic.a2.png",
+    "output": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 90,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#173b73",
+        "#356fae",
+        "#60a5fa",
+        "#9ac8fb"
+      ],
+      [
+        "#4b5563",
+        "#9ca3af",
+        "#e2e8f0",
+        "#f8fafc"
+      ]
+    ],
+    "outline": "#173b73"
+  }
+}

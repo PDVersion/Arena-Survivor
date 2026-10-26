@@ -1,0 +1,43 @@
+{
+  "contentId": "enemy.fast_fragile",
+  "source": "build/sprites/raw/enemy_fast_fragile.a4.png",
+  "output": "build/sprites/review/style2/enemy_fast_fragile.a4.png",
+  "frameWidth": 48,
+  "frameHeight": 48,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 90,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#172d5f",
+      "#64748b",
+      "#e2e8f0",
+      "#f8fafc"
+    ],
+    [
+      "#7f1d1d",
+      "#b91c1c",
+      "#ef4444",
+      "#fca5a5"
+    ],
+    [
+      "#173b73",
+      "#356fae",
+      "#2563eb",
+      "#93c5fd"
+    ],
+    [
+      "#713f12",
+      "#b7791f",
+      "#facc15",
+      "#fde68a"
+    ]
+  ],
+  "outline": "#172d5f"
+}

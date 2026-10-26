@@ -7,25 +7,35 @@ recognisable real-world tools, and optional educational depth.
 
 See [build dates and status](build/BUILD_STATUS.md) for verified checkpoints,
 merge dates, current PR/CI evidence and remaining acceptance limits.
-V0.4.3 is active; P5's affected lifecycle/startup slices are verified and its
-outstanding device/browser checks are temporarily waived by explicit owner decision
-(2026-10-20), with missing evidence still unverified. P6 software checks and the
-device kit are verified at their recorded sources. Owner-approved C1–C7
-implementation has completed C1–C7: multiple tools/evolution, shrines/curses, elite
-families, bosses, local profiles/unlocks and portable saves. These are local verified
-phases; no later remote CI or merge is implied.
+V0.4.3 software/content and Q6/G1–G4 scoped local gates are complete; their
+history is in the master log. Current selected work is eco sprite preparation:
+regenerate the five existing sheets and cover the settled roster at twice each
+frame dimension, keeping game display scale fixed. The original26 catalog subjects are generated for review. A new27th subject,
+[Takeaway Cup](build/enemies/TAKEAWAY_CUP.md), is integrated as a live ranged-enemy
+draft with seven64px frames; owner art acceptance and remaining integration stay open.
+Use the [sprite gallery](build/sprites/review/style2/index.html) to inspect them.
+The [progress audit](build/sprites/review/style2/PROGRESS_REPORT.md) confirms all27
+subjects/102 frames and lists remaining art acceptance, integration and future options.
+Knights and Magic is paused indefinitely until the owner explicitly reopens it.
+External device/browser evidence remains waived/unverified; see status for actual
+source-bound PR/CI observations.
+
+The latest correction adds vacuum suction/dust, optional attack-radius guides
+(default OFF), snapping extra Grabber claws and Escape-menu Quit to Main Menu.
+See the [verified correction](build/MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
 
 ## Project documents
 
 - [Master build plan — completed work](build/MASTER_BUILD_PLAN.md): consolidated V0.1–V0.4.2.1 implementation/architecture records and verified V0.4.3 slices.
 - [Build dates and status](build/BUILD_STATUS.md): one current milestone/phase summary.
 - [V0.4 sequence](build/BUILD_PLAN_V0.4.md): increment order, ownership and gates.
-- [V0.4.3 active plan](build/BUILD_PLAN_V0.4.3.md): P5/P6 evidence/waiver and active C1–C7 implementation.
-- [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): ongoing/TBC roster reconciliation.
-- [Next session — delivery and acceptance disposition](build/SESSION_21_PROMPT.md).
-- [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): execution protocol, retained design review and optional feature menu.
+- [V0.4.3 completed phase record](build/MASTER_BUILD_PLAN.md#v0-4-3-source-plan): original specifications, delivery history and acceptance limits.
+- [V0.4.4 sprite continuation](build/SPRITE_PLAN_V0.4.4.md): selected eco regeneration and full-roster art specifications.
+- [Current sprite handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md).
+- [Autonomous roadmap](build/AUTONOMOUS_DEVELOPMENT_PLAN.md): retained design review and unselected feature menu.
 - [Session progress](AUTONOMOUS_PROGRESS.md) and [reconciliation](RECONCILIATION.md): measured evidence and durable constraints.
 - [Product plan](build/PLAN.md), [education pivot](build/EDUCATION_PIVOT.md), [theme/archetypes](build/THEME_ARCHETYPES.md), and [save contracts](build/SAVE_DATA.md).
+- [Copyable sprite prompts](build/SPRITE_PROMPTS.md): shared-lock workflow and 26 subject blocks.
 - [Sprite style guide](build/SPRITE_STYLE_GUIDE.md) and [manifest](build/sprites/MANIFEST.md).
 - [Architecture map](build/ARCHITECTURE_MAP.html): searchable feature/system index.
 

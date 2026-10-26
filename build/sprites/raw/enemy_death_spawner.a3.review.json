@@ -1,0 +1,43 @@
+{
+  "contentId": "enemy.death_spawner",
+  "source": "build/sprites/raw/enemy_death_spawner.a3.png",
+  "output": "build/sprites/review/style2/enemy_death_spawner.a3.png",
+  "frameWidth": 96,
+  "frameHeight": 96,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 125,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#3b1762",
+      "#8050bd",
+      "#c084fc",
+      "#dcb5fd"
+    ],
+    [
+      "#374151",
+      "#6b7280",
+      "#d1d5db",
+      "#f8fafc"
+    ],
+    [
+      "#3f4b26",
+      "#68753b",
+      "#91a657",
+      "#c0d187"
+    ],
+    [
+      "#7c2d12",
+      "#c65d1a",
+      "#fb923c",
+      "#fdba74"
+    ]
+  ],
+  "outline": "#3b1762"
+}

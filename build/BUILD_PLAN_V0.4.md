@@ -1,5 +1,67 @@
 # V0.4 — Readable Baseline Before Content Growth
 
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+## Latest progress audit —2026-10-23
+
+**All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved
+style2 raw attempts.** Fresh file/format/hash audit and deterministic rebuilds pass
+for every current native output. No selected generation is missing or still claimed.
+Takeaway Cup is the only live style2 draft;26 subjects remain review-only and owner
+art acceptance/integration remains open. Current runtime uses five original style1
+sheets plus cup, with Glass Shards aliasing old Glass death art.
+
+[Audit report](sprites/review/style2/PROGRESS_REPORT.md) lists remaining
+visual fixes, production bindings, consolidated acceptance and unselected future
+features. [Master checkpoint](MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23)
+records completion; [active plan](SPRITE_PLAN_V0.4.4.md) now contains only
+remaining execution. No runtime/art change or new browser/stress/device/remote-CI
+pass;719units/three cup browser cases remain the last runtime gate. Knight theme
+stays indefinitely paused. V0.4.4/overall V0.4 are not complete.
+
+## Earlier selected addition —2026-10-23
+
+[Takeaway Cup](enemies/TAKEAWAY_CUP.md) is now a live eco ranged-enemy draft:
+seven64px frames including real preparation/release/recovery and a locked-bearing
+coffee projectile. [Completed slice](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+and [report](content/RANGED_ENEMY_REPORT.md) record719units/three scoped browser
+cases and remaining art/pacing limits. Catalog27 subjects /31 preserved style2
+attempts; original26 remain review-only. Next: individual art corrections/owner
+playtest and remaining integration. Frozen knight content and prior external
+waiver/unverified state remain. Earlier preparation checkpoints below are history.
+
+## Earlier verified correction — 2026-10-23
+
+Vacuum suction/dust, off-by-default Show attack radius, snapping extra Grabber
+claws and Escape-menu Quit to Main Menu are implemented. Quitting abandons the
+active run without finish rewards; saved settings/progress remain.714 unit tests,
+types/lint/build and four scoped serial browser cases pass; five images inspected.
+[Master record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23) and
+[report](content/TOOL_PRESENTATION_REPORT.md) own evidence/limits. Generated sheets
+remain review assets; knight content stays paused and external checks unverified.
+
+## Earlier generation checkpoint — 2026-10-23
+
+Completed V0.4.3 and Q6/G1–G4 execution history is in the master. Owner-requested
+full eco sprite generation is now complete: all 26 subjects, 27 preserved style2
+attempts including the wine-bottle alternative. Three subagents generated the
+23 remaining rows in parallel. All are review assets; individual corrections,
+production integration and in-game acceptance are deferred to owner review.
+[Gallery](sprites/review/style2/index.html) ·
+[full report](sprites/review/style2/FULL_ROSTER_REPORT.md) ·
+[current art plan](SPRITE_PLAN_V0.4.4.md). World/physics values and live assets
+are unchanged. Knights and Magic remains indefinitely paused.
+
 Current milestone dates and statuses: [BUILD_STATUS.md](BUILD_STATUS.md).
 
 V0.4 is now a sequence, not two live parallel streams. The sprite checkpoint
@@ -13,7 +75,7 @@ better than the simpler educational game.
 | **V0.4.1** | Sprite pipeline plus player and four enemy sheets | [`MASTER_BUILD_PLAN.md#v0-4-1`](./MASTER_BUILD_PLAN.md#v0-4-1) |
 | **V0.4.2** | Readable 2× world view, scaled crisp UI, 0.5 pace, minimap, Cleanup Grabber progression | [`MASTER_BUILD_PLAN.md#v0-4-2`](./MASTER_BUILD_PLAN.md#v0-4-2) |
 | **V0.4.2.1** | Readability/contact corrections, Collection Sweep, and material-family mapping | [`MASTER_BUILD_PLAN.md#v0-4-2-1`](./MASTER_BUILD_PLAN.md#v0-4-2-1) |
-| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./BUILD_PLAN_V0.4.3.md) |
+| **V0.4.3** | Performance P0–P6, then selected weapons, evolution, bosses, curses, unlockables, persistence | [`BUILD_PLAN_V0.4.3.md`](./MASTER_BUILD_PLAN.md#v0-4-3-source-plan) |
 | **V0.4.4** | Reconcile and complete the remaining sprite roster | [`SPRITE_PLAN_V0.4.4.md`](./SPRITE_PLAN_V0.4.4.md) |
 
 The old V0.4.2 content plan was moved to V0.4.3 before implementation began.
@@ -110,8 +172,7 @@ preserving the permanent presentation/simulation boundary above.
 ## V0.4 definition of done
 
 V0.4 is complete when the readable baseline has merged, content growth has been
-revalidated against it, the reconciled sprite roster is complete, both
-production themes still satisfy their contracts, and every accepted balance
+revalidated against it, the reconciled sprite roster is complete, the active eco theme satisfies its contracts and the frozen knight pack is preserved, and every accepted balance
 value remains theme-owned data. A 300-enemy stress test must still pass, but the
 game no longer treats reaching 300 enemies—or filling the screen with effects—as
 a design goal.
@@ -121,7 +182,7 @@ a design goal.
 Q6 and all four follow-on phases G1–G4 pass their scoped local gates. The
 [single completed build log](MASTER_BUILD_PLAN.md#readable-gameplay) owns commits,
 implementation/checklists, evidence and limits, ending at G4 `a10e3eb`.
-[Roadmap](READABLE_GAMEPLAY_ROADMAP.md) retains design priorities/source context.
+[Roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) retains design priorities/source context.
 [Next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md) covers delivery and V0.4.4 selection.
 No further G1–G4 gameplay phase remains. No new publication/CI/merge or sprite
 claim/generation follows from local closure. Broad current-app checks remain

@@ -1,0 +1,80 @@
+{
+  "source": "build/sprites/raw/shrine_duplication.a1.png",
+  "sourceSha256": "898861128af86b88aa3d0d59b5d535a81b33168ec06dab32d8a1a551e132ee38",
+  "output": "build/sprites/review/style2/shrine_duplication.a1.png",
+  "outputSha256": "41f9ed7d412614ea9c8d84b319064375b9dc04da48a856ce14ed37bb32b76a20",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 11,
+      "top": 14,
+      "width": 109,
+      "height": 101,
+      "opaquePixels": 8832
+    },
+    {
+      "frame": 1,
+      "left": 11,
+      "top": 14,
+      "width": 109,
+      "height": 101,
+      "opaquePixels": 8832
+    },
+    {
+      "frame": 2,
+      "left": 11,
+      "top": 14,
+      "width": 109,
+      "height": 101,
+      "opaquePixels": 8824
+    },
+    {
+      "frame": 3,
+      "left": 11,
+      "top": 14,
+      "width": 109,
+      "height": 101,
+      "opaquePixels": 8816
+    }
+  ],
+  "recipe": {
+    "contentId": "shrine.duplication",
+    "source": "build/sprites/raw/shrine_duplication.a1.png",
+    "output": "build/sprites/review/style2/shrine_duplication.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 117,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#881337",
+        "#be3459",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ]
+    ],
+    "outline": "#3f4b26"
+  }
+}

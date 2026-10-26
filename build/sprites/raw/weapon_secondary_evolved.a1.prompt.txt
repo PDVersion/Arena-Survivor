@@ -1,0 +1,49 @@
+Use case: stylized-concept
+Asset type: native pixel-art game sprite sheet
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: weapon.secondary_evolved — Cyclone Vacuum action. Eco-guardian only.
+TASK: new proposed tool strip. Logical baseline 64×32; final native frame 128×64px.
+SHEET: 3 equal cells, ONE horizontal 384×64px strip; no gutters.
+IN-GAME CONTRACT: same secondary procedural cone/pulse; unchanged by image resolution.
+DESCRIPTION: The evolved version of the approved Cleanup Vacuum: SAME mount, nozzle position and basic housing, with a second visible intake ring and yellow reinforcement band. A recognizable equipment upgrade, not an unrelated weapon or larger damage region. Lock mounting pivot (16,32) in each target 128×64 cell. No tornado, detached particles or baked cone.
+PALETTE (deep/shadow/base/highlight):
+Tool cyan: #164e63 #3893b5 #7dd3fc #bae6fd
+Protective green: #14532d #22a34e #4ade80 #8df0ac
+Gear grey / metal: #111827 #374151 #6b7280 #d1d5db
+Yellow plastic / trim: #713f12 #b7791f #facc15 #fde68a
+FRAMES, left to right, indexed from 0:
+0: reinforced ready.
+1: active paired intake rings, same aperture.
+2: recovery, same mount and footprint.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+INPUT IMAGE ROLES: Image 1 Bottle and Image 2 Player style only. Image 3 is the generated Cleanup Vacuum construction reference: preserve the SAME grey cylindrical wet/dry vacuum body, green carrying handle, corrugated hose and right-facing cyan nozzle. Add second intake ring and yellow reinforcement band only. Familiar practical upgraded vacuum, never raygun. Exactly three matching tools in one horizontal row. Each equal cell 2:1, full row6:1, same common rectangular envelope.

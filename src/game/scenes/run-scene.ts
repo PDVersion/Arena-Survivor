@@ -1,3 +1,5 @@
+import { EnemyShot } from "../entities/enemy-shot";
+import { shotHitFraction } from "../systems/enemies/ranged-attack";
 import { selectCapabilityProgress } from "../systems/mastery/run-review";
 import Phaser from "phaser";
 import { describeShrineChoice } from "../systems/codex/describe-shrine";
@@ -166,6 +168,7 @@ import {
 import { attackCooldownMs, projectileSpreadAngles } from "../systems/weapons/weapon-timing";
 import { selectMeleeAim, selectMeleeHits } from "../systems/weapons/melee-stab";
 import { resolveWeaponDefinition } from "../systems/weapons/resolve-weapon";
+import { ClawSnapActor } from "../entities/tool-effects";
 import { ConeAttackActor } from "../entities/cone-attack-actor";
 import { selectSplashHits } from "../systems/weapons/on-hit-splash";
 import { recordWeaponAttack } from "../systems/weapons/weapon-loadout";
@@ -378,6 +381,7 @@ export class RunScene extends Phaser.Scene {
   private enemyDefinition?: EnemyDefinition;
   private bossHealthUi?: BossHealthUi;
   private spawnedBossIds = new Set<string>();
+  private enemyShots = new Set<EnemyShot>();
   private bossAttacks = new Map<EnemyActor, BossAttackState>();
   private bossCues = new Map<EnemyActor, Phaser.GameObjects.Graphics>();
   private bossPulses = 0;
@@ -765,6 +769,8 @@ export class RunScene extends Phaser.Scene {
         movementInput,
         this.runState.player.stats.moveSpeed * this.hazardSlow,
       );
+      this.updateEnemyShots(delta);
+      if (!isRunActive(this.runState)) { this.publishTelemetry(); return; }
       this.updateEnemies(delta);
       this.rebuildEnemyIndex();
       this.resolveCrowd();
@@ -834,6 +840,7 @@ export class RunScene extends Phaser.Scene {
     for (const cue of this.bossCues.values()) cue.destroy();
     this.bossCues.clear();
     this.bossAttacks.clear();
+    this.clearEnemyShots();
     this.spawnedBossIds.clear();
     this.hud?.destroy();
     this.levelUpUi?.hide();
@@ -1350,6 +1357,17 @@ export class RunScene extends Phaser.Scene {
         continue;
       }
       enemy.advance(target, deltaMs);
+      if (enemy.consumeRangedShot()) {
+        const attack = enemy.definition.rangedAttack;
+        if (attack && this.enemyShots.size < attack.maxActiveProjectiles) {
+          const shot = new EnemyShot(this, enemy.x + enemy.rangedState.headingX * attack.muzzleForward,
+            enemy.y + enemy.rangedState.headingY * attack.muzzleForward + attack.muzzleVertical,
+            { x: enemy.rangedState.headingX, y: enemy.rangedState.headingY }, attack, enemy.definition.id,
+            attack.damage * enemy.contactDamage / enemy.definition.contactDamage, Boolean(enemy.elite), this.runTheme.tokens);
+          this.enemyShots.add(shot);
+          shot.once(Phaser.GameObjects.Events.DESTROY, () => this.enemyShots.delete(shot));
+        }
+      }
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
       if (obstacles.length > 0 && enemy.movement === "chase" && enemy.motionState.phase === "approach") {
@@ -1909,13 +1927,13 @@ export class RunScene extends Phaser.Scene {
       enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
         cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy);
       });
-      this.announceWave(this.runTheme.copy.content[definition.id].name);
+      this.announceWave(this.runTheme.copy.content[definition.id]!.name);
     }
   }
 
   private bossHealthValues() {
     return [...this.bossAttacks.keys()].filter((enemy) => enemy.active && !enemy.defeated).map((enemy) => ({
-      id: enemy.targetId, name: this.runTheme.copy.content[enemy.definition.id].name,
+      id: enemy.targetId, name: this.runTheme.copy.content[enemy.definition.id]!.name,
       health: enemy.health, maxHealth: enemy.maxHealth,
     }));
   }
@@ -1944,6 +1962,40 @@ export class RunScene extends Phaser.Scene {
         this.player.flashDamage(this.runTheme.tokens.palette.critical);
         if (this.runState.status === "dead") { this.enterTerminalState(); break; }
       }
+    }
+  }
+
+  private clearEnemyShots(): void {
+    for (const shot of this.enemyShots) shot.destroy();
+    this.enemyShots.clear();
+  }
+
+  private updateEnemyShots(deltaMs: number): void {
+    if (!this.player || !this.runState) return;
+    const obstacles = this.activeObstacles();
+    for (const shot of this.enemyShots) {
+      const from = { x: shot.x, y: shot.y };
+      shot.advance(deltaMs);
+      const playerHit = shotHitFraction(from, shot,
+        { x: this.player.x, y: this.player.y, radius: this.player.definition.radius }, shot.attack.projectileRadius);
+      const obstacleHit = Math.min(Infinity, ...obstacles.map((obstacle) => shotHitFraction(from, shot,
+        { x: obstacle.x, y: obstacle.y, radius: obstacle.hazardState.radius }, shot.attack.projectileRadius)));
+      // Resolve the first collision along the swept path, not iteration order.
+      if (obstacleHit !== Infinity && obstacleHit <= playerHit) {
+        shot.destroy(); continue;
+      }
+      if (playerHit !== Infinity) {
+        if (this.runState.elapsedMs >= this.invulnerableUntilMs) {
+          this.runState = damageRunPlayer(this.runState, reduceByArmour(shot.damage, this.runState.player.stats.armour),
+            { sourceId: shot.sourceId, elite: shot.elite });
+          this.lastContactDamageAtMs = this.runState.elapsedMs;
+          const source = this.enemyDefinitions.find((enemy) => enemy.id === shot.sourceId)!;
+          this.invulnerableUntilMs = this.runState.elapsedMs + source.contactCooldownMs;
+          this.player.flashDamage(this.runTheme.tokens.palette.critical);
+        }
+        shot.destroy();
+        if (this.runState.status === "dead") { this.enterTerminalState(); return; }
+      } else if (shot.expired) shot.destroy();
     }
   }
 
@@ -1993,7 +2045,8 @@ export class RunScene extends Phaser.Scene {
       if (hits.length === 0) return;
       this.activeGrabbers += 1;
       const onComplete = () => { this.activeGrabbers = Math.max(0, this.activeGrabbers - 1); };
-      if (weapon.arcRadians !== undefined) new ConeAttackActor(this, this.player.x, this.player.y, baseAngle, weapon, this.runTheme.tokens, onComplete, hits);
+      if (weapon.arcRadians !== undefined) new ConeAttackActor(this, this.player.x, this.player.y, baseAngle, weapon, this.runTheme.tokens, onComplete, hits, {
+        effects: this.runTheme.tuning.view.toolEffects, ...getSessionSettings(), quality: getSessionSettings().presentationQuality });
       else new GrabberActor(
         this,
         this.player.x,
@@ -2002,6 +2055,7 @@ export class RunScene extends Phaser.Scene {
         weapon,
         this.runTheme.tokens,
         onComplete,
+        { effects: this.runTheme.tuning.view.toolEffects, ...getSessionSettings() },
       );
       this.meleeStrikes += 1;
       this.shotsFired += 1;
@@ -2148,8 +2202,17 @@ export class RunScene extends Phaser.Scene {
   }
 
   /** Presentation follows the attack timing, while hit geometry remains pure. */
-  private renderCollectionSweepCue(x: number, y: number, radius: number): void {
+  private renderCollectionSweepCue(x: number, y: number, radius: number, splash = false): void {
     if (!this.scene.isActive()) return;
+    const effects = this.runTheme.tuning.view.toolEffects;
+    if (effects) {
+      const settings = getSessionSettings();
+      if (!splash) {
+        new ClawSnapActor(this, x, y, radius, this.runTheme.tokens, { effects, ...settings });
+        return;
+      }
+      if (!settings.showAttackRadius) return;
+    }
     const colour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.player).color;
     const cue = this.add.circle(x, y, radius, colour, 0.14)
       .setStrokeStyle(3, colour, 0.9)
@@ -2219,7 +2282,7 @@ export class RunScene extends Phaser.Scene {
         weapon, directBase: 0, criticalBonus: 0, piercingMomentum: 0,
       });
     }
-    if (targets.length > 0) this.renderCollectionSweepCue(primary.x, primary.y, weapon.splash.radius);
+    if (targets.length > 0) this.renderCollectionSweepCue(primary.x, primary.y, weapon.splash.radius, true);
   }
 
   /** Valid enemy contact nudges the player without turning an enemy into a wall. */
@@ -2927,7 +2990,7 @@ export class RunScene extends Phaser.Scene {
    * player was told they had to clear.
    */
   private isFieldClear(): boolean {
-    return this.enemies.size === 0 && this.eventQueue.snapshot().backlog === 0;
+    return this.enemies.size === 0 && this.enemyShots.size === 0 && this.eventQueue.snapshot().backlog === 0;
   }
 
   /** The end-of-timer decision. Simulation is frozen until it is answered. */
@@ -2967,6 +3030,7 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || this.terminalShown) return;
     if (this.runState.status !== "dead" && this.runState.status !== "complete") return;
     this.terminalShown = true;
+    this.clearEnemyShots();
     this.player?.stop();
     for (const entry of drainAll(this.damageNumbers)) {
       this.renderDamageNumber(entry.x, entry.y, entry.amount, entry.tier);
@@ -3099,13 +3163,21 @@ export class RunScene extends Phaser.Scene {
     };
   }
 
+  /** Abandon transient run state; finished-run statistics/unlocks are never folded. */
+  private quitToMenu(): void {
+    if (this.runState?.status !== "paused") return;
+    this.pauseMenu?.hide();
+    this.physics.world.resume();
+    this.scene.start("menu");
+  }
+
   private togglePause(): void {
     if (!this.runState || !this.player) return;
     if (isRunActive(this.runState)) {
       this.runState = setRunStatus(this.runState, "paused");
       this.player.stop();
       this.physics.world.pause();
-      this.pauseMenu?.show(this.pauseMenuView(), (key) => this.applySetting(key));
+      this.pauseMenu?.show(this.pauseMenuView(), (key) => this.applySetting(key), { onQuit: () => this.quitToMenu() });
     } else if (this.runState.status === "paused") {
       this.pauseMenu?.hide();
       this.runState = setRunStatus(this.runState, "playing");
@@ -3347,6 +3419,7 @@ export class RunScene extends Phaser.Scene {
         overtimeOpen: Boolean(this.overtimeUi?.isOpen),
         terminalTitle: this.runEndOverlay?.title ?? null,
         pauseTab: this.pauseMenu?.activeTab ?? null,
+        settingsControls: this.pauseMenu?.settingsControlPoints,
         settings: { ...getSessionSettings() },
         minimapShrines: this.shrineActors.filter((shrine) => shrine.active && !shrine.activated).length,
         shrineTextResolution: this.shrineActors[0]?.textResolution ?? 0,

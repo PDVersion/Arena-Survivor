@@ -16,6 +16,7 @@ export const archetypeIds = {
     clusterFodder: "enemy.cluster_fodder",
     gustDrifter: "enemy.gust_drifter",
     committedCharger: "enemy.committed_charger",
+    rangedAttacker: "enemy.ranged_attacker",
     miniBoss: "enemy.mini_boss",
     finalBoss: "enemy.final_boss",
   },
@@ -106,6 +107,7 @@ export const v01ContentIds = [
   ...Object.values(archetypeIds.upgrade),
 ] as ContentId[];
 
+// Historical required-copy inventory excludes selected optional capabilities.
 export const v02ContentIds = Object.values(archetypeIds).flatMap((category) =>
-  Object.values(category),
+  Object.values(category).filter((id) => id !== archetypeIds.enemy.rangedAttacker),
 ) as ContentId[];

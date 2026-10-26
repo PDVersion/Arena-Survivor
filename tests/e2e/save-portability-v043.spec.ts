@@ -1,3 +1,4 @@
+import { clickSettingControl } from "./settings-controls";
 import { readFile, writeFile } from "node:fs/promises";
 import { expect, test, type Page, type TestInfo } from "@playwright/test";
 
@@ -74,7 +75,7 @@ test("title Settings opens save management without a fourth menu action and expo
   const scale = box!.width / 1600;
   await canvas.click({ position: { x: 800 * scale, y: 698 * scale } });
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().menu?.overlayTab)).toBe("settings");
-  await canvas.click({ position: { x: 800 * scale, y: 565 * scale } });
+  await clickSettingControl(page, "manageSave");
   const dialog = page.getByRole("dialog", { name: "Manage Save" }); await expect(dialog).toBeVisible();
   expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().menu?.actions)).toEqual(["start", "info", "settings"]);
   const before = await stored(page);

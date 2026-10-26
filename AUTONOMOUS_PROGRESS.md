@@ -1,20 +1,103 @@
 # Autonomous progress
 
-Updated: 2026-10-22 (Australia/Sydney).
+Updated: 2026-10-26 (Australia/Sydney).
 
-## Objective and current state
+## PR29 CI repair — locally verified /2026-10-26
 
-G1–G4 are locally complete through G4 `a10e3eb` on
-`codex/readable-gameplay-g4`, with Q6 separately verified in `44585dd`.
-The [single completed build log](build/MASTER_BUILD_PLAN.md#readable-gameplay)
-now owns all four phase plans, original claims/checklists and evidence links.
-[BUILD_STATUS](build/BUILD_STATUS.md) owns dates/acceptance state; the
-[next handoff](build/NEXT_READABLE_GAMEPLAY_HANDOFF.md) owns delivery and
-owner-selected sprite planning. No further G1–G4 gameplay gate is open.
-Broad current-app checks remain deferred and existing external checks remain
-waived/unverified. This closure is documentation only, with no publication,
-new remote CI, gameplay/art selection or merge. Historical sessions below retain
-their original checkpoint meanings.
+Failed run40245699120 on b861e8c has135browser passes/6skips/13failures. Corrected
+stale settings coordinates, enemy/card/resource/page assumptions, elite role
+selection and clearing-fixture reach/early completion.13unique affected cases
+pass cumulatively, serial1worker/0retries;719units/75files, types/lint/build,
+production guard and whitespace pass. Audit high gate passes with2existing
+moderate findings. [Repair report](build/performance/PR29_CI_REPAIR.md) owns
+exact causes and evidence. SamePR29 receives repair; matching-head automatic
+full CI is pending at this local checkpoint. No gameplay/art/save/tuning/knight
+change, test skip/timeout/retry increase or new external-device acceptance.
+
+## Owner-authorized V0.4.4 PR delivery —2026-10-26
+
+Owner requests pushing all created sprites/features toward main and creating a PR
+if missing. Fresh origin/main9e29ca6 confirms PR28 already merged; no open PR.
+Local codex/v0.4.4 contains18 subsequent phase/audit commits. Merge78cd2e7 brings
+main's merge marker into the feature branch without content conflicts or rewrites.
+Publication covers all27 generated subjects/31 preserved sources and prompts,
+vacuum/claw effects, default-off attack guides, Escape-menu quit, Takeaway Cup
+ranged live draft and consolidated plans.26 other style2 outputs remain review
+assets; publication does not imply owner art acceptance or new runtime bindings.
+
+Fresh719units/75files, explicit typecheck, lint, production build, six configured
+sprite checks,27 native/31 source/prompt recorded hashes and cumulative whitespace
+pass. Existing bundle-size advisory remains. npm audit --audit-level=high exits0
+with two moderate Vitest/mocker findings; pins unchanged, no bypass. Select the
+automatic PR workflow for the consolidated full browser regression; no repeated
+heavy local campaign. Matching-head CI/publication is pending at this pre-push
+checkpoint; actual PR URL/status is recorded in the task artifact after creation.
+No knight files changed. External Safari/browser-OS/older physical-GPU checks
+remain waived/unverified. Art approval/remaining integration and V0.4 overall
+stay open; no new gameplay scope or deployment is selected.
+
+## Latest progress audit —2026-10-23
+
+**All27 selected sprite subjects exist:24 sheets +3 icons,102 cells,31 preserved
+style2 raw attempts.** Fresh file/format/hash audit and deterministic rebuilds pass
+for every current native output. No selected generation is missing or still claimed.
+Takeaway Cup is the only live style2 draft;26 subjects remain review-only and owner
+art acceptance/integration remains open. Current runtime uses five original style1
+sheets plus cup, with Glass Shards aliasing old Glass death art.
+
+[Audit report](build/sprites/review/style2/PROGRESS_REPORT.md) lists remaining
+visual fixes, production bindings, consolidated acceptance and unselected future
+features. [Master checkpoint](build/MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23)
+records completion; [active plan](build/SPRITE_PLAN_V0.4.4.md) now contains only
+remaining execution. No runtime/art change or new browser/stress/device/remote-CI
+pass;719units/three cup browser cases remain the last runtime gate. Knight theme
+stays indefinitely paused. V0.4.4/overall V0.4 are not complete.
+
+## Earlier selected addition —2026-10-23
+
+**Takeaway Cup is a live eco ranged-enemy draft.** Seven64px frames include real
+prepare/release/recover animation; a marked locked-bearing coffee shot is dodgeable,
+finite and paused/cleared with the run. [Enemy sheet](build/enemies/TAKEAWAY_CUP.md)
+and [master](build/MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23) own behavior.
+719units/75files, types/lint/build, six sprite builds/checks,3 unique serial
+Chromium cases/five inspected images and30 eco throughput scenarios pass.
+[Report](build/content/RANGED_ENEMY_REPORT.md) records limits: model omits ranged
+combat; owner art/extended pacing review remains pending. Original26 style2
+subjects remain review-only. Old five sheets/atlas unchanged; no knight changes,
+save migration, publication, broad browser/stress/device or external acceptance.
+Next handoff: owner playtest/individual art fixes and remaining roster integration.
+
+## Earlier verified correction — 2026-10-23
+
+Owner-requested vacuum suction/dust, off-by-default attack guides, snapping extra
+Grabber claws and Escape→Quit to Main Menu are implemented on codex/v0.4.4.
+714 full / 231 targeted units, types/lint/build/whitespace and four unique serial browser
+cases pass; five images inspected. Quit abandons transient run state without
+finish rewards; profile progress/settings survive. [Report](build/content/TOOL_PRESENTATION_REPORT.md)
+and [master](build/MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23) own scoped
+evidence and fixture corrections. No broad browser/device pass, new publication,
+knight work or generated/live sprite promotion. External checks remain unverified.
+
+## Earlier generation objective and state
+
+2026-10-23: owner-selected full eco sprite generation is complete on
+`codex/v0.4.4`. Three subagents generated all 23 remaining subjects in parallel;
+together with the initial three, all 26 catalog subjects have native review
+strips. There are 27 preserved style2 attempts including both angular Glass a3
+and familiar wine-bottle a4. Exact raw sources, prompts, reference hashes,
+metadata, recipes and checks are saved. No sources are production-accepted.
+
+[Review gallery](build/sprites/review/style2/index.html) and
+[full report](build/sprites/review/style2/FULL_ROSTER_REPORT.md) own inventory,
+validation and deferred per-subject findings. All 26 native format checks and
+27 deterministic rebuilds/hash checks pass; 36 sprite tests, types/lint/build
+and whitespace pass. Gallery JavaScript syntax/asset links pass; no browser run.
+Only the opt-in pipeline/its tests change pre-existing source files; all public,
+accepted art and runtime behaviour remain unchanged. No dependencies/save/tuning/
+knight-theme changes or new remote/device acceptance. External checks remain
+waived/unverified. The owner defers individual art and in-game review; do not
+launch a correction campaign or production integration without further direction.
+Knights and Magic remains indefinitely paused until explicit owner reopening.
 
 HEAD at branch creation / benchmark capture: `103afa7` (merged V0.4.2.1).
 Historical P0 delivery: `354d725 build(v0.4.3): establish browser performance measurements`.
@@ -1707,7 +1790,7 @@ types/lint/build/whole-branch whitespace,12serial Chromium Canvas candidate case
 (4.2s,1worker,0retries) and per-candidate before/after balance evidence pass.
 [G2C report](build/content/G2C_REPORT.md) records all decisions, actual sources,
 initial test-only failures, trade-offs and aided-fixture/model limits.
-[Reviewed G3 handoff](build/PHASE_G3_PROMPT.md) is prepared; **G3 implementation
+[Reviewed G3 handoff](build/MASTER_BUILD_PLAN.md#readable-gameplay-g3) is prepared; **G3 implementation
 has not started**. G4/new sprites remain unstarted. Broad regression/stress/soak
 checks deferred; actual Safari/missing browser-OS/older physical GPU evidence
 remains waived/unverified. No new remote CI, push, PR or main merge claim.
@@ -1719,11 +1802,11 @@ from G2C5b50d7b: spaced teaching/mini/elite thresholds,4Glass/2Bag first waves,
 five optional destinations, current-world site cost/reward, minimap diamonds and
 boss pursuit holds during fixed warnings. Rate/camera/bodies/caps/weapons/stable
 IDs/saves/art remain. Final342short tests/35files and696full units/73files,
-types/lint/build/whitespace,13unique affected serial browser cases and120before+
+types/lint/build/whitespace,13unique affected serial browser cases and 120before+
 120after ambient /90before+90after timed balance scenarios pass. Initial old
 schedule/roster fixture failures and actual aided/model limits are recorded in
 [G3_REPORT](build/content/G3_REPORT.md); this is no natural survival/device claim.
-[PHASE_G4_PROMPT](build/PHASE_G4_PROMPT.md) is written/reviewed; G4 implementation
+[PHASE_G4_PROMPT](build/MASTER_BUILD_PLAN.md#readable-gameplay-g4) is written/reviewed; G4 implementation
 and new sprites remain unstarted. Broad browser/stress/soak checks deferred;
 external browser/OS/older physical GPU evidence waived/unverified. Local phase
 commit only, no new CI/push/PR/main merge. Earlier open-G3 entries are historical.

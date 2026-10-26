@@ -13,6 +13,19 @@ export interface SpriteBuildDefinition {
   readonly frameWidth: number;
   readonly frameHeight: number;
   readonly frames: number;
+  /** Explicit equal source cells; preserves authored offsets instead of recentering poses. */
+  readonly sourceGrid?: {
+    readonly left: number;
+    readonly top: number;
+    readonly cellWidth: number;
+    readonly cellHeight: number;
+    /** Uniformly letterbox an unequal-aspect cell; every pose keeps the same grid transform. */
+    readonly fit?: "contain";
+    /** Permit virtual transparent margins beyond the source canvas; never crop art. */
+    readonly allowTransparentPadding?: boolean;
+  };
+  /** Outer opaque pixel layers recoloured without growing the silhouette. */
+  readonly outlineWidth?: 1 | 2;
   /** Generator backdrops that must be removed before frame extraction. */
   readonly background?: "transparent" | "light-checker" | "black";
   /** Exact four-step material ramps accepted for this sheet. */
@@ -51,13 +64,15 @@ const defaultRamps = [blueRamp, neutralRamp] as const;
 
 export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promise<void> {
   const normalizedSource = removeGeneratedBackground(
-    await readPng(definition.source),
+    await readSpritePng(definition.source),
     definition.background ?? "transparent",
   );
   const source = definition.keepLargestComponentPerFrame
     ? keepLargestComponentPerFrame(normalizedSource, definition.frames)
     : normalizedSource;
-  const bounds = (definition.background ?? "transparent") === "transparent"
+  const bounds = definition.sourceGrid
+    ? fixedSourceCells(source, definition)
+    : (definition.background ?? "transparent") === "transparent"
     ? detectSeparatedFrames(source.data, source.width, source.height)
     : detectFrameSlots(source.data, source.width, source.height, definition.frames);
   if (bounds.length !== definition.frames) {
@@ -66,8 +81,9 @@ export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promi
     );
   }
 
-  const contentWidth = definition.frameWidth - frameInset * 2;
-  const contentHeight = definition.frameHeight - frameInset * 2;
+  const inset = definition.sourceGrid ? 0 : frameInset;
+  const contentWidth = definition.frameWidth - inset * 2;
+  const contentHeight = definition.frameHeight - inset * 2;
   const scale = Math.min(
     contentWidth / Math.max(...bounds.map((entry) => entry.width)),
     contentHeight / Math.max(...bounds.map((entry) => entry.height)),
@@ -89,6 +105,7 @@ export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promi
     definition.frameHeight,
     palette,
     outline,
+    definition.outlineWidth ?? 1,
   );
 
   await mkdir(dirname(definition.output), { recursive: true });
@@ -133,6 +150,39 @@ export async function buildSpriteSheet(definition: SpriteBuildDefinition): Promi
       "utf8",
     );
   }
+}
+
+function fixedSourceCells(
+  source: { readonly data: Buffer; readonly width: number; readonly height: number },
+  definition: SpriteBuildDefinition,
+): readonly Bounds[] {
+  const grid = definition.sourceGrid!;
+  if (![grid.left, grid.top, grid.cellWidth, grid.cellHeight].every(Number.isInteger)
+    || grid.cellWidth <= 0 || grid.cellHeight <= 0
+    || (!grid.allowTransparentPadding && (grid.left < 0 || grid.top < 0
+      || grid.left + grid.cellWidth * definition.frames > source.width
+      || grid.top + grid.cellHeight > source.height))) {
+    throw new Error(`${definition.contentId}: source grid is outside the image`);
+  }
+  if (grid.fit !== "contain"
+    && grid.cellWidth / grid.cellHeight !== definition.frameWidth / definition.frameHeight) {
+    throw new Error(`${definition.contentId}: source grid must preserve target aspect ratio`);
+  }
+  for (let y = 0; y < source.height; y += 1) {
+    for (let x = 0; x < source.width; x += 1) {
+      if ((x < grid.left || x >= grid.left + grid.cellWidth * definition.frames
+        || y < grid.top || y >= grid.top + grid.cellHeight)
+        && source.data[(y * source.width + x) * 4 + 3]! >= opaqueThreshold) {
+        throw new Error(`${definition.contentId}: source grid would clip opaque artwork`);
+      }
+    }
+  }
+  return Array.from({ length: definition.frames }, (_, index) => ({
+    left: grid.left + index * grid.cellWidth,
+    top: grid.top,
+    width: grid.cellWidth,
+    height: grid.cellHeight,
+  }));
 }
 
 /**
@@ -244,7 +294,7 @@ export async function buildSpriteAtlas(
 ): Promise<void> {
   const sheets = await Promise.all(entries.map(async (entry) => ({
     entry,
-    image: await readPng(entry.output),
+    image: await readSpritePng(entry.output),
   })));
   const width = Math.max(...sheets.map(({ image }) => image.width));
   const height = sheets.reduce((sum, { image }) => sum + image.height, 0);
@@ -292,11 +342,11 @@ async function readRaw(path: string): Promise<{
   readonly width: number;
   readonly height: number;
 }> {
-  return readPng(path);
+  return readSpritePng(path);
 }
 
 function blitNearest(
-  source: { readonly data: Buffer; readonly width: number },
+  source: { readonly data: Buffer; readonly width: number; readonly height: number },
   bounds: Bounds,
   output: Buffer,
   outputWidth: number,
@@ -309,6 +359,7 @@ function blitNearest(
     const sourceY = bounds.top + Math.min(bounds.height - 1, Math.floor((y * bounds.height) / height));
     for (let x = 0; x < width; x += 1) {
       const sourceX = bounds.left + Math.min(bounds.width - 1, Math.floor((x * bounds.width) / width));
+      if (sourceX < 0 || sourceX >= source.width || sourceY < 0 || sourceY >= source.height) continue;
       const sourceOffset = (sourceY * source.width + sourceX) * 4;
       const outputOffset = ((top + y) * outputWidth + left + x) * 4;
       source.data.copy(output, outputOffset, sourceOffset, sourceOffset + 4);
@@ -393,6 +444,7 @@ function snapPaletteAndCloseOutline(
   height: number,
   palette: readonly (readonly [number, number, number])[],
   outline: readonly [number, number, number],
+  outlineWidth: 1 | 2,
 ): Buffer {
   const output = Buffer.alloc(data.length);
   for (let offset = 0; offset < data.length; offset += 4) {
@@ -410,13 +462,29 @@ function snapPaletteAndCloseOutline(
   }
 
   const outlined = Buffer.from(output);
+  const boundary = new Set<number>();
   for (let y = 0; y < height; y += 1) {
     for (let x = 0; x < width; x += 1) {
       const offset = (y * width + x) * 4;
       if (output[offset + 3] !== 255 || !touchesTransparency(output, width, height, x, y)) continue;
+      boundary.add(y * width + x);
       outlined[offset] = outline[0];
       outlined[offset + 1] = outline[1];
       outlined[offset + 2] = outline[2];
+    }
+  }
+  if (outlineWidth === 2) {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        const pixel = y * width + x;
+        if (output[pixel * 4 + 3] !== 255) continue;
+        const neighbours = [x > 0 ? pixel - 1 : -1, x + 1 < width ? pixel + 1 : -1,
+          y > 0 ? pixel - width : -1, y + 1 < height ? pixel + width : -1];
+        if (!neighbours.some((next) => boundary.has(next))) continue;
+        outlined[pixel * 4] = outline[0];
+        outlined[pixel * 4 + 1] = outline[1];
+        outlined[pixel * 4 + 2] = outline[2];
+      }
     }
   }
   return outlined;
@@ -565,7 +633,7 @@ function rgbKey(r: number, g: number, b: number): string {
   return `${r},${g},${b}`;
 }
 
-async function readPng(path: string): Promise<{
+export async function readSpritePng(path: string): Promise<{
   readonly data: Buffer;
   readonly width: number;
   readonly height: number;

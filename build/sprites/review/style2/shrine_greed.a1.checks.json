@@ -1,0 +1,80 @@
+{
+  "source": "build/sprites/raw/shrine_greed.a1.png",
+  "sourceSha256": "0ff209840dbd362d78b423a4edccb49cf3a6dc803645d9d0b41e38f16b002005",
+  "output": "build/sprites/review/style2/shrine_greed.a1.png",
+  "outputSha256": "0d3e7eacd39f6e0187a1673ea171226a9ed2faa59314e77bde69ec9501abd80b",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 14,
+      "top": 9,
+      "width": 107,
+      "height": 111,
+      "opaquePixels": 7520
+    },
+    {
+      "frame": 1,
+      "left": 14,
+      "top": 9,
+      "width": 106,
+      "height": 111,
+      "opaquePixels": 7504
+    },
+    {
+      "frame": 2,
+      "left": 14,
+      "top": 9,
+      "width": 106,
+      "height": 111,
+      "opaquePixels": 7536
+    },
+    {
+      "frame": 3,
+      "left": 14,
+      "top": 9,
+      "width": 107,
+      "height": 111,
+      "opaquePixels": 7545
+    }
+  ],
+  "recipe": {
+    "contentId": "shrine.greed",
+    "source": "build/sprites/raw/shrine_greed.a1.png",
+    "output": "build/sprites/review/style2/shrine_greed.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 82,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#881337",
+        "#be3459",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ]
+    ],
+    "outline": "#3f4b26"
+  }
+}

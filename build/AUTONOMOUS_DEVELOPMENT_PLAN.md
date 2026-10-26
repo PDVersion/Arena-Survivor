@@ -1,403 +1,42 @@
-# Autonomous development plan — browser performance first
-
-Current dates, statuses and gates: [BUILD_STATUS.md](BUILD_STATUS.md).
-Assessment date: 2026-10-11 (Australia/Sydney).
-Amended: 2026-10-11 with the owner's recycling-game ideation document.
-
-## Resource policy for every future session
-
-The owner's AGENTS.md limited-local-browser policy overrides older session
-command lists below. Prefer deterministic/source checks and existing matching-
-head Actions evidence. Run only necessary bounded affected browsers serially,
-one worker/zero retries; clean up owned processes. Full local Chromium/stress,
-long soaks and repeated performance campaigns require a separately scheduled
-consolidated run. Deferred requirements remain pending. Historical Session 1–7
-recipes are context, not permission to repeat those campaigns.
-
-## Objective and authority
-
-Make Arena Survivor run smoothly in a browser on older hardware while preserving
-the slower, readable environmental game. Work autonomously in **60–120 minute
-sessions**, measuring, implementing, testing, reviewing, and recording each
-completed cycle. Offer optional features for the owner to select before building
-them. The performance work below can proceed without another task-selection
-question; F16 difficulty is selected/delivered in Q1, with other optional content pending selection.
-
-This document is an execution roadmap, not a claim of completion. It does not
-create a recurring automation or launch a timed session. Existing milestone
-gates, ownership, theme contracts, and phase-commit rules still apply.
-
-Read, in order, `BUILD_PLAN_V0.4.md`, `../RECONCILIATION.md`, and
-`MASTER_BUILD_PLAN.md#v0-3` at the start of every development session. Then read
-`../AUTONOMOUS_PROGRESS.md`, the active increment plan, and the relevant code.
-Consult `PLAN.md`, `EDUCATION_PIVOT.md`, `THEME_ARCHETYPES.md`, and `SAVE_DATA.md`
-when their corresponding product/content/save boundaries are involved.
-
-## Verified starting point — 2026-10-11 assessment snapshot
-
-- Checkout: `main`, HEAD `103afa7`, the merge of V0.4.2.1. V0.4.0, V0.4.1,
-  V0.4.2, and V0.4.2.1 are merged; V0.4.3 is the next unbuilt increment.
-- Existing stack: TypeScript, Phaser 3.90, Vite, Vitest, ESLint, Playwright,
-  npm; no backend. Framework-independent rules feed Phaser scenes.
-- Existing features include automatic Cleanup Grabber combat, Collection Sweep,
-  progression, material-family death spawns, hazards, scheduled shrines,
-  minimap, title/settings/reference screens, run statistics, and endless/clearing
-  choices. Do not rebuild these.
-- Two production theme packs are validated. Spatial hashing already reuses
-  buckets; separation, causal queues, presentation cues, and audio have budgets.
-  Existing ceilings are 300 enemies, 192 projectiles, and 250 XP pickups.
-- Missing planned work: multiple weapon slots, a second weapon, evolution,
-  additional shrine/curse content, elite variants, bosses, persistent profiles,
-  unlocks, and portable save import/export. Remaining sprite work is V0.4.4.
-- README and parts of AGENTS.md still call V0.4.2 the next increment. The current
-  milestone plan, phase checklists, reconciliation, and Git history show otherwise.
-- The original seven status annotations have been consolidated into
-  `BUILD_STATUS.md`; the owner authorized their cleanup on 2026-10-16.
-
-Assessment checks actually executed:
-
-| Check | Result |
-| --- | --- |
-| `npm run typecheck` | Passed |
-| `npm test -- --run` | 403 tests passed across 46 files |
-| `npm run lint` | Failed: `prefer-const`, `tests/unit/weapons/collection-sweep.test.ts:56` |
-| `npm run build` | Passed; entry JS 1,669.77 kB, gzip 389.77 kB; large-chunk advisory |
-| `npm run test:e2e:ci` | Blocked before tests: localhost `127.0.0.1:4173` listener denied with `EPERM` |
-
-No current browser, stress, real-device, or dependency-audit pass is claimed.
-
-## Findings that determine the first tasks
-
-1. **Fix performance measurement before optimizing.** `RunScene.update` multiplies
-   frame delta by gameplay rate before storing `averageFrameMs`/`maxFrameMs`.
-   Those measurements represent simulated delta, not wall-clock frame spacing.
-   Historical 0.5-rate results cannot establish a 60 FPS hardware guarantee.
-   Record raw frame intervals and CPU work separately; exclude intentional
-   hit-stop, pauses, and hidden-tab intervals from active-play samples.
-2. **Remove unnecessary diagnostic work from production.** `publishTelemetry()`
-   runs every frame. The production build retains snapshot reads, array scans,
-   and selector calls even though the telemetry updater is inert. Gate work
-   before snapshot construction; prove that production has no test interface.
-3. **Profile minimap and UI update costs.** The minimap rebuilds arrays, parses
-   palette colours, and redraws graphics every frame, including allocation work
-   before discovering that it is hidden. HUD updates format values every frame;
-   text textures use resolution 4. These are candidates, not measured bottlenecks.
-4. **Profile crowd and actor churn rather than installing speculative pools.**
-   Spatial hashing and bounded separation already exist. Measure query visits,
-   dense-stack behaviour, deaths/spawns, effects, and cleanup before changing them.
-5. **Define older-device acceptance honestly.** Existing evidence comes from local
-   Chromium and synthetic fixtures. CPU throttling is useful for comparison;
-   it does not reproduce an old integrated GPU or prove real-device support.
-
-See REC-100 for the timing and production-telemetry findings.
-
-## Performance acceptance contract
-
-Use these as **initial targets to validate**, not measured current results. Record
-the exact device, OS, browser, renderer, viewport, quality setting, build/commit,
-scenario, sample window, and measurement method with every result.
-
-| Area | Proposed acceptance |
-| --- | --- |
-| Reference desktop | Typical play near 60 FPS; active-play p95 frame interval ≤20 ms |
-| Older laptop/desktop | Supported integrated-graphics device, initially a 4–8 GB machine; typical play near 30 FPS or better, p95 ≤40 ms |
-| Worst supported load | 300 mixed enemies plus representative pickups, hazards, and equipped weapons; p95 ≤40 ms in the supported presentation mode |
-| Stalls | Active-play intervals over 100 ms below 1% of samples; report p99 and maximum too |
-| Startup | Proposed cold first-playable target ≤5 seconds on a recorded 10 Mbps/100 ms network profile; report transfer and decode costs separately |
-| Responsiveness | Movement and menus remain responsive, with no stuck input, missed choices, or catch-up burst after focus returns |
-| Lifecycle | Full authored run (about 10 real minutes at 0.5 rate), overtime sample, and 10 restarts; no growing retained actor/listener/queue population |
-| Correctness | Identical combat, XP, upgrade, and ledger outcomes across presentation modes; caps and causal exact-once rules hold |
-
-Use a quiet browser and one performance worker. Warm up first, measure at least
-60 seconds for sustained cases, and repeat comparisons three times on the same
-device/configuration. Report spread; never select only the fastest run. Short
-unit microbenchmarks cannot substitute for browser rendering measurements.
-
-Record 60/150/300 enemy scenarios, default eco gameplay, the retained projectile
-theme, pickup/fragment bursts, minimap on/off, pause/resize/focus, and restart.
-Compare test-mode correctness runs with production-build profiles; instrumentation
-overhead must not be mistaken for gameplay cost. Label scripted invulnerability
-or automatic upgrade selection explicitly.
-
-Hardware-sensitive FPS thresholds stay in the manual performance gate, following
-REC-040–042 and REC-057. Required CI tests deterministic correctness and bounded
-work, not the speed of a shared runner. Keep the 300-enemy ceiling unless evidence
-and a recorded product decision justify a change. Slowing the gameplay clock is
-not a performance fix; simulation/presentation timing must remain coherent.
-
-When a representative older device is unavailable, complete useful local work
-and publish a reproducible device checklist. Mark hardware acceptance **pending**;
-do not describe throttled Chromium as real-device validation. Mobile controls
-and mobile support are separate optional scope.
-
-## Milestone and ownership integration
-
-The performance prerequisite is **P0–P6 within V0.4.3, before C1**, now promoted
-into the active plans by Session 1 (REC-102).
-This is justified by the new primary objective: content growth must not multiply
-work before browser performance is measured. At the beginning of Session 1,
-reconcile this addition into `BUILD_PLAN_V0.4.md` and `BUILD_PLAN_V0.4.3.md`, update
-stale entry-point status, and record phase gates/commit subjects. Preserve all
-existing C1–C7 dependencies; do not silently mark an old gate complete.
-
-Use `codex/v0.4.3`, one reviewable commit per completed numbered phase, one PR
-into `main`. Extend an existing suitable milestone branch rather than creating a
-duplicate. Do not push unrelated local edits. No merge, deployment, or production
-service changes are part of these sessions. No sprite generation or changes to
-the reserved sprite pipeline/roster are authorized by this performance plan.
-
-| Phase | Owned paths / permitted scope | Proposed commit subject |
-| --- | --- | --- |
-| P0 | Active plans, README/AGENTS status, progress/reconciliation, existing lint defect, `src/test-support/**`, frame sampling in `run-scene.ts`, measurement tests/scripts | `build(v0.4.3): establish browser performance measurements` |
-| P1 | Telemetry call sites in scenes, test-support bridge, architecture/production guard tests | `perf(v0.4.3): avoid production telemetry work` |
-| P2 | `src/game/ui/{minimap-ui,hud,ui-text}.ts`, corresponding scene presentation hooks, theme presentation tuning and UI tests | `perf(v0.4.3): reduce repeated interface work` |
-| P3 | Profiled hot paths in existing spatial/separation/effects/events/weapons systems and scene call sites, matching tests | `perf(v0.4.3): reduce measured simulation overhead` |
-| P4 | Measured rendering/presentation hooks, config, settings/UI, theme presentation tuning, content validation and presentation tests | `feat(v0.4.3): add a lightweight presentation mode` |
-| P5 | Entity/feedback/scene lifecycle cleanup, matching restart tests, measured boot/asset-loading improvements outside the reserved sprite pipeline | `fix(v0.4.3): bound lifecycle and startup costs` |
-| P6 | Performance reports, browser harness, documentation and narrowly scoped regression fixes from the combined gate | `test(v0.4.3): verify browser performance readiness` |
-
-Every phase owns its matching tests, plan status, progress file, and material
-reconciliation entry. Exact additional files discovered by profiling must be
-added to the phase ownership block before editing. Balance and presentation
-budgets belong to theme-owned data; systems consume neutral contracts. Read
-`SAVE_DATA.md` before P4 touches serializable settings; persistence still belongs
-to selected C6 work. The new presentation mode initially remains session-only.
-
-P3/P4 optimizations are evidence-dependent. If a proposed change has no useful
-benefit, document the measurement and skip that implementation. Do not invent
-busywork to fill a phase or weaken a gate to fit the session deadline.
-
-## Session execution protocol
-
-Default duration is **90 minutes**; a session request may set 60 or 120. At start,
-read the available clock and write start/deadline into the progress file. Check
-elapsed time after every cycle and before starting a browser soak. Tools can
-measure time but cannot guarantee the host will keep a turn running. If execution
-is interrupted, preserve state and report actual elapsed time; never claim a
-full 1–2 hour run that did not occur.
-
-Budget each session as follows:
-
-| Duration | Restore/evaluate | Implement/profile/test cycles | Final validation, review, record |
-| --- | --- | --- | --- |
-| 60 min | 5–10 min | 35–40 min | 15 min |
-| 90 min | 5–10 min | 60–65 min | 20 min |
-| 120 min | 5–10 min | 85–90 min | 25 min |
-
-After each meaningful change: run affected checks, self-review the diff, resolve
-material defects, and update `AUTONOMOUS_PROGRESS.md`. Then evaluate the next
-eligible task automatically. Reserve the final window before accepting another
-large task. A task may span sessions; record partially implemented work accurately
-and keep it out of a completed-phase commit until the phase gate passes.
-
-The schedule below gives a 60-minute core and useful extensions for 90–120
-minutes. Estimates include testing/review. If the core finishes early, select
-from the extension or the next eligible phase; if it takes longer, carry its
-remaining work forward. Do not enter a dependent phase before the current gate
-passes. Do not stop after one small fix while useful authorized work remains.
-
-## Selected interruption after Session 1
-
-The owner selected F16 as Beginner / Normal / Experienced (Normal slightly
-below the old baseline), plus player walk/facing, crisp background text and common
-tool-upgrade corrections. Q1 in the active plan owns this before Session 2/P1.
-This replaces F16's provisional Relaxed/Standard/Challenge naming and its
-unchanged-Standard assumption. Other optional features are unselected. After Q1
-verifies, resume P1, then P2–P6; refresh the P0 comparison scenario for the new
-Normal baseline rather than claim that old gameplay recordings are equivalent.
-
-## Performance session backlog — approximately 8–16 hours
-
-### Session 1 — P0: recover a trustworthy baseline
-
-**60-minute core:** reconcile milestone status/ownership; fix the known lint
-defect; separate raw wall-frame delta from scaled gameplay delta; add a focused
-0.5-rate/hit-stop timing regression; run types, units, lint, build, and a browser
-boot/load smoke where permissions allow. Save the baseline configuration/results.
-
-**90–120-minute extension:** add bounded p50/p95/p99 frame sampling and CPU
-update timing in opt-in measurement tooling; add scenario metadata/report output;
-run default gameplay and the existing 300-enemy stress fixture serially. Capture
-production versus instrumented costs and prioritize the next measured hotspot.
-
-**Exit:** measurement units are explicit and verified, production/test separation
-is understood, and each blocked check has a concrete reason and rerun command.
-
-Q2 event/roster inspection and immediate spawn accounting are verified in
-`7ff8bbf` (REC-107/108). The owner also authorized a test-only capacity sweep at
-150/300/450/600, reported with actual visible population and diagnostic overhead.
-Keep production at 300 until sustained mixed-combat and representative hardware
-results justify an increase. Bagged Waste's fixed composition awaits confirmation.
-
-### Session 2 — P1: remove diagnostic work from the production loop
-
-**60-minute core:** prevent telemetry construction before any snapshot reads,
-selectors, or array scans outside test mode; inspect emitted production code;
-verify test-mode snapshots still support the existing browser paths. Profile
-before/after on the same build configuration.
-
-**90–120-minute extension:** inspect other per-frame test-only hooks; guard
-only confirmed unnecessary work; cover menu/run lifecycle and mode boundaries;
-run focused browser tests, stress, and production boot checks.
-
-**Exit:** production avoids diagnostic scans, test telemetry remains usable, and
-simulation/ledger behaviour is unchanged. Record measured benefit, including zero.
-
-### Session 3 — P2: reduce repeated minimap and HUD work
-
-The completed Session 3 handoff was retired; see the completed master record. Q3 wraps
-up card fitting/early skill caps and atlas navigation before P2; it does not
-start this phase. Half-speed timing and stationary Glass Shards are deliberate.
-
-**60-minute core:** profile minimap on/off and hidden overlays; skip hidden-map
-view construction, cache stable palette values, and avoid unchanged text work
-where Phaser does not already do so. Keep essential status/health/XP updates
-correct and prompt. Add focused visibility/change tests.
-
-**90–120-minute extension:** use a theme-owned minimap refresh cadence if
-profiling justifies it; reuse bounded buffers; test resize, opacity changes,
-pause, restart, and keyboard/pointer behaviour. Measure texture upload and CPU
-cost under 300 enemies. Preserve legible text and crisp actor art.
-
-**Exit:** less measured interface work with no stale critical HUD, altered
-viewport, hidden-map processing, or interaction regression.
-
-### Session 4 — P3: optimize the highest measured simulation hotspot
-
-**60-minute core:** trace crowd/index, targeting, queue processing, pickup
-merging, and fragment bursts; implement one measured improvement to repeated
-queries, scans, or allocations. Preserve causal ordering, hit targets, rewards,
-and damage accounting with relevant deterministic regressions.
-
-**90–120-minute extension:** address the next confirmed hotspot only after the
-first validates; compare dense versus distributed crowds and both weapon delivery
-kinds. Run bounded-work tests and serial stress; remove an optimization if it
-adds complexity without benefit.
-
-**Exit:** reproducible benefit under relevant load and all exact-once/cap/ledger
-invariants pass. Pool objects only if allocation traces justify reset complexity.
-
-### Session 5 — P4: a lightweight presentation mode for older devices
-
-**60-minute core:** based on traces, implement a small explicit Default/Low
-presentation setting using existing settings and theme contracts. Reduce costly
-optional cues, decorative work, or minimap frequency while preserving damage,
-XP, spawn rates, hitboxes, the visible world, and essential attack telegraphs.
-
-**90–120-minute extension:** assess safe backing-buffer/text-resolution options
-only if GPU or texture upload is the bottleneck; verify pointer transforms,
-resize, readability, reduced motion, and both themes. Compare identical scenarios
-across modes. Avoid automatic oscillating quality policies until measured need.
-
-**Exit:** Low improves measured cost, mode changes are reversible and session-safe,
-and deterministic gameplay outcomes do not depend on presentation settings.
-If no mode is needed, record why and spend the session on the next proven issue.
-
-### Session 6 — P5, first slice: lifecycle and sustained-play reliability
-
-**Completed slice reference:** inspect shutdown/restart for actors, sprite
-followers, timers, listeners, physics registrations, graphics, audio and queue
-retention. The affected slice is recorded in the master and P5 lifecycle report;
-remaining acceptance belongs to Session 8 under the resource policy above.
-Use available heap tools, explaining browser-specific measurement limits.
-
-**Remaining evidence:** overtime, focus/visibility, pause/resize and mode
-switching must show bounded retained ownership and no resumed-tab catch-up burst.
-Long-soak execution remains deferred; it is not locally authorized by this recipe.
-Add regressions for actual defects.
-
-**Exit:** resources return to the expected baseline and gameplay is stable through
-run endings and reconstruction. Do not call ordinary GC fluctuation a leak.
-
-### Session 7 — P5, second slice: startup and browser compatibility
-
-**60-minute core:** measure production cold/warm startup, transfer/decode,
-initial textures, and first playable frame. Test existing WebGL/Canvas selection
-where available. Improve only the demonstrated bottleneck using existing tools.
-
-**90–120-minute extension:** test slow-network and smaller viewport cases;
-cover asset failures and supported-renderer boot errors with actionable recovery;
-lazy-load genuinely optional screens only if it improves first play. Run types,
-build, production guards, browser smoke, and both-theme content validation.
-
-**Exit:** startup/failure behaviour is measured and clear. Do not split Phaser
-arbitrarily or add a service worker merely to silence the large-chunk warning.
-
-### Session 8 — P5: remaining lifecycle/compatibility acceptance
-
-The affected Session 6/7 gates do not complete P5. Session 8 completed the
-[acceptance inventory](performance/P5_ACCEPTANCE_REPORT.md); the native visibility
-probe could not reach hidden state. Sessions 9–10 subsequently verify native
-overlays and the scoped consolidated lifecycle campaign. Session15 explicitly
-temporarily waives the outstanding external browser/device checks; continue
-[current C7 work](SESSION_20_PROMPT.md). Historical evidence stays source-bound. Prefer
-existing evidence and deterministic checks; only a necessary bounded serial
-browser fixture is allowed. Long soaks/full local suites remain deferred, not
-passed. P6 must wait for the P5 gate or an explicit recorded owner gate change.
-
-### Session 9 — P5 continuation: native events and remaining acceptance
-
-Completed bounded slice: one trusted native same-window tab round trip passes
-on Chromium/Metal, with 7.493 ms first observed advancement after 1.33 s hidden,
-unchanged spawns/empty queues, and 14 deterministic focus-state checks. See the
-[acceptance report](performance/P5_ACCEPTANCE_REPORT.md). No runtime defect or
-change; authored/sustained/native-overlay/audio/device requirements remain open.
-
-### Session 10 — P5: authorized consolidated lifecycle and device evidence
-
-Owner explicitly authorized the consolidated M5 campaign on 2026-10-19. Its
-20-minute ownership window passes within explicit test-only survival/focus aids:
-authored clock, five-minute endless extension, ten short terminals, native
-paused/level-up/time-up/pending work, quality/resize and actual audio closure.
-See [campaign report](performance/P5_CAMPAIGN_REPORT.md). No runtime defect/fix.
-
-### Session 11 — P5: selected desktop support and engine evidence
-
-Owner delegated support selection and authorized testing. Selected desktop
-Chrome/Edge/Firefox/Safari current/previous-major on vendor-supported OS; 52
-focused checks pass serially across installed Chrome and pinned Chromium/Firefox/
-WebKit. Test-only key-hold/resize-readiness corrections; no runtime fix. See
-[compatibility report](performance/P5_COMPATIBILITY_REPORT.md). Actual branded/
-platform/older physical-device coverage remains open.
-
-### Session12 — P5 branded checks and P6 software slice
-
-Owner requests P6 work alongside remaining P5.26 focused Edge155/154 checks
-and two unpatched Firefox158/157 smokes pass. Safari access remains blocked;
-owner confirms no older device. P6 software has96 browser/stress passes/six
-opt-in skips/zero retries,488units/types/lint/build/audit, a verified portable
-kit/manual checklist and18 frozen warmed Default/Low60/150/300 windows. See
-[readiness report](performance/P6_READINESS_REPORT.md). Physical/Safari/other
-release/platform acceptance remains pending, not passed.
-
-### Session13 — owner-approved C1 foundation
-
-On 2026-10-20 the owner explicitly approves planned C1–C7 after verified software
-checks, with missing browser/device evidence release-blocking. C1 is verified locally, including the second tool, owner-only progression,
-on-hit splash and the combined affected gate. Session15 verifies C2 evolution;
-Session16 verifies C3 shrines/curses; continue C4 using
-[SESSION_20_PROMPT.md](SESSION_20_PROMPT.md). Owner explicitly
-temporarily waives missing actual Safari/browser-OS/older physical-device checks;
-waived/unverified, never passed. Historical measurements remain source-bound.
-No optional/sprite scope is added.
-
-### After P5 — P6: combined readiness gate and real-device report
-
-**60-minute core:** inspect matching-head Actions evidence and the combined
-software gate; full local browser/stress runs require a separately scheduled
-consolidated run under the owner policy. Use affected serial checks only; compare baseline
-versus final results across default/low and 60/150/300 loads. Inspect the combined
-diff and fix regressions. Publish a reproducible manual device checklist.
-
-**90–120-minute extension:** measure on an available older integrated-graphics
-machine and an additional browser; repeat sustained/default and worst-load
-cases, then a restart/focus smoke. Include an actual playable run, not only an
-invulnerable harness. Record limitations and residual hotspots.
-
-**Exit:** software verification passes; hardware targets have evidence or remain
-explicitly pending. Summarize measured improvements, risks, and the next selected
-feature. Do not claim the overall older-device objective complete without device
-evidence. If hardware access is the only remaining blocker, stop and report it.
+# Optional development proposals — unselected backlog
+
+## Owner direction — Knights and Magic paused indefinitely
+
+Effective 2026-10-22: all further `knight-magic` theme development is paused
+indefinitely. Only the owner explicitly reopening the theme can end this pause;
+a new milestone, generic parity rule, old plan or failing themed test cannot.
+Do not plan or implement its content, tuning, names/copy, sprites, features or
+new dedicated acceptance campaigns. Preserve its existing files and historical
+records. Existing generic contract tests may read the frozen pack; a change that
+would require editing it must be recorded and deferred until explicit reopening,
+rather than silently expanding this scope. Continue eco-guardian through stable
+core contracts. This overrides older instructions to keep both packs in step.
+
+
+Completed performance/session sequencing is in the [master build log](MASTER_BUILD_PLAN.md#performance-original-sequencing).
+P0–P6 software, C1–C7 and Q6/G1–G4 are completed records, not a new backlog.
+F16 is delivered; other menu entries require checking current code and explicit
+owner selection before becoming a bounded phase. The current remaining work is
+[V0.4.4 art acceptance/integration](SPRITE_PLAN_V0.4.4.md); selected generation
+is complete.
+
+## Current backlog disposition —2026-10-23 audit
+
+Completed foundations are not pending tasks: F1–F7 delivered through C1–C7;
+F16 difficulty presets delivered; Q6/G1–G4, vacuum/claws/attack-guide/menu quit,
+and eco Takeaway Cup ranged slice delivered with scoped software evidence.
+F13 already has selected Can/Wrapper/Butt/Cup additions; any further enemy is a
+new selection. Existing Field Guide, run review and weapon slots are implemented;
+persistent discovery, sourced facts and material effectiveness are still proposals.
+
+Remaining optional choices: F8 seeds/challenges; F9 remaining accessibility and
+remapping; F10 discovery/facts; F11 touch; F12 types/layers; further F13 content;
+F14 resources; F15 restoration; F17 collection objectives; F18 gamepad. Education
+E2–E8 remains exploratory except already promoted slices. No option is selected
+by this audit. Complete selected art review/integration before assuming more
+content is required. [Verified inventory/remaining work](sprites/review/style2/PROGRESS_REPORT.md).
+Historical assessment/estimates below retain context, not current implementation
+status. Knights and Magic remains paused until explicit owner reopening.
 
 ## Recycling ideation — assessed against the existing game
 
@@ -513,7 +152,7 @@ in one hour. Already shipped features such as endless mode are not on this list.
 | F17 | **One optional collection-station objective:** deposit selected resources or safely clear a marked zone for a reward | 3–4 | F14 for deposits; education research if factual; later E6-style opt-in objective, no mandatory quiz |
 | F18 | **Controller support:** movement, interaction, and complete menu navigation with a gamepad | 2–3 | Existing input/settings seam; disconnect/focus/deadzone/menu regression coverage |
 
-Suggested initial shortlist: **F6, F1, F5, and F9** for retention, build variety,
+Historical initial shortlist (F1/F5/F6 now delivered): **F6, F1, F5, and F9** for retention, build variety,
 a run climax, and accessibility. The owner can choose any subset. Preserve C1–C7
 order unless a documented resequencing creates a smaller safe prerequisite; for
 example, bringing a settings/statistics-only part of C6 earlier needs its own
@@ -523,30 +162,17 @@ phase boundary and rationale before code changes. The ideation also makes
 Selection does not authorize the entire feature menu or automatically promote
 exploratory education scope.
 
-V0.4.4 sprite completion stays gated until selected V0.4.3 content stabilizes.
+V0.4.4 eco sprite preparation is selected after the locally completed G1–G4 roster.
 Read the style/pipeline plans and claim manifest rows before any later art work.
 
-## How selected content becomes hour-sized work
+## How future selections become bounded phases
 
-For each selected feature, add precise ownership, commit subjects, acceptance,
-and short checks to the active build plan before implementation. Use these
-session slices as the starting backlog:
-
-| Existing phase | Session slices, each with an implementation plus tests/review |
-| --- | --- |
-| C1 / F1 | (1) slot state/resolution and contract tests; (2) independent scheduling and ledger provenance; (3) second tool, equip-conditioned upgrades, simulator; (4) combined browser, balance, readability, and stress gate |
-| C2 / F2 | (1) pure evolution conditions/replacement and slot invariants; (2) theme definitions, descriptions, browser acquisition, simulator/stress |
-| C3 / F3 | (1) curse contract and contributor rules; (2) bounded content, reward copy, choice availability, balance/browser integration |
-| C4 / F4 | (1) modifier/inheritance rules; (2) two bounded behaviours and telegraphs; (3) fragmentation/duplication, queue, browser/stress integration if needed |
-| C5 / F5 | (1) boss state/director exact-once spawn; (2) one mini-boss pattern and tests; (3) final boss and post-kill decision; (4) ledger, restart, balance and presentation-mode stress |
-| C6 / F6 | (1) schema/validation and migration fixtures; (2) safe storage adapter and unavailable/quota/corrupt cases; (3) lifetime stats/unlock conditions and menu wiring; (4) reload, settings, double-count prevention, browser gate |
-| C7 / F7 | (1) canonical codec, limits, checksum, malformed/hostile-input tests; (2) export and import-preview UI; (3) cancellation, backup, confirmation, migration/reload verification |
-
-The same 60-minute core / 90–120-minute extension rule applies to these added
-packages. Each numbered slice below is one session's work, with related tests
-and review included; use profiling, edge cases, browser integration, and the next
-eligible slice as extensions. Commit at the declared phase boundary, not simply
-because a session ended.
+Before implementation check current code and completed master records, select one
+remaining capability, then write its exact ownership, dependencies, acceptance and
+short checks in an active plan. C1–C7 and F16 are complete and cannot be restarted
+from the old session estimates. The following are historical estimates for still
+optional scope; G2/G4 already deliver parts of F13/F10. Scope only the remaining
+chosen behaviour. Knights and Magic stays paused.
 
 | Optional package | Session slices and acceptance |
 | --- | --- |
@@ -557,32 +183,6 @@ because a session ended.
 | F16 — Difficulty | (1) neutral preset contracts, theme tuning and ordering and baseline-comparison tests; (2) pre-run choice, clear copy, settings compatibility and browser lifecycle; (3) simulator comparisons, escape/telegraph/readability checks and per-preset stress; difficulty never changes implicitly with graphics quality |
 | F17 — Station/objective | (1) one optional objective's state/reward/expiry rules and duplicate-completion tests; (2) bounded placement/telegraph and existing interaction prompt; (3) committed resource deposit or zone-clear reward, helpful failure feedback and factual-content review when applicable; (4) ignore/complete/restart/reload, balance and stress gate |
 | F18 — Controller | (1) input adapter with deadzones, action mapping, repeat behaviour and disconnect tests; (2) title/pause/guide/level-up/overtime/end-screen navigation and device-switch browser checks; (3) focus/unplug/reconnect, remapping compatibility and real-controller smoke if hardware is available |
-
-### Suggested subsequent iterations, conditional on feature selection
-
-1. **Performance readiness:** the existing eight P0–P6 sessions stay first.
-2. **Readable variety:** selected F1 and/or F13; one new tool/role, then balance
-   and performance verification. No mandatory material matrix or resource economy.
-3. **Progress and reference:** selected F6/F7 and F10; preserve progress and
-   expand the current Field Guide. Bringing C6 earlier requires the documented
-   small persistence prerequisite described above.
-4. **Build depth and climax:** selected F2–F5, keeping approved C-phase order
-   and the post-boss choice. Avoid introducing every boss/weapon pitch together.
-5. **Restoration experiment:** selected F14 followed by F15; start with one park,
-   three milestones, and cosmetic/sidegrade unlocks. Permanent numerical power
-   increases need a separately selected design and renewed balance testing.
-6. **Additional access or depth:** selected F9/F11/F16/F18 can be scoped once
-   their seams are stable; F12/F17 remain later experiments with their own fun,
-   accuracy, and performance gates.
-
-These are dependency-aware groupings, not new approved milestones or a strict
-feature-selection order. F13–F18 require named phases/ownership in an appropriate
-future build plan; do not append them silently to C1–C7 or pull them into P0–P6.
-Keep the established V0.4.4 roster gate when scheduling art after content choices.
-
-If only a subset is selected, build its necessary foundations without adding
-unselected content. Resolve substantial design choices from the selection and
-existing authorities; ask only when those cannot determine a safe outcome.
 
 ## Design-review priorities and architecture index — 2026-10-12
 
@@ -617,7 +217,7 @@ schedule difficulty presets or endless/clearing again from the generic prompt.
 The roadmap's earlier assessment table remains a dated historical snapshot;
 current status comes from the active plan/progress, including concurrent sessions.
 
-### Suggested additions within the existing packages
+### Historical design suggestions — check completed implementations first
 
 - **F1 / C1:** consider a bounded Vacuum → Collection Sweep interaction only
   if the prototype's suction/action is immediately legible. Theme data owns
@@ -761,59 +361,3 @@ again. Current C1–C7, F1–F20, SAVE_DATA and the active plans govern what rem
 10. **Per-enemy invulnerability windows**, revisited alongside the above.
 
 ---
-
-
-## 2026-10-20 selected C1–C7 checkpoint
-
-Planned C1–C7 local gates are verified; C7 delivers the bounded F7 portable-save
-flow following C6 persistence/unlocks. Completed records are in MASTER_BUILD_PLAN
-and individual content reports. This does not select R01–R06 or other optional
-proposals, start V0.4.4, or turn temporarily waived external browser/device evidence
-into a pass. Session21 retains owner delivery/acceptance decisions; no remote
-publication or additional broad campaign is authorized.
-
-## Session21 selected correction follow-up
-
-The next local work is Q6 in BUILD_PLAN_V0.4.3: diagnose/correct player pose motion,
-make cone feedback correspond to actual pulses/hits, and implement owner-selected
-vacuum primary-target growth with its own weapon upgrades. Retain a modest early
-cap; exact later integer steps/ceiling and evolution tuning need theme-owned data
-and balance validation. Planning is updated; runtime implementation/verification
-remains open. This supersedes delivery as the immediate next priority, preserving
-local-only delivery and the temporarily waived/unverified external checks.
-
-Session21 delivery revision: owner explicitly authorizes wrapping up and creating
-the V0.4.3 PR before Q6 implementation. Publish a draft with completed C1–C7 and
-selected planning; Q6 stays open. Fresh local delivery software checks pass but
-audit reports a high finding in Vite6.4.3; no dependency change/bypass is selected.
-PR Actions must verify the actual delivered head. No merge/deployment is authorized.
-
-## 2026-10-21 genre priorities and Australian rubbish roadmap
-
-The latest detailed follow-on is [READABLE_GAMEPLAY_ROADMAP.md](READABLE_GAMEPLAY_ROADMAP.md).
-It supersedes the older optional-menu recommendation order for these selected
-planning priorities, without selecting every F13–F20 example. Do not rebuild
-verified C1–C7. Q6 remains the immediate correction; then G1 current-roster
-rebalance → G2 outdoor prototypes → G3 encounters/sites → G4 mastery/results.
-
-Existing-roster rebalancing is owner-requested where evidence requires it, after
-corrected tool feedback/cap progression. The planning baseline and source identity
-are in [content/READABLE_ROSTER_BASELINE.md](content/READABLE_ROSTER_BASELINE.md).
-120 model scenarios execute; this is not new runtime acceptance. Exclude parked
-eco projectile/kill-detonation models from representative conclusions.
-
-The new roadmap separates waste tonnes from surveyed litter counts, reviews all
-supplied categories, and prioritizes cigarette clusters, wrapper gusts and a
-telegraphed rolling can as candidate decisions. Heavy/industrial categories remain
-later site ideas. New candidates need their owning implementation phase and gates,
-not automatic import of the entire survey or an extra resource/crafting system.
-Keep current art gates, stable material IDs, source-aware facts, optional reading,
-serial local-browser budget and external evidence limitations.
-
-## G1 claim and start handoff
-
-Owner2026-10-21 authorizes publishing the planning claim to main. G1 is claimed
-to Codex on `codex/readable-gameplay-g1` under the roadmap's exact ownership;
-[PHASE_G1_PROMPT.md](PHASE_G1_PROMPT.md) first completes/verifies the open Q6
-prerequisite, then implements G1. No gameplay phase starts in this delivery turn.
-G2–G4 remain future; PR27's merged checkpoint is not Q6/G1 acceptance.

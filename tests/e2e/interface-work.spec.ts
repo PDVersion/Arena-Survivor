@@ -1,3 +1,4 @@
+import { clickSettingControl } from "./settings-controls";
 import { expect, test } from "@playwright/test";
 
 test("minimap opacity, scaled settings pointer, resize, pause and restart stay coherent", async ({ page }, testInfo) => {
@@ -15,11 +16,8 @@ test("minimap opacity, scaled settings pointer, resize, pause and restart stay c
     await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe(["upgrades", "world", "codex", "settings"][index]);
   }
   await page.setViewportSize({ width: 900, height: 600 });
-  const canvas = page.locator("canvas");
   for (const opacity of [0.85, 0, 0.35, 0.6]) {
-    const box = await canvas.boundingBox();
-    expect(box).not.toBeNull();
-    await canvas.click({ position: { x: 1230 * box!.width / 1600, y: 398 * box!.height / 900 } });
+    await clickSettingControl(page, "minimapOpacity");
     await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.settings.minimapOpacity)).toBe(opacity);
     expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.minimapVisible)).toBe(false);
   }

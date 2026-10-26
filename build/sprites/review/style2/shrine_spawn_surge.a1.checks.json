@@ -1,0 +1,80 @@
+{
+  "source": "build/sprites/raw/shrine_spawn_surge.a1.png",
+  "sourceSha256": "c291cac1ea47e606cd1f5d1bb062498c4bcaae2ef24fa3472363b28c5836d5d2",
+  "output": "build/sprites/review/style2/shrine_spawn_surge.a1.png",
+  "outputSha256": "e293b0836c6e55b071c6f689efa3ee9e5ee262b871b902e6de39cd3006137728",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 3,
+      "top": 27,
+      "width": 125,
+      "height": 76,
+      "opaquePixels": 7662
+    },
+    {
+      "frame": 1,
+      "left": 0,
+      "top": 27,
+      "width": 128,
+      "height": 76,
+      "opaquePixels": 7641
+    },
+    {
+      "frame": 2,
+      "left": 2,
+      "top": 27,
+      "width": 126,
+      "height": 76,
+      "opaquePixels": 7645
+    },
+    {
+      "frame": 3,
+      "left": 2,
+      "top": 27,
+      "width": 125,
+      "height": 76,
+      "opaquePixels": 7635
+    }
+  ],
+  "recipe": {
+    "contentId": "shrine.spawn_surge",
+    "source": "build/sprites/raw/shrine_spawn_surge.a1.png",
+    "output": "build/sprites/review/style2/shrine_spawn_surge.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 106,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#881337",
+        "#be3459",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#374151",
+        "#6b7280",
+        "#d1d5db",
+        "#f8fafc"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ]
+    ],
+    "outline": "#3f4b26"
+  }
+}

@@ -21,6 +21,8 @@ export const director = {
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+    { enemyId: archetypeIds.enemy.rangedAttacker, waveMovement: "chase", unlockAt: 0.66,
+      introductionCount: 1, baseWeight: 1, weightGrowth: 0.2, chaosWeightBias: 0 },
     { enemyId: archetypeIds.enemy.committedCharger, waveMovement: "chase", unlockAt: 0.60,
       introductionCount: 1, baseWeight: 2, weightGrowth: 0.4, chaosWeightBias: 0 },
     { enemyId: archetypeIds.enemy.gustDrifter, waveMovement: "chase", unlockAt: 0.34,

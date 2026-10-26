@@ -184,7 +184,7 @@ export interface ThemeCopy {
   readonly codex: ThemeCodexCopy;
   /** Player-facing name for each roll tier, e.g. "Legendary". */
   readonly tiers: Readonly<Record<UpgradeTier, string>>;
-  readonly content: Readonly<Record<ContentId, ContentCopy>>;
+  readonly content: Readonly<Record<Exclude<ContentId, "enemy.ranged_attacker">, ContentCopy> & Partial<Record<"enemy.ranged_attacker", ContentCopy>>>;
 }
 
 /**
@@ -257,6 +257,7 @@ export type SpriteState = (typeof spriteStates)[number];
 
 /** Where a sprite sheet lives and how it is cut. Optional per theme. */
 export interface SpriteDefinition {
+  readonly attackFrames?: Readonly<Record<"prepare" | "release" | "recover", number>>;
   /** Actual facing of the authored pixels; never inferred by gameplay. */
   /** Authored pixel anchors; presentation only, never fed back to bodies. */
   readonly frameAnchors?: readonly Readonly<{ x: number; y: number }>[];
@@ -494,7 +495,25 @@ export interface CommittedMotionDefinition {
   readonly cueWidth: number;
 }
 
+export interface RangedAttackDefinition {
+  readonly muzzleForward: number;
+  readonly muzzleVertical: number;
+  readonly triggerRange: number;
+  readonly telegraphMs: number;
+  readonly releaseMs: number;
+  readonly recoveryMs: number;
+  readonly projectileSpeed: number;
+  readonly projectileLifetimeMs: number;
+  readonly projectileRadius: number;
+  readonly damage: number;
+  readonly maxActiveProjectiles: number;
+  readonly projectileColour: string;
+  readonly cueToken: keyof ThemePalette;
+  readonly cueWidth: number;
+}
+
 export interface EnemyDefinition {
+  readonly rangedAttack?: RangedAttackDefinition;
   readonly committedMotion?: CommittedMotionDefinition;
   /** Only natural director selections expand a group; causal spawns never do. */
   readonly arrivalCluster?: Readonly<{ count: number; spacing: number }>;

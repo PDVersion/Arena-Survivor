@@ -9,7 +9,7 @@ import type {
   CodexSessionLine,
   CodexUpgradeEntry,
 } from "../systems/codex/describe-shrine";
-import { addUiText, configureUiContainer, uiPointer } from "./ui-text";
+import { addUiText, configureUiContainer, uiPointer, uiViewport, UI_SCALE } from "./ui-text";
 
 export const pauseTabs = ["stats", "upgrades", "world", "codex", "settings"] as const;
 export type PauseTab = (typeof pauseTabs)[number];
@@ -75,6 +75,9 @@ export class PauseMenuUi {
   private onToggle?: (key: SettingKey) => void;
   private menuContext = false;
   private onManageSave?: () => void;
+  private onQuit?: () => void;
+  private quitBounds?: Phaser.Geom.Rectangle;
+  private readonly handleQuitKey = () => { if (this.isOpen && !this.menuContext) this.onQuit?.(); };
   private manageSaveBounds?: Phaser.Geom.Rectangle;
 
   constructor(scene: Phaser.Scene, theme: ThemeManifest) {
@@ -84,6 +87,18 @@ export class PauseMenuUi {
 
   get isOpen(): boolean {
     return this.container !== undefined;
+  }
+
+  /** Rendered control centres in logical canvas space for read-only UI inspection. */
+  get settingsControlPoints(): Readonly<Record<string, Readonly<{ x: number; y: number }>>> {
+    if (!this.isOpen || this.tab !== "settings") return {};
+    const centreX = this.scene.scale.width / 2, centreY = this.scene.scale.height / 2;
+    const controls = this.settingBounds.map(({ key, bounds }) => ({ key: String(key), bounds }));
+    if (this.manageSaveBounds) controls.push({ key: "manageSave", bounds: this.manageSaveBounds });
+    return Object.fromEntries(controls.map(({ key, bounds }) => [key, {
+      x: centreX + (bounds.centerX - centreX) * UI_SCALE,
+      y: centreY + (bounds.centerY - centreY) * UI_SCALE,
+    }]));
   }
 
   get activeTab(): PauseTab {
@@ -106,13 +121,14 @@ export class PauseMenuUi {
   show(
     view: PauseMenuView,
     onToggle: (key: SettingKey) => void,
-    options: Readonly<{ tab?: PauseTab; menuContext?: boolean; onManageSave?: () => void }> = {},
+    options: Readonly<{ tab?: PauseTab; menuContext?: boolean; onManageSave?: () => void; onQuit?: () => void }> = {},
   ): void {
     this.view = view;
     this.onToggle = onToggle;
     this.tab = options.tab ?? this.tab;
     this.menuContext = options.menuContext ?? false;
     this.onManageSave = options.onManageSave;
+    this.onQuit = options.onQuit;
     this.render();
   }
 
@@ -139,8 +155,9 @@ export class PauseMenuUi {
     const accent = Phaser.Display.Color.HexStringToColor(palette.accent).color;
     const floor = Phaser.Display.Color.HexStringToColor(palette.floor).color;
 
-    const panelWidth = Math.min(880, width - 32);
-    const panelHeight = Math.min(600, height - 32);
+    const viewport = uiViewport(this.scene);
+    const panelWidth = Math.min(880, viewport.width - 32);
+    const panelHeight = Math.min(600, viewport.height - 32);
     const panel = this.scene.add
       .rectangle(width / 2, height / 2, panelWidth, panelHeight, background, 1)
       .setStrokeStyle(3, accent);
@@ -198,7 +215,7 @@ export class PauseMenuUi {
     const bodyTop = top + 116;
     // Everything above the footer hint. Sections that can grow with content
     // measure against this rather than assuming they fit.
-    const bodyHeight = top + panelHeight - 46 - bodyTop;
+    const bodyHeight = top + panelHeight - 46 - bodyTop - (this.onQuit ? 44 : 0);
     const rowStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: palette.text,
       fontFamily: "Georgia, serif",
@@ -221,13 +238,15 @@ export class PauseMenuUi {
       const labels: Readonly<Record<SettingKey, string>> = {
         detailedUpgradeCards: "Detailed upgrade cards",
         reducedMotion: "Reduced motion",
+        showAttackRadius: "Show attack radius",
         muted: "Mute audio",
         minimapOpacity: "Minimap visibility",
         difficulty: this.menuContext ? this.theme.copy.difficulty.label : this.theme.copy.difficulty.nextRun,
         presentationQuality: "Presentation",
       };
+      const settingPitch = Math.min(44, (bodyHeight - (this.menuContext && this.onManageSave ? 52 : 0)) / Object.keys(labels).length);
       (Object.keys(labels) as SettingKey[]).forEach((key, index) => {
-        const y = bodyTop + index * 44;
+        const y = bodyTop + index * settingPitch;
         const value = view.settings[key];
         const on = typeof value === "boolean" ? value : typeof value === "string" || value > 0;
         const display = key === "presentationQuality" ? (value === "low" ? "Low" : "Default") : typeof value === "string" ? this.theme.copy.difficulty.levels[value as RunSettings["difficulty"]].name : typeof value === "boolean"
@@ -253,11 +272,21 @@ export class PauseMenuUi {
         });
       });
       if (this.menuContext && this.onManageSave) {
-        const y = bodyTop + Object.keys(labels).length * 44 + 12;
+        const y = bodyTop + Object.keys(labels).length * settingPitch + 12;
         children.push(this.scene.add.rectangle(width / 2, y, 260, 38, floor, 1).setStrokeStyle(2, accent),
           addUiText(this.scene, width / 2, y, this.theme.copy.saveManager.manageSave, { ...rowStyle, fontStyle: "bold", color: palette.accent }).setOrigin(0.5));
         this.manageSaveBounds = new Phaser.Geom.Rectangle(width / 2 - 130, y - 19, 260, 38);
       }
+    }
+
+    this.quitBounds = undefined;
+    if (this.onQuit && !this.menuContext) {
+      const y = top + panelHeight - 64;
+      const buttonWidth = Math.min(360, panelWidth - 48);
+      children.push(this.scene.add.rectangle(width / 2, y, buttonWidth, 36, floor, 1).setStrokeStyle(2, accent),
+        addUiText(this.scene, width / 2, y, "Quit to main menu · Q (ends this run)",
+          { ...rowStyle, fontSize: "15px", fontStyle: "bold" }).setOrigin(0.5));
+      this.quitBounds = new Phaser.Geom.Rectangle(width / 2 - buttonWidth / 2, y - 18, buttonWidth, 36);
     }
 
     children.push(
@@ -271,6 +300,7 @@ export class PauseMenuUi {
     );
 
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
+    this.scene.input.keyboard?.on("keydown-Q", this.handleQuitKey);
     this.scene.input.keyboard?.on("keydown-PAGE_UP", this.previousEnemy);
     this.scene.input.keyboard?.on("keydown-PAGE_DOWN", this.nextEnemy);
     this.container = configureUiContainer(this.scene, this.scene.add.container(0, 0, children)).setDepth(1050);
@@ -516,11 +546,14 @@ export class PauseMenuUi {
     this.view = undefined;
     this.onToggle = undefined;
     this.onManageSave = undefined;
+    this.onQuit = undefined;
+    this.quitBounds = undefined;
     this.manageSaveBounds = undefined;
   }
 
   private destroyContainer(): void {
     this.scene.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
+    this.scene.input.keyboard?.off("keydown-Q", this.handleQuitKey);
     this.scene.input.keyboard?.off("keydown-PAGE_UP", this.previousEnemy);
     this.scene.input.keyboard?.off("keydown-PAGE_DOWN", this.nextEnemy);
     this.container?.destroy(true);
@@ -529,6 +562,7 @@ export class PauseMenuUi {
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
     const point = uiPointer(this.scene, pointer);
+    if (this.quitBounds?.contains(point.x, point.y)) { this.onQuit?.(); return; }
     if (this.manageSaveBounds?.contains(point.x, point.y)) { this.onManageSave?.(); return; }
     const tab = this.tabBounds.find((entry) => entry.bounds.contains(point.x, point.y));
     if (tab) {

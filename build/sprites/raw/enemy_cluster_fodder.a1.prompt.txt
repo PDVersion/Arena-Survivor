@@ -1,0 +1,50 @@
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: enemy.cluster_fodder — Cigarette Butts. Eco-guardian only.
+TASK: new. Logical baseline 24×24; final native frame 48×48px.
+SHEET: 4 equal cells, ONE horizontal 192×48px strip; no gutters.
+IN-GAME CONTRACT: 28; unchanged by image resolution.
+DESCRIPTION: ONE discarded cigarette butt per cell: short pale paper/filter cylinder, orange filter end, compressed dark ash tip; same end orientation and paper crease throughout. The game places three separate actors in an arrival group: do not draw a group of three in one sprite. No smoke, flame, branding or mouth.
+PALETTE (deep/shadow/base/highlight):
+Pale plastic / filter paper: #172d5f #64748b #e2e8f0 #f8fafc
+Orange waste / tool trim: #7c2d12 #c65d1a #fb923c #fdba74
+Gear grey / metal: #111827 #374151 #6b7280 #d1d5db
+FRAMES, left to right, indexed from 0:
+0: single resting diagonal butt.
+1: tiny rocking change of the same butt.
+2: exact idle geometry for hit.
+3: same butt crumpled with inert ash tip, no cloud.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+REFERENCE ROLES: Image1 is the approved first-pass style2 Plastic Bottle style reference. Image2 is the matching style2 teal Glass Bottle material reference. Use references for style/material only, draw only the requested subject.
+OUTPUT LAYOUT: transparent wide canvas with precisely equally spaced cells in one row. Do not include the reference bottles. Every pose must fit completely into its own equal-width cell with common scale. Preserve idle and hit identical geometry. No captions.
+OWNER UPDATE OVERRIDES DESCRIPTION WHERE NECESSARY: Familiar discarded single cigarette butt from Sydney street litter: short off-white crumpled paper cylinder, tan/orange filter end and small dark spent ash tip. Broad practical real proportions, no toy rocket or fantasy object.
+Local reference context (shape only): Australian/Sydney common discarded material identity, unbranded. No prevalence/disposal claims.

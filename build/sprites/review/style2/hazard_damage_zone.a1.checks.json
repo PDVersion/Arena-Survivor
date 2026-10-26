@@ -1,0 +1,74 @@
+{
+  "source": "build/sprites/raw/hazard_damage_zone.a1.png",
+  "sourceSha256": "15d02a3994e23d2ac0c27d22da3dcfaf94ef606b9e7c864e84ea85812f930aa2",
+  "output": "build/sprites/review/style2/hazard_damage_zone.a1.png",
+  "outputSha256": "1e7d7a5d70f027aae3bc5c074d0b9a861b432880273080bece24d87e0a4d68f6",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 3,
+      "top": 22,
+      "width": 122,
+      "height": 85,
+      "opaquePixels": 7406
+    },
+    {
+      "frame": 1,
+      "left": 4,
+      "top": 22,
+      "width": 121,
+      "height": 85,
+      "opaquePixels": 7395
+    },
+    {
+      "frame": 2,
+      "left": 4,
+      "top": 22,
+      "width": 121,
+      "height": 85,
+      "opaquePixels": 7402
+    },
+    {
+      "frame": 3,
+      "left": 3,
+      "top": 22,
+      "width": 122,
+      "height": 85,
+      "opaquePixels": 7402
+    }
+  ],
+  "recipe": {
+    "contentId": "hazard.damage_zone",
+    "source": "build/sprites/raw/hazard_damage_zone.a1.png",
+    "output": "build/sprites/review/style2/hazard_damage_zone.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 117,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#7c2d12",
+        "#c65d1a",
+        "#fb923c",
+        "#fdba74"
+      ],
+      [
+        "#3f4b26",
+        "#68753b",
+        "#91a657",
+        "#c0d187"
+      ]
+    ],
+    "outline": "#3f4b26"
+  }
+}

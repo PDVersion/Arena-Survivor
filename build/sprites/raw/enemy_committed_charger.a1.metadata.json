@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-23",
+  "contentId": "enemy.committed_charger",
+  "attempt": 1,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/enemy_committed_charger.a1.png",
+  "rawWidth": 2172,
+  "rawHeight": 724,
+  "rawSha256": "e48e2db11a171a3598b678ff53ace5d69b2d6d30e665b345ca259fd3ebab9793",
+  "prompt": "build/sprites/raw/enemy_committed_charger.a1.prompt.txt",
+  "promptSha256": "33aeb62f00211796a0a4fca908fd362413a1a4f3cda2393c888aaad0a5a9cfa1",
+  "generatedOutput": "/Users/pdv/.codex/generated_images/01a1661b-7b8a-75d3-a292-1334241a1983/exec-2df8c60b-5367-42b9-84ca-f36d3b9bb01c.png",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/review/style2/enemy_slow_durable.a3.png",
+      "sha256": "aa56eb692eea440b276e4483dcca12ebd06b6526f1c8bc83734a6bd3c9214592"
+    }
+  ],
+  "localReferenceUrls": [
+    "https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling/Waste-Resources/A-to-Z-Guide-of-Waste-and-Recycling",
+    "https://returnandearn.org.au/what-you-can-return",
+    "https://www.cleanup.org.au/litter-report/",
+    "https://www.cityofsydney.nsw.gov.au/waste-recycling-services/book-pick-up-for-bulky-items"
+  ],
+  "referenceNotes": "Shape context only, no factual prevalence ranking/disposal advice. Exact owner realism overrides preserved at end of prompt.",
+  "status": "review",
+  "notes": "Generation only; user defers individual alignment and in-game review; no production acceptance. Native review format gates pass; common-grid conversion only, no per-pose fitting. Native silhouette occupancy and idle/hit equality remain unaccepted. Source grid is one common square for every pose.",
+  "reviewSourceGrid": {
+    "left": 0,
+    "top": 113,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "reviewOutput": "build/sprites/review/style2/enemy_committed_charger.a1.png",
+  "reviewWidth": 256,
+  "reviewHeight": 64,
+  "reviewSha256": "b8b7f141fb9b2319817b4f80e053c391608324fd2a0b920c9fbbfb7a3abd835a",
+  "formatIssues": []
+}

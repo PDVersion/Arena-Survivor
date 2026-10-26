@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-23",
+  "contentId": "icon.weapon.secondary_evolved",
+  "attempt": 1,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/icon_weapon_secondary_evolved.a1.png",
+  "sourceSha256": "23ea0d4bbf55e86e35f4a97114256400b8d1d7bcef0c0e54021f5f90eb86496b",
+  "prompt": "build/sprites/raw/icon_weapon_secondary_evolved.a1.prompt.txt",
+  "promptSha256": "b69dd38231e566cb8dcdc5a1e232432e771922ff80ef909f3eb0fe5027536a87",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    },
+    {
+      "path": "build/sprites/accepted/character_starter.png",
+      "sha256": "7552172c5549557deeb1040bd339ae566173a51c6f604b5861f06c4bcfca89d4"
+    },
+    {
+      "path": "build/sprites/raw/weapon_secondary_evolved.a1.png",
+      "sha256": "0117ad9e170ab8c7b7d5ab23912962eff1a8157fc05f2ff713c3f2bae14d2173"
+    }
+  ],
+  "originalToolOutput": "/Users/pdv/.codex/generated_images/01a1661b-a76a-79a2-9839-731cfd4d1889/exec-13b5ea1e-f972-49a8-8506-3b5f6ad97fcb.png",
+  "status": "review",
+  "reviewOutput": "build/sprites/review/style2/icon_weapon_secondary_evolved.a1.png",
+  "intendedFrameWidth": 64,
+  "intendedFrameHeight": 64,
+  "intendedFrames": 1,
+  "visualConstructionReferences": [
+    "https://www.bunnings.com.au/cleanstar-complete-vacuum-cleaner-hose-for-various-models-36mm-wet-dry_p1054850"
+  ],
+  "notes": "Generated first pass. Common fixed source grid, uniform scale and deterministic palette/binary-alpha/2px outline conversion only; no hand-painted repairs. Strict frame anchors, continuity, silhouette occupancy, UI composition and in-game acceptance remain pending. Production assets unchanged. Equipment uses practical familiar-object construction; vacuum function remains game abstraction.",
+  "deferredReviewFinding": "Format passes. Paired-ring/yellow-trim evolved construction matches action materials; composition is more horizontal than requested diagonal; preserved for owner review."
+}

@@ -1,0 +1,48 @@
+Use case: stylized-concept
+Asset type: native pixel-art game sprite sheet
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: weapon.starter — Cleanup Grabber action. Eco-guardian only.
+TASK: new proposed action strip. Logical baseline 64×16; final native frame 128×32px.
+SHEET: 3 equal cells, ONE horizontal 384×32px strip; no gutters.
+IN-GAME CONTRACT: existing procedural reach/width; unchanged by image resolution.
+DESCRIPTION: ONE practical long narrow litter pickup grabber pointing RIGHT, grip at the left, straight cyan shaft, fixed hinge and two green forked jaws at the right. Same shaft length and thickness in all cells. Lock grip pivot at (8,16) in each target 128×32 cell. Code owns extension/retraction translation and reach growth, so never draw three different-length shafts. No sword, projectile, muzzle flash or trail.
+PALETTE (deep/shadow/base/highlight):
+Tool cyan: #164e63 #3893b5 #7dd3fc #bae6fd
+Protective green: #14532d #22a34e #4ade80 #8df0ac
+Gear grey / metal: #111827 #374151 #6b7280 #d1d5db
+FRAMES, left to right, indexed from 0:
+0: extending/open jaws.
+1: contact/closed jaws meeting at the tip.
+2: retracting/opening jaws, identical grip/shaft geometry.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+INPUT IMAGE ROLES: Image 1 Bottle and Image 2 Player are style references only, not subject templates. Practical real-world Australian cleanup litter picker: black trigger handgrip, straight narrow aluminium shaft with cyan accent, fixed hinge and grooved green forked gripper jaws. Similar construction to ordinary 82cm litter picker sold at Australian hardware stores. Never a sword or sci-fi laser. Exactly 3 full identical-length grabbers in one horizontal row. Each cell 4:1 wide rectangular; entire row12:1. If larger tool canvas required keep grabbers thin, centered in middle horizontal band; no staggering, tilting or shortening.

@@ -1,0 +1,48 @@
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: enemy.stationary_fragment — Glass Shards. Eco-guardian only.
+TASK: new dedicated sheet. Logical baseline 24×24; final native frame 48×48px.
+SHEET: 4 equal cells, ONE horizontal 192×48px strip; no gutters.
+IN-GAME CONTRACT: 28; unchanged by image resolution.
+DESCRIPTION: One small low patch of two or three large jagged pieces from the regenerated Glass Bottle death frame, same teal ramp, thick fractured edges and top-left highlights. All pieces fit one small footprint. This is stationary clearable glass, not a mobile creature, sparkle or new timed hazard. Match parent shard shapes/material; no intact bottle neck.
+PALETTE (deep/shadow/base/highlight):
+Glass: #0f4f52 #169b91 #2dd4bf #82eadc
+FRAMES, left to right, indexed from 0:
+0: resting shard patch.
+1: identical resting placement, no walk.
+2: identical patch for hit.
+3: flattened/cleared broken pieces within the same footprint.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+REFERENCE ROLES: Image1 is the approved first-pass style2 Plastic Bottle style reference. Image2 is the matching style2 teal Glass Bottle material reference. Use references for style/material only, draw only the requested subject.
+OUTPUT LAYOUT: transparent wide canvas with precisely equally spaced cells in one row. Do not include the reference bottles. Every pose must fit completely into its own equal-width cell with common scale. Preserve idle and hit identical geometry. No captions.
+OWNER UPDATE OVERRIDES DESCRIPTION WHERE NECESSARY: Ordinary broken bottle/jar glass, two or three broad curved wall fragments and thick rim/base pieces; not fantasy crystals or pointed mineral cluster. Teal tint as palette styling; shapes have recognisable broken bottle curvature.
+Local reference context (shape only): Australian/Sydney common discarded material identity, unbranded. No prevalence/disposal claims.

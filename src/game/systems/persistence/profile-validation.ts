@@ -40,8 +40,12 @@ export function validateProfile(input: unknown): ProfileState {
   const p = object(input);
   keys(p, ["schemaVersion", "gameVersion", "activeThemeId", "contentSchemaVersion", "selectedCharacterId", "unlockedCharacterIds", "unlockedWeaponIds", "unlockedUpgradeIds", "settings", "statistics", "completedRuns", "deaths", "bestDurationMs", "createdAt", "updatedAt"]);
   if (p.schemaVersion !== 2) fail("unsupported schema version");
-  const settings = object(p.settings); keys(settings, ["difficulty", "presentationQuality", "detailedUpgradeCards", "reducedMotion", "muted", "minimapOpacity"]);
+  const settings = object(p.settings);
+  // Additive schema2 preference: historical saves omit it and hydrate OFF.
+  const requiredSettings = { ...settings }; delete requiredSettings.showAttackRadius;
+  keys(requiredSettings, ["difficulty", "presentationQuality", "detailedUpgradeCards", "reducedMotion", "muted", "minimapOpacity"]);
   if (typeof settings.difficulty !== "string" || typeof settings.presentationQuality !== "string" || !["beginner", "normal", "experienced"].includes(settings.difficulty) || !["default", "low"].includes(String(settings.presentationQuality)) || ![0, 0.35, 0.6, 0.85].includes(settings.minimapOpacity as number)) fail("invalid setting");
+  if (Object.hasOwn(settings, "showAttackRadius") && typeof settings.showAttackRadius !== "boolean") fail("invalid attack radius setting");
   for (const key of ["detailedUpgradeCards", "reducedMotion", "muted"]) if (typeof settings[key] !== "boolean") fail("invalid setting");
   const statistics = object(p.statistics); keys(statistics, ["runsPlayed", "totalKills", "totalDamage", "bestLevel", "bestKills", "bestDamage", "upgrades"]);
   for (const key of ["runsPlayed", "totalKills", "bestLevel", "bestKills"]) number(statistics[key], true);

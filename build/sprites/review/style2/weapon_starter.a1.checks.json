@@ -1,0 +1,72 @@
+{
+  "source": "build/sprites/raw/weapon_starter.a1.png",
+  "sourceSha256": "4280ced92f658f2f017b0190c2b41e76ae963682624a0fb8fb40f79b7db598bb",
+  "output": "build/sprites/review/style2/weapon_starter.a1.png",
+  "outputSha256": "887b18268b5a4a5e2f0bf285e5a67b58ad20c9b967d72e5b9dee917cb4773015",
+  "width": 384,
+  "height": 32,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 9,
+      "top": 2,
+      "width": 115,
+      "height": 29,
+      "opaquePixels": 1059
+    },
+    {
+      "frame": 1,
+      "left": 8,
+      "top": 7,
+      "width": 113,
+      "height": 24,
+      "opaquePixels": 1019
+    },
+    {
+      "frame": 2,
+      "left": 5,
+      "top": 2,
+      "width": 115,
+      "height": 29,
+      "opaquePixels": 1057
+    }
+  ],
+  "recipe": {
+    "contentId": "weapon.starter",
+    "source": "build/sprites/raw/weapon_starter.a1.png",
+    "output": "build/sprites/review/style2/weapon_starter.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 32,
+    "frames": 3,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 266,
+      "cellWidth": 724,
+      "cellHeight": 181
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#164e63",
+        "#3893b5",
+        "#7dd3fc",
+        "#bae6fd"
+      ],
+      [
+        "#14532d",
+        "#22a34e",
+        "#4ade80",
+        "#8df0ac"
+      ],
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ]
+    ],
+    "outline": "#164e63"
+  }
+}

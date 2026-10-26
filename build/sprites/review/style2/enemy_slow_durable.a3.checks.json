@@ -1,0 +1,68 @@
+{
+  "source": "build/sprites/raw/enemy_slow_durable.a3.png",
+  "sourceSha256": "0e63b7215f5a1d361ff167ffa29aebe88921b38ec1a5f1ec6b4b966926779172",
+  "output": "build/sprites/review/style2/enemy_slow_durable.a3.png",
+  "outputSha256": "aa56eb692eea440b276e4483dcca12ebd06b6526f1c8bc83734a6bd3c9214592",
+  "width": 384,
+  "height": 96,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 25,
+      "top": 12,
+      "width": 48,
+      "height": 81,
+      "opaquePixels": 3111
+    },
+    {
+      "frame": 1,
+      "left": 19,
+      "top": 11,
+      "width": 61,
+      "height": 82,
+      "opaquePixels": 3156
+    },
+    {
+      "frame": 2,
+      "left": 23,
+      "top": 13,
+      "width": 48,
+      "height": 80,
+      "opaquePixels": 3122
+    },
+    {
+      "frame": 3,
+      "left": 9,
+      "top": 12,
+      "width": 71,
+      "height": 83,
+      "opaquePixels": 3567
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.slow_durable",
+    "source": "build/sprites/raw/enemy_slow_durable.a3.png",
+    "output": "build/sprites/review/style2/enemy_slow_durable.a3.png",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 90,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#0f4f52",
+        "#169b91",
+        "#2dd4bf",
+        "#82eadc"
+      ]
+    ],
+    "outline": "#0f4f52"
+  }
+}

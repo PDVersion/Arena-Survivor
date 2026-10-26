@@ -29,6 +29,15 @@ describe("durable profile", () => {
     expect(() => validateProfile(JSON.parse('{"__proto__":{}}'))).toThrow();
     expect(() => validateProfile({ ...fresh(), settings: { ...fresh().settings, difficulty: "impossible" } })).toThrow();
   });
+  it("persists the explicit attack guide setting without changing completed run totals", () => {
+    const storage = store(); initializeProfile(theme, storage);
+    const before = getProfile().statistics.runsPlayed;
+    expect(getSessionSettings().showAttackRadius).toBe(false);
+    updateSessionSettings({ ...getSessionSettings(), showAttackRadius: true });
+    initializeProfile(theme, storage);
+    expect(getSessionSettings().showAttackRadius).toBe(true);
+    expect(getProfile().statistics.runsPlayed).toBe(before);
+  });
   it("persists settings and exact terminal totals, with immutable next-run pool", () => {
     const storage = store(); initializeProfile(theme, storage); const pool = selectRunUpgradePool(theme);
     expect(pool.some((entry) => entry.id === "upgrade.equip_secondary")).toBe(false);

@@ -1,0 +1,74 @@
+{
+  "source": "build/sprites/raw/hazard_periodic_burst.a1.png",
+  "sourceSha256": "f33649e6edd09f2ff31cbe2a3144b3b090eab8f095cf771925de4394f0097020",
+  "output": "build/sprites/review/style2/hazard_periodic_burst.a1.png",
+  "outputSha256": "06ed055910451f8d2feed449db3834a8c32408297f961f7d285cfc7aa2bb48ca",
+  "width": 512,
+  "height": 128,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 7,
+      "top": 26,
+      "width": 115,
+      "height": 77,
+      "opaquePixels": 5552
+    },
+    {
+      "frame": 1,
+      "left": 8,
+      "top": 26,
+      "width": 113,
+      "height": 77,
+      "opaquePixels": 5531
+    },
+    {
+      "frame": 2,
+      "left": 8,
+      "top": 26,
+      "width": 114,
+      "height": 77,
+      "opaquePixels": 5540
+    },
+    {
+      "frame": 3,
+      "left": 7,
+      "top": 26,
+      "width": 115,
+      "height": 77,
+      "opaquePixels": 5532
+    }
+  ],
+  "recipe": {
+    "contentId": "hazard.periodic_burst",
+    "source": "build/sprites/raw/hazard_periodic_burst.a1.png",
+    "output": "build/sprites/review/style2/hazard_periodic_burst.a1.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 111,
+      "cellWidth": 543,
+      "cellHeight": 543
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#881337",
+        "#be3459",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#101c15",
+        "#1b2b20",
+        "#23372a",
+        "#51644c"
+      ]
+    ],
+    "outline": "#101c15"
+  }
+}

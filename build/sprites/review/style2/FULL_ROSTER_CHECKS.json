@@ -1,0 +1,273 @@
+{
+  "subjects": 26,
+  "rawStyle2Attempts": 27,
+  "nativeFormatPasses": 26,
+  "deterministicRebuilds": 27,
+  "changedBaselineFiles": [
+    "src/game/systems/sprites/sprite-pipeline.ts",
+    "tests/unit/sprites/sprite-pipeline.test.ts"
+  ],
+  "acceptedPublicUnchanged": true,
+  "checks": [
+    {
+      "id": "enemy.swarm_basic",
+      "nativeSha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092",
+      "sourceSha256": "54f94fd1eee4f5096da4591fd497e5e82f3e20ba72d261ff569c0a94e8cb5a35",
+      "size": [
+        256,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.fast_fragile",
+      "nativeSha256": "7a6c18cd5807b15bec9b05dcd36365ee29c922a591ebf22521cb7ddf76ff99b1",
+      "sourceSha256": "be17cde4e49ea326748a7f4dd2700d86f921b626fdc3f2202d5e49048722919c",
+      "size": [
+        192,
+        48
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.slow_durable",
+      "nativeSha256": "307cc371f046c8b9e9166cb91637ff5a3c1af6a1f576cbe387b15cc6a8241a7a",
+      "sourceSha256": "e1c97b1da36956b7bfded11ee78be23632b81080d0b44c1f2182686ccdb6dd17",
+      "size": [
+        384,
+        96
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.death_spawner",
+      "nativeSha256": "34eaffc54799af15d5072b0e8e82c6cef8a1df85fd6fb1631bb823b1aa81a2e8",
+      "sourceSha256": "f354c29eb360c92325dab339f8600fabf78338ed78905b5ff1d8dc9b8cd55fc5",
+      "size": [
+        384,
+        96
+      ],
+      "issues": []
+    },
+    {
+      "id": "character.starter",
+      "nativeSha256": "fd28a38bad43fef6ccc8f9aad7db49e8c657d326cc680efd78fea7e324654ae0",
+      "sourceSha256": "2cd6506ee39a6f0b557f22276b270da90c031d4cac84b16e97caff0c910d108a",
+      "size": [
+        768,
+        96
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.stationary_fragment",
+      "nativeSha256": "de29c744eabb88ae4160cd6a2fd6a13de19f3e9797948d6ba8c595497db382c6",
+      "sourceSha256": "e7f562436001ebd109a360ff0d37d1ac5854f4bf76e2f21d1bbc667444ae9b32",
+      "size": [
+        192,
+        48
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.cluster_fodder",
+      "nativeSha256": "1ec59120f517e58a9e7f966e164c51070da1e13b8d6571123b55f9ef8c6c05e2",
+      "sourceSha256": "67a1207036307e05bc23ff772ff162bac08667ae77d549a78f6f58e1df70c19d",
+      "size": [
+        192,
+        48
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.gust_drifter",
+      "nativeSha256": "8b776c3f242ad927ccab8148fd0035844b65e9c3ff77056684db753a5d1d63a6",
+      "sourceSha256": "de8a3667f7056324eacd0f64ca84e6e21b4fa28894a93a80bf5ac58e4d56acd2",
+      "size": [
+        256,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.committed_charger",
+      "nativeSha256": "b8b7f141fb9b2319817b4f80e053c391608324fd2a0b920c9fbbfb7a3abd835a",
+      "sourceSha256": "e48e2db11a171a3598b678ff53ace5d69b2d6d30e665b345ca259fd3ebab9793",
+      "size": [
+        256,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.mini_boss",
+      "nativeSha256": "7806ad2be1cf6e88fdff685600019da679825673687a4a932538e61d3f6b6114",
+      "sourceSha256": "2dd374d3d219b98b083eb4fa90265ea18cbf9fd4991953ee4aa1bcae6f942479",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "enemy.final_boss",
+      "nativeSha256": "deb408b0f4dec2c77dc661a404283511f98a8ebe104ef32c0f337179be3c7938",
+      "sourceSha256": "f62de93648e76f264b2e4a94363d7f83d0491dc2d43712aa443957f51331dc2a",
+      "size": [
+        768,
+        192
+      ],
+      "issues": []
+    },
+    {
+      "id": "weapon.starter",
+      "nativeSha256": "887b18268b5a4a5e2f0bf285e5a67b58ad20c9b967d72e5b9dee917cb4773015",
+      "sourceSha256": "4280ced92f658f2f017b0190c2b41e76ae963682624a0fb8fb40f79b7db598bb",
+      "size": [
+        384,
+        32
+      ],
+      "issues": []
+    },
+    {
+      "id": "weapon.secondary",
+      "nativeSha256": "8a4be5a91860dd425485950b8da92293ad0985d5ac990ee9bbdfe20b80c6abfe",
+      "sourceSha256": "88b7a6502c22dcefef6e1b7d978ca921a35f9b37d7a2cee1cbcfca43d3c13c39",
+      "size": [
+        384,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "weapon.secondary_evolved",
+      "nativeSha256": "5523054a3487761f05fc75f37860e01e821de5794896bfd126e3ff900f6a18bb",
+      "sourceSha256": "0117ad9e170ab8c7b7d5ab23912962eff1a8157fc05f2ff713c3f2bae14d2173",
+      "size": [
+        384,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "pickup.experience",
+      "nativeSha256": "6a084ad29f95974e45129fc156370c7fada40c03e81e1bdc40d2235e07cec8d8",
+      "sourceSha256": "2caf6730f4819388766f0bd253d61c1858343009cb97066491a54a5e74860321",
+      "size": [
+        96,
+        32
+      ],
+      "issues": []
+    },
+    {
+      "id": "shrine.spawn_surge",
+      "nativeSha256": "e293b0836c6e55b071c6f689efa3ee9e5ee262b871b902e6de39cd3006137728",
+      "sourceSha256": "c291cac1ea47e606cd1f5d1bb062498c4bcaae2ef24fa3472363b28c5836d5d2",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "shrine.greed",
+      "nativeSha256": "0d3e7eacd39f6e0187a1673ea171226a9ed2faa59314e77bde69ec9501abd80b",
+      "sourceSha256": "0ff209840dbd362d78b423a4edccb49cf3a6dc803645d9d0b41e38f16b002005",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "shrine.multiplicity",
+      "nativeSha256": "703e2bb1c4529780afe06bfdc4129d16efd9ff4e0bc20cb08aef2979a67cff78",
+      "sourceSha256": "df0b86b005d395f9b3abdf40f60968170e6edeeda880ae4f51486a7faa2f6d98",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "shrine.duplication",
+      "nativeSha256": "41f9ed7d412614ea9c8d84b319064375b9dc04da48a856ce14ed37bb32b76a20",
+      "sourceSha256": "898861128af86b88aa3d0d59b5d535a81b33168ec06dab32d8a1a551e132ee38",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "shrine.escalation",
+      "nativeSha256": "82d5f423cf996fa489f243d4e12c3463dd6697d8de5c122548319ee1dd882d3d",
+      "sourceSha256": "18fa9d3aa2997c1466eadd1a99b60f291e42130b59bae38233d726960d00f2f0",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "hazard.damage_zone",
+      "nativeSha256": "1e7d7a5d70f027aae3bc5c074d0b9a861b432880273080bece24d87e0a4d68f6",
+      "sourceSha256": "15d02a3994e23d2ac0c27d22da3dcfaf94ef606b9e7c864e84ea85812f930aa2",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "hazard.obstacle",
+      "nativeSha256": "8f711fedbd708b458f7e04a73e154877375e98bb9d8eed81fce1feb57d3e3cbe",
+      "sourceSha256": "39bc4f40aecc90486319f0efd078c1b4735712e1ceffdf1c1ac0ceab6d251d45",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "hazard.periodic_burst",
+      "nativeSha256": "06ed055910451f8d2feed449db3834a8c32408297f961f7d285cfc7aa2bb48ca",
+      "sourceSha256": "f33649e6edd09f2ff31cbe2a3144b3b090eab8f095cf771925de4394f0097020",
+      "size": [
+        512,
+        128
+      ],
+      "issues": []
+    },
+    {
+      "id": "icon.weapon.starter",
+      "nativeSha256": "851b3070c7f73c299fcc3a0446c26da18e12ba1682bd0c720a44fbfafe835030",
+      "sourceSha256": "60c891b63e5ff648a792a0cb9026385bd89f0949f97b492f90633e676a4c7221",
+      "size": [
+        64,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "icon.weapon.secondary",
+      "nativeSha256": "aed23b6d2f5fc4ad39ec16dd472fb1c24c2e8c39b2afc6a764d4f341031512c0",
+      "sourceSha256": "8950f8253421f4de43cfa70d2c3a9e441758743112003a3ead04cd6425b6e803",
+      "size": [
+        64,
+        64
+      ],
+      "issues": []
+    },
+    {
+      "id": "icon.weapon.secondary_evolved",
+      "nativeSha256": "4f5a374b72b277de37cdf80302da0c29c0d45d5933f70a9e35e779bffef21380",
+      "sourceSha256": "23ea0d4bbf55e86e35f4a97114256400b8d1d7bcef0c0e54021f5f90eb86496b",
+      "size": [
+        64,
+        64
+      ],
+      "issues": []
+    }
+  ]
+}

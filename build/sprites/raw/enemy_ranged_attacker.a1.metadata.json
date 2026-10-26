@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-23",
+  "contentId": "enemy.ranged_attacker",
+  "attempt": 1,
+  "styleVersion": 2,
+  "tool": "built-in image_gen.imagegen",
+  "model": "not exposed",
+  "seed": "n/a",
+  "source": "build/sprites/raw/enemy_ranged_attacker.a1.png",
+  "prompt": "build/sprites/raw/enemy_ranged_attacker.a1.prompt.txt",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    }
+  ],
+  "status": "retained unused draft",
+  "notes": "a1 wind-up wrong; a2/4 death too wide; a3 compact death selected, shared padded grid without independent recentering. Owner can revise individual sprites later."
+}

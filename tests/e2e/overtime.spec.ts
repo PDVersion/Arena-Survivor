@@ -122,10 +122,11 @@ test("overtime escalates far harder than the timed run ever did", async ({ page 
 test("clearing the field stops arrivals and ends on an empty arena", async ({ page }) => {
   test.setTimeout(150_000);
   // Enough firepower that whatever is still standing can be cleared inside the
-  // budget; the subject is the mode, not the weapon.
+  // budget; spawn inside tool reach so a stationary ranged role is clearable.
+  // Real ranged aim/dodge/harm is covered by ranged-enemy.spec.ts.
   await waitForTimeUp(
     page,
-    "/?runDurationMs=2000&noContact&noXp=1&noHazards&spawnRadius=320&critChance=3&pierce=12&attackSpeedBonus=9",
+    "/?runDurationMs=2000&noContact&noXp=1&noHazards&spawnRadius=32&critChance=3&pierce=12&attackSpeedBonus=9",
   );
 
   await page.keyboard.press("Digit2");
@@ -137,7 +138,13 @@ test("clearing the field stops arrivals and ends on an empty arena", async ({ pa
   // covers a spawn interval rather than however much wall time the runner had.
   const atChoice = (await snapshot(page))?.spawnOrigins?.spawned.natural ?? 0;
   if ((await snapshot(page))?.run?.status === "playing") {
-    await advanceSimulation(page, 1_200);
+    const from = await elapsedMs(page);
+    await expect.poll(async () => {
+      const current = await snapshot(page);
+      // Early completion freezes the clock; it must not create an impossible wait.
+      return current?.run?.status === "complete" || current?.run?.status === "dead" ||
+        (current?.run?.elapsedMs ?? 0) > from + 1_200;
+    }, { timeout: SIMULATION_BUDGET_MS }).toBe(true);
     // Bagged Waste can release children while clearing; natural arrivals stop.
     expect((await snapshot(page))?.spawnOrigins?.spawned.natural ?? 0).toBe(atChoice);
   }

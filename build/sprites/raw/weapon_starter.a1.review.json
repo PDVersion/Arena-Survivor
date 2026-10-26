@@ -1,0 +1,37 @@
+{
+  "contentId": "weapon.starter",
+  "source": "build/sprites/raw/weapon_starter.a1.png",
+  "output": "build/sprites/review/style2/weapon_starter.a1.png",
+  "frameWidth": 128,
+  "frameHeight": 32,
+  "frames": 3,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 266,
+    "cellWidth": 724,
+    "cellHeight": 181
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#164e63",
+      "#3893b5",
+      "#7dd3fc",
+      "#bae6fd"
+    ],
+    [
+      "#14532d",
+      "#22a34e",
+      "#4ade80",
+      "#8df0ac"
+    ],
+    [
+      "#111827",
+      "#374151",
+      "#6b7280",
+      "#d1d5db"
+    ]
+  ],
+  "outline": "#164e63"
+}

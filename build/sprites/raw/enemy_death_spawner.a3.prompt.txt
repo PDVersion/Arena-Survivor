@@ -1,0 +1,51 @@
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: enemy.death_spawner — Bagged Waste. Eco-guardian only.
+TASK: replacement. Logical baseline 48×48; final native frame 96×96px.
+SHEET: 4 equal cells, ONE horizontal 384×96px strip; no gutters.
+IN-GAME CONTRACT: 56; unchanged by image resolution.
+DESCRIPTION: One overfilled violet rubbish bag, broad lumpy base, small twisted top knot, three stable bulges and one taut crease. No face or limbs. Preserve knot and fold locations. Death opens the same bag; visible contents suggest plastic bottle, coloured plastic pieces and teal glass without drawing extra living actors. Actual finite offspring are spawned by game code.
+PALETTE (deep/shadow/base/highlight):
+Mixed-waste violet: #3b1762 #8050bd #c084fc #dcb5fd
+Waste neutral: #374151 #6b7280 #d1d5db #f8fafc
+Waste olive: #3f4b26 #68753b #91a657 #c0d187
+Orange waste / tool trim: #7c2d12 #c65d1a #fb923c #fdba74
+FRAMES, left to right, indexed from 0:
+0: sealed bulging idle.
+1: slight lean with attached knot swinging.
+2: exact idle geometry for hit.
+3: torn open same bag with inert recognizable mixed contents.
+CONTINUITY: one object, one scale, one camera and one top-left light. Preserve
+material regions and anchor; no per-frame auto-fit, detached marks or new anatomy.
+
+REFERENCE ROLES: Image1 is the approved first-pass style2 Plastic Bottle style reference. Image2 is the matching style2 teal Glass Bottle material reference. Image3 is the OLD accepted version of this subject, use for identity and normalized pose placement only; regenerate finer contours to match style2.
+OUTPUT LAYOUT: transparent wide canvas with precisely equally spaced cells in one row. Do not include the reference bottles. Every pose must fit completely into its own equal-width cell with common scale. Preserve idle and hit identical geometry. No captions.
+OWNER UPDATE OVERRIDES DESCRIPTION WHERE NECESSARY: Recognisable ordinary tied black household/council rubbish bag used in Australia/Sydney. Use darkest waste-neutral charcoal body with restrained violet-lit folds/accents, not a bright purple fantasy slime. Real crumpled polyethylene, gathered top, practical bag silhouette. No creature features.
+Local reference context (shape only): Australian/Sydney common discarded material identity, unbranded. No prevalence/disposal claims.

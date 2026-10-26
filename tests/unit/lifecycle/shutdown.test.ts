@@ -51,6 +51,7 @@ it("shutdown releases retained resources and claims idempotently without alterin
     minimapView: { enemies: [actor], shrines: [actor], hazards: [actor] }, enemyHash,
     eventQueue: queue(), loadEventQueue: queue(), claimedPickupIds: new Set(["pickup-1"]), damageNumbers, feedbackLimiter,
     runState,
+    clearEnemyShots: vi.fn(),
   };
   // Physics, timers and tweens belong to Phaser, not a second teardown here.
   for (const property of ["physics", "time", "tweens"]) Object.defineProperty(scene, property, { get() { throw new Error(`Unexpected engine teardown: ${property}`); } });

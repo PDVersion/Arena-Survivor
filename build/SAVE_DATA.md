@@ -178,3 +178,23 @@ never fold/grant/write. Reset clears the map. Existing persistence/portable-save
 replacement/unknown-ID units pass; browser fixtures demonstrate one terminal fold,
 read-only redraws, exact memory-adapter reload and restart. No portable save UI
 changed, so a new import/export browser campaign was not needed.
+
+
+## Additive attack-guide preference — 2026-10-23
+
+Schema2 settings now permit optional boolean showAttackRadius. Absent historical
+schema2 values hydrate false through createSettings; schema1 migration inherits
+that default. Present nonboolean values reject before hydration/storage replacement.
+New profiles/settings writes/export include the boolean; the current canonical
+codec round-trips it. Other unknown settings still reject and all prior required
+settings remain required. No schema bump, adapter or stable-ID change. Earlier
+strict binaries may reject exports containing the new setting; downgrade import
+compatibility is not promised. Quitting to menu does not call finished-run folding
+or grant finish-based unlocks; existing profile/settings remain authoritative.
+
+## Optional ranged content —2026-10-23
+
+`enemy.ranged_attacker` is an additive eco enemy ID with transient actor/shot state.
+No persistent field, schema2 adapter/migration, unlock, discovery or import/export
+change. Existing unknown-ID preservation remains; current full persistence units
+pass. Frozen knight content does not acquire the new optional role.

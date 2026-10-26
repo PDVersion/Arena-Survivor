@@ -1,0 +1,62 @@
+{
+  "source": "build/sprites/raw/icon_weapon_secondary.a1.png",
+  "sourceSha256": "8950f8253421f4de43cfa70d2c3a9e441758743112003a3ead04cd6425b6e803",
+  "output": "build/sprites/review/style2/icon_weapon_secondary.a1.png",
+  "outputSha256": "aed23b6d2f5fc4ad39ec16dd472fb1c24c2e8c39b2afc6a764d4f341031512c0",
+  "width": 64,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 4,
+      "top": 20,
+      "width": 58,
+      "height": 29,
+      "opaquePixels": 1036
+    }
+  ],
+  "recipe": {
+    "contentId": "icon.weapon.secondary",
+    "source": "build/sprites/raw/icon_weapon_secondary.a1.png",
+    "output": "build/sprites/review/style2/icon_weapon_secondary.a1.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 1,
+    "background": "transparent",
+    "sourceGrid": {
+      "left": 0,
+      "top": 0,
+      "cellWidth": 1254,
+      "cellHeight": 1254
+    },
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#164e63",
+        "#3893b5",
+        "#7dd3fc",
+        "#bae6fd"
+      ],
+      [
+        "#14532d",
+        "#22a34e",
+        "#4ade80",
+        "#8df0ac"
+      ],
+      [
+        "#111827",
+        "#374151",
+        "#6b7280",
+        "#d1d5db"
+      ],
+      [
+        "#713f12",
+        "#b7791f",
+        "#facc15",
+        "#fde68a"
+      ]
+    ],
+    "outline": "#164e63"
+  }
+}

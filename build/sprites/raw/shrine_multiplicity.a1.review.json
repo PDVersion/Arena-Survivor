@@ -1,0 +1,37 @@
+{
+  "contentId": "shrine.multiplicity",
+  "source": "build/sprites/raw/shrine_multiplicity.a1.png",
+  "output": "build/sprites/review/style2/shrine_multiplicity.a1.png",
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "frames": 4,
+  "background": "transparent",
+  "sourceGrid": {
+    "left": 0,
+    "top": 99,
+    "cellWidth": 543,
+    "cellHeight": 543
+  },
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#881337",
+      "#be3459",
+      "#fb7185",
+      "#fecdd3"
+    ],
+    [
+      "#374151",
+      "#6b7280",
+      "#d1d5db",
+      "#f8fafc"
+    ],
+    [
+      "#3f4b26",
+      "#68753b",
+      "#91a657",
+      "#c0d187"
+    ]
+  ],
+  "outline": "#3f4b26"
+}

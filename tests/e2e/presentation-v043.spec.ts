@@ -1,11 +1,7 @@
+import { clickSettingControl } from "./settings-controls";
 import { expect, test, type Page } from "@playwright/test";
 
 async function state(page: Page) { return page.evaluate(() => window.__ARENA_TEST__?.getSnapshot()); }
-async function clickRow(page: Page, row: number) {
-  const canvas = page.locator("canvas");
-  const box = (await canvas.boundingBox())!;
-  await canvas.click({ position: { x: 1230 * box.width / 1600, y: (232.5 + 55 * row) * box.height / 900 } });
-}
 async function settings(page: Page) {
   await page.keyboard.press("Escape", { delay: 80 });
   for (let i = 0; i < 4; i++) await page.keyboard.press("Tab", { delay: 80 });
@@ -20,15 +16,15 @@ test("Low switches reversibly while paused, resizes, respects map opacity and su
   expect(initial?.ui?.settings.presentationQuality).toBe("default");
   await settings(page);
   const paused = await state(page);
-  await clickRow(page, 5);
+  await clickSettingControl(page, "presentationQuality");
   await expect.poll(async () => (await state(page))?.ui?.settings.presentationQuality).toBe("low");
   await page.setViewportSize({ width: 900, height: 620 });
   // Phaser handles resize on a later frame; do not calculate clicks from its old canvas size.
   await expect.poll(async () => (await page.locator("canvas").boundingBox())?.width).toBe(900);
-  await clickRow(page, 1); // reduced motion
+  await clickSettingControl(page, "reducedMotion"); // reduced motion
   await expect.poll(async () => (await state(page))?.ui?.settings.reducedMotion).toBe(true);
-  await clickRow(page, 3); // .6 -> .85
-  await clickRow(page, 3); // OFF
+  await clickSettingControl(page, "minimapOpacity"); // .6 -> .85
+  await clickSettingControl(page, "minimapOpacity"); // OFF
   await expect.poll(async () => (await state(page))?.ui?.settings.minimapOpacity).toBe(0);
   const held = await state(page);
   expect(held?.run?.elapsedMs).toBe(paused?.run?.elapsedMs);
@@ -36,10 +32,10 @@ test("Low switches reversibly while paused, resizes, respects map opacity and su
   expect(held?.view?.displayWidth).toBe(900);
   expect(held?.player).toEqual(paused?.player);
   expect(held?.statistics).toEqual(paused?.statistics);
-  await clickRow(page, 5);
+  await clickSettingControl(page, "presentationQuality");
   await expect.poll(async () => (await state(page))?.ui?.settings.presentationQuality).toBe("default");
-  await clickRow(page, 5);
-  await clickRow(page, 3); // .35
+  await clickSettingControl(page, "presentationQuality");
+  await clickSettingControl(page, "minimapOpacity"); // .35
   await page.keyboard.press("Escape", { delay: 80 });
   await expect.poll(async () => (await state(page))?.ui?.minimapVisible).toBe(true);
   await page.screenshot({ path: testInfo.outputPath("low-map.png") });
@@ -59,7 +55,7 @@ test("title settings carry Low into the next run and level-up hides the map", as
   const canvas = page.locator("canvas");
   const box = (await canvas.boundingBox())!;
   await canvas.click({ position: { x: box.width / 2, y: box.height * 0.775 } });
-  await clickRow(page, 5);
+  await clickSettingControl(page, "presentationQuality");
   await page.keyboard.press("Escape", { delay: 80 });
   await page.keyboard.press("Enter", { delay: 80 });
   await expect.poll(async () => (await state(page))?.ui?.settings.presentationQuality).toBe("low");
@@ -79,7 +75,7 @@ test("dense map keeps the same world and live population with readable Low marke
   const before = await state(page);
   await page.screenshot({ path: testInfo.outputPath("dense-default.png") });
   await settings(page);
-  await clickRow(page, 5);
+  await clickSettingControl(page, "presentationQuality");
   await expect.poll(async () => (await state(page))?.ui?.settings.presentationQuality).toBe("low");
   await page.keyboard.press("Escape", { delay: 80 });
   await expect.poll(async () => (await state(page))?.ui?.minimapVisible).toBe(true);

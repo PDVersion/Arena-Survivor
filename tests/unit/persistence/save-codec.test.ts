@@ -23,7 +23,7 @@ describe("portable save codec", () => {
   it("round trips every persistent field without mutating the original", async () => {
     const profile: ProfileState = { ...initial(), activeThemeId: "future_theme", selectedCharacterId: "character.future",
       unlockedCharacterIds: ["character.starter", "character.future"], unlockedWeaponIds: ["weapon.starter", "weapon.secondary"], unlockedUpgradeIds: ["upgrade.bloodlust"],
-      settings: { difficulty: "experienced", presentationQuality: "low", detailedUpgradeCards: false, reducedMotion: true, muted: true, minimapOpacity: 0.85 },
+      settings: { difficulty: "experienced", presentationQuality: "low", detailedUpgradeCards: false, showAttackRadius: true, reducedMotion: true, muted: true, minimapOpacity: 0.85 },
       completedRuns: 2, deaths: 3, bestDurationMs: 300000.125, createdAt: "2026-10-20T00:00:00.000Z", updatedAt: "2026-10-20T03:00:00.000Z",
       statistics: { runsPlayed: 5, totalKills: 123, totalDamage: 456.875, bestLevel: 12, bestKills: 99, bestDamage: 234.5, upgrades: { "upgrade.damage": { total: 9, bestInRun: 4 } } },
     };
@@ -31,6 +31,19 @@ describe("portable save codec", () => {
     expect(decoded).toEqual({ profile, warnings: [], sourceSchemaVersion: 2 });
     expect(profile).toEqual(before); expect(Object.isFrozen(decoded.profile.statistics)).toBe(true);
     expect(code.split("\n")).toHaveLength(3); expect(code.split("\n")[2]).toMatch(/^[a-f0-9]{64}$/);
+  });
+  it("imports pre-guide schema2 settings with the radius guide OFF", async () => {
+    const old = JSON.parse(JSON.stringify(initial()));
+    delete old.settings.showAttackRadius;
+    const decoded = await decodeProfile(pack(old));
+    expect(decoded.profile.schemaVersion).toBe(2);
+    expect(decoded.profile.settings.showAttackRadius).toBe(false);
+    const roundTrip = await decodeProfile(await encodeProfile(decoded.profile));
+    expect(roundTrip.profile).toEqual(decoded.profile);
+  });
+  it.each([null, 1, "false", {}, []])("rejects invalid radius guide setting %j", async (value) => {
+    const profile = initial();
+    await expect(decodeProfile(pack({ ...profile, settings: { ...profile.settings, showAttackRadius: value } }))).rejects.toThrow();
   });
   it("canonicalizes nested object keys, preserving all array order", async () => {
     const profile = { ...initial(), unlockedWeaponIds: ["weapon.future", "weapon.starter"] };

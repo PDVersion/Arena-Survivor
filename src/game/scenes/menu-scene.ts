@@ -232,6 +232,7 @@ export class MenuScene extends Phaser.Scene {
         bestLevel: session.bestLevel,
         overlayOpen: Boolean(this.overlay?.isOpen),
         overlayTab: this.overlay?.activeTab ?? null,
+        settingsControls: this.overlay?.settingsControlPoints,
         actions: ["start", "info", "settings"],
         difficulty: getSessionSettings().difficulty,
       },

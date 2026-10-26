@@ -1,3 +1,4 @@
+import { rangedSpriteRecipe } from "./ranged-sprite-recipe";
 /**
  * Inspect, verify, and build the sprite roster.
  *
@@ -34,6 +35,7 @@ interface Options {
 interface ProjectSprite extends SpriteBuildDefinition {
   readonly theme: string;
   readonly textureKey: string;
+  readonly standalone?: boolean;
 }
 
 const atlasTargets = {
@@ -44,6 +46,7 @@ const atlasTargets = {
 } as const;
 
 const projectSprites: readonly ProjectSprite[] = [
+  { ...rangedSpriteRecipe, theme: "eco-guardian", textureKey: "eco_guardian.enemy.ranged_attacker", standalone: true },
   {
     theme: "eco-guardian",
     textureKey: "eco_guardian.enemy.swarm_basic",
@@ -209,7 +212,7 @@ async function build(entries: readonly ThemeRegistryEntry[]): Promise<void> {
   for (const theme of new Set(sprites.map((sprite) => sprite.theme))) {
     const target = atlasTargets[theme as keyof typeof atlasTargets];
     if (!target) continue;
-    const themeSprites = sprites.filter((sprite) => sprite.theme === theme);
+    const themeSprites = sprites.filter((sprite) => sprite.theme === theme && !sprite.standalone);
     await buildSpriteAtlas(themeSprites, target.image, target.json);
   }
   process.stdout.write(`build: wrote ${sprites.length} sheet(s)\n`);
