@@ -164,7 +164,7 @@ export const ecoSpriteRecipes = [
   },
   {
     "contentId": "character.starter",
-    "source": "build/sprites/raw/character_starter.a3.png",
+    "source": "build/sprites/raw/character_starter.a4.png",
     "output": "public/sprites/eco-guardian/character_starter.png",
     "frameWidth": 96,
     "frameHeight": 96,
@@ -172,10 +172,11 @@ export const ecoSpriteRecipes = [
     "background": "transparent",
     "sourceGrid": {
       "left": 0,
-      "top": 238,
-      "cellWidth": 271,
-      "cellHeight": 309,
-      "fit": "contain"
+      "top": 232,
+      "cellWidth": 272,
+      "cellHeight": 288,
+      "fit": "contain",
+      "allowTransparentPadding": true
     },
     "outlineWidth": 2,
     "palette": [

@@ -6350,3 +6350,13 @@ is recorded without performance/latency claims. Full-app300-actor/stress/soak/
 current-head CI deferred; previously waived external checks remain unverified.
 No push/PR/merge/deployment/new gameplay/tuning/save changes. Owner playtest and
 selected corrections/consolidated acceptance remain; overallV0.4 stays open.
+
+## Player gait correction a4 —2026-10-26
+
+Owner requests review/regeneration after full switch. Separate sprite claime0eccf2
+precedes imagegen. Native8×96px sheet now has distinct passing steps and runtime
+0→1→2→3; gear/roles/display/body/stride preserved. Raw a4, prompt/reference hashes,
+fixed-grid recipe and check evidence preserved; selected inventory/atlas updated.
+39sprite units/27sprite checks/types/lint/build and3serial browser cases pass.
+REC-130 records integer-grid/footprint findings and remaining playtest limits.
+Next claimed B: gust/menu/card presentation and separate research-session prompt.

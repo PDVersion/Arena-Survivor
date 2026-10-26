@@ -58,15 +58,15 @@
   {
     "id": "character.starter",
     "name": "Environment Protector",
-    "attempt": 3,
+    "attempt": 4,
     "frameWidth": 96,
     "frameHeight": 96,
     "frames": 8,
-    "native": "character_starter.a3.png",
-    "raw": "../../raw/character_starter.a3.png",
-    "prompt": "../../raw/character_starter.a3.prompt.txt",
-    "metadata": "../../raw/character_starter.a3.metadata.json",
-    "checks": "character_starter.a3.checks.json",
+    "native": "character_starter.a4.png",
+    "raw": "../../raw/character_starter.a4.png",
+    "prompt": "../../raw/character_starter.a4.prompt.txt",
+    "metadata": "../../raw/character_starter.a4.metadata.json",
+    "checks": "character_starter.a4.checks.json",
     "status": "live; playtest pending"
   },
   {

@@ -54,7 +54,7 @@ for actual generated attempts are preserved beside their raw sources.
 | `enemy.fast_fragile` | Microplastics | 48×48 | 4 | a4 | Codex 2026-10-23 | live; playtest pending |
 | `enemy.slow_durable` | Glass Bottle | 96×96 | 4 | a4 | Codex root 2026-10-23 | live; playtest pending |
 | `enemy.death_spawner` | Bagged Waste | 96×96 | 4 | a3 | Codex actors 2026-10-23 | live; playtest pending |
-| `character.starter` | Environment Protector | 96×96 | 8 | a3 | Codex actors 2026-10-23 | live; playtest pending |
+| `character.starter` | Environment Protector | 96×96 | 8 | a4 | Codex actors 2026-10-23 | live; playtest pending |
 | `enemy.stationary_fragment` | Glass Shards | 48×48 | 4 | a1 | Codex actors 2026-10-23 | live; playtest pending |
 | `enemy.cluster_fodder` | Cigarette Butts | 48×48 | 4 | a1 | Codex actors 2026-10-23 | live; playtest pending |
 | `enemy.gust_drifter` | Packets / Wrappers | 64×64 | 4 | a1 | Codex actors 2026-10-23 | live; playtest pending |
@@ -172,4 +172,4 @@ Codex claims `character.starter` a4. Owner observes colour flicker with nearly
 identical feet. Regenerate four distinct leg poses; retain96px/eight cells with
 idle4/hit5/reserved6/death7, equipment identity and world dimensions. Change the
 walk cycle from0→1→2→1 to0→1→2→3 so both feet take a step. Preserve a3 and prompts;
-no pixel painting/per-pose fitting. Status generating, art candidate review required.
+no pixel painting/per-pose fitting. Status live after scoped gate; owner continuous-play review remains. New passing poses1/3 visibly lift opposite boots; runtime includes all four steps.

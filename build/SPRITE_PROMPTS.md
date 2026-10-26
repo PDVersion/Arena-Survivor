@@ -178,8 +178,8 @@ Orange waste / tool trim: #7c2d12 #c65d1a #fb923c #fdba74
 FRAMES, left to right, indexed from 0:
 0: walk contact facing right.
 1: walk down facing right.
-2: walk pass facing right, compatible with 0→1→2→1 loop.
-3: retained fourth walk pose facing right.
+2: walk pass facing right, compatible with 0→1→2→3 loop.
+3: second passing step facing right, opposite knee/boot lifted from frame 1.
 4: standing idle facing right.
 5: hit recoil authored LEFT as existing stateFacing.hit requires.
 6: retained unused reserved pose.

@@ -61,3 +61,22 @@ test("the player holds a walk pose with the authored right facing and mirrors le
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().player?.spriteFrame))
     .toBe(4);
 });
+
+test("regenerated player walks through four distinct step frames", async ({ page }, info) => {
+  await page.goto("/?noContact=1&noXp=1&noHazards=1");
+  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
+  await page.keyboard.down("ArrowRight");
+  const frames = await page.evaluate(async () => {
+    const seen = new Set<number>();
+    const deadline = performance.now() + 1500;
+    while (performance.now() < deadline && seen.size < 4) {
+      const frame = window.__ARENA_TEST__?.getSnapshot().player?.spriteFrame;
+      if (typeof frame === "number" && frame < 4) seen.add(frame);
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    }
+    return [...seen].sort();
+  });
+  await page.keyboard.up("ArrowRight");
+  expect(frames).toEqual([0,1,2,3]);
+  await page.screenshot({ path: info.outputPath("player-gait-live.png") });
+});

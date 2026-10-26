@@ -63,6 +63,6 @@ units, types/lint/build; necessary serial gait/gust/menu-scroll/card browser cas
 Default/Low/reduced-motion and actual narrow/resized canvas. Preserve raw a3.
 Full app/stress/soak/device checks stay deferred/waived/unverified.
 
-- [ ] A: claim/regenerate/review/verify one new player sheet; commit separately.
+- [x] A: a4 regenerated/reviewed/live;39sprite units/27checks/types/lint/build and3serial browser cases pass. See REC-130.
 - [ ] B: implement requested presentation/UI corrections and research handoff;
   verify and record findings in the same phase commit.

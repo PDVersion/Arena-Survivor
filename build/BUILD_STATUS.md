@@ -12,6 +12,13 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## Player gait correction a4 —2026-10-26
+
+Regenerated player has two distinct passing steps; runtime now plays0→1→2→3.
+Same8frames/96px/display42/body18/stride20.39sprite units/27sprite checks,
+types/lint/build and3serial browser cases pass. Raw a3/a4 history preserved.
+Gust/menu/card and research prompt corrections remain actively claimed next.
+
 ## Full eco style2 live switch —2026-10-26
 
 Owner selects all new sprites and removal of old sprites. All27 subjects now live:

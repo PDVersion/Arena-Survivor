@@ -4327,3 +4327,26 @@ states/body contracts. Captures inspected; owned servers/browsers cleaned up.
 [Report/playtest handoff](build/sprites/STYLE2_INTEGRATION_REPORT.md) records limits.
 Full-app300-actor/stress/soak/current-head CI deferred to consolidated delivery/
 selection. External checks remain waived/unverified; no release/publication claim.
+
+### REC-130 — Distinct foot silhouettes need both passing poses in the runtime loop
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: eco player sprite presentation
+- Blocks: None
+
+Owner observes colour flicker without readable steps. a3 walk cells have nearly
+identical legs and the authored fourth pose was skipped by0→1→2→1. Regenerate one
+8cell96px sheet as a4, preserve identity/gear/idle/hit/death roles and use0→1→2→3.
+New poses1/3 show different raised boots, while0/2 keep wide alternating contact.
+Native standing height84–86px versus prior85–86px; body18/display42/stride20 and
+all simulation values unchanged. Measure hood anchors in native frames. One fixed
+272×288source-cell transform with transparent right padding; no per-pose fitting
+or painting. a3 and all exact prompt/raw/reference hashes preserved in sidecars.
+
+39sprite units,27rebuild/checks, types/lint/build and3scoped serial Chromium cases
+pass; live run observes all4frames and right/left mirror. Native strip inspected.
+Long-frame pose-skipping guard remains. First attempted fractional grid rejected
+by integer contract, corrected to common integer grid; no pipeline relaxation.
+A nullable telemetry typing error corrected. Owner continuous-play review remains;
+no broad stress/device/CI pass. B gust/menu/card corrections are next claimed work.
