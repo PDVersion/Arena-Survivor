@@ -1,0 +1,54 @@
+{
+  "generator": "built-in image_gen",
+  "attempt": 1,
+  "prompt": "pickup_magnet.a1.prompt.txt",
+  "promptSha256": "a261f34d9e9494ce71b6367a728c85da3db1bc1102b20115332fc9b7e7f03b0d",
+  "rawSha256": "a09716a49716eda2c1805f3533a7da6352c140e72e0c75a53d9f1ead69338b46",
+  "normalizedSha256": "74608b665d59a4fdd4e8de1ea42c4032fb44bd674ccc148158f3cb43323ec57f",
+  "review": "Accepted after normalized visual inspection: readable silhouette and material, transparent margins, deterministic component cleanup and palette snapping only.",
+  "checks": [],
+  "recipe": {
+    "contentId": "pickup.magnet",
+    "source": "build/sprites/raw/pickup_magnet.a1.png",
+    "output": "build/sprites/review/style2/pickup_magnet.a1.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 4,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}

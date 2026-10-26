@@ -1,0 +1,87 @@
+{
+  "source": "build/sprites/raw/pickup_magnet.a1.png",
+  "sourceSha256": "a09716a49716eda2c1805f3533a7da6352c140e72e0c75a53d9f1ead69338b46",
+  "output": "build/sprites/review/style2/pickup_magnet.a1.png",
+  "outputSha256": "74608b665d59a4fdd4e8de1ea42c4032fb44bd674ccc148158f3cb43323ec57f",
+  "width": 128,
+  "height": 32,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 3,
+      "top": 2,
+      "width": 27,
+      "height": 28,
+      "opaquePixels": 469
+    },
+    {
+      "frame": 1,
+      "left": 3,
+      "top": 3,
+      "width": 26,
+      "height": 25,
+      "opaquePixels": 467
+    },
+    {
+      "frame": 2,
+      "left": 3,
+      "top": 3,
+      "width": 27,
+      "height": 27,
+      "opaquePixels": 462
+    },
+    {
+      "frame": 3,
+      "left": 2,
+      "top": 3,
+      "width": 27,
+      "height": 26,
+      "opaquePixels": 435
+    }
+  ],
+  "recipe": {
+    "contentId": "pickup.magnet",
+    "source": "build/sprites/raw/pickup_magnet.a1.png",
+    "output": "build/sprites/review/style2/pickup_magnet.a1.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 4,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}
