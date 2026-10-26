@@ -1,0 +1,54 @@
+{
+  "generator": "built-in image_gen",
+  "attempt": 1,
+  "prompt": "weapon_cleaning_bin.a1.prompt.txt",
+  "promptSha256": "1767273c840d8c6b5356b120ebf775191264ea01659621317a6aac3748dfdc5b",
+  "rawSha256": "cf4406d576b46a172f9354a7139e31d706f1cc86dbe90d8e1c789eef99361c50",
+  "normalizedSha256": "332bdf73618832478e2da9190122a4216c2bb01c1bd2dcee153f7d78c3bf09fc",
+  "review": "Accepted after normalized visual inspection: readable silhouette and material, transparent margins, deterministic component cleanup and palette snapping only.",
+  "checks": [],
+  "recipe": {
+    "contentId": "weapon.cleaning_bin",
+    "source": "build/sprites/raw/weapon_cleaning_bin.a1.png",
+    "output": "build/sprites/review/style2/weapon_cleaning_bin.a1.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 3,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}
