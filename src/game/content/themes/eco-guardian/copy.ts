@@ -98,7 +98,7 @@ export const copy = {
   levelUpTitle: "Requisition new equipment",
   vocabulary: {
     health: "Health",
-    experience: "Impact",
+    experience: "Money",
     level: "Level",
     time: "Time",
     kills: "Cleared",
@@ -160,14 +160,14 @@ export const copy = {
     armour: "Armour",
     regeneration: "Recovery",
     luck: "Fortune",
-    xpMultiplier: "Impact bonus",
+    xpMultiplier: "Money bonus",
   },
   world: {
     chaos: "Pollution",
     enemySpawn: "Waste arriving",
     enemyHealth: "Waste durability",
     enemyDamage: "Waste harm",
-    xpGain: "Impact gain",
+    xpGain: "Money gain",
     eliteChance: "Illegal dumping",
     threat: "Threat level",
   },
@@ -195,6 +195,9 @@ export const copy = {
     unique: "Unique",
   },
   content: {
+    [archetypeIds.pickup.magnet]: { name: "Money Magnet", description: "Draws all money already on the map toward you." },
+    [archetypeIds.pickup.food]: { name: "Drumstick", description: "Restores up to 20 health." },
+    [archetypeIds.pickup.impact]: { name: "Impact Point", description: "Saved between runs for the Impact Shop." },
     [archetypeIds.enemy.rangedAttacker]: {
       name: "Takeaway Cup",
       description: "Tips back, then flicks a coffee blob along the marked direction. Sidestep after it aims, then approach during recovery. Its attack is a game abstraction.",
@@ -267,7 +270,7 @@ export const copy = {
       description: "Broken glass stays where it falls and remains hazardous until it is cleared.",
     },
     [archetypeIds.pickup.experience]: {
-      name: "Impact Point",
+      name: "Recycling Money",
       description: "Credit for waste that will not reach the waterway.",
     },
     [archetypeIds.shrine.spawnSurge]: {
@@ -360,7 +363,7 @@ export const copy = {
     },
     [archetypeIds.upgrade.pickupRadius]: {
       name: "Collection Range",
-      description: "Draw impact from farther away.",
+      description: "Collect money from farther away.",
     },
     [archetypeIds.upgrade.piercingMomentum]: {
       name: "Sorting Momentum",

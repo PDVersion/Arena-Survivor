@@ -1,3 +1,4 @@
+import { economy } from "./economy";
 import { unlocks } from "./unlocks";
 import type { UpgradeDefinition } from "../../../core/archetypes/contracts";
 import { defineTheme } from "../../define-theme";
@@ -33,6 +34,7 @@ import { pace } from "./pace";
  */
 export const ecoGuardianTheme = defineTheme({
   id: "eco_guardian",
+  economy,
   schemaVersion: 1,
   unlocks,
   copy,

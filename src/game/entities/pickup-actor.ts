@@ -1,3 +1,4 @@
+import { moneyTier } from "../systems/economy/economy";
 import Phaser from "phaser";
 import type { PickupDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import type { EnemySpawnSource } from "./enemy-actor";
@@ -12,6 +13,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
   /** Mutable so two pickups can merge into one worth the sum. */
   private value: number;
   private collected = false;
+  magnetized = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -39,6 +41,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     // Built after `applyTier`, so it starts at whatever size this drop is
     // worth; later merges resize it through `setDiameter`.
     this.view = createSpriteView(this, tokens, definition.id, { diameter: this.radius * 2 });
+    this.applyMoneyArt();
   }
 
   get xpValue(): number {
@@ -70,15 +73,19 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     // Undefined on the constructor's own call, which is why the view is built
     // afterwards rather than before.
     this.view?.setDiameter(radius * 2);
+    this.applyMoneyArt();
     if (tier > 0) this.setStrokeStyle(2 + tier, 0xffffff, 0.55);
   }
 
+  private applyMoneyArt(): void {
+    if (this.definition.denominations) this.view?.setState((["idle", "move", "hit"] as const)[moneyTier(this.value, this.definition.denominations)]);
+  }
   get arcadeBody(): Phaser.Physics.Arcade.Body {
     return this.body as Phaser.Physics.Arcade.Body;
   }
 
   magnetToward(target: Phaser.Math.Vector2): void {
-    this.view?.setState("move");
+    if (!this.definition.denominations) this.view?.setState("move");
     const direction = target.clone().subtract(new Phaser.Math.Vector2(this.x, this.y));
     if (direction.lengthSq() === 0) return;
     direction.normalize().scale(this.definition.magnetSpeed);
@@ -86,14 +93,14 @@ export class PickupActor extends Phaser.GameObjects.Arc {
   }
 
   stop(): void {
-    if (!this.collected) this.view?.setState("idle");
+    if (!this.collected && !this.definition.denominations) this.view?.setState("idle");
     this.arcadeBody.setVelocity(0, 0);
   }
 
   claim(): number | null {
     if (this.collected || !this.active) return null;
     this.collected = true;
-    this.view?.setState("death");
+    if (!this.definition.denominations) this.view?.setState("death");
     return this.xpValue;
   }
 

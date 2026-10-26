@@ -1,3 +1,5 @@
+import { applyImpactBonuses, dropChance, sampleActiveClock, type ActiveClock } from "../systems/economy/economy";
+import { creditImpact } from "../systems/persistence/profile-service";
 import { EnemyShot } from "../entities/enemy-shot";
 import { shotHitFraction } from "../systems/enemies/ranged-attack";
 import { selectCapabilityProgress } from "../systems/mastery/run-review";
@@ -527,6 +529,7 @@ export class RunScene extends Phaser.Scene {
   private hitStop: HitStopState = createHitStopState();
   private damageNumbers = createDamageAggregator();
   private lastFrameMs = 16;
+  private activeClock?: ActiveClock;
   private deathSlowUntilMs = 0;
   private killChainDetuneCents = 0;
 
@@ -541,6 +544,7 @@ export class RunScene extends Phaser.Scene {
     this.runTheme = resolveDifficultyTheme(activeTheme, difficulty);
     this.resetTransientRuntime();
     this.runGeneration = ++runGenerationSequence;
+    this.activeClock = undefined;
     const keyboard = this.input.keyboard;
     if (!keyboard) throw new Error("Keyboard input is unavailable");
 
@@ -583,7 +587,7 @@ export class RunScene extends Phaser.Scene {
       weaponSlotCount: this.runTheme.weaponSlotCount,
       themeId: this.runTheme.id,
       characterId: selectedCharacter.id,
-      baseStats: selectedCharacter.baseStats,
+      baseStats: this.runTheme.economy ? applyImpactBonuses(selectedCharacter.baseStats, profile.economy, this.runTheme.economy.shop) : selectedCharacter.baseStats,
       durationMs: testRunDurationMs(),
       xpCurve: this.runTheme.tuning.progression.xpCurve,
     });
@@ -719,6 +723,8 @@ export class RunScene extends Phaser.Scene {
   update(time: number, delta: number): void {
     if (!this.player || !this.runState || !this.pauseKey) return;
     const updateCpuStartedAt = this.frameMeasurements ? performance.now() : undefined;
+    const clock = sampleActiveClock(this.activeClock, performance.now(), isRunActive(this.runState));
+    this.activeClock = clock.clock;
     const wallDelta = delta;
     const startedPlaying = isRunActive(this.runState);
     this.lastFrameMs = delta;
@@ -756,7 +762,7 @@ export class RunScene extends Phaser.Scene {
       testSkillEnabled("representativeLoad") &&
       testSkillEnabled("closeLoad") &&
       this.loadHarnessSpawned < this.loadHarnessRequested;
-    if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, delta);
+    if (!preparingRepresentativeLoad) this.runState = advanceRunState(this.runState, this.runTheme.economy ? clock.deltaMs : delta);
     if (this.runState.status === "time_up") this.showOvertimeChoice();
     if (this.runState.status === "complete") this.enterTerminalState();
     if (isRunActive(this.runState)) {
@@ -1407,7 +1413,7 @@ export class RunScene extends Phaser.Scene {
       if (distance <= this.player.definition.radius + pickup.definition.radius) {
         this.collectPickup(pickup);
         if (this.runState.status === "level_up") break;
-      } else if (distance <= this.runState.player.stats.pickupRadius) {
+      } else if ((pickup.magnetized || distance <= this.runState.player.stats.pickupRadius)) {
         pickup.magnetToward(target);
       } else {
         pickup.stop();
@@ -2415,6 +2421,7 @@ export class RunScene extends Phaser.Scene {
     // A big chain is worth a freeze, and the streak has an audible shape.
     if (chain >= 25 && chain % 25 === 0) this.requestImpactFreeze(60);
     this.killChainDetuneCents = killChainDetune(chain);
+    this.dropSpecialItems(enemy.x, enemy.y);
     const xpReward = enemy.definition.xpReward * enemy.rewardMultiplier;
     this.dropExperience(enemy.x, enemy.y, xpReward, enemy.spawnSource);
     if (enemy.spawnSource === archetypeIds.shrine.spawnSurge) {
@@ -2639,6 +2646,19 @@ export class RunScene extends Phaser.Scene {
     this.bloodlustAttackSpeedBonus = selected.attackSpeedBonus;
   }
 
+  private dropSpecialItems(x: number, y: number, multiplier = 1): void {
+    const economy = this.runTheme.economy;
+    if (!economy || this.pickups.size > PICKUP_CAP) return;
+    for (const kind of ["magnet", "food", "impact"] as const) {
+      if (Math.random() >= dropChance(economy.dropChances[kind] * multiplier, this.runState!.player.stats.luck, economy)) continue;
+      const definition = this.runTheme.pickups.find((entry) => entry.kind === kind)!;
+      this.pickupSequence++;
+      const pickup = new PickupActor(this, `special-${this.pickupSequence}`, x, y, definition, this.runTheme.tokens, economy.impactValue);
+      this.pickups.add(pickup); this.pickupGroup?.add(pickup);
+      pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
+    }
+  }
+
   private dropExperience(
     x: number,
     y: number,
@@ -2663,6 +2683,10 @@ export class RunScene extends Phaser.Scene {
     // Overflow may absorb this very actor synchronously. Own cleanup first.
     pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
     this.pickupsDropped += 1;
+    const mergeDistance = this.runTheme.economy?.mergeDistance;
+    const nearby = mergeDistance && [...this.pickups].find((other) => other !== pickup && !other.isClaimed &&
+      (!other.definition.kind || other.definition.kind === "money") && Math.hypot(other.x - x, other.y - y) <= mergeDistance);
+    if (nearby) { nearby.absorb(pickup); pickup.destroy(); this.pickupsMerged += 1; }
     this.enforcePickupCap();
   }
 
@@ -2681,7 +2705,7 @@ export class RunScene extends Phaser.Scene {
       if (pickup.isClaimed) pickup.destroy();
       if (this.pickups.size <= PICKUP_CAP) return;
     }
-    const live = [...this.pickups].filter((pickup) => pickup.active);
+    const live = [...this.pickups].filter((pickup) => pickup.active && (!pickup.definition.kind || pickup.definition.kind === "money"));
     let best: readonly [PickupActor, PickupActor] | undefined;
     let bestDistance = Number.POSITIVE_INFINITY;
 
@@ -2710,6 +2734,16 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState) return;
     const value = pickup.claim();
     if (value === null) return;
+    if (pickup.definition.kind && pickup.definition.kind !== "money") {
+      pickup.playCollectCue();
+      if (pickup.definition.kind === "magnet") for (const money of this.pickups) {
+        if (!money.isClaimed && (!money.definition.kind || money.definition.kind === "money")) money.magnetized = true;
+      }
+      if (pickup.definition.kind === "food") this.runState = { ...this.runState, player: { ...this.runState.player,
+        health: Math.min(this.runState.player.stats.maxHealth, this.runState.player.health + (this.runTheme.economy?.foodHealth ?? 0)) } };
+      if (pickup.definition.kind === "impact") creditImpact(Math.floor(value));
+      return;
+    }
     const claim = claimExperiencePickup(this.claimedPickupIds, pickup.pickupId, value);
     if (!claim.claimed) return;
     this.claimedPickupIds = claim.claimedPickupIds;

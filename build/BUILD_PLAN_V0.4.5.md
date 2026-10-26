@@ -51,7 +51,7 @@ load check; no repeated full-app/stress/soak/device campaigns. Existing external
 waiver remains unverified. No push/merge/deploy. Sprite per-subject source claims
 and evidence retained; current request selects all listed art/integration.
 
-- [ ] Phase1 economy/save/clock.
+- [x] Phase1 economy/save/clock. 729 unit tests, typecheck/lint/build and serial browser boot pass. Shop UI and targeted mixed-pickup acceptance remain phase3.
 - [ ] Phase2 tools/fragmentation/director/rat/crit.
 - [ ] Phase3 generated art/testing-area/trees/shop/consolidated acceptance.
 
@@ -61,3 +61,7 @@ Use HoloCure EXP Magnet/merged drops/food/shop, Vampire Survivors area/orbit/lan
 weapons as comparative patterns, not copied tuning. Record secondary wiki evidence
 as such. NSW Return and Earn official eligible-container refund is inspiration,
 not an assertion that rat/wrapper/butt cleanup earns a real-world refund.
+
+Independent source-only art generation is permitted after its manifest claim while
+software phases run: it does not bind assets or start phase3runtime integration.
+This avoids blocking the mechanical work on image-generation latency.

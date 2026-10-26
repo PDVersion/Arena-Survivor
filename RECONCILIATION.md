@@ -4387,3 +4387,7 @@ capped/hybrid progression in another session. No new progression, cap, balance,
 rarity weights, save schema/IDs, knight content or chat dispatch is selected here.
 Full-app300-actor/stress/soak/current-headCI and waived external device evidence
 remain unverified; no publication or release acceptance follows.
+
+## REC-133 — V0.4.5 economy, save and active clock
+
+Owner-selected money retains historical XP/stat IDs; denominations are presentation over exact bounded aggregate values. Special pickups never merge into money. Fortune scales rare drops; food heals20; Impact saves immediately, independently of run money. Schema3 accepts/migrates1/2 with empty shop balance. Shop purchases clamp levels and cannot overspend; bonuses apply on new runs. Active monotonic wall time replaces eco simulation-time timer (old pace0.5 was the source of slow timer); pause/focus transitions exclude inactive gaps. Frozen pack retains simulation clock. Phase1:729 units, typecheck/lint/build, single serial boot pass; mixed pickups/shop interaction reserved for phase3.

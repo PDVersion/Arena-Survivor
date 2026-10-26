@@ -22,6 +22,7 @@ export const archetypeIds = {
   },
   pickup: {
     experience: "pickup.experience",
+    magnet: "pickup.magnet", food: "pickup.food", impact: "pickup.impact",
   },
   shrine: {
     spawnSurge: "shrine.spawn_surge",
@@ -71,6 +72,9 @@ export const archetypeIds = {
     equipSecondary: "upgrade.equip_secondary",
     secondaryRange: "upgrade.secondary_range",
     evolveSecondary: "upgrade.evolve_secondary",
+    auraDamage: "upgrade.tool.aura_damage", auraTick: "upgrade.tool.aura_tick", auraSlow: "upgrade.tool.aura_slow",
+    binEquip: "upgrade.tool.bin_equip", binDamage: "upgrade.tool.bin_damage", binCount: "upgrade.tool.bin_count", binRadius: "upgrade.tool.bin_radius", binDot: "upgrade.tool.bin_dot",
+    rakeEquip: "upgrade.tool.rake_equip", rakeDamage: "upgrade.tool.rake_damage", rakeCount: "upgrade.tool.rake_count", rakeRows: "upgrade.tool.rake_rows", rakeSpeed: "upgrade.tool.rake_speed",
     weaponRange: "upgrade.weapon_range",
     weaponCollectionSweep: "upgrade.weapon_collection_sweep",
   },
@@ -96,7 +100,7 @@ export type ContentId =
   | Values<typeof archetypeIds.shrine>
   | Values<typeof archetypeIds.skill>
   | Values<typeof archetypeIds.hazard>
-  | Values<typeof archetypeIds.upgrade>;
+  | UpgradeId;
 
 export const v01ContentIds = [
   ...Object.values(archetypeIds.character),
@@ -109,5 +113,7 @@ export const v01ContentIds = [
 
 // Historical required-copy inventory excludes selected optional capabilities.
 export const v02ContentIds = Object.values(archetypeIds).flatMap((category) =>
-  Object.values(category).filter((id) => id !== archetypeIds.enemy.rangedAttacker),
+  Object.values(category).filter((id) => !id.startsWith("upgrade.tool.") && ![archetypeIds.enemy.rangedAttacker, archetypeIds.pickup.magnet, archetypeIds.pickup.food, archetypeIds.pickup.impact].includes(id as never)),
 ) as ContentId[];
+
+export type OptionalContentId = "enemy.ranged_attacker" | "enemy.scavenger" | "pickup.magnet" | "pickup.food" | "pickup.impact" | "weapon.cleaning_bin" | "weapon.orbiting_rake" | Extract<UpgradeId, `upgrade.tool.${string}`>;

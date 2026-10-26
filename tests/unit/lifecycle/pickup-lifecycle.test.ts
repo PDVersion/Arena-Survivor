@@ -54,7 +54,7 @@ function fixture(theme: (typeof themeRegistry)[number]["theme"], levelCap?: numb
   const bodies = new Set<PickupActor>(), group = new Set<PickupActor>();
   const cues: (() => void)[] = [];
   Object.assign(scene, {
-    runTheme: theme, pickupDefinition: theme.pickups[0], pickups: new Set(),
+    runTheme: { ...theme, economy: theme.economy && { ...theme.economy, mergeDistance: 0 } }, pickupDefinition: theme.pickups[0], pickups: new Set(),
     pickupGroup: { add: (actor: PickupActor) => { group.add(actor); actor.once("destroy", () => group.delete(actor)); } },
     pickupSequence: 0, pickupsDropped: 0, pickupsMerged: 0, pickupsCollected: 0, pickupCues: 0,
     claimedPickupIds: new Set(), xpEarnedTotal: 0, ambientXpCollected: 0, shrineXpCollected: 0,

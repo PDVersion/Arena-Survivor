@@ -1,3 +1,5 @@
+import type { OptionalContentId } from "./ids";
+import type { EconomyDefinition, DropKind } from "../../systems/economy/economy";
 import type {
   CharacterId,
   ContentId,
@@ -184,7 +186,7 @@ export interface ThemeCopy {
   readonly codex: ThemeCodexCopy;
   /** Player-facing name for each roll tier, e.g. "Legendary". */
   readonly tiers: Readonly<Record<UpgradeTier, string>>;
-  readonly content: Readonly<Record<Exclude<ContentId, "enemy.ranged_attacker">, ContentCopy> & Partial<Record<"enemy.ranged_attacker", ContentCopy>>>;
+  readonly content: Readonly<Record<Exclude<ContentId, OptionalContentId>, ContentCopy> & Partial<Record<OptionalContentId, ContentCopy>>>;
 }
 
 /**
@@ -551,6 +553,8 @@ export interface EnemyDefinition {
 }
 
 export interface PickupDefinition {
+  readonly kind?: DropKind;
+  readonly denominations?: readonly [number, number];
   readonly id: PickupId;
   readonly radius: number;
   readonly magnetSpeed: number;
@@ -610,6 +614,7 @@ export interface ShrineDefinition {
 }
 
 export interface ThemeManifest {
+  readonly economy?: EconomyDefinition;
   readonly unlocks?: readonly { readonly kind: "weapon" | "upgrade"; readonly id: WeaponId | UpgradeId; readonly metric: "runsPlayed" | "totalKills"; readonly required: number }[];
   readonly id: string;
   readonly schemaVersion: 1;

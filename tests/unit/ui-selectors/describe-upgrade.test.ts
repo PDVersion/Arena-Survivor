@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
-import { statKeys, worldKeys, type UpgradeDefinition } from "../../../src/game/core/archetypes/contracts";
+import { statKeys, worldKeys, type UpgradeDefinition, type ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import {
   describeUpgrade,
   selectPlayerStats,
@@ -223,7 +223,7 @@ describe("upgrade descriptions", () => {
     };
     for (const entry of pack.upgrades) {
       const description = describeUpgrade(packState, entry, pack);
-      expect(description.name).toBe(pack.copy.content[entry.id]!.name);
+      expect(description.name).toBe((pack as ThemeManifest).copy.content[entry.id]!.name);
       expect(description.summary.length).toBeGreaterThan(0);
       expect(description.maxLevel).toBe(
         entry.maxLevel === null ? null : entry.track === "weapon" && !entry.effects.some((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve") ? entry.maxLevel + 1 : entry.maxLevel,
