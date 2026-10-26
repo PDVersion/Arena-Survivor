@@ -1,0 +1,54 @@
+{
+  "generator": "built-in image_gen",
+  "attempt": 1,
+  "prompt": "weapon_orbiting_rake.a1.prompt.txt",
+  "promptSha256": "fb0131f2a854b07fd360cda33b4cddb860525785156a4fc0bcc5df99b964c2e1",
+  "rawSha256": "54ce1d726624411dccc7d008e41bf533399fd25e9458994116e255a16cee19c1",
+  "normalizedSha256": "83e5c85f9936a87e170f6bccf6fee4a38c03b706aa951578c102a7a762238c02",
+  "review": "Accepted after normalized visual inspection: readable silhouette and material, transparent margins, deterministic component cleanup and palette snapping only.",
+  "checks": [],
+  "recipe": {
+    "contentId": "weapon.orbiting_rake",
+    "source": "build/sprites/raw/weapon_orbiting_rake.a1.png",
+    "output": "build/sprites/review/style2/weapon_orbiting_rake.a1.png",
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}
