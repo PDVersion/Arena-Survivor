@@ -19,6 +19,32 @@ control telemetry and fixture updates preserve real pointer/phase/ledger tests.
 [master](MASTER_BUILD_PLAN.md#pr29-ci-repair) holds completed ownership. Automatic
 matching-head CI remains pending; no sprite acceptance/integration is advanced.
 
+## Bulk live switch — claimed 2026-10-26 before code
+
+Owner selects all new eco sprites and deletion of old sprites. Codex claims a
+bounded integration phase on `codex/v0.4.4` from current clean main. This explicit
+bulk selection advances the individual-selection handoff: promote all 27 existing
+outputs together, with no generation or pixel repairs. Remove superseded style1
+production/accepted outputs through replacement, preserve raw attempts/prompts,
+historical reports and frozen knight files. Visual refinement stays owner playtest.
+
+Ownership: `scripts/sprites.ts`, new style2 recipe registry, eco `sprites.ts`,
+optional sprite presentation metadata/validation, atlas packing, SpriteView,
+pickup/shrine/hazard/grabber/cone actors, HUD tool icons, sprite browser fixture,
+relevant sprite units/scoped e2e and new integration case, accepted/public sprite
+outputs, manifest, this plan, BUILD_STATUS, sequence/handoff/master/reconciliation.
+No gameplay tuning, saved IDs/state, enemy logic or knight changes.
+
+Short checks: all configured sprite rebuild/format/hash/atlas bounds checks;
+unit suite, types/lint/build/production guard; one serial scoped eco campaign
+covering roster/facing, real tool phases, world states, fallback, Default/Low and
+reduced motion. Record texture/startup byte cost. Full-app stress/soak and external
+device checks deferred to consolidated CI/owner selection; never claim a pass.
+
+- [x] Claim scope and owner bulk selection before code.
+- [ ] Promote all 27 outputs, deliberate state bindings and remove old live art.
+- [ ] Pass short checks, inspect captures and document playthrough checklist.
+
 ## Current authority and ownership
 
 - [Style guide](SPRITE_STYLE_GUIDE.md): palette, shared prompt, continuity and

@@ -1,3 +1,11 @@
+## Bulk integration claim —2026-10-26
+
+Owner explicitly selects all new eco sprites and removal of old sprites. Codex
+claims the existing 27 outputs (no new generation) for production binding under
+[the bounded phase](../SPRITE_PLAN_V0.4.4.md#bulk-live-switch--claimed-2026-10-26-before-code).
+Raw prompts/sources and historical evidence stay preserved. Art refinements are
+reviewed during normal play; this selection is not a claim of perfect continuity.
+
 # Sprite manifest — accepted evidence and style 2 queue
 
 Knights and Magic is paused indefinitely until the owner explicitly reopens it.
