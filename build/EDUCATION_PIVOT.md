@@ -817,3 +817,15 @@ variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
 active run without counting a finished run or granting an unlock. Saved settings/
 progress remain. Generated sprite sheets remain in review and knight content
 stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
+## Owner-selected money and cleanup expansion —2026-10-27
+
+[V0.4.5](BUILD_PLAN_V0.4.5.md) selects money as run leveling, separate saved Impact
+and shop, rare magnet/food/Impact drops affected by Fortune, aura vacuum/bin/orbit
+rakes, detrimental material fragmentation, opening Cigarette Butts, late natural
+Microplastics, fleeing litter-carrying rat, real active-wall run clock, and an
+isolated testing area with interactive equipment trees and currency editors.
+Stable historical experience/statistic IDs retain their meaning as earned run
+progress; schema3 adds Impact/shop with explicit migration. Game rewards are
+fiction, not a claim that all waste qualifies for a real container refund.
+Knights and Magic remains paused; no new educational disposal claims.

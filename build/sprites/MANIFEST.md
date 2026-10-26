@@ -173,3 +173,12 @@ identical feet. Regenerate four distinct leg poses; retain96px/eight cells with
 idle4/hit5/reserved6/death7, equipment identity and world dimensions. Change the
 walk cycle from0→1→2→1 to0→1→2→3 so both feet take a step. Preserve a3 and prompts;
 no pixel painting/per-pose fitting. Status live after scoped gate; owner continuous-play review remains. New passing poses1/3 visibly lift opposite boots; runtime includes all four steps.
+
+## V0.4.5 selected art claim —2026-10-27
+
+Codex claims a1 for pickup.money (3denominations), pickup.magnet,
+pickup.food (drumstick), enemy.scavenger (rat), weapon.cleaning_bin,
+weapon.orbiting_rake. Built-in generation with preserved exact prompts/raw/recipe/
+hashes. Owner selects runtime integration. Existing pickup.experience ID remains
+money's stable historical ID; Impact icon is reused for separate meta currency.
+No knight art. Existing vacuum sheets remain parked history, not active cone art.
