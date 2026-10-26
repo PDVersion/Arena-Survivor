@@ -182,3 +182,5 @@ weapon.orbiting_rake. Built-in generation with preserved exact prompts/raw/recip
 hashes. Owner selects runtime integration. Existing pickup.experience ID remains
 money's stable historical ID; Impact icon is reused for separate meta currency.
 No knight art. Existing vacuum sheets remain parked history, not active cone art.
+
+V0.4.5 rat a1 review: generated four poses overlap the equal-cell boundaries; rejected for runtime packing. Claim a2 regeneration with explicit wide four-cell spacing. Source-only attempt, no pixel repairs.
