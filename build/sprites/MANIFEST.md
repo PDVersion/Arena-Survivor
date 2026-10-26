@@ -165,3 +165,11 @@ and public PNG SHA256 `74fbd0a70ae6042f2e86d4c1fb95bd464ab07989075cdb96914456103
 One fixed equal grid with virtual transparent margins; measured paper-base
 anchors. Small generated idle/hit contour differences and extended art/pacing
 review remain open. No prior catalog art promoted. Knights and Magic stays paused.
+
+## Player gait correction —claimed2026-10-26
+
+Codex claims `character.starter` a4. Owner observes colour flicker with nearly
+identical feet. Regenerate four distinct leg poses; retain96px/eight cells with
+idle4/hit5/reserved6/death7, equipment identity and world dimensions. Change the
+walk cycle from0→1→2→1 to0→1→2→3 so both feet take a step. Preserve a3 and prompts;
+no pixel painting/per-pose fitting. Status generating, art candidate review required.
