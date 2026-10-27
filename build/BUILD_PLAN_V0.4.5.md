@@ -94,3 +94,19 @@ consolidated regression reconciliation is explicitly deferred with full CI/stres
 soak/device checks under the resource budget. Do not claim them passed. This local
 implementation ends the claimed phases; owner tuning/art acceptance and any
 publication are separate. No push/merge/deploy or frozen-theme edits.
+
+## Owner correction phase4 — claimed2026-10-27
+
+Replace eco tool tracks with one seven-level path per weapon (acquisition is level1).
+Keep stable historical IDs; remove the active Cyclone alias/evolution. Orbiting
+Shovels reuse the old orbit weapon ID; Rake Sweep is a new straight travelling
+weapon aimed by movement/last facing. Shrink bin presentation only. Accelerating
+map-magnet pull uses theme-owned starting speed/acceleration/cap and active time.
+Own optional core progression/beam/pickup contracts, eco definitions/copy/sprites,
+shared resolvers/runtime/RunScene, testing tree/card previews, related checks/docs.
+Claim one new shovel sprite; reuse accepted rake for the outward sweep. No frozen
+pack changes, saved-ID removal, passive redesign, publishing or broad campaigns.
+Verification: deterministic progression/acceleration/beam geometry units, sprite
+checks, typecheck/lint/build, one scoped serial testing-area acceptance campaign.
+Historical obsolete cone/evolution browser fixtures remain deferred explicitly.
+- [ ] Phase4 software, art integration and scoped acceptance.

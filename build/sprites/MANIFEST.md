@@ -194,3 +194,11 @@ as `pickup.impact`; money retains historical `pickup.experience`.33recipes and
 33sprite checks pass. Live feel/art acceptance remains with the owner; no active
 source/integration claim remains after V0.4.5 verification. See
 [implementation/playtest report](../content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+###2026-10-27 phase4 — Orbiting Shovel a1 claimed
+
+Owner Codex, built-in imagegen. New horizontal steel shovel, head right and broad,
+short wooden handle left; native96x32, hard alpha/style2. Replaces orbiting rake
+presentation at stable weapon.orbiting_rake; accepted rake becomes Rake Sweep.
+Claim covers raw prompt/source, deterministic recipe/review, accepted source and
+atlas binding. Physics/world size remains theme-authored and independent of art.
