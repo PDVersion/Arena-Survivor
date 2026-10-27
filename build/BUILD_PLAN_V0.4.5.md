@@ -122,3 +122,24 @@ reuse manifest/inventory, plan/status/report/reconciliation. No frozen content, 
 Checks: types/lint/build, existing meaningful units, one focused serial real-HUD/
 rake presentation case. Broad browser/stress/CI/device checks remain deferred.
 - [x] Phase5 rake feel and equipped-tool HUD. 736 units/79 files, types/lint/build and focused serial HUD/rake browser check pass. No new bitmap art; broader checks remain deferred.
+
+## Owner correction phase6 — claimed2026-10-27
+
+Regenerate outward rake with shorter handle, broader readable teeth and contrasting
+material shading (existing shovel as proportion/style reference). Own one a2rake
+source/review/acceptance, recipe/atlas/binding/manifest; no shovel changes. Enemy
+material rules: no cigarette/can microplastics, keep glass shards; transfer natural
+arrival clusters to Microplastics. Wrappers chase while ignoring other rubbish
+and ground obstacles, retaining player contact damage and weapon hits. Bosses gain
+higher bounded death fragmentation and telegraphed summon cycles with theme-owned
+pools/counts/rewards, plus final-boss near-death mixed release. Attack summons use
+their own normal rewards and never deduct boss rewards. Compacted Waste excludes
+Bagged Waste/Glass Bottles; Colossus may summon all ordinary waste, never recursive
+bosses. Lower rare item rates while preserving food>magnet and Fortune scaling.
+Own optional core enemy/boss contracts, eco data/copy/tuning, summon resolver,
+separation/actor/RunScene integration, meaningful units/scoped serial browser,
+product authority/status/report/reconciliation. No frozen-theme, save-schema or
+passive-system changes. Verify types/lint/build, units/sprites, pacing CLI and one
+consolidated scoped art/wrapper/boss/fragment/drop browser check; broader checks
+remain deferred. Sprite claim and accepted source get separate commits.
+- [ ] Phase6 art, material/director/boss/drop corrections and acceptance.

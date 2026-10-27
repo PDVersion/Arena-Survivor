@@ -215,3 +215,10 @@ now identify all equipped tools in the HUD, with aspect ratio preserved. Vacuum
 weapon frame0 is rebound for identification; its cone attack remains parked.
 Rake Sweep reverses its runtime rotation about the same head anchor so the handle
 leads; orbiting shovel rotation and collision geometry stay unchanged.
+
+2026-10-27 phase6 — Rake Sweep a2 claimed by Codex before generation. Existing a1
+rake edited using built-in imagegen with shovel as readability reference. Shorten
+handle roughly30%, broaden rake head roughly25%; distinct steel teeth, dark gaps,
+clear material contrast. One connected horizontal head-right sprite,96x32native,
+transparent style2. Preserve raw/prompt/review/recipe/hashes; runtime remains
+handle-first and current geometry/speed stay independent of art.
