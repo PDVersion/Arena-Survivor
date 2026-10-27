@@ -159,7 +159,14 @@ export const masteryCopyKeys = ["review", "details", "tools", "choices", "nextEx
   "tryFirst", "tryEquip", "tryEvolve", "tryReady", "tryRisk", "tryRecovery", "tryCalm", "bossDefeated"] as const;
 export type MasteryCopy = Readonly<Record<(typeof masteryCopyKeys)[number], string>>;
 
+export interface EliteGuideCopy {
+  readonly tab: string; readonly title: string; readonly introduction: string;
+  readonly standardName: string; readonly standardDescription: string; readonly noMarker: string;
+  readonly health: string; readonly harm: string; readonly money: string; readonly size: string;
+  readonly split: string; readonly shield: string; readonly acceleration: string;
+}
 export interface ThemeCopy {
+  readonly eliteGuide?: EliteGuideCopy;
   readonly mastery: MasteryCopy;
   readonly saveManager: SaveManagerCopy;
   readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly changedElsewhere: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };

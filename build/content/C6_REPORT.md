@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # C6 — browser-local profile, unlocks and lifetime records /2026-10-20
 
 Verified local phase from5da2ed3 on codex/v0.4.3. No push/PR/merge/deploy/dispatch or matching-head CI claim. Remote39189877476 covers2806720 only. Exact source/compiled/image hashes and retained raw profile observations are in [C6_RESULTS.json](C6_RESULTS.json).

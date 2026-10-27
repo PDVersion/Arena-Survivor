@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../../../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 > Superseded live-binding status2026-10-26: all27 subjects now live by owner
 > selection. See [current integration/playtest report](../../STYLE2_INTEGRATION_REPORT.md).
 > File/generation audit below remains historical evidence.

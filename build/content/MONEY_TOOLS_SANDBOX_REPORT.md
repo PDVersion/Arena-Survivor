@@ -320,3 +320,16 @@ with the former triple-cigarette formation. The model omits boss summon combat,
 spatial coverage, fragments and survival; these are pacing estimates, not a
 balance acceptance claim. Next owner playthrough should check early leveling,
 boss density/fairness, moving-rake readability and rarer natural item drops.
+
+
+## Elite guide and documentation — phase7, 2026-10-27
+
+Field Guide → Elites is now an actual visible section at title and pause. It
+explains all four elite identities and reads combat modifier values from their
+live definitions. Earlier marker wording existed only in content data and was
+not previously displayed by the guide. This section closes that presentation gap.
+743units/81files, types/lint/build and scoped serial pause/title/small-viewport
+scroll acceptance pass; no combat/tuning/art/save change. Completed notes are in
+the [master log](../MASTER_BUILD_PLAN.md#elite-guide-doc-audit). Current proposals
+and acceptance gaps: [remaining work](../REMAINING_WORK.md). No new full-app/
+current-head CI/device/production-guard pass is claimed by this UI/doc correction.

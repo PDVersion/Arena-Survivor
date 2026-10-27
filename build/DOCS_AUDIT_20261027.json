@@ -1,0 +1,494 @@
+{
+  "date": "2026-10-27",
+  "originalBuildMarkdownCount": 64,
+  "currentBuildMarkdownCount": 68,
+  "documents": [
+    {
+      "path": "AUTONOMOUS_PROGRESS.md",
+      "disposition": "Current status / handoff",
+      "action": "Condensed to current checkpoint, honest verification limits and next decision; old repetition moved to logs.",
+      "beforeSha256": "103469649d11fa0fa687eb206cff83200cf0f92214764662240bcd8ed0d45ce8",
+      "afterSha256": "d223a2e8123881f04c974c09222d6aca6c9892197b1cf480c03f861f33aff77a"
+    },
+    {
+      "path": "build/AUTONOMOUS_DEVELOPMENT_PLAN.md",
+      "disposition": "Current unbuilt-proposal inventory",
+      "action": "Separates unbuilt additions, partial foundations, retired designs and verification gaps.",
+      "beforeSha256": "415fe23921615744f1bc7c1a5593ff869ab1287985e153c83ccd64d4bedc2552",
+      "afterSha256": "7d5b2c33d7525933d11060d62d33b96c508b8e82374abe8a2b2c262ffcfdf524"
+    },
+    {
+      "path": "build/BUILD_PLAN_V0.4.5.md",
+      "disposition": "Current status / handoff",
+      "action": "Condensed to current checkpoint, honest verification limits and next decision; old repetition moved to logs.",
+      "beforeSha256": "42c990ea71846247b2d3b5d0513e3961ec890ac1526bdb6044cc23e097a4309e",
+      "afterSha256": "24166bcc3b8d2b1b1d54a4e166da5f274c0e796b2df5e4c598de4a397af10b6d"
+    },
+    {
+      "path": "build/BUILD_PLAN_V0.4.md",
+      "disposition": "Current status / handoff",
+      "action": "Condensed to current checkpoint, honest verification limits and next decision; old repetition moved to logs.",
+      "beforeSha256": "a37201b568c1f7a1f4de985f4e9fd510f1b4b973cba716e59098cb3f526fa363",
+      "afterSha256": "a41c3997efae67f9ef8d87f3ea8b7be515f747fbd2a6dd67a1f8fcb1d964e3fb"
+    },
+    {
+      "path": "build/BUILD_STATUS.md",
+      "disposition": "Current status / handoff",
+      "action": "Condensed to current checkpoint, honest verification limits and next decision; old repetition moved to logs.",
+      "beforeSha256": "6d5d365b161e54bd21fb40feda3eaab801554e13ab1a6bb07a6d8fcf52330ec5",
+      "afterSha256": "01dee9e748079e97322db17dd5e4d5eef558f621723e0a70425eac13c6b04bf7"
+    },
+    {
+      "path": "build/ECO_CONTENT_MAP.md",
+      "disposition": "Current product / contract",
+      "action": "Reconciled current code versus exploratory design; original implementation/spec history preserved in logs.",
+      "beforeSha256": "1b590c5cb5b8158ba038269a078fae531ddb965b695b381dd99a2bcd9f8c05be",
+      "afterSha256": "0c8dae0fffd524ff77d0b359544ab246acc360238f1612f7f2015d3bd7f50b78"
+    },
+    {
+      "path": "build/EDUCATION_PIVOT.md",
+      "disposition": "Current product / contract",
+      "action": "Reconciled current code versus exploratory design; original implementation/spec history preserved in logs.",
+      "beforeSha256": "a0c4362d0084a70e9e87a5a3833a6017cc377f040794d4bdd1ac5cbecad755a0",
+      "afterSha256": "8d610951b18386df8b09e564c7fcb7965388609c39641a7b1811e3ee169b2ea3"
+    },
+    {
+      "path": "build/IDEAS.md",
+      "disposition": "Style / original prompt / idea reference",
+      "action": "Current-status notice; original source preserved. Not an automatic generation/content queue.",
+      "beforeSha256": "99f9ca9a21e06dfa0cbef3782fe60811f5b4df71a652e4fb079d2b7da1fe6acb",
+      "afterSha256": "a2e401ca8cdca1cbdbe56bd58e3a389ee91440282b07f328b45975b25067ccb7"
+    },
+    {
+      "path": "build/MASTER_BUILD_PLAN.md",
+      "disposition": "Completed implementation log",
+      "action": "Absorbed V0.4.5 claims/results and theme/education/save completed notes; preserves old history.",
+      "beforeSha256": "e3a458d8ed03c2d3662aee1a3c15be6062574cfa74b765b4b06602dad03d0135",
+      "afterSha256": "bfee13a1a54ed9881856522c9e9f0d736687ac6d0e1e5d360aa90d1383f10cac"
+    },
+    {
+      "path": "build/NEXT_READABLE_GAMEPLAY_HANDOFF.md",
+      "disposition": "Current status / handoff",
+      "action": "Condensed to current checkpoint, honest verification limits and next decision; old repetition moved to logs.",
+      "beforeSha256": "6ad4e3b80e6b8a399f41af35ffa89adc6f12c2fc131d77e2681546657c973a51",
+      "afterSha256": "d754613acb3e9cb5ac73e574ecce3abb7d99f2e3a93e18e6a5f436f8c7d2980a"
+    },
+    {
+      "path": "build/PLAN.md",
+      "disposition": "Current product / contract",
+      "action": "Reconciled current code versus exploratory design; original implementation/spec history preserved in logs.",
+      "beforeSha256": "d73808487f20c4657d35033c3566dff1de9b2f2834eebe51be1ad3a8891edd07",
+      "afterSha256": "11cbe23c09d26d947d1b20543126daee755a527b31cd044f929712c401fba313"
+    },
+    {
+      "path": "build/PROGRESSION_DESIGN_RESEARCH.md",
+      "disposition": "Local draft / preserved edits",
+      "action": "Read; preserved unstaged. Dated proposal, not active implementation approval.",
+      "beforeSha256": "926e4818b5b10b92cdc184896cc699a93b7e0e61a241b64a7076c2d66cd1703f",
+      "afterSha256": "926e4818b5b10b92cdc184896cc699a93b7e0e61a241b64a7076c2d66cd1703f"
+    },
+    {
+      "path": "build/REMAINING_WORK.md",
+      "disposition": "Current unbuilt-proposal inventory",
+      "action": "Separates unbuilt additions, partial foundations, retired designs and verification gaps.",
+      "beforeSha256": null,
+      "afterSha256": "d3d3ccc4e5d6b335d60a9ec9666bb89bfeb8dc58134ebc6234e801fce3527bb4"
+    },
+    {
+      "path": "build/SAVE_DATA.md",
+      "disposition": "Current product / contract",
+      "action": "Reconciled current code versus exploratory design; original implementation/spec history preserved in logs.",
+      "beforeSha256": "0a4bfab05775071e4e042ae93ba13217e1bee98ef726d9a4537b29a3486cc362",
+      "afterSha256": "27c2082c4b312e1e0034fa2c386082b7d30c465b6989ae75fa1594951fe2a45a"
+    },
+    {
+      "path": "build/SPRITE_PLAN_V0.4.4.md",
+      "disposition": "Current sprite acceptance",
+      "action": "No missing generation; current bindings/counts/owner acceptance and remaining gates.",
+      "beforeSha256": "bb779ca418dd5d72d9391b01049d62f6f8b69739a2cab7083c64e72b261d4cb4",
+      "afterSha256": "a1bb399d561978eb36eb2196fda648af3f3aaa6af2e0fc91faeafff408ca61e3"
+    },
+    {
+      "path": "build/SPRITE_PROMPTS.md",
+      "disposition": "Style / original prompt / idea reference",
+      "action": "Current-status notice; original source preserved. Not an automatic generation/content queue.",
+      "beforeSha256": "fce69b787331d5abbb85901077cbb48b620138e5cced1b4443e4a2512a467a7d",
+      "afterSha256": "dbcecff04d84b595b44482d3f7bfaa00141cf0ee50c42c6fe9ef9e1ef38bdc8d"
+    },
+    {
+      "path": "build/SPRITE_STYLE_GUIDE.md",
+      "disposition": "Style / original prompt / idea reference",
+      "action": "Current-status notice; original source preserved. Not an automatic generation/content queue.",
+      "beforeSha256": "87e5e641bd7f0ff8b6b2bc2b847168efe8a82a129dff10253c2f748eaabd1ab9",
+      "afterSha256": "2e64f34da8c91dd054595ad8a27f4860c24ed39d8dee935b77f3ce6c649b406f"
+    },
+    {
+      "path": "build/THEME_ARCHETYPES.md",
+      "disposition": "Current product / contract",
+      "action": "Reconciled current code versus exploratory design; original implementation/spec history preserved in logs.",
+      "beforeSha256": "6ad19a81c5252d4e952d34e27e34859764355c944f84f5006b0a100f02aceaac",
+      "afterSha256": "66fb54d4eafbd955573c73cef8d94e128caa04ebd9867608ea43fe6c7860183b"
+    },
+    {
+      "path": "build/balance/Q4_OPENING_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "83afd9242bd22db45b7c760034a1902e7855f0fc280be12a86faa66d3eec8f6a",
+      "afterSha256": "f4accf98a6153a57c0b3e740a60976024ff574f8108900fd5fee11bd27128ea8"
+    },
+    {
+      "path": "build/content/C1_FOUNDATION_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "5f4c2284de589e1ae61ba402396a7c58e7308e6e85e07a589f174a445592a492",
+      "afterSha256": "7006deafc50df7b4b56ee49d0d2d2f1a07c13ee0f0dc2e95f410ea91c3cf80c2"
+    },
+    {
+      "path": "build/content/C1_SECOND_TOOL_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "a33e282cd966e1f6b57e501984178a383060e0981ee0833083882810a0bbb160",
+      "afterSha256": "2f462479d0fb41dc7c411162d940c3ca52b4b6c47bf117d507dfab08a08a3402"
+    },
+    {
+      "path": "build/content/C2_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "d1da44a0148571c960660089ddac27b51680633e5906a7cd719a9c148e937932",
+      "afterSha256": "aa8a1dd4cd62306ba38e11e82fa2e5185857af1f77ebcce00a78580c849f7c07"
+    },
+    {
+      "path": "build/content/C3_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "fbb1ae7f93b9373c38f1a54d7cae51b5c85965a3a4567c7bcf907bf20711be4d",
+      "afterSha256": "db34f1d691a5372c11115c84db42b9ec146642a064a804bec65b74740eefb06c"
+    },
+    {
+      "path": "build/content/C4_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "cc58ca45948cb49dfa47ff7597e2cf8b7903d497e760a668a0fbb421a90c60c8",
+      "afterSha256": "c78b2e36e36b8685d75db0bc0db9a3f7c074ef2af7c358d23896deb46ddcf660"
+    },
+    {
+      "path": "build/content/C5_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "a1e29a27cc812280b0a2d44cc712f42d837b00157a43977ae7a23f7762d68a7e",
+      "afterSha256": "5fff282fc4ca237bfda3d0441fd9464b0d331d15dff570ecf1280207e21049b8"
+    },
+    {
+      "path": "build/content/C6_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "84b5adf048b0d511a37938a75faa3368ec36126c43f4f0d99d0a212fb5f20b31",
+      "afterSha256": "00bbfd8a0649365cbc79b25b29d349918b6afbb114d04edea13fdcfa8d08a767"
+    },
+    {
+      "path": "build/content/C7_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "2f4fbdb04319ffe7915e3dd1699143221cbba3d44da10adbc7ba535ee1c64f44",
+      "afterSha256": "323a194740c515fdfa50d79c620b844d86820a661b367a8587165b009877bcaa"
+    },
+    {
+      "path": "build/content/G1_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "81639a59330dda34d10398cc35f1893b1dc30f8f711d2bf38acabbe1d19b9aa5",
+      "afterSha256": "e037d55349eede67d03fec175b8e8061496e0a2f174a06ddc17c02eb9c69b95a"
+    },
+    {
+      "path": "build/content/G2A_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "0aceb228ec32aa648c1b60a0255c3a5bd2c87143699b9c54638d7a6abc0aab91",
+      "afterSha256": "a55e52730277109166f80fb54a6e34219cd0bbe32d1b2e6db5146935323425ca"
+    },
+    {
+      "path": "build/content/G2B_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "3f16f0e61f1d3896d427f15b309e6d62f9ff4ca3ec228b5fe8db6b2eb9ed4e0a",
+      "afterSha256": "298ca327c834174427853258a6751a890f789f2985c3e28cb969e2e3c1ee5996"
+    },
+    {
+      "path": "build/content/G2C_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "8fbf96b3cf3d58d74efd1eb1b1a4bcbe59adf5f360ec44a88724af6f4c0891e3",
+      "afterSha256": "b5b1a509039e6f4fda6fa351241138f3289d1fad5ee53922f2cf751c6d4e636e"
+    },
+    {
+      "path": "build/content/G3_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "2eaa39b42edb344d4b01baf82c1a2efc45e8bcd7aa140d3985c0a97d365c09e3",
+      "afterSha256": "1611f64a364ecdf7dd328a3a9877344611fe628846835ddb2bb98cd79497a2b0"
+    },
+    {
+      "path": "build/content/G4_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "3efdba38f211cceb6d656f0adb9f07996f4d1360d562ff4ff159b66fd459dff2",
+      "afterSha256": "333b3f500e7508ef49f40b06dc5c914422ef527697ab15e93a042386600b7c82"
+    },
+    {
+      "path": "build/content/MONEY_TOOLS_SANDBOX_REPORT.md",
+      "disposition": "Current gameplay report",
+      "action": "Keeps current rules/phase-specific verification, adds actual Elite guide and source-of-truth pointers.",
+      "beforeSha256": "ed8e57714fb559ac3f345f989f98ca36144c8e4f23a4b8f881d0ed47d4832adb",
+      "afterSha256": "2eca77ec729048806b36cc36e3bd4be469d74bc19a24f1e25b992b18e922bd1f"
+    },
+    {
+      "path": "build/content/PLAYTEST_CORRECTIONS_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "25be17d0a4029763e448c36c5abf40010b50a79ea420ed64932f6381f478c37b",
+      "afterSha256": "b94e463382eba0f7c1d47017dc32add74e43b8665f28b3bfa24f43bd486fa28b"
+    },
+    {
+      "path": "build/content/Q6_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "03011327cfb475b561b2db0d655bae08e7a6b1e644c5cd035aa912ef909b1f3b",
+      "afterSha256": "03b86b5e92d261f22424b273a8be3098362bce0b943339e4f18a55a86d32b45c"
+    },
+    {
+      "path": "build/content/RANGED_ENEMY_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "c05ac25e9cbf046f108eb6c631b351d54e7b1a9bc15451424a1f2e4f7998ae38",
+      "afterSha256": "bae660a9d9ab4b0a51f0cf8dae4e7f64fb1541310b701af52d85d1e012e842f8"
+    },
+    {
+      "path": "build/content/READABLE_ROSTER_BASELINE.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "e0e4c8f47d3f78d2a1144954ab6dbf6797fd24a5229d3e0182e96caf690ba2b7",
+      "afterSha256": "2563ec67b93b3b2cfe37f661a7dc2d3137a2ecb1e9b5a2af03bdfa927a0c26c1"
+    },
+    {
+      "path": "build/content/TOOL_PRESENTATION_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "0fa92811e2e8469a2127b7f3bd6371074f9565bbc204e4286db0cf8b105d1e5d",
+      "afterSha256": "4f9ef9383ce7193ea3969e312be24c8267cf52f99a38bf9993f37706f913a511"
+    },
+    {
+      "path": "build/enemies/TAKEAWAY_CUP.md",
+      "disposition": "Current enemy reference",
+      "action": "Corrected stale XP/clock wording; detailed historical source evidence retained.",
+      "beforeSha256": "b78daa4562491bd2fcf0123ab67febc84d9d9331172b2f3d28ffc2e5e38e51ea",
+      "afterSha256": "70ee595c377530dd7b7e142dcc7b2ae78da72eec3c0ccb0059d6c65431cfa6b7"
+    },
+    {
+      "path": "build/logs/PRODUCT_DESIGN_HISTORY_20261027.md",
+      "disposition": "Historical build log",
+      "action": "Full superseded source context preserved; current pointers replace its old next/current wording.",
+      "beforeSha256": null,
+      "afterSha256": "0226b9ca788465a0dd1fa3275468d9601d334d39ef481496a9d0ba884a843dd3"
+    },
+    {
+      "path": "build/logs/PROGRESS_HISTORY_20261027.md",
+      "disposition": "Historical build log",
+      "action": "Full superseded source context preserved; current pointers replace its old next/current wording.",
+      "beforeSha256": null,
+      "afterSha256": "107f01c9d512575ae45b0b4d2b7df4f151ce5e18c5858b8eb6e77af8d2385c6e"
+    },
+    {
+      "path": "build/performance/CI_REPAIR_20261016.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "fd3da573ed2cb401e37a0296953fc5d53ff373beed73aa4990dea7179b96422a",
+      "afterSha256": "e52394b3780713614af29b2cba8d5c5d9c6d8e96de54c4eb8a3e3e623555eef2"
+    },
+    {
+      "path": "build/performance/P0_BASELINE.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "fa392ac8362d82605d8ec33ecf4dc8e630696ffc493fbfc380dedd554c955dd9",
+      "afterSha256": "279e11cbfb7dfaa12268e37984a5bdaa3ba27f39e0e69735372ced8f02ccd2e5"
+    },
+    {
+      "path": "build/performance/P1_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "99df99d1ff513f2ba42559b444c9703f11adbf7df5894e6f5b3f8ab2c36438cc",
+      "afterSha256": "a814adcbe56a2a4770f707846ae6d7c266f233f9a313e6ac80df221b7103fd53"
+    },
+    {
+      "path": "build/performance/P2_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "9c8f83f7c98a65a93bb2da4ae3c8668457d155d49489f0fd4fc0c00353a90eba",
+      "afterSha256": "37b021a61f4c312dde07a7d84f57f4a252dd731a52b578275c32a844ced1a974"
+    },
+    {
+      "path": "build/performance/P3_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "ed383c8fb1b13cd065ab95cdc19d933f337cae3c73b116d475c0bfba0a98b209",
+      "afterSha256": "15c3aa5866e024c083b1b11bdf7f7a3efa6d0906d3bf70b4d10353a1eea2d1f7"
+    },
+    {
+      "path": "build/performance/P4_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "8e8bb88852df1bd0fb1c5390f22ef0676ca014aec74d6a0ef62a56afd155af55",
+      "afterSha256": "42c3d0943c6a1c4f955e6a49dfa636217b037805f064902a4a834845afc810fb"
+    },
+    {
+      "path": "build/performance/P5_ACCEPTANCE_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "87dd52e2265367fdbdfaccf760bc4e5f4796b9da0033be01b2f27df287d69bd3",
+      "afterSha256": "fbb424e61f302d46794e8406c6ca1d3a8be9acbc695571c41f092540b1ba48c0"
+    },
+    {
+      "path": "build/performance/P5_CAMPAIGN_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "018b4154baa8fb6057937aab0cd0636db644f34f9d28e22bcef4b776dc985de2",
+      "afterSha256": "eed0b521bd6dfe355a719aaba833f7b068f0eebc61990ffa7e02a0c425df3081"
+    },
+    {
+      "path": "build/performance/P5_COMPATIBILITY_FOLLOWUP.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "47dc5b2ee6c03cb14dd3a154f598d79e456859430d97ac18fad4e9e072feef24",
+      "afterSha256": "0e6bf270f1d21ba9700f568b31570247f3c6a65ad0ee5e578ae82feb37b9aac4"
+    },
+    {
+      "path": "build/performance/P5_COMPATIBILITY_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "eb79ece7c5c80e6d4737c602d5a2b0ec265356e5ebc16f11e3a3133595e3f207",
+      "afterSha256": "de1da37ee0c1843648cf1de12fa8d2cca01cc2c0b1fdad991b799ea04da870b0"
+    },
+    {
+      "path": "build/performance/P5_LIFECYCLE_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "8279f55907bf03007a7ca18adf89f9cedb4bebc93f5b7e50b7aa92d02aa85a4f",
+      "afterSha256": "5ed17ef693b0c31aac4786c588c3148de61e8fda69f803de50ecb8c9b415a66f"
+    },
+    {
+      "path": "build/performance/P5_STARTUP_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "4af5886b7a8bce59d1ab520c24e9f60d4b1365a2948e49c65c72278502423a48",
+      "afterSha256": "0162cd7606e4bec9602552a27f8480b5c4508b00aacfeba5811025f84f4cf342"
+    },
+    {
+      "path": "build/performance/P6_DEVICE_CHECKLIST.md",
+      "disposition": "Retained external acceptance procedure",
+      "action": "Current waiver/unverified/source-identity notice; not a passed device check.",
+      "beforeSha256": "e1674986518ec80c1d8db738b4bef6bfc17c6a904d4fc8b27fe5bc7d5bd6e24b",
+      "afterSha256": "764a0de25e8c1bc8f67147ffbdea6c27c6ddf6ffdca16e26f9bfe7ed3aee92f9"
+    },
+    {
+      "path": "build/performance/P6_READINESS_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "d2fde48b0bf93136c55c37af3fe0e42384988c7fa143ec6bee04d8d38019119d",
+      "afterSha256": "d7d8c4d568a3a6a1a9f56a43ccbaadc93824f193ee4388a5609c581fe90bddf6"
+    },
+    {
+      "path": "build/performance/PR27_CI_REPAIR.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "40a3863d37c7d0274a5ca31dc7839ea1836bb63d3860a3d91d319365080d0924",
+      "afterSha256": "61c30cef6cf30a5afbcca9163d02ee28b1a66b08bf69972b8cf923fc160b6bb9"
+    },
+    {
+      "path": "build/performance/PR28_CI_REPAIR.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "4fb8bb3048ab117d884269f00e7c903b1eb4d40a4654d59967037138bfedcd82",
+      "afterSha256": "d2d8a50dd337967f93a1d700c3f4fcae501b6df5221ac84813029e943f546c85"
+    },
+    {
+      "path": "build/performance/PR29_CI_REPAIR.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "d5c86f69c44d788d531e0fd767b183a0a9a80e4e01d667cf89a9cbd4b588b7f5",
+      "afterSha256": "c97309c55747aeabcf9afd4064aea01e55b729673844bd4ec552fc45d1133d11"
+    },
+    {
+      "path": "build/performance/Q4_AUDIT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "f1597b2c298ed7b1d9d554c675d80cec40b9ebeb90c2ec0dd3017fe5880bf5b6",
+      "afterSha256": "a402ea79f60aae3f50d4e23705c7b6e4c794d6fa489a116b9b68c522c7177ebd"
+    },
+    {
+      "path": "build/performance/Q5_CI_REPAIR.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "d4a3189f4bab85739658c430e42339c454b79e8567c2d7b41667ae86dc2f56d3",
+      "afterSha256": "df79966e9c5d56b6c876c8409f101ffa639acdc0cb2ae4e2457dc3821b854e6e"
+    },
+    {
+      "path": "build/prompts/PROGRESSION_SYSTEM_RESEARCH.md",
+      "disposition": "Local draft / preserved edits",
+      "action": "Read; preserved unstaged. Dated proposal, not active implementation approval.",
+      "beforeSha256": "b94d4c2bff0839ea8cb96a8fd0d6bb05b5cdc03c7d9531a5e5e48a458ff2107f",
+      "afterSha256": "b94d4c2bff0839ea8cb96a8fd0d6bb05b5cdc03c7d9531a5e5e48a458ff2107f"
+    },
+    {
+      "path": "build/sprites/AUSTRALIAN_REFERENCE_NOTES.md",
+      "disposition": "Dated art source context",
+      "action": "Retained dated reference/provenance; no new factual or art acceptance claim.",
+      "beforeSha256": "4563032f68b94450f761bf37e2e68969e8d703098412dd8cc24a25503d3bc2ed",
+      "afterSha256": "4563032f68b94450f761bf37e2e68969e8d703098412dd8cc24a25503d3bc2ed"
+    },
+    {
+      "path": "build/sprites/MANIFEST.md",
+      "disposition": "Art provenance ledger",
+      "action": "Retained claim/source/acceptance/hashes; no active generation remains.",
+      "beforeSha256": "80b4b2f98a802319da925abe7877bc1adbe230768b27686ba5665e8f96352f5c",
+      "afterSha256": "80b4b2f98a802319da925abe7877bc1adbe230768b27686ba5665e8f96352f5c"
+    },
+    {
+      "path": "build/sprites/STYLE2_INTEGRATION_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "66d652207b47d61e66adf986f7901451781c5f2f40227835a6f7e98b8f754693",
+      "afterSha256": "7fc19d3eba279bc58c552a9baecbb6c2225c2b07197578507a1c95b6e43b289f"
+    },
+    {
+      "path": "build/sprites/review/style2/BATCH_1_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "3e0e8126274861522ff1bac07ad7e735097cc5370cc8469641dc0f6eddd3b849",
+      "afterSha256": "0b401e5379b2248c5f734692adfea8f404c79a76dab5af101009c2b762900ce0"
+    },
+    {
+      "path": "build/sprites/review/style2/FULL_ROSTER_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "e7d1e191a8e2ab8af87bcc7f387b56b59b17176b89781773b067d920dbb2b8ae",
+      "afterSha256": "b348a6a8924a937e2fb523d596071f43fa156d2c924baa3bb78ca86c42f061f5"
+    },
+    {
+      "path": "build/sprites/review/style2/PROGRESS_REPORT.md",
+      "disposition": "Historical scoped evidence",
+      "action": "Preserved original findings/results with a clear historical-status notice; not current-head acceptance or a new task.",
+      "beforeSha256": "dd89de34023e92bfa9b8ffae07286b1c0f50735c4a90d9f3429e158ceaf2e1ca",
+      "afterSha256": "f870d2d4495a594f4dfe637bc96999c74b0534bcd0aa3e7daf6632a3260ec78c"
+    }
+  ],
+  "localLinksChecked": 856,
+  "localLinkIssues": [],
+  "fullyPreservedArchivedSources": [
+    "AUTONOMOUS_PROGRESS.md",
+    "build/BUILD_STATUS.md",
+    "build/BUILD_PLAN_V0.4.md",
+    "build/PLAN.md",
+    "build/ECO_CONTENT_MAP.md",
+    "build/AUTONOMOUS_DEVELOPMENT_PLAN.md"
+  ],
+  "preexistingResearchUnchanged": true
+}

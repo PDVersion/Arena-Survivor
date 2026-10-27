@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # P5 / Session 10 — authorized consolidated lifecycle campaign
 
 **The scoped M5 lifecycle campaign passes. P5 overall remains open for broader

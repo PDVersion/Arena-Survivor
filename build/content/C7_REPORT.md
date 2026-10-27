@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # C7 — portable saves and explicit recovery / 2026-10-20
 
 Verified local phase on `codex/v0.4.3` from C6 `0776c95`. C4 `b0ff7e9`, C5

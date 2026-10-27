@@ -139,6 +139,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const key of worldKeys) {
     if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
   }
+  if (theme.copy.eliteGuide && Object.values(theme.copy.eliteGuide).some((value) => typeof value !== "string" || !value.trim())) issues.push("eliteGuide labels must be nonempty");
   for (const key of masteryCopyKeys) {
     if (!theme.copy.mastery?.[key]?.trim()) issues.push(`mastery.${key} label is required`);
   }

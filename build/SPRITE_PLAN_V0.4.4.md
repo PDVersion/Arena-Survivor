@@ -1,79 +1,36 @@
-# V0.4.4 — remaining eco playtest and acceptance
+# Sprite implementation — remaining acceptance
 
-All27 selected style2 subjects are now live by owner direction2026-10-26:
-24 sheets +3 equipped-tool icons,102frames. Five style1 outputs/atlas pixels are
-replaced; Shards has dedicated art. Raw sources/prompts and historical reports
-remain preserved. No knight content is changed; that theme stays paused indefinitely.
+Updated2026-10-27. The selected eco roster is generated and integrated. There is
+no missing selected subject or active art claim. Thirty live bindings use34sheets/
+119atlas frames, including parked historical designs. Current selection/evidence:
+[manifest](sprites/MANIFEST.md),[inventory](sprites/review/style2/ALL_SPRITES_INVENTORY.json),
+[current report](content/MONEY_TOOLS_SANDBOX_REPORT.md). Completed source claims/
+outcomes are [in the master log](MASTER_BUILD_PLAN.md#v0-4-5).
 
-[Integration/playthrough report](sprites/STYLE2_INTEGRATION_REPORT.md) owns current
-implementation, short checks, texture costs, limits and countdown-based test guide.
-[Manifest](sprites/MANIFEST.md) owns live selections; [master](MASTER_BUILD_PLAN.md#eco-style2-live-switch)
-records the completed claim/result. Generation backlog is empty.
+Owner accepted Rake Sweep a2appearance. Remaining roster continuity/gameplay feel
+may still receive bounded owner-selected corrections; this is acceptance, not a
+new generation backlog. HUD icons reuse weapon frames. Shovel orbit and compact
+handle-first rake are separate tools; old cone evolution is parked.
 
 ## Remaining gates
 
-1. **Owner normal-play acceptance/corrections.** Test current art at actual game
-   size: hood/mirror/walk/hit transitions, grip/nozzle/Impact Point continuity,
-   enemy silhouettes, world cues, Cup ranged pacing, bosses and terminal choices.
-   Use [the normal-play checklist](sprites/STYLE2_INTEGRATION_REPORT.md#normal-playthrough-checklist).
-   Bulk promotion does not certify individual art continuity. Claim each selected
-   correction in the manifest; fix prompts/regenerate rather than hand-paint.
-   Cup nexta5; compute other attempts from preserved sources, never overwrite.
-2. **Consolidated presentation/performance acceptance.** Current scoped gate passes
-   720units/75files,27sprite checks, types/lint/build/production and13unique serial
-   browser cases cumulatively, including Default/Low/reduced-motion and synthetic
-   fallback. Full-app300-actor/stress/soak/current-head CI has not been run here.
-   Use one consolidated serial campaign or delivery CI when selected, not a new
-   heavy campaign per art correction. All art shares one2048×736 texture (~5.75MiB
-   decoded RGBA before GPU overhead); increased storage is not a performance pass.
-   Actual Safari/browser-OS/older physical-GPU checks remain waived/unverified.
-3. **Delivery.** Inspect actual remote/head CI when publication is requested. This
-   local phase does not publish/merge/deploy or close overallV0.4 automatically.
+1. Owner actual-size normal-play acceptance: player gait/hood/grip, enemy identity,
+   tool readability, cues, bosses and endings; use the current playthrough report.
+2. One selected consolidated current-head presentation/performance/regression/CI
+   campaign. Past scoped checks are dated evidence, not a full current-head pass.
+3. Native Safari/branded browser-OS/older physical GPU checks remain waived and
+   unverified. Publication/merge/deployment requires owner selection.
 
-## Ownership for future work
+## Future correction ownership
 
-No generation/integration claim remains active. Before further code/art edits,
-claim a bounded correction/acceptance phase with exact paths and short checks.
-Respect the style guide, theme-owned presentation, stable IDs and unchanged
-world/body contracts. P0–P6/C1–C7/Q6/G1–G4/tool effects/menu quit/Cup and full sprite
-integration are delivered; do not reschedule them as unbuilt foundations.
+Read style/pipeline contracts, claim exact bounded scope and manifest subject
+before edits. Regenerate by fixing prompts, preserve evidence, never paint repairs.
+Art cannot change world/body/geometry implicitly. Use necessary serial browser
+checks and clean owned processes. Frozen knight content stays untouched.
+Further tools/enemies/facts/material layers are [unselected proposals](REMAINING_WORK.md),
+not missing original sprite subjects.
 
-Optional seeds/challenges, remaining controls/accessibility, discovery/facts,
-material layers, resources/restoration, collection objectives and controller
-support remain separate owner selections in AUTONOMOUS_DEVELOPMENT_PLAN.md.
-
-
-## Latest verified owner corrections
-
-Player a4 has a real fourth gait pose in0→1→2→3. Vacuum air now drifts/fades as
-broad clouds; pause/title-guide bodies scroll in clipped viewports with measured
-Equipment rows and fixed controls. Fixed cards identify their related tool/item;
-actual stat-quality gains stay visible. [Correction report](content/PLAYTEST_CORRECTIONS_REPORT.md)
-records723units/27sprite checks, scoped serial Canvas/WebGL evidence and limits.
-No correction claim remains active. Existing owner acceptance/performance/delivery
-work above remains open. The [separate-session research prompt](prompts/PROGRESSION_SYSTEM_RESEARCH.md)
-is written; no progression redesign is selected by it.
-
-## Owner-selected continuation V0.4.5 —2026-10-27
-
-The [V0.4.5 plan](BUILD_PLAN_V0.4.5.md) selects six further subjects and gameplay
-integration: money denominations, magnet, drumstick, rat, bin and rake. All are
-now accepted locally with preserved built-in generation evidence; rat usesa2,
-othersa1. Lime Impact art is reused for saved currency, cone designs are parked.
-33registry recipes/118atlas frames (including parked history),28active content
-bindings. [Report/checklist](content/MONEY_TOOLS_SANDBOX_REPORT.md) owns current
-software checks and remaining owner feel/art acceptance. No sprite claim remains
-active; future corrections need their own bounded claim. Frozen pack untouched.
-
-
-2026-10-27 owner correction: one additional generated shovel accepted for the
-clockwise orbit weapon, head leading. Accepted rake reused for outward Rake Sweep.
-34 reproducible sheets now include the parked historical designs. Native shovel
-96x32 and unchanged authored world geometry; bin presentation reduced to38 only.
-Exact claim/prompt/raw/review/normalized hashes recorded in the manifest.
-
-
-2026-10-27 phase6: Rake Sweep a2accepted and integrated with shorter handle,
-broader shaded teeth and clear gaps. Native96x32 and authored world geometry
-unchanged; old production a1rake removed, raw/review history preserved.34sheet
-checks and actual rendered-rake/boss capture pass. No art claim remains active.
+<!-- Compatibility anchors for moved historical claim/checkpoint links. -->
+<a id="settled-roster-checkpoint-after-g4--2026-10-22"></a>
+<a id="bulk-live-switch--claimed-2026-10-26-before-code"></a>
+Historical claim/checkpoint records: [master log](MASTER_BUILD_PLAN.md#eco-style2-live-switch).

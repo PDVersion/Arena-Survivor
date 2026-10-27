@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # G2A — weak arrival groups, keep decision /2026-10-22
 
 Owner requested a G2 start prompt, its review and implementation. Created

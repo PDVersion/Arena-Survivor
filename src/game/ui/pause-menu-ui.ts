@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { selectEliteCodex } from "../systems/codex/describe-shrine";
 import type { CapabilityProgress } from "../systems/mastery/run-review";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { StatLine, WorldLine } from "../systems/upgrades/describe-upgrade";
@@ -21,7 +22,7 @@ export type PauseTab = (typeof pauseTabs)[number];
  * upgrade pool, and the tab strip is already tight at five tabs, so the split
  * lives inside the tab rather than adding more of them.
  */
-export const codexSections = ["shrines", "enemies", "equipment", "capabilities", "session"] as const;
+export const codexSections = ["shrines", "enemies", "elites", "equipment", "capabilities", "session"] as const;
 export type CodexSection = (typeof codexSections)[number];
 
 export interface PauseMenuView {
@@ -136,12 +137,17 @@ export class PauseMenuUi {
     return this.codexSection;
   }
 
+  private get visibleCodexSections(): readonly CodexSection[] {
+    return codexSections.filter((section) => section !== "elites" || Boolean(this.theme.copy.eliteGuide));
+  }
+
   /** Move within the Field Guide. Ignored on every other tab. */
   cycleCodexSection(direction: 1 | -1): void {
     if (this.tab !== "codex") return;
-    const index = codexSections.indexOf(this.codexSection);
+    const sections = this.visibleCodexSections;
+    const index = sections.indexOf(this.codexSection);
     this.codexSection =
-      codexSections[(index + direction + codexSections.length) % codexSections.length]!;
+      sections[(index + direction + sections.length) % sections.length]!;
     if (this.view) this.render();
   }
 
@@ -377,7 +383,7 @@ export class PauseMenuUi {
     this.sectionBounds = [];
     let chipLeft = left + 32;
     let chipTop = top;
-    for (const section of codexSections) {
+    for (const section of this.visibleCodexSections) {
       const active = section === this.codexSection;
       const label = addUiText(this.scene, 0, 0, this.codexSectionLabel(section).toUpperCase(), {
         ...style,
@@ -433,6 +439,19 @@ export class PauseMenuUi {
         children.push(addUiText(this.scene, left + panelWidth / 2, y, `${this.enemyPage + 1} / ${entries.length} · PgUp / PgDn`,
           { ...style, fontSize: "13px" }).setOrigin(.5));
       }
+    } else if (this.codexSection === "elites" && this.theme.copy.eliteGuide) {
+      const guide = this.theme.copy.eliteGuide;
+      let y = sectionTop;
+      const add = (text: string, bold = false) => {
+        const label = addUiText(this.scene, left + 32, y, text, { ...style, fontSize: "16px", fontStyle: bold ? "bold" : "normal", wordWrap: { width: panelWidth - 64, useAdvancedWrap: true } });
+        content.push(label); y += label.height + 12;
+      };
+      add(guide.title, true); add(guide.introduction);
+      for (const elite of selectEliteCodex(this.theme)) {
+        add(`${elite.marker} · ${elite.name}`, true);
+        add(elite.description);
+        add(elite.effects.map((effect) => `${effect.label} ${effect.display}`).join(" · "));
+      }
     } else if (this.codexSection === "capabilities") {
       let y = sectionTop;
       for (const capability of view.capabilities) {
@@ -462,6 +481,7 @@ export class PauseMenuUi {
     const codex = this.theme.copy.codex;
     if (section === "shrines") return codex.shrines;
     if (section === "enemies") return this.theme.copy.mastery.enemies;
+    if (section === "elites") return this.theme.copy.eliteGuide?.tab ?? "";
     if (section === "capabilities") return this.theme.copy.mastery.capabilities;
     if (section === "equipment") return codex.upgrades;
     return codex.session;

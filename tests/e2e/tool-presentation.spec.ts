@@ -440,3 +440,43 @@ test("material rules, floating wrappers and independent boss summon rewards", as
     await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.materialRakeRuntime?.destroy(); return f.cleanup(); });
   }
 });
+
+test("Elite identities guide explains every live modifier from pause and title", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await setup(page, false, true);
+  try {
+    await pause(page);
+    const inspect = () => page.evaluate(() => {
+      const run = (window as any).__TOOL_REVIEW__.run(), ui = run.pauseMenu;
+      ui.codexSection = "elites";
+      ui.show(run.pauseMenuView(), () => {}, { tab: "codex", onQuit: () => {} });
+      return { text: ui.scrollBody.list.filter((object: any) => object.type === "Text").map((object: any) => object.text).join("\n"),
+        sections: ui.sectionBounds.map((entry: any) => entry.section), maxScroll: ui.maxScroll, masked: Boolean(ui.scrollBody.mask),
+        aboveFooter: ui.scrollArea.bottom < ui.quitBounds.top };
+    });
+    const paused = await inspect();
+    expect(paused.sections).toContain("elites"); expect(paused.masked).toBe(true); expect(paused.aboveFooter).toBe(true);
+    for (const phrase of ["Elite identities", "No symbol · Standard elite", "2 · Dispersing Waste", "◇ · Wrapped Waste", "» · Rolling Waste", "2 copies", "50% of incoming damage", "×1.5 normal movement speed", "Money reward ×2.5"]) expect(paused.text).toContain(phrase);
+    await page.keyboard.press("End");
+    await page.screenshot({ path: info.outputPath("elite-guide-pause-bottom.png") });
+    await page.setViewportSize({ width: 800, height: 600 });
+    const resized = await inspect(); expect(resized.aboveFooter).toBe(true); expect(resized.maxScroll).toBeGreaterThan(0);
+    await page.keyboard.press("End");
+    await page.screenshot({ path: info.outputPath("elite-guide-small-bottom.png") });
+    const title = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__;
+      f.run().pauseMenu.hide(); f.run().scene.start("menu");
+      await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+      const menu = f.menu();
+      const path = "/src/game/ui/pause-menu-ui.ts";
+      const { PauseMenuUi } = await import(path);
+      const ui = new PauseMenuUi(menu, f.theme); f.eliteTitleUi = ui;
+      ui.codexSection = "elites"; ui.show(menu.infoView(), () => {}, { tab: "codex", menuContext: true });
+      return { text: ui.scrollBody.list.filter((object: any) => object.type === "Text").map((object: any) => object.text).join("\n"),
+        hasQuit: Boolean(ui.quitBounds), sections: ui.sectionBounds.map((entry: any) => entry.section) };
+    });
+    expect(title.sections).toContain("elites"); expect(title.text).toContain("» · Rolling Waste"); expect(title.hasQuit).toBe(false);
+    await page.screenshot({ path: info.outputPath("elite-guide-title.png") });
+    expect(errors).toEqual([]);
+  } finally { await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.eliteTitleUi?.hide(); return f.cleanup(); }); }
+});

@@ -1,6 +1,6 @@
 # Takeaway Cup — ranged enemy sheet
 
-Status: **live draft**, eco-guardian only. Owner selected 2026-10-23.
+Status: **implemented; owner art/pacing acceptance remains open**, eco-guardian only. Owner selected 2026-10-23.
 Stable neutral role: `enemy.ranged_attacker`. Knights and Magic stays paused.
 
 An unbranded takeaway coffee cup: tapered cream paper body, cardboard sleeve,
@@ -16,7 +16,7 @@ these values do not measure persistence, toxicity or environmental harm.
 | Move speed |68 world units/second|
 | Contact harm / cooldown |4 /1000ms|
 | Body radius / display canvas |14 /40 world units|
-| Reward |3 XP|
+| Reward |3 money|
 | Introduction |66% of run, one cup; low later weight|
 | Attack trigger |Within320 world units|
 | Warning |1000 simulation ms; locks direction immediately|
@@ -24,10 +24,9 @@ these values do not measure persistence, toxicity or environmental harm.
 | Coffee shot |8 harm,210 units/s,7 radius,1800ms lifetime|
 | Shot budget |32 simultaneous hostile shots globally|
 
-At the current0.5× pace, warning lasts two real seconds. A normal five-minute
-simulation shift introduces the cup at3:18 simulated /6:36 real. It gets18
-simulation seconds before the unchanged mini-boss. Existing role/boss timings
-stay intact. New cups approach until in range, stop, tip back along a visible
+The active-wall run timer introduces the cup at3:18of a five-minute run. Enemy
+movement/animation retains authored pacing; warning/cycle timings above are
+movement-clock values and do not define the run clock. New cups approach until in range, stop, tip back along a visible
 warning bearing, release once, then recover. They do not kite away or home shots.
 
 **Counterplay:** sidestep after it aims, then close in during recovery. Solid

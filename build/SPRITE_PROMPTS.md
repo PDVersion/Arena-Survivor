@@ -1,3 +1,7 @@
+> Original reproducible subject catalog, not a generation backlog. All selected
+> subjects are built; later corrections/additions use exact prompts in sprites/raw
+> and selections in [manifest](sprites/MANIFEST.md). Current status: [BUILD_STATUS](BUILD_STATUS.md).
+
 # Copyable sprite subject prompts — eco-guardian style 2
 
 ## Familiar Australian appearance —2026-10-23

@@ -1,5 +1,22 @@
 # Education Pivot — Design Exploration
 
+## Current disposition — 2026-10-27
+
+This document retains exploratory design, not automatic implementation approval.
+Selected gameplay is [PLAN](PLAN.md); every remaining proposal is classified in
+[REMAINING_WORK](REMAINING_WORK.md). Four automatic weapon slots/seven-level paths,
+Field Guide UI, run review, local saves and Impact Shop are built. Passive slots,
+material effectiveness/layers/zones, persistent discovery, sourced facts/education
+debriefs, feats/cosmetics, Knowledge Shrines/questions, age/curriculum tools and
+standalone/store distribution remain unbuilt proposals. Early weapon evolution
+was built historically and then intentionally removed from active eco.
+
+Cigarette Butts open individually, Microplastics group later, glass makes shards,
+and wrappers float through the crowd. The visible run timer uses active wall time;
+the old0.5pace experiment below is historical design context. Gameplay reward and
+boss material releases are abstractions, not real-world disposal guidance.
+Completed implementation amendments moved to [the log](MASTER_BUILD_PLAN.md#v0-4-5).
+
 ## Familiar Australian appearance — 2026-10-23
 
 Use recognisable ordinary Australian/Sydney objects before abstract/fantasy
@@ -592,258 +609,20 @@ say so loudly, and aim at a finished small game rather than a large unfinished
 one.
 
 
-Q2 follow-up (2026-10-12): Microplastics now open the eco run; Plastic Bottles
-enter quietly at 10% progress (30 seconds on the five-minute timer) and ramp
-from ~6% to ~43% of calm natural spawn selection. At 0.5 gameplay rate this
-first unlock is about 60 real seconds into active play. Microplastics now pay
-1 XP as the common opening enemy; material health ordering stays unchanged.
-Bagged Waste still releases its fixed 2 bottles / 2 Microplastics / 1 glass mix
-pending owner confirmation. Site-event labels counter camera zoom at UI scale,
-and spent events disappear from the minimap. Spawn accounting distinguishes
-natural arrivals (including milestone waves), Fracture, Bagged Waste release,
-site effects (surge/duplication) and test loads; source means immediate creation,
-so ambient pressure modified by a shrine is still natural. No factual claims,
-new material identities or bitmap generation are introduced.
 
-Q4 (2026-10-13) makes ordinary opening Microplastics one-hit across difficulty
-presets by lowering their game health to 9. This is authored game balance, not
-a claim about environmental persistence. Starting stats in the sprite browser
-come from actual difficulty-resolved theme definitions. A future stat book should
-reuse those definitions/selectors and clearly distinguish authored, starting and
-live modified values; that future feature is not implemented here.
-
-
-## V0.4.3 C1 promotion — bounded second tool
-
-The selected content phase adds a short-cone Cleanup Vacuum beside the unchanged
-starter grabber. Two automatic slots; no manual switching or material matrix.
-Three direct targets and bounded on-hit neighbour splash are authored game rules,
-not sourced factual handling claims. The shared ledger names hit splash separately
-from on-kill detonation. Tool-owned upgrades remain in each theme's weapon data.
-No new enemy material, fact card, persistence or sprite is introduced here.
-
-
-### V0.4.3 C2 — secondary-tool evolution
-
-After four actual picks of its owned reach upgrade, the second tool can evolve
-through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
-Runic Tempest. A distinct definition replaces the source in the same slot with
-its exact earned reach and existing attack clock. Shared upgrades stay shared;
-old owner entries retire and reset returns to the starting loadout. The evolved
-tool has a wider four-target cone and stronger bounded on-hit splash; theme
-weapons data owns every value. Quality tiers retain their gains but do not count
-as extra picks toward the condition. No paired-equipment subsystem, environmental
-fact/material-effectiveness claim, persistence or sprite generation is introduced.
-The education document's earlier max-level/paired-item example remains exploratory;
-this shipped condition uses the existing capped owner track instead.
-
-
-### V0.4.3 C3 — readable, voluntary pressure choices
-
-Unmanaged Dump adds a spatial Pollution/XP bargain. Overflow Contract and
-Contamination Pact are one-time normal level-up choices for more arrivals or
-more Pollution in exchange for XP, lasting only for that run. Their names and
-numeric effects are theme-owned game fiction, not environmental facts or
-material-effectiveness claims. No Knowledge Shrine/question or new enemy/material
-identity is introduced. The detail card prioritizes the actual reward and primary
-cost so the voluntary bargain stays readable under the three-line limit.
-
-C4 implementation boundary2026-10-20: elite family names describe authored game
-modifiers over existing material roles. Split/shield/acceleration adds no factual
-environmental claim, material/tool effectiveness table or new educational surface.
-
-
-### V0.4.3 C5 — bounded fictional encounters
-
-Compacted Waste and Dumping Colossus are readable mini/final encounter fiction,
-not persistence estimates, disposal advice or a promoted layered-material system.
-They use the same tool damage path as existing waste actors. Their marked circle
-teaches the immediate game action: move clear before the pulse. No knowledge
-question, content-source claim, type effectiveness, material layer or sprite
-inventory is added. Boss values and labels remain theme-owned.
-
-### Session21 selected correction — vacuum progression and feedback
-
-Owner selects increasing vacuum primary-target capacity as its own weapon upgrades
-advance, retaining a modest early cap. This is a planned game rule, not an
-educational/material-effectiveness claim. The C1/C2 three/four-target descriptions
-above remain the implemented baseline. Exact steps, finite ceiling and evolution
-carryover tuning need theme data and balance verification in Q6; growth must not
-be lost at evolution. Clarify pulse/cone feedback and investigate player pose
-alignment before further sprite generation. No new information surface, factual
-content, material identity or progression category is introduced here.
-
-## Australian rubbish and readable gameplay — 2026-10-21 planning amendment
-
-The [four-phase roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) records the owner-requested
-priorities, source review, candidate roster and phase gates. The promotion here is
-planning direction, not implementation of the broader six-type/knowledge systems.
-Waste generation uses tonnes; surveyed litter uses item counts and a site sample.
-Neither measures combat harm. The >5mm hard-fragment row does not describe the
-existing Microplastics identity. Keep period/region/metric/denominator/source/review
-date with eventual facts; retain the two separate rankings.
-
-Outdoor prototypes prioritize Cigarette Butts, Packets/Wrappers and Aluminium Can,
-one proved decision at a time. Rubble/organics/cardboard/scrap are later site
-candidates; ash and hazardous waste remain industrial/containment candidates.
-New movement/attacks are fictional game behaviour. In particular, the legacy
-cigarette-on-death contamination idea is not selected: successful cleanup should
-not automatically create a harmful patch. Hazardous material is not ordinary
-vacuumable rubbish. Real handling claims require separate evidence and context.
-
-The existing guide is the only reference framework. Optional explanations follow
-recognizable interactions; no reading/quiz gate or new effectiveness matrix is
-introduced. Q6 remains first, followed by measured G1 rebalancing before growth.
-
-## Q6 implemented correction — 2026-10-21
-
-The second tool's own four reach picks each add one primary target, independent
-of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
-adds its authored extra target (8). Splash remains finite and unchanged. The
-short filled cue marks a single pulse, followed by a faint historical outline
-and selected-hit rings; entering the fade causes no new damage. Frame-specific
-presentation anchors align player poses without editing accepted art or bodies.
-This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
-fact, effectiveness matrix, persisted state or new sprite is added.
-[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.
-
-## G1 accepted balance — 2026-10-21
-
-After verified Q6, the existing-roster comparison selects only eco Glass armour
-40→20 and its director base weight12→8. Glass retains96health, slow70movement,
-9contact harm and7XP; the health ordering/material relationships stay intact.
-The calm late natural selection mix is approximately45%Bottle/30%Microplastics/
-11%Glass/14%Bagged, replacing the historical43/28/16/13rounded mix. These are game
-weights, never litter-survey probabilities. Microplastics still open one-hit;
-Bottles remain the numerical baseline, Shards stationary/clearable and bag
-families finite. Knight tuning, other roles, weapon damage, progression, presets,
-cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
-[G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
-retains all scenarios and records the bounded local gate and its limits. G1 is
-locally complete; G2–G4 and sprite generation remain unstarted.
-
-## G2A weak groups — kept locally 2026-10-22
-
-`enemy.cluster_fodder` maps to eco Cigarette Butts and knight Ashling. Individual
-weak actors approach slowly in groups of three; clear a narrow lane or catch the
-group in a cone. First introduction at25% is three retained requests, then sparse
-natural groups.6HP/64speed/3harm/1XP are game tuning, unrelated to surveyed item
-percentages or factual toxicity/persistence. Visible pale/orange primitive parts
-and separate20px bodies replace neither Microplastics nor any material family.
-No post-cleanup contamination patch, new art, saved discovery or effectiveness
-matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
-
-[Reviewed plan](MASTER_BUILD_PLAN.md#readable-gameplay-g2), [candidate report](content/G2A_REPORT.md).
-G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
-a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
-
-## G2B wrapper role — local keep 2026-10-22
-
-`enemy.gust_drifter`: eco Packets / Wrappers; knight Paper Wisp. One introduction
-at32% and sparse later arrivals. Approach → visible fixed-bearing warning → short
-oblique gust → stationary recovery gives an interception choice. Generic capability,
-theme-owned timings/stats/essential cue, code-native packet silhouette. Fictional
-movement/harm, no real handling/abundance claim, automatic waste patch, new guide
-surface, sprite or save field. Existing material families/IDs unchanged.
-[G2B_REPORT](content/G2B_REPORT.md) records keep and measured limits. Can next;
-G2 in progress, G3/G4/art unstarted. Historical earlier status remains historical.
-
-## G2C kept / G2 complete — 2026-10-22
-
-`enemy.committed_charger`: eco Aluminium Can; knight Barrel Construct. A visible
-fixed line captures the player's old position, then a fast direct roll passes it
-and stops for recovery. Sideways movement avoids that route; cleanup rewards the
-return. This differs from the wrapper's oblique gust and weak-group lane clearing.
-One introduction at55%, sparse natural weight2; timings/stats/cue/body/presentation
-are theme-authored and use the shared capability. The primitive can's body/label/
-end caps are code-native presentation, never physics input. No generated art,
-material/harm/handling fact, new information surface, saved field or ID remap.
-
-All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
-[G3 master record](MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed. G3 ready/unstarted;
-G4/art unstarted, external evidence still deferred/waived/unverified. This is the
-current state; earlier staged continuation paragraphs are historical checkpoints.
-
-## G3 rhythm and informed voluntary pressure — 2026-10-22
-
-Locally kept after owner-requested execution: shared later roles unlock25/34/44/
-52/60%, mini72%, baseline elites82%, final100%. Eco Microplastics0/Bottle10 and
-knight Grunt0/Runner20 remain distinct. First Glass/Tank4, Bag/Broodmother2 use
-existing retained causal introductions. Five optional sites at16/40/66/84/90%
-replace the repeated Multiplicity arrival; definitions/cost/reward values stay.
-
-Existing prompts now name the choice and show resolved current-world arrivals,
-durability/harm/XP/elite chance before acceptance; walk away to ignore. Named
-edge pointers remain, with distinct minimap site diamonds and a shorter authored
-placement band. Bosses stop pursuit during their fixed-circle warning, then resume
-in recovery; no new attack/counter/health/damage/body. These are game decisions,
-not real material/handling/abundance claims. No quiz, currency, new roster, saved
-field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
-verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
-complete; [reviewed G4 handoff](MASTER_BUILD_PLAN.md#readable-gameplay-g4) is current, G4/art unstarted.
-
-## G4 — useful reviews and optional reference / 2026-10-22
-
-Locally verified G4 adds a concise run review: actual committed direct/splash
-damage by tool, other effects as the remaining partition, recorded voluntary
-site/curse pressure and an attainable next experiment. The old damage ledger,
-metrics and upgrade tally remain in Details (click or Tab); R/Enter restarts.
-A death source describes the recorded final hit at elapsed time, including
-endless overtime; it is not a diagnosis of the whole run. Final-boss success
-appears only from its recorded flag and can coexist with a later death.
-
-Info and the pause Field Guide/Grimoire now include one paged enemy entry at a
-time and read-only progress toward the existing finished-attempt/kill unlocks.
-Enemy descriptions/relations come from the current theme; health, speed and
-contact harm come from difficulty-resolved definitions, displayed to two decimals
-and explicitly labelled game values. They are reference values, not every live
-actor's time/world/elite-scaled state. Previous/Next and PgUp/PgDn navigate;
-Tab/arrows switch sections and Escape returns. Reading is optional and changes
-no progress. No new fact, ranking, disposal/handling advice, discovered-material
-record, ID remap or permanent stat economy was selected. Existing environmental
-copy has not received a new factual review in this phase.
-
-[Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
-is current. G1–G4 are locally complete; new sprite generation remains unstarted.
-
-
-## Tool presentation and menu exit — 2026-10-23
-
-Owner selects bounded procedural suction/dust on eco vacuum pulses and snapping
-multi-prong Collection Sweep cues. Precise attack guides are presentation only,
-behind Show attack radius (default OFF). Actual hit selection, reach/caps, damage,
-clocks and material identities remain unchanged. Reduced motion/Low have quieter
-variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
-active run without counting a finished run or granting an unlock. Saved settings/
-progress remain. Generated sprite sheets remain in review and knight content
-stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
-
-## Owner-selected money and cleanup expansion —2026-10-27
-
-[V0.4.5](BUILD_PLAN_V0.4.5.md) selects money as run leveling, separate saved Impact
-and shop, rare magnet/food/Impact drops affected by Fortune, aura vacuum/bin/orbit
-rakes, detrimental material fragmentation, opening Cigarette Butts, late natural
-Microplastics, fleeing litter-carrying rat, real active-wall run clock, and an
-isolated testing area with interactive equipment trees and currency editors.
-Stable historical experience/statistic IDs retain their meaning as earned run
-progress; schema3 adds Impact/shop with explicit migration. Game rewards are
-fiction, not a claim that all waste qualifies for a real container refund.
-Knights and Magic remains paused; no new educational disposal claims.
-
-
-Owner correction2026-10-27: eco weapons now use one seven-level stepped path each.
-Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
-in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
-Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
-slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.
-
-
-Owner phase6 correction2026-10-27: cigarettes/cans never produce Microplastics;
-glass retains Glass Shards. Single-cigarette opening; later Microplastics own
-three-piece natural arrivals. Wrappers pursue airborne through other rubbish.
-Compacted Waste summons ordinary litter excluding Bagged Waste/Glass Bottles;
-Colossus varies light/heavy/pressure patterns and releases one mixed load below
-20%health. Boss attack summons pay independently; bounded death-fragment budgets
-remain separate. Rare item chances lower; rake regenerated for readability.
-All are game abstractions, with no new real-world disposal/material claims.
-[Current implementation/checks](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+<!-- Historical heading anchors retained for existing links. -->
+<a id="v043-c1-promotion--bounded-second-tool"></a>
+<a id="v043-c2--secondary-tool-evolution"></a>
+<a id="v043-c3--readable-voluntary-pressure-choices"></a>
+<a id="v043-c5--bounded-fictional-encounters"></a>
+<a id="session21-selected-correction--vacuum-progression-and-feedback"></a>
+<a id="australian-rubbish-and-readable-gameplay--2026-10-21-planning-amendment"></a>
+<a id="q6-implemented-correction--2026-10-21"></a>
+<a id="g1-accepted-balance--2026-10-21"></a>
+<a id="g2a-weak-groups--kept-locally-2026-10-22"></a>
+<a id="g2b-wrapper-role--local-keep-2026-10-22"></a>
+<a id="g2c-kept--g2-complete--2026-10-22"></a>
+<a id="g3-rhythm-and-informed-voluntary-pressure--2026-10-22"></a>
+<a id="g4--useful-reviews-and-optional-reference--2026-10-22"></a>
+<a id="tool-presentation-and-menu-exit--2026-10-23"></a>
+<a id="owner-selected-money-and-cleanup-expansion-2026-10-27"></a>

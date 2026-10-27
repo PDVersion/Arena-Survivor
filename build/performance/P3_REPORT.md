@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # P3 — Measured committed-kill window overhead
 
 Status: **P3 software gate verified 2026-10-14.** P3 only; P4–P6 and content remain unstarted.

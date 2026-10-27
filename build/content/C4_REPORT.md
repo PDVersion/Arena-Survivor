@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # C4 — elite family /2026-10-20
 
 Verified local phase on codex/v0.4.3 from05f8860. No publication or matching-head CI claim. Read-only remote inspection confirms mergedPR26 head2806720/mergec6daeb6 and run39189877476 passing2806720 only. Exact source, compiled and screenshot hashes plus actual browser observations are in [C4_RESULTS.json](C4_RESULTS.json).

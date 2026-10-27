@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # G1 — reliable power growth and existing-roster rebalance
 
 Verified locally 2026-10-21, `codex/readable-gameplay-g1`. Q6 prerequisite is the

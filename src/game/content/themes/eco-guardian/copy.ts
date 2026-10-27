@@ -72,6 +72,15 @@ export const copy = {
   },
   profile: { saved: "Progress saved in this browser.", memory: "Browser storage unavailable. Progress remains in memory; keep this tab open.", blocked: "Saved progress could not be read. It has been preserved; new progress stays in memory.", changedElsewhere: "Saved progress changed in another tab. This tab keeps changes in memory; reload to use the saved progress.", browserSave: "Browser save", completedRuns: "Completed runs", deaths: "Deaths", longestRun: "Longest run", unlocked: "Unlocked", locked: "Locked", finishedRuns: "finished runs", lifetimeKills: "lifetime kills", unlockedPrefix: "Unlocked" },
 
+  eliteGuide: {
+    tab: "Elites", title: "Elite identities",
+    introduction: "Elite identities modify an ordinary enemy; they are separate from material fragments, natural groups and boss summons. The symbol above the enemy identifies its extra behaviour. The values below are multipliers on that enemy type; difficulty and site pressure apply separately.",
+    standardName: "Standard elite", standardDescription: "Larger, tougher waste with increased contact harm and a larger money reward. No additional special behaviour.", noMarker: "No symbol",
+    health: "Health", harm: "Contact harm", money: "Money reward", size: "Size",
+    split: "Splits into {count} copies when cleared, for up to {depth} generation. The copies retain their symbol but cannot split again after that limit. Each copy pays {reward} of its normal elite reward.",
+    shield: "Takes {damage}% of incoming damage while above {health}% health. The shield and its symbol disappear at that threshold.",
+    acceleration: "Gradually accelerates to {speed} normal movement speed.",
+  },
   eliteVariants: {
     "elite.split": { name: "Dispersing Waste", description: "2 marker: splits into two copies once per lineage; copies retain their elite identity." },
     "elite.shield": { name: "Wrapped Waste", description: "◇ marker: takes half damage above half health; the shield then breaks." },

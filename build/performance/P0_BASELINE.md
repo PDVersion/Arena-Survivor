@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # P0 browser measurement baseline — 2026-10-12
 
 Status: **P0 complete and verified**, including the final combined software gate. No optimization or older-device acceptance is claimed.

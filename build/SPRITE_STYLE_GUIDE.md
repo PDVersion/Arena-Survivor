@@ -18,7 +18,7 @@ The [sprite plan](SPRITE_PLAN_V0.4.4.md) owns scope and integration gates;
 [copyable prompts](SPRITE_PROMPTS.md) own individual subjects;
 the [manifest](sprites/MANIFEST.md) owns attempts and acceptance.
 [Master pipeline record](MASTER_BUILD_PLAN.md#v0-4-1) and REC-071–078 explain the seam.
-Style 1 remains the shipped baseline until reviewed style 2 replacements pass.
+Style2 is the live eco baseline (owner switch2026-10-26). Original style1 evidence is historical; current acceptance is in BUILD_STATUS.md.
 
 ## Resolution and scale contract
 

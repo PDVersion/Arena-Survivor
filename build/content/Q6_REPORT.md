@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # Q6 — verified prerequisite correction, 2026-10-21
 
 Branch `codex/readable-gameplay-g1`, parent/main `c200b21`. PR27 merge `9837158`

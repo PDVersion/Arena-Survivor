@@ -1,3 +1,8 @@
+> Retained acceptance procedure. Actual native Safari/missing branded-browser-OS/
+> older physical GPU evidence remains waived/unverified; use a fresh current source
+> identity if selected. Old pack revisions are not current-head acceptance.
+> [Current status](../BUILD_STATUS.md).
+
 # P6 — physical device and branded-browser checklist
 
 This checklist records evidence; it does not waive P5 or certify a device from an engine test. The owner confirmed on 2026-10-19 that no older device is available. Physical older integrated-GPU acceptance is **pending**.

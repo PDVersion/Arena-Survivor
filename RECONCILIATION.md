@@ -4491,3 +4491,41 @@ inspected. Damage-rush model: L5at19s,L10at74s,final25/677kills/931money,peak300
 It omits boss release combat/coverage/fragments/survival, so is not balance proof.
 Full historical browser/stress/soak/device/current-head CI remain deferred. Owned
 processes cleaned. Next: owner early-pacing/boss-density/drop/rake feel feedback.
+
+## REC-139 — Visible elite guide and current-document authority (2026-10-27)
+
+Owner selects Elite Identities reference and a full current build-doc pass.
+Existing eliteVariants descriptions were content data only, not rendered by the
+Field Guide; REC-138's marker-copy statement did not establish a visible guide.
+A new optional eco guide now renders standard/no-symbol, split2, shield◇ and
+accelerating» from actual elite definitions, including shared health/harm/money/
+size modifiers. Both pause/title contexts scroll above fixed controls, including
+small viewport. Optional copy/section preserves the frozen pack and does not change
+combat, tuning, saved data, sprites or enemy identities.
+
+Indexed64pre-existing build Markdown files plus root progress. Condensed current
+status/product/content/save/sprite/handoff authorities and moved completed
+V0.4.5 claims/results plus compatibility notes into MASTER_BUILD_PLAN. Full old
+progress/status/sequence and original product/content/proposal sources remain in
+build/logs; dated reports retain original findings with explicit historical-status
+notices. Legacy heading anchors and relative paths remain usable. Current
+REMAINING_WORK distinguishes unbuilt proposals, partially shipped foundations,
+retired eco designs, owner acceptance, regression/fixture work, waived external
+device gaps and unrequested delivery. A document saying "planned" is not new
+implementation approval. Slots, save portability, bosses, endless, sprites, money/
+Impact Shop, tools, guide/review and testing area must not be rescheduled as missing.
+
+Pre-existing progression research/retired-prompt/REC-132local edits preserved
+unstaged; their source732080a snapshot is dated and not current tuning authority.
+No passive-system proposal or frozen-theme work is promoted by this audit.
+
+743units/81files, types/lint/build and one focused serial real-Phaser guide case
+pass, zero retries; dynamic definition changes and absent optional copy covered.
+Pause/title/scroll/small viewport/fixed footer captures inspected. Browser fixture
+cleanup corrected from nonexistent destroy() to hide() before the passing run.
+856local file/anchor links pass, six complete source archives verified, research
+hashes unchanged. Per-document dispositions/hashes in build/DOCS_AUDIT_20261027.*.
+Existing build-size advisory remains. Full browser/stress/soak/device/current-head
+CI and fresh production guard deferred, not passed. Owned processes cleaned; no
+publication. Next owner confirmation chooses which unbuilt proposals to retain
+or prioritise; no selected implementation task remains in this turn's scope.

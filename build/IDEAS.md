@@ -1,3 +1,7 @@
+> Historical unselected ideation. “Current build” below describes its original
+> brainstorming context, not the active game. Eco is active; knight content stays
+> frozen. See [remaining work](REMAINING_WORK.md) before selecting anything.
+
 Ideas
 
 ## Owner direction — Knights and Magic paused indefinitely
