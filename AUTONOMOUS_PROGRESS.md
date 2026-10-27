@@ -2,6 +2,16 @@
 
 Updated: 2026-10-27 (Australia/Sydney).
 
+## V0.4.5 material/boss/rake correction — 2026-10-27
+
+Compact readable rake a2; material-aware fragments; single-cigarette opening,
+Microplastic groups; airborne wrappers; named boss summon patterns and near-death
+mixed release; rarer items.740units/80files,34sprite checks, types/lint/build,
+focused serial real-Phaser acceptance and production guard pass. Pacing model ran
+with stated coverage/boss/survival limits. Full historical/device/CI remain
+deferred. Next: owner early pacing, boss density, drops and rake feel feedback.
+No publication/frozen-theme edits. See current V0.4.5 plan/report.
+
 ## V0.4.5 rake/HUD correction — 2026-10-27
 
 Rake Sweep travels about15% slower, handle first. Equipped-tool HUD icons now

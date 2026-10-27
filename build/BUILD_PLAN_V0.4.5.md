@@ -142,4 +142,4 @@ product authority/status/report/reconciliation. No frozen-theme, save-schema or
 passive-system changes. Verify types/lint/build, units/sprites, pacing CLI and one
 consolidated scoped art/wrapper/boss/fragment/drop browser check; broader checks
 remain deferred. Sprite claim and accepted source get separate commits.
-- [ ] Phase6 art, material/director/boss/drop corrections and acceptance.
+- [x] Phase6 art, material/director/boss/drop corrections and acceptance. 740 units/80 files,34sprite sheets, types/lint/build, focused serial browser and production guard pass. Pacing model ran; full historical/device/CI checks remain deferred.

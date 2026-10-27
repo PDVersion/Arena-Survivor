@@ -421,13 +421,24 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     for (const child of enemy.deathSpawns ?? []) {
       if (!enemyIds.has(child.enemyId)) issues.push(`${enemy.id} references missing death-spawn enemy: ${child.enemyId}`);
     }
+    if (enemy.airborne !== undefined && typeof enemy.airborne !== "boolean") issues.push(`${enemy.id} airborne must be boolean`);
+    const fragments = enemy.fragmentation;
+    if (fragments && (!fragments.pool.length || fragments.pool.some((id) => !enemyIds.has(id) || enemies.find((e) => e.id === id)?.boss) || !Number.isSafeInteger(fragments.childCount) || fragments.childCount < 1 || fragments.childCount > 32 || !Number.isFinite(fragments.spreadRadius) || fragments.spreadRadius <= 0 || ![fragments.chanceBonus, fragments.minimumChance].every((n) => Number.isFinite(n) && n >= 0 && n <= 1))) issues.push(`${enemy.id} invalid bounded material fragments`);
+    const summons = enemy.boss?.summons;
+    if (summons) {
+      if (!summons.patterns.length) issues.push(`${enemy.id} summon cycle needs patterns`);
+      for (const pattern of [...summons.patterns, ...(summons.nearDeath ? [summons.nearDeath] : [])]) {
+        if (!pattern.name.trim() || !Number.isFinite(pattern.spreadRadius) || pattern.spreadRadius <= 0 || !pattern.entries.length || pattern.entries.reduce((sum, entry) => sum + entry.count, 0) > 32 || pattern.entries.some((entry) => !enemyIds.has(entry.enemyId) || enemies.find((e) => e.id === entry.enemyId)?.boss || !Number.isSafeInteger(entry.count) || entry.count < 1 || !Number.isFinite(entry.rewardMultiplier) || entry.rewardMultiplier <= 0)) issues.push(`${enemy.id} invalid bounded boss summons`);
+      }
+      if (summons.nearDeath && (!Number.isFinite(summons.nearDeath.healthFraction) || summons.nearDeath.healthFraction <= 0 || summons.nearDeath.healthFraction >= 1)) issues.push(`${enemy.id} invalid near-death summon threshold`);
+    }
     if (enemy.fragmentInto && !enemyIds.has(enemy.fragmentInto)) {
       issues.push(`${enemy.id} references missing fragment enemy: ${enemy.fragmentInto}`);
     }
   }
   const spawnEdges = new Map<string, string[]>(enemies.map((enemy) => [
     enemy.id,
-    [...(enemy.deathSpawns ?? []).map((child: { enemyId: string }) => child.enemyId), ...(enemy.fragmentInto ? [enemy.fragmentInto] : [])],
+    [...(enemy.deathSpawns ?? []).map((child: { enemyId: string }) => child.enemyId), ...(enemy.fragmentInto ? [enemy.fragmentInto] : []), ...(enemy.fragmentation?.pool ?? [])],
   ]));
   const visiting = new Set<string>();
   const visited = new Set<string>();

@@ -1312,8 +1312,8 @@ export const ecoSpriteRecipes = [
   },
   {
     "contentId": "weapon.rake_beam",
-    "source": "build/sprites/raw/weapon_orbiting_rake.a1.png",
-    "output": "public/sprites/eco-guardian/weapon_orbiting_rake.png",
+    "source": "build/sprites/raw/weapon_rake_beam.a2.png",
+    "output": "public/sprites/eco-guardian/weapon_rake_beam.png",
     "frameWidth": 96,
     "frameHeight": 32,
     "frames": 1,
@@ -1353,7 +1353,7 @@ export const ecoSpriteRecipes = [
       ]
     ],
     "outline": "#172d3c",
-    "acceptedOutput": "build/sprites/accepted/weapon_orbiting_rake.png",
+    "acceptedOutput": "build/sprites/accepted/weapon_rake_beam.png",
     "theme": "eco-guardian",
     "textureKey": "eco_guardian.weapon.rake_beam"
   },

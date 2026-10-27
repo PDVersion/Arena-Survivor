@@ -227,6 +227,6 @@ Rake Sweep a2 accepted2026-10-27: native96x32, five distinct silver/grey teeth w
 transparent gaps, compact orange handle. Raw SHA256524b6c875c52a4abaf64a23907b11f42c2b9c9a3dc9bc217f0404bfb632d5727;
 normalized7476c52610e27a14a9e715b121e8de8b7bacab01784381e102f5e126b7d86bb2.
 Hard-alpha/palette/component checks pass; inspected native and full source. Handle
-roughly30%shorter; broader head uses28px height versus prior20px for readability.
+roughly30%shorter; broader head uses28px height versus prior19px for readability.
 User allowed proportions to vary. New compact silhouette is intentional; no
 world-size/hitbox compensation or painted repairs. Exact built-in prompt retained.

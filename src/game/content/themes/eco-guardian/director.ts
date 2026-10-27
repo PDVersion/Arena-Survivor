@@ -5,7 +5,7 @@ import type { DirectorTuning } from "../../../core/archetypes/tuning";
  * Curves, not a phase list. Everything resolves from normalized run progress,
  * so a run of any length restretches without new authoring.
  *
- * Microplastics open the run. Bottles quietly enter at 10% progress (30 s on
+ * Single Cigarette Butts open the run. Bottles quietly enter at 10% progress (30 s on
  * the five-minute timer), with a low initial weight and a gradual ramp.
  * G3 spaces heavier introductions before the later mini-boss.
  */
@@ -39,8 +39,7 @@ export const director = {
       weightGrowth: 9,
       chaosWeightBias: 0,
     },
-    // Small opening enemy. Keep drift for any authored milestone burst;
-    // ordinary spawns chase but remain below player movement speed.
+    // Single opening enemy; Microplastics own natural three-piece groups later.
     {
       enemyId: archetypeIds.enemy.clusterFodder,
       waveMovement: "chase",

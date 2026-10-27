@@ -1,3 +1,4 @@
+import type { EnemyDefinition } from "../../core/archetypes/contracts";
 import type { PlayerBaseStats } from "../../core/stats/player-stats";
 export type DropKind = "money" | "magnet" | "food" | "impact";
 export interface EconomyDefinition {
@@ -45,4 +46,11 @@ export function sampleActiveClock(previous: ActiveClock | undefined, at: number,
 export function magnetPullSpeed(pull: { startSpeed: number; acceleration: number; maxSpeed: number }, ageMs: number, distance: number, deltaMs: number): number {
   const speed = Math.min(pull.maxSpeed, pull.startSpeed + pull.acceleration * Math.max(0, ageMs) / 1000);
   return Math.min(speed, distance / Math.max(deltaMs / 1000, Number.EPSILON));
+}
+
+/** Material pool and boss modifiers remain authored by the active pack. */
+export function enemyFragmentChance(enemy: EnemyDefinition, economy: EconomyDefinition, fortune: number, hits: number, lethalFraction: number, critical: boolean, care: number): number {
+  if (!enemy.fragmentInto && !enemy.fragmentation) return 0;
+  const base = fragmentationChance(economy, fortune, hits, lethalFraction, critical, care);
+  return Math.min(1, Math.max(enemy.fragmentation?.minimumChance ?? 0, base + (enemy.fragmentation?.chanceBonus ?? 0)));
 }

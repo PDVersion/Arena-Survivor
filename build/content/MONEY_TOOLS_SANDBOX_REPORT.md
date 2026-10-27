@@ -40,12 +40,12 @@ money aggregates, representing their full value rather than an approximation.
 
 | Rare drop | Base chance per primary cleanup | Effect |
 |---|---:|---|
-| Money Magnet | 0.3% | Draw all existing money toward the player |
-| Drumstick | 0.5% | Restore20health, capped at maximum |
-| Impact Point | 0.4% | Save1Impact immediately for the outside-run shop |
+| Money Magnet | 0.08% | Draw all existing money toward the player |
+| Drumstick | 0.15% | Restore20health, capped at maximum |
+| Impact Point | 0.12% | Save1Impact immediately for the outside-run shop |
 
-Fortune multiplies these chances by `1 + Fortune/100`, with8%cap per kind.
-Fragment children do not roll extra rare items. A Litter Rat has8x base rare-item
+Fortune multiplies these chances by `1 + Fortune/100`, with2%cap per kind.
+Fragment children do not roll extra rare items. A Litter Rat has3x base rare-item
 rolls,180base health,30base money on cleanup, and a separate12money hit-leak budget.
 It wanders rather than chasing and flees after damage. Its reward represents
 recovered carried litter, not a claim that animals are recyclable waste.
@@ -76,7 +76,7 @@ second and caps at 1900 units/s. Each aggregate tracks its own pull age, so dist
 money arrives faster after a longer pull. Pauses add no acceleration time. Exact
 value/merge limits are unchanged; displacement is capped to prevent overshoot.
 
-Waste begins with75%breakage chance on a weak multi-hit, non-critical kill.
+Eligible plastic/mixed waste begins with75%breakage chance on a weak multi-hit, non-critical kill.
 A clean one-shot reduces this to10%; a critical finishing hit reduces it to15%;
 a one-shot critical produces no fragments. Each Fortune point subtracts0.4
 percentage points, and each Careful Cleanup skill level subtracts10points.
@@ -87,7 +87,7 @@ The small extra return is not intended to make fragmentation desirable.
 
 Cigarette Butts now open naturally; natural Microplastics enter at28%of the run
 (84seconds on a five-minute clock), while events and breakage may create them
-earlier. Cigarette Butts retain small arrival groups. Rare rats begin entering
+earlier. Cigarette Butts arrive individually; natural Microplastics arrive in groups of three. Rare rats begin entering
 at20%, with very low selection weight. Glass remains the durable waste role.
 
 Eco criticals progress2x yellow →3x white →4x red; red is the top tier and its
@@ -112,7 +112,7 @@ starting tuning rather than copied balance claims.
 - [HoloCure EXP](https://holocure.wiki.gg/wiki/EXP) describes exact-value nearby-drop
   merging and an EXP Magnet. This supports conserving aggregate money and pulling
   it toward the character. HoloCure's stated magnet rate is much lower; this short
-  five-minute game starts at0.3%and needs owner feedback about frequency.
+  five-minute game now uses0.08%and still needs owner feedback about frequency.
 - [Vampire Survivors Vacuum](https://vampire.survivors.wiki/w/Vacuum) pulls ground
   experience toward the player and is affected by Luck. Our magnet affects money,
   while healing and saved Impact remain their own pickups.
@@ -136,7 +136,7 @@ fixed-items research remains separate from these implementation decisions.
 
 ## Normal-play checklist and next work
 
-1. Begin a fresh normal run. Cigarette Butts should be recognisable opening waste.
+1. Begin a fresh normal run. Cigarette Butts should be recognisable opening waste arriving individually; later natural Microplastics should group in threes.
    Check that money looks like coins/notes, larger piles keep their value, and
    fixed tool cards name their owner while stat cards retain meaningful quality.
 2. Compare the five-minute countdown with a stopwatch. Count only active play;
@@ -258,3 +258,65 @@ Actual rake runtime covers110units of travel in200ms, handle-first rotation and
 unchanged head anchor. Capture inspected. Existing bundle-size advisory remains;
 full-app/browser/stress/device/current-head CI and a fresh production guard are
 explicitly deferred for this bounded correction. Owned browser/server cleaned.
+
+
+## Owner correction, phase 6 — 2026-10-27
+
+Rake a2 has a roughly30%shorter shaft and a deliberately broader head than the
+suggested25%increase:28native pixels high versus19before. Five substantial silver/
+grey teeth, dark shading and transparent gaps remain visible while moving. Native
+96x32/frame, existing speed/head contact anchor geometry and handle-first runtime
+orientation are preserved. Built-in imagegen exact prompt/raw/review/accepted
+paths: `build/sprites/raw/weapon_rake_beam.a2.*`,
+`build/sprites/review/style2/weapon_rake_beam.a2.*`,
+`build/sprites/accepted/weapon_rake_beam.png`. Previous a1production image removed;
+its historical generation/review evidence remains. No shovel regeneration.
+
+Cigarette Butts and Aluminium Cans no longer fragment into Microplastics. Glass
+Bottles still produce Glass Shards. Plastic/mixed-material enemies retain their
+configured material fragments. Natural three-piece formation moves from the
+opening cigarettes to later Microplastics; causal spawns never multiply groups.
+Wrappers lose the gust/committed attack and pursue directly, ignoring crowd
+separation and ground obstacle steering. Player contact harm and tool hits remain.
+
+Compacted Waste cycles Loose litter (8small enemies), Hard litter (5enemies) and
+Compacted fragments (7pieces), excluding Bagged Waste and Glass Bottles. Colossus
+cycles Scattered rubbish (11), Heavy load (6), Pressure release (7), then once
+below20%health selects an18-enemy mixed load at its next telegraph. That release
+contains every ordinary type, including a rat, and cannot summon another boss.
+Each pattern has a visible name during the existing fixed warning. Heavy types
+arrive in smaller numbers than light litter; each uses its own normal stats and
+reward. Attack summons do not deduct boss money. Existing actor/causal queue caps
+still apply, and no missed attack is replayed after lag.
+
+Bosses also fragment on death more readily: mini+20percentage points with45%floor
+and4children; final+25points with65%floor and8children. Pools match their allowed
+ordinary types. Death fragments share the existing35%child reward budget while
+the parent pays75%, so combined value remains110%; unlike attack summons, they
+cannot fragment again, drop rare items or leak extra rat money.
+
+Rare-item rates are now Magnet0.08%, food0.15%, Impact0.12%per eligible cleanup:
+about71%less baseline frequency than before. Fortune still increases chances,
+with2%per-kind cap. Rat bonus falls8x→3x and remains better than ordinary waste.
+The money drop itself is unchanged. Test-mode Fortune picks can raise frequency;
+manual placement buttons create items directly and bypass random-drop chances.
+
+Elite marker clarification: **2** means Dispersing Waste, splitting into two once
+per lineage; **◇** means Wrapped Waste, taking half damage while above half HP.
+These are elite modifiers, separate from material fragmentation or arrival groups.
+Descriptions now include the markers in the Field Guide.
+
+Verification:740unit tests/80files,34sprite sheets, types/lint/production build and
+one focused serial real-Phaser browser case (zero retries). It verifies floating
+wrapper overlap/pursuit, actual material kill outputs, boss summon contents,
+unchanged attack-time boss payout, death-fragment110%budget, and all10ordinary
+types in the18-enemy near-death release; rendered rake/boss capture inspected.
+Production guard verifies all entries and absent test hooks. Owned processes are
+cleaned. Full historical browser/stress/soak/device/current-head CI remain deferred.
+
+Damage-rush pacing model ran: Level5at19seconds, Level10at74seconds, final Level25,
+677kills/931money and peak300actors. Fewer opening arrivals slow leveling compared
+with the former triple-cigarette formation. The model omits boss summon combat,
+spatial coverage, fragments and survival; these are pacing estimates, not a
+balance acceptance claim. Next owner playthrough should check early leveling,
+boss density/fairness, moving-rake readability and rarer natural item drops.

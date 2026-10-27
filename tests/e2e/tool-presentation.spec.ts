@@ -350,3 +350,93 @@ test("weapon-frame HUD icons and slower handle-first rake reuse live art", async
     await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.hudRakeRuntime?.destroy(); return f.cleanup(); });
   }
 });
+
+test("material rules, floating wrappers and independent boss summon rewards", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await setup(page, false, true);
+  try {
+    const result = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__, run = f.run();
+      const controller = run.openTestingArea(); controller.pause(true);
+      const configure = () => controller.configure({ weapons: [], upgrades: {}, level: 1, health: 100, money: 0, impact: 0 });
+      configure();
+      controller.spawn("enemy.gust_drifter", 1, 180); controller.spawn("enemy.slow_durable", 1, 180);
+      const wrapper = [...run.enemies].find((e: any) => e.definition.id === "enemy.gust_drifter") as any;
+      const glass = [...run.enemies].find((e: any) => e.definition.id === "enemy.slow_durable") as any;
+      const before = { x: wrapper.x, y: wrapper.y };
+      run.updateEnemies(16); run.rebuildEnemyIndex(); run.resolveCrowd();
+      const floating = { airborne: wrapper.airborne, hasOldCue: Boolean(wrapper.motionCue), vx: wrapper.arcadeBody.velocity.x, vy: wrapper.arcadeBody.velocity.y,
+        samePlace: wrapper.x === before.x && wrapper.y === before.y && wrapper.x === glass.x && wrapper.y === glass.y };
+      controller.clear(); configure();
+      run.effectRandom = () => 0; // Deterministic fragmentation; rare-item rolls keep their real RNG.
+      const materialKills: Record<string, string[]> = {};
+      for (const id of ["enemy.cluster_fodder", "enemy.committed_charger", "enemy.slow_durable"]) {
+        controller.clear(); controller.spawn(id, 1, 180);
+        const target = [...run.enemies][0] as any;
+        run.commitEnemyDamage(target, 1e6, "direct"); run.processCausalEvents();
+        materialKills[id] = [...run.enemies].map((e: any) => e.definition.id);
+      }
+      controller.clear(); configure(); controller.spawn("enemy.mini_boss", 1, 150);
+      const mini = [...run.enemies][0] as any;
+      const cleanReward = mini.definition.xpReward * mini.rewardMultiplier;
+      const pulse = (boss: any) => {
+        run.runState = { ...run.runState, elapsedMs: run.bossAttacks.get(boss).nextAtMs };
+        run.updateBossAttacks();
+        const label = run.bossSummonLabels.get(boss).text;
+        const release = run.bossAttacks.get(boss).warning.releaseAtMs;
+        run.runState = { ...run.runState, elapsedMs: release };
+        run.updateBossAttacks(); run.processCausalEvents();
+        return label;
+      };
+      const miniLabel = pulse(mini);
+      const miniChildren = [...run.enemies].filter((e: any) => e !== mini) as any[];
+      const miniSummons = miniChildren.map((e: any) => e.definition.id);
+      const miniRewardAfterAttack = mini.definition.xpReward * mini.rewardMultiplier;
+      for (const child of miniChildren) child.destroy();
+      run.commitEnemyDamage(mini, 1e6, "direct"); run.processCausalEvents();
+      const fragments = [...run.enemies] as any[];
+      const fragmentBudget = [...run.pickups].filter((p: any) => (p.definition.kind ?? "money") === "money").reduce((sum: number, p: any) => sum + p.xpValue, 0)
+        + fragments.reduce((sum, e) => sum + e.definition.xpReward * e.rewardMultiplier, 0);
+      const miniFragmentCount = fragments.length;
+      const fragmentSources = fragments.map((e) => e.spawnSource);
+      controller.clear(); configure(); controller.spawn("enemy.final_boss", 1, 140);
+      const final = [...run.enemies][0] as any;
+      final.health = final.maxHealth * .19;
+      const finalReward = final.definition.xpReward * final.rewardMultiplier;
+      const finalLabel = pulse(final);
+      const finalChildren = [...run.enemies].filter((e: any) => e !== final) as any[];
+      const finalSummons = finalChildren.map((e) => e.definition.id);
+      const finalRewardAfterAttack = final.definition.xpReward * final.rewardMultiplier;
+      // Leave an actual telegraph and the regenerated pulled rake visible for inspection.
+      run.runState = { ...run.runState, elapsedMs: run.bossAttacks.get(final).nextAtMs };
+      run.updateBossAttacks();
+      const path = "/src/game/entities/cleanup-tool-runtime.ts";
+      const { CleanupToolRuntime } = await import(path);
+      const rake = f.theme.weapons.find((w: any) => w.id === "weapon.rake_beam");
+      const runtime = new CleanupToolRuntime(run, f.theme.tokens, () => {});
+      const at = { x: run.player.x - 170, y: run.player.y - 130 };
+      runtime.update(0, at, [{ weapon: rake, tool: rake.cleanup, attackRate: 1 }], new Set(), { x: 1, y: 0 });
+      runtime.update(180, at, [{ weapon: rake, tool: rake.cleanup, attackRate: 1 }], new Set());
+      f.materialRakeRuntime = runtime;
+      return { floating, materialKills, miniLabel, miniSummons, cleanReward, miniRewardAfterAttack, fragmentBudget, miniFragmentCount, fragmentSources,
+        finalLabel, finalSummons, finalReward, finalRewardAfterAttack, expectedTypes: f.theme.enemies.filter((e: any) => !e.boss).map((e: any) => e.id) };
+    });
+    expect(result.floating).toMatchObject({ airborne: true, hasOldCue: false, samePlace: true });
+    expect(result.floating.vx).toBeLessThan(0); expect(result.floating.vy).toBeCloseTo(0);
+    expect(result.materialKills["enemy.cluster_fodder"]).toEqual([]);
+    expect(result.materialKills["enemy.committed_charger"]).toEqual([]);
+    expect(result.materialKills["enemy.slow_durable"]).toEqual(["enemy.stationary_fragment", "enemy.stationary_fragment"]);
+    expect(result.miniLabel).toBe("Loose litter"); expect(result.miniSummons).toHaveLength(8);
+    expect(result.miniSummons).not.toContain("enemy.death_spawner"); expect(result.miniSummons).not.toContain("enemy.slow_durable");
+    expect(result.miniRewardAfterAttack).toBe(result.cleanReward);
+    expect(result.miniFragmentCount).toBe(4); expect(new Set(result.fragmentSources)).toEqual(new Set(["skill.fracture"]));
+    expect(result.fragmentBudget).toBeCloseTo(result.cleanReward * 1.1);
+    expect(result.finalLabel).toBe("Last load — mixed release"); expect(result.finalSummons).toHaveLength(18);
+    expect(new Set(result.finalSummons)).toEqual(new Set(result.expectedTypes));
+    expect(result.finalRewardAfterAttack).toBe(result.finalReward);
+    await page.screenshot({ path: info.outputPath("compact-rake-and-boss-mixed-release.png") });
+    expect(errors).toEqual([]);
+  } finally {
+    await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.materialRakeRuntime?.destroy(); return f.cleanup(); });
+  }
+});

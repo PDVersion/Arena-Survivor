@@ -3,7 +3,7 @@ import { arrivalClusterAngles, arrivalClusterCount, introductionCount } from "..
 import { ecoGuardianTheme as theme } from "../../../src/game/content/themes/eco-guardian";
 import { archetypeIds as ids } from "../../../src/game/core/archetypes/ids";
 import { crossedUnlocks } from "../../../src/game/systems/director/spawn-director";
-const definition = theme.enemies.find((e) => e.id === ids.enemy.clusterFodder)!;
+const definition = theme.enemies.find((e) => e.id === ids.enemy.fastFragile)!;
 it("keeps formation symmetric, spaced in world units and bounded by actual free slots", () => {
   const angles = arrivalClusterAngles(definition, 100, 0.5, 500);
   expect(angles).toHaveLength(3);

@@ -836,3 +836,14 @@ Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
 in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
 Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
 slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.
+
+
+Owner phase6 correction2026-10-27: cigarettes/cans never produce Microplastics;
+glass retains Glass Shards. Single-cigarette opening; later Microplastics own
+three-piece natural arrivals. Wrappers pursue airborne through other rubbish.
+Compacted Waste summons ordinary litter excluding Bagged Waste/Glass Bottles;
+Colossus varies light/heavy/pressure patterns and releases one mixed load below
+20%health. Boss attack summons pay independently; bounded death-fragment budgets
+remain separate. Rare item chances lower; rake regenerated for readability.
+All are game abstractions, with no new real-world disposal/material claims.
+[Current implementation/checks](content/MONEY_TOOLS_SANDBOX_REPORT.md).

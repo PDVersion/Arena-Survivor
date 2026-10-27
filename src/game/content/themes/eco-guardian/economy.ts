@@ -1,8 +1,8 @@
 import type { EconomyDefinition } from "../../../systems/economy/economy";
 export const economy = {
   criticalPresentation: [{ colour: "#facc15", size: 20 }, { colour: "#ffffff", size: 26 }, { colour: "#ef4444", size: 30 }],
-  denominations: [4, 25], dropChances: { magnet: 0.003, food: 0.005, impact: 0.004 },
-  fortuneScale: 0.01, maxDropChance: 0.08, foodHealth: 20, impactValue: 1, mergeDistance: 28,
+  denominations: [4, 25], dropChances: { magnet: 0.0008, food: 0.0015, impact: 0.0012 },
+  fortuneScale: 0.01, maxDropChance: 0.02, foodHealth: 20, impactValue: 1, mergeDistance: 28,
   fragmentation: { chance: 0.75, fortuneReduction: 0.004, cleanHitReduction: 0.65, careReduction: 0.1, critReduction: 0.6,
     parentShare: 0.75, totalShare: 1.1, childCount: 2 },
   shop: [

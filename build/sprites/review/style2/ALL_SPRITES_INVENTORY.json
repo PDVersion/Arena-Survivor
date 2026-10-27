@@ -449,17 +449,16 @@
   },
   {
     "id": "weapon.rake_beam",
-    "name": "weapon_orbiting_rake",
-    "attempt": 1,
+    "name": "Rake Sweep",
+    "attempt": 2,
     "frameWidth": 96,
     "frameHeight": 32,
     "frames": 1,
-    "native": "weapon_orbiting_rake.a1.png",
-    "raw": "../../raw/weapon_orbiting_rake.a1.png",
-    "prompt": "../../raw/weapon_orbiting_rake.a1.prompt.txt",
-    "metadata": "../../raw/weapon_orbiting_rake.a1.metadata.json",
-    "checks": "weapon_orbiting_rake.a1.checks.json",
-    "status": "live: outward rake sweep"
+    "native": "weapon_rake_beam.a2.png",
+    "raw": "../../raw/weapon_rake_beam.a2.png",
+    "prompt": "../../raw/weapon_rake_beam.a2.prompt.txt",
+    "checks": "weapon_rake_beam.a2.checks.json",
+    "status": "live: compact handle and broad separated teeth"
   },
   {
     "id": "weapon.orbiting_rake",

@@ -1,4 +1,5 @@
 import { archetypeIds } from "../../../core/archetypes/ids";
+import { miniSummons, finalSummons, miniFragments, finalFragments } from "./boss-summons";
 import type { EnemyDefinition } from "../../../core/archetypes/contracts";
 
 /**
@@ -47,7 +48,7 @@ import type { EnemyDefinition } from "../../../core/archetypes/contracts";
 export const enemies = [
   { id: archetypeIds.enemy.scavenger, maxHealth: 180, moveSpeed: 110, contactDamage: 2, contactCooldownMs: 1000,
     radius: 16, displayDiameter: 44, xpReward: 30, armour: 0, geometry: "circle", presentationToken: "enemyFast",
-    scavenger: { wanderMs: 1400, fleeMs: 2400, fleeSpeed: 1.6, leakValue: 1, leakBudget: 12, itemMultiplier: 8 } },
+    scavenger: { wanderMs: 1400, fleeMs: 2400, fleeSpeed: 1.6, leakValue: 1, leakBudget: 12, itemMultiplier: 3 } },
   {
     // Fictional coffee flick, authored gameplay values rather than material facts.
     id: archetypeIds.enemy.rangedAttacker, fragmentInto: archetypeIds.enemy.fastFragile,
@@ -74,17 +75,18 @@ export const enemies = [
     fragmentInto: archetypeIds.enemy.fastFragile,
   },
   {
-    // Microplastics — opening fodder. Nine health stays below a plain starter
+    // Microplastics — later group arrivals. Nine health stays below a plain starter
     // hit in every preset (Experienced: 9.9 HP / 10 damage); time/pressure
     // scaling can make later arrivals tougher. See REC-112.
     id: archetypeIds.enemy.fastFragile,
+    arrivalCluster: { count: 3, spacing: 34 },
     maxHealth: 9,
     moveSpeed: 190,
     contactDamage: 8,
     contactCooldownMs: 1000,
     radius: 10,
     displayDiameter: 26,
-    // Now the opening/common enemy: keep its reward at the bottle baseline.
+    // Small grouped enemy: keep its reward at the bottle baseline.
     xpReward: 1,
     armour: 0,
     geometry: "triangle",
@@ -146,44 +148,43 @@ export const enemies = [
   },
   {
     id: archetypeIds.enemy.miniBoss,
+    fragmentation: miniFragments,
     maxHealth: 240, moveSpeed: 60, contactDamage: 12, contactCooldownMs: 1000,
     radius: 26, displayDiameter: 64, xpReward: 18, armour: 0,
     geometry: "hexagon", presentationToken: "enemyTank",
-    boss: { kind: "mini", appearAt: 0.72,
+    boss: { kind: "mini", appearAt: 0.72, summons: miniSummons,
       attack: { holdDuringTelegraph: true, telegraphMs: 1200, recoveryMs: 2200, radius: 90, damage: 18 } },
   },
   {
     id: archetypeIds.enemy.finalBoss,
+    fragmentation: finalFragments,
     maxHealth: 1200, moveSpeed: 55, contactDamage: 16, contactCooldownMs: 1000,
     radius: 32, displayDiameter: 90, xpReward: 40, armour: 0,
     geometry: "hexagon", presentationToken: "enemySpawner",
-    boss: { kind: "final", appearAt: 1,
+    boss: { kind: "final", appearAt: 1, summons: finalSummons,
       attack: { holdDuringTelegraph: true, telegraphMs: 1400, recoveryMs: 1800, radius: 120, damage: 24 } },
   },
   {
     // G2A authored weak-cluster game tuning; no persistence/harm fact is implied.
-    id: archetypeIds.enemy.clusterFodder, fragmentInto: archetypeIds.enemy.fastFragile,
+    id: archetypeIds.enemy.clusterFodder,
     maxHealth: 9, moveSpeed: 110, contactDamage: 3, contactCooldownMs: 1000,
     radius: 10, displayDiameter: 28, xpReward: 1, armour: 0,
     geometry: "circle", presentationToken: "enemyFast",
-    arrivalCluster: { count: 3, spacing: 34 },
     primitiveParts: [{ x: -0.1, y: 0, width: 0.65, height: 0.35, rotation: 0.3, token: "enemyFast" },
       { x: 0.3, y: 0.12, width: 0.22, height: 0.35, rotation: 0.3, token: "explosion" }],
   },
   {
-    // G2B fictional gust/interception role; authored game values, not material facts.
-    id: archetypeIds.enemy.gustDrifter, fragmentInto: archetypeIds.enemy.fastFragile,
+    // Floating wrappers ignore ground crowding and pursue directly.
+    id: archetypeIds.enemy.gustDrifter, airborne: true, fragmentInto: archetypeIds.enemy.fastFragile,
     maxHealth: 12, moveSpeed: 80, contactDamage: 5, contactCooldownMs: 1000,
     radius: 12, displayDiameter: 34, xpReward: 2, armour: 0,
     geometry: "square", presentationToken: "enemySpawner",
-    committedMotion: { triggerRange: 150, telegraphMs: 900, travelMs: 900, recoveryMs: 1300,
-      speedMultiplier: 2.5, aimOffsetRadians: 0.8, cueToken: "critical", cueWidth: 3 },
     primitiveParts: [{ x: 0, y: 0, width: 0.7, height: 0.55, rotation: 0.15, token: "enemySpawner" },
       { x: 0, y: 0, width: 0.15, height: 0.65, rotation: 0.15, token: "critical" }],
   },
   {
     // G2C direct committed roll: sidestep the shown route, then clear in recovery.
-    id: archetypeIds.enemy.committedCharger, fragmentInto: archetypeIds.enemy.fastFragile,
+    id: archetypeIds.enemy.committedCharger,
     maxHealth: 18, moveSpeed: 90, contactDamage: 7, contactCooldownMs: 1000,
     radius: 14, displayDiameter: 38, xpReward: 3, armour: 0,
     geometry: "circle", presentationToken: "enemyTank",

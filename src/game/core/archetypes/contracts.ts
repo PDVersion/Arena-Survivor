@@ -485,7 +485,13 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
 /** Theme-owned weapon data with delivery-specific fields kept type-safe. */
 export type WeaponDefinition = ProjectileWeaponDefinition | MeleeWeaponDefinition;
 
+export interface BossSummonPattern {
+  readonly name: string;
+  readonly spreadRadius: number;
+  readonly entries: readonly { readonly enemyId: EnemyId; readonly count: number; readonly rewardMultiplier: number }[];
+}
 export interface BossDefinition {
+  readonly summons?: { readonly patterns: readonly BossSummonPattern[]; readonly nearDeath?: BossSummonPattern & { readonly healthFraction: number } };
   readonly kind: "mini" | "final";
   /** Normalized authored progress; unique encounter, not an ambient role. */
   readonly appearAt: number;
@@ -532,6 +538,9 @@ export interface RangedAttackDefinition {
 }
 
 export interface EnemyDefinition {
+  /** Airborne litter ignores ground crowd/obstacle blocking, but still harms the player and takes weapon hits. */
+  readonly airborne?: boolean;
+  readonly fragmentation?: { readonly pool: readonly EnemyId[]; readonly chanceBonus: number; readonly minimumChance: number; readonly childCount: number; readonly spreadRadius: number };
   readonly scavenger?: Readonly<{ wanderMs: number; fleeMs: number; fleeSpeed: number; leakValue: number; leakBudget: number; itemMultiplier: number }>;
   readonly rangedAttack?: RangedAttackDefinition;
   readonly committedMotion?: CommittedMotionDefinition;

@@ -178,3 +178,14 @@ describe("crowd density", () => {
     expect(theme.tuning.bodies.cellSize).toBeGreaterThanOrEqual(largest * 2);
   });
 });
+
+it("airborne litter passes through ground bodies without moving either, while ground separation remains", () => {
+  const ground = body("ground", 100, 100);
+  const wrapper = { ...body("wrapper", 100, 100), airborne: true };
+  const stats = separateCrowd([ground, wrapper], indexed([ground, wrapper]), OPTIONS);
+  expect(stats.adjustments).toBe(0);
+  expect([ground.x, ground.y, wrapper.x, wrapper.y]).toEqual([100, 100, 100, 100]);
+  const other = body("other", 100, 100);
+  expect(separateCrowd([ground, wrapper, other], indexed([ground, wrapper, other]), OPTIONS).adjustments).toBeGreaterThan(0);
+  expect([wrapper.x, wrapper.y]).toEqual([100, 100]);
+});

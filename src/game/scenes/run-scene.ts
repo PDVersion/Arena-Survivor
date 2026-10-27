@@ -2,7 +2,7 @@ import type { TestingAreaController } from "../core/testing-area";
 import { applyUpgrade } from "../systems/upgrades";
 import { xpRequiredForLevelOn } from "../systems/xp";
 import { setSandboxImpact } from "../systems/persistence/profile-service";
-import { fragmentationChance } from "../systems/economy/economy";
+import { enemyFragmentChance } from "../systems/economy/economy";
 import { CleanupToolRuntime } from "../entities/cleanup-tool-runtime";
 import { resolveCleanupTool } from "../systems/weapons/cleanup-tools";
 import { applyImpactBonuses, dropChance, sampleActiveClock, type ActiveClock } from "../systems/economy/economy";
@@ -393,6 +393,7 @@ export class RunScene extends Phaser.Scene {
   private enemyShots = new Set<EnemyShot>();
   private bossAttacks = new Map<EnemyActor, BossAttackState>();
   private bossCues = new Map<EnemyActor, Phaser.GameObjects.Graphics>();
+  private bossSummonLabels = new Map<EnemyActor, Phaser.GameObjects.Text>();
   private bossPulses = 0;
   private bossDamage = 0;
   private enemyDefinitions: readonly EnemyDefinition[] = [];
@@ -939,6 +940,8 @@ export class RunScene extends Phaser.Scene {
     this.bossHealthUi = undefined;
     for (const cue of this.bossCues.values()) cue.destroy();
     this.bossCues.clear();
+    for (const label of this.bossSummonLabels.values()) label.destroy();
+    this.bossSummonLabels.clear();
     this.bossAttacks.clear();
     this.clearEnemyShots();
     this.spawnedBossIds.clear();
@@ -996,6 +999,7 @@ export class RunScene extends Phaser.Scene {
     this.spawnedBossIds = new Set();
     this.bossAttacks = new Map();
     this.bossCues = new Map();
+    this.bossSummonLabels = new Map();
     this.bossPulses = 0;
     this.bossDamage = 0;
     this.bossHealthUi = undefined;
@@ -1222,7 +1226,7 @@ export class RunScene extends Phaser.Scene {
     rewardMultiplier: number,
     parentEntityId?: string,
     parentEventId?: string,
-    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" | "elite_split" = "offspring",
+    reason: "roster" | "offspring" | "fracture" | "duplication" | "wave" | "elite_split" | "boss_summon" = "offspring",
     point?: Readonly<{ x: number; y: number }>,
     elite?: boolean | EliteId,
     movement: WaveMovement = "chase",
@@ -1234,7 +1238,7 @@ export class RunScene extends Phaser.Scene {
       eventId: `spawn-${this.eventSequence}`,
       kind: "spawn.requested",
       provenance: {
-        sourceCategory: reason === "offspring" || reason === "elite_split" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
+        sourceCategory: reason === "offspring" || reason === "elite_split" || reason === "boss_summon" ? "enemy" : reason === "fracture" ? "skill" : reason === "duplication" ? "shrine" : "world",
         sourceId: spawnSource,
         parentEventId,
         effectId: reason === "offspring" ? "enemy.death_spawn" : reason === "fracture" ? "skill.fracture" : reason === "elite_split" ? "elite.split" : undefined,
@@ -1261,7 +1265,7 @@ export class RunScene extends Phaser.Scene {
       if (!definition) return;
       if (this.spawnEnemy(payload.spawnSource ?? "ambient", payload.rewardMultiplier ?? 1, definition, payload.point, payload.elite, payload.angleRadians, payload.movement,
         payload.reason === "fracture" ? "fragmentation" : payload.reason === "offspring" ? "baggedWaste" :
-          payload.reason === "duplication" || payload.reason === "elite_split" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural", payload.eliteSplitDepth)) {
+          payload.reason === "duplication" || payload.reason === "elite_split" || payload.reason === "boss_summon" ? "environment" : payload.reason === "roster" ? "benchmark" : "natural", payload.eliteSplitDepth)) {
         capacity -= 1;
         if (payload.reason === "offspring") this.offspringSpawned += 1;
         if (payload.reason === "fracture") this.fractureSpawned += 1;
@@ -1471,7 +1475,7 @@ export class RunScene extends Phaser.Scene {
       }
       // One tangential steer, no pathfinding: enough to stop a crowd stalling
       // permanently against an obstacle without paying for navigation.
-      if (obstacles.length > 0 && enemy.movement === "chase" && enemy.motionState.phase === "approach") {
+      if (!enemy.airborne && obstacles.length > 0 && enemy.movement === "chase" && enemy.motionState.phase === "approach") {
         const body = enemy.arcadeBody;
         let velocity = { x: body.velocity.x, y: body.velocity.y };
         for (const obstacle of obstacles) {
@@ -2020,7 +2024,9 @@ export class RunScene extends Phaser.Scene {
     if (!this.runState || !enemy.definition.boss || this.bossAttacks.has(enemy)) return;
     this.bossAttacks.set(enemy, createBossAttack(this.runState.elapsedMs, enemy.definition.boss));
     const cue = this.add.graphics().setDepth(15); this.bossCues.set(enemy, cue);
-    enemy.once(Phaser.GameObjects.Events.DESTROY, () => { cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy); });
+    const label = enemy.definition.boss.summons ? addWorldText(this, enemy.x, enemy.y, "", { fontFamily: "Georgia, serif", fontSize: "16px", color: this.runTheme.tokens.palette.critical, backgroundColor: this.runTheme.tokens.palette.background }).setOrigin(.5, 1).setDepth(45) : undefined;
+    if (label) this.bossSummonLabels.set(enemy, label);
+    enemy.once(Phaser.GameObjects.Events.DESTROY, () => { cue.destroy(); label?.destroy(); this.bossSummonLabels.delete(enemy); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy); });
   }
 
   private releaseBossMilestones(): void {
@@ -2048,11 +2054,21 @@ export class RunScene extends Phaser.Scene {
     for (const [enemy, state] of this.bossAttacks) {
       const definition = enemy.definition.boss;
       if (!enemy.active || enemy.defeated || !definition) continue;
-      const result = advanceBossAttack(state, definition, this.runState.elapsedMs, enemy,
+      const result = advanceBossAttack(state, definition, this.runState.elapsedMs, { x: enemy.x, y: enemy.y, healthFraction: enemy.health / enemy.maxHealth },
         { x: this.player.x, y: this.player.y, radius: this.player.definition.radius });
       this.bossAttacks.set(enemy, result.state);
       const cue = this.bossCues.get(enemy);
       cue?.clear();
+      this.bossSummonLabels.get(enemy)?.setText(result.state.warning?.summon?.name ?? "").setPosition(enemy.x, enemy.y - enemy.displayDiameter / 2);
+      if (result.summons) {
+        const count = result.summons.entries.reduce((sum, entry) => sum + entry.count, 0);
+        let index = 0;
+        for (const entry of result.summons.entries) for (let i = 0; i < entry.count; i++) {
+          const angle = index++ * Math.PI * 2 / count;
+          this.enqueueSpawnRequest(entry.enemyId, enemy.definition.id, entry.rewardMultiplier, enemy.targetId, undefined, "boss_summon",
+            { x: Phaser.Math.Clamp(enemy.x + Math.cos(angle) * result.summons.spreadRadius, 0, ARENA_SIZE.width), y: Phaser.Math.Clamp(enemy.y + Math.sin(angle) * result.summons.spreadRadius, 0, ARENA_SIZE.height) }, false);
+        }
+      }
       if (result.state.warning && cue) {
         const colour = Phaser.Display.Color.HexStringToColor(this.runTheme.tokens.palette.critical).color;
         cue.fillStyle(colour, 0.16).fillCircle(result.state.warning.x, result.state.warning.y, definition.attack.radius);
@@ -2452,7 +2468,7 @@ export class RunScene extends Phaser.Scene {
     const result = enemy.takeDamage(reduced);
     if (!result.applied) return;
     const scavenger = enemy.definition.scavenger;
-    if (scavenger && enemy.leakedMoney < scavenger.leakBudget) {
+    if (scavenger && enemy.spawnSource !== archetypeIds.skill.fracture && enemy.leakedMoney < scavenger.leakBudget) {
       const value = Math.min(scavenger.leakValue, scavenger.leakBudget - enemy.leakedMoney);
       enemy.leakedMoney += value; this.dropExperience(enemy.x, enemy.y, value, enemy.spawnSource);
     }
@@ -2528,19 +2544,22 @@ export class RunScene extends Phaser.Scene {
     if (chain >= 25 && chain % 25 === 0) this.requestImpactFreeze(60);
     this.killChainDetuneCents = killChainDetune(chain);
     const economy = this.runTheme.economy;
-    const fragment = economy && enemy.definition.fragmentInto && enemy.spawnSource !== archetypeIds.skill.fracture && !enemy.definition.boss &&
-      this.effectRandom() < fragmentationChance(economy, this.runState.player.stats.luck, enemy.hitsTaken,
+    const fragment = economy && enemy.spawnSource !== archetypeIds.skill.fracture &&
+      this.effectRandom() < enemyFragmentChance(enemy.definition, economy, this.runState.player.stats.luck, enemy.hitsTaken,
         reduced / enemy.maxHealth, (direct?.criticalBonus ?? 0) > 0, skillLevel(this.runState.skillLevels, archetypeIds.skill.fracture));
     const cleanReward = enemy.definition.xpReward * enemy.rewardMultiplier;
-    if (fragment && economy && enemy.definition.fragmentInto) {
-      const child = this.enemyDefinitions.find((entry) => entry.id === enemy.definition.fragmentInto)!;
+    if (fragment && economy) {
+      const pool = enemy.definition.fragmentation?.pool ?? [enemy.definition.fragmentInto!];
       const f = economy.fragmentation;
-      // Source multiplier is normalized at child spawn; no compounded world/elite payout.
-      const childReward = cleanReward * (f.totalShare - f.parentShare) / f.childCount;
+      const count = enemy.definition.fragmentation?.childCount ?? f.childCount;
+      const spread = enemy.definition.fragmentation?.spreadRadius;
+      const childReward = cleanReward * (f.totalShare - f.parentShare) / count;
       const toughness = 1 + (this.worldModifiers().enemyHealthMultiplier - 1) * this.runTheme.tuning.progression.toughnessRewardShare;
-      for (let i = 0; i < f.childCount; i++) {
+      for (let i = 0; i < count; i++) {
+        const child = this.enemyDefinitions.find((entry) => entry.id === pool[Math.min(pool.length - 1, Math.floor(this.effectRandom() * pool.length))])!;
+        const angle = i * Math.PI * 2 / count;
         this.enqueueSpawnRequest(child.id, archetypeIds.skill.fracture, childReward / child.xpReward / toughness,
-          enemy.targetId, deathEventId, "fracture", { x: enemy.x + (i === 0 ? -8 : 8), y: enemy.y }, false, "chase", 0);
+          enemy.targetId, deathEventId, "fracture", { x: enemy.x + (spread ? Math.cos(angle) * spread : i === 0 ? -8 : 8), y: enemy.y + (spread ? Math.sin(angle) * spread : 0) }, false, "chase", 0);
         this.fractureQueued++;
       }
     }

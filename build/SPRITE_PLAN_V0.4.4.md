@@ -71,3 +71,9 @@ clockwise orbit weapon, head leading. Accepted rake reused for outward Rake Swee
 34 reproducible sheets now include the parked historical designs. Native shovel
 96x32 and unchanged authored world geometry; bin presentation reduced to38 only.
 Exact claim/prompt/raw/review/normalized hashes recorded in the manifest.
+
+
+2026-10-27 phase6: Rake Sweep a2accepted and integrated with shorter handle,
+broader shaded teeth and clear gaps. Native96x32 and authored world geometry
+unchanged; old production a1rake removed, raw/review history preserved.34sheet
+checks and actual rendered-rake/boss capture pass. No art claim remains active.

@@ -14,6 +14,7 @@ import type { SpatialHash } from "../spatial/spatial-hash";
 
 export interface SeparationBody {
   readonly id: string;
+  readonly airborne?: boolean;
   x: number;
   y: number;
   /** Personal space, smaller than the drawn radius. */
@@ -65,12 +66,13 @@ export function separateCrowd<T extends SeparationBody>(
   let adjustments = 0;
 
   for (const body of bodies) {
+    if (body.airborne) continue;
     let resolved = 0;
     let pushX = 0;
     let pushY = 0;
 
     pairChecks += hash.forEachWithin(body.x, body.y, body.separationRadius * 2, (other) => {
-      if (other === body || resolved >= options.maxNeighbours) return;
+      if (other.airborne || other === body || resolved >= options.maxNeighbours) return;
 
       const minDistance = body.separationRadius + other.separationRadius;
       const dx = other.x - body.x;

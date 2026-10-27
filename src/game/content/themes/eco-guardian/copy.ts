@@ -73,8 +73,8 @@ export const copy = {
   profile: { saved: "Progress saved in this browser.", memory: "Browser storage unavailable. Progress remains in memory; keep this tab open.", blocked: "Saved progress could not be read. It has been preserved; new progress stays in memory.", changedElsewhere: "Saved progress changed in another tab. This tab keeps changes in memory; reload to use the saved progress.", browserSave: "Browser save", completedRuns: "Completed runs", deaths: "Deaths", longestRun: "Longest run", unlocked: "Unlocked", locked: "Locked", finishedRuns: "finished runs", lifetimeKills: "lifetime kills", unlockedPrefix: "Unlocked" },
 
   eliteVariants: {
-    "elite.split": { name: "Dispersing Waste", description: "Splits into two copies once per lineage; copies retain their elite identity." },
-    "elite.shield": { name: "Wrapped Waste", description: "Takes half damage above half health; the shield then breaks." },
+    "elite.split": { name: "Dispersing Waste", description: "2 marker: splits into two copies once per lineage; copies retain their elite identity." },
+    "elite.shield": { name: "Wrapped Waste", description: "◇ marker: takes half damage above half health; the shield then breaks." },
     "elite.acceleration": { name: "Rolling Waste", description: "Accelerates to one and a half speed over three simulation seconds." },
   },
   spawnOrigins: { live: "Live origins", total: "Total spawned", natural: "Natural", fragmentation: "Fragments", baggedWaste: "Released", environment: "Site effects", benchmark: "Test load" },
@@ -225,15 +225,15 @@ export const copy = {
     },
     [archetypeIds.enemy.committedCharger]: {
       name: "Aluminium Can",
-      description: "Watch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began.",
+      description: "Watch the line, step sideways, then clear it while it rests. Its roll commits to where you were when the warning began. Does not produce microplastics.",
     },
     [archetypeIds.enemy.gustDrifter]: {
       name: "Packets / Wrappers",
-      description: "Watch the arrow: a short gust crosses your route, then stops. Intercept it during the pause.",
+      description: "Floats directly toward you over other rubbish and ground obstacles. Still causes contact harm and can be cleaned by tools.",
     },
     [archetypeIds.enemy.clusterFodder]: {
       name: "Cigarette Butts",
-      description: "Slow groups of weak litter. Clear a lane or catch several in one tool action.",
+      description: "Weak opening litter arriving individually. Does not break into microplastics.",
     },
     [archetypeIds.character.starter]: {
       name: "Environment Protector",
@@ -268,19 +268,19 @@ export const copy = {
       name: "Cleanup Grabber",
       description: "A mechanical grabber that extends through every item in its narrow path.",
     },
-    [archetypeIds.enemy.miniBoss]: { name: "Compacted Waste", description: "A unique mid-run threat. Step clear of its marked circle before the pulse." },
-    [archetypeIds.enemy.finalBoss]: { name: "Dumping Colossus", description: "The final encounter. Escape its marked pulse, then defeat it to choose how the run finishes." },
+    [archetypeIds.enemy.miniBoss]: { name: "Compacted Waste", description: "Telegraphs rotating loose-litter, hard-litter and fragment releases. Never summons Bagged Waste or Glass Bottles. More likely to shed mixed fragments when cleared." },
+    [archetypeIds.enemy.finalBoss]: { name: "Dumping Colossus", description: "Cycles light, heavy and pressure-release attacks. Below 20% health, telegraphs one final mixed load of every ordinary enemy type. More likely to fragment when cleared." },
     [archetypeIds.enemy.swarmBasic]: {
       name: "Plastic Bottle",
       description: "The most common thing on the ground, and it never truly goes away.",
     },
     [archetypeIds.enemy.fastFragile]: {
       name: "Microplastics",
-      description: "Small plastic fragments spread easily and are difficult to recover once they enter the environment.",
+      description: "Small plastic pieces arrive in groups of three later in the run, or from plastic breakage and site events.",
     },
     [archetypeIds.enemy.slowDurable]: {
       name: "Glass Bottle",
-      description: "Slow, inert, and effectively permanent. It outlasts everything here.",
+      description: "Slow and durable. Breaks into glass shards rather than microplastics.",
     },
     [archetypeIds.enemy.deathSpawner]: {
       name: "Bagged Waste",

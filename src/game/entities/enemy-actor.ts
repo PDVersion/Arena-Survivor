@@ -36,6 +36,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
   readonly movement: WaveMovement;
   /** Personal space in the crowd, deliberately smaller than the drawn radius. */
   readonly separationRadius: number;
+  get airborne(): boolean { return this.definition.airborne === true; }
   readonly mass: number;
   readonly displayDiameter: number;
   defeated = false;

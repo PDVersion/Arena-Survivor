@@ -4454,3 +4454,40 @@ head-anchor/rotation; capture inspected. Initial browser assertion exposed the
 missing vacuum binding and passed after restoring the existing weapon image.
 No broad browser/stress/device/CI/fresh production guard claimed. Owned processes
 cleaned; next owner feel check is rake speed/readability and equipped-tool icons.
+
+## REC-138 — Material-aware breakage, airborne wrappers and boss releases (2026-10-27)
+
+Owner removes microplastic output from Cigarette Butts/Aluminium Cans; Glass keeps
+Glass Shards. Natural groups move from cigarettes to Microplastics (three, bounded
+by free slots). Wrappers lose committed gust and ignore crowd pairs/ground obstacle
+steering, retaining weapon hits/player contact. Airborne is an optional generic
+contract, not zero-radius physics or art-derived collision.
+
+Boss summons are theme-authored, bounded named patterns released through existing
+fixed telegraphs and causal queue, with normal enemy-type stats/rewards. Mini pool
+excludes Bagged Waste/Glass Bottles; final cycles light/heavy/pressure groups and
+once below20%health selects an18-enemy all-ordinary-type load at its next warning.
+No recursive boss summons/catch-up. Attack releases never deduct boss money.
+Boss death fragmentation has higher chance/floors45%/65%,4/8mixed children, keeping
+75%parent+35%children=110%budget. These children cannot fragment/drop rare items or
+leak extra rat coins. Pools/thresholds/counts/rewards are validated theme data.
+
+Item chances lower to magnet0.08%,food0.15%,Impact0.12% (about71%less combined base
+frequency); Fortune retained, cap2%per kind, rat bonus8x→3x. Manual sandbox drops
+bypass chance; high Fortune still changes natural rates. Elite2 means one-generation
+two-way split; ◇ means half incoming damage while above half HP, independent of
+material fragmentation. Field Guide descriptions identify these markers.
+
+Built-in rake a2 uses shorter shaft and broad multi-tone separated teeth, raw/
+prompt/review/hashes preserved and accepted separately. World geometry, slower
+speed and handle-first direction unchanged; previous unused production rake image
+removed, generation history preserved. No shovel art or frozen pack changes.
+
+740units/80files,34sprite checks, types/lint/build, one focused serial real-Phaser
+case (zero retries) and production-entry/test-hook guard pass. Actual wrapper
+pursuit/overlap, material kill children, boss summon types, unchanged attack boss
+reward and110%death budget verified; native/moving rake and named boss cue capture
+inspected. Damage-rush model: L5at19s,L10at74s,final25/677kills/931money,peak300.
+It omits boss release combat/coverage/fragments/survival, so is not balance proof.
+Full historical browser/stress/soak/device/current-head CI remain deferred. Owned
+processes cleaned. Next: owner early-pacing/boss-density/drop/rake feel feedback.
