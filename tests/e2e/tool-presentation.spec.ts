@@ -197,7 +197,7 @@ for (const low of [false, true]) {
     }
     expect(result.tools.every((tool: { hasArt: boolean }) => tool.hasArt)).toBe(true);
     expect(result.fallback).toBe(true);
-    expect(result.icons).toEqual(["eco_guardian.icon.weapon.starter/0"]);
+    expect(result.icons).toEqual(["eco_guardian.weapon.starter/0"]);
     expect(result.textureKeys).toEqual(["sprites/eco-guardian/atlas.png"]);
     await page.screenshot({ path: info.outputPath("style2-world.png") });
     const phases = await page.evaluate(async () => {
@@ -223,8 +223,8 @@ for (const low of [false, true]) {
     expect(phases.contact).toBe("eco_guardian.weapon.starter/1");
     expect(phases.recovery).toBe("eco_guardian.weapon.starter/2");
     expect(phases.vacuumRecovery).toBe("eco_guardian.weapon.secondary/2");
-    expect(phases.secondaryIcons).toEqual(["eco_guardian.icon.weapon.starter/0", "eco_guardian.icon.weapon.secondary/0"]);
-    expect(phases.evolvedIcons).toEqual(["eco_guardian.icon.weapon.starter/0", "eco_guardian.icon.weapon.secondary_evolved/0"]);
+    expect(phases.secondaryIcons).toEqual(["eco_guardian.weapon.starter/0", "eco_guardian.weapon.secondary/0"]);
+    expect(phases.evolvedIcons).toEqual(["eco_guardian.weapon.starter/0", "eco_guardian.weapon.secondary_evolved/0"]);
     await page.evaluate(() => (window as any).__TOOL_REVIEW__.cleanup());
     expect(errors).toEqual([]);
   });
@@ -296,3 +296,57 @@ for (const low of [false, true]) {
     await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.levelReview.hide(); return f.cleanup(); });
   });
 }
+
+test("weapon-frame HUD icons and slower handle-first rake reuse live art", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await setup(page, false, true);
+  try {
+    const result = await page.evaluate(async () => {
+      const f = (window as any).__TOOL_REVIEW__, run = f.run();
+      const controller = run.openTestingArea(); controller.pause(true);
+      const extras = { spawnCounts: { natural: 0, fragmentation: 0, environment: 0, baggedWaste: 0 }, threatStep: 0, killChain: 0, levelProgress: 0 };
+      const load = (ids: string[]) => {
+        controller.configure({ weapons: ids, upgrades: {}, level: 1, health: 100, money: 0, impact: 0 });
+        run.hud.update(run.runState, extras);
+        return run.hud.toolIcons.map((image: any) => ({ frame: image.frame.name, width: image.displayWidth, height: image.displayHeight,
+          aspect: image.frame.width / image.frame.height, visible: image.visible && image.alpha > 0,
+          belowInfo: image.getBounds().top > run.hud.levelLabel.getBounds().bottom }));
+      };
+      const ids = ["weapon.starter", "weapon.cleaning_bin", "weapon.orbiting_rake", "weapon.rake_beam"];
+      const first = load(ids), old = [...run.hud.toolIcons];
+      const swapped = load(["weapon.secondary", ...ids.slice(1)]);
+      const oldDestroyed = old.every((image: any) => !image.scene);
+      const path = "/src/game/entities/cleanup-tool-runtime.ts";
+      const { CleanupToolRuntime } = await import(path);
+      const weapon = f.theme.weapons.find((weapon: any) => weapon.id === "weapon.rake_beam");
+      const runtime = new CleanupToolRuntime(run, f.theme.tokens, () => {});
+      const tools = [{ weapon, tool: weapon.cleanup, attackRate: 1 }];
+      const start = { x: run.player.x, y: run.player.y };
+      runtime.update(0, start, tools, new Set(), { x: 1, y: 0 });
+      runtime.update(200, start, tools, new Set(), { x: 0, y: 0 });
+      const image = runtime.images[0];
+      const rake = { travel: image.x - start.x, rotation: image.rotation, headAnchor: image.originX, frame: image.frame.name };
+      const speed = weapon.cleanup.speed;
+      const maxSpeed = weapon.cleanup.progression.levels[6].speed;
+      f.hudRakeRuntime = runtime;
+      return { first, swapped, oldDestroyed, rake, speed, maxSpeed };
+    });
+    expect(result.first.map((image: any) => image.frame)).toEqual(["eco_guardian.weapon.starter/0", "eco_guardian.weapon.cleaning_bin/0", "eco_guardian.weapon.orbiting_rake/0", "eco_guardian.weapon.rake_beam/0"]);
+    expect(result.swapped[0].frame).toBe("eco_guardian.weapon.secondary/0");
+    for (const image of [...result.first, ...result.swapped]) {
+      expect(image.visible).toBe(true); expect(image.belowInfo).toBe(true);
+      expect(Math.max(image.width, image.height)).toBe(40);
+      expect(image.width / image.height).toBeCloseTo(image.aspect);
+    }
+    expect(result.oldDestroyed).toBe(true);
+    expect(result.rake.frame).toBe("eco_guardian.weapon.rake_beam/0");
+    expect(result.rake.travel).toBeCloseTo(110);
+    expect(Math.cos(result.rake.rotation)).toBeCloseTo(-1);
+    expect(result.rake.headAnchor).toBe(.85);
+    expect(result.speed).toBe(550); expect(result.maxSpeed).toBe(720);
+    await page.screenshot({ path: info.outputPath("hud-weapon-frames-and-pulled-rake.png") });
+    expect(errors).toEqual([]);
+  } finally {
+    await page.evaluate(() => { const f = (window as any).__TOOL_REVIEW__; f.hudRakeRuntime?.destroy(); return f.cleanup(); });
+  }
+});

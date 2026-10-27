@@ -26,7 +26,9 @@ export class CleanupToolRuntime {
     if (!image) { image = this.scene.add.image(0, 0, runtimeTextureKey(sprite), runtimeFrame(sprite, 0)).setDepth(22); this.images.push(image); }
     image.setTexture(runtimeTextureKey(sprite), runtimeFrame(sprite, 0))
       .setPosition(x, y).setOrigin(weapon.cleanup?.kind === "orbit" || weapon.cleanup?.kind === "beam" ? .85 : .5, .5)
-      .setDisplaySize(width, width * sprite.frameHeight / sprite.frameWidth).setRotation(rotation).setVisible(true);
+      .setDisplaySize(width, width * sprite.frameHeight / sprite.frameWidth)
+      // Turn about the head anchor: the handle leads while the damaging head stays on its path.
+      .setRotation(rotation + (weapon.cleanup?.kind === "beam" ? Math.PI : 0)).setVisible(true);
     this.imageCount++;
   }
   update(now: number, player: { x: number; y: number }, tools: readonly { weapon: WeaponDefinition; tool: CleanupToolDefinition; attackRate: number }[], enemies: ReadonlySet<EnemyActor>, movement = { x: 0, y: 0 }): void {

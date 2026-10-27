@@ -179,7 +179,7 @@
     "prompt": "../../raw/weapon_secondary.a1.prompt.txt",
     "metadata": "../../raw/weapon_secondary.a1.metadata.json",
     "checks": "weapon_secondary.a1.checks.json",
-    "status": "parked design; preserved review history"
+    "status": "existing weapon frame reused for HUD; cone attack remains parked"
   },
   {
     "id": "weapon.secondary_evolved",

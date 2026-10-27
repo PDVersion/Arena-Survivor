@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { runtimeTextureKey } from "../systems/sprites/runtime-sprite";
+import { runtimeFrame, runtimeTextureKey } from "../systems/sprites/runtime-sprite";
 import type { SpawnCounts } from "../systems/statistics/spawn-statistics";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { RunState } from "../state/run-state";
@@ -157,10 +157,12 @@ export class Hud {
       this.toolIcons.length = 0;
       for (const slot of state.weaponSlots) {
         const sprite = this.theme.tokens.sprites?.[slot.weaponId];
-        if (!sprite?.iconFrameKey) continue;
-        const icon = this.scene.add.image(this.barLeft + this.toolIcons.length * 36,
-          this.uiTop + Hud.XP_BAR_Y + 56, runtimeTextureKey(sprite), `${sprite.iconFrameKey}/0`)
-          .setOrigin(0, 0.5).setDisplaySize(28, 28).setScrollFactor(0);
+        if (!sprite || !this.scene.textures.exists(runtimeTextureKey(sprite))) continue;
+        const size = 40;
+        const scale = size / Math.max(sprite.frameWidth, sprite.frameHeight);
+        const icon = this.scene.add.image(this.barLeft + this.toolIcons.length * 48,
+          this.uiTop + Hud.XP_BAR_Y + 64, runtimeTextureKey(sprite), runtimeFrame(sprite, 0))
+          .setOrigin(0, 0.5).setDisplaySize(sprite.frameWidth * scale, sprite.frameHeight * scale).setScrollFactor(0);
         this.container.add(icon);
         this.toolIcons.push(icon);
       }

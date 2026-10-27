@@ -12,6 +12,14 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## V0.4.5 rake/HUD correction — 2026-10-27
+
+Rake Sweep travels about15% slower, handle first. Equipped-tool HUD icons now
+reuse existing weapon frames, including vacuum, at smaller proportional sizes.
+736units/79files, types/lint/build and one scoped serial real-HUD/rake browser
+case pass; screenshot inspected. Full regression/device/CI/fresh production guard
+remain deferred. No new bitmap art, saved data, frozen content or publication.
+
 ## V0.4.5 owner correction — 2026-10-27
 
 One seven-level path per weapon; smaller bin, clockwise orbiting shovels,

@@ -110,3 +110,15 @@ Verification: deterministic progression/acceleration/beam geometry units, sprite
 checks, typecheck/lint/build, one scoped serial testing-area acceptance campaign.
 Historical obsolete cone/evolution browser fixtures remain deferred explicitly.
 - [x] Phase4 software, art integration and scoped acceptance. 736 units/79 files,34sprite checks, types/lint/build, five unique targeted serial browser cases and production guard pass. Broader historical/device/CI checks remain deferred.
+
+## Owner correction phase5 — claimed2026-10-27
+
+Slow Rake Sweep travel by about15% at all levels; reverse its runtime art so the
+handle leads and the head trails, keeping the head at its authored contact point.
+Restore HUD equipped-tool icons using existing weapon frames at a smaller size,
+with preserved aspect ratio and normal atlas/standalone resolution. No new art.
+Own eco beam tuning, existing vacuum art binding for HUD, cleanup runtime presentation, HUD, scoped browser evidence,
+reuse manifest/inventory, plan/status/report/reconciliation. No frozen content, save or sprite-image edits.
+Checks: types/lint/build, existing meaningful units, one focused serial real-HUD/
+rake presentation case. Broad browser/stress/CI/device checks remain deferred.
+- [x] Phase5 rake feel and equipped-tool HUD. 736 units/79 files, types/lint/build and focused serial HUD/rake browser check pass. No new bitmap art; broader checks remain deferred.

@@ -202,6 +202,15 @@ export const sprites = {
     },
     "authoredFacing": "right"
   },
+  // Existing vacuum tool art is reused for HUD identification; aura delivery stays procedural.
+  "weapon.secondary": {
+    "key": "eco_guardian.weapon.secondary",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 64,
+    "frames": 3,
+    "states": { "idle": 0, "move": 0, "hit": 1, "death": 2 }
+  },
   "weapon.starter": {
     "key": "eco_guardian.weapon.starter",
     "path": "sprites/eco-guardian/atlas.png",

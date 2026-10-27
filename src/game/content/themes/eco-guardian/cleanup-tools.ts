@@ -33,15 +33,15 @@ export const rake: CleanupToolDefinition = { ...base, kind: "orbit", radius: 84,
     { count: 5, damage: 17, speed: 2.1, description: "Add one shovel: five orbiting heads." },
     { count: 5, damage: 24, speed: 2.5, description: "Maximum shovels: damage 24 and rotation 2.5 rad/s." },
 ] } };
-export const beam: CleanupToolDefinition = { ...base, kind: "beam", damage: 18, tickMs: 3000, slow: 0, speed: 650, headRadius: 22, displayWidth: 64,
+export const beam: CleanupToolDefinition = { ...base, kind: "beam", damage: 18, tickMs: 3000, slow: 0, speed: 550, headRadius: 22, displayWidth: 64,
   progression: { id: ids.upgrade.beamLevel, levels: [
     { description: "A rake sweeps straight to the screen edge in your last movement direction." },
     { headRadius: 29, displayWidth: 76, description: "Wider rake head: contact radius 22 →29." },
     { headRadius: 29, displayWidth: 76, damage: 25, description: "Stronger sweep: damage 18 →25." },
     { headRadius: 29, displayWidth: 76, damage: 25, count: 2, description: "Two parallel rake sweeps per cycle." },
     { headRadius: 36, displayWidth: 88, damage: 35, count: 2, description: "Broad, strong sweep: damage 35 and contact radius 36." },
-    { headRadius: 36, displayWidth: 88, damage: 35, count: 2, tickMs: 2100, speed: 850, description: "Faster launch and travel:2.1 seconds between sweeps." },
-    { headRadius: 40, displayWidth: 96, damage: 48, count: 3, tickMs: 2100, speed: 850, description: "Three broad rake sweeps with 48 damage each." },
+    { headRadius: 36, displayWidth: 88, damage: 35, count: 2, tickMs: 2100, speed: 720, description: "Faster launch and travel:2.1 seconds between sweeps." },
+    { headRadius: 40, displayWidth: 96, damage: 48, count: 3, tickMs: 2100, speed: 720, description: "Three broad rake sweeps with 48 damage each." },
 ] } };
 export const fixedUpgrade = (id: UpgradeId, weaponId: WeaponId): UpgradeDefinition => ({ id, ownerWeaponId: weaponId,
   effects: [{ kind: "tool.upgrade", weaponId }], maxLevel: 6, track: "weapon", rarity: "common", category: "offense", presentationToken: "accent" });

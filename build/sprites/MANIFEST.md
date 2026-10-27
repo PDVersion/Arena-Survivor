@@ -208,3 +208,10 @@ review recipe/checks retained.96x32, hard-alpha/component/outline/palette checks
 pass; inspected at native size: connected shaft and broad right-leading spade.
 Raw SHA2568eff91a4e4da232d03268bc797a8db5117b3df1729580788db11e0c8cd724de6;
 normalized80af556074fe1a5d3f482b72cc011ee38028a4f81009589a0cd03d5c46f3e847.
+
+
+2026-10-27 phase5 HUD reuse: no new bitmap art. Existing accepted weapon frames
+now identify all equipped tools in the HUD, with aspect ratio preserved. Vacuum
+weapon frame0 is rebound for identification; its cone attack remains parked.
+Rake Sweep reverses its runtime rotation about the same head anchor so the handle
+leads; orbiting shovel rotation and collision geometry stay unchanged.

@@ -56,7 +56,7 @@ recovered carried litter, not a claim that animals are recyclable waste.
 | Cleanup Vacuum | Radius 90, damage 4/750 ms, 8% slow | Radius 150, damage 12/450 ms, 22% slow |
 | Cleaning Bin | One bin, radius 58, burst 28, landing DOT 2/650 ms, 2.2 s fuse | Four bins, radius 95, burst 60, DOT 8/650 ms, 3.2 s fuse |
 | Orbiting Shovels | Two heads, radius 84, damage 9, rotation 1.8 rad/s | Five heads, damage 24, rotation 2.5 rad/s |
-| Rake Sweep | One straight outward rake, damage 18, 3 s cycle, speed 650 | Three parallel rakes, damage 48, 2.1 s cycle, speed 850 |
+| Rake Sweep | One straight outward rake, damage 18, 3 s cycle, speed 550 | Three parallel rakes, damage 48, 2.1 s cycle, speed 720 |
 
 The testing tree gives each intermediate milestone's exact description. Shovel
 levels alternate extra heads and stronger/faster blades. The grabber gains sweep
@@ -67,7 +67,7 @@ stat upgrades retain quality gains. Four slots among five tools preserve a choic
 Shovel heads lead clockwise and own the contact area; handles trail. The outward
 rake follows current/last movement direction, initially right, and travels to the
 camera edge. Swept head contact prevents tunnelling after a delayed frame, with
-one hit per enemy per rake. Parallel rake lanes can each hit the same target.
+one hit per enemy per rake. The handle leads the travel, pulling the head behind it. Parallel rake lanes can each hit the same target.
 Collision comes from theme data, never sprite pixels. Bin display width is 38
 world units (player 42), while its cleaning radius stays independent of the art.
 
@@ -235,3 +235,26 @@ notice whether each weapon pick changes coverage/power; choose four of five tool
 check shovel readability, rake direction while stopping/turning, bin clutter and
 whether distant magnet money feels satisfying. Unlimited stats vs capped passive
 items remains the separate research decision already prepared.
+
+
+## Owner correction, phase 5 — 2026-10-27
+
+Rake Sweep travel is about15% slower:550 units/s at Levels1–5,720 at Levels6–7.
+The handle now leads the outward motion. The existing bitmap rotates180degrees
+about its head anchor, keeping the damaging head aligned with the swept contact
+path. Orbiting shovels retain their clockwise, head-leading presentation.
+
+Equipped tools appear below the top-left health/money/level information. HUD
+icons reuse weapon frame0 at a maximum40logical pixels, preserve aspect ratio,
+and update on equipment changes. The old mandatory dedicated-icon check was
+silently skipping the newly added tools. Vacuum had no active art binding; its
+existing accepted tool frame is now reused for HUD identification. No new art,
+cone attacks, sprite-image edits, saves or frozen-pack changes.
+
+Checks:736units/79files, types/lint/build and one focused serial Chromium case
+with zero retries. Real HUD inspection covers all five weapon images across slot
+swaps, aspect ratio, placement below character info and old-image destruction.
+Actual rake runtime covers110units of travel in200ms, handle-first rotation and
+unchanged head anchor. Capture inspected. Existing bundle-size advisory remains;
+full-app/browser/stress/device/current-head CI and a fresh production guard are
+explicitly deferred for this bounded correction. Owned browser/server cleaned.

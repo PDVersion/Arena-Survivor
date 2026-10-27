@@ -4432,3 +4432,25 @@ Historical full browser/stress/soak/device/CI remain deferred, not passed. No
 publication; unrelated progression research remains unstaged. Next owner feedback
 should compare meaningful weapon picks, four-slot choices, direction/readability,
 bin clutter and magnet travel before selecting any further tuning increment.
+
+## REC-137 — HUD weapon-frame fallback and handle-first rake (2026-10-27)
+
+HUD previously required iconFrameKey, silently skipping new tools without separate
+icon art; Vacuum also had no active sprite binding after aura replacement. HUD
+now uses existing weapon frame0 with the normal atlas/standalone resolver, maximum
+40logical pixels and preserved aspect ratio. Existing vacuum art is rebound for
+HUD identification only; cone delivery remains parked. Equipment changes destroy
+old images. No new sprite images, saved IDs or frozen pack edits.
+
+Owner tunes outward rake speed650→550 at Levels1–5 and850→720 at Levels6–7
+(about15% slower). Runtime rotates the existing art180degrees about its head
+anchor: handle leads, head trails and still owns the swept damage path. Clockwise
+head-leading orbit shovels remain unchanged.
+
+736units/79files, types/lint/build and one scoped serial real-Phaser browser case
+pass, zero retries. Browser checks all5tool HUD frames through slot swaps, intact
+aspect ratios/placement, destroyed prior images,110units/200ms rake motion and
+head-anchor/rotation; capture inspected. Initial browser assertion exposed the
+missing vacuum binding and passed after restoring the existing weapon image.
+No broad browser/stress/device/CI/fresh production guard claimed. Owned processes
+cleaned; next owner feel check is rake speed/readability and equipped-tool icons.
