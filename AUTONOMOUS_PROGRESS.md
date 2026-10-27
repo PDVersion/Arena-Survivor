@@ -1,6 +1,19 @@
 # Autonomous progress
 
-Updated: 2026-10-26 (Australia/Sydney).
+Updated: 2026-10-27 (Australia/Sydney).
+
+## V0.4.5 local implementation —2026-10-27
+
+Owner selects money/pickups, saved Impact Shop, aura/bin/orbit tools, downside
+fragmentation, Cigarette Butts opening, roaming rat and testing area. The
+[V0.4.5 plan](build/BUILD_PLAN_V0.4.5.md) and [report/playthrough checklist](build/content/MONEY_TOOLS_SANDBOX_REPORT.md)
+own this active increment.740units/79files,33sprite checks/types/lint/build,
+scoped serial browser acceptance and production-entry checks pass locally.
+New art is generated/reviewed; old cone design is parked; frozen knight files
+remain unchanged. Sandbox edits use an isolated save. OverallV0.4 and publication
+remain open. Next: owner normal-play balance/feel feedback, remaining art
+acceptance and a separately consolidated current-head regression/CI pass.
+Full historical browser/stress/soak/device checks are deferred, not passed.
 
 ## PR29 CI repair — locally verified /2026-10-26
 

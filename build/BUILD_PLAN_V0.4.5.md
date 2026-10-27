@@ -53,7 +53,7 @@ and evidence retained; current request selects all listed art/integration.
 
 - [x] Phase1 economy/save/clock. 729 unit tests, typecheck/lint/build and serial browser boot pass. Shop UI and targeted mixed-pickup acceptance remain phase3.
 - [x] Phase2 tools/fragmentation/director/rat/crit. 728 units, typecheck/lint/build, balance/TTK and scoped serial boot pass.
-- [ ] Phase3 generated art/testing-area/trees/shop/consolidated acceptance.
+- [x] Phase3 generated art/testing-area/trees/shop/consolidated acceptance. 740 units/79 files, 33 sprite checks, typecheck/lint/build, six unique targeted serial browser cases and production entries pass. Full historical regression is deferred.
 
 ## Research boundary
 
@@ -75,3 +75,22 @@ still omits spatial tool coverage, scavenger movement and downside-fragment work
 it is a pressure estimate, not a claim these new tools are balanced by simulation.
 Old cone runtime/accepted art remain historical/generic fallback; no eco equipped
 weapon takes that delivery path. No frozen-pack files changed.
+
+
+## Final local gate
+
+740unit tests/79files;33sprite checks; typecheck/lint/production build and whitespace
+pass. Six unique phase3browser cases cover sandbox money/magnet/heal/Impact/save
+isolation/pause/blocked frame/tree paths, saved shop purchases,150-actor maximum
+tracks, ordinary aura offers/evolution/continued tracks/reset, and two normal-play
+clock cases. Production guard verifies game/shop/testing/sprite entries, isolated
+normal profile, absence of test hooks and inspected captures. Existing bundle-size
+advisory remains. Owned browsers/servers cleaned. Balance damage-rush and capped-
+critical/TTK models ran; coverage/fragments/rat survival are not modelled.
+
+Old cone-specific browser campaign is archived with replacement acceptance. Some
+historical G2 introduction/cone fixtures target now-replaced behaviour; their
+consolidated regression reconciliation is explicitly deferred with full CI/stress/
+soak/device checks under the resource budget. Do not claim them passed. This local
+implementation ends the claimed phases; owner tuning/art acceptance and any
+publication are separate. No push/merge/deploy or frozen-theme edits.

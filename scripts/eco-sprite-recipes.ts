@@ -566,9 +566,9 @@ export const ecoSpriteRecipes = [
     "textureKey": "eco_guardian.weapon.secondary_evolved"
   },
   {
-    "contentId": "pickup.experience",
+    "contentId": "pickup.impact",
     "source": "build/sprites/raw/pickup_experience.a1.png",
-    "output": "public/sprites/eco-guardian/pickup_experience.png",
+    "output": "public/sprites/eco-guardian/pickup_impact.png",
     "frameWidth": 32,
     "frameHeight": 32,
     "frames": 3,
@@ -589,9 +589,9 @@ export const ecoSpriteRecipes = [
       ]
     ],
     "outline": "#365314",
-    "acceptedOutput": "build/sprites/accepted/pickup_experience.png",
+    "acceptedOutput": "build/sprites/accepted/pickup_impact.png",
     "theme": "eco-guardian",
-    "textureKey": "eco_guardian.pickup.experience"
+    "textureKey": "eco_guardian.pickup.impact"
   },
   {
     "contentId": "shrine.spawn_surge",
@@ -1074,5 +1074,287 @@ export const ecoSpriteRecipes = [
     "acceptedOutput": "build/sprites/accepted/enemy_ranged_attacker.png",
     "theme": "eco-guardian",
     "textureKey": "eco_guardian.enemy.ranged_attacker"
+  },
+  {
+    "contentId": "pickup.experience",
+    "source": "build/sprites/raw/pickup_money.a1.png",
+    "output": "public/sprites/eco-guardian/pickup_experience.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/pickup_money.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.pickup.experience"
+  },
+  {
+    "contentId": "pickup.magnet",
+    "source": "build/sprites/raw/pickup_magnet.a1.png",
+    "output": "public/sprites/eco-guardian/pickup_magnet.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 4,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/pickup_magnet.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.pickup.magnet"
+  },
+  {
+    "contentId": "pickup.food",
+    "source": "build/sprites/raw/pickup_food.a1.png",
+    "output": "public/sprites/eco-guardian/pickup_food.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 1,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/pickup_food.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.pickup.food"
+  },
+  {
+    "contentId": "enemy.scavenger",
+    "source": "build/sprites/raw/enemy_scavenger.a2.png",
+    "output": "public/sprites/eco-guardian/enemy_scavenger.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/enemy_scavenger.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.enemy.scavenger"
+  },
+  {
+    "contentId": "weapon.cleaning_bin",
+    "source": "build/sprites/raw/weapon_cleaning_bin.a1.png",
+    "output": "public/sprites/eco-guardian/weapon_cleaning_bin.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 3,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/weapon_cleaning_bin.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.weapon.cleaning_bin"
+  },
+  {
+    "contentId": "weapon.orbiting_rake",
+    "source": "build/sprites/raw/weapon_orbiting_rake.a1.png",
+    "output": "public/sprites/eco-guardian/weapon_orbiting_rake.png",
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/weapon_orbiting_rake.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.weapon.orbiting_rake"
   }
 ] as const satisfies readonly (SpriteBuildDefinition & { readonly theme: string; readonly textureKey: string })[];

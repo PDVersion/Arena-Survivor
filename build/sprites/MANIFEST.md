@@ -184,3 +184,13 @@ money's stable historical ID; Impact icon is reused for separate meta currency.
 No knight art. Existing vacuum sheets remain parked history, not active cone art.
 
 V0.4.5 rat a1 review: generated four poses overlap the equal-cell boundaries; rejected for runtime packing. Claim a2 regeneration with explicit wide four-cell spacing. Source-only attempt, no pixel repairs.
+
+V0.4.5 acceptance/integration: money/magnet/food/bin/rakea1 and rata2 were visually
+reviewed after deterministic normalization and committed one subject per commit.
+Source/prompts/review recipes/checks/hashes retained; built-in generation, no
+painted repairs. Rata1 rejected; a2 readable. Existing lime Impact strip repurposed
+as `pickup.impact`; money retains historical `pickup.experience`.33recipes and
+118atlas frames include parked cone/icon history;28content bindings are active.
+33sprite checks pass. Live feel/art acceptance remains with the owner; no active
+source/integration claim remains after V0.4.5 verification. See
+[implementation/playtest report](../content/MONEY_TOOLS_SANDBOX_REPORT.md).

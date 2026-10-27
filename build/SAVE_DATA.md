@@ -210,3 +210,16 @@ Stable historical experience/statistic IDs retain their meaning as earned run
 progress; schema3 adds Impact/shop with explicit migration. Game rewards are
 fiction, not a claim that all waste qualifies for a real container refund.
 Knights and Magic remains paused; no new educational disposal claims.
+
+
+V0.4.5 implemented locally: `ProfileState.economy = { impact, upgrades }`, schema3.
+`impact` is a nonnegative bounded integer; shop upgrades are stable string IDs
+with bounded integer levels, unknown IDs preserved but not applied. Schema2 adds
+empty economy; schema1 uses its existing migration into current defaults. Shop
+purchases/save import/export/backup use the existing profile validation/storage
+adapter. Old run XP/stat IDs remain unchanged; money is run-local. Impact pickup
+credits save immediately; new-run bonuses read only known shop definitions and
+clamp to authored caps. Testing area initializes its own memory adapter before
+constructing the arena; its currency/shop/editor/reset never writes the normal
+profile. Normal outside-run shop uses the real adapter. See REC-133–135 and the
+[V0.4.5 report](content/MONEY_TOOLS_SANDBOX_REPORT.md).

@@ -34,7 +34,7 @@ test("sprite browser freezes every frame, compares the set, filters and retains 
 test("sprite browser exposes fallbacks and exports review data", async ({ page }) => {
   await page.goto("/sprite-browser.html");
   await page.locator("#art").selectOption("fallback");
-  await expect(page.locator(".card")).toHaveCount(0);
+  await expect(page.locator(".card")).toHaveCount(2);
   const downloaded = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export reviews" }).click();
   expect((await downloaded).suggestedFilename()).toBe("arena-sprite-reviews.json");

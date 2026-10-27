@@ -49,8 +49,8 @@ export const weapons = [
     cleanup: aura,
     deliveryKind: "melee",
     upgrades: secondaryUpgrades,
-    damage: 6,
-    cooldownMs: 1400,
+    damage: aura.damage,
+    cooldownMs: aura.tickMs,
     range: 90,
     reach: 90,
     width: 18,
@@ -67,10 +67,10 @@ export const weapons = [
     cleanup: { ...aura, radius: 110, damage: 6 },
     deliveryKind: "melee",
     upgrades: [],
-    damage: 9,
-    cooldownMs: 1200,
-    range: 105,
-    reach: 105,
+    damage: 6,
+    cooldownMs: aura.tickMs,
+    range: 110,
+    reach: 110,
     width: 18,
     arcRadians: 1.5,
     targetCap: null,
@@ -88,5 +88,5 @@ export const weapons = [
     extendMs: 100, retractMs: 100, knockback: 0, armourPierce: 0, presentationToken: "projectile" },
 ] as const satisfies readonly WeaponDefinition[];
 
-/** Two automatic tool slots; only the starter is equipped at run creation. */
+/** Four automatic tool slots; only the starter is equipped at run creation. */
 export const weaponSlotCount = 4;

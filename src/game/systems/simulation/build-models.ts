@@ -17,6 +17,7 @@ export interface BuildModel {
 }
 
 export interface BuildContext {
+  readonly cappedCrit?: boolean;
   readonly secondaryWeapon?: WeaponDefinition;
   readonly evolvedWeapon?: WeaponDefinition;
   /** Earliest level after acquisition, prerequisite picks and the evolution choice. */
@@ -39,10 +40,14 @@ function baseDps(context: BuildContext): number {
 }
 
 /** Expected damage multiplier from an uncapped crit chance, per REC-031. */
-export function expectedCritMultiplier(critChance: number, critDamage: number): number {
+export function expectedCritMultiplier(critChance: number, critDamage: number, cappedLinear = false): number {
   const chance = Math.max(0, critChance);
   const guaranteed = Math.floor(chance);
   const fraction = chance - guaranteed;
+  if (cappedLinear) {
+    const gain = (tier: number) => Math.min(4, 1 + (critDamage - 1) * Math.min(3, tier));
+    return gain(guaranteed) * (1 - fraction) + gain(guaranteed + 1) * fraction;
+  }
   const lower = critTierMultiplier(guaranteed);
   const upper = critTierMultiplier(guaranteed + 1);
   const scale = critDamage / 2;
@@ -65,7 +70,7 @@ const models: readonly BuildModel[] = [
     damagePerSecond: (level, context) => {
       const weapon = context.evolutionLevel && level >= context.evolutionLevel ? context.evolvedWeapon : context.secondaryWeapon;
       return (baseDps(context) + (level >= 2 ? secondaryDps(context, packed, level, weapon) : 0)) *
-        expectedCritMultiplier(context.baseCritChance, context.critDamage);
+        expectedCritMultiplier(context.baseCritChance, context.critDamage, context.cappedCrit);
     },
   })),
   ...[false, true].map((packed): BuildModel => ({
@@ -73,13 +78,13 @@ const models: readonly BuildModel[] = [
     description: packed ? "Second tool at level2, then owned track picks; authored target/splash caps with packed targets. Ideal-contact upper band, no overkill model."
       : "Second tool at level2; one target in reach, no splash neighbours. Contact-only lower band.",
     damagePerSecond: (level, context) => (baseDps(context) + (level >= 2 ? secondaryDps(context, packed, level) : 0)) *
-      expectedCritMultiplier(context.baseCritChance, context.critDamage),
+      expectedCritMultiplier(context.baseCritChance, context.critDamage, context.cappedCrit),
   })),
   {
     id: "passive",
     description: "Takes no offensive upgrades. The floor of the DPS band.",
     damagePerSecond: (_level, context) =>
-      baseDps(context) * expectedCritMultiplier(context.baseCritChance, context.critDamage),
+      baseDps(context) * expectedCritMultiplier(context.baseCritChance, context.critDamage, context.cappedCrit),
   },
   {
     id: "damage-rush",
@@ -87,7 +92,7 @@ const models: readonly BuildModel[] = [
     damagePerSecond: (level, context) =>
       baseDps(context) *
       (1 + 0.25 * (level - 1)) *
-      expectedCritMultiplier(context.baseCritChance, context.critDamage),
+      expectedCritMultiplier(context.baseCritChance, context.critDamage, context.cappedCrit),
   },
   {
     id: "crit",
@@ -99,7 +104,7 @@ const models: readonly BuildModel[] = [
       return (
         baseDps(context) *
         (1 + 0.2 * speedLevels) *
-        expectedCritMultiplier(critChance, context.critDamage)
+        expectedCritMultiplier(critChance, context.critDamage, context.cappedCrit)
       );
     },
   },
@@ -118,7 +123,7 @@ const models: readonly BuildModel[] = [
         (1 + 0.25 * perAxis) *
         (1 + 0.2 * perAxis) *
         projectiles *
-        expectedCritMultiplier(critChance, context.critDamage)
+        expectedCritMultiplier(critChance, context.critDamage, context.cappedCrit)
       );
     },
   },
@@ -139,7 +144,7 @@ const models: readonly BuildModel[] = [
         : 2 + effect.levelFiveExtraPositions.min + effect.levelFiveExtraPositions.max;
       const extraDamagePerAttack = positions / cadence * effect.damageMultiplier;
       return baseDps(context) * (1 + extraDamagePerAttack) *
-        expectedCritMultiplier(context.baseCritChance, context.critDamage);
+        expectedCritMultiplier(context.baseCritChance, context.critDamage, context.cappedCrit);
     },
   },
   {
@@ -153,7 +158,7 @@ const models: readonly BuildModel[] = [
         baseDps(context) *
         (1 + 0.25 * damageLevels) *
         densityBonus *
-        expectedCritMultiplier(context.baseCritChance, context.critDamage)
+        expectedCritMultiplier(context.baseCritChance, context.critDamage, context.cappedCrit)
       );
     },
   },

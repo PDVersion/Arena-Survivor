@@ -1,3 +1,4 @@
+import { validateCleanupTool } from "../systems/weapons/cleanup-tools";
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
 import {
@@ -223,6 +224,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(weapon.damage) || weapon.damage <= 0) {
       issues.push(`${weapon.id} damage must be greater than zero`);
     }
+    if (weapon.cleanup) issues.push(...validateCleanupTool(weapon.cleanup).map((issue) => `${weapon.id} ${issue}`));
     if (!Number.isFinite(weapon.cooldownMs) || weapon.cooldownMs <= 0) {
       issues.push(`${weapon.id} cooldownMs must be greater than zero`);
     }
@@ -547,6 +549,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
           issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
           continue;
         }
+        if (effect.ceiling !== undefined && (effect.target !== "player.critChance" || !Number.isFinite(effect.ceiling) || effect.ceiling <= 0)) issues.push(`${upgrade.id} has invalid critical chance ceiling`);
         if (upgrade.ownerWeaponId && !effect.target.startsWith("weapon.")) {
           issues.push(`${upgrade.id} owned stat effect must target a weapon`);
         }

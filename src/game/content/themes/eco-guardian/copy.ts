@@ -242,19 +242,19 @@ export const copy = {
     [archetypeIds.upgrade.acceptEscalation]: { name: "Contamination Pact", description: "Raise world pressure in exchange for more money for the rest of this run. One choice per run." },
     [archetypeIds.weapon.secondaryEvolved]: {
       name: "Cyclone Vacuum",
-      description: "A wider automatic pulse with stronger hits, one extra primary target and nearby splash. Keeps earned capacity.",
+      description: "A wider circular cleaning field with stronger damage per tick. Keeps earned upgrade tracks.",
     },
     [archetypeIds.upgrade.evolveSecondary]: {
       name: "Evolve to Cyclone Vacuum",
-      description: "After four reach upgrades, replace Cleanup Vacuum in its slot. Keep earned reach; gain a wider cone, four targets, faster cycling and stronger splash.",
+      description: "After four area upgrades, replace Cleanup Vacuum in its slot. Keep earned area; gain a wider cleaning circle and stronger damage per tick.",
     },
     [archetypeIds.weapon.secondary]: {
       name: "Cleanup Vacuum",
-      description: "Pulse a short cone, starting at three targets. Owned reach upgrades add targets; each selected hit splashes nearby targets.",
+      description: "Surrounds you with a grey cleaning field. Damages every piece of waste inside over time and slows it slightly.",
     },
     [archetypeIds.upgrade.equipSecondary]: {
       name: "Equip Cleanup Vacuum",
-      description: "Add a second automatic tool in an empty slot. Hits splash up to three neighbours without needing a kill.",
+      description: "Add a circular vacuum field in an empty tool slot. Cleans and slows all waste inside it.",
     },
     [archetypeIds.upgrade.secondaryRange]: {
       name: "Wider Vacuum Area",
@@ -280,7 +280,7 @@ export const copy = {
     },
     [archetypeIds.enemy.deathSpawner]: {
       name: "Bagged Waste",
-      description: "A sealed bundle that spills its mixed contents the moment it opens.",
+      description: "A mixed bundle that can leave plastic fragments when cleanup is rough.",
     },
     [archetypeIds.enemy.stationaryFragment]: {
       name: "Glass Shards",
@@ -288,7 +288,7 @@ export const copy = {
     },
     [archetypeIds.pickup.experience]: {
       name: "Recycling Money",
-      description: "Credit for waste that will not reach the waterway.",
+      description: "In-run money from cleanup. Nearby drops combine into silver coins, gold coins and notes without losing value.",
     },
     [archetypeIds.shrine.spawnSurge]: {
       name: "Landfill Breach",
@@ -360,7 +360,7 @@ export const copy = {
     },
     [archetypeIds.upgrade.critChance]: {
       name: "Precision Sort",
-      description: "Increase the chance of a critical separation.",
+      description: "Increase critical chance, up to 300%: guaranteed red 4x cleanup.",
     },
     [archetypeIds.upgrade.pierce]: {
       name: "Deep Reach",

@@ -22,7 +22,8 @@ export const rake = { ...base, kind: "orbit", radius: 84, count: 2, damage: 9, t
   { id: ids.upgrade.rakeSpeed, stat: "speed", step: .35 },
 ] } as const satisfies CleanupToolDefinition;
 export const toolUpgrades = (weaponId: typeof ids.weapon[keyof typeof ids.weapon], tool: CleanupToolDefinition): UpgradeDefinition[] =>
-  tool.tracks.map((track) => ({ id: track.id, ownerWeaponId: weaponId, effects: [{ kind: "tool.upgrade", weaponId }],
+  tool.tracks.map((track) => ({ id: track.id, ownerWeaponId: weaponId,
+    ...(weaponId === ids.weapon.secondary ? { additionalOwnerWeaponIds: [ids.weapon.secondaryEvolved] } : {}), effects: [{ kind: "tool.upgrade", weaponId }],
     maxLevel: 4, track: "weapon", rarity: "common", category: "offense", presentationToken: "accent" }));
 export const toolAcquisitions: UpgradeDefinition[] = [
   [ids.upgrade.binEquip, ids.weapon.cleaningBin], [ids.upgrade.rakeEquip, ids.weapon.orbitingRake],

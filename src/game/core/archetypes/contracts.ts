@@ -588,6 +588,8 @@ export const upgradeCategories = [
 export type UpgradeCategory = (typeof upgradeCategories)[number];
 
 export interface UpgradeDefinition {
+  /** An evolved tool can continue the same fixed progression tracks. */
+  readonly additionalOwnerWeaponIds?: readonly WeaponId[];
   /** Own stat gains affect only this equipped weapon. Global cards omit it. */
   readonly ownerWeaponId?: WeaponId;
   readonly id: UpgradeId;

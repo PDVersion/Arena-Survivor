@@ -1715,3 +1715,11 @@ Stable historical experience/statistic IDs retain their meaning as earned run
 progress; schema3 adds Impact/shop with explicit migration. Game rewards are
 fiction, not a claim that all waste qualifies for a real container refund.
 Knights and Magic remains paused; no new educational disposal claims.
+
+V0.4.5 local implementation follows the owner-selected amendment above. Money,
+saved Impact Shop, cleanup aura/bin/rakes, downside fragmentation, Cigarette
+Butts opening, roaming rat and isolated testing area are built. The next product
+step is owner feel/balance feedback using the
+[normal-play checklist](content/MONEY_TOOLS_SANDBOX_REPORT.md), with full
+historical regression/art/device acceptance still open. Unlimited-stat vs capped
+item redesign remains a separate research decision.

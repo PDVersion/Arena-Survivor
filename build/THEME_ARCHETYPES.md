@@ -521,3 +521,11 @@ Stable historical experience/statistic IDs retain their meaning as earned run
 progress; schema3 adds Impact/shop with explicit migration. Game rewards are
 fiction, not a claim that all waste qualifies for a real container refund.
 Knights and Magic remains paused; no new educational disposal claims.
+
+V0.4.5 implementation record: `pickup.experience` is eco money; optional
+`pickup.magnet/food/impact` retain distinct collection effects. Optional
+`weapon.cleaning_bin`, `weapon.orbiting_rake`, `enemy.scavenger` are active only
+in eco. Cleanup capability data and fixed tracks remain theme-owned; core
+schedulers consume stable IDs. Evolved aura shares source tracks via declared
+additional owner IDs. Critical cap is opt-in; frozen content is unchanged.
+[Current tuning and playtest report](content/MONEY_TOOLS_SANDBOX_REPORT.md).

@@ -1,5 +1,7 @@
 import type { ContentId } from "../game/core/archetypes/ids";
 import type { ThemeManifest } from "../game/core/archetypes/contracts";
+import { resolveWeaponDefinition } from "../game/systems/weapons/resolve-weapon";
+import { createWeaponStatModifiers } from "../game/systems/upgrades";
 import { reduceByArmour } from "../game/systems/combat";
 
 export interface ContentStatRow { readonly label: string; readonly value: number; readonly unit?: string }
@@ -17,7 +19,7 @@ export function contentStatRows(theme: ThemeManifest, id: ContentId): readonly C
       { label: labels.armour, value: enemy.armour },
       { label: `Contact ${labels.damage.toLowerCase()}`, value: enemy.contactDamage },
       { label: labels.moveSpeed, value: enemy.moveSpeed, unit: "world units/s" },
-      { label: "XP reward", value: enemy.xpReward },
+      { label: `${theme.copy.vocabulary.experience} reward`, value: enemy.xpReward },
       { label: "Body radius", value: enemy.radius, unit: "world units" },
       { label: "Starter hits (non-critical)", value: Math.ceil(enemy.maxHealth / hit) },
     ];
@@ -35,7 +37,8 @@ export function contentStatRows(theme: ThemeManifest, id: ContentId): readonly C
       { label: labels.critDamage, value: stats.critDamage, unit: "×" },
     ];
   }
-  const weapon = theme.weapons.find((entry) => entry.id === id);
+  const definition = theme.weapons.find((entry) => entry.id === id);
+  const weapon = definition ? resolveWeaponDefinition(definition, createWeaponStatModifiers()) : undefined;
   if (weapon) return [
     { label: labels.damage, value: weapon.damage },
     { label: labels.attackRate, value: 1000 / weapon.cooldownMs, unit: "/s" },

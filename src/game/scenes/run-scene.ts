@@ -1,3 +1,7 @@
+import type { TestingAreaController } from "../core/testing-area";
+import { applyUpgrade } from "../systems/upgrades";
+import { xpRequiredForLevelOn } from "../systems/xp";
+import { setSandboxImpact } from "../systems/persistence/profile-service";
 import { fragmentationChance } from "../systems/economy/economy";
 import { CleanupToolRuntime } from "../entities/cleanup-tool-runtime";
 import { resolveCleanupTool } from "../systems/weapons/cleanup-tools";
@@ -534,11 +538,88 @@ export class RunScene extends Phaser.Scene {
   private lastFrameMs = 16;
   private activeClock?: ActiveClock;
   private cleanupRuntime?: CleanupToolRuntime;
+  private sandboxControl?: { paused: boolean; natural: boolean; invincible: boolean };
   private deathSlowUntilMs = 0;
   private killChainDetuneCents = 0;
 
   constructor() {
     super("run");
+  }
+
+  private rebuildCleanupRuntime(): void {
+    this.cleanupRuntime?.destroy();
+    this.cleanupRuntime = new CleanupToolRuntime(this, this.runTheme.tokens, (enemy, amount, weapon) => {
+      if (!this.runState) return;
+      const roll = rollDamage({ baseDamage: amount, damageBonus: this.runState.player.stats.damageBonus,
+        critChance: this.runState.player.stats.critChance, critDamage: this.runState.player.stats.critDamage, random: Math.random, cappedLinear: true });
+      accumulateDamage(this.damageNumbers, { targetId: enemy.targetId, amount: roll.damage, tier: roll.tier, x: enemy.x, y: enemy.y }, this.runState.elapsedMs, DAMAGE_NUMBER_WINDOW_MS);
+      this.runState = observeRunCrit(this.runState, roll.tier);
+      this.commitEnemyDamage(enemy, roll.damage, "direct", undefined, { weapon, directBase: roll.baseDamage, criticalBonus: roll.bonusDamage, piercingMomentum: 0 });
+    });
+  }
+
+  /** Called only by the separate testing-area entry, with an isolated profile. */
+  openTestingArea(): TestingAreaController {
+    if (!this.runState || !this.player) throw new Error("Testing area is still loading");
+    this.sandboxControl = { paused: false, natural: false, invincible: true };
+    this.runState = { ...this.runState, mode: "endless", finalBossEnabled: false };
+    const bounded = (value: number, min: number, max: number) => Number.isFinite(value) ? Math.max(min, Math.min(max, value)) : min;
+    return {
+      configure: (loadout) => {
+        const previous = this.runState!;
+        const character = this.runTheme.characters[0]!;
+        setSandboxImpact(Math.floor(bounded(loadout.impact, 0, 1e9)));
+        const weapons = [...new Set(loadout.weapons)].filter((id) => this.runTheme.weapons.some((weapon) => weapon.id === id)).slice(0, this.runTheme.weaponSlotCount);
+        let next = createRunState({ themeId: this.runTheme.id, characterId: character.id,
+          baseStats: applyImpactBonuses(character.baseStats, getProfile().economy, this.runTheme.economy?.shop ?? []),
+          weaponSlotCount: this.runTheme.weaponSlotCount, startingWeaponIds: weapons, xpCurve: this.runTheme.tuning.progression.xpCurve, finalBossEnabled: false });
+        for (const upgrade of this.runTheme.upgrades) {
+          if (upgrade.effects.some((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve")) continue;
+          const count = Math.floor(bounded(loadout.upgrades[upgrade.id] ?? 0, 0, upgrade.maxLevel ?? 100));
+          for (let i = 0; i < count; i++) next = applyUpgrade(next, upgrade, (id) => skillMaxLevel(this.runTheme.skills, id), 1, this.runTheme.weapons, this.runTheme.curses);
+        }
+        const level = Math.floor(bounded(loadout.level, 1, 100));
+        this.runState = { ...next, mode: "endless", elapsedMs: previous.elapsedMs, player: { ...next.player, health: bounded(loadout.health, 1, next.player.stats.maxHealth) },
+          progression: { level, xp: bounded(loadout.money, 0, 1e6), xpToNextLevel: xpRequiredForLevelOn(next.xpCurve, level), pendingChoices: 0 } };
+        this.rebuildCleanupRuntime();
+        this.currentChoices = []; this.currentOffers = []; this.levelUpUi?.hide(); this.pauseMenu?.hide(); this.overtimeUi?.hide(); this.runEndOverlay?.hide();
+        if (!this.sandboxControl?.paused) this.physics.world.resume();
+      },
+      spawn: (id, count, distance) => {
+        const definition = this.enemyDefinitions.find((enemy) => enemy.id === id);
+        if (!definition || !this.player) return;
+        const n = Math.floor(bounded(count, 1, 100)), d = bounded(distance, 0, 900);
+        for (let i = 0; i < n; i++) { const a = i * Math.PI * 2 / n;
+          this.spawnEnemy("ambient", 1, definition, { x: this.player.x + Math.cos(a) * d, y: this.player.y + Math.sin(a) * d }, false, undefined, "chase", "benchmark");
+        }
+      },
+      pickup: (kind, value, distance) => {
+        if (!this.player || !this.pickupGroup || this.pickups.size >= PICKUP_CAP) return;
+        const definition = this.runTheme.pickups.find((pickup) => (pickup.kind ?? "money") === kind);
+        if (!definition) return;
+        const d = bounded(distance, 0, 900), v = bounded(value, 1, 1e6);
+        if (kind === "money") { this.dropExperience(this.player.x + d, this.player.y, v, "ambient"); return; }
+        const pickup = new PickupActor(this, `pickup-${++this.pickupSequence}`, this.player.x + d, this.player.y,
+          definition, this.runTheme.tokens, v);
+        this.pickups.add(pickup); this.pickupGroup.add(pickup);
+        pickup.once(Phaser.GameObjects.Events.DESTROY, () => this.pickups.delete(pickup));
+      },
+      hit: (amount) => { for (const enemy of [...this.enemies]) this.commitEnemyDamage(enemy, bounded(amount, 1, 1e6), "direct"); },
+      clear: () => {
+        for (const enemy of [...this.enemies]) { drainTarget(this.damageNumbers, enemy.targetId); enemy.destroy(); }
+        for (const pickup of [...this.pickups]) pickup.destroy();
+        for (const projectile of [...this.projectiles]) projectile.destroy();
+        for (const hazard of [...this.hazards]) hazard.destroy(); this.hazards.clear();
+        this.clearEnemyShots(); this.eventQueue.clear(); this.rebuildCleanupRuntime();
+      },
+      pause: (paused) => { this.pauseKey?.reset(); this.sandboxControl!.paused = paused; this.activeClock = undefined; if (paused) this.physics.world.pause(); else this.physics.world.resume(); },
+      natural: (enabled) => { this.sandboxControl!.natural = enabled; },
+      invincible: (enabled) => { this.sandboxControl!.invincible = enabled; },
+      read: () => ({ elapsedMs: this.runState!.elapsedMs, level: this.runState!.progression.level, money: this.runState!.progression.xp,
+        impact: getProfile().economy.impact, health: this.runState!.player.health, enemies: this.enemies.size,
+        moneyOnGround: [...this.pickups].filter((p) => !p.isClaimed && (p.definition.kind ?? "money") === "money").reduce((sum, p) => sum + p.xpValue, 0),
+        pickupCount: [...this.pickups].filter((p) => !p.isClaimed).length, status: this.sandboxControl?.paused ? "sandbox_paused" : this.runState!.status }),
+    };
   }
 
   create(): void {
@@ -549,14 +630,8 @@ export class RunScene extends Phaser.Scene {
     this.resetTransientRuntime();
     this.runGeneration = ++runGenerationSequence;
     this.activeClock = undefined;
-    this.cleanupRuntime = new CleanupToolRuntime(this, this.runTheme.tokens, (enemy, amount, weapon) => {
-      if (!this.runState) return;
-      const roll = rollDamage({ baseDamage: amount, damageBonus: this.runState.player.stats.damageBonus,
-        critChance: this.runState.player.stats.critChance, critDamage: this.runState.player.stats.critDamage, random: Math.random, cappedLinear: true });
-      accumulateDamage(this.damageNumbers, { targetId: enemy.targetId, amount: roll.damage, tier: roll.tier, x: enemy.x, y: enemy.y }, this.runState.elapsedMs, DAMAGE_NUMBER_WINDOW_MS);
-      this.runState = observeRunCrit(this.runState, roll.tier);
-      this.commitEnemyDamage(enemy, roll.damage, "direct", undefined, { weapon, directBase: roll.baseDamage, criticalBonus: roll.bonusDamage, piercingMomentum: 0 });
-    });
+    this.sandboxControl = undefined;
+    this.rebuildCleanupRuntime();
     const keyboard = this.input.keyboard;
     if (!keyboard) throw new Error("Keyboard input is unavailable");
 
@@ -735,8 +810,9 @@ export class RunScene extends Phaser.Scene {
   update(time: number, delta: number): void {
     if (!this.player || !this.runState || !this.pauseKey) return;
     const updateCpuStartedAt = this.frameMeasurements ? performance.now() : undefined;
-    const clock = sampleActiveClock(this.activeClock, performance.now(), isRunActive(this.runState));
+    const clock = sampleActiveClock(this.activeClock, performance.now(), isRunActive(this.runState) && !this.sandboxControl?.paused);
     this.activeClock = clock.clock;
+    if (this.sandboxControl?.paused) { this.physics.world.pause(); this.player.stop(); return; }
     const wallDelta = delta;
     const startedPlaying = isRunActive(this.runState);
     this.lastFrameMs = delta;
@@ -1258,7 +1334,7 @@ export class RunScene extends Phaser.Scene {
     const tuning = this.runTheme.tuning.hazards;
     const progress = runEscalationProgress(this.runState);
 
-    if (nowMs >= this.nextHazardAtMs && this.hazards.size < tuning.maxActive) {
+    if ((!this.sandboxControl || this.sandboxControl.natural) && nowMs >= this.nextHazardAtMs && this.hazards.size < tuning.maxActive) {
       this.placeHazard(nowMs);
       this.nextHazardAtMs = nowMs + (testHazardIntervalMs() ?? hazardIntervalMs(
         tuning,
@@ -1280,7 +1356,7 @@ export class RunScene extends Phaser.Scene {
         y: this.player.y,
         radius: this.player.definition.radius,
       }, nowMs);
-      if (effect.damage > 0) {
+      if (effect.damage > 0 && !this.sandboxControl?.invincible) {
         this.runState = damageRunPlayer(this.runState, effect.damage, {
           sourceId: hazard.definition.id,
           elite: false,
@@ -1528,7 +1604,7 @@ export class RunScene extends Phaser.Scene {
   private updateShrine(): void {
     if (!this.player || !this.runState) return;
     while (
-      this.shrinesRevealed < this.shrineArrivals.length &&
+      (!this.sandboxControl || this.sandboxControl.natural) && this.shrinesRevealed < this.shrineArrivals.length &&
       this.runState.elapsedMs >= this.shrineArrivals[this.shrinesRevealed]!.appearAtMs
     ) {
       this.revealShrine(
@@ -1802,6 +1878,7 @@ export class RunScene extends Phaser.Scene {
   }
 
   private spawnIfReady(): void {
+    if (this.sandboxControl && !this.sandboxControl.natural) return;
     if (testSkillEnabled("noAmbient")) return;
     if (
       !this.player ||
@@ -1918,6 +1995,7 @@ export class RunScene extends Phaser.Scene {
     );
     enemy.eliteSplitDepth = eliteSplitDepth;
     enemy.sourceRewardMultiplier = rewardMultiplier;
+    if (this.sandboxControl && definition.boss) this.registerBossAttack(enemy);
     if (movement === "drift") this.driftSpawned += 1;
     const spawnStatistics = this.spawnStatistics;
     spawnStatistics.add(enemy.targetId, origin);
@@ -1938,6 +2016,13 @@ export class RunScene extends Phaser.Scene {
     return true;
   }
 
+  private registerBossAttack(enemy: EnemyActor): void {
+    if (!this.runState || !enemy.definition.boss || this.bossAttacks.has(enemy)) return;
+    this.bossAttacks.set(enemy, createBossAttack(this.runState.elapsedMs, enemy.definition.boss));
+    const cue = this.add.graphics().setDepth(15); this.bossCues.set(enemy, cue);
+    enemy.once(Phaser.GameObjects.Events.DESTROY, () => { cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy); });
+  }
+
   private releaseBossMilestones(): void {
     if (!this.runState?.finalBossEnabled || !this.player || this.runState.mode !== "timed") return;
     for (const definition of dueBosses(this.enemyDefinitions, runProgress(this.runState.elapsedMs, this.runState.durationMs), this.spawnedBossIds)) {
@@ -1946,12 +2031,7 @@ export class RunScene extends Phaser.Scene {
       this.spawnedBossIds.add(definition.id);
       const enemy = [...this.enemies].find((actor) => actor.definition.id === definition.id);
       if (!enemy || !definition.boss) continue;
-      this.bossAttacks.set(enemy, createBossAttack(this.runState.elapsedMs, definition.boss));
-      const cue = this.add.graphics().setDepth(15);
-      this.bossCues.set(enemy, cue);
-      enemy.once(Phaser.GameObjects.Events.DESTROY, () => {
-        cue.destroy(); this.bossCues.delete(enemy); this.bossAttacks.delete(enemy);
-      });
+      this.registerBossAttack(enemy);
       this.announceWave(this.runTheme.copy.content[definition.id]!.name);
     }
   }
@@ -1979,7 +2059,7 @@ export class RunScene extends Phaser.Scene {
         cue.lineStyle(3, colour, 1).strokeCircle(result.state.warning.x, result.state.warning.y, definition.attack.radius);
       }
       if (result.released) this.bossPulses += 1;
-      if (result.damage > 0) {
+      if (result.damage > 0 && !this.sandboxControl?.invincible) {
         const damage = reduceByArmour(result.damage * (enemy.contactDamage / enemy.definition.contactDamage), this.runState.player.stats.armour);
         const healthBefore = this.runState.player.health;
         this.runState = damageRunPlayer(this.runState, damage, { sourceId: enemy.definition.id, elite: false });
@@ -2010,7 +2090,7 @@ export class RunScene extends Phaser.Scene {
         shot.destroy(); continue;
       }
       if (playerHit !== Infinity) {
-        if (this.runState.elapsedMs >= this.invulnerableUntilMs) {
+        if (this.runState.elapsedMs >= this.invulnerableUntilMs && !this.sandboxControl?.invincible) {
           this.runState = damageRunPlayer(this.runState, reduceByArmour(shot.damage, this.runState.player.stats.armour),
             { sourceId: shot.sourceId, elite: shot.elite });
           this.lastContactDamageAtMs = this.runState.elapsedMs;
@@ -2692,8 +2772,9 @@ export class RunScene extends Phaser.Scene {
 
   private dropSpecialItems(x: number, y: number, multiplier = 1): void {
     const economy = this.runTheme.economy;
-    if (!economy || this.pickups.size > PICKUP_CAP) return;
+    if (!economy || this.pickups.size >= PICKUP_CAP - 1) return;
     for (const kind of ["magnet", "food", "impact"] as const) {
+      if (this.pickups.size >= PICKUP_CAP - 1) break;
       if (Math.random() >= dropChance(economy.dropChances[kind] * multiplier, this.runState!.player.stats.luck, economy)) continue;
       const definition = this.runTheme.pickups.find((entry) => entry.kind === kind)!;
       this.pickupSequence++;
@@ -2823,11 +2904,16 @@ export class RunScene extends Phaser.Scene {
   }
 
   private beginLevelUpChoice(): void {
+    if (this.sandboxControl && this.runState) {
+      this.runState = { ...this.runState, status: "playing", progression: { ...this.runState.progression, pendingChoices: 0 } };
+      return;
+    }
     if (!this.runState || !this.levelUpUi || this.runState.progression.pendingChoices < 1) return;
     this.player?.stop();
     this.physics.world.pause();
     const luck = this.runState.player.stats.luck;
     const drawn = selectUpgradeChoices(this.runUpgradePool, 3, this.upgradeRandom, {
+      player: this.runState.player,
       selectedUpgradeIds: this.runState.selectedUpgradeIds,
       world: this.runState.world,
       weaponSlots: this.runState.weaponSlots,
@@ -2864,6 +2950,7 @@ export class RunScene extends Phaser.Scene {
       killChain: runState?.statistics.recentKillTimesMs.length ?? 0,
       levelProgress: required > 0 ? (progression?.xp ?? 0) / required : 0,
       spawnCounts: this.spawnStatistics.live,
+      ...(this.runTheme.economy ? { savedCurrency: { name: this.runTheme.copy.content[archetypeIds.pickup.impact]?.name ?? "", value: getProfile().economy.impact } } : {}),
     };
   }
 
@@ -3021,7 +3108,7 @@ export class RunScene extends Phaser.Scene {
 
   private handlePlayerEnemyOverlap(enemy: EnemyActor): void {
     if (!this.runState || !this.player || enemy.defeated) return;
-    if (testSkillEnabled("noContact")) return;
+    if (testSkillEnabled("noContact") || this.sandboxControl?.invincible) return;
     if (
       !canApplyContactDamage(
         this.runState.elapsedMs,
@@ -3601,7 +3688,7 @@ export class RunScene extends Phaser.Scene {
             gameplayRate: this.runTheme.tuning.pace.gameplayRate,
             expectedRealDurationMs: expectedRealDurationMs(
               this.runState.durationMs,
-              this.runTheme.tuning.pace.gameplayRate,
+              this.runTheme.economy ? 1 : this.runTheme.tuning.pace.gameplayRate,
             ),
             progress: this.runState.durationMs === 0
               ? 0

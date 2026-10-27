@@ -109,6 +109,7 @@ export class EnemyActor extends Phaser.GameObjects.Arc {
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.arcadeBody.setCircle(radius);
+    if (definition.scavenger) this.arcadeBody.setCollideWorldBounds(true);
     if (definition.geometry === "triangle") this.setIterations(1 / 3).setAngle(-90);
     if (definition.geometry === "square") this.setIterations(1 / 4).setAngle(45);
     if (definition.geometry === "hexagon") {

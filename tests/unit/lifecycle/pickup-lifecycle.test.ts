@@ -1,3 +1,6 @@
+import { dropChance } from "../../../src/game/systems/economy/economy";
+import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
+import type { RunState } from "../../../src/game/state/run-state";
 import { readFileSync } from "node:fs";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
@@ -26,7 +29,7 @@ vi.mock("phaser", async () => {
 vi.mock("../../../src/game/systems/sprites/sprite-view", () => ({ createSpriteView: () => undefined }));
 
 const source = ts.createSourceFile("scene.ts", readFileSync("src/game/scenes/run-scene.ts", "utf8"), ts.ScriptTarget.Latest, true);
-const names = ["dropExperience", "enforcePickupCap", "collectPickup"];
+const names = ["dropExperience", "enforcePickupCap", "collectPickup", "dropSpecialItems"];
 const methods: string[] = [];
 function visit(node: ts.Node): void {
   if (ts.isMethodDeclaration(node) && names.includes(node.name.getText(source))) {
@@ -38,10 +41,13 @@ visit(source);
 // Execute the actual scene methods without constructing a renderer in Node.
 const code = ts.transpileModule(`class Methods { ${methods.join("\n")} }`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
 const cap = Number(source.statements.find((node) => ts.isVariableStatement(node) && node.declarationList.declarations.some((d) => d.name.getText(source) === "PICKUP_CAP"))?.getText(source).match(/= (\d+)/)?.[1]);
-const makeMethods = new Function("PickupActor", "Phaser", "PICKUP_CAP", "testSkillEnabled", "testXpLevelCap", "claimExperiencePickup", "awardRunExperience", "archetypeIds", `${code}; return Methods;`);
-function createMethods(levelCap?: number) { return makeMethods(PickupActor, { GameObjects: { Events: { DESTROY: "destroy" } }, Math: { Distance: { Between: (x: number, y: number, a: number, b: number) => Math.hypot(x - a, y - b) } } }, cap, () => false, () => levelCap, claimExperiencePickup, awardRunExperience, archetypeIds); }
+const creditImpactMock = vi.fn();
+const makeMethods = new Function("PickupActor", "Phaser", "PICKUP_CAP", "testSkillEnabled", "testXpLevelCap", "claimExperiencePickup", "awardRunExperience", "archetypeIds", "dropChance", "creditImpact", `${code}; return Methods;`);
+function createMethods(levelCap?: number) { return makeMethods(PickupActor, { GameObjects: { Events: { DESTROY: "destroy" } }, Math: { Distance: { Between: (x: number, y: number, a: number, b: number) => Math.hypot(x - a, y - b) } } }, cap, () => false, () => levelCap, claimExperiencePickup, awardRunExperience, archetypeIds, dropChance, creditImpactMock); }
 
 type SceneFixture = {
+  runTheme: ThemeManifest; runState: RunState;
+  dropSpecialItems(x: number, y: number, multiplier?: number): void;
   pickups: Set<PickupActor>; bodies: Set<PickupActor>; group: Set<PickupActor>;
   pickupsMerged: number; xpEarnedTotal: number; pickupsCollected: number;
   dropExperience: (x: number, y: number, value: number, source: string) => void;
@@ -166,4 +172,36 @@ for (const { theme } of themeRegistry) describe(`${theme.id} pickup lifecycle`, 
     expect(scene.xpEarnedTotal).toBe(cap + 5);
     expect(scene.pickups.size).toBe(0);
   });
+});
+
+const eco = themeRegistry.find(({ theme }) => theme.economy)!.theme;
+it("nearby money merges exact fractional value and crosses denomination boundaries", () => {
+  const scene = fixture(eco); scene.runTheme = eco;
+  scene.dropExperience(100, 100, 3.5, "ambient"); scene.dropExperience(110, 100, 22, "ambient");
+  expect(scene.pickups.size).toBe(1); expect([...scene.pickups][0]!.xpValue).toBe(25.5);
+});
+it("specials keep a money slot free; overflow conserves money without absorbing items", () => {
+  const random = vi.spyOn(Math, "random").mockReturnValue(0);
+  try {
+    const scene = fixture(eco);
+    for (let i = 0; i < 100; i++) scene.dropSpecialItems(i * 30, 0);
+    expect(scene.pickups.size).toBe(cap - 1);
+    scene.dropExperience(10, 10, .25, "ambient"); scene.dropExperience(100, 100, 7, "ambient");
+    expect(scene.pickups.size).toBe(cap);
+    expect([...scene.pickups].filter((p) => p.definition.kind === "money").map((p) => p.xpValue)).toEqual([7.25]);
+    expect([...scene.pickups].filter((p) => p.definition.kind !== "money")).toHaveLength(cap - 1);
+  } finally { random.mockRestore(); }
+});
+it("magnet claims existing money, food clamps health, Impact credits once and specials grant no run XP", () => {
+  const random = vi.spyOn(Math, "random").mockReturnValue(0); creditImpactMock.mockClear();
+  try {
+    const scene = fixture(eco);
+    scene.runState = { ...scene.runState, player: { ...scene.runState.player, health: 95 } };
+    scene.dropExperience(100, 100, 7, "ambient"); scene.dropSpecialItems(0, 0);
+    const money = [...scene.pickups].find((p) => p.definition.kind === "money")!;
+    for (const pickup of [...scene.pickups].filter((p) => p.definition.kind !== "money")) { scene.collectPickup(pickup); scene.collectPickup(pickup); }
+    expect(money.magnetized).toBe(true); expect(money.xpValue).toBe(7);
+    expect(scene.runState.player.health).toBe(100); expect(scene.xpEarnedTotal).toBe(0);
+    expect(creditImpactMock).toHaveBeenCalledExactlyOnceWith(1);
+  } finally { random.mockRestore(); }
 });

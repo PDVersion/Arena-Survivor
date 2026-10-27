@@ -1,8 +1,9 @@
+import { expectedCritMultiplier } from "../../../src/game/systems/simulation/build-models";
 import { describe, expect, it } from "vitest";
 import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { archetypeIds as ids } from "../../../src/game/core/archetypes/ids";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
-import { resolveCleanupTool, orbitHead } from "../../../src/game/systems/weapons/cleanup-tools";
+import { resolveCleanupTool, orbitHead, validateCleanupTool } from "../../../src/game/systems/weapons/cleanup-tools";
 import { createRunState } from "../../../src/game/state/run-state";
 import { applyUpgrade, isUpgradeAvailable } from "../../../src/game/systems/upgrades";
 import { describeUpgrade } from "../../../src/game/systems/upgrades/describe-upgrade";
@@ -36,6 +37,9 @@ it("makes critical and clean hits, Fortune and careful cleanup reduce fragmentat
   const e = ecoGuardianTheme.economy;
   const weak = fragmentationChance(e, 0, 4, .2, false, 0);
   for (const reduced of [fragmentationChance(e, 0, 1, 1, false, 0), fragmentationChance(e, 0, 4, .2, true, 0), fragmentationChance(e, 40, 4, .2, false, 0), fragmentationChance(e, 0, 4, .2, false, 3)]) expect(reduced).toBeLessThan(weak);
+  expect(fragmentationChance(e, 0, 1, 1, false, 0)).toBeCloseTo(.1);
+  expect(fragmentationChance(e, 25, 1, 1, false, 0)).toBe(0);
+  expect(fragmentationChance(e, 0, 1, 1, true, 0)).toBe(0);
   expect(fragmentationChance(e, 1000, 4, .1, false, 6)).toBe(0);
   expect(e.fragmentation.parentShare).toBeLessThan(1);
   expect(e.fragmentation.totalShare).toBeGreaterThan(1);
@@ -62,4 +66,36 @@ it("opens with cigarette butts, delays natural microplastics and keeps rare rat 
   expect(rat.maxHealth).toBeGreaterThan(100);
   expect(rat.scavenger!.leakBudget).toBe(12);
   expect(rat.scavenger!.itemMultiplier).toBeGreaterThan(1);
+});
+
+it("uses the same capped critical policy in the eco balance model", () => {
+  expect(expectedCritMultiplier(2.5, 2, true)).toBe(3.5);
+  expect(expectedCritMultiplier(20, 2, true)).toBe(4);
+});
+
+it("rejects unsafe tick and contact population extremes at the definition boundary", () => {
+  const tool = theme.weapons.find((w) => w.cleanup)!.cleanup!;
+  expect(validateCleanupTool(tool)).toEqual([]);
+  expect(validateCleanupTool({ ...tool, tickMs: 0 })).toContain("cleanup tickMs must stay positive");
+  expect(validateCleanupTool({ ...tool, count: 100, rows: 100 })).toContain("cleanup contact population exceeds bounded budget");
+  expect(validateCleanupTool({ ...tool, slow: 1 })).toContain("cleanup slow must stay below immunity");
+});
+
+it("keeps aura tracks available after evolution and previews the evolved base", () => {
+  const state = createRunState({ themeId: theme.id, characterId: ids.character.starter, baseStats: theme.characters[0]!.baseStats, startingWeaponIds: [ids.weapon.secondaryEvolved], weaponSlotCount: 4 });
+  const upgrade = theme.upgrades.find((u) => u.id === ids.upgrade.auraDamage)!;
+  expect(isUpgradeAvailable(upgrade, [], state)).toBe(true);
+  const description = describeUpgrade(state, upgrade, theme);
+  expect(description.association).toBe("Cyclone Vacuum");
+  expect(description.lines.find((l) => l.label === "Damage per hit")).toMatchObject({ from: "6", to: "8" });
+});
+
+it("clamps critical-chance gains at guaranteed red and stops offering a wasted pick", () => {
+  const initial = createRunState({ themeId: theme.id, characterId: ids.character.starter, baseStats: theme.characters[0]!.baseStats });
+  const state = { ...initial, player: { ...initial.player, stats: { ...initial.player.stats, critChance: 2.95 } } };
+  const upgrade = theme.upgrades.find((u) => u.id === ids.upgrade.critChance)!;
+  const after = applyUpgrade(state, upgrade, undefined, 4, theme.weapons);
+  expect(after.player.stats.critChance).toBe(3);
+  expect(isUpgradeAvailable(upgrade, after.selectedUpgradeIds, after)).toBe(false);
+  expect(applyUpgrade(after, upgrade, undefined, 4, theme.weapons)).toBe(after);
 });

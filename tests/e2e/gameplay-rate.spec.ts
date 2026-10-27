@@ -15,7 +15,7 @@ async function advanceSimulation(page: Page, byMs: number): Promise<number> {
   return elapsedMs(page);
 }
 
-test("half speed is wired to the advancing browser simulation clock", async ({ page }) => {
+test("active run clock advances independently of half-speed movement", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto("/?noContact&noXp");
   await expect
@@ -29,11 +29,11 @@ test("half speed is wired to the advancing browser simulation clock", async ({ p
   expect(after - before).toBeGreaterThan(500);
   expect(snapshot?.pacing?.gameplayRate).toBe(0.5);
   expect(snapshot?.pacing?.expectedRealDurationMs).toBe(
-    (snapshot?.run?.durationMs ?? 0) / activeTheme.tuning.pace.gameplayRate,
+    (snapshot?.run?.durationMs ?? 0) / (activeTheme.economy ? 1 : activeTheme.tuning.pace.gameplayRate),
   );
 });
 
-test("pause freezes the half-speed clock and reduced motion preserves the base rate", async ({ page }) => {
+test("pause freezes the active clock and reduced motion preserves the base rate", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto("/?noContact&noXp&reducedMotion=1");
   await expect

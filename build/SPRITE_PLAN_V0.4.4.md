@@ -53,3 +53,14 @@ records723units/27sprite checks, scoped serial Canvas/WebGL evidence and limits.
 No correction claim remains active. Existing owner acceptance/performance/delivery
 work above remains open. The [separate-session research prompt](prompts/PROGRESSION_SYSTEM_RESEARCH.md)
 is written; no progression redesign is selected by it.
+
+## Owner-selected continuation V0.4.5 —2026-10-27
+
+The [V0.4.5 plan](BUILD_PLAN_V0.4.5.md) selects six further subjects and gameplay
+integration: money denominations, magnet, drumstick, rat, bin and rake. All are
+now accepted locally with preserved built-in generation evidence; rat usesa2,
+othersa1. Lime Impact art is reused for saved currency, cone designs are parked.
+33registry recipes/118atlas frames (including parked history),28active content
+bindings. [Report/checklist](content/MONEY_TOOLS_SANDBOX_REPORT.md) owns current
+software checks and remaining owner feel/art acceptance. No sprite claim remains
+active; future corrections need their own bounded claim. Frozen pack untouched.

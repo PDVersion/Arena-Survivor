@@ -10,7 +10,7 @@ export interface EconomyDefinition {
   readonly impactValue: number;
   readonly mergeDistance: number;
   readonly shop: readonly ShopItem[];
-  readonly fragmentation: { readonly chance: number; readonly fortuneReduction: number; readonly cleanHitReduction: number; readonly critReduction: number; readonly parentShare: number; readonly totalShare: number; readonly childCount: number };
+  readonly fragmentation: { readonly chance: number; readonly fortuneReduction: number; readonly cleanHitReduction: number; readonly careReduction: number; readonly critReduction: number; readonly parentShare: number; readonly totalShare: number; readonly childCount: number };
 }
 export interface ShopItem { readonly id: string; readonly name: string; readonly description: string; readonly maxLevel: number; readonly baseCost: number; readonly costGrowth: number; readonly stat: "maxHealth" | "damageBonus" | "luck" | "moveSpeed"; readonly perLevel: number }
 export interface MetaEconomy { readonly impact: number; readonly upgrades: Readonly<Record<string, number>> }
@@ -33,7 +33,7 @@ export function applyImpactBonuses<T extends PlayerBaseStats>(stats: T, economy:
 export function fragmentationChance(definition: EconomyDefinition, fortune: number, hits: number, lethalFraction: number, critical: boolean, careLevel: number): number {
   const f = definition.fragmentation;
   const clean = hits <= 1 || lethalFraction >= 1;
-  return Math.max(0, Math.min(1, f.chance - Math.max(0, fortune) * f.fortuneReduction - careLevel * f.cleanHitReduction
+  return Math.max(0, Math.min(1, f.chance - Math.max(0, fortune) * f.fortuneReduction - careLevel * f.careReduction
     - (clean ? f.cleanHitReduction : 0) - (critical ? f.critReduction : 0)));
 }
 export interface ActiveClock { readonly at: number; readonly active: boolean }

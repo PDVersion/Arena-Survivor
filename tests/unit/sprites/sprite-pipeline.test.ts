@@ -6,14 +6,14 @@ import { join } from "node:path";
 import { buildSpriteSheet, readSpritePng, checkSpriteSheet } from "../../../src/game/systems/sprites/sprite-pipeline";
 
 describe("sprite build output", () => {
-  it("ships only the selected 27 style2 outputs with exact atlas pixels", async () => {
+  it("ships only the selected style2 outputs with exact atlas pixels", async () => {
     const inventory = JSON.parse(await readFile("build/sprites/review/style2/ALL_SPRITES_INVENTORY.json", "utf8"));
     const atlas = await readSpritePng("public/sprites/eco-guardian/atlas.png");
     const metadata = JSON.parse(await readFile("public/sprites/eco-guardian/atlas.json", "utf8"));
-    expect(ecoSpriteRecipes).toHaveLength(27);
+    expect(ecoSpriteRecipes).toHaveLength(33);
     expect(atlas.width).toBeLessThanOrEqual(2048);
     expect(atlas.height).toBeLessThanOrEqual(2048);
-    expect(Object.keys(metadata.frames)).toHaveLength(102);
+    expect(Object.keys(metadata.frames)).toHaveLength(ecoSpriteRecipes.reduce((sum, recipe) => sum + recipe.frames, 0));
     for (const recipe of ecoSpriteRecipes) {
       const selected = inventory.find((row: { id: string }) => row.id === recipe.contentId);
       expect(await readFile(recipe.output)).toEqual(await readFile(`build/sprites/review/style2/${selected.native}`));

@@ -16,6 +16,8 @@ export const upgradeStatTargets = [
 export type UpgradeStatTarget = (typeof upgradeStatTargets)[number];
 
 export interface AddStatEffect {
+  /** Optional ceiling for bounded critical-chance progression. */
+  readonly ceiling?: number;
   readonly kind: "stat.add";
   readonly target: UpgradeStatTarget;
   readonly value: number;

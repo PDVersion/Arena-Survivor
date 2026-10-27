@@ -7,6 +7,7 @@ import { selectHudValues } from "../state/statistics";
 import { addUiText, configureUiContainer, uiViewport } from "./ui-text";
 
 export interface HudExtras {
+  readonly savedCurrency?: { readonly name: string; readonly value: number };
   readonly spawnCounts: SpawnCounts;
   /** Discrete elapsed-time escalation step. */
   readonly threatStep: number;
@@ -17,6 +18,7 @@ export interface HudExtras {
 }
 
 interface HudTextInputs {
+  savedCurrency: number | undefined;
   health: number;
   maxHealth: number;
   xp: number;
@@ -175,6 +177,7 @@ export class Hud {
     const counts = extras.spawnCounts;
     if (!previous || previous.health !== health || previous.maxHealth !== maxHealthText ||
         previous.xp !== progression.xp || previous.requiredXp !== progression.xpToNextLevel ||
+        previous.savedCurrency !== extras.savedCurrency?.value ||
         previous.level !== progression.level || previous.clockSecond !== clockSecond ||
         previous.mode !== state.mode || previous.status !== state.status ||
         previous.difficulty !== state.difficulty || previous.kills !== statistics.kills ||
@@ -183,6 +186,7 @@ export class Hud {
         previous.natural !== counts.natural || previous.fragmentation !== counts.fragmentation ||
         previous.environment !== counts.environment || previous.baggedWaste !== counts.baggedWaste) {
       this.textInputs = {
+        savedCurrency: extras.savedCurrency?.value,
         health, maxHealth: maxHealthText, xp: progression.xp, requiredXp: progression.xpToNextLevel,
         level: progression.level, clockSecond, mode: state.mode, status: state.status,
         difficulty: state.difficulty, kills: statistics.kills, enemies: statistics.liveEnemies,
@@ -223,6 +227,7 @@ export class Hud {
     if (extras.killChain > 1) {
       right.push(`${vocabulary.largestKillChain}: ${extras.killChain}`);
     }
+    if (extras.savedCurrency) right.push(`${extras.savedCurrency.name}: ${extras.savedCurrency.value}`);
     this.right.setText(right);
 
     this.levelLabel.setText(`${vocabulary.level} ${values.level}`);

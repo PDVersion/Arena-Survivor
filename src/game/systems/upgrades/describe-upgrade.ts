@@ -190,6 +190,7 @@ export function describeUpgrade(
   theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning" | "curses" | "economy">,
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
+  const ownerId = state.weaponSlots?.find((slot) => slot.weaponId === upgrade.ownerWeaponId || upgrade.additionalOwnerWeaponIds?.includes(slot.weaponId))?.weaponId ?? upgrade.ownerWeaponId;
   const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
   const acquisition = upgrade.effects.find((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
   const evolution = upgrade.effects.find((effect) => effect.kind === "weapon.evolve");
@@ -207,8 +208,8 @@ export function describeUpgrade(
     theme.curses,
   );
 
-  const beforeStats = selectPlayerStats(state, theme, evolution?.fromWeaponId ?? upgrade.ownerWeaponId);
-  const afterStats = selectPlayerStats(after, theme, evolution?.weaponId ?? upgrade.ownerWeaponId);
+  const beforeStats = selectPlayerStats(state, theme, evolution?.fromWeaponId ?? ownerId);
+  const afterStats = selectPlayerStats(after, theme, evolution?.weaponId ?? ownerId);
   const lines: UpgradeChangeLine[] = [];
 
   afterStats.forEach((next, index) => {
@@ -244,7 +245,7 @@ export function describeUpgrade(
       }
     }
   }
-  const tool = theme.weapons.find((weapon) => weapon.id === upgrade.ownerWeaponId)?.cleanup;
+  const tool = theme.weapons.find((weapon) => weapon.id === ownerId)?.cleanup;
   const toolTrack = tool?.tracks.find((track) => track.id === upgrade.id);
   if (tool && toolTrack) {
     const beforeTool = resolveCleanupTool(tool, state.selectedUpgradeIds);
@@ -260,7 +261,7 @@ export function describeUpgrade(
     summary: theme.copy.content[upgrade.id]?.description ?? "",
     rarity: upgrade.rarity,
     qualityRelevant: isTiered(upgrade),
-    association: theme.copy.content[upgrade.ownerWeaponId ?? acquisition?.weaponId ??
+    association: theme.copy.content[ownerId ?? acquisition?.weaponId ??
       upgrade.effects.find((effect) => effect.kind === "skill.level")?.skillId ?? upgrade.id]?.name ?? "",
     tier: resolvedTier,
     tierLabel: theme.copy.tiers[resolvedTier],
@@ -332,7 +333,7 @@ function describeSkillChange(
 
     const fracture = findSkillEffect(theme.skills, effect.skillId, "fracture");
     if (fracture && theme.economy) {
-      lines.push({ label: "Breakage chance reduction", from: percent(previous * theme.economy.fragmentation.cleanHitReduction), to: percent(next * theme.economy.fragmentation.cleanHitReduction) });
+      lines.push({ label: "Breakage chance reduction", from: percent(previous * theme.economy.fragmentation.careReduction), to: percent(next * theme.economy.fragmentation.careReduction) });
       continue;
     }
     if (fracture) {
