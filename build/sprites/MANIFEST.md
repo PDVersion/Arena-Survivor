@@ -202,3 +202,9 @@ short wooden handle left; native96x32, hard alpha/style2. Replaces orbiting rake
 presentation at stable weapon.orbiting_rake; accepted rake becomes Rake Sweep.
 Claim covers raw prompt/source, deterministic recipe/review, accepted source and
 atlas binding. Physics/world size remains theme-authored and independent of art.
+
+Orbiting Shovel a1 accepted2026-10-27: built-in imagegen, exact prompt/raw and
+review recipe/checks retained.96x32, hard-alpha/component/outline/palette checks
+pass; inspected at native size: connected shaft and broad right-leading spade.
+Raw SHA2568eff91a4e4da232d03268bc797a8db5117b3df1729580788db11e0c8cd724de6;
+normalized80af556074fe1a5d3f482b72cc011ee38028a4f81009589a0cd03d5c46f3e847.
