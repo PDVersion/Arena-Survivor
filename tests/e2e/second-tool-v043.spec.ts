@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 // The cone/splash campaign is preserved in build/history. Eco now owns aura tracks;
 // generic cone/evolution contracts remain covered by existing unit fixtures.
-test("normal offers equip the aura, advance its fixed track, evolve in place and reset", async ({ page }) => {
+test("normal offers equip one vacuum and advance its single seven-level path", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/sprite-browser.html?noAmbient&noContact&noHazards");
   await page.evaluate(async () => {
@@ -38,14 +38,14 @@ test("normal offers equip the aura, advance its fixed track, evolve in place and
   });
   const snapshot = () => page.evaluate(() => (window as unknown as { __AURA_OFFER_FIXTURE__: { snapshot(): { slots: string[]; selected: string[]; status: string } } }).__AURA_OFFER_FIXTURE__.snapshot());
   try {
-    for (const id of ["upgrade.equip_secondary", ...Array<string>(4).fill("upgrade.secondary_range"), "upgrade.evolve_secondary", "upgrade.tool.aura_damage"]) {
+    for (const id of ["upgrade.equip_secondary", ...Array<string>(6).fill("upgrade.tool.aura_damage")]) {
       const index = await page.evaluate((id) => (window as unknown as { __AURA_OFFER_FIXTURE__: { offer(id: string): number } }).__AURA_OFFER_FIXTURE__.offer(id), id);
       expect(index).toBeGreaterThanOrEqual(0);
       await page.keyboard.press(String(index + 1), { delay: 50 });
       await expect.poll(async () => (await snapshot()).status).toBe("playing");
     }
-    expect((await snapshot()).slots).toEqual(["weapon.starter", "weapon.secondary_evolved"]);
-    expect((await snapshot()).selected.filter((id) => id === "upgrade.secondary_range")).toHaveLength(4);
+    expect((await snapshot()).slots).toEqual(["weapon.starter", "weapon.secondary"]);
+    expect((await snapshot()).selected.filter((id) => id === "upgrade.tool.aura_damage")).toHaveLength(6);
     await page.evaluate(() => (window as unknown as { __AURA_OFFER_FIXTURE__: { restart(): void } }).__AURA_OFFER_FIXTURE__.restart());
     await expect.poll(async () => (await snapshot()).slots).toEqual(["weapon.starter"]);
     expect(errors).toEqual([]);

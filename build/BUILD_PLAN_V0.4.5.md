@@ -109,4 +109,4 @@ pack changes, saved-ID removal, passive redesign, publishing or broad campaigns.
 Verification: deterministic progression/acceleration/beam geometry units, sprite
 checks, typecheck/lint/build, one scoped serial testing-area acceptance campaign.
 Historical obsolete cone/evolution browser fixtures remain deferred explicitly.
-- [ ] Phase4 software, art integration and scoped acceptance.
+- [x] Phase4 software, art integration and scoped acceptance. 736 units/79 files,34sprite checks, types/lint/build, five unique targeted serial browser cases and production guard pass. Broader historical/device/CI checks remain deferred.

@@ -529,3 +529,10 @@ in eco. Cleanup capability data and fixed tracks remain theme-owned; core
 schedulers consume stable IDs. Evolved aura shares source tracks via declared
 additional owner IDs. Critical cap is opt-in; frozen content is unchanged.
 [Current tuning and playtest report](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+
+Owner correction2026-10-27: eco weapons now use one seven-level stepped path each.
+Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
+in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
+Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
+slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.

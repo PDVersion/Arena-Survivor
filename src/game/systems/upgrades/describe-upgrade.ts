@@ -1,4 +1,3 @@
-import { resolveCleanupTool } from "../weapons/cleanup-tools";
 import type {
   StatKey,
   ThemeManifest,
@@ -245,20 +244,16 @@ export function describeUpgrade(
       }
     }
   }
-  const tool = theme.weapons.find((weapon) => weapon.id === ownerId)?.cleanup;
-  const toolTrack = tool?.tracks.find((track) => track.id === upgrade.id);
-  if (tool && toolTrack) {
-    const beforeTool = resolveCleanupTool(tool, state.selectedUpgradeIds);
-    const afterTool = resolveCleanupTool(tool, after.selectedUpgradeIds);
-    const labels = { radius: "Area radius", damage: "Damage per hit", tickMs: "Tick interval (ms)", slow: "Slow", count: "Number per row / throw", rows: "Orbit rows", speed: "Rotation (rad/s)", dotDamage: "Landing damage per tick" };
-    lines.push({ label: labels[toolTrack.stat], from: number(beforeTool[toolTrack.stat]), to: number(afterTool[toolTrack.stat]) });
-  }
+  const ownedWeapon = theme.weapons.find((weapon) => weapon.id === ownerId);
+  const progression = ownedWeapon?.progression ?? ownedWeapon?.cleanup?.progression;
+  const step = progression?.id === upgrade.id ? progression.levels[Math.min(picks + 1, progression.levels.length - 1)] : undefined;
+  if (step) lines.push({ label: "Next weapon level", to: step.description });
   lines.push(...describeSkillChange(state, after, upgrade, theme));
 
   return Object.freeze({
     id: upgrade.id,
     name: theme.copy.content[upgrade.id]?.name ?? upgrade.id,
-    summary: theme.copy.content[upgrade.id]?.description ?? "",
+    summary: step?.description ?? theme.copy.content[upgrade.id]?.description ?? "",
     rarity: upgrade.rarity,
     qualityRelevant: isTiered(upgrade),
     association: theme.copy.content[ownerId ?? acquisition?.weaponId ??

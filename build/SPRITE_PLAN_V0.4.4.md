@@ -64,3 +64,10 @@ othersa1. Lime Impact art is reused for saved currency, cone designs are parked.
 bindings. [Report/checklist](content/MONEY_TOOLS_SANDBOX_REPORT.md) owns current
 software checks and remaining owner feel/art acceptance. No sprite claim remains
 active; future corrections need their own bounded claim. Frozen pack untouched.
+
+
+2026-10-27 owner correction: one additional generated shovel accepted for the
+clockwise orbit weapon, head leading. Accepted rake reused for outward Rake Sweep.
+34 reproducible sheets now include the parked historical designs. Native shovel
+96x32 and unchanged authored world geometry; bin presentation reduced to38 only.
+Exact claim/prompt/raw/review/normalized hashes recorded in the manifest.

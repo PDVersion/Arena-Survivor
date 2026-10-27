@@ -1,37 +1,41 @@
+import { resolveWeaponDefinition } from "../../../src/game/systems/weapons/resolve-weapon";
 import { expectedCritMultiplier } from "../../../src/game/systems/simulation/build-models";
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { archetypeIds as ids } from "../../../src/game/core/archetypes/ids";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
-import { resolveCleanupTool, orbitHead, validateCleanupTool } from "../../../src/game/systems/weapons/cleanup-tools";
+import { resolveCleanupTool, orbitHead, validateCleanupTool, sweepReach, sweepContact } from "../../../src/game/systems/weapons/cleanup-tools";
 import { createRunState } from "../../../src/game/state/run-state";
 import { applyUpgrade, isUpgradeAvailable } from "../../../src/game/systems/upgrades";
 import { describeUpgrade } from "../../../src/game/systems/upgrades/describe-upgrade";
 import { isTiered } from "../../../src/game/systems/upgrades/upgrade-tiers";
-import { fragmentationChance } from "../../../src/game/systems/economy/economy";
+import { magnetPullSpeed, fragmentationChance } from "../../../src/game/systems/economy/economy";
 import { rollDamage } from "../../../src/game/systems/combat";
 const theme: ThemeManifest = ecoGuardianTheme;
-for (const weapon of theme.weapons.filter((w) => w.cleanup && w.id !== ids.weapon.secondaryEvolved)) describe(weapon.id, () => {
-  for (const track of weapon.cleanup!.tracks) it(`resolves five fixed levels for ${track.stat}, ignores rarity, and caps picks`, () => {
-    const upgrade = theme.upgrades.find((u) => u.id === track.id)!;
-    const initial = createRunState({ themeId: theme.id, characterId: ids.character.starter, baseStats: theme.characters[0]!.baseStats, weaponSlotCount: theme.weaponSlotCount });
-    let state = { ...initial, weaponSlots: [{ weaponId: weapon.id, nextAttackAtMs: 123 }] };
-    expect(isTiered(upgrade)).toBe(false);
-    for (let level = 1; level <= 5; level++) {
-      const tool = resolveCleanupTool(weapon.cleanup!, state.selectedUpgradeIds);
-      expect(tool[track.stat]).toBeCloseTo(weapon.cleanup![track.stat] + (level - 1) * track.step);
-      if (level === 5) break;
-      const preview = describeUpgrade(state, upgrade, theme, "unique");
-      const after = applyUpgrade(state, upgrade, undefined, 4, theme.weapons);
-      expect(preview.qualityRelevant).toBe(false);
-      expect(preview.lines.length).toBeGreaterThan(0);
-      expect(after.weaponSlots).toEqual(state.weaponSlots);
-      expect(after.player).toEqual(state.player);
-      state = after;
-    }
-    expect(isUpgradeAvailable(upgrade, state.selectedUpgradeIds, state)).toBe(false);
-    expect(applyUpgrade(state, upgrade, undefined, 4, theme.weapons)).toBe(state);
-  });
+for (const weapon of theme.weapons) it(`${weapon.id} has one seven-level path, meaningful steps and fixed untiered cap`, () => {
+  expect(weapon.upgrades).toHaveLength(1);
+  const upgrade = weapon.upgrades![0]!;
+  const progression = weapon.progression ?? weapon.cleanup!.progression!;
+  expect(progression.levels).toHaveLength(7);
+  expect(upgrade.maxLevel).toBe(6);
+  expect(isTiered(upgrade)).toBe(false);
+  let state = createRunState({ themeId: theme.id, characterId: ids.character.starter, baseStats: theme.characters[0]!.baseStats, startingWeaponIds: [weapon.id], weaponSlotCount: theme.weaponSlotCount });
+  let previous = "";
+  for (let level = 1; level <= 7; level++) {
+    const resolved = weapon.cleanup ? resolveCleanupTool(weapon.cleanup, state.selectedUpgradeIds) : resolveWeaponDefinition(weapon, { range: 0, pierce: 0, projectileCount: 0 }, undefined, state.selectedUpgradeIds);
+    const snapshot = JSON.stringify(Object.fromEntries(Object.entries(resolved).filter(([, value]) => typeof value === "number")));
+    expect(snapshot).not.toBe(previous); previous = snapshot;
+    if (level === 7) break;
+    const preview = describeUpgrade(state, upgrade, theme, "unique");
+    expect(preview).toMatchObject({ qualityRelevant: false, tierMultiplier: 1, level, nextLevel: level + 1, maxLevel: 7, summary: progression.levels[level]!.description });
+    const after = applyUpgrade(state, upgrade, undefined, 4, theme.weapons);
+    expect(after.weaponSlots).toEqual(state.weaponSlots);
+    expect(after.player).toEqual(state.player);
+    state = after;
+    if (weapon.progression?.skillId) expect(state.skillLevels[weapon.progression.skillId]).toBe(weapon.progression.levels[level]!.sweepLevel);
+  }
+  expect(isUpgradeAvailable(upgrade, state.selectedUpgradeIds, state)).toBe(false);
+  expect(applyUpgrade(state, upgrade, undefined, 4, theme.weapons)).toBe(state);
 });
 it("makes critical and clean hits, Fortune and careful cleanup reduce fragmentation", () => {
   const e = ecoGuardianTheme.economy;
@@ -81,13 +85,28 @@ it("rejects unsafe tick and contact population extremes at the definition bounda
   expect(validateCleanupTool({ ...tool, slow: 1 })).toContain("cleanup slow must stay below immunity");
 });
 
-it("keeps aura tracks available after evolution and previews the evolved base", () => {
-  const state = createRunState({ themeId: theme.id, characterId: ids.character.starter, baseStats: theme.characters[0]!.baseStats, startingWeaponIds: [ids.weapon.secondaryEvolved], weaponSlotCount: 4 });
-  const upgrade = theme.upgrades.find((u) => u.id === ids.upgrade.auraDamage)!;
-  expect(isUpgradeAvailable(upgrade, [], state)).toBe(true);
-  const description = describeUpgrade(state, upgrade, theme);
-  expect(description.association).toBe("Cyclone Vacuum");
-  expect(description.lines.find((l) => l.label === "Damage per hit")).toMatchObject({ from: "6", to: "8" });
+it("has one vacuum identity and no evolution or separate tool-track offers", () => {
+  expect(theme.weapons.some((w) => w.id === ids.weapon.secondaryEvolved)).toBe(false);
+  expect(theme.upgrades.some((u) => u.effects.some((e) => e.kind === "weapon.evolve"))).toBe(false);
+  expect(theme.weapons.filter((w) => w.cleanup?.kind === "aura")).toHaveLength(1);
+});
+
+it("bounds camera-edge sweep travel and catches a target crossed between frames", () => {
+  const view = { x: 100, y: 200, width: 800, height: 600 };
+  expect(sweepReach(500, 500, 1, 0, view)).toBe(400);
+  expect(sweepReach(500, 500, 0, -1, view)).toBe(300);
+  expect(sweepReach(500, 500, .6, .8, view)).toBe(375);
+  expect(sweepContact(150, 5, 0, 0, 300, 0, 10)).toBe(true);
+  expect(sweepContact(150, 50, 0, 0, 300, 0, 10)).toBe(false);
+  expect(sweepContact(0, 0, 0, 0, 0, 0, 10)).toBe(true);
+});
+
+it("starts magnet pull slowly, accelerates with active time, caps speed and avoids overshoot", () => {
+  const pull = theme.pickups.find((p) => p.kind === "money")!.magnetPull!;
+  expect(magnetPullSpeed(pull, 0, 1000, 16)).toBe(70);
+  expect(magnetPullSpeed(pull, 1000, 1000, 16)).toBe(720);
+  expect(magnetPullSpeed(pull, 10000, 1000, 16)).toBe(1900);
+  expect(magnetPullSpeed(pull, 10000, 5, 100)).toBe(50);
 });
 
 it("clamps critical-chance gains at guaranteed red and stops offering a wasted pick", () => {
@@ -98,4 +117,10 @@ it("clamps critical-chance gains at guaranteed red and stops offering a wasted p
   expect(after.player.stats.critChance).toBe(3);
   expect(isUpgradeAvailable(upgrade, after.selectedUpgradeIds, after)).toBe(false);
   expect(applyUpgrade(after, upgrade, undefined, 4, theme.weapons)).toBe(after);
+});
+
+it("shrinks bin presentation without shrinking its authored damage area", () => {
+  const bin = theme.weapons.find((w) => w.id === ids.weapon.cleaningBin)!.cleanup!;
+  expect(bin.displayWidth).toBeLessThanOrEqual(theme.characters[0]!.displayDiameter);
+  expect(bin.radius).toBe(58);
 });

@@ -475,5 +475,18 @@ export const sprites = {
       "hit": 0,
       "death": 0
     }
+  },
+  "weapon.rake_beam": {
+    "key": "eco_guardian.weapon.rake_beam",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 0,
+      "death": 0
+    }
   }
 } as const satisfies ThemeSprites;

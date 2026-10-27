@@ -8,7 +8,7 @@ import { enemies } from "./enemies";
 import { copy } from "./copy";
 import { tokens } from "./tokens";
 import { sprites } from "./sprites";
-import { weapons, weaponSlotCount, weaponAcquisition, weaponEvolution } from "./weapons";
+import { weapons, weaponSlotCount, weaponAcquisition } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades, upgradeTierTuning } from "./upgrades";
 import { curses, curseOffers } from "./curses";
@@ -47,7 +47,7 @@ export const ecoGuardianTheme = defineTheme({
   weaponSlotCount,
   enemies,
   pickups,
-  upgrades: [...upgrades, ...curseOffers, ...toolAcquisitions, weaponAcquisition, weaponEvolution, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
+  upgrades: [...upgrades, ...curseOffers, ...toolAcquisitions, weaponAcquisition, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
   shrines,
   curses,
   skills,

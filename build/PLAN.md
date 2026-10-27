@@ -1723,3 +1723,10 @@ step is owner feel/balance feedback using the
 [normal-play checklist](content/MONEY_TOOLS_SANDBOX_REPORT.md), with full
 historical regression/art/device acceptance still open. Unlimited-stat vs capped
 item redesign remains a separate research decision.
+
+
+Owner correction2026-10-27: eco weapons now use one seven-level stepped path each.
+Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
+in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
+Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
+slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.

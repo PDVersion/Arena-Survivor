@@ -11,6 +11,7 @@ import {
   type EnemyPrimitivePart,
   type EnemyDefinition,
   type ThemeManifest,
+  type WeaponDefinition,
   type UpgradeDefinition,
 } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
@@ -216,7 +217,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push("weaponSlotCount must be a positive safe integer");
   }
   const weaponIds = new Set<string>();
-  const weapons = Array.isArray(theme.weapons) ? theme.weapons : [];
+  const weapons: readonly WeaponDefinition[] = Array.isArray(theme.weapons) ? theme.weapons : [];
   if (!Array.isArray(theme.weapons)) issues.push("weapons registry is required");
   for (const weapon of weapons) {
     if (weaponIds.has(weapon.id)) issues.push(`duplicate weapon id: ${weapon.id}`);
@@ -224,6 +225,13 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(weapon.damage) || weapon.damage <= 0) {
       issues.push(`${weapon.id} damage must be greater than zero`);
     }
+    const progression = weapon.progression ?? weapon.cleanup?.progression;
+    if (progression) {
+      const upgrade = weapon.upgrades?.find((u) => u.id === progression.id);
+      if (progression.levels.length !== 7 || upgrade?.maxLevel !== 6 || weapon.upgrades?.length !== 1) issues.push(`${weapon.id} requires one seven-level progression`);
+      if (progression.levels.some((level) => !level.description.trim())) issues.push(`${weapon.id} requires a description at every level`);
+    }
+    if (weapon.progression && weapon.progression.levels.some((level) => ![level.damage, level.range, level.cooldownMs].every((value) => Number.isFinite(value) && value > 0) || !Number.isInteger(level.sweepLevel) || level.sweepLevel < 0)) issues.push(`${weapon.id} has unsafe progression values`);
     if (weapon.cleanup) issues.push(...validateCleanupTool(weapon.cleanup).map((issue) => `${weapon.id} ${issue}`));
     if (!Number.isFinite(weapon.cooldownMs) || weapon.cooldownMs <= 0) {
       issues.push(`${weapon.id} cooldownMs must be greater than zero`);
@@ -541,8 +549,9 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
           continue;
         }
         if (effect.kind === "tool.upgrade") {
-          const tool = theme.weapons.find((weapon) => weapon.id === effect.weaponId)?.cleanup;
-          if (!tool?.tracks.some((track) => track.id === upgrade.id)) issues.push(`${upgrade.id} has no tool track`);
+          const weapon = theme.weapons.find((weapon) => weapon.id === effect.weaponId);
+          const tool = weapon?.cleanup;
+          if (!(weapon?.progression?.id === upgrade.id || tool?.progression?.id === upgrade.id || tool?.tracks.some((track) => track.id === upgrade.id))) issues.push(`${upgrade.id} has no tool track`);
           continue;
         }
         if (effect.kind !== "stat.add") {

@@ -12,6 +12,14 @@ would require editing it must be recorded and deferred until explicit reopening,
 rather than silently expanding this scope. Continue eco-guardian through stable
 core contracts. This overrides older instructions to keep both packs in step.
 
+## V0.4.5 owner correction — 2026-10-27
+
+One seven-level path per weapon; smaller bin, clockwise orbiting shovels,
+movement-aimed outward rake, one Cleanup Vacuum, accelerating money magnet.
+736 units/79 files,34sprite sheets, types/lint/build, five unique scoped serial
+browser cases and production guard pass. Broader historical regression/device/CI
+remain deferred. Next: owner feel feedback and bounded tuning. No publication.
+
 ## V0.4.5 local implementation —2026-10-27
 
 Owner selects money/pickups, saved Impact Shop, aura/bin/orbit tools, downside

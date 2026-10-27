@@ -419,7 +419,8 @@ export interface OnHitSplashDefinition {
 }
 
 export interface CleanupToolDefinition {
-  readonly kind: "aura" | "bin" | "orbit";
+  readonly kind: "aura" | "bin" | "orbit" | "beam";
+  readonly progression?: { readonly id: UpgradeId; readonly levels: readonly (Partial<Omit<CleanupToolDefinition, "progression" | "tracks">> & { readonly description: string })[] };
   readonly radius: number; readonly damage: number; readonly tickMs: number; readonly slow: number;
   readonly count: number; readonly rows: number; readonly speed: number;
   readonly throwDistance: number; readonly flightMs: number; readonly fuseMs: number; readonly dotMs: number; readonly dotDamage: number;
@@ -428,6 +429,8 @@ export interface CleanupToolDefinition {
 }
 
 interface WeaponDefinitionBase {
+  readonly progression?: { readonly id: UpgradeId; readonly skillId?: SkillId; readonly levels: readonly { readonly damage: number; readonly range: number; readonly cooldownMs: number; readonly sweepLevel: number; readonly description: string }[] };
+  readonly sweepLevel?: number;
   readonly cleanup?: CleanupToolDefinition;
   /** Authored beside its weapon; manifest merges these into the offer registry. */
   readonly upgrades?: readonly UpgradeDefinition[];
@@ -569,6 +572,7 @@ export interface PickupDefinition {
   readonly id: PickupId;
   readonly radius: number;
   readonly magnetSpeed: number;
+  readonly magnetPull?: { readonly startSpeed: number; readonly acceleration: number; readonly maxSpeed: number };
   readonly presentationToken: keyof Pick<ThemePalette, "pickup">;
 }
 

@@ -223,3 +223,10 @@ clamp to authored caps. Testing area initializes its own memory adapter before
 constructing the arena; its currency/shop/editor/reset never writes the normal
 profile. Normal outside-run shop uses the real adapter. See REC-133–135 and the
 [V0.4.5 report](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+
+2026-10-27 phase4: no schema change. Historical `weapon.orbiting_rake` now displays
+Orbiting Shovels at owner direction; new `weapon.rake_beam` is Rake Sweep. Removed
+active tool tracks/Cyclone IDs remain retained in saved history and statistics.
+Run-selected picks are transient; no saved run build requires migration. General
+stats, Impact/shop and isolated sandbox persistence retain their contracts.

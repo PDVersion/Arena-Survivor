@@ -207,7 +207,16 @@ export function applyUpgrade<T extends UpgradeableState>(
   let world = state.world;
 
   for (const effect of upgrade.effects) {
-    if (effect.kind === "tool.upgrade") continue; // Resolved from earned picks by the tool runtime.
+    if (effect.kind === "tool.upgrade") {
+      // Numeric weapon snapshots resolve from picks; exposed skill milestones also
+      // enter run state so the field guide and capability panel report the same level.
+      const progression = weapons.find((weapon) => weapon.id === effect.weaponId)?.progression;
+      if (progression?.skillId) {
+        const next = progression.levels[Math.min(progression.levels.length - 1, upgradeLevel(state.selectedUpgradeIds, upgrade.id) + 1)]!;
+        skillLevels = { ...skillLevels, [progression.skillId]: next.sweepLevel };
+      }
+      continue;
+    }
     if (effect.kind === "curse.accept") {
       const curse = curses.find((entry) => entry.id === effect.curseId);
       if (!curse) return state;

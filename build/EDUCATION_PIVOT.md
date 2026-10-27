@@ -829,3 +829,10 @@ Stable historical experience/statistic IDs retain their meaning as earned run
 progress; schema3 adds Impact/shop with explicit migration. Game rewards are
 fiction, not a claim that all waste qualifies for a real container refund.
 Knights and Magic remains paused; no new educational disposal claims.
+
+
+Owner correction2026-10-27: eco weapons now use one seven-level stepped path each.
+Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
+in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
+Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
+slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.

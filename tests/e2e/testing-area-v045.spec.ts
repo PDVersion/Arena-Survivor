@@ -36,8 +36,8 @@ test("sandbox isolates its save, conserves magnet money, heals, pauses and appli
   await page.locator('[data-weapon="weapon.orbiting_rake"]').check();
   await page.locator("#trees-open").click();
   const path = page.locator('[data-tool="weapon.secondary"] [data-upgrade="upgrade.tool.aura_damage"]');
-  await path.filter({ hasText: "Level 5" }).click();
-  await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].acquired')).toHaveCount(4);
+  await path.filter({ hasText: "Level 7" }).click();
+  await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].acquired')).toHaveCount(6);
   await page.locator('[data-tool="weapon.secondary"] .tree-root').click();
   await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].acquired')).toHaveCount(0);
   await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].available')).toHaveAttribute("data-level", "2");
@@ -63,14 +63,14 @@ test("Impact shop persists purchases and rejects overspending", async ({ page })
   const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("arena-survivor.profile")!));
   expect(saved.economy).toEqual({ impact: 0, upgrades: { "shop.safety": 1 } });
 });
-test("bounded mixed cleanup field runs at maximum tool tracks", async ({ page }) => {
+test("bounded mixed cleanup field runs at maximum seven-level tools", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/testing-area.html"); await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
   await page.locator("#pause").click();
   for (const id of ["weapon.secondary", "weapon.cleaning_bin", "weapon.orbiting_rake"]) await page.locator(`[data-weapon="${id}"]`).check();
   await page.locator("#trees-open").click();
-  for (const id of ["upgrade.secondary_range", "upgrade.tool.aura_damage", "upgrade.tool.aura_tick", "upgrade.tool.aura_slow", "upgrade.tool.bin_damage", "upgrade.tool.bin_count", "upgrade.tool.bin_radius", "upgrade.tool.bin_dot", "upgrade.tool.rake_damage", "upgrade.tool.rake_count", "upgrade.tool.rake_rows", "upgrade.tool.rake_speed"]) {
-    await page.locator(`[data-upgrade="${id}"][data-level="5"]`).click();
+  for (const id of ["upgrade.tool.grabber_level", "upgrade.tool.aura_damage", "upgrade.tool.bin_damage", "upgrade.tool.rake_damage"]) {
+    await page.locator(`[data-upgrade="${id}"][data-level="7"]`).click();
   }
   await page.locator("#trees-close").click();
   await page.locator("#distance").fill("200"); await page.locator("#enemy-count").fill("100"); await page.locator("#spawn").click();
@@ -81,5 +81,37 @@ test("bounded mixed cleanup field runs at maximum tool tracks", async ({ page })
   const count = Number(await page.locator(status).getAttribute("data-enemies"));
   expect(count).toBeLessThanOrEqual(300);
   await page.screenshot({ path: "/private/tmp/eco-v045-bounded-mixed-field.png" });
+  expect(errors).toEqual([]);
+});
+
+test("seven-level outward rake sweeps clean a distant target through the real runtime", async ({ page }) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await expect(page.locator('[data-weapon="weapon.secondary_evolved"]')).toHaveCount(0);
+  await page.locator("#pause").click();
+  await page.locator('[data-weapon="weapon.starter"]').uncheck();
+  await page.locator('[data-weapon="weapon.rake_beam"]').check();
+  await page.locator("#trees-open").click();
+  const path = page.locator('[data-tool="weapon.rake_beam"]');
+  await expect(path.locator(".branch")).toHaveCount(1);
+  await expect(path.locator("[data-level]")).toHaveCount(6);
+  await path.locator('[data-level="7"]').click();
+  await expect(path.locator(".acquired[data-level]")).toHaveCount(6);
+  await path.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: "/private/tmp/eco-v045-seven-level-trees.png" });
+  await page.locator('[aria-label="Sharp Eye picks"]').fill("100");
+  await page.locator('[aria-label="Sharp Eye picks"]').dispatchEvent("change");
+  await page.locator("#trees-close").click();
+  await page.locator("#enemy").selectOption("enemy.slow_durable");
+  await page.locator("#enemy-count").fill("1");
+  await page.locator("#distance").fill("180");
+  await page.locator("#spawn").click();
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "1");
+  await page.locator("#pause").click();
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "0", { timeout: 8000 });
+  await page.keyboard.down("ArrowUp"); await page.waitForTimeout(250); await page.keyboard.up("ArrowUp");
+  await page.waitForTimeout(2000);
+  await page.screenshot({ path: "/private/tmp/eco-v045-outward-rake.png" });
   expect(errors).toEqual([]);
 });

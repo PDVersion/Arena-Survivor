@@ -1,4 +1,4 @@
-import { moneyTier } from "../systems/economy/economy";
+import { magnetPullSpeed, moneyTier } from "../systems/economy/economy";
 import Phaser from "phaser";
 import type { PickupDefinition, ThemeTokens } from "../core/archetypes/contracts";
 import type { EnemySpawnSource } from "./enemy-actor";
@@ -14,6 +14,7 @@ export class PickupActor extends Phaser.GameObjects.Arc {
   private value: number;
   private collected = false;
   magnetized = false;
+  private pullAgeMs = 0;
 
   constructor(
     scene: Phaser.Scene,
@@ -84,11 +85,15 @@ export class PickupActor extends Phaser.GameObjects.Arc {
     return this.body as Phaser.Physics.Arcade.Body;
   }
 
-  magnetToward(target: Phaser.Math.Vector2): void {
+  magnetToward(target: Phaser.Math.Vector2, deltaMs = 0): void {
     if (!this.definition.denominations) this.view?.setState("move");
     const direction = target.clone().subtract(new Phaser.Math.Vector2(this.x, this.y));
     if (direction.lengthSq() === 0) return;
-    direction.normalize().scale(this.definition.magnetSpeed);
+    const speed = this.magnetized && this.definition.magnetPull
+      ? magnetPullSpeed(this.definition.magnetPull, this.pullAgeMs, direction.length(), deltaMs)
+      : this.definition.magnetSpeed;
+    if (this.magnetized) this.pullAgeMs += deltaMs;
+    direction.normalize().scale(speed);
     this.arcadeBody.setVelocity(direction.x, direction.y);
   }
 

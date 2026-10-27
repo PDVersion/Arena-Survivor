@@ -6,7 +6,7 @@ export const archetypeIds = {
     starter: "weapon.starter",
     secondary: "weapon.secondary",
     secondaryEvolved: "weapon.secondary_evolved",
-    cleaningBin: "weapon.cleaning_bin", orbitingRake: "weapon.orbiting_rake",
+    rakeBeam: "weapon.rake_beam", cleaningBin: "weapon.cleaning_bin", orbitingRake: "weapon.orbiting_rake",
   },
   enemy: {
     swarmBasic: "enemy.swarm_basic",
@@ -73,7 +73,7 @@ export const archetypeIds = {
     equipSecondary: "upgrade.equip_secondary",
     secondaryRange: "upgrade.secondary_range",
     evolveSecondary: "upgrade.evolve_secondary",
-    auraDamage: "upgrade.tool.aura_damage", auraTick: "upgrade.tool.aura_tick", auraSlow: "upgrade.tool.aura_slow",
+    beamEquip: "upgrade.tool.beam_equip", beamLevel: "upgrade.tool.beam_level", grabberLevel: "upgrade.tool.grabber_level", auraDamage: "upgrade.tool.aura_damage", auraTick: "upgrade.tool.aura_tick", auraSlow: "upgrade.tool.aura_slow",
     binEquip: "upgrade.tool.bin_equip", binDamage: "upgrade.tool.bin_damage", binCount: "upgrade.tool.bin_count", binRadius: "upgrade.tool.bin_radius", binDot: "upgrade.tool.bin_dot",
     rakeEquip: "upgrade.tool.rake_equip", rakeDamage: "upgrade.tool.rake_damage", rakeCount: "upgrade.tool.rake_count", rakeRows: "upgrade.tool.rake_rows", rakeSpeed: "upgrade.tool.rake_speed",
     weaponRange: "upgrade.weapon_range",
@@ -114,7 +114,7 @@ export const v01ContentIds = [
 
 // Historical required-copy inventory excludes selected optional capabilities.
 export const v02ContentIds = Object.values(archetypeIds).flatMap((category) =>
-  Object.values(category).filter((id) => !id.startsWith("upgrade.tool.") && ![archetypeIds.weapon.cleaningBin, archetypeIds.weapon.orbitingRake, archetypeIds.enemy.scavenger, archetypeIds.enemy.rangedAttacker, archetypeIds.pickup.magnet, archetypeIds.pickup.food, archetypeIds.pickup.impact].includes(id as never)),
+  Object.values(category).filter((id) => !id.startsWith("upgrade.tool.") && ![archetypeIds.weapon.rakeBeam, archetypeIds.weapon.cleaningBin, archetypeIds.weapon.orbitingRake, archetypeIds.enemy.scavenger, archetypeIds.enemy.rangedAttacker, archetypeIds.pickup.magnet, archetypeIds.pickup.food, archetypeIds.pickup.impact].includes(id as never)),
 ) as ContentId[];
 
-export type OptionalContentId = "enemy.ranged_attacker" | "enemy.scavenger" | "pickup.magnet" | "pickup.food" | "pickup.impact" | "weapon.cleaning_bin" | "weapon.orbiting_rake" | Extract<UpgradeId, `upgrade.tool.${string}`>;
+export type OptionalContentId = "weapon.rake_beam" | "enemy.ranged_attacker" | "enemy.scavenger" | "pickup.magnet" | "pickup.food" | "pickup.impact" | "weapon.cleaning_bin" | "weapon.orbiting_rake" | Extract<UpgradeId, `upgrade.tool.${string}`>;

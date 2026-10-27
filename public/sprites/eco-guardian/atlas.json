@@ -2340,9 +2340,29 @@
         "h": 64
       }
     },
-    "eco_guardian.weapon.orbiting_rake/0": {
+    "eco_guardian.weapon.rake_beam/0": {
       "frame": {
         "x": 1344,
+        "y": 672,
+        "w": 96,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 96,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 96,
+        "h": 32
+      }
+    },
+    "eco_guardian.weapon.orbiting_rake/0": {
+      "frame": {
+        "x": 1440,
         "y": 672,
         "w": 96,
         "h": 32

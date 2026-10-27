@@ -448,7 +448,7 @@
     "status": "live; playtest pending"
   },
   {
-    "id": "weapon.orbiting_rake",
+    "id": "weapon.rake_beam",
     "name": "weapon_orbiting_rake",
     "attempt": 1,
     "frameWidth": 96,
@@ -459,6 +459,19 @@
     "prompt": "../../raw/weapon_orbiting_rake.a1.prompt.txt",
     "metadata": "../../raw/weapon_orbiting_rake.a1.metadata.json",
     "checks": "weapon_orbiting_rake.a1.checks.json",
-    "status": "live; playtest pending"
+    "status": "live: outward rake sweep"
+  },
+  {
+    "id": "weapon.orbiting_rake",
+    "name": "weapon_orbiting_shovel",
+    "attempt": 1,
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "native": "weapon_orbiting_shovel.a1.png",
+    "raw": "../../raw/weapon_orbiting_shovel.a1.png",
+    "prompt": "../../raw/weapon_orbiting_shovel.a1.prompt.txt",
+    "checks": "weapon_orbiting_shovel.a1.checks.json",
+    "status": "live: orbiting shovel"
   }
 ]

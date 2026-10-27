@@ -10,7 +10,7 @@ describe("sprite build output", () => {
     const inventory = JSON.parse(await readFile("build/sprites/review/style2/ALL_SPRITES_INVENTORY.json", "utf8"));
     const atlas = await readSpritePng("public/sprites/eco-guardian/atlas.png");
     const metadata = JSON.parse(await readFile("public/sprites/eco-guardian/atlas.json", "utf8"));
-    expect(ecoSpriteRecipes).toHaveLength(33);
+    expect(ecoSpriteRecipes).toHaveLength(34);
     expect(atlas.width).toBeLessThanOrEqual(2048);
     expect(atlas.height).toBeLessThanOrEqual(2048);
     expect(Object.keys(metadata.frames)).toHaveLength(ecoSpriteRecipes.reduce((sum, recipe) => sum + recipe.frames, 0));

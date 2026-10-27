@@ -1311,7 +1311,7 @@ export const ecoSpriteRecipes = [
     "textureKey": "eco_guardian.weapon.cleaning_bin"
   },
   {
-    "contentId": "weapon.orbiting_rake",
+    "contentId": "weapon.rake_beam",
     "source": "build/sprites/raw/weapon_orbiting_rake.a1.png",
     "output": "public/sprites/eco-guardian/weapon_orbiting_rake.png",
     "frameWidth": 96,
@@ -1354,6 +1354,53 @@ export const ecoSpriteRecipes = [
     ],
     "outline": "#172d3c",
     "acceptedOutput": "build/sprites/accepted/weapon_orbiting_rake.png",
+    "theme": "eco-guardian",
+    "textureKey": "eco_guardian.weapon.rake_beam"
+  },
+  {
+    "contentId": "weapon.orbiting_rake",
+    "source": "build/sprites/raw/weapon_orbiting_shovel.a1.png",
+    "output": "public/sprites/eco-guardian/weapon_orbiting_shovel.png",
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c",
+    "acceptedOutput": "build/sprites/accepted/weapon_orbiting_shovel.png",
     "theme": "eco-guardian",
     "textureKey": "eco_guardian.weapon.orbiting_rake"
   }

@@ -17,13 +17,12 @@ Start the usual game preview (`npm run dev`) and use the title-screen links:
 - **Sprite browser** — `/sprite-browser.html`. New money/pickup/rat/bin/rake sheets
   appear here. The old cone design is parked; its historical art remains archived.
 
-Choosing a final branch node acquires all its preceding levels. Choosing an
-acquired node removes it and its descendants; the tool's Level1 root clears its
-branches. Green means acquired, gold outline means next available. New tool
-tracks have levels1–5. The existing Collection Sweep keeps its historical cap.
-Equipping Cyclone Vacuum continues the same aura tracks, including those not yet
-purchased when it evolved. Changing a loadout clears pending tool attacks so old
-bin settings cannot contaminate a new comparison.
+Each weapon now has **one path with seven total levels**. Starting/newly equipped
+weapons begin at Level 1; six fixed picks reach Level 7. Selecting a late node
+acquires its predecessors; selecting an acquired node removes it and later nodes;
+the Level 1 root resets that weapon. Green means acquired, gold means next.
+There is one Cleanup Vacuum and no active Cyclone evolution. Changing a loadout
+clears pending attacks, including travelling rake sweeps and thrown bins.
 
 The level editor does not invent automatic stat picks. Money is the current
 level's progress; crossing a requirement spends that progress and raises level.
@@ -51,18 +50,31 @@ rolls,180base health,30base money on cleanup, and a separate12money hit-leak bud
 It wanders rather than chasing and flees after damage. Its reward represents
 recovered carried litter, not a claim that animals are recyclable waste.
 
-| Tool | Baseline | Four fixed upgrade branches, each levels1–5 |
+| Tool | Level 1 | Level 7 |
 |---|---|---|
-| Cleanup Vacuum | Grey player-centred radius90;4damage/750ms;8%slow | Radius90→150; damage4→12; tick750→350ms; slow8→20% |
-| Cleaning Bin | Random short throw150;500msflight;2200mslanded fuse; burst28/radius58; landing DOT2/650ms until burst | Burst28→68; count1→5; radius58→98; DOT2→10 |
-| Orbiting Rakes |2heads,1row, radius84;9damage;1.8rad/s;650msper-head contact cooldown | Count2→6 per row; rows1→5; damage9→25; rotation1.8→3.2rad/s |
+| Cleanup Grabber | Damage 10, reach 78, cycle 1000 ms | Damage 38, reach 150, cycle 650 ms, full Collection Sweep |
+| Cleanup Vacuum | Radius 90, damage 4/750 ms, 8% slow | Radius 150, damage 12/450 ms, 22% slow |
+| Cleaning Bin | One bin, radius 58, burst 28, landing DOT 2/650 ms, 2.2 s fuse | Four bins, radius 95, burst 60, DOT 8/650 ms, 3.2 s fuse |
+| Orbiting Shovels | Two heads, radius 84, damage 9, rotation 1.8 rad/s | Five heads, damage 24, rotation 2.5 rad/s |
+| Rake Sweep | One straight outward rake, damage 18, 3 s cycle, speed 650 | Three parallel rakes, damage 48, 2.1 s cycle, speed 850 |
 
-Rake heads lead tangentially and are the damaging geometry; handles trail.
-Collision dimensions come from theme data, never sprite pixels. Rows are42units
-apart. Bin actors and orbit populations are bounded. Four automatic slots allow
-the starter grabber plus these three tools. Fixed tracks identify their tool and
-never gain a cosmetic rarity multiplier. General stat cards keep quality gains.
-Cyclone retains its earned aura tracks, adds20base radius and2base damage.
+The testing tree gives each intermediate milestone's exact description. Shovel
+levels alternate extra heads and stronger/faster blades. The grabber gains sweep
+milestones through its own path; there is no separate Collection Sweep offer.
+Fixed weapon upgrades identify their tool, with no rarity multiplier. General
+stat upgrades retain quality gains. Four slots among five tools preserve a choice.
+
+Shovel heads lead clockwise and own the contact area; handles trail. The outward
+rake follows current/last movement direction, initially right, and travels to the
+camera edge. Swept head contact prevents tunnelling after a delayed frame, with
+one hit per enemy per rake. Parallel rake lanes can each hit the same target.
+Collision comes from theme data, never sprite pixels. Bin display width is 38
+world units (player 42), while its cleaning radius stays independent of the art.
+
+Map-magnet money starts at 70 units/s, accelerates by 650 units/s each active
+second and caps at 1900 units/s. Each aggregate tracks its own pull age, so distant
+money arrives faster after a longer pull. Pauses add no acceleration time. Exact
+value/merge limits are unchanged; displacement is capped to prevent overshoot.
 
 Waste begins with75%breakage chance on a weak multi-hit, non-critical kill.
 A clean one-shot reduces this to10%; a critical finishing hit reduces it to15%;
@@ -129,9 +141,9 @@ fixed-items research remains separate from these implementation decisions.
    fixed tool cards name their owner while stat cards retain meaningful quality.
 2. Compare the five-minute countdown with a stopwatch. Count only active play;
    pause and level-up menus should stop it. Slow rendering should not slow time.
-3. Try grabber+vacuum, then add bin and rake. Test one branch at a time in the
+3. Try grabber+vacuum, then compare bin, shovels and outward rake. Test one weapon level at a time in the
    testing area first. Watch for readable grey aura, slower enemies inside it,
-   landed bin DOT followed by its burst, and leading rake heads.
+   landed bin DOT followed by its burst, clockwise leading shovel heads, and a rake sweep following your last movement direction.
 4. Compare weak bottle/glass cleanup with strong or critical hits and more
    Fortune. Early mistakes should create extra cleanup work; improved tools
    should visibly leave fewer fragments. Report whether the starting pressure
@@ -168,7 +180,7 @@ currency. No painted repairs.33recipes/118atlas frames include parked history;
 Verification details are finalized with the phase checklist and REC-135. Browser
 checks are serial and scoped. The retired cone-specific browser campaign is
 preserved at [`SECOND_TOOL_V043_RETIRED.spec.txt`](../history/SECOND_TOOL_V043_RETIRED.spec.txt);
-new acceptance covers aura offers/evolution, fixed trees, economy and mixed tools.
+new acceptance covers single-vacuum offers through Level 7, fixed paths, economy, mixed tools and outward-rake contact.
 The coarse balance/TTK CLI ran damage-rush and capped-critical models. It omits
 spatial coverage, rat movement and downside-fragment work, so it is not a proof of
 survival balance. Full historical browser/stress/soak/native-device regression
@@ -184,3 +196,42 @@ and absent test hooks. A bounded150-enemy maximum-track field passes without
 browser errors; this is not a frame-rate or device-performance guarantee. Captures
 were inspected and owned browsers/servers closed. The existing bundle-size
 advisory remains. Unrelated in-progress progression research is left unstaged.
+
+
+## Owner correction, phase 4 — 2026-10-27
+
+The former four-track/five-level design and Cyclone are superseded above. The new
+shovel was generated with built-in imagegen; exact prompt/raw/review/accepted
+sources are preserved as `weapon_orbiting_shovel.a1` under `build/sprites/`.
+The accepted rake is reused for the new outward sweep. Historical orbit weapon ID
+is retained for shovels; `weapon.rake_beam` is the new rake ID. Historical saved
+upgrade/statistic IDs remain readable, without offering removed tracks.
+
+Comparison sources: [Elite Lava Bucket](https://holocure.wiki.gg/wiki/Elite_Lava_Bucket)
+informs thrown lingering-area cleanup; [BL Book](https://holocure.wiki.gg/wiki/BL_Book)
+and the owner's pasted seven-level table inform stepped orbit progression;
+[Fan Beam](https://holocure.wiki.gg/wiki/Fan_Beam) informs aimed outward coverage;
+[Spider Cooking](https://holocure.wiki.gg/wiki/Spider_Cooking) informs the nearby
+periodic aura. Fandom links returned access errors, so corresponding wiki.gg
+entries were checked. These are secondary comparisons. Tuning and the moving rake
+head, bin burst and vacuum slow are this game's adaptations.
+
+Phase 4 checks: 736 units across 79 files; 34 sprite sheets; typecheck, lint,
+production build; five unique targeted serial Chromium cases (zero retries),
+including distant-target cleanup using the actual rake runtime, single-vacuum
+normal offers to Level 7, path resets, money conservation, save isolation and
+maximum-level mixed tools. Production guard passes for all entry pages and
+absence of test hooks. Native shovel and mixed arena captures were inspected.
+Bundle-size advisory remains. Owned browser/server processes are cleaned.
+
+Damage-rush pacing and TTK models ran. The coarse model still omits spatial
+coverage, the new stepped weapon paths, fragments and rat movement; historical
+'evolved' model names are estimates, not an active vacuum evolution. These runs
+are not proof of tool balance or survival. Full historical regression/stress/soak/
+device checks and matching-head CI remain deferred, not passed.
+
+Next normal-play feedback: compare early weak cleanup with late strong tools;
+notice whether each weapon pick changes coverage/power; choose four of five tools;
+check shovel readability, rake direction while stopping/turning, bin clutter and
+whether distant magnet money feels satisfying. Unlimited stats vs capped passive
+items remains the separate research decision already prepared.

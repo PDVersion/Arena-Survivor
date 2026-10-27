@@ -20,7 +20,7 @@ root.innerHTML = `<header><h1>Cleanup testing area</h1><p>Build a loadout, place
 <section><h2>Spawn waste</h2><label class="stacked">Enemy type <select id="enemy"></select></label><div class="row"><label>Count <input type="number" id="enemy-count" min="1" max="100" value="1"></label><label>Distance <input type="number" id="distance" min="0" max="900" value="180"></label></div><button id="spawn">Spawn enemies</button><div class="row"><label>Hit damage <input type="number" id="hit-damage" min="1" max="1000000" value="10"></label><button id="hit">Hit all enemies</button></div></section>
 <section><h2>Test pickups</h2><label class="stacked">Pickup type <select id="pickup"><option value="money">Money</option><option value="magnet">Money Magnet</option><option value="food">Drumstick (+20 health)</option><option value="impact">Impact Point</option></select></label><div class="row"><label>Value <input type="number" id="pickup-value" min="1" max="1000000" value="1"></label><label>Distance <input type="number" id="pickup-distance" min="0" max="900" value="300"></label></div><button id="drop">Place pickup</button></section>
 </aside><section aria-label="Live arena"><div id="game-container"></div><output id="live-status" aria-live="off">Loading arena…</output><p id="action-status" role="status"></p></section></main>
-<dialog id="trees"><div class="dialog-heading"><div><h2>Tools &amp; upgrade trees</h2><p class="notice">Select an end node to acquire its path. Select an acquired node to remove it and later levels. Level 1 clears that tool's branches. Gold outlines show the next available pick.</p></div><button id="trees-close">Return to arena</button></div><div id="tool-trees"></div><h2>General upgrades &amp; items</h2><p class="notice">These apply their normal common-quality value. Infinite tracks can be set up to 100 picks here.</p><div id="general-upgrades" class="general-grid"></div><h2>Sandbox Impact Shop</h2><p class="notice">Test purchases using this tab's Impact balance, then apply the loadout to include their bonuses.</p><div id="sandbox-shop" class="general-grid"></div></dialog>`;
+<dialog id="trees"><div class="dialog-heading"><div><h2>Tools &amp; upgrade trees</h2><p class="notice">Select an end node to acquire its path. Select an acquired node to remove it and later levels. Level 1 resets that weapon. Each weapon has one path to Level7. Gold outlines show the next available pick.</p></div><button id="trees-close">Return to arena</button></div><div id="tool-trees"></div><h2>General upgrades &amp; items</h2><p class="notice">These apply their normal common-quality value. Infinite tracks can be set up to 100 picks here.</p><div id="general-upgrades" class="general-grid"></div><h2>Sandbox Impact Shop</h2><p class="notice">Test purchases using this tab's Impact balance, then apply the loadout to include their bonuses.</p><div id="sandbox-shop" class="general-grid"></div></dialog>`;
 const element = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const value = (id: string) => Number(element<HTMLInputElement>(id).value);
 let controller: TestingAreaController | undefined;
@@ -38,9 +38,7 @@ function refreshWeapons(): void {
     const input = document.createElement("input"); input.type = "checkbox"; input.checked = weapons.has(weapon.id); input.dataset.weapon = weapon.id;
     input.onchange = () => {
       if (input.checked) {
-        if (weapons.size >= theme.weaponSlotCount && !((weapon.id === "weapon.secondary" && weapons.has("weapon.secondary_evolved")) || (weapon.id === "weapon.secondary_evolved" && weapons.has("weapon.secondary")))) { input.checked = false; message(`Choose up to ${theme.weaponSlotCount} tools.`); return; }
-        if (weapon.id === "weapon.secondary") weapons.delete("weapon.secondary_evolved");
-        if (weapon.id === "weapon.secondary_evolved") weapons.delete("weapon.secondary");
+        if (weapons.size >= theme.weaponSlotCount) { input.checked = false; message(`Choose up to ${theme.weaponSlotCount} tools.`); return; }
         weapons.add(weapon.id);
       } else weapons.delete(weapon.id);
       refreshWeapons(); renderTrees();
@@ -55,16 +53,9 @@ function apply(useFields = false): void {
   for (const key of ["level", "health", "money", "impact"] as const) element<HTMLInputElement>(key).value = String(chosen[key]);
   message("Loadout applied. Changes to trees use the same upgrades as a normal run.");
 }
-function statText(weapon: WeaponDefinition, id: UpgradeId, picks: number): string {
-  const track = weapon.cleanup?.tracks.find((track) => track.id === id);
-  if (!track || !weapon.cleanup) {
-    const upgrade = theme.upgrades.find((upgrade) => upgrade.id === id);
-    const range = upgrade?.effects.find((effect) => effect.kind === "stat.add" && effect.target === "weapon.range");
-    if (range?.kind === "stat.add") return `${weapon.range + range.value * picks} range`;
-    return `Skill level ${picks}`;
-  }
-  const amount = weapon.cleanup[track.stat] + picks * track.step;
-  return track.stat === "slow" ? `${Math.round(amount * 100)}% slow` : `${Number(amount.toFixed(2))} ${track.stat === "tickMs" ? "ms" : track.stat === "speed" ? "rad/s" : track.stat === "dotDamage" ? "DOT damage" : track.stat}`;
+function statText(weapon: WeaponDefinition, _id: UpgradeId, picks: number): string {
+  const progression = weapon.progression ?? weapon.cleanup?.progression;
+  return progression?.levels[Math.min(picks, progression.levels.length - 1)]?.description ?? "";
 }
 function renderTrees(): void {
   const target = element("tool-trees"); target.replaceChildren();

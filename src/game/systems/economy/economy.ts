@@ -40,3 +40,9 @@ export interface ActiveClock { readonly at: number; readonly active: boolean }
 export function sampleActiveClock(previous: ActiveClock | undefined, at: number, active: boolean): { clock: ActiveClock; deltaMs: number } {
   return { clock: { at, active }, deltaMs: previous?.active && active ? Math.max(0, at - previous.at) : 0 };
 }
+
+/** Active pull age, independent of frame count; cap displacement to avoid overshoot. */
+export function magnetPullSpeed(pull: { startSpeed: number; acceleration: number; maxSpeed: number }, ageMs: number, distance: number, deltaMs: number): number {
+  const speed = Math.min(pull.maxSpeed, pull.startSpeed + pull.acceleration * Math.max(0, ageMs) / 1000);
+  return Math.min(speed, distance / Math.max(deltaMs / 1000, Number.EPSILON));
+}

@@ -869,12 +869,12 @@ export class RunScene extends Phaser.Scene {
       this.cleanupRuntime?.update(this.runState.elapsedMs, this.player, this.runState.weaponSlots.flatMap((slot) => {
         const weapon = this.runTheme.weapons.find((entry) => entry.id === slot.weaponId);
         return weapon?.cleanup ? [{ weapon, tool: resolveCleanupTool(weapon.cleanup, this.runState!.selectedUpgradeIds), attackRate: Math.max(.1, 1 + this.runState!.player.stats.attackSpeedBonus) }] : [];
-      }), this.enemies);
+      }), this.enemies, { x: Number(movementInput.right) - Number(movementInput.left), y: Number(movementInput.down) - Number(movementInput.up) });
       this.rebuildEnemyIndex();
       this.resolveCrowd();
       this.updateHazards();
       this.updateProjectiles();
-      this.updatePickups();
+      this.updatePickups(clock.deltaMs);
       this.updateShrine();
       this.updateTestWorldScenario();
       this.updateSurge();
@@ -1499,7 +1499,7 @@ export class RunScene extends Phaser.Scene {
     }
   }
 
-  private updatePickups(): void {
+  private updatePickups(deltaMs: number): void {
     if (!this.player || !this.runState) return;
     const target = new Phaser.Math.Vector2(this.player.x, this.player.y);
     for (const pickup of this.pickups) {
@@ -1509,7 +1509,7 @@ export class RunScene extends Phaser.Scene {
         this.collectPickup(pickup);
         if (this.runState.status === "level_up") break;
       } else if ((pickup.magnetized || distance <= this.runState.player.stats.pickupRadius)) {
-        pickup.magnetToward(target);
+        pickup.magnetToward(target, deltaMs);
       } else {
         pickup.stop();
       }
@@ -2254,15 +2254,15 @@ export class RunScene extends Phaser.Scene {
     weapon: Extract<ReturnType<typeof resolveWeaponDefinition>, { deliveryKind: "melee" }>,
     damage: ReturnType<typeof rollDamage>,
   ): void {
-    if (!this.runState || !this.player || !weapon.upgrades?.some((upgrade) =>
-      upgrade.effects.some((effect) => effect.kind === "skill.level" && effect.skillId === archetypeIds.skill.collectionSweep))) return;
+    if (!this.runState || !this.player || (!weapon.progression && !weapon.upgrades?.some((upgrade) =>
+      upgrade.effects.some((effect) => effect.kind === "skill.level" && effect.skillId === archetypeIds.skill.collectionSweep)))) return;
     const effect = findSkillEffect(
       this.runTheme.skills,
       archetypeIds.skill.collectionSweep,
       "collection_sweep",
     );
     if (!effect) return;
-    const level = skillLevel(this.runState.skillLevels, archetypeIds.skill.collectionSweep);
+    const level = Math.max(weapon.sweepLevel ?? 0, skillLevel(this.runState.skillLevels, archetypeIds.skill.collectionSweep));
     const resolution = completeCollectionSweepAttack(
       this.collectionSweepProgress,
       level,

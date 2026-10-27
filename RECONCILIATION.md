@@ -4403,3 +4403,32 @@ Six built-in generated subjects accepted individually (rata2after spacing reject
 Initial weak multi-hit fragmentation75%, clean one-shot10%, critical finish15%, both0; Fortune subtracts0.4percentage points each and Careful Cleanup10points per level. This avoids the invalid first pass where one-shot opening waste still mostly fragmented. Fragment children get no rare-item rolls. Special drops reserve a money slot; exact-value merging/claim-once tests cover full-cap specials and money. Eco crit tier and damage both cap at red4x; critical chance clamps at300%and capped offers leave the pool; balance model uses the same capped expectation. Glass work/share reduction does not guarantee higher levels because changing role mix also changes income; removed that invalid coarse-model assertion while retaining work/share gates.
 
 740units/79files,33sprite checks, types/lint/build/whitespace pass. Six unique targeted serial browser cases pass cumulatively: isolated sandbox economy/healing/magnet/pause/650msblocked-frame/tree paths, saved shop,150-actor maximal tracks, normal aura offers/evolution/continued tracks/reset and two normal-play clock cases. Production guard checks all entries, profile isolation and absent test hooks; captures inspected. Built-in art and exact prompt paths are in the manifest/report. Old C1 cone browser campaign preserved as historical text with replacement tests. Full historical/G2 fixture reconciliation, full CI/stress/soak/native-device/owner art and balance acceptance remain deferred/unverified. Owned browsers/servers cleaned; no publication or frozen-pack edits. See build/content/MONEY_TOOLS_SANDBOX_REPORT.md for research sources, tuning and normal-play checklist.
+
+## REC-136 — Seven-level weapon paths and distinct shovel/rake delivery (2026-10-27)
+
+Owner correction replaces four independent five-level tracks with one authored
+seven-level path per eco weapon. Acquisition is level1; six fixed untiered picks
+resolve immutable snapshots, with meaningful mixed-stat milestones. Grabber sweep
+milestones also enter skill state so capability UI and actual combat agree.
+Removed track/evolution IDs remain in historical saved statistics; no migration
+or frozen-theme change. Cleanup Vacuum is the sole active vacuum identity.
+
+Stable weapon.orbiting_rake now presents Orbiting Shovels. A new weapon.rake_beam
+reuses accepted rake art for a straight, camera-edge travelling sweep, aimed by
+movement/last direction (initially right). Swept contact prevents frame gaps
+skipping targets; each rake hits a target once. Orbiting shovel heads lead the
+clockwise tangent. New shovel raw/prompt/normalized evidence is preserved and
+accepted separately. Bin display shrinks56→38; cleaning radius stays58.
+
+Map-magnet money tracks active pull age:70start speed,+650/s acceleration,1900cap,
+with an overshoot displacement cap. Pause time does not age the pull. Exact
+aggregate values, population bounds, merging and isolated sandbox save remain.
+
+Verification:736units/79files,34sprite checks, types/lint/build; five unique scoped
+serial Chromium cases, zero retries; production-entry/test-hook guard. Reviewed
+native shovel and mixed-tool presentation. Damage-rush/TTK models ran but omit
+new path coverage, fragmentation and rat movement; not a survival/balance proof.
+Historical full browser/stress/soak/device/CI remain deferred, not passed. No
+publication; unrelated progression research remains unstaged. Next owner feedback
+should compare meaningful weapon picks, four-slot choices, direction/readability,
+bin clutter and magnet travel before selecting any further tuning increment.
