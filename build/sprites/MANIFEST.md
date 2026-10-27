@@ -222,3 +222,11 @@ handle roughly30%, broaden rake head roughly25%; distinct steel teeth, dark gaps
 clear material contrast. One connected horizontal head-right sprite,96x32native,
 transparent style2. Preserve raw/prompt/review/recipe/hashes; runtime remains
 handle-first and current geometry/speed stay independent of art.
+
+Rake Sweep a2 accepted2026-10-27: native96x32, five distinct silver/grey teeth with
+transparent gaps, compact orange handle. Raw SHA256524b6c875c52a4abaf64a23907b11f42c2b9c9a3dc9bc217f0404bfb632d5727;
+normalized7476c52610e27a14a9e715b121e8de8b7bacab01784381e102f5e126b7d86bb2.
+Hard-alpha/palette/component checks pass; inspected native and full source. Handle
+roughly30%shorter; broader head uses28px height versus prior20px for readability.
+User allowed proportions to vary. New compact silhouette is intentional; no
+world-size/hitbox compensation or painted repairs. Exact built-in prompt retained.
