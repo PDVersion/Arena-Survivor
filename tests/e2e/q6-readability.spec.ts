@@ -87,78 +87,73 @@ test("Q6 fixed body anchor across player poses and directions", async ({ page },
 });
 
 
-test("Q6 cone pulse marks selected hits, freezes origin and cannot hit a fade entrant", async ({ page }, testInfo) => {
-  test.setTimeout(30_000);
+test("Q6 seven-level aura ticks all nearby targets, follows player and gates late entrants", async ({ page }, testInfo) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/sprite-browser.html?noAmbient&noContact&noHazards&noXp");
-  await page.exposeFunction("q6Capture", async (name: string) => { await page.screenshot({ path: testInfo.outputPath(`${name}.png`) }); });
-  const pulse = await page.evaluate(async () => {
+  const result = await page.evaluate(async () => {
     const paths = ["/tests/fixtures/phaser-runtime.ts", "/src/game/scenes/run-scene.ts", "/src/game/content/themes/eco-guardian/index.ts",
-      "/src/game/systems/sprites/load-sprites.ts", "/src/game/systems/upgrades.ts"];
-    const [{ default: Phaser }, { RunScene }, { ecoGuardianTheme: theme }, { loadThemeSprites }, { applyUpgrade }] = await Promise.all(paths.map((p) => import(p)));
-    const root = document.createElement("div"); root.id = "q6-cone";
-    Object.assign(root.style, { position: "fixed", inset: "0", zIndex: "9999" }); document.body.append(root);
+      "/src/game/systems/sprites/load-sprites.ts", "/src/game/systems/upgrades.ts", "/src/game/systems/weapons/cleanup-tools.ts"];
+    const [{ default: Phaser }, { RunScene }, { ecoGuardianTheme: theme }, { loadThemeSprites }, { applyUpgrade }, { resolveCleanupTool }] = await Promise.all(paths.map((p) => import(p)));
+    const root = document.createElement("div"); root.id = "q6-aura"; document.body.append(root);
     let scene: InstanceType<typeof RunScene>;
     const game = await new Promise<InstanceType<typeof Phaser.Game>>((resolve) => {
       class Run extends RunScene {
-        resetTransientRuntime() { this.runTheme = theme; super.resetTransientRuntime(); }
         create() { super.create(); scene = this; this.physics.world.pause(); resolve(this.game); }
-        update() { /* Frozen simulation; real presentation timers still advance. */ }
+        update() { /* Aided scheduler ticks; render timers remain real. */ }
       }
       class Load extends Phaser.Scene {
-        constructor() { super("q6-load"); }
+        constructor() { super("q6-aura-load"); }
         preload() { loadThemeSprites(this, theme); }
         create() { this.scene.start("run"); }
       }
       new Phaser.Game({ type: Phaser.CANVAS, width: 1000, height: 600, parent: root.id,
         physics: { default: "arcade" }, audio: { noAudio: true }, scene: [Load, Run] });
     });
-    const runs = [];
-    for (const picks of [0, 2, 4, 5]) {
-      for (const enemy of [...scene!.enemies]) { scene!.enemies.delete(enemy); enemy.destroy(); }
-      let state = scene!.runState;
-      const acquire = theme.upgrades.find((u: { id: string }) => u.id === "upgrade.equip_secondary");
-      state = applyUpgrade(state, acquire, undefined, 1, theme.weapons);
-      // Each case starts a fresh history/loadout; its own actual track supplies growth.
-      state = { ...state, selectedUpgradeIds: [], ownedWeaponModifiers: {},
-        weaponSlots: [{ weaponId: "weapon.starter", nextAttackAtMs: 10000 }, { weaponId: "weapon.secondary", nextAttackAtMs: 0 }] };
-      for (let i = 0; i < Math.min(4, picks); i++) state = applyUpgrade(state, theme.upgrades.find((u: { id: string }) => u.id === "upgrade.secondary_range"), undefined, 1, theme.weapons);
-      if (picks === 5) state = applyUpgrade(state, theme.upgrades.find((u: { id: string }) => u.id === "upgrade.evolve_secondary"), undefined, 1, theme.weapons);
-      scene!.runState = { ...state, elapsedMs: 0, player: { ...state.player, stats: { ...state.player.stats, critChance: 0 } } };
-      const origin = { x: scene!.player.x, y: scene!.player.y };
-      const definition = { ...theme.enemies[0], maxHealth: 10000, armour: 0, moveSpeed: 0 };
-      for (let i = 0; i < 10; i++) scene!.spawnEnemy("ambient", 1, definition, { x: origin.x + 50 + i, y: origin.y }, false);
-      const before = scene!.meleeHits;
-      scene!.fireIfReady();
-      const cue = scene!.children.list.find((child: { constructor: { name: string } }) => child.constructor.name === "ConeAttackActor");
-      const hits = scene!.meleeHits - before;
-      await (window as unknown as { q6Capture(name: string): Promise<void> }).q6Capture(`pulse-${picks}`);
-      const entrantDefinition = { ...definition, id: "enemy.fast_fragile" };
-      scene!.spawnEnemy("ambient", 1, entrantDefinition, { x: origin.x + 45, y: origin.y + 2 }, false);
-      const entrant = [...scene!.enemies].at(-1);
-      const health = entrant.health;
-      scene!.player.setPosition(origin.x + 20, origin.y + 10);
-      await new Promise<void>((r) => scene!.time.delayedCall(100, () => r()));
-      const fade = { hits, cueOrigin: [cue.x, cue.y], origin: [origin.x, origin.y], nozzleVisible: cue.list[1].visible,
-        entrantHealth: entrant.health, health, clocks: scene!.runState.weaponSlots.map((s: { nextAttackAtMs: number }) => s.nextAttackAtMs),
-        total: scene!.runState.statistics.totalDamage,
-        breakdown: Object.values(scene!.runState.statistics.damageBreakdown).reduce((a: number, b) => a + Number(b), 0) };
-      await (window as unknown as { q6Capture(name: string): Promise<void> }).q6Capture(`fade-${picks}`);
-      runs.push(fade);
-      await new Promise<void>((r) => scene!.time.delayedCall(200, () => r()));
-    }
-    game.scene.stop("run"); game.destroy(true);
-    await new Promise<void>((r) => requestAnimationFrame(() => r())); root.remove();
-    return runs;
+    try {
+      const runs = [], base = scene!.runState;
+      const weapon = theme.weapons.find((w: { id: string }) => w.id === "weapon.secondary");
+      const step = theme.upgrades.find((u: { id: string }) => u.id === weapon.cleanup.progression.id);
+      for (let level = 1; level <= 7; level++) {
+        for (const enemy of [...scene!.enemies]) enemy.destroy();
+        scene!.player.arcadeBody.reset(2000, 2000);
+        let state = { ...base, selectedUpgradeIds: [], ownedWeaponModifiers: {},
+          weaponSlots: [{ weaponId: "weapon.starter", nextAttackAtMs: 10000 }, { weaponId: weapon.id, nextAttackAtMs: 0 }] };
+        for (let pick = 1; pick < level; pick++) state = applyUpgrade(state, step, undefined, 1, theme.weapons);
+        scene!.runState = { ...state, player: { ...state.player, stats: { ...state.player.stats, critChance: 0 } } };
+        scene!.rebuildCleanupRuntime();
+        const tool = resolveCleanupTool(weapon.cleanup, scene!.runState.selectedUpgradeIds);
+        const tools = [{ weapon, tool, attackRate: 1 }];
+        const definition = { ...theme.enemies.find((e: { id: string }) => e.id === "enemy.cluster_fodder"), maxHealth: 10000, armour: 0, moveSpeed: 0 };
+        for (let i = 0; i < 10; i++) scene!.spawnEnemy("ambient", 1, definition,
+          { x: scene!.player.x + tool.radius + definition.radius - 1, y: scene!.player.y }, false);
+        const targets = [...scene!.enemies];
+        const before = targets.map((e) => e.health);
+        scene!.spawnEnemy("ambient", 1, definition, { x: scene!.player.x - tool.radius - definition.radius - 20, y: scene!.player.y }, false);
+        const outside = [...scene!.enemies].at(-1), outsideBefore = outside.health;
+        scene!.cleanupRuntime.update(0, scene!.player, tools, scene!.enemies);
+        const first = targets.map((e, i) => before[i] - e.health);
+        scene!.player.arcadeBody.reset(2600, 2000);
+        scene!.spawnEnemy("ambient", 1, definition, { x: scene!.player.x, y: scene!.player.y }, false);
+        const entrant = [...scene!.enemies].at(-1), entrantBefore = entrant.health;
+        scene!.cleanupRuntime.update(tool.tickMs - 1, scene!.player, tools, scene!.enemies);
+        const held = entrant.health;
+        scene!.cleanupRuntime.update(tool.tickMs, scene!.player, tools, scene!.enemies);
+        runs.push({ level, picks: scene!.runState.selectedUpgradeIds.filter((id: string) => id === step.id).length, damage: tool.damage, first, held, entrantBefore, next: entrantBefore - entrant.health,
+          oldDamage: targets.map((e, i) => before[i] - e.health), outsideBefore, outsideAfter: outside.health,
+          total: scene!.runState.statistics.totalDamage,
+          breakdown: Object.values(scene!.runState.statistics.damageBreakdown).reduce((sum: number, n) => sum + Number(n), 0) });
+      }
+      return runs;
+    } finally { game.destroy(true); root.remove(); }
   });
-  expect(pulse.map((value) => value.hits)).toEqual([3, 5, 7, 8]);
-  for (const value of pulse) {
-    expect(value.cueOrigin).toEqual(value.origin);
-    expect(value.nozzleVisible).toBe(false);
-    expect(value.entrantHealth).toBe(value.health);
-    expect(value.clocks[0]).toBe(10000);
-    expect(value.breakdown).toBeCloseTo(value.total, 8);
+  expect(result.map((r) => r.level)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  for (const run of result) {
+    expect(run.picks).toBe(run.level - 1);
+    expect(run.first).toEqual(Array(10).fill(run.damage));
+    expect(run.held).toBe(run.entrantBefore); expect(run.next).toBe(run.damage);
+    expect(run.oldDamage).toEqual(run.first); expect(run.outsideAfter).toBe(run.outsideBefore);
+    expect(run.total).toBeCloseTo(run.damage * 11); expect(run.breakdown).toBeCloseTo(run.total);
   }
   expect(errors).toEqual([]);
-  await testInfo.attach("pulse-observations", { body: JSON.stringify(pulse, null, 2), contentType: "application/json" });
+  await testInfo.attach("aura-observations", { body: JSON.stringify(result, null, 2), contentType: "application/json" });
 });

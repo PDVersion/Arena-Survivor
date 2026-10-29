@@ -83,7 +83,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
               const health = enemy.health;
               scene!.runState = { ...scene!.runState, player: { ...scene!.runState.player, stats: { ...scene!.runState.player.stats, critChance: 0 } } };
               const weapon = scene!.runTheme.weapons.find((w: { id: string }) => w.id === weaponId);
-              scene!.fireWeaponIfReady(weapon);
+              if (!weapon.cleanup) scene!.fireWeaponIfReady(weapon);
               if (weapon.deliveryKind === "projectile") scene!.handleProjectileEnemyOverlap([...scene!.projectiles][0], enemy);
               scene!.processCausalEvents();
               scene!.commitEnemyDamage(enemy, 99999, "direct", undefined, { weapon, directBase: 99999, criticalBonus: 0, piercingMomentum: 0 });
@@ -94,8 +94,14 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
             if (quality === "low") {
               scene!.revealAllShrines(); scene!.activateShrine(scene!.shrineActors.find((s: { definition: { id: string } }) => s.definition.id === "shrine.greed"));
               acquire("upgrade.accept_frenzy"); acquire("upgrade.equip_secondary"); hits.push(attack("weapon.secondary"));
-              for (let i = 0; i < 4; i++) acquire("upgrade.secondary_range");
-              acquire("upgrade.evolve_secondary"); hits.push(attack("weapon.secondary_evolved"));
+              if (theme.economy) {
+                for (let i = 0; i < 6; i++) acquire("upgrade.tool.aura_damage");
+                const equip = theme.upgrades.find((u: { effects: { kind: string; weaponId?: string }[] }) => u.effects.some((e) => e.kind === "weapon.equip" && e.weaponId === "weapon.cleaning_bin"));
+                acquire(equip.id); hits.push(attack("weapon.cleaning_bin"));
+              } else {
+                for (let i = 0; i < 4; i++) acquire("upgrade.secondary_range");
+                acquire("upgrade.evolve_secondary"); hits.push(attack("weapon.secondary_evolved"));
+              }
               scene!.runState = { ...scene!.runState, status: "complete", mode: "clearing", finalBossDefeated: true, elapsedMs: scene!.runState.durationMs + 1000 };
             } else {
               const endless = themeKey === "knight-magic";

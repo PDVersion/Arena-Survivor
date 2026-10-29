@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 const status = "#live-status";
-test("sandbox isolates its save, conserves magnet money, heals, pauses and applies real tool trees", async ({ page }) => {
+test("sandbox isolates its save, conserves magnet money, heals, pauses and applies real tool trees", async ({ page }, info) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.addInitScript(() => localStorage.setItem("arena-save-sentinel", "untouched"));
   await page.goto("/testing-area.html");
@@ -45,7 +45,7 @@ test("sandbox isolates its save, conserves magnet money, heals, pauses and appli
   await page.locator("#enemy").selectOption("enemy.slow_durable"); await page.locator("#enemy-count").fill("3"); await page.locator("#distance").fill("40"); await page.locator("#spawn").click();
   await expect(page.locator(status)).toHaveAttribute("data-enemies", "3");
   await page.waitForTimeout(3500);
-  await page.screenshot({ path: "/private/tmp/eco-v045-mixed-tools.png" });
+  await page.screenshot({ path: info.outputPath("eco-v045-mixed-tools.png") });
   await page.locator("#clear").click(); await expect(page.locator(status)).toHaveAttribute("data-enemies", "0");
   expect(await page.evaluate(() => localStorage.getItem("arena-survivor.profile"))).toBeNull();
   expect(await page.evaluate(() => localStorage.getItem("arena-save-sentinel"))).toBe("untouched");
@@ -63,7 +63,7 @@ test("Impact shop persists purchases and rejects overspending", async ({ page })
   const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("arena-survivor.profile")!));
   expect(saved.economy).toEqual({ impact: 0, upgrades: { "shop.safety": 1 } });
 });
-test("bounded mixed cleanup field runs at maximum seven-level tools", async ({ page }) => {
+test("bounded mixed cleanup field runs at maximum seven-level tools", async ({ page }, info) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/testing-area.html"); await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
   await page.locator("#pause").click();
@@ -80,11 +80,11 @@ test("bounded mixed cleanup field runs at maximum seven-level tools", async ({ p
   await expect.poll(async () => Number(await page.locator(status).getAttribute("data-elapsed-ms"))).toBeGreaterThan(2000);
   const count = Number(await page.locator(status).getAttribute("data-enemies"));
   expect(count).toBeLessThanOrEqual(300);
-  await page.screenshot({ path: "/private/tmp/eco-v045-bounded-mixed-field.png" });
+  await page.screenshot({ path: info.outputPath("eco-v045-bounded-mixed-field.png") });
   expect(errors).toEqual([]);
 });
 
-test("seven-level outward rake sweeps clean a distant target through the real runtime", async ({ page }) => {
+test("seven-level outward rake sweeps clean a distant target through the real runtime", async ({ page }, info) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/testing-area.html");
   await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
@@ -99,7 +99,7 @@ test("seven-level outward rake sweeps clean a distant target through the real ru
   await path.locator('[data-level="7"]').click();
   await expect(path.locator(".acquired[data-level]")).toHaveCount(6);
   await path.scrollIntoViewIfNeeded();
-  await page.screenshot({ path: "/private/tmp/eco-v045-seven-level-trees.png" });
+  await page.screenshot({ path: info.outputPath("eco-v045-seven-level-trees.png") });
   await page.locator('[aria-label="Sharp Eye picks"]').fill("100");
   await page.locator('[aria-label="Sharp Eye picks"]').dispatchEvent("change");
   await page.locator("#trees-close").click();
@@ -112,6 +112,6 @@ test("seven-level outward rake sweeps clean a distant target through the real ru
   await expect(page.locator(status)).toHaveAttribute("data-enemies", "0", { timeout: 8000 });
   await page.keyboard.down("ArrowUp"); await page.waitForTimeout(250); await page.keyboard.up("ArrowUp");
   await page.waitForTimeout(2000);
-  await page.screenshot({ path: "/private/tmp/eco-v045-outward-rake.png" });
+  await page.screenshot({ path: info.outputPath("eco-v045-outward-rake.png") });
   expect(errors).toEqual([]);
 });

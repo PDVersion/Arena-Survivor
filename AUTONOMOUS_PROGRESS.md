@@ -26,3 +26,14 @@ tests pass in556ms total; full743units/81files pass in1.78s locally. Types/lint/
 build/34sprite checks/whitespace pass; existing bundle advisory remains.
 Matching-head Actions must now reach and verify later steps; full CI repair is
 not yet complete. No heavy local browser campaign was run for this unit fix.
+
+## PR30 browser-fixture repair checkpoint — 2026-10-29
+
+Reconciled old Eco group/gust/cone/evolution/money-art assumptions with the active
+owner-selected contracts. Cumulatively21distinct focused eco/generic cases pass
+serially with zero retries, including4sandbox/shop cases with portable capture
+paths. Lint/types/whitespace pass; unit/runtime/art files unchanged after the
+verified unit repair. Audit high gate passes with2existing moderate Vitest
+findings. No timeouts/retries increased or frozen pack edited. Full matching-head
+CI remains pending; run40828495077 is still completing its browser campaign.
+[Repair report](build/performance/PR30_CI_REPAIR.md) records reproduction and scope.

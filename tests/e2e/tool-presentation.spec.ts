@@ -145,8 +145,14 @@ for (const low of [false, true]) {
       });
       const pickup = new PickupActor(r, "style2", x - 70, y + 100, theme.pickups[0], theme.tokens, 1);
       const pickupFrames = [frame(pickup)];
-      pickup.magnetToward(r.player.arcadeBody.velocity.clone().set(x, y)); pickupFrames.push(frame(pickup));
-      pickup.claim(); pickupFrames.push(frame(pickup));
+      pickup.magnetToward(r.player.arcadeBody.velocity.clone().set(x, y));
+      const movingMoneyFrame = frame(pickup);
+      const absorb = (value: number) => {
+        const other = new PickupActor(r, `merge-${value}`, x, y, theme.pickups[0], theme.tokens, value);
+        pickup.absorb(other); other.destroy(); pickupFrames.push(frame(pickup));
+      };
+      absorb(3); absorb(21); pickup.claim();
+      const claimedMoneyFrame = frame(pickup);
       const sites = theme.shrines.map((definition: any, i: number) => {
         const actor = new ShrineActor(r, x - 160 + i * 80, y + 165, definition, theme.tokens,
           theme.copy.content[definition.id].name, "");
@@ -179,7 +185,7 @@ for (const low of [false, true]) {
       });
       const fallback = new PickupActor(r, "fallback", x + 130, y + 100, theme.pickups[0], { ...theme.tokens, sprites: {} }, 1);
       f.style2 = { pickup, fallback };
-      return { enemies, pickupFrames, sites, hazards, tools, fallback: !fallback.view && fallback.visible,
+      return { enemies, pickupFrames, movingMoneyFrame, claimedMoneyFrame, sites, hazards, tools, fallback: !fallback.view && fallback.visible,
         icons: r.hud.toolIcons.map((icon: any) => icon.frame.name),
         textureKeys: [...new Set(Object.values(theme.tokens.sprites).map((s: any) => s.path))] };
     });
@@ -188,6 +194,7 @@ for (const low of [false, true]) {
       expect(enemy.radius).toBe(enemy.expectedRadius);
     }
     expect(result.pickupFrames).toEqual([0, 1, 2]);
+    expect(result.movingMoneyFrame).toBe(0); expect(result.claimedMoneyFrame).toBe(2);
     for (const site of result.sites) expect(site).toEqual([0, 1, 2, 3]);
     for (const hazard of result.hazards) {
       expect(hazard.primitive).toBe(true);
@@ -217,14 +224,14 @@ for (const low of [false, true]) {
         r.hud.update({ ...r.runState, weaponSlots: [r.runState.weaponSlots[0], { weaponId: id, nextAttackAtMs: 0 }] }, extras);
         return r.hud.toolIcons.map((icon: any) => icon.frame.name);
       };
-      const secondaryIcons = icons("weapon.secondary"), evolvedIcons = icons("weapon.secondary_evolved");
-      return { contact, recovery, vacuumRecovery, secondaryIcons, evolvedIcons };
+      const secondaryIcons = icons("weapon.secondary"), binIcons = icons("weapon.cleaning_bin");
+      return { contact, recovery, vacuumRecovery, secondaryIcons, binIcons };
     });
     expect(phases.contact).toBe("eco_guardian.weapon.starter/1");
     expect(phases.recovery).toBe("eco_guardian.weapon.starter/2");
     expect(phases.vacuumRecovery).toBe("eco_guardian.weapon.secondary/2");
     expect(phases.secondaryIcons).toEqual(["eco_guardian.weapon.starter/0", "eco_guardian.weapon.secondary/0"]);
-    expect(phases.evolvedIcons).toEqual(["eco_guardian.weapon.starter/0", "eco_guardian.weapon.secondary_evolved/0"]);
+    expect(phases.binIcons).toEqual(["eco_guardian.weapon.starter/0", "eco_guardian.weapon.cleaning_bin/0"]);
     await page.evaluate(() => (window as any).__TOOL_REVIEW__.cleanup());
     expect(errors).toEqual([]);
   });
@@ -272,8 +279,8 @@ for (const low of [false, true]) {
       r.pauseMenu.hide();
       const paths = ["/src/game/ui/level-up-choice-ui.ts", "/src/game/systems/upgrades/describe-upgrade.ts"];
       const [{ LevelUpChoiceUi }, { describeUpgrade }] = await Promise.all(paths.map((p) => import(p)));
-      // Acquisition/evolution definitions are registered in the theme upgrade pool.
-      const ids = ["upgrade.equip_secondary", "upgrade.evolve_secondary", "upgrade.damage"];
+      // Acquisition and fixed level steps are registered in the active upgrade pool.
+      const ids = ["upgrade.equip_secondary", "upgrade.tool.aura_damage", "upgrade.damage"];
       const choices = ids.map((id) => theme.upgrades.find((entry: any) => entry.id === id));
       const descriptions = choices.map((entry: any) => describeUpgrade(r.runState, entry, theme, "legendary"));
       const ui = new LevelUpChoiceUi(r, theme);
@@ -285,10 +292,10 @@ for (const low of [false, true]) {
       return { texts, colours, descriptions: descriptions.map((d: any) => ({ relevant: d.qualityRelevant, association: d.association, multiplier: d.tierMultiplier })), listeners };
     });
     expect(cards.descriptions[0]).toEqual({ relevant: false, association: "Cleanup Vacuum", multiplier: 1 });
-    expect(cards.descriptions[1]).toEqual({ relevant: false, association: "Cyclone Vacuum", multiplier: 1 });
+    expect(cards.descriptions[1]).toEqual({ relevant: false, association: "Cleanup Vacuum", multiplier: 1 });
     expect(cards.descriptions[2].relevant).toBe(true);
     expect(cards.texts.some((text: string) => text.startsWith("STAT ·"))).toBe(true);
-    expect(cards.texts).toContain("Cleanup Vacuum"); expect(cards.texts).toContain("Cyclone Vacuum");
+    expect(cards.texts).toContain("Cleanup Vacuum"); expect(cards.texts).not.toContain("Cyclone Vacuum");
     expect(cards.texts.filter((text: string) => text.includes("Legendary"))).toHaveLength(1);
     expect(cards.colours[0]).toBe(cards.colours[1]); expect(cards.colours[2]).not.toBe(cards.colours[0]);
     expect(cards.listeners).toBe(0);

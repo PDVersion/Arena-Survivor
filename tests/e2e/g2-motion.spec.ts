@@ -4,6 +4,9 @@ import { expect, test } from "@playwright/test";
 // Explicitly aided integration: isolated RunScene, physics paused, movement stepped
 // at20 simulated ms. This is deterministic cue/target/ledger evidence, not survival.
 for (const candidate of ["gust", "roll"] as const) for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of ["default", "low"]) {
+  // Eco wrappers now float; their replacement coverage is below. Keep the
+  // existing frozen-pack committed-gust contract without changing its content.
+  if (themeKey === "eco-guardian" && candidate === "gust") continue;
   test(`${themeKey} G2 ${candidate} interception ${quality}`, async ({ page, browser }, testInfo) => {
     test.setTimeout(30_000);
     const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
@@ -56,7 +59,7 @@ for (const candidate of ["gust", "roll"] as const) for (const themeKey of ["eco-
         const initialMotionPhase = actor.motionState.phase;
         const offscreenDistance = Phaser.Math.Distance.Between(actor.x, actor.y, scene!.player.x, scene!.player.y);
         actor.arcadeBody.reset(scene!.player.x + motion.triggerRange - 10, scene!.player.y);
-        const view = actor.primitiveView.image, cue = actor.motionCue.image;
+        const view = (actor.view ?? actor.primitiveView).image, cue = actor.motionCue.image;
         const snapshot = () => ({ phase: actor.motionState.phase, heading: [actor.motionState.headingX, actor.motionState.headingY],
           velocity: actor.body ? [actor.arcadeBody.velocity.x, actor.arcadeBody.velocity.y] : [0, 0], position: [actor.x, actor.y],
           cueCommands: cue.commandBuffer?.length ?? 0, cueActive: cue.active, viewActive: view.active, bodyWidth: actor.body?.width ?? 0,
@@ -93,12 +96,12 @@ for (const candidate of ["gust", "roll"] as const) for (const themeKey of ["eco-
             scene!.enemyCapacity = 300;
             scene!.player.arcadeBody.reset(actor.x - 60, actor.y);
             for (const [i, oldId] of ["enemy.swarm_basic", "enemy.fast_fragile"].entries()) scene!.spawnEnemy("ambient", 1,
-              theme.enemies.find((e: { id: string }) => e.id === oldId), { x: scene!.player.x - 75, y: scene!.player.y + (i ? -35 : 35) }, false);
+              theme.enemies.find((e: { id: string }) => e.id === oldId), { x: scene!.player.x - (theme.economy ? 200 : 75), y: scene!.player.y + (i ? -35 : 35) }, false);
             if (candidate === "roll") {
               scene!.spawnEnemy("ambient", 1, theme.enemies.find((e: { id: string }) => e.id === "enemy.cluster_fodder"),
-                { x: scene!.player.x - 70, y: scene!.player.y - 100 }, false);
+                { x: scene!.player.x - (theme.economy ? 200 : 70), y: scene!.player.y - 100 }, false);
               scene!.spawnEnemy("ambient", 1, theme.enemies.find((e: { id: string }) => e.id === "enemy.gust_drifter"),
-                { x: scene!.player.x + 90, y: scene!.player.y + 100 }, false);
+                { x: scene!.player.x + (theme.economy ? 200 : 90), y: scene!.player.y + 100 }, false);
               const wrapper = [...scene!.enemies].find((e) => e.definition.id === "enemy.gust_drifter");
               wrapper.advance(new Phaser.Math.Vector2(scene!.player.x, scene!.player.y), 20);
               cueSync();
@@ -106,16 +109,27 @@ for (const candidate of ["gust", "roll"] as const) for (const themeKey of ["eco-
             outside = [...scene!.enemies].filter((e) => e !== actor);
             return outside.map((e) => e.health);
           },
-          pulse() {
+          async pulse() {
             scene!.runState = applyUpgrade(scene!.runState, theme.upgrades.find((u: { id: string }) => u.id === "upgrade.equip_secondary"), undefined, 1, theme.weapons);
-            for (let i = 0; i < 5 && actor.active; i++) {
+            const weapon = theme.weapons.find((w: { id: string }) => w.id === "weapon.secondary");
+            const ticks = weapon.cleanup ? Math.ceil(actor.health / weapon.cleanup.damage) + 1 : 5;
+            for (let i = 0; i < ticks && actor.active; i++) {
               scene!.runState = { ...scene!.runState, player: { ...scene!.runState.player, stats: { ...scene!.runState.player.stats, critChance: 0 } },
                 weaponSlots: scene!.runState.weaponSlots.map((slot: { weaponId: string }) => ({ ...slot, nextAttackAtMs: slot.weaponId === "weapon.starter" ? 1e9 : 0 })) };
-              scene!.fireIfReady(); scene!.processCausalEvents();
+              if (weapon.cleanup) scene!.cleanupRuntime.update(scene!.runState.elapsedMs + i * weapon.cleanup.tickMs, scene!.player,
+                [{ weapon, tool: weapon.cleanup, attackRate: 1 }], scene!.enemies);
+              else scene!.fireIfReady();
+              scene!.processCausalEvents();
             }
             const lethal = snapshot();
             scene!.commitEnemyDamage(actor, 1000, "direct"); scene!.processCausalEvents();
-            return { lethal, duplicate: snapshot(), outside: outside.map((e) => e.health), viewDestroyed: !view.active, cueDestroyed: !cue.active };
+            const duplicate = snapshot();
+            if (actor.view) {
+              const path = "/src/game/systems/sprites/sprite-animation.ts";
+              const { SPRITE_DEATH_FRAME_MS } = await import(path);
+              await new Promise<void>((resolve) => scene!.time.delayedCall(SPRITE_DEATH_FRAME_MS + 30, resolve));
+            }
+            return { lethal, duplicate, outside: outside.map((e) => e.health), viewDestroyed: !view.active, cueDestroyed: !cue.active };
           },
           async cleanup() { game.scene.stop("run"); game.destroy(true); await new Promise<void>((r) => requestAnimationFrame(() => r())); root.remove(); delete (window as unknown as Record<string, unknown>).__G2_MOTION__; },
         } });
@@ -159,5 +173,82 @@ for (const candidate of ["gust", "roll"] as const) for (const themeKey of ["eco-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- isolated test fixture
       await page.evaluate(() => (window as any).__G2_MOTION__?.cleanup());
     }
+  });
+}
+
+// Replacement for Eco's retired committed gust: live introduction, continuous
+// retargeting and overlap use the active airborne contract in both display modes.
+for (const quality of ["default", "low"]) {
+  test(`eco-guardian G2 airborne wrapper pursuit ${quality}`, async ({ page }, info) => {
+    await page.goto("/sprite-browser.html?noAmbient&noContact&noHazards");
+    const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+    const result = await page.evaluate(async (quality) => {
+      const paths = ["/tests/fixtures/phaser-runtime.ts", "/src/game/scenes/run-scene.ts",
+        "/src/game/content/active-theme.ts", "/src/game/systems/sprites/load-sprites.ts", "/src/game/config.ts"];
+      const [{ default: Phaser }, { RunScene }, { activeTheme: theme }, { loadThemeSprites }, { createGameConfig }] = await Promise.all(paths.map((p) => import(p)));
+      const root = document.createElement("div"); root.id = "airborne-review"; document.body.append(root);
+      let scene: InstanceType<typeof RunScene>;
+      const game = await new Promise<InstanceType<typeof Phaser.Game>>((resolve) => {
+        class Run extends RunScene {
+          create() {
+            super.create();
+            // eslint-disable-next-line @typescript-eslint/no-this-alias -- bounded fixture inspection
+            scene = this; this.physics.world.pause(); resolve(this.game);
+          }
+          update() { /* Aided fixed movement/causal steps below. */ }
+        }
+        class Load extends Phaser.Scene {
+          constructor() { super("airborne-load"); }
+          preload() { loadThemeSprites(this, theme); }
+          create() { this.scene.start("run"); }
+        }
+        new Phaser.Game({ ...createGameConfig(root.id), type: Phaser.CANVAS, scene: [Load, Run], audio: { noAudio: true } });
+      });
+      try {
+        if (quality === "low") { scene!.applySetting("presentationQuality"); scene!.applySetting("reducedMotion"); }
+        const definition = theme.enemies.find((e: { id: string }) => e.id === "enemy.gust_drifter");
+        const role = theme.tuning.director.roles.find((r: { enemyId: string }) => r.enemyId === definition.id);
+        scene!.runState = { ...scene!.runState, elapsedMs: scene!.runState.durationMs * role.unlockAt };
+        scene!.lastDirectorProgress = role.unlockAt - .001; scene!.enemyCapacity = 0;
+        const url = new URL(location.href); url.searchParams.delete("noAmbient"); history.replaceState(null, "", url);
+        scene!.releaseMilestoneWaves(); scene!.processCausalEvents();
+        const retained = scene!.eventQueue.snapshot().backlog;
+        scene!.releaseMilestoneWaves(); scene!.processCausalEvents();
+        const repeated = scene!.eventQueue.snapshot().backlog;
+        url.searchParams.set("noAmbient", ""); history.replaceState(null, "", url);
+        scene!.enemyCapacity = 2; scene!.processCausalEvents();
+        const wrapper = [...scene!.enemies][0];
+        const point = { x: scene!.player.x + 120, y: scene!.player.y };
+        wrapper.arcadeBody.reset(point.x, point.y);
+        scene!.spawnEnemy("ambient", 1, theme.enemies.find((e: { id: string }) => e.id === "enemy.slow_durable"), point, false);
+        const glass = [...scene!.enemies].find((e) => e !== wrapper);
+        scene!.updateEnemies(20); scene!.rebuildEnemyIndex(); scene!.resolveCrowd();
+        const first = { x: wrapper.x, y: wrapper.y, vx: wrapper.arcadeBody.velocity.x, vy: wrapper.arcadeBody.velocity.y };
+        scene!.player.arcadeBody.reset(point.x, point.y + 120); scene!.updateEnemies(20);
+        const next = { vx: wrapper.arcadeBody.velocity.x, vy: wrapper.arcadeBody.velocity.y };
+        const view = wrapper.view.image;
+        const health = wrapper.health, reward = definition.xpReward * wrapper.rewardMultiplier;
+        // Isolate the lethal ledger from chance-driven material child production.
+        scene!.effectRandom = () => 1 - Number.EPSILON;
+        scene!.commitEnemyDamage(wrapper, 10000, "direct"); scene!.processCausalEvents();
+        const ledger = () => ({ kills: scene!.runState.statistics.kills, damage: scene!.runState.statistics.totalDamage,
+          money: [...scene!.pickups].filter((p) => (p.definition.kind ?? "money") === "money").reduce((sum, p) => sum + p.xpValue, 0) });
+        const lethal = ledger(); scene!.commitEnemyDamage(wrapper, 10000, "direct");
+        const animationPath = "/src/game/systems/sprites/sprite-animation.ts";
+        const { SPRITE_DEATH_FRAME_MS } = await import(animationPath);
+        await new Promise<void>((resolve) => scene!.time.delayedCall(SPRITE_DEATH_FRAME_MS + 30, resolve));
+        return { retained, repeated, first, next, point, overlap: first.x === glass.x && first.y === glass.y,
+          airborne: wrapper.airborne, cue: Boolean(wrapper.motionCue), destroyed: !view.active,
+          health, reward, lethal, duplicate: ledger() };
+      } finally { game.destroy(true); root.remove(); }
+    }, quality);
+    expect(result.retained).toBe(1); expect(result.repeated).toBe(1);
+    expect(result.airborne).toBe(true); expect(result.cue).toBe(false); expect(result.overlap).toBe(true);
+    expect(result.first.vx).toBeLessThan(0); expect(result.first.vy).toBeCloseTo(0);
+    expect(result.next.vx).toBeCloseTo(0); expect(result.next.vy).toBeGreaterThan(0);
+    expect(result.lethal.kills).toBe(1); expect(result.lethal.damage).toBeCloseTo(result.health);
+    expect(result.lethal.money).toBeCloseTo(result.reward); expect(result.duplicate).toEqual(result.lethal);
+    expect(result.destroyed).toBe(true); expect(errors).toEqual([]);
+    await writeFile(info.outputPath("airborne-observations.json"), JSON.stringify(result, null, 2));
   });
 }

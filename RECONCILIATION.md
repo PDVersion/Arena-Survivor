@@ -4593,3 +4593,23 @@ not raise timeouts, skip pixels or alter assets to hide slow verification.
 Focused7tests pass (556ms total) and full743units pass (1.78s); types/lint/build/
 34sprite checks pass. Later CI steps were not reached in the failed run and
 remain pending after the push; no gameplay or full-browser pass inferred.
+
+## REC-142 — Reconcile behavioural fixtures when owner changes a role
+
+Old Eco browser fixtures still assumed grouped Cigarettes, committed wrapper
+gusts, primitive-only views, cone pulses/evolution and motion-coded XP art. These
+are superseded by grouped Microplastics, airborne wrappers, sprite death holds,
+seven-level player-centred Vacuum and value-coded money. Replace those cases
+with active-contract coverage rather than restoring retired gameplay or dropping
+assertions. Preserve legacy generic/frozen-pack paths and historical cone source.
+
+Actual aura scheduler steps verify contact/range and exact ledgers; all7levels
+must be genuinely acquired (owner weapon equipped), not seven labels over an
+unmodified base. Control enemies must be distinct from the selected group type
+and outside its current area; money checks use real merged value. Wait the
+authored220ms corpse hold for view disposal while comparing duplicate lethals at
+the same instant. Sandbox screenshot paths belong to Playwright output, not
+host-specific /private/tmp.21distinct focused cases cumulatively pass serially
+without retries, types/lint/whitespace pass, audit high gate passes (2existing
+moderate findings). No gameplay/tuning/art/save/frozen-pack changes. Full remote
+CI is pending and this scope does not close owner or external-device acceptance.

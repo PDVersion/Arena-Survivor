@@ -41,3 +41,10 @@ changes. Use native byte equality for PNG buffers/rows instead of generic deep
 comparisons. Gates: focused sprites then fullunits/types/lint/build/sprite checks;
 necessary failed browser cases serially, full regression in Actions. Inspect
 matching-head CI and fix observed follow-up failures before closing repair.
+
+Bounded fixture follow-up now locally verified:21distinct cases cumulatively,
+serial/zero retries; lint/types/whitespace and audit high gate pass. Q6's retired
+cone fixture is preserved in build/history; replacement aura coverage retains
+actual level/range/tick/ledger assertions. See performance/PR30_CI_REPAIR.md.
+Push this repair while the preceding Actions campaign completes; full CI is
+still pending, not claimed passed.
