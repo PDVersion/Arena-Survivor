@@ -75,3 +75,8 @@ verified unit repair. Audit high gate passes with2existing moderate Vitest
 findings. No timeouts/retries increased or frozen pack edited. Full matching-head
 CI remains pending; run40828495077 is still completing its browser campaign.
 [Repair report](performance/PR30_CI_REPAIR.md) records reproduction and scope.
+
+Latest repair checkpoint: boss material RNG and nested difficulty bonuses fixed;
+41distinct focused cases cumulatively pass serial/zero retries,744unit tests,
+types/lint/build/34sprite sheets and production guard pass. Matching-head Actions
+pending. Details: [PR30 repair](performance/PR30_CI_REPAIR.md).

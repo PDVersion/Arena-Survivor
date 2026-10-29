@@ -6,6 +6,9 @@ import { resolveDifficultyTheme } from "../../../src/game/systems/difficulty/res
 import { createSettings, cycleDifficulty } from "../../../src/game/state/settings-state";
 import { createRunState } from "../../../src/game/state/run-state";
 import { simulatePacing } from "../../../src/game/systems/simulation/pacing-simulator";
+import { resolveWeaponDefinition } from "../../../src/game/systems/weapons/resolve-weapon";
+import { createWeaponStatModifiers } from "../../../src/game/systems/upgrades";
+import { resolveCleanupTool } from "../../../src/game/systems/weapons/cleanup-tools";
 import { findBuildModel } from "../../../src/game/systems/simulation/build-models";
 
 describe("difficulty presets", () => {
@@ -68,4 +71,31 @@ describe("difficulty presets", () => {
     Reflect.deleteProperty(incomplete.tuning.difficultyPresets.normal, "enemyDamage");
     expect(validateTheme(incomplete)).toContain("difficulty.normal.enemyDamage must be positive");
   });
+});
+
+it("retains difficulty damage and cadence through every authored Eco weapon level", () => {
+  const theme = themeRegistry.find((entry) => entry.key === "eco-guardian")!.theme;
+  const original = structuredClone(theme);
+  for (const difficulty of difficultyIds) {
+    const preset = theme.tuning.difficultyPresets[difficulty];
+    const resolved = resolveDifficultyTheme(theme, difficulty);
+    for (const weapon of theme.weapons) for (let picks = 0; picks < 7; picks++) {
+      const id = weapon.progression?.id ?? weapon.cleanup!.progression!.id;
+      const selected = Array(picks).fill(id);
+      const authored = resolveWeaponDefinition(weapon, createWeaponStatModifiers(), undefined, selected);
+      const actual = resolveWeaponDefinition(resolved.weapons.find((w) => w.id === weapon.id)!, createWeaponStatModifiers(), undefined, selected);
+      expect(actual.damage).toBeCloseTo(authored.damage * preset.weaponDamage);
+      expect(actual.cooldownMs).toBeCloseTo(authored.cooldownMs * preset.weaponCooldown);
+      expect(actual.range).toBe(authored.range);
+      if (weapon.cleanup) {
+        const base = resolveCleanupTool(weapon.cleanup, selected);
+        const tool = resolveCleanupTool(resolved.weapons.find((w) => w.id === weapon.id)!.cleanup!, selected);
+        expect(tool.damage).toBeCloseTo(base.damage * preset.weaponDamage);
+        expect(tool.dotDamage).toBeCloseTo(base.dotDamage * preset.weaponDamage);
+        expect(tool.tickMs).toBeCloseTo(base.tickMs * preset.weaponCooldown);
+        expect(tool.radius).toBe(base.radius); expect(tool.count).toBe(base.count);
+      }
+    }
+  }
+  expect(theme).toEqual(original);
 });

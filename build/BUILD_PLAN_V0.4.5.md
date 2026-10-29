@@ -48,3 +48,23 @@ cone fixture is preserved in build/history; replacement aura coverage retains
 actual level/range/tick/ledger assertions. See performance/PR30_CI_REPAIR.md.
 Push this repair while the preceding Actions campaign completes; full CI is
 still pending, not claimed passed.
+
+### Evidence-based repair extension — claimed2026-10-29 before runtime edits
+
+Superseded run40828495077 canceled after its logs identified more stale fixtures;
+latest c95d6f5 campaign continues. Local failures expose two actual bugs: material
+pool RNG is evaluated once per find predicate (can find no valid child and crash
+a boss kill), and difficulty scales outer weapon data but seven-level/cleanup
+resolution overwrites it with unscaled nested data. Own run-scene.ts single-draw
+fragment lookup, difficulty resolver nested authored numeric scaling, associated
+unit/browser regressions, read-only test roster/telemetry if needed, failed
+roster/director/progression/shrine/lifecycle/sprite-browser/boss fixtures and
+repair records. No new mechanic/tuning literal/art/save/frozen-pack edits.
+Gate: meaningful seeded mixed-pool boss regression and all-level difficulty
+resolver units, fullunits/types/lint/build/production guard, only affected serial
+browser cases, then matching-head full Actions. No timeout/retry increases/skips.
+
+Runtime extension locally verified:744units plus final24diagnostic seam units,
+types/lint/build/34sprite sheets/production guard and cumulative41distinct focused
+browser cases pass. See REC-143 and performance/PR30_CI_REPAIR.md. Push the bounded
+repair; current-head full Actions remains pending, no merge/deployment.

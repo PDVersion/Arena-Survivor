@@ -62,7 +62,7 @@ test("the director gates the roster on run progress and announces each milestone
 
   const opening = await snapshot(page);
   expect(Object.keys(opening?.pacing?.roleWeights ?? {})).toEqual([
-    archetypeIds.enemy.fastFragile,
+    archetypeIds.enemy.clusterFodder,
   ]);
   expect(opening?.pacing?.batchSize).toBe(1);
   expect(opening?.pacing?.eliteChance).toBe(0);
@@ -119,7 +119,7 @@ test("a restarted run rewinds the director to its opening state", async ({ page 
   expect(restarted?.pacing?.waveSpawned).toBe(0);
   expect(restarted?.pacing?.progress).toBeLessThan(0.2);
   expect(Object.keys(restarted?.pacing?.roleWeights ?? {})).toEqual([
-    archetypeIds.enemy.fastFragile,
+    archetypeIds.enemy.clusterFodder,
   ]);
 });
 
@@ -135,5 +135,7 @@ test("bottles unlock quietly before the heavy-role milestone waves", async ({ pa
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().pacing?.milestoneWaves ?? 0), { timeout: 90_000 }).toBeGreaterThanOrEqual(1);
   const wave = await snapshot(page);
   expect(wave?.pacing?.waveSpawned).toBeGreaterThan(0);
-  expect(wave?.pacing?.driftSpawned).toBe(0);
+  const firstDrift = director.roles.find((role) => role.waveMovement === "drift" && role.unlockAt > 0)!;
+  expect(wave?.pacing?.driftSpawned).toBe("introductionCount" in firstDrift ? firstDrift.introductionCount : undefined);
+  expect(wave?.pacing?.progress).toBeGreaterThanOrEqual(firstDrift.unlockAt);
 });

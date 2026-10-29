@@ -37,3 +37,8 @@ verified unit repair. Audit high gate passes with2existing moderate Vitest
 findings. No timeouts/retries increased or frozen pack edited. Full matching-head
 CI remains pending; run40828495077 is still completing its browser campaign.
 [Repair report](build/performance/PR30_CI_REPAIR.md) records reproduction and scope.
+
+Latest PR30 repair: actual boss material-selection crash and difficulty scaling
+fixed;41distinct focused cases cumulatively pass serial/zero retries,744units,
+types/lint/build/sprite checks and production guard pass. Remote final-head CI
+pending; see [repair report](build/performance/PR30_CI_REPAIR.md).

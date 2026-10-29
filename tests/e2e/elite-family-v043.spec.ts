@@ -28,7 +28,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
       window.__C4_CLEANUP__ = async () => { game.scene.stop("run"); game.destroy(true); await new Promise((r) => setTimeout(r, 30)); parent.remove(); };
       let timeout: ReturnType<typeof setTimeout> | undefined;
       const scene = await Promise.race([started, new Promise<never>((_, reject) => { timeout = setTimeout(() => reject(new Error("C4 startup timeout")), 8000); })]); clearTimeout(timeout);
-      type Enemy = { elite?: { id: string }; targetId: string; health: number; maxHealth: number; moveSpeed: number; eliteSplitDepth: number; rewardMultiplier: number; sourceRewardMultiplier: number; movement: string; definition: { id: string }; eliteMarker?: { text: string; active: boolean }; advance(target: unknown, delta: number): void; destroy(): void };
+      type Enemy = { elite?: { id: string }; targetId: string; health: number; maxHealth: number; moveSpeed: number; eliteSplitDepth: number; rewardMultiplier: number; sourceRewardMultiplier: number; movement: string; definition: { id: string; xpReward: number }; eliteMarker?: { text: string; active: boolean }; advance(target: unknown, delta: number): void; destroy(): void };
       const actors = (): Enemy[] => Array.from(scene.enemies);
       const clear = () => { for (const enemy of actors()) enemy.destroy(); scene.eventQueue.clear(); };
       const baseRole = theme.enemies.find((e: { id: string }) => e.id === "enemy.swarm_basic");
@@ -36,6 +36,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
         const before = new Set(actors()); scene.spawnEnemy("shrine.spawn_surge", reward, role, { x: scene.player.x + 70, y: scene.player.y }, eliteId, undefined, "chase", "environment", depth);
         return actors().find((e) => !before.has(e))!;
       };
+      // Isolate split/shield accounting from the separate material-drop roll.
+      scene.effectRandom = () => 1 - Number.EPSILON;
       const observations: Record<string, unknown> = {};
       const shield = spawn("elite.shield");
       const before = scene.runState.statistics.totalDamage; const initial = shield.health;
@@ -84,8 +86,15 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
         clear();
         scene.runState = { ...scene.runState, skillLevels: { "skill.fracture": 1 } };
         const parent = spawn(variant, baseRole, 1, 1);
-        scene.commitEnemyDamage(parent, 1000000, "direct"); scene.processCausalEvents();
-        descendants[variant] = { offspring, expectedOffspring: spawnerRole.deathSpawns.reduce((n: number, d: { count: number }) => n + d.count, 0),
+        if (theme.economy) {
+          // Aided damaged parent: exercise downside fragments despite Careful
+          // Cleanup and keep shields below their active health threshold.
+          parent.health = parent.maxHealth * .4; Object.assign(parent, { hitsTaken: 1 });
+        }
+        scene.commitEnemyDamage(parent, theme.economy ? parent.health : 1000000, "direct"); scene.processCausalEvents();
+        descendants[variant] = { offspring, expectedOffspring: theme.economy ? theme.economy.fragmentation.childCount : spawnerRole.deathSpawns.reduce((n: number, d: { count: number }) => n + d.count, 0),
+          expectedFragmentMoney: theme.economy ? baseRole.xpReward * parent.rewardMultiplier * (theme.economy.fragmentation.totalShare - theme.economy.fragmentation.parentShare) : 0,
+          fragmentMoney: actors().reduce((sum, e) => sum + e.definition.xpReward * e.rewardMultiplier, 0),
           fragments: actors().map((e) => ({ variant: e.elite?.id, depth: e.eliteSplitDepth, reward: e.rewardMultiplier })) };
         clear(); scene.runState = { ...scene.runState, skillLevels: {} };
       }
@@ -100,6 +109,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
       acceleration.advance(new Phaser.Math.Vector2(scene.player.x, scene.player.y), 1500);
       observations.acceleration = { speed, half, paused, full: acceleration.moveSpeed };
       clear();
+      scene.effectRandom = () => 1 - Number.EPSILON;
       const killsBefore = scene.runState.statistics.kills;
       for (let i = 0; i < 100; i++) spawn("elite.split");
       for (const enemy of actors()) scene.commitEnemyDamage(enemy, 1000000, "direct");
@@ -126,7 +136,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
       cap: { live: number; pending: number }; capDrained: { live: number; pending: number };
       duplication: Record<string, { id: string; depth: number; movement: string }[]>;
       burst: { peak: number; childrenCount: number; depths: number[]; live: number; backlog: number; kills: number };
-      descendants: Record<string, { offspring: { variant: string; depth: number }[]; expectedOffspring: number; fragments: { variant: string; depth: number; reward: number }[] }>;
+      descendants: Record<string, { offspring: { variant: string; depth: number }[]; expectedOffspring: number; expectedFragmentMoney: number; fragmentMoney: number; fragments: { variant: string; depth: number; reward: number }[] }>;
       acceleration: { speed: number; half: number; paused: number; full: number }; markers: string[];
     };
     expect(o.shield.lost).toBe(1); expect(o.shield.ledger).toBe(1);
@@ -138,8 +148,17 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} elite
     for (const [variant, descendants] of Object.entries(o.duplication)) expect(descendants).toEqual([{ id: variant, depth: 1, movement: "chase" }, { id: variant, depth: 1, movement: "chase" }]);
     for (const [variant, descendants] of Object.entries(o.descendants)) {
       expect(descendants.offspring).toHaveLength(descendants.expectedOffspring);
-      for (const child of descendants.offspring) expect(child).toEqual({ variant, depth: 1 });
-      expect(descendants.fragments).toEqual([{ variant, depth: 1, reward: 0 }, { variant, depth: 1, reward: 0 }]);
+      if (themeKey === "eco-guardian") {
+        for (const child of descendants.offspring) expect(child).toEqual({ variant: undefined, depth: 0 });
+        expect(descendants.fragments).toHaveLength(2);
+        for (const child of descendants.fragments) {
+          expect(child.variant).toBeUndefined(); expect(child.depth).toBe(0); expect(child.reward).toBeGreaterThan(0);
+        }
+        expect(descendants.fragmentMoney).toBeCloseTo(descendants.expectedFragmentMoney, 8);
+      } else {
+        for (const child of descendants.offspring) expect(child).toEqual({ variant, depth: 1 });
+        expect(descendants.fragments).toEqual([{ variant, depth: 1, reward: 0 }, { variant, depth: 1, reward: 0 }]);
+      }
     }
     expect(o.acceleration.half).toBeCloseTo(o.acceleration.speed * 1.25); expect(o.acceleration.paused).toBe(o.acceleration.half); expect(o.acceleration.full).toBeCloseTo(o.acceleration.speed * 1.5);
     expect(o.burst).toEqual({ peak: 200, childrenCount: 200, depths: [1], live: 0, backlog: 0, kills: 300 });

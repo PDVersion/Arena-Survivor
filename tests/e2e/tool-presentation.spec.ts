@@ -400,11 +400,19 @@ test("material rules, floating wrappers and independent boss summon rewards", as
       const miniSummons = miniChildren.map((e: any) => e.definition.id);
       const miniRewardAfterAttack = mini.definition.xpReward * mini.rewardMultiplier;
       for (const child of miniChildren) child.destroy();
+      // One stable material choice per child: this changing sequence used to
+      // be consumed again for every candidate in Array.find and could crash.
+      const poolRolls = [0, .18, .32, .55, .81]; let materialDraws = 0;
+      run.effectRandom = () => poolRolls[materialDraws++ % poolRolls.length];
       run.commitEnemyDamage(mini, 1e6, "direct"); run.processCausalEvents();
       const fragments = [...run.enemies] as any[];
       const fragmentBudget = [...run.pickups].filter((p: any) => (p.definition.kind ?? "money") === "money").reduce((sum: number, p: any) => sum + p.xpValue, 0)
         + fragments.reduce((sum, e) => sum + e.definition.xpReward * e.rewardMultiplier, 0);
       const miniFragmentCount = fragments.length;
+      const materialTypes = fragments.map((e) => e.definition.id);
+      const expectedMaterialTypes = poolRolls.slice(1).map((roll) => mini.definition.fragmentation.pool[Math.floor(roll * mini.definition.fragmentation.pool.length)]);
+      const materialDrawCount = materialDraws;
+      run.effectRandom = () => 0;
       const fragmentSources = fragments.map((e) => e.spawnSource);
       controller.clear(); configure(); controller.spawn("enemy.final_boss", 1, 140);
       const final = [...run.enemies][0] as any;
@@ -425,9 +433,10 @@ test("material rules, floating wrappers and independent boss summon rewards", as
       runtime.update(0, at, [{ weapon: rake, tool: rake.cleanup, attackRate: 1 }], new Set(), { x: 1, y: 0 });
       runtime.update(180, at, [{ weapon: rake, tool: rake.cleanup, attackRate: 1 }], new Set());
       f.materialRakeRuntime = runtime;
-      return { floating, materialKills, miniLabel, miniSummons, cleanReward, miniRewardAfterAttack, fragmentBudget, miniFragmentCount, fragmentSources,
+      return { materialDrawCount, materialTypes, expectedMaterialTypes, floating, materialKills, miniLabel, miniSummons, cleanReward, miniRewardAfterAttack, fragmentBudget, miniFragmentCount, fragmentSources,
         finalLabel, finalSummons, finalReward, finalRewardAfterAttack, expectedTypes: f.theme.enemies.filter((e: any) => !e.boss).map((e: any) => e.id) };
     });
+    expect(result.materialDrawCount).toBe(5); expect(result.materialTypes).toEqual(result.expectedMaterialTypes);
     expect(result.floating).toMatchObject({ airborne: true, hasOldCue: false, samePlace: true });
     expect(result.floating.vx).toBeLessThan(0); expect(result.floating.vy).toBeCloseTo(0);
     expect(result.materialKills["enemy.cluster_fodder"]).toEqual([]);

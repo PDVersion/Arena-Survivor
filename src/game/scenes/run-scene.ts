@@ -2556,7 +2556,8 @@ export class RunScene extends Phaser.Scene {
       const childReward = cleanReward * (f.totalShare - f.parentShare) / count;
       const toughness = 1 + (this.worldModifiers().enemyHealthMultiplier - 1) * this.runTheme.tuning.progression.toughnessRewardShare;
       for (let i = 0; i < count; i++) {
-        const child = this.enemyDefinitions.find((entry) => entry.id === pool[Math.min(pool.length - 1, Math.floor(this.effectRandom() * pool.length))])!;
+        const childId = pool[Math.min(pool.length - 1, Math.floor(this.effectRandom() * pool.length))]!;
+        const child = this.enemyDefinitions.find((entry) => entry.id === childId)!;
         const angle = i * Math.PI * 2 / count;
         this.enqueueSpawnRequest(child.id, archetypeIds.skill.fracture, childReward / child.xpReward / toughness,
           enemy.targetId, deathEventId, "fracture", { x: enemy.x + (spread ? Math.cos(angle) * spread : i === 0 ? -8 : 8), y: enemy.y + (spread ? Math.sin(angle) * spread : 0) }, false, "chase", 0);
@@ -3386,14 +3387,14 @@ export class RunScene extends Phaser.Scene {
   }
 
   /**
-   * Enemy pairs sharing effectively the same position.
+   * Grounded enemy pairs sharing effectively the same position.
    *
-   * The invariant separation exists to hold: nothing should stay perfectly
-   * stacked. Test-build only, and quadratic, so it is skipped in production.
+   * Airborne enemies intentionally overlap; only separation-eligible pairs
+   * belong to this diagnostic. Test-build only and skipped in production.
    */
   private countCoincidentPairs(): number {
     if (import.meta.env.MODE !== "test") return 0;
-    const live = [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated);
+    const live = [...this.enemies].filter((enemy) => enemy.active && !enemy.defeated && !enemy.airborne);
     let pairs = 0;
     for (let index = 0; index < live.length; index += 1) {
       for (let other = index + 1; other < live.length; other += 1) {

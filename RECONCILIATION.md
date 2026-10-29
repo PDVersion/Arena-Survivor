@@ -4613,3 +4613,31 @@ host-specific /private/tmp.21distinct focused cases cumulatively pass serially
 without retries, types/lint/whitespace pass, audit high gate passes (2existing
 moderate findings). No gameplay/tuning/art/save/frozen-pack changes. Full remote
 CI is pending and this scope does not close owner or external-device acceptance.
+
+## REC-143 — Sample choices before search; resolve presets through every level
+
+PR30 browser reproduction exposed a material-pool draw inside Array.find's
+predicate: every candidate consumed a new random choice, so an otherwise valid
+pool could yield no child and crash boss kills. Draw the child ID once, then
+look it up. Changing-RNG real-mini-boss regression asserts one draw per child
+and exact selected types, beyond old constant-zero fixtures. Difficulty presets
+also scaled only outer weapon fields; authored level/cleanup resolution then
+overrode damage/cadence with unscaled data. Scale nested damage/DOT/tick/cooldown
+values once in the resolved pack, retaining omitted inheritance and geometry.
+All5weapons×7levels×3presets verify resolved output without mutating source.
+Frozen packs have no such optional capabilities and require no content edits.
+
+A zero simulation delta no longer freezes Eco wall time. Aided UI fixtures reset
+the clock sample while keeping keyboard processing live; explicit ticks provide
+controlled active time. Actor-cap/lifecycle fixtures use260spaced sites to still
+pressure250actors under proactive merging, preserving exact1040money and cleanup.
+Separation coincidence diagnostics count only grounded eligible pairs; wrappers
+intentionally overlap. Contact/roster fixtures disable weapon kills before the
+first population sample. Shrine reward fixtures explicitly use critical clean
+hits to isolate parent payout; material-budget cases independently verify110%.
+
+744units, final24architecture/separation units, types/lint/build/34sprite sheets,
+production guard and cumulative41focused browser cases pass; matching-head full
+Actions pending. Superseded run40828495077 canceled with partial logs preserved
+externally; no full pass/failure totals inferred. No new tuning/art/save/knight
+changes, skip/retry/timeout increases or owner/device acceptance.

@@ -51,7 +51,7 @@ test("movement hint timeout counts active real play rather than paused time", as
 });
 
 test("all enemy roles are walk-through while valid contact gives one bounded shove", async ({ page }) => {
-  await page.goto("/?enemyRoster=all&spawnRadius=36&noXp&noHazards&debugBodies");
+  await page.goto("/?enemyRoster=all&spawnRadius=36&noXp&noHazards&noWeapon&debugBodies");
   const start = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().player?.x ?? 0);
   await page.keyboard.down("KeyD");
   await page.waitForTimeout(1_200);

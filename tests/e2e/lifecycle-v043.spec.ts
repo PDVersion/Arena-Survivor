@@ -50,7 +50,10 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} picku
         const baselineBodies = world.bodies.size;
         const baselineObjects = scene.children.length;
         const baselinePostUpdate = scene.events.listenerCount("postupdate");
-        for (let i = 0; i < 1040; i++) scene.dropExperience(100 + (i % 80 % 10) * 10, 100 + Math.floor(i % 80 / 10) * 10, 1, "ambient");
+        // Spread 260 unique sites beyond the authored merge radius, repeated
+        // four times. This still pressures the250-actor cap with proactive merging.
+        const spacing = (theme.economy?.mergeDistance ?? 0) + 10;
+        for (let i = 0; i < 1040; i++) scene.dropExperience(100 + (i % 260 % 20) * spacing, 100 + Math.floor(i % 260 / 20) * spacing, 1, "ambient");
         await framesUntil(() => world.pendingDestroy.size === 0);
         const overflow = {
           tracked: scene.pickups.size,
