@@ -79,3 +79,19 @@ whitespace and production guard pass (PR30_PRODUCTION_CHECK.json). Existing
 bundle advisory and2moderate audit findings retain prior status. Owned local
 servers/browsers cleaned. Matching-head full Actions still required after push;
 no overall owner/device/performance acceptance or merge/deployment inferred.
+
+## Hosted-renderer timing follow-up — 2026-10-29
+
+Completed run40830296454/c95d6f5 reports136passes/6existing opt-in skips/20failures
+and1flaky contact case. The runtime/fixture repair169c17f addresses18failures;
+the last two are the1.5s wall-window gait sample and monolithic sandbox30s test.
+Bounded follow-up owns sprites.spec.ts, testing-area-v045.spec.ts and
+phase-three.spec.ts plus these records. Use a controlled RAF clock with real
+physics/input/rendering to observe all4walk poses; split sandbox money/isolation,
+active-clock/lag and tree/mixed-combat into3independent cases, retaining assertions.
+Contact validation keeps its successful immunity/health snapshot atomically,
+rather than re-reading after the active-wall immunity window may expire.
+No increased test timeout/retries, new skips or gameplay changes.5focused cases
+pass serially/zero retries (28.6s total), types/lint/whitespace pass. Earlier
+744units/build/production evidence remains unchanged. Push and inspect final-head
+CI; full current-head browser/audit acceptance remains pending until it completes.

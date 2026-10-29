@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 const status = "#live-status";
-test("sandbox isolates its save, conserves magnet money, heals, pauses and applies real tool trees", async ({ page }, info) => {
+test("sandbox isolates its save, conserves magnet money and heals", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.addInitScript(() => localStorage.setItem("arena-save-sentinel", "untouched"));
   await page.goto("/testing-area.html");
@@ -23,6 +23,13 @@ test("sandbox isolates its save, conserves magnet money, heals, pauses and appli
   await expect(page.locator(status)).toHaveAttribute("data-money-on-ground", "0", { timeout: 10000 });
   await expect(page.locator(status)).toHaveAttribute("data-money", "22")
   await expect(page.locator(status)).toHaveAttribute("data-level", "11");
+  expect(await page.evaluate(() => localStorage.getItem("arena-survivor.profile"))).toBeNull();
+  expect(await page.evaluate(() => localStorage.getItem("arena-save-sentinel"))).toBe("untouched");
+  expect(errors).toEqual([]);
+});
+test("sandbox pauses its active clock and accounts for a blocked frame", async ({ page }) => {
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
   await page.locator("#pause").click();
   await expect(page.locator(status)).toHaveAttribute("data-status", "sandbox_paused");
   const pausedTime = Number(await page.locator(status).getAttribute("data-elapsed-ms"));
@@ -31,6 +38,13 @@ test("sandbox isolates its save, conserves magnet money, heals, pauses and appli
   const beforeLag = Number(await page.locator(status).getAttribute("data-elapsed-ms"));
   await page.evaluate(() => { const until = performance.now() + 650; while (performance.now() < until) { /* Simulate one blocked render frame. */ } });
   await expect.poll(async () => Number(await page.locator(status).getAttribute("data-elapsed-ms")) - beforeLag).toBeGreaterThan(600);
+});
+test("sandbox toggles real tool trees and runs the selected mixed loadout", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await page.locator("#pause").click();
+  await page.locator('[data-weapon="weapon.starter"]').uncheck();
   await page.locator('[data-weapon="weapon.secondary"]').check();
   await page.locator('[data-weapon="weapon.cleaning_bin"]').check();
   await page.locator('[data-weapon="weapon.orbiting_rake"]').check();
@@ -44,11 +58,11 @@ test("sandbox isolates its save, conserves magnet money, heals, pauses and appli
   await page.locator("#trees-close").click();
   await page.locator("#enemy").selectOption("enemy.slow_durable"); await page.locator("#enemy-count").fill("3"); await page.locator("#distance").fill("40"); await page.locator("#spawn").click();
   await expect(page.locator(status)).toHaveAttribute("data-enemies", "3");
+  await page.locator("#pause").click();
   await page.waitForTimeout(3500);
   await page.screenshot({ path: info.outputPath("eco-v045-mixed-tools.png") });
   await page.locator("#clear").click(); await expect(page.locator(status)).toHaveAttribute("data-enemies", "0");
   expect(await page.evaluate(() => localStorage.getItem("arena-survivor.profile"))).toBeNull();
-  expect(await page.evaluate(() => localStorage.getItem("arena-save-sentinel"))).toBe("untouched");
   expect(errors).toEqual([]);
 });
 test("Impact shop persists purchases and rejects overspending", async ({ page }) => {

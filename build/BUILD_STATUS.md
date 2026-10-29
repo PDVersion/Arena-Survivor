@@ -80,3 +80,7 @@ Latest repair checkpoint: boss material RNG and nested difficulty bonuses fixed;
 41distinct focused cases cumulatively pass serial/zero retries,744unit tests,
 types/lint/build/34sprite sheets and production guard pass. Matching-head Actions
 pending. Details: [PR30 repair](performance/PR30_CI_REPAIR.md).
+
+Timing follow-up: last2failures from completed c95d6f5 run and1flaky contact
+assertion corrected without timeout/retry increases or gameplay edits.5focused
+cases pass serially; final matching-head Actions pending.

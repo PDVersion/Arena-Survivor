@@ -42,3 +42,7 @@ Latest PR30 repair: actual boss material-selection crash and difficulty scaling
 fixed;41distinct focused cases cumulatively pass serial/zero retries,744units,
 types/lint/build/sprite checks and production guard pass. Remote final-head CI
 pending; see [repair report](build/performance/PR30_CI_REPAIR.md).
+
+Hosted-renderer timing follow-up: gait uses fixed RAF timestamps; sandbox checks
+split into3bounded cases; contact assertion retains one successful snapshot.
+5focused cases/types/lint pass. Final matching-head CI pending.

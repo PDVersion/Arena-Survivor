@@ -4641,3 +4641,16 @@ production guard and cumulative41focused browser cases pass; matching-head full
 Actions pending. Superseded run40828495077 canceled with partial logs preserved
 externally; no full pass/failure totals inferred. No new tuning/art/save/knight
 changes, skip/retry/timeout increases or owner/device acceptance.
+
+## REC-144 — Separate renderer throughput from functional timing assertions
+
+Run40830296454 exposed two remaining timing fixtures and a transient contact
+sample: a1.5s real-time gait loop can miss authored frames on a slow runner; a
+combined sandbox test can exhaust30s across unrelated interactions; a second
+immunity snapshot may arrive after expiry. Use fixed RAF timestamps for real
+physics/input/rendering animation coverage, split the sandbox into3bounded cases
+without dropping assertions, and retain the exact successful contact snapshot.
+5focused cases pass serially without retries; types/lint/whitespace pass. No
+timeout/retry increases, new skips or gameplay/performance/device claims. Full
+final-head Actions remains pending; earlier failed run's136passes/6skips/20fails/
+1flake are historical evidence, not repair-head results.

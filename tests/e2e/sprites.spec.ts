@@ -63,20 +63,22 @@ test("the player holds a walk pose with the authored right facing and mirrors le
 });
 
 test("regenerated player walks through four distinct step frames", async ({ page }, info) => {
-  await page.goto("/?noContact=1&noXp=1&noHazards=1");
-  await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("playing");
+  // Fixed RAF timestamps exercise real movement/rendering without sampling
+  // skipped frames from the hosted runner's variable rendering throughput.
+  await page.clock.install();
+  await page.goto("/?noContact=1&noXp=1&noHazards=1&noAmbient=1&noWeapon=1");
+  await expect.poll(async () => {
+    await page.clock.runFor(100);
+    return page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status);
+  }).toBe("playing");
   await page.keyboard.down("ArrowRight");
-  const frames = await page.evaluate(async () => {
-    const seen = new Set<number>();
-    const deadline = performance.now() + 1500;
-    while (performance.now() < deadline && seen.size < 4) {
-      const frame = window.__ARENA_TEST__?.getSnapshot().player?.spriteFrame;
-      if (typeof frame === "number" && frame < 4) seen.add(frame);
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-    }
-    return [...seen].sort();
-  });
+  const seen = new Set<number>();
+  for (let tick = 0; tick < 30 && seen.size < 4; tick++) {
+    await page.clock.runFor(50);
+    const frame = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().player?.spriteFrame);
+    if (typeof frame === "number" && frame < 4) seen.add(frame);
+  }
   await page.keyboard.up("ArrowRight");
-  expect(frames).toEqual([0,1,2,3]);
+  expect([...seen].sort()).toEqual([0, 1, 2, 3]);
   await page.screenshot({ path: info.outputPath("player-gait-live.png") });
 });
