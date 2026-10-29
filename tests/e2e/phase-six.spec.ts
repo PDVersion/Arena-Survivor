@@ -8,7 +8,7 @@ const toughnessReward = (healthMultiplier: number): number =>
   1 + (healthMultiplier - 1) * toughnessShare;
 
 async function waitForRun(page: Page, path: string): Promise<void> {
-  await page.goto(`${path}${path.includes("?") ? "&" : "?"}spawnRadius=320`);
+  await page.goto(path.includes("spawnRadius=") ? path : `${path}${path.includes("?") ? "&" : "?"}spawnRadius=320`);
   await expect
     .poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status))
     .toBe("playing");
@@ -20,7 +20,10 @@ async function choosePendingUpgrades(page: Page, deadlineMs: number): Promise<vo
     const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
     if (snapshot?.run?.status === "level_up") {
       const index = snapshot.progression!.choiceIds.findIndex((id) => !id.startsWith("upgrade.world_") && !id.startsWith("upgrade.accept_"));
-      await page.keyboard.press(String(index + 1));
+      const selected = snapshot.progression!.selectedUpgradeIds.length;
+      await page.keyboard.down(String(index + 1));
+      try { await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().progression?.selectedUpgradeIds.length ?? 0)).toBeGreaterThan(selected); }
+      finally { await page.keyboard.up(String(index + 1)); }
     }
     if ((snapshot?.shrine?.scheduled ?? 0) >= 100) return;
     await page.waitForTimeout(50);
@@ -49,7 +52,7 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
   // `shrineLayout=adjacent` restores the V0.3 layout: shrines now arrive across
   // the run at randomized positions, and this path's subject is what the Horde
   // shrine does once activated, not how the player finds it.
-  await waitForRun(page, "/?surgeDurationMs=1000&noAmbient=1&noContact&critChance=3&attackSpeedBonus=5&shrineLayout=adjacent&atTimeUp=complete");
+  await waitForRun(page, "/?surgeDurationMs=1000&spawnRadius=40&noAmbient=1&noContact&critChance=3&attackSpeedBonus=5&shrineLayout=adjacent&atTimeUp=complete");
   const ready = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
   expect(ready?.shrine).toMatchObject({
     id: "shrine.spawn_surge",
@@ -89,7 +92,10 @@ test("Horde shrine activates once, schedules 100 tagged enemies, and creates bon
     if ((snapshot?.shrine?.shrineXpDropped ?? 0) >= 1.5) break;
     if (snapshot?.run?.status === "level_up") {
       const index = snapshot.progression!.choiceIds.findIndex((id) => !id.startsWith("upgrade.world_") && !id.startsWith("upgrade.accept_"));
-      await page.keyboard.press(String(index + 1));
+      const selected = snapshot.progression!.selectedUpgradeIds.length;
+      await page.keyboard.down(String(index + 1));
+      try { await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().progression?.selectedUpgradeIds.length ?? 0)).toBeGreaterThan(selected); }
+      finally { await page.keyboard.up(String(index + 1)); }
     }
     if (snapshot?.run?.status === "dead") break;
     await page.waitForTimeout(50);

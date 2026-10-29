@@ -95,3 +95,16 @@ No increased test timeout/retries, new skips or gameplay changes.5focused cases
 pass serially/zero retries (28.6s total), types/lint/whitespace pass. Earlier
 744units/build/production evidence remains unchanged. Push and inspect final-head
 CI; full current-head browser/audit acceptance remains pending until it completes.
+
+## Observed intermittent input/reward follow-up — 2026-10-29
+
+Run40832103795/169c17f reports153passes/6existing opt-in skips/2timing failures
+(already addressed by b7e8e98) and2flaky paths: paused difficulty navigation lost a
+zero-duration Tab press; the surge reward fixture had no in-reach kills within
+its fixed wall window. Own difficulty-v043.spec.ts and phase-six.spec.ts plus
+repair records. Hold Tab/choice keys until their real game result is observed,
+then release in finally; place scripted surge enemies within reach instead of
+waiting on slow-runner travel. Keep real damage, provenance, exact rewards,
+100arrivals and restart assertions.2focused cases pass serial/zero retries (7.5s),
+types/lint/whitespace pass. No source/tuning/art/save changes, increased limits or
+new skips. Push final fixture follow-up; matching-head full CI remains pending.

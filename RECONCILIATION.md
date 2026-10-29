@@ -4654,3 +4654,14 @@ without dropping assertions, and retain the exact successful contact snapshot.
 timeout/retry increases, new skips or gameplay/performance/device claims. Full
 final-head Actions remains pending; earlier failed run's136passes/6skips/20fails/
 1flake are historical evidence, not repair-head results.
+
+## REC-145 — A game-consumed key is stronger evidence than a sent key event
+
+Hosted-renderer run40832103795 shows a zero-duration Tab press can start/end
+between game updates. Hold a test key until the actual tab/choice state changes,
+release in finally and retain the same assertion budget. Scripted shrine reward
+checks place enemies within tool reach rather than timing off-screen travel on
+a slow runner; real damage,100tagged arrivals and exact reward provenance remain
+asserted.2focused cases pass serial/zero retries, types/lint/whitespace pass.
+No input/gameplay changes, new skips or timeout/retry increases. Full repair-head
+CI pending; old153passes/6skips/2fails/2flakes are not final-head results.

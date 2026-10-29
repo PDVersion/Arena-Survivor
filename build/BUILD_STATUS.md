@@ -84,3 +84,7 @@ pending. Details: [PR30 repair](performance/PR30_CI_REPAIR.md).
 Timing follow-up: last2failures from completed c95d6f5 run and1flaky contact
 assertion corrected without timeout/retry increases or gameplay edits.5focused
 cases pass serially; final matching-head Actions pending.
+
+Observed flaky input/reward follow-up also verified:2focused cases pass with
+held-until-consumed game keys and in-reach scripted surge targets. No gameplay
+change or timeout/retry increase. Final matching-head Actions pending.

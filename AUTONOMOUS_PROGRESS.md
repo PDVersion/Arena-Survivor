@@ -46,3 +46,6 @@ pending; see [repair report](build/performance/PR30_CI_REPAIR.md).
 Hosted-renderer timing follow-up: gait uses fixed RAF timestamps; sandbox checks
 split into3bounded cases; contact assertion retains one successful snapshot.
 5focused cases/types/lint pass. Final matching-head CI pending.
+
+Final observed input/reward flakes repaired and2focused cases verified; current
+source remains unchanged. Final matching-head Actions pending.
