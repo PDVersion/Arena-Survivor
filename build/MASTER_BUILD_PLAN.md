@@ -7345,3 +7345,15 @@ Full browser regression runs in PR CI; obsolete fixtures remain a possible
 follow-up. No new local heavy browser campaign, stress/soak or external device
 checks claimed. Overall owner acceptance remains open. Normal push/PR publication
 selected; merge and deployment are not. See REC-140 and current status for limits.
+
+## PR30 CI repair checkpoint — 2026-10-29
+
+Failed run40825861165 on517f420 stopped at the exact-atlas unit test's5s limit:
+742other units passed and browser steps were not reached. Replaced generic deep
+Buffer comparisons with native byte equality, retaining every selected/accepted
+file comparison, every RGBA row, frame counts/dimensions and atlas bounds. No
+assets, runtime, timeouts, retries or frozen-theme files changed. Focused7sprite
+tests pass in556ms total; full743units/81files pass in1.78s locally. Types/lint/
+build/34sprite checks/whitespace pass; existing bundle advisory remains.
+Matching-head Actions must now reach and verify later steps; full CI repair is
+not yet complete. No heavy local browser campaign was run for this unit fix.

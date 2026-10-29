@@ -27,3 +27,17 @@ types, lint, build,34sprite sheets and whitespace. Existing bundle-size advisory
 remains. Full browser regression is delegated to PR CI; obsolete fixtures may
 need reconciliation. Stress/soak/external checks and overall owner acceptance
 remain open. No merge or deployment. Completed claim recorded in the master.
+
+## PR30 CI repair — claimed2026-10-29
+
+Owner requests diagnosing/fixing failed Actions and pushing the same PR. Initial
+run40825861165 on517f420 fails only sprite-pipeline exact-atlas comparison at the
+5s unit timeout (742other tests pass); subsequent steps were not reached.
+Bounded ownership: sprite verification assertions, failed eco/generic browser
+fixtures and read-only test telemetry only if later CI evidence requires it;
+status/progress/master/reconciliation and CI repair evidence. Preserve exact
+assertions; no timeout/retry increases, skips, tuning/art/save or frozen-pack
+changes. Use native byte equality for PNG buffers/rows instead of generic deep
+comparisons. Gates: focused sprites then fullunits/types/lint/build/sprite checks;
+necessary failed browser cases serially, full regression in Actions. Inspect
+matching-head CI and fix observed follow-up failures before closing repair.

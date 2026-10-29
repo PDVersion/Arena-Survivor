@@ -16,8 +16,8 @@ describe("sprite build output", () => {
     expect(Object.keys(metadata.frames)).toHaveLength(ecoSpriteRecipes.reduce((sum, recipe) => sum + recipe.frames, 0));
     for (const recipe of ecoSpriteRecipes) {
       const selected = inventory.find((row: { id: string }) => row.id === recipe.contentId);
-      expect(await readFile(recipe.output)).toEqual(await readFile(`build/sprites/review/style2/${selected.native}`));
-      expect(await readFile(recipe.acceptedOutput)).toEqual(await readFile(recipe.output));
+      expect((await readFile(recipe.output)).equals(await readFile(`build/sprites/review/style2/${selected.native}`)), recipe.contentId).toBe(true);
+      expect((await readFile(recipe.acceptedOutput)).equals(await readFile(recipe.output)), recipe.contentId).toBe(true);
       const sheet = await readSpritePng(recipe.output);
       for (let index = 0; index < recipe.frames; index++) {
         const frame = metadata.frames[`${recipe.textureKey}/${index}`].frame;
@@ -25,10 +25,11 @@ describe("sprite build output", () => {
         expect(frame.x + frame.w).toBeLessThanOrEqual(atlas.width);
         expect(frame.y + frame.h).toBeLessThanOrEqual(atlas.height);
         for (let y = 0; y < frame.h; y++) {
-          expect(atlas.data.subarray(((frame.y + y) * atlas.width + frame.x) * 4,
-            ((frame.y + y) * atlas.width + frame.x + frame.w) * 4))
-            .toEqual(sheet.data.subarray((y * sheet.width + index * frame.w) * 4,
-              (y * sheet.width + (index + 1) * frame.w) * 4));
+          const atlasRow = atlas.data.subarray(((frame.y + y) * atlas.width + frame.x) * 4,
+            ((frame.y + y) * atlas.width + frame.x + frame.w) * 4);
+          const sheetRow = sheet.data.subarray((y * sheet.width + index * frame.w) * 4,
+            (y * sheet.width + (index + 1) * frame.w) * 4);
+          expect(atlasRow.equals(sheetRow), `${recipe.contentId} frame ${index} row ${y}`).toBe(true);
         }
       }
     }

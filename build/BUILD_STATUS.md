@@ -52,3 +52,15 @@ Fresh quick gates:743unit tests/81files, types/lint/build,34sprite sheets and
 whitespace pass. Existing bundle-size advisory remains. Full browser regression
 runs in PR CI; historical fixtures may require reconciliation. Stress/soak and
 external waived checks remain unverified. No merge or deployment selected.
+
+## PR30 CI repair checkpoint — 2026-10-29
+
+Failed run40825861165 on517f420 stopped at the exact-atlas unit test's5s limit:
+742other units passed and browser steps were not reached. Replaced generic deep
+Buffer comparisons with native byte equality, retaining every selected/accepted
+file comparison, every RGBA row, frame counts/dimensions and atlas bounds. No
+assets, runtime, timeouts, retries or frozen-theme files changed. Focused7sprite
+tests pass in556ms total; full743units/81files pass in1.78s locally. Types/lint/
+build/34sprite checks/whitespace pass; existing bundle advisory remains.
+Matching-head Actions must now reach and verify later steps; full CI repair is
+not yet complete. No heavy local browser campaign was run for this unit fix.

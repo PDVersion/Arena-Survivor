@@ -4582,3 +4582,14 @@ Fresh gates:743units/81files, types/lint/build,34sprite checks and whitespace pa
 Existing bundle-size advisory remains. PR CI owns full browser regression;
 obsolete fixtures may require later reconciliation. Stress/soak/external checks
 remain unverified; owner acceptance is not inferred. No merge/deployment selected.
+
+## REC-141 — Exact binary assertions should use native byte equality
+
+PR30 run40825861165 timed out at5s while generic deep Buffer assertions compared
+all34style2 sheets and119atlas frames. Native Buffer.equals preserves exact
+length/byte equality and explicit content/frame/row diagnostics, avoiding object
+assertion overhead. Keep counts, bounds and selected/accepted source checks; do
+not raise timeouts, skip pixels or alter assets to hide slow verification.
+Focused7tests pass (556ms total) and full743units pass (1.78s); types/lint/build/
+34sprite checks pass. Later CI steps were not reached in the failed run and
+remain pending after the push; no gameplay or full-browser pass inferred.
