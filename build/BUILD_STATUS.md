@@ -88,3 +88,9 @@ cases pass serially; final matching-head Actions pending.
 Observed flaky input/reward follow-up also verified:2focused cases pass with
 held-until-consumed game keys and in-reach scripted surge targets. No gameplay
 change or timeout/retry increase. Final matching-head Actions pending.
+
+2026-10-30: fully completed7559741 CI reports156passes/2sandbox timeouts/1menu
+retry pass/6existing opt-in skips. Trace-backed fixture setup and consumed-Tab
+repair verified:3focused cases serial/zero retries (15.2s), types/lint pass.
+No gameplay or raised test limits. Push one batch; final matching-head Actions
+remains pending and must finish completely before any further repairs.

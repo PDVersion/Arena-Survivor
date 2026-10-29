@@ -49,3 +49,9 @@ split into3bounded cases; contact assertion retains one successful snapshot.
 
 Final observed input/reward flakes repaired and2focused cases verified; current
 source remains unchanged. Final matching-head Actions pending.
+
+2026-10-30: fully completed7559741 CI reports156passes/2sandbox timeouts/1menu
+retry pass/6existing opt-in skips. Trace-backed fixture setup and consumed-Tab
+repair verified:3focused cases serial/zero retries (15.2s), types/lint pass.
+No gameplay or raised test limits. Push one batch; final matching-head Actions
+remains pending and must finish completely before any further repairs.

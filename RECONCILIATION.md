@@ -4665,3 +4665,16 @@ a slow runner; real damage,100tagged arrivals and exact reward provenance remain
 asserted.2focused cases pass serial/zero retries, types/lint/whitespace pass.
 No input/gameplay changes, new skips or timeout/retry increases. Full repair-head
 CI pending; old153passes/6skips/2fails/2flakes are not final-head results.
+
+## REC-146 — Separate fixture preparation from UI actions under assertion
+
+Completed run40834008030 traces measured~3.2s checkbox and~2s pointer actions;
+two30s sandbox cases exhausted setup without observing incorrect gameplay.
+Prepare mixed fixtures through existing DOM change handlers, re-querying controls
+rebuilt by each event; retain native tree/root/spawn/pause/clear actions and all
+assertions. Explicitly distinguish fixture preparation from native checkbox
+pointer coverage. The independently observed menu Tab flake uses REC-145's
+held-until-consumed pattern.3focused cases pass serially/zero retries,15.2s;
+types/lint/whitespace pass. No runtime edits or raised limits/retries/new skips.
+Owner requires fully completed CI results before repairs; push one batch and
+wait for complete matching-head CI before any follow-up.

@@ -97,3 +97,37 @@ waiting on slow-runner travel. Keep real damage, provenance, exact rewards,
 100arrivals and restart assertions.2focused cases pass serial/zero retries (7.5s),
 types/lint/whitespace pass. No source/tuning/art/save changes, increased limits or
 new skips. Push final fixture follow-up; matching-head full CI remains pending.
+
+## Completed-run trace follow-up — claimed 2026-10-30
+
+Run40834008030/7559741 is fully completed:156passes,2sandbox timeouts,1menu
+retry pass,6existing opt-in skips. Saved traces measure native checkbox setup
+at~3.2s each and pointer clicks at~2s, exhausting the unchanged30s sandbox
+budget before assertions. Own only testing-area-v045.spec.ts, interface-work.spec.ts
+and repair/status/master/reconciliation records. Batch sandbox fixture checkbox
+and field setup through existing DOM change handlers; retain native tree/root,
+spawn/resume/clear actions and all gameplay/save assertions. Hold the confirmed
+flaky menu Tab until consumed. No runtime edits, timeout/retry increases, new
+skips or frozen theme changes. Gate:3affected cases serially/zero retries,
+types/lint/whitespace. Push once; wait for the entire new CI run before further
+repairs. Earlier remote runs are completed and will not be canceled.
+
+## Completed-run trace repair — 2026-10-30
+
+Fully completed run40834008030 (7559741):156passed,2failed sandbox cases,
+1menu retry pass,6existing opt-in skips. Downloaded browser-failures traces
+show~3.2s per native checkbox and~2s per pointer click;30s expired during
+fixture setup, not a failed gameplay assertion. Sandbox loadout/spawn setup
+now batches existing DOM change handlers, re-querying rebuilt checkbox nodes.
+Native upgrade/root clicks, spawn/resume/clear, exact actor count, bounded field,
+clock, screenshot, save isolation and error assertions remain. Menu Tab stays
+held until the observed tab changes, then releases in finally. This is fixture
+setup coverage; it does not claim native checkbox pointer coverage in these two
+cases. Other sandbox checkbox interactions remain unchanged. No runtime,
+art/tuning/save/frozen-pack edits, increased limits/retries or new skips.
+
+3affected cases pass serially/zero retries (15.2s); types/lint/whitespace pass.
+744unit and prior production evidence are unchanged historical checks; this
+test-only batch relies on the upcoming full Actions run for fresh full gates.
+Push once, then wait until that matching-head run fully completes before any
+further repair. No remote runs canceled or concurrent repair pushes.

@@ -1,5 +1,33 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 const status = "#live-status";
+// Fixture setup uses the real form handlers; tree/spawn/pause/clear interactions
+// under test remain native pointer actions. Re-query after each change because
+// the weapon form rebuilds its checkbox nodes.
+async function prepareMixedLoadout(page: Page, starter: boolean): Promise<void> {
+  await page.evaluate((starter) => {
+    for (const [id, checked] of [
+      ["weapon.starter", starter], ["weapon.secondary", true],
+      ["weapon.cleaning_bin", true], ["weapon.orbiting_rake", true],
+    ] as const) {
+      const input = document.querySelector<HTMLInputElement>(`[data-weapon="${id}"]`)!;
+      if (input.checked === checked) continue;
+      input.checked = checked;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }, starter);
+  for (const id of ["weapon.secondary", "weapon.cleaning_bin", "weapon.orbiting_rake"]) {
+    await expect(page.locator(`[data-weapon="${id}"]`)).toBeChecked();
+  }
+}
+async function prepareSpawn(page: Page, count: number, distance: number, enemy?: string): Promise<void> {
+  await page.evaluate(({ count, distance, enemy }) => {
+    for (const [id, value] of [["enemy-count", String(count)], ["distance", String(distance)], ...(enemy ? [["enemy", enemy]] : [])]) {
+      const input = document.getElementById(id) as HTMLInputElement | HTMLSelectElement;
+      input.value = value;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }, { count, distance, enemy });
+}
 test("sandbox isolates its save, conserves magnet money and heals", async ({ page }) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.addInitScript(() => localStorage.setItem("arena-save-sentinel", "untouched"));
@@ -44,10 +72,7 @@ test("sandbox toggles real tool trees and runs the selected mixed loadout", asyn
   await page.goto("/testing-area.html");
   await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
   await page.locator("#pause").click();
-  await page.locator('[data-weapon="weapon.starter"]').uncheck();
-  await page.locator('[data-weapon="weapon.secondary"]').check();
-  await page.locator('[data-weapon="weapon.cleaning_bin"]').check();
-  await page.locator('[data-weapon="weapon.orbiting_rake"]').check();
+  await prepareMixedLoadout(page, false);
   await page.locator("#trees-open").click();
   const path = page.locator('[data-tool="weapon.secondary"] [data-upgrade="upgrade.tool.aura_damage"]');
   await path.filter({ hasText: "Level 7" }).click();
@@ -56,7 +81,8 @@ test("sandbox toggles real tool trees and runs the selected mixed loadout", asyn
   await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].acquired')).toHaveCount(0);
   await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].available')).toHaveAttribute("data-level", "2");
   await page.locator("#trees-close").click();
-  await page.locator("#enemy").selectOption("enemy.slow_durable"); await page.locator("#enemy-count").fill("3"); await page.locator("#distance").fill("40"); await page.locator("#spawn").click();
+  await prepareSpawn(page, 3, 40, "enemy.slow_durable");
+  await page.locator("#spawn").click();
   await expect(page.locator(status)).toHaveAttribute("data-enemies", "3");
   await page.locator("#pause").click();
   await page.waitForTimeout(3500);
@@ -81,14 +107,14 @@ test("bounded mixed cleanup field runs at maximum seven-level tools", async ({ p
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/testing-area.html"); await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
   await page.locator("#pause").click();
-  for (const id of ["weapon.secondary", "weapon.cleaning_bin", "weapon.orbiting_rake"]) await page.locator(`[data-weapon="${id}"]`).check();
+  await prepareMixedLoadout(page, true);
   await page.locator("#trees-open").click();
   for (const id of ["upgrade.tool.grabber_level", "upgrade.tool.aura_damage", "upgrade.tool.bin_damage", "upgrade.tool.rake_damage"]) {
     await page.locator(`[data-upgrade="${id}"][data-level="7"]`).click();
   }
   await page.locator("#trees-close").click();
-  await page.locator("#distance").fill("200"); await page.locator("#enemy-count").fill("100"); await page.locator("#spawn").click();
-  await page.locator("#enemy-count").fill("50"); await page.locator("#spawn").click();
+  await prepareSpawn(page, 100, 200); await page.locator("#spawn").click();
+  await prepareSpawn(page, 50, 200); await page.locator("#spawn").click();
   await expect(page.locator(status)).toHaveAttribute("data-enemies", "150");
   await page.locator("#pause").click();
   await expect.poll(async () => Number(await page.locator(status).getAttribute("data-elapsed-ms"))).toBeGreaterThan(2000);

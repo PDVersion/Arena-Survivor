@@ -12,8 +12,12 @@ test("minimap opacity, scaled settings pointer, resize, pause and restart stay c
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().run?.status)).toBe("paused");
   expect(await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.minimapVisible)).toBe(false);
   for (let index = 0; index < 4; index += 1) {
-    await page.keyboard.press("Tab");
-    await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe(["upgrades", "world", "codex", "settings"][index]);
+    await page.keyboard.down("Tab");
+    try {
+      await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe(["upgrades", "world", "codex", "settings"][index]);
+    } finally {
+      await page.keyboard.up("Tab");
+    }
   }
   await page.setViewportSize({ width: 900, height: 600 });
   for (const opacity of [0.85, 0, 0.35, 0.6]) {
