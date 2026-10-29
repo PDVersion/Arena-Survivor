@@ -23,7 +23,8 @@ entries moved to [progress history](logs/PROGRESS_HISTORY_20261027.md).
 
 No selected feature phase remains after the current verified guide/document pass.
 Owner normal-play acceptance, one consolidated current-head regression/fixture
-reconciliation/performance/CI campaign and selected delivery remain open. Native
+reconciliation/performance/CI campaign remain open. Owner selected PR delivery
+into `main` on2026-10-29; merge/deployment remain unselected. Native
 Safari/missing branded browser-OS/older physical GPU checks retain the owner's
 waiver and remain unverified, never passed. Prior scoped guards do not imply
 current full CI. Use the [handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md).

@@ -53,8 +53,8 @@ and [education exploration](EDUCATION_PIVOT.md), with original product examples 
 [design history](logs/PRODUCT_DESIGN_HISTORY_20261027.md). E2 and E4 labels contain
 both shipped foundations and unbuilt additions; this table splits them explicitly.
 
-Pre-existing local `build/PROGRESSION_DESIGN_RESEARCH.md` and edits to its retired
-session prompt/REC-132 were read but preserved unstaged. Their source732080a
+Completed [progression research](PROGRESSION_DESIGN_RESEARCH.md), its retired
+session prompt and REC-132 are included in the2026-10-29 PR delivery. Their source732080a
 snapshot predates the current four slots/seven-level paths/sole Vacuum; its numeric
 candidate roster and three-passive-slot recommendation are proposals, not an
 approved current implementation plan. The report itself is not newly adopted by

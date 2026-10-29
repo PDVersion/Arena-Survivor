@@ -1,4 +1,4 @@
-# Build status — 2026-10-27
+# Build status — 2026-10-29
 
 Knights and Magic remains paused indefinitely under owner direction2026-10-22.
 Only an explicit owner reopening can change that; preserve its files/history.
@@ -9,7 +9,8 @@ Eco Guardian V0.4.5 is implemented locally on `codex/v0.4.5`, including the late
 material/boss/drop/rake corrections and Field Guide → Elites. No new gameplay
 feature, art generation or selected documentation task remains in the current
 scope. Overall V0.4 acceptance and delivery remain open; local completion is not
-merge/deployment or current remote-CI evidence.
+merge/deployment or current remote-CI evidence. Owner selected PR delivery into
+`main` on2026-10-29.
 
 Guide/document pass: 743unit tests/81files, types/lint/build and focused serial pause/title Elite-guide acceptance pass (zero retries). Prior gameplay/art checkpoint:740units/80files,
 34sprite checks, types/lint/build, scoped serial gameplay and production guard.
@@ -40,4 +41,14 @@ including parked history. Rake a2appearance accepted by owner.
 records and gates. Historical dates/status repetition moved to
 [progress history](logs/PROGRESS_HISTORY_20261027.md). Detailed raw reports stay
 at their original paths with historical-status notices. [Document audit](DOCS_AUDIT_20261027.md)
-records the disposition of every build Markdown file. No push/merge/deploy.
+records the disposition of every build Markdown file.
+
+## PR delivery checkpoint — 2026-10-29
+
+All completed branch implementation and the dated progression research are
+included for PR review. Research is a proposal based on732080a; its outdated
+slot/evolution/clock assumptions are flagged, not adopted as current design.
+Fresh quick gates:743unit tests/81files, types/lint/build,34sprite sheets and
+whitespace pass. Existing bundle-size advisory remains. Full browser regression
+runs in PR CI; historical fixtures may require reconciliation. Stress/soak and
+external waived checks remain unverified. No merge or deployment selected.

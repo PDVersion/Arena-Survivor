@@ -4388,6 +4388,44 @@ rarity weights, save schema/IDs, knight content or chat dispatch is selected her
 Full-app300-actor/stress/soak/current-headCI and waived external device evidence
 remain unverified; no publication or release acceptance follows.
 
+### REC-132 — Capped ranks need real exclusions and an explicit exhaustion policy
+
+- Status: Provisional
+- Date: 2026-10-26
+- Affects: future owner-selected Eco progression design/prototype only
+- Blocks: None
+
+Observation: source732080a registers20Eco offer identities:9uncapped player-stat
+entries and11finite definitions with35total pick ceilings. There are2automatic
+tool slots and no passive-slot constraint. Actual skill ranks differ from pick
+counts: current Unique2.5 multiplier rounds to3skill levels; reach quality never
+substitutes for the4actual picks needed by Vacuum evolution/capacity. Existing
+selection throws below3eligible identities, currently protected by unlimited
+stats. Merely assigning item names/caps would not create lasting exclusions.
+
+[Research/design report](build/PROGRESSION_DESIGN_RESEARCH.md) separates code facts,
+dated primary/community game evidence and proposed rules.30Eco baseline headless
+balance cases plus1explicit C3fixture pass; relevant Normal models yield15–29
+choices before5simulation minutes/10active wall minutes. This is no sampled-offer,
+quality, survival, boss, comprehension or retention model. Historical schema2
+per-upgrade total/bestInRun counters record selections, not item ranks/rolls or
+causal benefits; never reconstruct those histories or clamp old counters to new caps.
+
+Recommendation, **not approval**: test3capped passive slots with deterministic
+construction beside existing2tools, preserve readable4-pick evolution, then
+separately evaluate an explicitly selected post-boss Endless construction-complete
+stat outlet retaining excluded identities. Fewer-than3offers/empty pools, queued
+credits, quality semantics and save-ID compatibility must be resolved before any
+prototype gate. Report includes candidate roster/numbers,6conditional builds,
+A/B measures, strongest counterargument, bounded phase ownership/rollback and
+open owner decisions. All numbers/caps/new rules remain unselected proposals.
+
+Future guardrail: claims about named games distinguish weapons, passives, rarity,
+quality and post-cap systems; literal unlimited Megabonk levels are unverified.
+No runtime/tuning/art/save/knight edits or implementation claim follows. Revisit
+only when owner explicitly selects a later phase; current sprite acceptance and
+external waived/unverified checks retain their status.
+
 ## REC-133 — V0.4.5 economy, save and active clock
 
 Owner-selected money retains historical XP/stat IDs; denominations are presentation over exact bounded aggregate values. Special pickups never merge into money. Fortune scales rare drops; food heals20; Impact saves immediately, independently of run money. Schema3 accepts/migrates1/2 with empty shop balance. Shop purchases clamp levels and cannot overspend; bonuses apply on new runs. Active monotonic wall time replaces eco simulation-time timer (old pace0.5 was the source of slow timer); pause/focus transitions exclude inactive gaps. Frozen pack retains simulation clock. Phase1:729 units, typecheck/lint/build, single serial boot pass; mixed pickups/shop interaction reserved for phase3.
@@ -4529,3 +4567,18 @@ Existing build-size advisory remains. Full browser/stress/soak/device/current-he
 CI and fresh production guard deferred, not passed. Owned processes cleaned; no
 publication. Next owner confirmation chooses which unbuilt proposals to retain
 or prioritise; no selected implementation task remains in this turn's scope.
+
+## REC-140 — Completed-work PR delivery preserves proposal and acceptance boundaries
+
+Owner selected a PR into main on2026-10-29. Remote main is an ancestor of the
+completed branch (23commits before delivery documentation), with no existing PR.
+Completed local progression research/REC-132 and retired prompt are included as
+historical732080a proposals. A prominent report notice identifies obsolete two
+slots, Cyclone and half-speed assumptions; they do not supersede current four
+slots/seven-level paths/sole Vacuum/active clock or approve passive implementation.
+Delivery owns Git/PR metadata, status/handoff/master/reconciliation and those
+research docs only. No gameplay, art, save or frozen-pack changes in this phase.
+Fresh gates:743units/81files, types/lint/build,34sprite checks and whitespace pass.
+Existing bundle-size advisory remains. PR CI owns full browser regression;
+obsolete fixtures may require later reconciliation. Stress/soak/external checks
+remain unverified; owner acceptance is not inferred. No merge/deployment selected.
