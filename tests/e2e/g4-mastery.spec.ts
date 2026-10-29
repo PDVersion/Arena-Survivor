@@ -38,7 +38,9 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
           new Phaser.Game({ ...createGameConfig(root.id), type: Phaser.CANVAS, audio: { noAudio: true }, scene: [Load, Run] });
         });
         if (quality === "low") { scene!.applySetting("presentationQuality"); scene!.applySetting("reducedMotion"); }
-        const text = (container: { list: { text?: string; visible: boolean }[] } | undefined) => container?.list.filter((c) => c.visible && typeof c.text === "string").map((c) => c.text) ?? [];
+        type UiNode = { text?: string; visible: boolean; list?: UiNode[] };
+        const flatten = (nodes: UiNode[]): UiNode[] => nodes.flatMap((node) => [node, ...flatten(node.list ?? [])]);
+        const text = (container: { list: UiNode[] } | undefined) => flatten(container?.list ?? []).filter((c) => c.visible && typeof c.text === "string").map((c) => c.text);
         const guide = (section: string) => {
           scene!.pauseMenu.codexSection = section;
           scene!.pauseMenu.show(scene!.pauseMenuView(), () => {}, { tab: "codex" });
@@ -48,7 +50,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
         const capabilities = guide("capabilities");
         const firstEnemy = guide("enemies");
         const guideSnapshot = () => {
-          const body = scene!.pauseMenu.container?.list.find((c: { text?: string }) => c.text?.includes(theme.copy.mastery.gameValues));
+          const body = scene!.pauseMenu.scrollBody?.list.find((c: { text?: string }) => c.text?.includes(theme.copy.mastery.gameValues));
           return { texts: text(scene!.pauseMenu.container), page: scene!.pauseMenu.enemyPage, writes,
             bodyBottom: body ? body.y + body.height : 0, navigationTop: scene!.pauseMenu.enemyPageBounds[0]?.bounds.top ?? 0,
             listeners: scene!.input.keyboard.listenerCount("keydown-PAGE_DOWN"), scroll: window.scrollY };
@@ -81,7 +83,7 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
               const health = enemy.health;
               scene!.runState = { ...scene!.runState, player: { ...scene!.runState.player, stats: { ...scene!.runState.player.stats, critChance: 0 } } };
               const weapon = scene!.runTheme.weapons.find((w: { id: string }) => w.id === weaponId);
-              scene!.fireWeaponIfReady(weapon);
+              if (!weapon.cleanup) scene!.fireWeaponIfReady(weapon);
               if (weapon.deliveryKind === "projectile") scene!.handleProjectileEnemyOverlap([...scene!.projectiles][0], enemy);
               scene!.processCausalEvents();
               scene!.commitEnemyDamage(enemy, 99999, "direct", undefined, { weapon, directBase: 99999, criticalBonus: 0, piercingMomentum: 0 });
@@ -92,8 +94,14 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const quality of [
             if (quality === "low") {
               scene!.revealAllShrines(); scene!.activateShrine(scene!.shrineActors.find((s: { definition: { id: string } }) => s.definition.id === "shrine.greed"));
               acquire("upgrade.accept_frenzy"); acquire("upgrade.equip_secondary"); hits.push(attack("weapon.secondary"));
-              for (let i = 0; i < 4; i++) acquire("upgrade.secondary_range");
-              acquire("upgrade.evolve_secondary"); hits.push(attack("weapon.secondary_evolved"));
+              if (theme.economy) {
+                for (let i = 0; i < 6; i++) acquire("upgrade.tool.aura_damage");
+                const equip = theme.upgrades.find((u: { effects: { kind: string; weaponId?: string }[] }) => u.effects.some((e) => e.kind === "weapon.equip" && e.weaponId === "weapon.cleaning_bin"));
+                acquire(equip.id); hits.push(attack("weapon.cleaning_bin"));
+              } else {
+                for (let i = 0; i < 4; i++) acquire("upgrade.secondary_range");
+                acquire("upgrade.evolve_secondary"); hits.push(attack("weapon.secondary_evolved"));
+              }
               scene!.runState = { ...scene!.runState, status: "complete", mode: "clearing", finalBossDefeated: true, elapsedMs: scene!.runState.durationMs + 1000 };
             } else {
               const endless = themeKey === "knight-magic";

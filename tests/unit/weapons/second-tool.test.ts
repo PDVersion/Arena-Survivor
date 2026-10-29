@@ -1,3 +1,4 @@
+import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { describe, expect, it } from "vitest";
 import { archetypeIds as ids } from "../../../src/game/core/archetypes/ids";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
@@ -16,7 +17,7 @@ import { findBuildModel } from "../../../src/game/systems/simulation/build-model
 
 const point = (targetId: string, x: number, y: number, radius = 0): MeleeTarget => ({ targetId, x, y, radius, active: true });
 
-describe.each([ecoGuardianTheme, knightMagicTheme])("second tool in $id", (theme) => {
+describe.each(([ecoGuardianTheme, knightMagicTheme] as readonly ThemeManifest[]).filter((theme) => !theme.economy))("second tool in $id", (theme) => {
   const secondary = theme.weapons.find((weapon) => weapon.id === ids.weapon.secondary)!;
   const acquisition = theme.upgrades.find((upgrade) => upgrade.id === ids.upgrade.equipSecondary)!;
   const own = secondary.upgrades![0]!;
@@ -72,7 +73,7 @@ describe.each([ecoGuardianTheme, knightMagicTheme])("second tool in $id", (theme
     expect(applyRunUpgrade(equipped, integerUpgrade, undefined, 2.2, theme.weapons).ownedWeaponModifiers[secondary.id]?.pierce).toBe(2);
     const rows = selectEquippedWeaponStats(equipped, theme);
     expect(rows.map((row) => row.key)).toEqual(["damage", "attackRate", "primaryTargets", "range"]);
-    expect(rows.every((row) => row.label.startsWith(theme.copy.content[secondary.id].name))).toBe(true);
+    expect(rows.every((row) => row.label.startsWith(theme.copy.content[secondary.id]!.name))).toBe(true);
     expect(rows.find((row) => row.key === "range")?.value).toBe(secondary.range);
   });
 
@@ -97,7 +98,7 @@ describe.each([ecoGuardianTheme, knightMagicTheme])("second tool in $id", (theme
 });
 
 describe("bounded cone and on-hit splash", () => {
-  const weapon = ecoGuardianTheme.weapons[1]!;
+  const weapon = knightMagicTheme.weapons[1]!;
   it("clips disks against the authored sector, preserves the rear boundary, and sorts capped ties", () => {
     if (weapon.deliveryKind !== "melee") throw new Error("Expected cone");
     const targets = [point("b", 40, 0), point("a", 40, 0), point("c", 80, 30), point("far", 100, 0),

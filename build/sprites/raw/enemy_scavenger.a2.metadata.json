@@ -1,0 +1,54 @@
+{
+  "generator": "built-in image_gen",
+  "attempt": 2,
+  "prompt": "enemy_scavenger.a2.prompt.txt",
+  "promptSha256": "35f969425818c51d7061b59fa8da14b20fabaff08d24c5402221dbdc48bfeddb",
+  "rawSha256": "600b1eb41a9c75b6433e771fe632c1c9beca505d52d5d13d7e39f4fd4693953d",
+  "normalizedSha256": "373a5fab121d744402636a36fccb114693f31e918b2569bfc85698097a1b1939",
+  "review": "Accepted after normalized visual inspection: readable silhouette and material, transparent margins, deterministic component cleanup and palette snapping only.",
+  "checks": [],
+  "recipe": {
+    "contentId": "enemy.scavenger",
+    "source": "build/sprites/raw/enemy_scavenger.a2.png",
+    "output": "build/sprites/review/style2/enemy_scavenger.a2.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}

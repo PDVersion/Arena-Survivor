@@ -1,0 +1,54 @@
+{
+  "generator": "built-in image_gen",
+  "attempt": 1,
+  "prompt": "pickup_money.a1.prompt.txt",
+  "promptSha256": "6ce1b97c76e22cfe95417582dc3e84fce2c9cfe7ceed7c0c58129736dce6a60f",
+  "rawSha256": "03c04bde1e9a6f8eecd032b6f4ba8e907b7bb2a307e84e4f01a39e1a8240f4da",
+  "normalizedSha256": "0046be38d84f1115837c92c4555668033ce636f4808daf371959037e040eb7e0",
+  "review": "Accepted after normalized visual inspection: readable silhouette and material, transparent margins, deterministic component cleanup and palette snapping only.",
+  "checks": [],
+  "recipe": {
+    "contentId": "pickup.experience",
+    "source": "build/sprites/raw/pickup_money.a1.png",
+    "output": "build/sprites/review/style2/pickup_money.a1.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}

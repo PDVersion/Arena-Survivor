@@ -18,7 +18,7 @@ describe("durable profile", () => {
   });
   it("migrates the historical schema deterministically", () => {
     const old = { schemaVersion: 1, activeThemeId: theme.id, contentSchemaVersion: 1, selectedCharacterId: "character.starter", unlockedCharacterIds: ["character.starter"] };
-    expect(migrateProfile(old)).toEqual(migrateProfile(old)); expect(migrateProfile(old).profile.schemaVersion).toBe(2);
+    expect(migrateProfile(old)).toEqual(migrateProfile(old)); expect(migrateProfile(old).profile.schemaVersion).toBe(3);
   });
   it.each([NaN, Infinity, -1, 1e16])("rejects invalid statistics %s", (value) => {
     expect(() => validateProfile({ ...fresh(), bestDurationMs: value })).toThrow();

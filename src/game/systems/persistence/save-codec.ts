@@ -74,7 +74,7 @@ export async function decodeProfile(text: string): Promise<DecodedProfile> {
     parsed = JSON.parse(new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(bytes));
   } catch { return fail("payload must contain valid UTF-8 JSON"); }
   const sourceSchemaVersion = parsed && typeof parsed === "object" ? (parsed as { schemaVersion?: unknown }).schemaVersion : undefined;
-  if (sourceSchemaVersion !== 1 && sourceSchemaVersion !== PROFILE_SCHEMA_VERSION) fail("unsupported profile schema version");
+  if (sourceSchemaVersion !== 1 && sourceSchemaVersion !== 2 && sourceSchemaVersion !== PROFILE_SCHEMA_VERSION) fail("unsupported profile schema version");
   const { profile, warnings } = migrateProfile(parsed);
   return Object.freeze({ profile, warnings: Object.freeze([...warnings]), sourceSchemaVersion });
 }

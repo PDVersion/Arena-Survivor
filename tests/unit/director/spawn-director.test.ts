@@ -67,27 +67,27 @@ describe("spawn cadence", () => {
 
 describe("role composition", () => {
   it("gates roles behind their unlock threshold", () => {
-    expect(Object.keys(shares(0))).toEqual([archetypeIds.enemy.fastFragile]);
+    expect(Object.keys(shares(0))).toEqual([archetypeIds.enemy.clusterFodder]);
     expect(Object.keys(shares(0.099))).toHaveLength(1);
     expect(Object.keys(shares(0.1))).toHaveLength(2);
-    expect(Object.keys(shares(0.2))).toHaveLength(2);
-    expect(Object.keys(shares(0.4))).toHaveLength(4);
-    expect(Object.keys(shares(0.45))).toHaveLength(5);
+    expect(Object.keys(shares(0.2))).toHaveLength(3);
+    expect(Object.keys(shares(0.4))).toHaveLength(5);
+    expect(Object.keys(shares(0.45))).toHaveLength(6);
   });
 
   it("produces the documented five-minute shape from the curves", () => {
-    expect(shares(0)).toEqual({ [archetypeIds.enemy.fastFragile]: 100 });
+    expect(shares(0)).toEqual({ [archetypeIds.enemy.clusterFodder]: 100 });
     expect(shares(0.2)).toMatchObject({
       [archetypeIds.enemy.swarmBasic]: 12,
-      [archetypeIds.enemy.fastFragile]: 88,
+      [archetypeIds.enemy.clusterFodder]: 88,
     });
     expect(shares(1)).toMatchObject({
       [archetypeIds.enemy.swarmBasic]: 41,
-      [archetypeIds.enemy.fastFragile]: 28,
-      [archetypeIds.enemy.slowDurable]: 11,
+      [archetypeIds.enemy.clusterFodder]: 28,
+      [archetypeIds.enemy.slowDurable]: 10,
       [archetypeIds.enemy.deathSpawner]: 12,
       [archetypeIds.enemy.rangedAttacker]: 1,
-      [archetypeIds.enemy.clusterFodder]: 2,
+      [archetypeIds.enemy.fastFragile]: 2,
       [archetypeIds.enemy.gustDrifter]: 3,
       [archetypeIds.enemy.committedCharger]: 2,
     });
@@ -156,7 +156,7 @@ describe("elite escalation", () => {
 describe("milestone waves", () => {
   it("fires once when progress crosses a role unlock", () => {
     expect(crossedUnlocks(tuning, 0.09, 0.11)).toEqual([]);
-    expect(crossedUnlocks(tuning, 0.21, 0.3).map((r) => r.enemyId)).toEqual([archetypeIds.enemy.clusterFodder]);
+    expect(crossedUnlocks(tuning, 0.21, 0.3).map((r) => r.enemyId)).toEqual([archetypeIds.enemy.fastFragile]);
     expect(crossedUnlocks(tuning, 0.43, 0.53).map((role) => role.enemyId)).toEqual([
       archetypeIds.enemy.slowDurable,
       archetypeIds.enemy.deathSpawner,

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { selectEliteCodex } from "../systems/codex/describe-shrine";
 import type { CapabilityProgress } from "../systems/mastery/run-review";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { StatLine, WorldLine } from "../systems/upgrades/describe-upgrade";
@@ -21,7 +22,7 @@ export type PauseTab = (typeof pauseTabs)[number];
  * upgrade pool, and the tab strip is already tight at five tabs, so the split
  * lives inside the tab rather than adding more of them.
  */
-export const codexSections = ["shrines", "enemies", "equipment", "capabilities", "session"] as const;
+export const codexSections = ["shrines", "enemies", "elites", "equipment", "capabilities", "session"] as const;
 export type CodexSection = (typeof codexSections)[number];
 
 export interface PauseMenuView {
@@ -53,13 +54,40 @@ export class PauseMenuUi {
   private tab: PauseTab = "stats";
   private codexSection: CodexSection = "shrines";
   private enemyPage = 0;
+  private scrollBody?: Phaser.GameObjects.Container;
+  private scrollMask?: Phaser.Display.Masks.GeometryMask;
+  private scrollGraphics?: Phaser.GameObjects.Graphics;
+  private scrollArea?: Phaser.Geom.Rectangle;
+  private scrollBarBounds?: Phaser.Geom.Rectangle;
+  private scrollThumb?: Phaser.GameObjects.Rectangle;
+  private scrollOffset = 0;
+  private maxScroll = 0;
+  private scrollKey = "";
+  private readonly scrollHome = (event: KeyboardEvent) => this.handleScrollEnd(event, false);
+  private readonly scrollEnd = (event: KeyboardEvent) => this.handleScrollEnd(event, true);
+  private handleScrollEnd(event: KeyboardEvent, end: boolean): void {
+    if (!this.isOpen || !this.maxScroll) return;
+    event.preventDefault();
+    this.setScroll(end ? this.maxScroll : 0);
+  }
+  private readonly handleWheel = (pointer: Phaser.Input.Pointer, _objects: unknown[], _dx: number, dy: number): void => {
+    const point = uiPointer(this.scene, pointer);
+    if (!this.isOpen || !this.maxScroll || !this.scrollArea?.contains(point.x, point.y)) return;
+    pointer.event?.preventDefault();
+    this.setScroll(this.scrollOffset + dy / UI_SCALE);
+  };
   private enemyPageBounds: { direction: 1 | -1; bounds: Phaser.Geom.Rectangle }[] = [];
   private readonly previousEnemy = (event: KeyboardEvent) => this.handleEnemyPage(event, -1);
   private readonly nextEnemy = (event: KeyboardEvent) => this.handleEnemyPage(event, 1);
   private handleEnemyPage(event: KeyboardEvent, direction: 1 | -1): void {
-    if (!this.isOpen || this.tab !== "codex" || this.codexSection !== "enemies") return;
-    event.preventDefault();
-    this.cycleEnemyPage(direction);
+    if (!this.isOpen) return;
+    if (this.tab === "codex" && this.codexSection === "enemies") {
+      event.preventDefault();
+      this.cycleEnemyPage(direction);
+    } else if (this.maxScroll && this.scrollArea) {
+      event.preventDefault();
+      this.setScroll(this.scrollOffset + direction * this.scrollArea.height * 0.85);
+    }
   }
   cycleEnemyPage(direction: 1 | -1): void {
     if (!this.isOpen || this.tab !== "codex" || this.codexSection !== "enemies") return;
@@ -109,12 +137,17 @@ export class PauseMenuUi {
     return this.codexSection;
   }
 
+  private get visibleCodexSections(): readonly CodexSection[] {
+    return codexSections.filter((section) => section !== "elites" || Boolean(this.theme.copy.eliteGuide));
+  }
+
   /** Move within the Field Guide. Ignored on every other tab. */
   cycleCodexSection(direction: 1 | -1): void {
     if (this.tab !== "codex") return;
-    const index = codexSections.indexOf(this.codexSection);
+    const sections = this.visibleCodexSections;
+    const index = sections.indexOf(this.codexSection);
     this.codexSection =
-      codexSections[(index + direction + codexSections.length) % codexSections.length]!;
+      sections[(index + direction + sections.length) % sections.length]!;
     if (this.view) this.render();
   }
 
@@ -224,16 +257,16 @@ export class PauseMenuUi {
     };
 
     if (this.tab === "stats") {
-      children.push(...this.renderRows(view.stats, left, bodyTop, panelWidth, rowStyle));
+      children.push(...this.scrollContent(this.renderRows(view.stats, left, bodyTop, panelWidth, rowStyle), new Phaser.Geom.Rectangle(left + 24, bodyTop, panelWidth - 48, bodyHeight)));
     } else if (this.tab === "world") {
-      children.push(...this.renderRows(view.world, left, bodyTop, panelWidth, rowStyle));
+      children.push(...this.scrollContent(this.renderRows(view.world, left, bodyTop, panelWidth, rowStyle), new Phaser.Geom.Rectangle(left + 24, bodyTop, panelWidth - 48, bodyHeight)));
     } else if (this.tab === "codex") {
       children.push(
         ...this.renderCodexTab(view, left, bodyTop, panelWidth, bodyHeight, rowStyle),
       );
     } else if (this.tab === "upgrades") {
       const text = view.upgrades.length > 0 ? view.upgrades.join("\n") : "—";
-      children.push(addUiText(this.scene, left + 32, bodyTop, text, rowStyle));
+      children.push(...this.scrollContent([addUiText(this.scene, left + 32, bodyTop, text, { ...rowStyle, wordWrap: { width: panelWidth - 80 } })], new Phaser.Geom.Rectangle(left + 24, bodyTop, panelWidth - 48, bodyHeight)));
     } else {
       const labels: Readonly<Record<SettingKey, string>> = {
         detailedUpgradeCards: "Detailed upgrade cards",
@@ -290,7 +323,7 @@ export class PauseMenuUi {
     }
 
     children.push(
-      addUiText(this.scene, width / 2, top + panelHeight - 26, this.menuContext ? "Tab / arrows to switch · Escape to go back" : "Tab / arrows to switch · Escape to resume", {
+      addUiText(this.scene, width / 2, top + panelHeight - 26, this.maxScroll > 0 ? "Wheel / PgUp / PgDn to scroll · Tab: tabs · Escape: back" : this.menuContext ? "Tab / arrows to switch · Escape to go back" : "Tab / arrows to switch · Escape to resume", {
           color: palette.text,
           fontFamily: "Georgia, serif",
           fontSize: "15px",
@@ -300,6 +333,9 @@ export class PauseMenuUi {
     );
 
     this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
+    this.scene.input.on(Phaser.Input.Events.POINTER_WHEEL, this.handleWheel);
+    this.scene.input.keyboard?.on("keydown-HOME", this.scrollHome);
+    this.scene.input.keyboard?.on("keydown-END", this.scrollEnd);
     this.scene.input.keyboard?.on("keydown-Q", this.handleQuitKey);
     this.scene.input.keyboard?.on("keydown-PAGE_UP", this.previousEnemy);
     this.scene.input.keyboard?.on("keydown-PAGE_DOWN", this.nextEnemy);
@@ -346,7 +382,8 @@ export class PauseMenuUi {
 
     this.sectionBounds = [];
     let chipLeft = left + 32;
-    for (const section of codexSections) {
+    let chipTop = top;
+    for (const section of this.visibleCodexSections) {
       const active = section === this.codexSection;
       const label = addUiText(this.scene, 0, 0, this.codexSectionLabel(section).toUpperCase(), {
         ...style,
@@ -356,8 +393,11 @@ export class PauseMenuUi {
       });
       // Chips are sized to their own label, because the labels are theme copy.
       const chipWidth = label.width + 24;
+      if (chipLeft + chipWidth > left + panelWidth - 32 && chipLeft > left + 32) {
+        chipLeft = left + 32; chipTop += 36;
+      }
       const centreX = chipLeft + chipWidth / 2;
-      const centreY = top + 11;
+      const centreY = chipTop + 11;
       label.setPosition(centreX, centreY).setOrigin(0.5);
       children.push(
         this.scene.add
@@ -372,10 +412,11 @@ export class PauseMenuUi {
       chipLeft += chipWidth + 8;
     }
 
-    const sectionTop = top + 42;
-    const sectionHeight = bodyHeight - 42;
+    const sectionTop = chipTop + 42;
+    const sectionHeight = bodyHeight - (sectionTop - top);
+    const content: Phaser.GameObjects.GameObject[] = [];
     if (this.codexSection === "shrines") {
-      children.push(...this.renderCodex(view.codex, left, sectionTop, panelWidth, style));
+      content.push(...this.renderCodex(view.codex, left, sectionTop, panelWidth, style));
     } else if (this.codexSection === "enemies") {
       const entries = view.codexEnemies;
       this.enemyPage = Math.min(this.enemyPage, Math.max(0, entries.length - 1));
@@ -385,7 +426,7 @@ export class PauseMenuUi {
         const display = (value: number) => String(Number(value.toFixed(2)));
         const relations = entry.relations.map((relation) => `${relation.kind === "fractures_into" ? copy.fractures : copy.releases}: ${relation.name} ×${relation.count}`);
         const text = `${entry.name}\n\n${entry.description}\n\n${copy.gameValues}\n${copy.health}: ${display(entry.health)} · ${copy.speed}: ${display(entry.moveSpeed)} · ${copy.harm}: ${display(entry.contactDamage)}\n${relations.join("\n")}`;
-        children.push(addUiText(this.scene, left + 32, sectionTop, text,
+        content.push(addUiText(this.scene, left + 32, sectionTop, text,
           { ...style, fontSize: "16px", wordWrap: { width: panelWidth - 64, useAdvancedWrap: true } }));
         const y = sectionTop + sectionHeight - 28;
         for (const direction of [-1, 1] as const) {
@@ -398,27 +439,41 @@ export class PauseMenuUi {
         children.push(addUiText(this.scene, left + panelWidth / 2, y, `${this.enemyPage + 1} / ${entries.length} · PgUp / PgDn`,
           { ...style, fontSize: "13px" }).setOrigin(.5));
       }
+    } else if (this.codexSection === "elites" && this.theme.copy.eliteGuide) {
+      const guide = this.theme.copy.eliteGuide;
+      let y = sectionTop;
+      const add = (text: string, bold = false) => {
+        const label = addUiText(this.scene, left + 32, y, text, { ...style, fontSize: "16px", fontStyle: bold ? "bold" : "normal", wordWrap: { width: panelWidth - 64, useAdvancedWrap: true } });
+        content.push(label); y += label.height + 12;
+      };
+      add(guide.title, true); add(guide.introduction);
+      for (const elite of selectEliteCodex(this.theme)) {
+        add(`${elite.marker} · ${elite.name}`, true);
+        add(elite.description);
+        add(elite.effects.map((effect) => `${effect.label} ${effect.display}`).join(" · "));
+      }
     } else if (this.codexSection === "capabilities") {
       let y = sectionTop;
       for (const capability of view.capabilities) {
         const text = addUiText(this.scene, left + 32, y, `${capability.name} · ${capability.display}\n${capability.description}`,
           { ...style, fontSize: "17px", wordWrap: { width: panelWidth - 64, useAdvancedWrap: true } });
-        children.push(text); y += text.height + 24;
+        content.push(text); y += text.height + 24;
       }
     } else if (this.codexSection === "equipment") {
-      children.push(
+      content.push(
         ...this.renderCodexUpgrades(
           view.codexUpgrades,
           left,
           sectionTop,
           panelWidth,
-          sectionHeight,
           style,
         ),
       );
     } else {
-      children.push(...this.renderRows(view.codexSession, left, sectionTop, panelWidth, style));
+      content.push(...this.renderRows(view.codexSession, left, sectionTop, panelWidth, style));
     }
+    children.push(...this.scrollContent(content, new Phaser.Geom.Rectangle(left + 24, sectionTop,
+      panelWidth - 48, Math.max(1, sectionHeight - (this.codexSection === "enemies" ? 54 : 0)))));
     return children;
   }
 
@@ -426,6 +481,7 @@ export class PauseMenuUi {
     const codex = this.theme.copy.codex;
     if (section === "shrines") return codex.shrines;
     if (section === "enemies") return this.theme.copy.mastery.enemies;
+    if (section === "elites") return this.theme.copy.eliteGuide?.tab ?? "";
     if (section === "capabilities") return this.theme.copy.mastery.capabilities;
     if (section === "equipment") return codex.upgrades;
     return codex.session;
@@ -444,7 +500,6 @@ export class PauseMenuUi {
     left: number,
     top: number,
     panelWidth: number,
-    availableHeight: number,
     style: Phaser.Types.GameObjects.Text.TextStyle,
   ): Phaser.GameObjects.GameObject[] {
     const palette = this.theme.tokens.palette;
@@ -462,26 +517,22 @@ export class PauseMenuUi {
         fontStyle: "bold",
       }));
       const groupEntries = entries.filter((entry) => entry.track === group.track);
-      const pitch = Math.min(48, Math.max(27, (availableHeight - 26) / Math.max(1, groupEntries.length)));
-      groupEntries.forEach((entry, index) => {
-        const y = top + 25 + index * pitch;
+      let y = top + 25;
+      groupEntries.forEach((entry) => {
+        const definition = this.theme.upgrades.find((upgrade) => upgrade.id === entry.id);
+        const acquisition = definition?.effects.some((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
         const cap = entry.maxPerRun === null
           ? "∞"
-          : String(entry.track === "weapon" ? entry.maxPerRun + 1 : entry.maxPerRun);
-        children.push(
-          addUiText(this.scene, group.x, y, `${entry.name}  ·  ${cap}`, {
-            ...style,
-            color: entry.sessionTotal > 0 ? palette.accent : palette.text,
-            fontSize: "14px",
-            fontStyle: "bold",
-            wordWrap: { width: columnWidth },
-          }),
-          addUiText(this.scene, group.x, y + 17, entry.description, {
-            ...style,
-            fontSize: "11px",
-            wordWrap: { width: columnWidth },
-          }).setAlpha(0.68),
-        );
+          : String(entry.track === "weapon" && !acquisition ? entry.maxPerRun + 1 : entry.maxPerRun);
+        const name = addUiText(this.scene, group.x, y, `${entry.name}  ·  ${cap}`, {
+          ...style, color: entry.sessionTotal > 0 ? palette.accent : palette.text,
+          fontSize: "14px", fontStyle: "bold", wordWrap: { width: columnWidth },
+        });
+        const description = addUiText(this.scene, group.x, y + name.height + 2, entry.description, {
+          ...style, fontSize: "12px", wordWrap: { width: columnWidth },
+        }).setAlpha(0.8);
+        children.push(name, description);
+        y = description.y + description.height + 14;
       });
     }
     return children;
@@ -533,6 +584,43 @@ export class PauseMenuUi {
     return children;
   }
 
+  private scrollContent(items: Phaser.GameObjects.GameObject[], area: Phaser.Geom.Rectangle): Phaser.GameObjects.GameObject[] {
+    const key = `${this.tab}/${this.codexSection}/${this.enemyPage}`;
+    if (key !== this.scrollKey) { this.scrollOffset = 0; this.scrollKey = key; }
+    this.scrollArea = area;
+    const bottom = Math.max(area.top, ...items.map((item) => {
+      const object = item as Phaser.GameObjects.Text;
+      return object.y + object.height;
+    }));
+    this.maxScroll = Math.max(0, bottom - area.bottom + 8);
+    this.scrollBody = this.scene.add.container(0, 0, items);
+    this.scrollGraphics = this.scene.make.graphics({ x: 0, y: 0 });
+    const zoom = this.scene.cameras.main.zoom || 1, scale = UI_SCALE / zoom;
+    const cx = this.scene.scale.width / 2, cy = this.scene.scale.height / 2;
+    this.scrollGraphics.fillStyle(0xffffff).fillRect(area.x, area.y, area.width, area.height)
+      .setPosition(cx * (1 - scale), cy * (1 - scale)).setScale(scale).setScrollFactor(0);
+    this.scrollMask = this.scrollGraphics.createGeometryMask();
+    this.scrollBody.setMask(this.scrollMask);
+    const children: Phaser.GameObjects.GameObject[] = [this.scrollBody];
+    if (this.maxScroll > 0) {
+      const colour = Phaser.Display.Color.HexStringToColor(this.theme.tokens.palette.accent).color;
+      this.scrollBarBounds = new Phaser.Geom.Rectangle(area.right - 6, area.y, 6, area.height);
+      const track = this.scene.add.rectangle(area.right - 3, area.y, 4, area.height, colour, 0.2).setOrigin(0.5, 0);
+      this.scrollThumb = this.scene.add.rectangle(area.right - 3, area.y, 6,
+        Math.max(24, area.height * area.height / (area.height + this.maxScroll)), colour, 0.9).setOrigin(0.5, 0);
+      children.push(track, this.scrollThumb);
+    }
+    this.setScroll(this.scrollOffset);
+    return children;
+  }
+
+  private setScroll(offset: number): void {
+    this.scrollOffset = Phaser.Math.Clamp(offset, 0, this.maxScroll);
+    this.scrollBody?.setY(-this.scrollOffset);
+    if (this.scrollThumb && this.scrollArea) this.scrollThumb.y = this.scrollArea.y +
+      (this.scrollArea.height - this.scrollThumb.height) * this.scrollOffset / Math.max(1, this.maxScroll);
+  }
+
   private tabLabel(tab: PauseTab): string {
     if (tab === "stats") return "STATS";
     if (tab === "upgrades") return this.theme.copy.vocabulary.upgradesTaken.toUpperCase();
@@ -552,6 +640,16 @@ export class PauseMenuUi {
   }
 
   private destroyContainer(): void {
+    this.scene.input.off(Phaser.Input.Events.POINTER_WHEEL, this.handleWheel);
+    this.scene.input.keyboard?.off("keydown-HOME", this.scrollHome);
+    this.scene.input.keyboard?.off("keydown-END", this.scrollEnd);
+    this.scrollBody = undefined;
+    this.scrollThumb = undefined;
+    this.scrollArea = undefined;
+    this.scrollBarBounds = undefined;
+    this.maxScroll = 0;
+    this.scrollMask?.destroy(); this.scrollMask = undefined;
+    this.scrollGraphics?.destroy(); this.scrollGraphics = undefined;
     this.scene.input.off(Phaser.Input.Events.POINTER_DOWN, this.handlePointerDown, this);
     this.scene.input.keyboard?.off("keydown-Q", this.handleQuitKey);
     this.scene.input.keyboard?.off("keydown-PAGE_UP", this.previousEnemy);
@@ -562,6 +660,11 @@ export class PauseMenuUi {
 
   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
     const point = uiPointer(this.scene, pointer);
+    if (this.scrollBarBounds?.contains(point.x, point.y) && this.scrollArea && this.scrollThumb) {
+      const travel = this.scrollArea.height - this.scrollThumb.height;
+      this.setScroll((point.y - this.scrollArea.y - this.scrollThumb.height / 2) / Math.max(1, travel) * this.maxScroll);
+      return;
+    }
     if (this.quitBounds?.contains(point.x, point.y)) { this.onQuit?.(); return; }
     if (this.manageSaveBounds?.contains(point.x, point.y)) { this.onManageSave?.(); return; }
     const tab = this.tabBounds.find((entry) => entry.bounds.contains(point.x, point.y));

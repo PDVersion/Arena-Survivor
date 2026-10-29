@@ -38,8 +38,10 @@ export function validateProfile(input: unknown): ProfileState {
   safeTree(input);
   if (new TextEncoder().encode(JSON.stringify(input)).length > PROFILE_LIMITS.textBytes) fail("too large");
   const p = object(input);
-  keys(p, ["schemaVersion", "gameVersion", "activeThemeId", "contentSchemaVersion", "selectedCharacterId", "unlockedCharacterIds", "unlockedWeaponIds", "unlockedUpgradeIds", "settings", "statistics", "completedRuns", "deaths", "bestDurationMs", "createdAt", "updatedAt"]);
-  if (p.schemaVersion !== 2) fail("unsupported schema version");
+  keys(p, ["economy", "schemaVersion", "gameVersion", "activeThemeId", "contentSchemaVersion", "selectedCharacterId", "unlockedCharacterIds", "unlockedWeaponIds", "unlockedUpgradeIds", "settings", "statistics", "completedRuns", "deaths", "bestDurationMs", "createdAt", "updatedAt"]);
+  if (p.schemaVersion !== 3) fail("unsupported schema version");
+  const economy = object(p.economy); keys(economy, ["impact", "upgrades"]); number(economy.impact, true);
+  for (const [key, level] of Object.entries(object(economy.upgrades))) { id(key); number(level, true); if ((level as number) > 100) fail("invalid shop level"); }
   const settings = object(p.settings);
   // Additive schema2 preference: historical saves omit it and hydrate OFF.
   const requiredSettings = { ...settings }; delete requiredSettings.showAttackRadius;
@@ -56,7 +58,7 @@ export function validateProfile(input: unknown): ProfileState {
   if (!characters.includes(selected)) fail("selected character is locked");
   if (number(p.completedRuns, true) + number(p.deaths, true) !== statistics.runsPlayed) fail("run totals disagree");
   if ((statistics.bestKills as number) > (statistics.totalKills as number) || (statistics.bestDamage as number) > (statistics.totalDamage as number)) fail("best exceeds total");
-  const result = { ...p, schemaVersion: 2, gameVersion: id(p.gameVersion), activeThemeId: id(p.activeThemeId), contentSchemaVersion: number(p.contentSchemaVersion, true), selectedCharacterId: selected,
+  const result = { ...p, schemaVersion: 3, gameVersion: id(p.gameVersion), activeThemeId: id(p.activeThemeId), contentSchemaVersion: number(p.contentSchemaVersion, true), selectedCharacterId: selected,
     unlockedCharacterIds: characters, unlockedWeaponIds: ids(p.unlockedWeaponIds), unlockedUpgradeIds: ids(p.unlockedUpgradeIds), settings: createSettings(settings), statistics: statistics as unknown as SessionStatistics,
     bestDurationMs: number(p.bestDurationMs), createdAt: timestamp(p.createdAt), updatedAt: timestamp(p.updatedAt) } as ProfileState;
   const copy = JSON.parse(JSON.stringify(result)) as ProfileState;
@@ -65,6 +67,7 @@ export function validateProfile(input: unknown): ProfileState {
 }
 export function migrateProfile(input: unknown): { profile: ProfileState; warnings: readonly string[] } {
   const p = object(input); safeTree(p);
+  if (p.schemaVersion === 2) return { profile: validateProfile({ ...p, schemaVersion: 3, economy: { impact: 0, upgrades: {} } }), warnings: ["Migrated schema 2; Impact shop starts empty."] };
   if (p.schemaVersion !== 1) return { profile: validateProfile(p), warnings: [] };
   keys(p, ["schemaVersion", "activeThemeId", "contentSchemaVersion", "selectedCharacterId", "unlockedCharacterIds"]);
   const base = createInitialProfile({ activeThemeId: id(p.activeThemeId), contentSchemaVersion: number(p.contentSchemaVersion, true), starterCharacterId: "character.starter" });

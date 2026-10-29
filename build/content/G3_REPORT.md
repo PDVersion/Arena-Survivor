@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # G3 — encounter rhythm and informed optional sites
 
 Local gate accepted2026-10-22. Branch `codex/readable-gameplay-g3` from verified

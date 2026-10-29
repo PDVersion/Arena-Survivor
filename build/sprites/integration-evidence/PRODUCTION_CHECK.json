@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-26T02:26:33.535Z",
+  "browserVersion": "151.0.7922.34",
+  "bundlesChecked": [
+    "combat-DP5YJCqn.js",
+    "game-BYKDDhDV.js",
+    "index-CXa8REMR.js",
+    "sprites-Dt-Ty36i.js",
+    "start-game-BGYjVRgS.js"
+  ],
+  "diagnosticMarkersAbsent": true,
+  "testInterfaceAbsent": true,
+  "productionBootPlayPause": true,
+  "spriteBrowserLoads": true,
+  "startingStatsVerified": true,
+  "architectureNavigation": true,
+  "errors": []
+}

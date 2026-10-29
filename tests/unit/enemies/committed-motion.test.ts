@@ -45,6 +45,7 @@ for (const theme of [ecoGuardianTheme, knightMagicTheme]) {
 for (const theme of [ecoGuardianTheme, knightMagicTheme]) it(`${theme.id} direct pass and oblique gust make different routes`, () => {
   const can = theme.enemies.find((e) => e.id === "enemy.committed_charger")!;
   const wrapper = theme.enemies.find((e) => e.id === "enemy.gust_drifter")!;
+  if (!("committedMotion" in wrapper)) return; // Airborne eco wrappers now pursue directly.
   const position = { x: 140, y: 0 }, target = { x: 0, y: 0 };
   const roll = advanceCommittedMotion(createMotionState(), can.committedMotion, 20, position, target);
   const gust = advanceCommittedMotion(createMotionState(), wrapper.committedMotion, 20, position, target);

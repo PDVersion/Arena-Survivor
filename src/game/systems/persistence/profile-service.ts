@@ -1,3 +1,4 @@
+import { purchaseImpact, type ShopItem } from "../economy/economy";
 import type { ThemeManifest, UpgradeDefinition } from "../../core/archetypes/contracts";
 import { createInitialProfile, type ProfileState } from "../../state/profile-state";
 import { getSessionSettings, hydrateSessionSettings, subscribeSettings } from "../../state/settings-state";
@@ -200,4 +201,20 @@ export function profileCompatibilityWarnings(candidate: ProfileState, theme: The
   if (unique.length) warnings.push(`${copy.warnUnavailable} (${unique.length}): ${unique.slice(0, 8).join(", ")}${unique.length > 8 ? "…" : ""}`);
   if (!theme.characters.some((entry) => entry.id === candidate.selectedCharacterId)) warnings.push(`${copy.warnCharacterFallback}: ${candidate.selectedCharacterId}`);
   return Object.freeze(warnings);
+}
+
+export function creditImpact(amount: number): void {
+  if (!Number.isSafeInteger(amount) || amount < 0) throw new Error("Invalid Impact amount");
+  const p = getProfile(); save({ ...p, economy: { ...p.economy, impact: Math.min(PROFILE_LIMITS.number, p.economy.impact + amount) }, updatedAt: new Date().toISOString() });
+}
+export function buyImpactUpgrade(id: string): boolean {
+  const item: ShopItem | undefined = currentTheme.economy?.shop.find((entry) => entry.id === id);
+  if (!item) return false;
+  const p = getProfile(), next = purchaseImpact(p.economy, item);
+  if (next === p.economy) return false;
+  save({ ...p, economy: next, updatedAt: new Date().toISOString() }); return true;
+}
+export function setSandboxImpact(amount: number): void {
+  if (!Number.isSafeInteger(amount) || amount < 0 || amount > PROFILE_LIMITS.number) throw new Error("Invalid Impact amount");
+  const p = getProfile(); save({ ...p, economy: { ...p.economy, impact: amount } });
 }

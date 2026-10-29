@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # Takeaway Cup — scoped live draft verification /2026-10-23
 
 Owner selects one new eco ranged enemy, enemy sheet, generated art and live

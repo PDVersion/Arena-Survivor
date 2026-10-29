@@ -1,3 +1,4 @@
+import type { ArenaTestSnapshot } from "../../src/test-support/telemetry-bridge";
 import { expect, test, type Page } from "@playwright/test";
 
 async function waitForCombat(page: Page): Promise<void> {
@@ -52,7 +53,13 @@ test("contact damage is visible, throttled, and can cause death", async ({ page 
       timeout: 35_000,
     })
     .toBeGreaterThan(0);
-  const firstHit = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  // Keep the successful snapshot: a second read can arrive after the active
+  // wall-clock immunity window has expired on a slow renderer.
+  let firstHit: ArenaTestSnapshot | undefined;
+  await expect.poll(async () => {
+    firstHit = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+    return Boolean((firstHit?.combat?.contactHits ?? 0) > 0 && firstHit?.player?.invulnerable && firstHit.player.health < 100);
+  }).toBe(true);
   expect(firstHit?.player?.health).toBeLessThan(100);
   expect(firstHit?.player?.invulnerable).toBe(true);
 

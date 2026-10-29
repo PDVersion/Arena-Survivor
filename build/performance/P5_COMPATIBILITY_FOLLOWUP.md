@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # P5 / Session12 — branded Edge releases and Safari access
 
 Owner requests finishing remaining P5 work and beginning P6 on2026-10-19. Current/previous-major desktop support policy remains selected; physical device acceptance is not waived. Owner confirms no older device is available.

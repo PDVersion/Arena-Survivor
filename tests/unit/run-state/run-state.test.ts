@@ -140,7 +140,7 @@ describe("run state", () => {
     });
 
     expect(profile).toMatchObject({
-      schemaVersion: 2,
+      schemaVersion: 3,
       activeThemeId: "knight_magic",
       contentSchemaVersion: 1,
       selectedCharacterId: characterId,

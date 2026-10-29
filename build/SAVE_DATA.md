@@ -1,8 +1,8 @@
-# Portable Save Data Plan
+# Portable Save Data Contract — current schema3
 
-Arena Survivor will keep local browser progress while also allowing the complete persistent save to be exported as encoded text and restored by importing a text file or pasting the save code. This is a portability and player-control feature, not encryption or anti-cheat.
+Arena Survivor keeps local browser progress while also allowing the complete persistent save to be exported as encoded text and restored by importing a text file or pasting the save code. This is a portability and player-control feature, not encryption or anti-cheat.
 
-V0.4.3 C6 implements browser-local profiles, settings, terminal-only lifetime records and theme-owned unlocks. C7 implements the portable format and title-screen Settings → Manage Save flow below. Current schema2 includes every implemented persistent field; future currencies, achievements, suspended runs and additional unlock categories remain unimplemented. They require a later versioned schema rather than silently accepted extra fields.
+V0.4.3 C6 implements browser-local profiles, settings, terminal-only lifetime records and theme-owned unlocks. C7 implements the portable format and title-screen Settings → Manage Save flow below. Current schema3 includes every implemented persistent field, including saved Impact and capped shop purchases. Material-resource currencies, achievements, suspended runs and additional unlock categories remain unimplemented. They require a later versioned schema rather than silently accepted extra fields.
 
 ## Player experience
 
@@ -56,7 +56,7 @@ ARENA-SURVIVOR-SAVE:1
 - The envelope is limited to350KiB before decoding and the decoded profile to256KiB UTF-8. Schema validation caps depth12, each collection512entries, stable IDs128characters and nonnegative finite numeric totals at1e15 (integer counters). Lifetime aggregates saturate there without altering actual run damage or XP.
 - Malformed Base64URL/padding bits, invalid UTF-8/BOM/JSON, checksum mismatch, future envelope/schema, unsafe keys, invalid settings/references and duplicate stable-ID lists are rejected. JSON object duplicate keys follow standard JSON.parse last-value semantics; the resulting object still undergoes strict validation.
 
-## Planned state boundary
+## Implemented state boundary
 
 ```text
 Gameplay systems
@@ -92,7 +92,7 @@ Import is untrusted input even though the game is single-player.
 - Prevent prototype-pollution keys and excessive nesting.
 - Maintain a recoverable last-known-good backup and provide a reset-to-new-profile option.
 
-## Verification required when implemented
+## Verification contract
 
 Unit tests:
 
@@ -123,78 +123,39 @@ The service validates and freezes a candidate before preview, then rejects stale
 
 Confirmation writes a validated backup before one atomic current-key replacement, then hydrates memory/settings/statistics and publishes the installed profile. localStorage has no multi-key transaction: a failed current write may have refreshed the recoverable backup, but current progress remains unchanged. Storage denial/quota errors do not install a memory-only replacement; export of existing memory progress remains available.
 
-Explicit recovery of corrupt current storage first preserves those bytes under `arena-survivor.profile.quarantine`. An existing valid backup is retained. If no usable backup exists, the validated memory snapshot becomes the backup before installation. No corrupt bytes are promoted to the good backup. Unknown well-formed IDs survive import/export and preview warnings; unavailable character selections fall back only at runtime. Schema1 identity migrates purely to schema2 with deterministic defaults and a migration warning.
-
-## Q1 difficulty setting seam
-
-Session settings now include the stable `difficulty` value `beginner`, `normal`
-or `experienced`, defaulting to `normal`. Active run state snapshots this ID at
-creation; changing the session selection affects the next run. No storage adapter
-or migration is introduced here. Future profile/import validation must allow
-only those IDs and supply `normal` for older settings without the field, while
-retaining the ordinary backup/confirmation requirements above.
-
-## V0.4.3 C6 implementation checkpoint /2026-10-20
-
-Browser-local schema2 now retains six settings, terminal-only lifetime statistics,
-completed/death counts, longest run and stable identity/unlock IDs. Both themes
-unlock the existing secondary tool after one finished run and bloodlust after25
-finished-run kills, affecting the next run only. These are the planned mechanical
-content unlocks, distinct from exploratory educational cosmetic feats. No permanent
-stat bonus, active-run suspension, sprite or new factual content is added.
-Corrupt storage is preserved; denied/quota storage falls back to memory with visible
-warnings. Schema1 migration is deterministic. C7 portable export/import/preview/
-explicit backup recovery remains next; use the same validated profile model.
-
-## G2A compatibility note — 2026-10-22
-
-New neutral enemy ID `enemy.cluster_fodder` adds content only. No existing ID,
-schema2 field, profile adapter, unlock or discovery record is changed. Current
-portable unknown-ID preservation remains; no migration is required for this
-addition. G2A reruns affected profile/codec/replacement units as part of its278
-unit gate. This does not imply implementation of saved discoveries or new fields.
-
-## G2B compatibility — 2026-10-22
-
-`enemy.gust_drifter` is an additive content ID with actor-local transient motion.
-No saved ID remap, schema/field/migration/profile/unlock/discovery change. Existing
-unknown-ID portable round trips still pass in the affected persistence suite.
-
-## G2C compatibility / complete roster — 2026-10-22
-
-`enemy.committed_charger` is additive content, with fresh actor-local transient
-motion; no field/schema/profile/migration/import/export/unlock/discovery change.
-Existing IDs and unknown-ID round trips retain their meanings. Final686unit suite
-includes current persistence compatibility; no saved discovery system is implied.
-
-## G4 compatibility — 2026-10-22
-
-`RunStatistics.damageByWeapon` is transient run-local actual direct/splash damage.
-Session/profile folding still selects existing aggregate fields explicitly; no
-per-tool map enters schema2, exports, import previews or backups. No stable ID,
-unlock rule, setting, adapter, migration or discovery field changes. Results use
-the already-folded current profile for advice, and redraw/tab/resize/guide reads
-never fold/grant/write. Reset clears the map. Existing persistence/portable-save/
-replacement/unknown-ID units pass; browser fixtures demonstrate one terminal fold,
-read-only redraws, exact memory-adapter reload and restart. No portable save UI
-changed, so a new import/export browser campaign was not needed.
+Explicit recovery of corrupt current storage first preserves those bytes under `arena-survivor.profile.quarantine`. An existing valid backup is retained. If no usable backup exists, the validated memory snapshot becomes the backup before installation. No corrupt bytes are promoted to the good backup. Unknown well-formed IDs survive import/export and preview warnings; unavailable character selections fall back only at runtime. Schema1 identity migrates through the historical schema2 shape into current schema3, with deterministic defaults and migration warnings.
 
 
-## Additive attack-guide preference — 2026-10-23
 
-Schema2 settings now permit optional boolean showAttackRadius. Absent historical
-schema2 values hydrate false through createSettings; schema1 migration inherits
-that default. Present nonboolean values reject before hydration/storage replacement.
-New profiles/settings writes/export include the boolean; the current canonical
-codec round-trips it. Other unknown settings still reject and all prior required
-settings remain required. No schema bump, adapter or stable-ID change. Earlier
-strict binaries may reject exports containing the new setting; downgrade import
-compatibility is not promised. Quitting to menu does not call finished-run folding
-or grant finish-based unlocks; existing profile/settings remain authoritative.
+## Current schema and ownership — 2026-10-27
 
-## Optional ranged content —2026-10-23
+Schema3 adds `economy = { impact, upgrades }`. Impact is a nonnegative bounded
+integer; shop levels use stable IDs and caps, preserving unknown saved IDs without
+applying them. Schema2 migrates with an empty economy; schema1 migrates through
+existing defaults. Codec, preview, backup and import use the same validated model.
+Impact collection saves immediately; purchased bonuses apply to new runs. Money
+is transient run leveling and retains historical XP statistic IDs. Testing area
+uses a separate memory adapter and cannot edit the normal save.
 
-`enemy.ranged_attacker` is an additive eco enemy ID with transient actor/shot state.
-No persistent field, schema2 adapter/migration, unlock, discovery or import/export
-change. Existing unknown-ID preservation remains; current full persistence units
-pass. Frozen knight content does not acquire the new optional role.
+Historical `weapon.orbiting_rake` now displays Orbiting Shovels; new
+`weapon.rake_beam` is Rake Sweep. Removed active upgrade/evolution IDs remain in
+saved history. Selected run picks are not suspended/persisted builds. Current
+elite guide changes no saved data. Cloud sync, accounts, active-run resume and
+achievement/discovery schemas are unbuilt, separate proposals.
+
+Older C6/C7 and settings/role compatibility checkpoints moved to the
+[master log](MASTER_BUILD_PLAN.md#v0-4-5); their schema2 wording is historical.
+
+<!-- Historical heading anchors retained for existing links. -->
+<a id="portable-save-data-plan"></a>
+<a id="planned-state-boundary"></a>
+<a id="verification-required-when-implemented"></a>
+<a id="q1-difficulty-setting-seam"></a>
+<a id="v043-c6-implementation-checkpoint-2026-10-20"></a>
+<a id="g2a-compatibility-note--2026-10-22"></a>
+<a id="g2b-compatibility--2026-10-22"></a>
+<a id="g2c-compatibility--complete-roster--2026-10-22"></a>
+<a id="g4-compatibility--2026-10-22"></a>
+<a id="additive-attack-guide-preference--2026-10-23"></a>
+<a id="optional-ranged-content-2026-10-23"></a>
+<a id="owner-selected-money-and-cleanup-expansion-2026-10-27"></a>

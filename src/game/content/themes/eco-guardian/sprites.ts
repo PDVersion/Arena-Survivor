@@ -1,80 +1,501 @@
 import type { ThemeSprites } from "../../../core/archetypes/contracts";
-import { archetypeIds } from "../../../core/archetypes/ids";
 
-/**
- * Sprite sheets for this pack.
- *
- * Its own file rather than an entry in `tokens.ts` on purpose: `tokens.ts` is
- * edited whenever content needs a colour, and a sprite roster is edited on
- * every single sheet. Separating them gives the sprite work sole ownership of
- * one file and removes what would otherwise be the busiest merge conflict in
- * V0.4 — see `build/BUILD_PLAN_V0.4.md` §2.
- *
- * Entries are optional: every actor without one falls back to its primitive.
- */
+/** Full owner-selected style2 roster. All measurements are presentation only. */
 export const sprites = {
-  [archetypeIds.enemy.rangedAttacker]: {
-    key: "eco_guardian.enemy.ranged_attacker", path: "sprites/eco-guardian/enemy_ranged_attacker.png",
-    frameWidth: 64, frameHeight: 64, frames: 7, authoredFacing: "right",
-    states: { idle: 0, move: 1, hit: 2, death: 3 },
-    attackFrames: { prepare: 4, release: 5, recover: 6 },
-    // Measured paper-base anchors; raw poses keep their shared grid transform.
-    frameAnchors: [38, 31, 35, 31, 31, 26, 27].map((x) => ({ x, y: 32 })),
+  "enemy.swarm_basic": {
+    "key": "eco_guardian.enemy.swarm_basic",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
   },
-  [archetypeIds.enemy.swarmBasic]: {
-    key: "eco_guardian.enemy.swarm_basic",
-    path: "sprites/eco-guardian/atlas.png",
-    frameWidth: 32,
-    frameHeight: 32,
-    frames: 4,
-    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  "enemy.fast_fragile": {
+    "key": "eco_guardian.enemy.fast_fragile",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
   },
-  [archetypeIds.enemy.fastFragile]: {
-    key: "eco_guardian.enemy.fast_fragile",
-    path: "sprites/eco-guardian/atlas.png",
-    frameWidth: 24,
-    frameHeight: 24,
-    frames: 4,
-    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  "enemy.slow_durable": {
+    "key": "eco_guardian.enemy.slow_durable",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
   },
-  [archetypeIds.enemy.slowDurable]: {
-    key: "eco_guardian.enemy.slow_durable",
-    path: "sprites/eco-guardian/atlas.png",
-    frameWidth: 48,
-    frameHeight: 48,
-    frames: 4,
-    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  "enemy.death_spawner": {
+    "key": "eco_guardian.enemy.death_spawner",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
   },
-  [archetypeIds.enemy.deathSpawner]: {
-    key: "eco_guardian.enemy.death_spawner",
-    path: "sprites/eco-guardian/atlas.png",
-    frameWidth: 48,
-    frameHeight: 48,
-    frames: 4,
-    states: { idle: 0, move: 1, hit: 2, death: 3 },
+  "character.starter": {
+    "key": "eco_guardian.character.starter",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "frames": 8,
+    "states": {
+      "idle": 4,
+      "move": 0,
+      "hit": 5,
+      "death": 7
+    },
+    "authoredFacing": "right",
+    "stateFacing": {
+      "hit": "left"
+    },
+    "walkAnimation": {
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "distancePerFrame": 20
+    },
+    "frameAnchors": [
+      {
+        "x": 54.5,
+        "y": 48
+      },
+      {
+        "x": 52,
+        "y": 48
+      },
+      {
+        "x": 54,
+        "y": 48
+      },
+      {
+        "x": 52,
+        "y": 48
+      },
+      {
+        "x": 46,
+        "y": 48
+      },
+      {
+        "x": 49.5,
+        "y": 48
+      },
+      {
+        "x": 49.5,
+        "y": 48
+      },
+      {
+        "x": 48,
+        "y": 48
+      }
+    ]
   },
-  // Accepted broken-glass pose, reused until the dedicated fragment art pass.
-  [archetypeIds.enemy.stationaryFragment]: {
-    key: "eco_guardian.enemy.stationary_fragment",
-    atlasFrameKey: "eco_guardian.enemy.slow_durable",
-    path: "sprites/eco-guardian/atlas.png",
-    frameWidth: 48, frameHeight: 48, frames: 4,
-    states: { idle: 3, move: 3, hit: 3, death: 3 },
+  "enemy.stationary_fragment": {
+    "key": "eco_guardian.enemy.stationary_fragment",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
   },
-  [archetypeIds.character.starter]: {
-    // Centre of the hood's upper silhouette, measured in accepted 48px frames.
-    // y compensates the one-pixel top shift; idle/walk/hit share a fixed anchor.
-    frameAnchors: [{ x: 25.5, y: 24 }, { x: 26, y: 25 }, { x: 25, y: 24 },
-      { x: 26.5, y: 24 }, { x: 25, y: 24 }, { x: 28, y: 24 },
-      { x: 28, y: 25 }, { x: 24, y: 25 }],
-    authoredFacing: "right",
-    stateFacing: { hit: "left" },
-    walkAnimation: { frames: [0, 1, 2, 1], distancePerFrame: 20 },
-    key: "eco_guardian.character.starter",
-    path: "sprites/eco-guardian/atlas.png",
-    frameWidth: 48,
-    frameHeight: 48,
-    frames: 8,
-    states: { idle: 4, move: 0, hit: 5, death: 7 },
+  "enemy.cluster_fodder": {
+    "key": "eco_guardian.enemy.cluster_fodder",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 48,
+    "frameHeight": 48,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
   },
+  "enemy.gust_drifter": {
+    "key": "eco_guardian.enemy.gust_drifter",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
+  },
+  "enemy.committed_charger": {
+    "key": "eco_guardian.enemy.committed_charger",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
+  },
+  "enemy.mini_boss": {
+    "key": "eco_guardian.enemy.mini_boss",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
+  },
+  "enemy.final_boss": {
+    "key": "eco_guardian.enemy.final_boss",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 192,
+    "frameHeight": 192,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
+  },
+  // Existing vacuum tool art is reused for HUD identification; aura delivery stays procedural.
+  "weapon.secondary": {
+    "key": "eco_guardian.weapon.secondary",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 64,
+    "frames": 3,
+    "states": { "idle": 0, "move": 0, "hit": 1, "death": 2 }
+  },
+  "weapon.starter": {
+    "key": "eco_guardian.weapon.starter",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 32,
+    "frames": 3,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 1,
+      "death": 2
+    },
+    "iconFrameKey": "eco_guardian.icon.weapon.starter",
+    "toolSpan": 112,
+    "frameAnchors": [
+      {
+        "x": 8,
+        "y": 16.0
+      },
+      {
+        "x": 8,
+        "y": 16.0
+      },
+      {
+        "x": 8,
+        "y": 16.0
+      }
+    ]
+  },
+  "shrine.spawn_surge": {
+    "key": "eco_guardian.shrine.spawn_surge",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "shrine.greed": {
+    "key": "eco_guardian.shrine.greed",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "shrine.multiplicity": {
+    "key": "eco_guardian.shrine.multiplicity",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "shrine.duplication": {
+    "key": "eco_guardian.shrine.duplication",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "shrine.escalation": {
+    "key": "eco_guardian.shrine.escalation",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "hazard.damage_zone": {
+    "key": "eco_guardian.hazard.damage_zone",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "hazard.obstacle": {
+    "key": "eco_guardian.hazard.obstacle",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "hazard.periodic_burst": {
+    "key": "eco_guardian.hazard.periodic_burst",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    }
+  },
+  "enemy.ranged_attacker": {
+    "key": "eco_guardian.enemy.ranged_attacker",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 7,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right",
+    "attackFrames": {
+      "prepare": 4,
+      "release": 5,
+      "recover": 6
+    },
+    "frameAnchors": [
+      {
+        "x": 38,
+        "y": 32
+      },
+      {
+        "x": 31,
+        "y": 32
+      },
+      {
+        "x": 35,
+        "y": 32
+      },
+      {
+        "x": 31,
+        "y": 32
+      },
+      {
+        "x": 31,
+        "y": 32
+      },
+      {
+        "x": 26,
+        "y": 32
+      },
+      {
+        "x": 27,
+        "y": 32
+      }
+    ]
+  },
+  "pickup.impact": {
+    "key": "eco_guardian.pickup.impact",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 1,
+      "death": 2
+    }
+  },
+  "pickup.experience": {
+    "key": "eco_guardian.pickup.experience",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 2
+    }
+  },
+  "pickup.magnet": {
+    "key": "eco_guardian.pickup.magnet",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 2,
+      "death": 2
+    }
+  },
+  "pickup.food": {
+    "key": "eco_guardian.pickup.food",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 1,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 0,
+      "death": 0
+    }
+  },
+  "enemy.scavenger": {
+    "key": "eco_guardian.enemy.scavenger",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "states": {
+      "idle": 0,
+      "move": 1,
+      "hit": 2,
+      "death": 3
+    },
+    "authoredFacing": "right"
+  },
+  "weapon.cleaning_bin": {
+    "key": "eco_guardian.weapon.cleaning_bin",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 3,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 2,
+      "death": 2
+    }
+  },
+  "weapon.orbiting_rake": {
+    "key": "eco_guardian.weapon.orbiting_rake",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 0,
+      "death": 0
+    }
+  },
+  "weapon.rake_beam": {
+    "key": "eco_guardian.weapon.rake_beam",
+    "path": "sprites/eco-guardian/atlas.png",
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "states": {
+      "idle": 0,
+      "move": 0,
+      "hit": 0,
+      "death": 0
+    }
+  }
 } as const satisfies ThemeSprites;

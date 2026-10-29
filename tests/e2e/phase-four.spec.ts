@@ -27,8 +27,9 @@ test("level up freezes play and presents three distinct themed upgrades", async 
   expect(paused?.run).toMatchObject({ level: 2, pendingChoices: 1 });
   expect(paused?.progression?.choiceIds).toHaveLength(3);
   expect(new Set(paused?.progression?.choiceIds).size).toBe(3);
-  expect(paused?.progression?.pickupsCollected).toBeGreaterThanOrEqual(2);
-  expect(paused?.progression?.pickupsDropped).toBe(paused?.run?.kills);
+  expect(paused?.progression?.pickupsCollected).toBeGreaterThanOrEqual(1);
+  // Nearby money merges; rare special drops are separate from money actors.
+  expect((paused?.progression?.pickupsCollected ?? 0) + (paused?.progression?.pickupsMerged ?? 0)).toBeGreaterThanOrEqual(paused?.run?.kills ?? 0);
 
   await page.waitForTimeout(250);
   const frozen = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
@@ -64,6 +65,14 @@ test("choosing an upgrade applies its stable effect and resumes safely", async (
     case "upgrade.crit_chance":
       expect(after?.player?.critChance).toBeGreaterThan(before?.player?.critChance ?? Infinity);
       break;
+    case "upgrade.regeneration":
+    case "upgrade.armour":
+    case "upgrade.luck": {
+      const stat = chosenId.slice("upgrade.".length);
+      const value = (state: typeof before) => Number.parseFloat(state?.ui?.statLines.find((line) => line.key === stat)?.display ?? "NaN");
+      expect(value(after)).toBeGreaterThan(value(before));
+      break;
+    }
     case "upgrade.pierce":
       expect(after?.progression?.pierceBonus).toBeGreaterThan(
         before?.progression?.pierceBonus ?? Infinity,

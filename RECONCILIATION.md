@@ -4292,3 +4292,389 @@ raising retries/timeouts, disabling ranged damage or changing gameplay balance.
 13affected eco/generic cases pass cumulatively serially;719units and build/types/
 lint/production guard pass. Full new-head Actions remains pending. Frozen knight
 content and all art remain unchanged. [Report](build/performance/PR29_CI_REPAIR.md).
+
+### REC-129 — Bulk sprite promotion needs explicit presentation states and bounded atlas packing
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: V0.4.4 eco presentation/pipeline/normal-play acceptance
+- Blocks: None
+
+Owner explicitly selects all27new subjects and removal of old production sprites.
+Promote the preserved native outputs without regeneration/pixel patches. Replace
+style1 accepted/public bytes and atlas rows; keep raw attempts/prompts/history and
+frozen knight files. Bulk live selection is distinct from individual continuity
+acceptance. No reason remains to keep the old Glass-death alias for Shards.
+
+Generic post-update animation previously overwrote explicit world states. Persist
+named states with transient hit priority so pickup collection and spent sites do
+not revert to idle. Tool action sprites live inside existing attack transforms;
+HUD icons use atlas rows, not new content/saved IDs. Tool pixel spans remain
+theme-owned presentation. Hazard centre tiles retain the primitive circle/border:
+square artwork must not replace the true area or simulation geometry.
+
+Whole-strip vertical stacking would exceed2048px with this roster. Use bounded
+shelf packing, preserve each frame's pixels and fail beyond2048on either axis.
+27outputs/102frames fit2048×736;211882resourcebytes/6029312decodedRGBAbytes versus
+21349/421888before. These are storage figures, not performance acceptance.
+
+720units/75files (including exact selected-output/atlas equality),27sprite checks,
+types/lint/build/production/whitespace and13unique scoped serial browser cases
+pass cumulatively. Initial stale48px/constructor/fallback and incorrectVector2
+fixtures were corrected without gameplay/retry/skip/timeout changes. Final two
+expanded Default/Low/reduced-motion cases verify actual tool phases/icons/world
+states/body contracts. Captures inspected; owned servers/browsers cleaned up.
+[Report/playtest handoff](build/sprites/STYLE2_INTEGRATION_REPORT.md) records limits.
+Full-app300-actor/stress/soak/current-head CI deferred to consolidated delivery/
+selection. External checks remain waived/unverified; no release/publication claim.
+
+### REC-130 — Distinct foot silhouettes need both passing poses in the runtime loop
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: eco player sprite presentation
+- Blocks: None
+
+Owner observes colour flicker without readable steps. a3 walk cells have nearly
+identical legs and the authored fourth pose was skipped by0→1→2→1. Regenerate one
+8cell96px sheet as a4, preserve identity/gear/idle/hit/death roles and use0→1→2→3.
+New poses1/3 show different raised boots, while0/2 keep wide alternating contact.
+Native standing height84–86px versus prior85–86px; body18/display42/stride20 and
+all simulation values unchanged. Measure hood anchors in native frames. One fixed
+272×288source-cell transform with transparent right padding; no per-pose fitting
+or painting. a3 and all exact prompt/raw/reference hashes preserved in sidecars.
+
+39sprite units,27rebuild/checks, types/lint/build and3scoped serial Chromium cases
+pass; live run observes all4frames and right/left mirror. Native strip inspected.
+Long-frame pose-skipping guard remains. First attempted fractional grid rejected
+by integer contract, corrected to common integer grid; no pipeline relaxation.
+A nullable telemetry typing error corrected. Owner continuous-play review remains;
+no broad stress/device/CI pass. B gust/menu/card corrections are next claimed work.
+
+### REC-131 — Scroll real measured menu content and label only real quality gains
+
+- Status: Accepted
+- Date:2026-10-26
+- Affects: eco playtest corrections, shared pause/card presentation
+- Blocks: None
+
+Owner screenshot shows Equipment descriptions below the footer. Minimum row pitch
+still overlaps wrapped text. Measure each title/description, then scroll/mask the
+body with fixed tabs/chips/pager/Quit/footer. Support wheel/page/home/end and track
+clicks; wrap chips as needed. Mask graphics need the sameUI/camera transform and
+separate cleanup. Existing G4 observers must recurse through the new body container.
+Phaser3scene wheel event has five arguments, not a sixthWheelEvent; use pointer.event
+for native preventDefault. Remove stable listeners/masks on redraw/hide.
+
+Owner asks for gentler vacuum air and fixed-card identity. Use theme-authored
+520ms broad translucent gusts/180msfade/1100mscycle; no thin streaks or dots.
+Do not extend the actual damage pulse. Optional timings preserve frozen packs;
+validate suction and claw independently so duplicate durationMs keys cannot mask
+bad suction data. Fixed equip/evolution cards use related tool names/accent, no
+quality promise; stat cards saySTAT and retain real quality gains. Reach/skill
+upgrades actually can scale in current code, so retain those facts rather than
+silently changing rolls or presenting them as fixed. One-time guide caps show1.
+
+723units/75files, types/lint/build/whitespace and11unique serial scoped browser
+cases pass cumulatively. Scroll/card cases verify both actualWebGLandCanvas,
+Default/Low/reduced-motion, wheel/page/home/end, resized800×600, safe footer,
+quality versus identity and listener cleanup. Initial wrong wheel signature and
+unused argument lint error corrected. Captures inspected; no retries/skips/
+timeouts increased. [Report](build/content/PLAYTEST_CORRECTIONS_REPORT.md).
+
+[Research prompt](build/prompts/PROGRESSION_SYSTEM_RESEARCH.md) audits unlimited/
+capped/hybrid progression in another session. No new progression, cap, balance,
+rarity weights, save schema/IDs, knight content or chat dispatch is selected here.
+Full-app300-actor/stress/soak/current-headCI and waived external device evidence
+remain unverified; no publication or release acceptance follows.
+
+### REC-132 — Capped ranks need real exclusions and an explicit exhaustion policy
+
+- Status: Provisional
+- Date: 2026-10-26
+- Affects: future owner-selected Eco progression design/prototype only
+- Blocks: None
+
+Observation: source732080a registers20Eco offer identities:9uncapped player-stat
+entries and11finite definitions with35total pick ceilings. There are2automatic
+tool slots and no passive-slot constraint. Actual skill ranks differ from pick
+counts: current Unique2.5 multiplier rounds to3skill levels; reach quality never
+substitutes for the4actual picks needed by Vacuum evolution/capacity. Existing
+selection throws below3eligible identities, currently protected by unlimited
+stats. Merely assigning item names/caps would not create lasting exclusions.
+
+[Research/design report](build/PROGRESSION_DESIGN_RESEARCH.md) separates code facts,
+dated primary/community game evidence and proposed rules.30Eco baseline headless
+balance cases plus1explicit C3fixture pass; relevant Normal models yield15–29
+choices before5simulation minutes/10active wall minutes. This is no sampled-offer,
+quality, survival, boss, comprehension or retention model. Historical schema2
+per-upgrade total/bestInRun counters record selections, not item ranks/rolls or
+causal benefits; never reconstruct those histories or clamp old counters to new caps.
+
+Recommendation, **not approval**: test3capped passive slots with deterministic
+construction beside existing2tools, preserve readable4-pick evolution, then
+separately evaluate an explicitly selected post-boss Endless construction-complete
+stat outlet retaining excluded identities. Fewer-than3offers/empty pools, queued
+credits, quality semantics and save-ID compatibility must be resolved before any
+prototype gate. Report includes candidate roster/numbers,6conditional builds,
+A/B measures, strongest counterargument, bounded phase ownership/rollback and
+open owner decisions. All numbers/caps/new rules remain unselected proposals.
+
+Future guardrail: claims about named games distinguish weapons, passives, rarity,
+quality and post-cap systems; literal unlimited Megabonk levels are unverified.
+No runtime/tuning/art/save/knight edits or implementation claim follows. Revisit
+only when owner explicitly selects a later phase; current sprite acceptance and
+external waived/unverified checks retain their status.
+
+## REC-133 — V0.4.5 economy, save and active clock
+
+Owner-selected money retains historical XP/stat IDs; denominations are presentation over exact bounded aggregate values. Special pickups never merge into money. Fortune scales rare drops; food heals20; Impact saves immediately, independently of run money. Schema3 accepts/migrates1/2 with empty shop balance. Shop purchases clamp levels and cannot overspend; bonuses apply on new runs. Active monotonic wall time replaces eco simulation-time timer (old pace0.5 was the source of slow timer); pause/focus transitions exclude inactive gaps. Frozen pack retains simulation clock. Phase1:729 units, typecheck/lint/build, single serial boot pass; mixed pickups/shop interaction reserved for phase3.
+
+## REC-134 — cleanup capabilities and downside fragments
+
+Eco vacuum now uses player-centred grey DOT/slow, bins finite landing DOT/fuse bursts, rakes head-only orbit contacts. Theme-owned fixed tracks resolve from earned pick IDs, remain untiered, and share live/preview definitions; four slots fit the four cleanup tools. All damage routes through the existing lethal commit. Natural opening switches to Cigarette Butts; Microplastics enter at28% or via events/fragments. Waste fragmentation chance falls with Fortune, clean/critical hits and Careful Cleanup; parent75% plus two children35% total pays110%, children never recurse or drop rare items. Rat wanders/flees, leaks at most12money, pays30plus scaled reward and8x capped rare-item rolls. Eco criticals use linear2x/3x/4x cap and theme-owned yellow/white/red sizes; generic policy stays unchanged. Legacy cone tests cover its preserved contract, new eco tests cover all12fixed tracks.728units/typecheck/lint/build and serial boot pass; mixed runtime acceptance belongs to phase3. Balance CLI ran, clock report corrected; spatial coverage/new-tool survival remain manual acceptance, never inferred from the coarse model.
+
+## REC-135 — V0.4.5 art, sandbox and acceptance
+
+Six built-in generated subjects accepted individually (rata2after spacing rejection, othersa1), prompts/raw/normalization recipes/hashes retained. Old lime art becomes saved Impact; money uses historical pickup.experience ID.33recipes/118atlas frames preserve parked cone/icon history;28content bindings live. No pixel-painted repairs. Production-valid testing-area and Impact-shop entries have menu/browser links. Sandbox uses an isolated memory profile, real RunScene/upgrades, bounded manual spawns, currencies/health/level/tool editors, prerequisites/toggle trees, pause/reset/clear and temporary shop. Level alone gives no invented automatic stat picks. Tree Level1 clears a tool's paths; acquired-node removal clears descendants. Evolved aura keeps remaining tracks and previews its evolved base. Loadout changes clear pending tool runtime; manual bosses get real attacks; invincibility covers contact/shots/bosses/hazards and rats collide with arena bounds.
+
+Initial weak multi-hit fragmentation75%, clean one-shot10%, critical finish15%, both0; Fortune subtracts0.4percentage points each and Careful Cleanup10points per level. This avoids the invalid first pass where one-shot opening waste still mostly fragmented. Fragment children get no rare-item rolls. Special drops reserve a money slot; exact-value merging/claim-once tests cover full-cap specials and money. Eco crit tier and damage both cap at red4x; critical chance clamps at300%and capped offers leave the pool; balance model uses the same capped expectation. Glass work/share reduction does not guarantee higher levels because changing role mix also changes income; removed that invalid coarse-model assertion while retaining work/share gates.
+
+740units/79files,33sprite checks, types/lint/build/whitespace pass. Six unique targeted serial browser cases pass cumulatively: isolated sandbox economy/healing/magnet/pause/650msblocked-frame/tree paths, saved shop,150-actor maximal tracks, normal aura offers/evolution/continued tracks/reset and two normal-play clock cases. Production guard checks all entries, profile isolation and absent test hooks; captures inspected. Built-in art and exact prompt paths are in the manifest/report. Old C1 cone browser campaign preserved as historical text with replacement tests. Full historical/G2 fixture reconciliation, full CI/stress/soak/native-device/owner art and balance acceptance remain deferred/unverified. Owned browsers/servers cleaned; no publication or frozen-pack edits. See build/content/MONEY_TOOLS_SANDBOX_REPORT.md for research sources, tuning and normal-play checklist.
+
+## REC-136 — Seven-level weapon paths and distinct shovel/rake delivery (2026-10-27)
+
+Owner correction replaces four independent five-level tracks with one authored
+seven-level path per eco weapon. Acquisition is level1; six fixed untiered picks
+resolve immutable snapshots, with meaningful mixed-stat milestones. Grabber sweep
+milestones also enter skill state so capability UI and actual combat agree.
+Removed track/evolution IDs remain in historical saved statistics; no migration
+or frozen-theme change. Cleanup Vacuum is the sole active vacuum identity.
+
+Stable weapon.orbiting_rake now presents Orbiting Shovels. A new weapon.rake_beam
+reuses accepted rake art for a straight, camera-edge travelling sweep, aimed by
+movement/last direction (initially right). Swept contact prevents frame gaps
+skipping targets; each rake hits a target once. Orbiting shovel heads lead the
+clockwise tangent. New shovel raw/prompt/normalized evidence is preserved and
+accepted separately. Bin display shrinks56→38; cleaning radius stays58.
+
+Map-magnet money tracks active pull age:70start speed,+650/s acceleration,1900cap,
+with an overshoot displacement cap. Pause time does not age the pull. Exact
+aggregate values, population bounds, merging and isolated sandbox save remain.
+
+Verification:736units/79files,34sprite checks, types/lint/build; five unique scoped
+serial Chromium cases, zero retries; production-entry/test-hook guard. Reviewed
+native shovel and mixed-tool presentation. Damage-rush/TTK models ran but omit
+new path coverage, fragmentation and rat movement; not a survival/balance proof.
+Historical full browser/stress/soak/device/CI remain deferred, not passed. No
+publication; unrelated progression research remains unstaged. Next owner feedback
+should compare meaningful weapon picks, four-slot choices, direction/readability,
+bin clutter and magnet travel before selecting any further tuning increment.
+
+## REC-137 — HUD weapon-frame fallback and handle-first rake (2026-10-27)
+
+HUD previously required iconFrameKey, silently skipping new tools without separate
+icon art; Vacuum also had no active sprite binding after aura replacement. HUD
+now uses existing weapon frame0 with the normal atlas/standalone resolver, maximum
+40logical pixels and preserved aspect ratio. Existing vacuum art is rebound for
+HUD identification only; cone delivery remains parked. Equipment changes destroy
+old images. No new sprite images, saved IDs or frozen pack edits.
+
+Owner tunes outward rake speed650→550 at Levels1–5 and850→720 at Levels6–7
+(about15% slower). Runtime rotates the existing art180degrees about its head
+anchor: handle leads, head trails and still owns the swept damage path. Clockwise
+head-leading orbit shovels remain unchanged.
+
+736units/79files, types/lint/build and one scoped serial real-Phaser browser case
+pass, zero retries. Browser checks all5tool HUD frames through slot swaps, intact
+aspect ratios/placement, destroyed prior images,110units/200ms rake motion and
+head-anchor/rotation; capture inspected. Initial browser assertion exposed the
+missing vacuum binding and passed after restoring the existing weapon image.
+No broad browser/stress/device/CI/fresh production guard claimed. Owned processes
+cleaned; next owner feel check is rake speed/readability and equipped-tool icons.
+
+## REC-138 — Material-aware breakage, airborne wrappers and boss releases (2026-10-27)
+
+Owner removes microplastic output from Cigarette Butts/Aluminium Cans; Glass keeps
+Glass Shards. Natural groups move from cigarettes to Microplastics (three, bounded
+by free slots). Wrappers lose committed gust and ignore crowd pairs/ground obstacle
+steering, retaining weapon hits/player contact. Airborne is an optional generic
+contract, not zero-radius physics or art-derived collision.
+
+Boss summons are theme-authored, bounded named patterns released through existing
+fixed telegraphs and causal queue, with normal enemy-type stats/rewards. Mini pool
+excludes Bagged Waste/Glass Bottles; final cycles light/heavy/pressure groups and
+once below20%health selects an18-enemy all-ordinary-type load at its next warning.
+No recursive boss summons/catch-up. Attack releases never deduct boss money.
+Boss death fragmentation has higher chance/floors45%/65%,4/8mixed children, keeping
+75%parent+35%children=110%budget. These children cannot fragment/drop rare items or
+leak extra rat coins. Pools/thresholds/counts/rewards are validated theme data.
+
+Item chances lower to magnet0.08%,food0.15%,Impact0.12% (about71%less combined base
+frequency); Fortune retained, cap2%per kind, rat bonus8x→3x. Manual sandbox drops
+bypass chance; high Fortune still changes natural rates. Elite2 means one-generation
+two-way split; ◇ means half incoming damage while above half HP, independent of
+material fragmentation. Field Guide descriptions identify these markers.
+
+Built-in rake a2 uses shorter shaft and broad multi-tone separated teeth, raw/
+prompt/review/hashes preserved and accepted separately. World geometry, slower
+speed and handle-first direction unchanged; previous unused production rake image
+removed, generation history preserved. No shovel art or frozen pack changes.
+
+740units/80files,34sprite checks, types/lint/build, one focused serial real-Phaser
+case (zero retries) and production-entry/test-hook guard pass. Actual wrapper
+pursuit/overlap, material kill children, boss summon types, unchanged attack boss
+reward and110%death budget verified; native/moving rake and named boss cue capture
+inspected. Damage-rush model: L5at19s,L10at74s,final25/677kills/931money,peak300.
+It omits boss release combat/coverage/fragments/survival, so is not balance proof.
+Full historical browser/stress/soak/device/current-head CI remain deferred. Owned
+processes cleaned. Next: owner early-pacing/boss-density/drop/rake feel feedback.
+
+## REC-139 — Visible elite guide and current-document authority (2026-10-27)
+
+Owner selects Elite Identities reference and a full current build-doc pass.
+Existing eliteVariants descriptions were content data only, not rendered by the
+Field Guide; REC-138's marker-copy statement did not establish a visible guide.
+A new optional eco guide now renders standard/no-symbol, split2, shield◇ and
+accelerating» from actual elite definitions, including shared health/harm/money/
+size modifiers. Both pause/title contexts scroll above fixed controls, including
+small viewport. Optional copy/section preserves the frozen pack and does not change
+combat, tuning, saved data, sprites or enemy identities.
+
+Indexed64pre-existing build Markdown files plus root progress. Condensed current
+status/product/content/save/sprite/handoff authorities and moved completed
+V0.4.5 claims/results plus compatibility notes into MASTER_BUILD_PLAN. Full old
+progress/status/sequence and original product/content/proposal sources remain in
+build/logs; dated reports retain original findings with explicit historical-status
+notices. Legacy heading anchors and relative paths remain usable. Current
+REMAINING_WORK distinguishes unbuilt proposals, partially shipped foundations,
+retired eco designs, owner acceptance, regression/fixture work, waived external
+device gaps and unrequested delivery. A document saying "planned" is not new
+implementation approval. Slots, save portability, bosses, endless, sprites, money/
+Impact Shop, tools, guide/review and testing area must not be rescheduled as missing.
+
+Pre-existing progression research/retired-prompt/REC-132local edits preserved
+unstaged; their source732080a snapshot is dated and not current tuning authority.
+No passive-system proposal or frozen-theme work is promoted by this audit.
+
+743units/81files, types/lint/build and one focused serial real-Phaser guide case
+pass, zero retries; dynamic definition changes and absent optional copy covered.
+Pause/title/scroll/small viewport/fixed footer captures inspected. Browser fixture
+cleanup corrected from nonexistent destroy() to hide() before the passing run.
+856local file/anchor links pass, six complete source archives verified, research
+hashes unchanged. Per-document dispositions/hashes in build/DOCS_AUDIT_20261027.*.
+Existing build-size advisory remains. Full browser/stress/soak/device/current-head
+CI and fresh production guard deferred, not passed. Owned processes cleaned; no
+publication. Next owner confirmation chooses which unbuilt proposals to retain
+or prioritise; no selected implementation task remains in this turn's scope.
+
+## REC-140 — Completed-work PR delivery preserves proposal and acceptance boundaries
+
+Owner selected a PR into main on2026-10-29. Remote main is an ancestor of the
+completed branch (23commits before delivery documentation), with no existing PR.
+Completed local progression research/REC-132 and retired prompt are included as
+historical732080a proposals. A prominent report notice identifies obsolete two
+slots, Cyclone and half-speed assumptions; they do not supersede current four
+slots/seven-level paths/sole Vacuum/active clock or approve passive implementation.
+Delivery owns Git/PR metadata, status/handoff/master/reconciliation and those
+research docs only. No gameplay, art, save or frozen-pack changes in this phase.
+Fresh gates:743units/81files, types/lint/build,34sprite checks and whitespace pass.
+Existing bundle-size advisory remains. PR CI owns full browser regression;
+obsolete fixtures may require later reconciliation. Stress/soak/external checks
+remain unverified; owner acceptance is not inferred. No merge/deployment selected.
+
+## REC-141 — Exact binary assertions should use native byte equality
+
+PR30 run40825861165 timed out at5s while generic deep Buffer assertions compared
+all34style2 sheets and119atlas frames. Native Buffer.equals preserves exact
+length/byte equality and explicit content/frame/row diagnostics, avoiding object
+assertion overhead. Keep counts, bounds and selected/accepted source checks; do
+not raise timeouts, skip pixels or alter assets to hide slow verification.
+Focused7tests pass (556ms total) and full743units pass (1.78s); types/lint/build/
+34sprite checks pass. Later CI steps were not reached in the failed run and
+remain pending after the push; no gameplay or full-browser pass inferred.
+
+## REC-142 — Reconcile behavioural fixtures when owner changes a role
+
+Old Eco browser fixtures still assumed grouped Cigarettes, committed wrapper
+gusts, primitive-only views, cone pulses/evolution and motion-coded XP art. These
+are superseded by grouped Microplastics, airborne wrappers, sprite death holds,
+seven-level player-centred Vacuum and value-coded money. Replace those cases
+with active-contract coverage rather than restoring retired gameplay or dropping
+assertions. Preserve legacy generic/frozen-pack paths and historical cone source.
+
+Actual aura scheduler steps verify contact/range and exact ledgers; all7levels
+must be genuinely acquired (owner weapon equipped), not seven labels over an
+unmodified base. Control enemies must be distinct from the selected group type
+and outside its current area; money checks use real merged value. Wait the
+authored220ms corpse hold for view disposal while comparing duplicate lethals at
+the same instant. Sandbox screenshot paths belong to Playwright output, not
+host-specific /private/tmp.21distinct focused cases cumulatively pass serially
+without retries, types/lint/whitespace pass, audit high gate passes (2existing
+moderate findings). No gameplay/tuning/art/save/frozen-pack changes. Full remote
+CI is pending and this scope does not close owner or external-device acceptance.
+
+## REC-143 — Sample choices before search; resolve presets through every level
+
+PR30 browser reproduction exposed a material-pool draw inside Array.find's
+predicate: every candidate consumed a new random choice, so an otherwise valid
+pool could yield no child and crash boss kills. Draw the child ID once, then
+look it up. Changing-RNG real-mini-boss regression asserts one draw per child
+and exact selected types, beyond old constant-zero fixtures. Difficulty presets
+also scaled only outer weapon fields; authored level/cleanup resolution then
+overrode damage/cadence with unscaled data. Scale nested damage/DOT/tick/cooldown
+values once in the resolved pack, retaining omitted inheritance and geometry.
+All5weapons×7levels×3presets verify resolved output without mutating source.
+Frozen packs have no such optional capabilities and require no content edits.
+
+A zero simulation delta no longer freezes Eco wall time. Aided UI fixtures reset
+the clock sample while keeping keyboard processing live; explicit ticks provide
+controlled active time. Actor-cap/lifecycle fixtures use260spaced sites to still
+pressure250actors under proactive merging, preserving exact1040money and cleanup.
+Separation coincidence diagnostics count only grounded eligible pairs; wrappers
+intentionally overlap. Contact/roster fixtures disable weapon kills before the
+first population sample. Shrine reward fixtures explicitly use critical clean
+hits to isolate parent payout; material-budget cases independently verify110%.
+
+744units, final24architecture/separation units, types/lint/build/34sprite sheets,
+production guard and cumulative41focused browser cases pass; matching-head full
+Actions pending. Superseded run40828495077 canceled with partial logs preserved
+externally; no full pass/failure totals inferred. No new tuning/art/save/knight
+changes, skip/retry/timeout increases or owner/device acceptance.
+
+## REC-144 — Separate renderer throughput from functional timing assertions
+
+Run40830296454 exposed two remaining timing fixtures and a transient contact
+sample: a1.5s real-time gait loop can miss authored frames on a slow runner; a
+combined sandbox test can exhaust30s across unrelated interactions; a second
+immunity snapshot may arrive after expiry. Use fixed RAF timestamps for real
+physics/input/rendering animation coverage, split the sandbox into3bounded cases
+without dropping assertions, and retain the exact successful contact snapshot.
+5focused cases pass serially without retries; types/lint/whitespace pass. No
+timeout/retry increases, new skips or gameplay/performance/device claims. Full
+final-head Actions remains pending; earlier failed run's136passes/6skips/20fails/
+1flake are historical evidence, not repair-head results.
+
+## REC-145 — A game-consumed key is stronger evidence than a sent key event
+
+Hosted-renderer run40832103795 shows a zero-duration Tab press can start/end
+between game updates. Hold a test key until the actual tab/choice state changes,
+release in finally and retain the same assertion budget. Scripted shrine reward
+checks place enemies within tool reach rather than timing off-screen travel on
+a slow runner; real damage,100tagged arrivals and exact reward provenance remain
+asserted.2focused cases pass serial/zero retries, types/lint/whitespace pass.
+No input/gameplay changes, new skips or timeout/retry increases. Full repair-head
+CI pending; old153passes/6skips/2fails/2flakes are not final-head results.
+
+## REC-146 — Separate fixture preparation from UI actions under assertion
+
+Completed run40834008030 traces measured~3.2s checkbox and~2s pointer actions;
+two30s sandbox cases exhausted setup without observing incorrect gameplay.
+Prepare mixed fixtures through existing DOM change handlers, re-querying controls
+rebuilt by each event; retain native tree/root/spawn/pause/clear actions and all
+assertions. Explicitly distinguish fixture preparation from native checkbox
+pointer coverage. The independently observed menu Tab flake uses REC-145's
+held-until-consumed pattern.3focused cases pass serially/zero retries,15.2s;
+types/lint/whitespace pass. No runtime edits or raised limits/retries/new skips.
+Owner requires fully completed CI results before repairs; push one batch and
+wait for complete matching-head CI before any follow-up.

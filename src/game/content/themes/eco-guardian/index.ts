@@ -1,3 +1,5 @@
+import { toolAcquisitions } from "./cleanup-tools";
+import { economy } from "./economy";
 import { unlocks } from "./unlocks";
 import type { UpgradeDefinition } from "../../../core/archetypes/contracts";
 import { defineTheme } from "../../define-theme";
@@ -6,7 +8,7 @@ import { enemies } from "./enemies";
 import { copy } from "./copy";
 import { tokens } from "./tokens";
 import { sprites } from "./sprites";
-import { weapons, weaponSlotCount, weaponAcquisition, weaponEvolution } from "./weapons";
+import { weapons, weaponSlotCount, weaponAcquisition } from "./weapons";
 import { pickups } from "./pickups";
 import { upgrades, upgradeTierTuning } from "./upgrades";
 import { curses, curseOffers } from "./curses";
@@ -33,6 +35,7 @@ import { pace } from "./pace";
  */
 export const ecoGuardianTheme = defineTheme({
   id: "eco_guardian",
+  economy,
   schemaVersion: 1,
   unlocks,
   copy,
@@ -44,7 +47,7 @@ export const ecoGuardianTheme = defineTheme({
   weaponSlotCount,
   enemies,
   pickups,
-  upgrades: [...upgrades, ...curseOffers, weaponAcquisition, weaponEvolution, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
+  upgrades: [...upgrades, ...curseOffers, ...toolAcquisitions, weaponAcquisition, ...weapons.flatMap<UpgradeDefinition>((weapon) => weapon.upgrades)],
   shrines,
   curses,
   skills,

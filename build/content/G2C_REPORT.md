@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # G2C — committed Can pass: keep; G2 ready for G3 locally
 
 2026-10-22. Branch `codex/readable-gameplay-g2`, parent G2B `7ce03c5`; G2A is

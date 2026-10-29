@@ -1,0 +1,157 @@
+import { expect, test, type Page } from "@playwright/test";
+const status = "#live-status";
+// Fixture setup uses the real form handlers; tree/spawn/pause/clear interactions
+// under test remain native pointer actions. Re-query after each change because
+// the weapon form rebuilds its checkbox nodes.
+async function prepareMixedLoadout(page: Page, starter: boolean): Promise<void> {
+  await page.evaluate((starter) => {
+    for (const [id, checked] of [
+      ["weapon.starter", starter], ["weapon.secondary", true],
+      ["weapon.cleaning_bin", true], ["weapon.orbiting_rake", true],
+    ] as const) {
+      const input = document.querySelector<HTMLInputElement>(`[data-weapon="${id}"]`)!;
+      if (input.checked === checked) continue;
+      input.checked = checked;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }, starter);
+  for (const id of ["weapon.secondary", "weapon.cleaning_bin", "weapon.orbiting_rake"]) {
+    await expect(page.locator(`[data-weapon="${id}"]`)).toBeChecked();
+  }
+}
+async function prepareSpawn(page: Page, count: number, distance: number, enemy?: string): Promise<void> {
+  await page.evaluate(({ count, distance, enemy }) => {
+    for (const [id, value] of [["enemy-count", String(count)], ["distance", String(distance)], ...(enemy ? [["enemy", enemy]] : [])]) {
+      const input = document.getElementById(id) as HTMLInputElement | HTMLSelectElement;
+      input.value = value;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }, { count, distance, enemy });
+}
+test("sandbox isolates its save, conserves magnet money and heals", async ({ page }) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await page.addInitScript(() => localStorage.setItem("arena-save-sentinel", "untouched"));
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "0");
+  await page.locator('[data-weapon="weapon.starter"]').uncheck();
+  await page.locator("#health").fill("40"); await page.locator("#impact").fill("20"); await page.locator("#level").fill("10"); await page.locator("#money").fill("2");
+  await page.getByRole("button", { name: "Apply loadout", exact: true }).click();
+  await expect(page.locator(status)).toHaveAttribute("data-level", "10");
+  await page.locator("#pickup").selectOption("food"); await page.locator("#pickup-distance").fill("0");
+  await page.locator("#drop").click();
+  await expect(page.locator(status)).toHaveAttribute("data-health", "60");
+  await page.locator("#pickup").selectOption("impact"); await page.locator("#pickup-value").fill("3"); await page.locator("#drop").click();
+  await expect(page.locator(status)).toHaveAttribute("data-impact", "23");
+  await page.locator("#pickup").selectOption("money"); await page.locator("#pickup-distance").fill("650"); await page.locator("#pickup-value").fill("30"); await page.locator("#drop").click();
+  await expect(page.locator(status)).toHaveAttribute("data-money-on-ground", "30");
+  await page.locator("#pickup-value").fill("10"); await page.locator("#drop").click();
+  await expect(page.locator(status)).toHaveAttribute("data-money-on-ground", "40");
+  await page.locator("#pickup").selectOption("magnet"); await page.locator("#pickup-distance").fill("0"); await page.locator("#drop").click();
+  await expect(page.locator(status)).toHaveAttribute("data-money-on-ground", "0", { timeout: 10000 });
+  await expect(page.locator(status)).toHaveAttribute("data-money", "22")
+  await expect(page.locator(status)).toHaveAttribute("data-level", "11");
+  expect(await page.evaluate(() => localStorage.getItem("arena-survivor.profile"))).toBeNull();
+  expect(await page.evaluate(() => localStorage.getItem("arena-save-sentinel"))).toBe("untouched");
+  expect(errors).toEqual([]);
+});
+test("sandbox pauses its active clock and accounts for a blocked frame", async ({ page }) => {
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await page.locator("#pause").click();
+  await expect(page.locator(status)).toHaveAttribute("data-status", "sandbox_paused");
+  const pausedTime = Number(await page.locator(status).getAttribute("data-elapsed-ms"));
+  await page.waitForTimeout(500); expect(Number(await page.locator(status).getAttribute("data-elapsed-ms"))).toBe(pausedTime);
+  await page.locator("#pause").click();
+  const beforeLag = Number(await page.locator(status).getAttribute("data-elapsed-ms"));
+  await page.evaluate(() => { const until = performance.now() + 650; while (performance.now() < until) { /* Simulate one blocked render frame. */ } });
+  await expect.poll(async () => Number(await page.locator(status).getAttribute("data-elapsed-ms")) - beforeLag).toBeGreaterThan(600);
+});
+test("sandbox toggles real tool trees and runs the selected mixed loadout", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await page.locator("#pause").click();
+  await prepareMixedLoadout(page, false);
+  await page.locator("#trees-open").click();
+  const path = page.locator('[data-tool="weapon.secondary"] [data-upgrade="upgrade.tool.aura_damage"]');
+  await path.filter({ hasText: "Level 7" }).click();
+  await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].acquired')).toHaveCount(6);
+  await page.locator('[data-tool="weapon.secondary"] .tree-root').click();
+  await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].acquired')).toHaveCount(0);
+  await expect(page.locator('[data-upgrade="upgrade.tool.aura_damage"].available')).toHaveAttribute("data-level", "2");
+  await page.locator("#trees-close").click();
+  await prepareSpawn(page, 3, 40, "enemy.slow_durable");
+  await page.locator("#spawn").click();
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "3");
+  await page.locator("#pause").click();
+  await page.waitForTimeout(3500);
+  await page.screenshot({ path: info.outputPath("eco-v045-mixed-tools.png") });
+  await page.locator("#clear").click(); await expect(page.locator(status)).toHaveAttribute("data-enemies", "0");
+  expect(await page.evaluate(() => localStorage.getItem("arena-survivor.profile"))).toBeNull();
+  expect(errors).toEqual([]);
+});
+test("Impact shop persists purchases and rejects overspending", async ({ page }) => {
+  await page.goto("/impact-shop.html");
+  await expect(page.getByRole("heading", { name: "Impact Shop", exact: true })).toBeVisible();
+  await page.evaluate(() => { const key = "arena-survivor.profile"; const p = JSON.parse(localStorage.getItem(key)!); p.economy.impact = 5; localStorage.setItem(key, JSON.stringify(p)); });
+  await page.reload();
+  await page.getByRole("button", { name: "Upgrade Durable Safety Gear", exact: true }).click();
+  await expect(page.locator("#impact-balance")).toHaveText("0 Impact Points");
+  await expect(page.getByRole("button", { name: "Upgrade Durable Safety Gear", exact: true })).toBeDisabled();
+  await page.reload(); await expect(page.getByText("Level 1 / 5", { exact: true })).toBeVisible();
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("arena-survivor.profile")!));
+  expect(saved.economy).toEqual({ impact: 0, upgrades: { "shop.safety": 1 } });
+});
+test("bounded mixed cleanup field runs at maximum seven-level tools", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/testing-area.html"); await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await page.locator("#pause").click();
+  await prepareMixedLoadout(page, true);
+  await page.locator("#trees-open").click();
+  for (const id of ["upgrade.tool.grabber_level", "upgrade.tool.aura_damage", "upgrade.tool.bin_damage", "upgrade.tool.rake_damage"]) {
+    await page.locator(`[data-upgrade="${id}"][data-level="7"]`).click();
+  }
+  await page.locator("#trees-close").click();
+  await prepareSpawn(page, 100, 200); await page.locator("#spawn").click();
+  await prepareSpawn(page, 50, 200); await page.locator("#spawn").click();
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "150");
+  await page.locator("#pause").click();
+  await expect.poll(async () => Number(await page.locator(status).getAttribute("data-elapsed-ms"))).toBeGreaterThan(2000);
+  const count = Number(await page.locator(status).getAttribute("data-enemies"));
+  expect(count).toBeLessThanOrEqual(300);
+  await page.screenshot({ path: info.outputPath("eco-v045-bounded-mixed-field.png") });
+  expect(errors).toEqual([]);
+});
+
+test("seven-level outward rake sweeps clean a distant target through the real runtime", async ({ page }, info) => {
+  const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/testing-area.html");
+  await expect(page.locator(status)).toHaveAttribute("data-ready", "true");
+  await expect(page.locator('[data-weapon="weapon.secondary_evolved"]')).toHaveCount(0);
+  await page.locator("#pause").click();
+  await page.locator('[data-weapon="weapon.starter"]').uncheck();
+  await page.locator('[data-weapon="weapon.rake_beam"]').check();
+  await page.locator("#trees-open").click();
+  const path = page.locator('[data-tool="weapon.rake_beam"]');
+  await expect(path.locator(".branch")).toHaveCount(1);
+  await expect(path.locator("[data-level]")).toHaveCount(6);
+  await path.locator('[data-level="7"]').click();
+  await expect(path.locator(".acquired[data-level]")).toHaveCount(6);
+  await path.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath("eco-v045-seven-level-trees.png") });
+  await page.locator('[aria-label="Sharp Eye picks"]').fill("100");
+  await page.locator('[aria-label="Sharp Eye picks"]').dispatchEvent("change");
+  await page.locator("#trees-close").click();
+  await page.locator("#enemy").selectOption("enemy.slow_durable");
+  await page.locator("#enemy-count").fill("1");
+  await page.locator("#distance").fill("180");
+  await page.locator("#spawn").click();
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "1");
+  await page.locator("#pause").click();
+  await expect(page.locator(status)).toHaveAttribute("data-enemies", "0", { timeout: 8000 });
+  await page.keyboard.down("ArrowUp"); await page.waitForTimeout(250); await page.keyboard.up("ArrowUp");
+  await page.waitForTimeout(2000);
+  await page.screenshot({ path: info.outputPath("eco-v045-outward-rake.png") });
+  expect(errors).toEqual([]);
+});

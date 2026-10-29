@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
 import { archetypeIds } from "../../../src/game/core/archetypes/ids";
-import { statKeys, worldKeys, type UpgradeDefinition } from "../../../src/game/core/archetypes/contracts";
+import { statKeys, worldKeys, type UpgradeDefinition, type ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import {
   describeUpgrade,
   selectPlayerStats,
@@ -57,7 +57,8 @@ describe("player stat lines", () => {
       const starter = selectPlayerStats(state(), pack);
       expect(starter.some((line) => line.key === "primaryTargets")).toBe(false);
       const secondary = selectPlayerStats(state(), pack, archetypeIds.weapon.secondary);
-      expect(secondary.find((line) => line.key === "primaryTargets")).toMatchObject({ value: 3, label: pack.copy.stats.primaryTargets });
+      if ("economy" in pack) expect(secondary.find((line) => line.key === "primaryTargets")).toBeUndefined();
+      else expect(secondary.find((line) => line.key === "primaryTargets")).toMatchObject({ value: 3, label: pack.copy.stats.primaryTargets });
       expect(secondary.some((line) => line.key === "projectiles" || line.key === "pierce")).toBe(false);
     }
     const projectile = selectPlayerStats(state(), knightMagicTheme);
@@ -189,8 +190,8 @@ describe("upgrade descriptions", () => {
     // The anti-drift guarantee: descriptions come from applying the upgrade and
     // diffing, so every stated line must be reproducible by applying it.
     for (const entry of theme.upgrades as readonly UpgradeDefinition[]) {
-      const before = state(entry.ownerWeaponId === archetypeIds.weapon.secondary
-        ? { weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }, { weaponId: archetypeIds.weapon.secondary, nextAttackAtMs: 0 }] } : {});
+      const before = state(entry.ownerWeaponId
+        ? { weaponSlots: [{ weaponId: archetypeIds.weapon.starter, nextAttackAtMs: 0 }, { weaponId: entry.ownerWeaponId!, nextAttackAtMs: 0 }] } : {});
       const description = describeUpgrade(before, entry, theme);
       const after = applyUpgrade(before, entry, maxLevelFor, 1, theme.weapons);
 
@@ -223,7 +224,7 @@ describe("upgrade descriptions", () => {
     };
     for (const entry of pack.upgrades) {
       const description = describeUpgrade(packState, entry, pack);
-      expect(description.name).toBe(pack.copy.content[entry.id]!.name);
+      expect(description.name).toBe((pack as ThemeManifest).copy.content[entry.id]!.name);
       expect(description.summary.length).toBeGreaterThan(0);
       expect(description.maxLevel).toBe(
         entry.maxLevel === null ? null : entry.track === "weapon" && !entry.effects.some((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve") ? entry.maxLevel + 1 : entry.maxLevel,
@@ -261,4 +262,14 @@ describe("session settings", () => {
     expect(resetSessionSettings({ muted: true }).muted).toBe(true);
     expect(resetSessionSettings().muted).toBe(false);
   });
+});
+
+it("labels fixed tool acquisition/evolution by their target while preserving real tier gains", () => {
+  const acquire = describeUpgrade(state(), upgrade(archetypeIds.upgrade.equipSecondary), theme, "legendary");
+  expect(acquire).toMatchObject({ qualityRelevant: false, association: "Cleanup Vacuum", tierMultiplier: 1 });
+  const damage = describeUpgrade(state(), upgrade(archetypeIds.upgrade.damage), theme, "legendary");
+  expect(damage.qualityRelevant).toBe(true);
+  expect(damage.tierMultiplier).toBeGreaterThan(1);
+  const reach = describeUpgrade(state(), upgrade(archetypeIds.upgrade.grabberLevel), theme, "legendary");
+  expect(reach).toMatchObject({ qualityRelevant: false, association: "Cleanup Grabber" });
 });

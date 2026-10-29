@@ -1,0 +1,54 @@
+{
+  "generator": "built-in image_gen",
+  "attempt": 1,
+  "prompt": "pickup_food.a1.prompt.txt",
+  "promptSha256": "a8513c66d881b1b6dd762242e5a6f60ca1b3b3f30b7dee034936c659530a1994",
+  "rawSha256": "558617b2f12e48a0089946803b594a4e50dbd29880be417db7428e5b50c872c9",
+  "normalizedSha256": "2680e80bb4f2d9abaf8bb24a83113741e7b0a25cb7f490967ad1ca7073a43730",
+  "review": "Accepted after normalized visual inspection: readable silhouette and material, transparent margins, deterministic component cleanup and palette snapping only.",
+  "checks": [],
+  "recipe": {
+    "contentId": "pickup.food",
+    "source": "build/sprites/raw/pickup_food.a1.png",
+    "output": "build/sprites/review/style2/pickup_food.a1.png",
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 1,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}

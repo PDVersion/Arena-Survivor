@@ -55,7 +55,20 @@ try {
   await page.getByRole("link", { name: "Sprite browser ↗", exact: true }).click();
   await page.waitForSelector(".card canvas[data-loaded=true]");
   if (errors.length) throw new Error(errors.join("; "));
-  const result = { checkedAt: new Date().toISOString(), browserVersion: browser.version(),
+  const normalProfile = await page.evaluate(() => localStorage.getItem("arena-survivor.profile"));
+  await page.goto(`${url}/impact-shop.html`);
+  await page.getByRole("heading", { name: "Impact Shop", exact: true }).waitFor();
+  await page.goto(`${url}/testing-area.html`);
+  await page.locator('#live-status[data-ready="true"]').waitFor();
+  await page.locator("#spawn").click();
+  await page.waitForTimeout(200);
+  await page.locator("#trees-open").click();
+  await page.getByRole("dialog").waitFor();
+  await page.screenshot({ path: "/private/tmp/eco-v045-upgrade-trees.png" });
+  if (await page.evaluate(() => localStorage.getItem("arena-survivor.profile")) !== normalProfile) throw new Error("Testing area modified normal profile");
+  if (await page.evaluate(() => Boolean(window.__ARENA_TEST__))) throw new Error("Testing area retained test interface");
+  if (errors.length) throw new Error(errors.join("; "));
+  const result = { impactShopLoads: true, testingAreaLoads: true, testingAreaProfileIsolated: true, checkedAt: new Date().toISOString(), browserVersion: browser.version(),
     bundlesChecked: emitted.map(({ name }) => name), diagnosticMarkersAbsent: true,
     testInterfaceAbsent: true, productionBootPlayPause: true, spriteBrowserLoads: true, startingStatsVerified: true, architectureNavigation: true, errors };
   await writeFile(process.argv[2] ?? "build/performance/P1_PRODUCTION_CHECK.json", JSON.stringify(result, null, 2) + "\n");

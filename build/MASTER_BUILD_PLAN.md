@@ -1,5 +1,8 @@
 # Master build plan — completed implementation record
 
+Current checkpoint: [V0.4.5 implementation and owner corrections](#v0-4-5).
+Current unbuilt/acceptance disposition: [remaining work](REMAINING_WORK.md).
+
 ## Owner direction — Knights and Magic paused indefinitely
 
 Effective 2026-10-22: all further `knight-magic` theme development is paused
@@ -6293,3 +6296,1149 @@ no retry/timeout increase, no disabled assertions or frozen knight edits.
 Gate: focused failed eco/generic cases serial1worker/0retries, fullunits,
 typecheck/lint/build/production guard, whitespace; push samePR and inspect CI.
 Heavy full browser/stress regression remains assigned to automatic PR workflow.
+
+<a id="eco-style2-live-switch"></a>
+## Full eco style2 live switch —2026-10-26
+
+Owner explicitly requests all new sprites and removal of old sprites. Claimed on
+`codex/v0.4.4` from clean main; separate claim commit29878a3 precedes code. Bulk
+promotion is one coherent presentation phase, not27claims of perfect individual
+art continuity. Future art corrections retain per-subject claim/acceptance rules.
+[Implementation/evidence/playtest report](sprites/STYLE2_INTEGRATION_REPORT.md).
+
+Completed claim (historical exact scope):
+
+## Bulk live switch — claimed 2026-10-26 before code
+
+Owner selects all new eco sprites and deletion of old sprites. Codex claims a
+bounded integration phase on `codex/v0.4.4` from current clean main. This explicit
+bulk selection advances the individual-selection handoff: promote all 27 existing
+outputs together, with no generation or pixel repairs. Remove superseded style1
+production/accepted outputs through replacement, preserve raw attempts/prompts,
+historical reports and frozen knight files. Visual refinement stays owner playtest.
+
+Ownership: `scripts/sprites.ts`, new style2 recipe registry, eco `sprites.ts`,
+optional sprite presentation metadata/validation, atlas packing, SpriteView,
+pickup/shrine/hazard/grabber/cone actors, HUD tool icons, sprite browser fixture,
+relevant sprite units/scoped e2e and new integration case, accepted/public sprite
+outputs, manifest, this plan, BUILD_STATUS, sequence/handoff/master/reconciliation.
+No gameplay tuning, saved IDs/state, enemy logic or knight changes.
+
+Short checks: all configured sprite rebuild/format/hash/atlas bounds checks;
+unit suite, types/lint/build/production guard; one serial scoped eco campaign
+covering roster/facing, real tool phases, world states, fallback, Default/Low and
+reduced motion. Record texture/startup byte cost. Full-app stress/soak and external
+device checks deferred to consolidated CI/owner selection; never claim a pass.
+
+- [x] Claim scope and owner bulk selection before code.
+- [ ] Promote all 27 outputs, deliberate state bindings and remove old live art.
+- [ ] Pass short checks, inspect captures and document playthrough checklist.
+
+
+### Verified outcome
+
+- [x] Promote all27 selected style2 outputs with explicit tool/pickup/site/hazard
+  phases and equipped icons; replace five old accepted/public sheets and atlas,
+  remove old Shards alias. No raw attempts/prompts or knight files deleted.
+- [x]27rebuilds/checks;720units/75files; every selected output byte and102atlas
+  frames verified. Types/lint/build/production/whitespace pass.
+- [x]13unique serial scoped browser cases pass cumulatively with no retries;
+  final expanded Default/Low/reduced-motion cases pass together. Actual tool
+  contact/recovery, site spent, collection, hazard borders, all11 enemy sizes/
+  bodies, icons and synthetic fallback verified. Captures inspected.
+- [x] Current remaining plan/handoff and normal-play checklist updated.
+
+One2048×736 atlas,211882PNG+JSONbytes,6029312decodedRGBAbytes. Storage increase
+is recorded without performance/latency claims. Full-app300-actor/stress/soak/
+current-head CI deferred; previously waived external checks remain unverified.
+No push/PR/merge/deployment/new gameplay/tuning/save changes. Owner playtest and
+selected corrections/consolidated acceptance remain; overallV0.4 stays open.
+
+## Player gait correction a4 —2026-10-26
+
+Owner requests review/regeneration after full switch. Separate sprite claime0eccf2
+precedes imagegen. Native8×96px sheet now has distinct passing steps and runtime
+0→1→2→3; gear/roles/display/body/stride preserved. Raw a4, prompt/reference hashes,
+fixed-grid recipe and check evidence preserved; selected inventory/atlas updated.
+39sprite units/27sprite checks/types/lint/build and3serial browser cases pass.
+REC-130 records integer-grid/footprint findings and remaining playtest limits.
+Next claimed B: gust/menu/card presentation and separate research-session prompt.
+
+## Owner playtest correction B —2026-10-26
+
+[Report](content/PLAYTEST_CORRECTIONS_REPORT.md) owns implementation, evidence,
+initial failures and limits. Completed B: slower broad eco gusts with unchanged
+actual pulses, measured/masked scrolling pause/title-guide content, truthful
+fixed-card tool identity/STAT labels and correct one-time guide caps. Research
+prompt is written for a separate future session, no redesign or chat creation.
+
+Historical exact claim (e0eccf2):
+
+## Owner playtest correction claim —2026-10-26, before edits
+
+Codex claims two bounded follow-ups on codex/v0.4.4 after46dbb17:
+A) one regenerated player subject, nexta4, distinct four-step gait, same8frame
+roles/dimensions/world scale and a distance-driven four-pose cycle. Own prompt/
+style-guide amendment, manifest, raw/review evidence, recipe registry, eco sprites,
+accepted/public player/atlas outputs, sprite units/scoped browser checks and docs.
+B) slower broad vacuum gusts (presentation only), scrolling/clipping pause/menu
+body content and measured equipment rows, truthful fixed-item/weapon labels in
+upgrade cards, and a separate-session research prompt. Own cone actor, tool-effects
+tuning contract/eco view/validation, pause/level-up UI, upgrade description selector,
+relevant tests and matching plan/status/master/reconciliation/handoff/report.
+No changes to damage, targeting, timing of actual attacks, rarity rolls/stat boosts,
+upgrade caps, persistence or knight files. Research prompt does not select a new
+progression system or create/message another chat.
+
+Short checks: selected sprite rebuild/format and exact atlas pixels; focused/full
+units, types/lint/build; necessary serial gait/gust/menu-scroll/card browser cases,
+Default/Low/reduced-motion and actual narrow/resized canvas. Preserve raw a3.
+Full app/stress/soak/device checks stay deferred/waived/unverified.
+
+- [x] A: a4 regenerated/reviewed/live;39sprite units/27checks/types/lint/build and3serial browser cases pass. See REC-130.
+- [x] B: implement requested presentation/UI corrections and research handoff;
+  verify and record findings in the same phase commit.
+
+Verified B gate:723full units/75files, types/lint/build/whitespace;11unique scoped
+serial browser cases pass cumulatively, one worker/zero retries. New scroll/card
+cases also pass in actual WebGLDefault/Low-reduced-motion and earlier Canvas,
+resizing to800×600. Three A sprite browser cases and39focused/27sprite checks are
+recorded separately in708259a. Captures inspected; owned resources cleaned up.
+REC-131 records wheel-event, measured-height and actual-tier discoveries. No
+full-app/stress/soak/remote-CI/device pass or publication. OverallV0.4 remains open.
+
+
+<a id="v0-4-5"></a>
+# V0.4.5 — Money, cleanup tools, testing and owner corrections
+
+Implemented locally on `codex/v0.4.5`, 2026-10-27. This is an implementation
+record, not a claim of merge/deployment, full current-head CI or waived device
+acceptance. [Current rules and checks](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+| Slice | Result / evidence |
+|---|---|
+| Economy/save/clock | Money denominations, rare magnet/food/Impact, schema3 Impact Shop, isolated sandbox save, active-wall timer; `1f59b40` |
+| Combat/tools | Aura/bin/orbit capabilities, downside material fragments, rats, opening cigarette role, linear red4x crit cap; `f88983b` |
+| Art/testing | Six source subjects accepted separately; testing area, tree menu and shop integration; `63a5a3d` |
+| Seven levels | One seven-level path per weapon, shovel orbit, separate outward rake, sole Cleanup Vacuum, accelerating magnet; `4be0126` |
+| Rake/HUD | Slower handle-first rake and HUD weapon-frame reuse; `4d51a83` |
+| Materials/bosses | Compact rake a2, single butts/later micro groups, airborne wrappers, independent boss summon patterns and rarer drops; `f70ea1c` |
+
+Prior local gate:740units/80files,34sprite sheets, types/lint/build and scoped
+serial real-Phaser/production checks. Broader historical browser fixtures and
+current-head CI/stress/device acceptance remain explicitly deferred. Owner has
+accepted the compact rake appearance; this does not certify the whole roster or
+combat balance. Knights and Magic remains frozen.
+
+## Original V0.4.5 ownership and completed phase records
+
+# V0.4.5 — money, cleanup tools and testing area
+
+Owner selection2026-10-27. Continues current committed732080a on codex/v0.4.5.
+Existing unrelated progression research/RECON edits remain unstaged and preserved.
+Knights and Magic stays frozen. This explicit selection supersedes old optional
+scope gates for the features below; no passive-slot redesign is inferred.
+
+## Contracts and phase ownership, claimed before code
+
+1. Economy/time: in-run money retains saved historical XP statistic IDs while UI
+   calls it money. Silver/gold/note aggregate denominations preserve exact value.
+   Rare map magnet0.3%, food0.5% (20HP), Impact0.4%, Fortune scales all with cap.
+   Existing bounded pickup/merge system retained; magnet moves every existing
+   aggregate, not invented approximation or unlimited actors. Impact saved on
+   collection; schema3 migration from1/2; capped shop health/damage/Fortune/move
+   bonuses apply at run start. Testing uses a separate memory profile. Run timer
+   monotonic active wall time, pauses on menus and hidden/inactive focus as pause.
+   Own core optional economy contracts/IDs, eco copy/data/pickups, pickup actor,
+   run state/scene clock, profile/codec validation/shop selectors/UI, related tests.
+2. Tools/combat: park cone vacuum art/old draft history; active vacuum is circular
+   grey DOT/slow. Add thrown cleaning bin (fuse/burst/landing DOT), orbiting rakes
+   (head-only collision). Fixed five-level tracks for radius/damage/tick/slow,
+   bin damage/count/radius/DOT, rake count/rows/damage/speed. Generic optional
+   capabilities, theme tuning only; four equipment slots. Waste fragmentation
+   becomes a downside: baseline chance, multiple weak hits increase it; crit/
+   strong tools/Fortune reduce it. No recursive fragments. Parent pays75%, total
+   parent+children110% of clean kill; finite children. Existing fragmentation
+   upgrade becomes careful-cleanup mitigation retaining its ID. Cigarette Butts
+   open naturally, Microplastics start later or via fragmentation/events. Rare
+   highHP rat wanders/flees after hits, leaks bounded money from a finite budget,
+   higher rewards/drop rates. Rat sheds carried litter, not biological shards.
+   Crit2x yellow/3x white/4x+ red with capped presentation and larger red numbers.
+   Own optional contracts/capabilities, eco weapons/enemies/director/skills/copy/
+   tuning, generic tool runtime/actor/combat/scene, relevant model/tests/docs.
+3. Art/testing/acceptance: claim six subjects before built-in generation: money
+   denomination strip, magnet, drumstick, rat, cleaning bin, rake. Preserve raw
+   prompts/recipes/hashes; no painted edits. Add separate testing-area.html,
+   production-valid separate entry, isolated profile, actual RunScene controlled
+   by explicit developer sandbox API loaded only on that page. Enemy spawn,
+   level/weapons/money/Impact editing, pause/reset/clear, interactive upgrade-tree
+   menu with prerequisite toggle paths (end node selects predecessors, base node
+   clears). Tree and live run use the same definitions. Add outside-run shop
+   page and navigation from title/sprite browser. Own new tools pages/modules,
+   optional scene sandbox interface, Vite entries/links, sprite registry/outputs,
+   claims/evidence, targeted browser tests, matching authority/status/reconciliation.
+
+Each phase: meaningful deterministic units, typecheck/lint/build and scoped serial
+browser cases; commit verified phase with matching records. Balance model is an
+estimate, never a survival proof. One necessary combined mixed-tool/pickup browser
+load check; no repeated full-app/stress/soak/device campaigns. Existing external
+waiver remains unverified. No push/merge/deploy. Sprite per-subject source claims
+and evidence retained; current request selects all listed art/integration.
+
+- [x] Phase1 economy/save/clock. 729 unit tests, typecheck/lint/build and serial browser boot pass. Shop UI and targeted mixed-pickup acceptance remain phase3.
+- [x] Phase2 tools/fragmentation/director/rat/crit. 728 units, typecheck/lint/build, balance/TTK and scoped serial boot pass.
+- [x] Phase3 generated art/testing-area/trees/shop/consolidated acceptance. 740 units/79 files, 33 sprite checks, typecheck/lint/build, six unique targeted serial browser cases and production entries pass. Full historical regression is deferred.
+
+## Research boundary
+
+Use HoloCure EXP Magnet/merged drops/food/shop, Vampire Survivors area/orbit/landing
+weapons as comparative patterns, not copied tuning. Record secondary wiki evidence
+as such. NSW Return and Earn official eligible-container refund is inspiration,
+not an assertion that rat/wrapper/butt cleanup earns a real-world refund.
+
+Independent source-only art generation is permitted after its manifest claim while
+software phases run: it does not bind assets or start phase3runtime integration.
+This avoids blocking the mechanical work on image-generation latency.
+
+Phase2 verification: fixed five-level tracks have deterministic cap/rarity/preview
+checks; legacy cone-specific cases now read the preserved generic cone fixture,
+with eco cleanup tracks covered separately. Mixed-runtime contact, rat flight and
+pickup visuals will receive the single consolidated phase3 browser acceptance.
+Damage-rush balance/TTK model ran: report now uses eco's real active timer. Model
+still omits spatial tool coverage, scavenger movement and downside-fragment work;
+it is a pressure estimate, not a claim these new tools are balanced by simulation.
+Old cone runtime/accepted art remain historical/generic fallback; no eco equipped
+weapon takes that delivery path. No frozen-pack files changed.
+
+
+## Final local gate
+
+740unit tests/79files;33sprite checks; typecheck/lint/production build and whitespace
+pass. Six unique phase3browser cases cover sandbox money/magnet/heal/Impact/save
+isolation/pause/blocked frame/tree paths, saved shop purchases,150-actor maximum
+tracks, ordinary aura offers/evolution/continued tracks/reset, and two normal-play
+clock cases. Production guard verifies game/shop/testing/sprite entries, isolated
+normal profile, absence of test hooks and inspected captures. Existing bundle-size
+advisory remains. Owned browsers/servers cleaned. Balance damage-rush and capped-
+critical/TTK models ran; coverage/fragments/rat survival are not modelled.
+
+Old cone-specific browser campaign is archived with replacement acceptance. Some
+historical G2 introduction/cone fixtures target now-replaced behaviour; their
+consolidated regression reconciliation is explicitly deferred with full CI/stress/
+soak/device checks under the resource budget. Do not claim them passed. This local
+implementation ends the claimed phases; owner tuning/art acceptance and any
+publication are separate. No push/merge/deploy or frozen-theme edits.
+
+## Owner correction phase4 — claimed2026-10-27
+
+Replace eco tool tracks with one seven-level path per weapon (acquisition is level1).
+Keep stable historical IDs; remove the active Cyclone alias/evolution. Orbiting
+Shovels reuse the old orbit weapon ID; Rake Sweep is a new straight travelling
+weapon aimed by movement/last facing. Shrink bin presentation only. Accelerating
+map-magnet pull uses theme-owned starting speed/acceleration/cap and active time.
+Own optional core progression/beam/pickup contracts, eco definitions/copy/sprites,
+shared resolvers/runtime/RunScene, testing tree/card previews, related checks/docs.
+Claim one new shovel sprite; reuse accepted rake for the outward sweep. No frozen
+pack changes, saved-ID removal, passive redesign, publishing or broad campaigns.
+Verification: deterministic progression/acceleration/beam geometry units, sprite
+checks, typecheck/lint/build, one scoped serial testing-area acceptance campaign.
+Historical obsolete cone/evolution browser fixtures remain deferred explicitly.
+- [x] Phase4 software, art integration and scoped acceptance. 736 units/79 files,34sprite checks, types/lint/build, five unique targeted serial browser cases and production guard pass. Broader historical/device/CI checks remain deferred.
+
+## Owner correction phase5 — claimed2026-10-27
+
+Slow Rake Sweep travel by about15% at all levels; reverse its runtime art so the
+handle leads and the head trails, keeping the head at its authored contact point.
+Restore HUD equipped-tool icons using existing weapon frames at a smaller size,
+with preserved aspect ratio and normal atlas/standalone resolution. No new art.
+Own eco beam tuning, existing vacuum art binding for HUD, cleanup runtime presentation, HUD, scoped browser evidence,
+reuse manifest/inventory, plan/status/report/reconciliation. No frozen content, save or sprite-image edits.
+Checks: types/lint/build, existing meaningful units, one focused serial real-HUD/
+rake presentation case. Broad browser/stress/CI/device checks remain deferred.
+- [x] Phase5 rake feel and equipped-tool HUD. 736 units/79 files, types/lint/build and focused serial HUD/rake browser check pass. No new bitmap art; broader checks remain deferred.
+
+## Owner correction phase6 — claimed2026-10-27
+
+Regenerate outward rake with shorter handle, broader readable teeth and contrasting
+material shading (existing shovel as proportion/style reference). Own one a2rake
+source/review/acceptance, recipe/atlas/binding/manifest; no shovel changes. Enemy
+material rules: no cigarette/can microplastics, keep glass shards; transfer natural
+arrival clusters to Microplastics. Wrappers chase while ignoring other rubbish
+and ground obstacles, retaining player contact damage and weapon hits. Bosses gain
+higher bounded death fragmentation and telegraphed summon cycles with theme-owned
+pools/counts/rewards, plus final-boss near-death mixed release. Attack summons use
+their own normal rewards and never deduct boss rewards. Compacted Waste excludes
+Bagged Waste/Glass Bottles; Colossus may summon all ordinary waste, never recursive
+bosses. Lower rare item rates while preserving food>magnet and Fortune scaling.
+Own optional core enemy/boss contracts, eco data/copy/tuning, summon resolver,
+separation/actor/RunScene integration, meaningful units/scoped serial browser,
+product authority/status/report/reconciliation. No frozen-theme, save-schema or
+passive-system changes. Verify types/lint/build, units/sprites, pacing CLI and one
+consolidated scoped art/wrapper/boss/fragment/drop browser check; broader checks
+remain deferred. Sprite claim and accepted source get separate commits.
+- [x] Phase6 art, material/director/boss/drop corrections and acceptance. 740 units/80 files,34sprite sheets, types/lint/build, focused serial browser and production guard pass. Pacing model ran; full historical/device/CI checks remain deferred.
+
+
+
+## Historical implementation notes moved from build/THEME_ARCHETYPES.md
+
+Dated source notes below preserve the original decisions; later V0.4.5 amendments
+above supersede old identities/counts/clock/evolution.
+
+## Q1 difficulty and sprite presentation metadata
+
+Beginner / Normal / Experienced are stable run-setting IDs; names/descriptions
+and all preset multipliers live in each theme. The selected preset resolves an
+immutable per-run view of character, weapon, enemy, hazard and director data.
+The source manifest stays unchanged, preserving material identity and the
+persistence-health model. Session choices apply to the next run; settings do
+not silently change an active run's difficulty. Sprite metadata declares the
+sheet's authored facing and walk poses/stride, including differently facing hit
+poses; no physics or gameplay value is derived from those fields.
+
+
+Q2 follow-up (2026-10-12): Microplastics now open the eco run; Plastic Bottles
+enter quietly at 10% progress (30 seconds on the five-minute timer) and ramp
+from ~6% to ~43% of calm natural spawn selection. At 0.5 gameplay rate this
+first unlock is about 60 real seconds into active play. Microplastics now pay
+1 XP as the common opening enemy; material health ordering stays unchanged.
+Bagged Waste still releases its fixed 2 bottles / 2 Microplastics / 1 glass mix
+pending owner confirmation. Site-event labels counter camera zoom at UI scale,
+and spent events disappear from the minimap. Spawn accounting distinguishes
+natural arrivals (including milestone waves), Fracture, Bagged Waste release,
+site effects (surge/duplication) and test loads; source means immediate creation,
+so ambient pressure modified by a shrine is still natural. No factual claims,
+new material identities or bitmap generation are introduced.
+
+Q4 opening balance: eco `enemy.fast_fragile` now has 9 base health as an explicit
+one-hit opening override (REC-112), retaining the material ordering. Other roles
+and starter damage stay unchanged. The standalone inspector resolves the chosen
+difficulty using the game's resolver, labels stats through theme copy and reads
+physics/stats from definitions, never sprites. Its starting values exclude
+time/pressure/elites/upgrades; future live stat-book selectors must preserve that
+distinction. The secondary pack's roster balance is unchanged.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — shrine and curse catalog
+
+| Stable role | Eco | Knight/magic |
+| --- | --- | --- |
+| `shrine.escalation` | Unmanaged Dump | Shrine of Defiance |
+| `curse.frenzy` | Overflow Contract | Frenzy Pact |
+| `curse.escalation` | Contamination Pact | Doom Pact |
+
+Each theme now owns `curses.ts` beside shrines/upgrades. A curse is a run-local,
+one-time world bargain; its normal level-up offer uses `curse.accept` and records
+stable accepted IDs separately from shrine activations. Shared world resolution
+composes Chaos additions and spawn/XP products, retaining fractional rewards.
+Curses do not add actors, timers, queues, inherited source rewards or profiles.
+The new shrine uses the existing world-multiplier actor/arrival/guide path.
+Both production themes remain complete; a small alternate fixture may omit this
+optional new shrine and provide an empty curse registry.
+
+### V0.4.3 C4 elite family
+
+Both packs author four elite definitions: baseline plus split/shield/acceleration.
+Eco Dispersing/Wrapped/Rolling Waste correspond to Splitting/Warded/Charging Elite.
+Copy catalog owns names/descriptions, elites.ts owns finite mechanics and markers.
+Identity is inherited, not inferred from sprite/tint. See content/C4_REPORT.md.
+
+
+### V0.4.3 C5 — unique encounter capabilities
+
+Enemy definitions may carry one unique mini/final boss capability with normalized
+arrival and simulation warning/recovery/radius/damage. It is excluded from ambient
+roles, random elites, duplication and descendant relationships. Stable mini/final
+IDs map to Compacted Waste/Dumping Colossus or Runic Sentinel/Chaos Warden. All
+combat/body/display/reward values are explicit theme data; primitive shape and
+health bars observe combat state and never determine it. Exactly one of each kind
+can be authored; no boss art is claimed by this phase.
+
+## V0.4.3 C6 implementation checkpoint /2026-10-20
+
+Browser-local schema2 now retains six settings, terminal-only lifetime statistics,
+completed/death counts, longest run and stable identity/unlock IDs. Both themes
+unlock the existing secondary tool after one finished run and bloodlust after25
+finished-run kills, affecting the next run only. These are the planned mechanical
+content unlocks, distinct from exploratory educational cosmetic feats. No permanent
+stat bonus, active-run suspension, sprite or new factual content is added.
+Corrupt storage is preserved; denied/quota storage falls back to memory with visible
+warnings. Schema1 migration is deterministic. C7 portable export/import/preview and
+explicit backup recovery are implemented through the same validated profile model.
+
+
+### V0.4.3 C7 — portable progress
+
+Title Settings → Manage Save exports the complete implemented profile to encoded
+text/download, or previews a file/pasted save before explicit confirmation. Both
+themes supply labels/warnings; stable IDs retain identity across display-name
+changes. Unknown valid IDs remain saved and warn about unavailable selection.
+Backup restore and reset each need confirmation. No save management is offered
+during a live run; no transient simulation objects or suspended run are persisted.
+Current progress is preserved on cancellation/invalid input/storage failure, and
+corrupt source is quarantined without replacing a good backup. See SAVE_DATA.md
+for exact format, bounds, storage transaction limits and accepted schema migration.
+
+### Session21 selected correction — owner-track target capacity
+
+Q6 will extend vacuum primary-target capacity through its own weapon progression;
+the current three-target/four-target evolved definitions remain the implemented
+baseline until that gate passes. A modest early cap is retained. Exact integer
+steps, finite ceiling and evolution tuning belong to theme weapon data and need
+balance verification. Earned capacity must survive same-slot evolution without
+regression; splash caps are a separate authored mechanic. The reusable contract
+must validate both Cleanup Vacuum/Cyclone Vacuum and Runic Fan/Runic Tempest while
+keeping themed identity out of systems. No new stable IDs, save schema, materials
+or sprites are selected by this planning decision.
+
+## Readable roster roadmap — 2026-10-21 planning boundary
+
+[Master gameplay design record](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) owns the staged candidate
+assessment and G1–G4 gates. Existing Plastic Bottle, Microplastics, Glass Bottle,
+Bagged Waste and stationary Glass Shards keep their stable IDs and finite material
+relationships. No current role is renamed to match a survey ranking. Plastic Bag
+remains retired as the identity of `enemy.fast_fragile`; a future bag is a distinct
+candidate, not restoration of that mapping. Hard-plastic pieces >5mm must not be
+labelled Microplastics merely to reuse a role.
+
+New candidate names are editorial proposals only; reserve neutral IDs and reusable
+capabilities with both-theme validation at implementation. Gust drift, rolling
+commitment/recovery and clustered litter must be data/capability driven, not themed
+string branches in systems. Balance stats, weights, cues and timings stay theme
+owned. Prevalence, persistence, mass and fictional contact harm are separate axes.
+Read SAVE_DATA before any persisted ID/discovery/unlock change. Prototype primitives
+before V0.4.4 acceptance; no new sprite claims or collision-from-art derivation.
+
+## Q6 implemented correction — 2026-10-21
+
+The second tool's own four reach picks each add one primary target, independent
+of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
+adds its authored extra target (8). Splash remains finite and unchanged. The
+short filled cue marks a single pulse, followed by a faint historical outline
+and selected-hit rings; entering the fade causes no new damage. Frame-specific
+presentation anchors align player poses without editing accepted art or bodies.
+This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
+fact, effectiveness matrix, persisted state or new sprite is added.
+[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.
+
+## G1 accepted balance — 2026-10-21
+
+After verified Q6, the existing-roster comparison selects only eco Glass armour
+40→20 and its director base weight12→8. Glass retains96health, slow70movement,
+9contact harm and7XP; the health ordering/material relationships stay intact.
+The calm late natural selection mix is approximately45%Bottle/30%Microplastics/
+11%Glass/14%Bagged, replacing the historical43/28/16/13rounded mix. These are game
+weights, never litter-survey probabilities. Microplastics still open one-hit;
+Bottles remain the numerical baseline, Shards stationary/clearable and bag
+families finite. Knight tuning, other roles, weapon damage, progression, presets,
+cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
+[G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
+retains all scenarios and records the bounded local gate and its limits. G1 is
+locally complete; G2–G4 and sprite generation remain unstarted.
+
+## G2A weak groups — kept locally 2026-10-22
+
+`enemy.cluster_fodder` maps to eco Cigarette Butts and knight Ashling. Individual
+weak actors approach slowly in groups of three; clear a narrow lane or catch the
+group in a cone. First introduction at25% is three retained requests, then sparse
+natural groups.6HP/64speed/3harm/1XP are game tuning, unrelated to surveyed item
+percentages or factual toxicity/persistence. Visible pale/orange primitive parts
+and separate20px bodies replace neither Microplastics nor any material family.
+No post-cleanup contamination patch, new art, saved discovery or effectiveness
+matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
+
+[Reviewed plan](MASTER_BUILD_PLAN.md#readable-gameplay-g2), [candidate report](content/G2A_REPORT.md).
+G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
+a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
+
+## G2B wrapper role — local keep 2026-10-22
+
+`enemy.gust_drifter`: eco Packets / Wrappers; knight Paper Wisp. One introduction
+at32% and sparse later arrivals. Approach → visible fixed-bearing warning → short
+oblique gust → stationary recovery gives an interception choice. Generic capability,
+theme-owned timings/stats/essential cue, code-native packet silhouette. Fictional
+movement/harm, no real handling/abundance claim, automatic waste patch, new guide
+surface, sprite or save field. Existing material families/IDs unchanged.
+[G2B_REPORT](content/G2B_REPORT.md) records keep and measured limits. Can next;
+G2 in progress, G3/G4/art unstarted. Historical earlier status remains historical.
+
+## G2C kept / G2 complete — 2026-10-22
+
+`enemy.committed_charger`: eco Aluminium Can; knight Barrel Construct. A visible
+fixed line captures the player's old position, then a fast direct roll passes it
+and stops for recovery. Sideways movement avoids that route; cleanup rewards the
+return. This differs from the wrapper's oblique gust and weak-group lane clearing.
+One introduction at55%, sparse natural weight2; timings/stats/cue/body/presentation
+are theme-authored and use the shared capability. The primitive can's body/label/
+end caps are code-native presentation, never physics input. No generated art,
+material/harm/handling fact, new information surface, saved field or ID remap.
+
+All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
+[G3 master record](MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed. G3 ready/unstarted;
+G4/art unstarted, external evidence still deferred/waived/unverified. This is the
+current state; earlier staged continuation paragraphs are historical checkpoints.
+
+## G3 rhythm and informed voluntary pressure — 2026-10-22
+
+Locally kept after owner-requested execution: shared later roles unlock25/34/44/
+52/60%, mini72%, baseline elites82%, final100%. Eco Microplastics0/Bottle10 and
+knight Grunt0/Runner20 remain distinct. First Glass/Tank4, Bag/Broodmother2 use
+existing retained causal introductions. Five optional sites at16/40/66/84/90%
+replace the repeated Multiplicity arrival; definitions/cost/reward values stay.
+
+Existing prompts now name the choice and show resolved current-world arrivals,
+durability/harm/XP/elite chance before acceptance; walk away to ignore. Named
+edge pointers remain, with distinct minimap site diamonds and a shorter authored
+placement band. Bosses stop pursuit during their fixed-circle warning, then resume
+in recovery; no new attack/counter/health/damage/body. These are game decisions,
+not real material/handling/abundance claims. No quiz, currency, new roster, saved
+field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
+verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
+complete; [reviewed G4 handoff](MASTER_BUILD_PLAN.md#readable-gameplay-g4) is current, G4/art unstarted.
+
+## G4 — useful reviews and optional reference / 2026-10-22
+
+Locally verified G4 adds a concise run review: actual committed direct/splash
+damage by tool, other effects as the remaining partition, recorded voluntary
+site/curse pressure and an attainable next experiment. The old damage ledger,
+metrics and upgrade tally remain in Details (click or Tab); R/Enter restarts.
+A death source describes the recorded final hit at elapsed time, including
+endless overtime; it is not a diagnosis of the whole run. Final-boss success
+appears only from its recorded flag and can coexist with a later death.
+
+Info and the pause Field Guide/Grimoire now include one paged enemy entry at a
+time and read-only progress toward the existing finished-attempt/kill unlocks.
+Enemy descriptions/relations come from the current theme; health, speed and
+contact harm come from difficulty-resolved definitions, displayed to two decimals
+and explicitly labelled game values. They are reference values, not every live
+actor's time/world/elite-scaled state. Previous/Next and PgUp/PgDn navigate;
+Tab/arrows switch sections and Escape returns. Reading is optional and changes
+no progress. No new fact, ranking, disposal/handling advice, discovered-material
+record, ID remap or permanent stat economy was selected. Existing environmental
+copy has not received a new factual review in this phase.
+
+[Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
+is current. G1–G4 are locally complete; new sprite generation remains unstarted.
+
+
+## Tool presentation and menu exit — 2026-10-23
+
+Owner selects bounded procedural suction/dust on eco vacuum pulses and snapping
+multi-prong Collection Sweep cues. Precise attack guides are presentation only,
+behind Show attack radius (default OFF). Actual hit selection, reach/caps, damage,
+clocks and material identities remain unchanged. Reduced motion/Low have quieter
+variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
+active run without counting a finished run or granting an unlock. Saved settings/
+progress remain. Generated sprite sheets remain in review and knight content
+stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
+## Owner-selected eco ranged role —2026-10-23
+
+Optional `enemy.ranged_attacker` maps only to eco **Takeaway Cup**. Familiar paper
+cup, sleeve and dark lid; fictional single coffee projectile. Stable gameplay
+capability/phase contracts are core, identity/tuning/sprite remain eco-owned.
+No corresponding knight role/copy is required or added while indefinitely paused.
+[Enemy sheet](enemies/TAKEAWAY_CUP.md) and [master](MASTER_BUILD_PLAN.md#ranged-enemy-2026-10-23)
+record role, live draft, timing and limits. Cigarette Butts stay weak groups.
+
+## Owner-selected money and cleanup expansion —2026-10-27
+
+[V0.4.5](BUILD_PLAN_V0.4.5.md) selects money as run leveling, separate saved Impact
+and shop, rare magnet/food/Impact drops affected by Fortune, aura vacuum/bin/orbit
+rakes, detrimental material fragmentation, opening Cigarette Butts, late natural
+Microplastics, fleeing litter-carrying rat, real active-wall run clock, and an
+isolated testing area with interactive equipment trees and currency editors.
+Stable historical experience/statistic IDs retain their meaning as earned run
+progress; schema3 adds Impact/shop with explicit migration. Game rewards are
+fiction, not a claim that all waste qualifies for a real container refund.
+Knights and Magic remains paused; no new educational disposal claims.
+
+V0.4.5 implementation record: `pickup.experience` is eco money; optional
+`pickup.magnet/food/impact` retain distinct collection effects. Optional
+`weapon.cleaning_bin`, `weapon.orbiting_rake`, `enemy.scavenger` are active only
+in eco. Cleanup capability data and fixed tracks remain theme-owned; core
+schedulers consume stable IDs. Evolved aura shares source tracks via declared
+additional owner IDs. Critical cap is opt-in; frozen content is unchanged.
+[Current tuning and playtest report](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+
+Owner correction2026-10-27: eco weapons now use one seven-level stepped path each.
+Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
+in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
+Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
+slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.
+
+
+Owner phase6 correction2026-10-27: cigarettes/cans never produce Microplastics;
+glass retains Glass Shards. Single-cigarette opening; later Microplastics own
+three-piece natural arrivals. Wrappers pursue airborne through other rubbish.
+Compacted Waste summons ordinary litter excluding Bagged Waste/Glass Bottles;
+Colossus varies light/heavy/pressure patterns and releases one mixed load below
+20%health. Boss attack summons pay independently; bounded death-fragment budgets
+remain separate. Rare item chances lower; rake regenerated for readability.
+All are game abstractions, with no new real-world disposal/material claims.
+[Current implementation/checks](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+
+## Historical implementation notes moved from build/EDUCATION_PIVOT.md
+
+Dated source notes below preserve the original decisions; later V0.4.5 amendments
+above supersede old identities/counts/clock/evolution.
+
+Q2 follow-up (2026-10-12): Microplastics now open the eco run; Plastic Bottles
+enter quietly at 10% progress (30 seconds on the five-minute timer) and ramp
+from ~6% to ~43% of calm natural spawn selection. At 0.5 gameplay rate this
+first unlock is about 60 real seconds into active play. Microplastics now pay
+1 XP as the common opening enemy; material health ordering stays unchanged.
+Bagged Waste still releases its fixed 2 bottles / 2 Microplastics / 1 glass mix
+pending owner confirmation. Site-event labels counter camera zoom at UI scale,
+and spent events disappear from the minimap. Spawn accounting distinguishes
+natural arrivals (including milestone waves), Fracture, Bagged Waste release,
+site effects (surge/duplication) and test loads; source means immediate creation,
+so ambient pressure modified by a shrine is still natural. No factual claims,
+new material identities or bitmap generation are introduced.
+
+Q4 (2026-10-13) makes ordinary opening Microplastics one-hit across difficulty
+presets by lowering their game health to 9. This is authored game balance, not
+a claim about environmental persistence. Starting stats in the sprite browser
+come from actual difficulty-resolved theme definitions. A future stat book should
+reuse those definitions/selectors and clearly distinguish authored, starting and
+live modified values; that future feature is not implemented here.
+
+
+## V0.4.3 C1 promotion — bounded second tool
+
+The selected content phase adds a short-cone Cleanup Vacuum beside the unchanged
+starter grabber. Two automatic slots; no manual switching or material matrix.
+Three direct targets and bounded on-hit neighbour splash are authored game rules,
+not sourced factual handling claims. The shared ledger names hit splash separately
+from on-kill detonation. Tool-owned upgrades remain in each theme's weapon data.
+No new enemy material, fact card, persistence or sprite is introduced here.
+
+
+### V0.4.3 C2 — secondary-tool evolution
+
+After four actual picks of its owned reach upgrade, the second tool can evolve
+through the normal level-up draw: Cleanup Vacuum → Cyclone Vacuum, Runic Fan →
+Runic Tempest. A distinct definition replaces the source in the same slot with
+its exact earned reach and existing attack clock. Shared upgrades stay shared;
+old owner entries retire and reset returns to the starting loadout. The evolved
+tool has a wider four-target cone and stronger bounded on-hit splash; theme
+weapons data owns every value. Quality tiers retain their gains but do not count
+as extra picks toward the condition. No paired-equipment subsystem, environmental
+fact/material-effectiveness claim, persistence or sprite generation is introduced.
+The education document's earlier max-level/paired-item example remains exploratory;
+this shipped condition uses the existing capped owner track instead.
+
+
+### V0.4.3 C3 — readable, voluntary pressure choices
+
+Unmanaged Dump adds a spatial Pollution/XP bargain. Overflow Contract and
+Contamination Pact are one-time normal level-up choices for more arrivals or
+more Pollution in exchange for XP, lasting only for that run. Their names and
+numeric effects are theme-owned game fiction, not environmental facts or
+material-effectiveness claims. No Knowledge Shrine/question or new enemy/material
+identity is introduced. The detail card prioritizes the actual reward and primary
+cost so the voluntary bargain stays readable under the three-line limit.
+
+C4 implementation boundary2026-10-20: elite family names describe authored game
+modifiers over existing material roles. Split/shield/acceleration adds no factual
+environmental claim, material/tool effectiveness table or new educational surface.
+
+
+### V0.4.3 C5 — bounded fictional encounters
+
+Compacted Waste and Dumping Colossus are readable mini/final encounter fiction,
+not persistence estimates, disposal advice or a promoted layered-material system.
+They use the same tool damage path as existing waste actors. Their marked circle
+teaches the immediate game action: move clear before the pulse. No knowledge
+question, content-source claim, type effectiveness, material layer or sprite
+inventory is added. Boss values and labels remain theme-owned.
+
+### Session21 selected correction — vacuum progression and feedback
+
+Owner selects increasing vacuum primary-target capacity as its own weapon upgrades
+advance, retaining a modest early cap. This is a planned game rule, not an
+educational/material-effectiveness claim. The C1/C2 three/four-target descriptions
+above remain the implemented baseline. Exact steps, finite ceiling and evolution
+carryover tuning need theme data and balance verification in Q6; growth must not
+be lost at evolution. Clarify pulse/cone feedback and investigate player pose
+alignment before further sprite generation. No new information surface, factual
+content, material identity or progression category is introduced here.
+
+## Australian rubbish and readable gameplay — 2026-10-21 planning amendment
+
+The [four-phase roadmap](MASTER_BUILD_PLAN.md#readable-gameplay-design-context) records the owner-requested
+priorities, source review, candidate roster and phase gates. The promotion here is
+planning direction, not implementation of the broader six-type/knowledge systems.
+Waste generation uses tonnes; surveyed litter uses item counts and a site sample.
+Neither measures combat harm. The >5mm hard-fragment row does not describe the
+existing Microplastics identity. Keep period/region/metric/denominator/source/review
+date with eventual facts; retain the two separate rankings.
+
+Outdoor prototypes prioritize Cigarette Butts, Packets/Wrappers and Aluminium Can,
+one proved decision at a time. Rubble/organics/cardboard/scrap are later site
+candidates; ash and hazardous waste remain industrial/containment candidates.
+New movement/attacks are fictional game behaviour. In particular, the legacy
+cigarette-on-death contamination idea is not selected: successful cleanup should
+not automatically create a harmful patch. Hazardous material is not ordinary
+vacuumable rubbish. Real handling claims require separate evidence and context.
+
+The existing guide is the only reference framework. Optional explanations follow
+recognizable interactions; no reading/quiz gate or new effectiveness matrix is
+introduced. Q6 remains first, followed by measured G1 rebalancing before growth.
+
+## Q6 implemented correction — 2026-10-21
+
+The second tool's own four reach picks each add one primary target, independent
+of rarity and unrelated levels:3→4→5→6→7. Evolution retains all four gains and
+adds its authored extra target (8). Splash remains finite and unchanged. The
+short filled cue marks a single pulse, followed by a faint historical outline
+and selected-hit rings; entering the fade causes no new damage. Frame-specific
+presentation anchors align player poses without editing accepted art or bodies.
+This supersedes the earlier fixed3/4 and pending-Q6 wording. No environmental
+fact, effectiveness matrix, persisted state or new sprite is added.
+[Verification and limits](content/Q6_REPORT.md). G1 enemy tuning follows this gate.
+
+## G1 accepted balance — 2026-10-21
+
+After verified Q6, the existing-roster comparison selects only eco Glass armour
+40→20 and its director base weight12→8. Glass retains96health, slow70movement,
+9contact harm and7XP; the health ordering/material relationships stay intact.
+The calm late natural selection mix is approximately45%Bottle/30%Microplastics/
+11%Glass/14%Bagged, replacing the historical43/28/16/13rounded mix. These are game
+weights, never litter-survey probabilities. Microplastics still open one-hit;
+Bottles remain the numerical baseline, Shards stationary/clearable and bag
+families finite. Knight tuning, other roles, weapon damage, progression, presets,
+cap300 and rate0.5 stay unchanged. No new content, art, facts or saved IDs.
+[G1_REPORT](content/G1_REPORT.md) separates corrected-model effects from tuning,
+retains all scenarios and records the bounded local gate and its limits. G1 is
+locally complete; G2–G4 and sprite generation remain unstarted.
+
+## G2A weak groups — kept locally 2026-10-22
+
+`enemy.cluster_fodder` maps to eco Cigarette Butts and knight Ashling. Individual
+weak actors approach slowly in groups of three; clear a narrow lane or catch the
+group in a cone. First introduction at25% is three retained requests, then sparse
+natural groups.6HP/64speed/3harm/1XP are game tuning, unrelated to surveyed item
+percentages or factual toxicity/persistence. Visible pale/orange primitive parts
+and separate20px bodies replace neither Microplastics nor any material family.
+No post-cleanup contamination patch, new art, saved discovery or effectiveness
+matrix. Both themes retain all prior tuning/contracts and rate0.5/cap300.
+
+[Reviewed plan](MASTER_BUILD_PLAN.md#readable-gameplay-g2), [candidate report](content/G2A_REPORT.md).
+G2A is locally complete; G2 remains in progress. Packets/Wrappers are next under
+a separate reviewed claim; Can/G3/G4 and sprite generation remain unstarted.
+
+## G2B wrapper role — local keep 2026-10-22
+
+`enemy.gust_drifter`: eco Packets / Wrappers; knight Paper Wisp. One introduction
+at32% and sparse later arrivals. Approach → visible fixed-bearing warning → short
+oblique gust → stationary recovery gives an interception choice. Generic capability,
+theme-owned timings/stats/essential cue, code-native packet silhouette. Fictional
+movement/harm, no real handling/abundance claim, automatic waste patch, new guide
+surface, sprite or save field. Existing material families/IDs unchanged.
+[G2B_REPORT](content/G2B_REPORT.md) records keep and measured limits. Can next;
+G2 in progress, G3/G4/art unstarted. Historical earlier status remains historical.
+
+## G2C kept / G2 complete — 2026-10-22
+
+`enemy.committed_charger`: eco Aluminium Can; knight Barrel Construct. A visible
+fixed line captures the player's old position, then a fast direct roll passes it
+and stops for recovery. Sideways movement avoids that route; cleanup rewards the
+return. This differs from the wrapper's oblique gust and weak-group lane clearing.
+One introduction at55%, sparse natural weight2; timings/stats/cue/body/presentation
+are theme-authored and use the shared capability. The primitive can's body/label/
+end caps are code-native presentation, never physics input. No generated art,
+material/harm/handling fact, new information surface, saved field or ID remap.
+
+All three G2 candidates are locally kept; G2 scoped gate complete. [G2C_REPORT](content/G2C_REPORT.md) owns source/checks/trade-offs and aided-fixture limits.
+[G3 master record](MASTER_BUILD_PLAN.md#readable-gameplay-g3) is written/reviewed. G3 ready/unstarted;
+G4/art unstarted, external evidence still deferred/waived/unverified. This is the
+current state; earlier staged continuation paragraphs are historical checkpoints.
+
+## G3 rhythm and informed voluntary pressure — 2026-10-22
+
+Locally kept after owner-requested execution: shared later roles unlock25/34/44/
+52/60%, mini72%, baseline elites82%, final100%. Eco Microplastics0/Bottle10 and
+knight Grunt0/Runner20 remain distinct. First Glass/Tank4, Bag/Broodmother2 use
+existing retained causal introductions. Five optional sites at16/40/66/84/90%
+replace the repeated Multiplicity arrival; definitions/cost/reward values stay.
+
+Existing prompts now name the choice and show resolved current-world arrivals,
+durability/harm/XP/elite chance before acceptance; walk away to ignore. Named
+edge pointers remain, with distinct minimap site diamonds and a shorter authored
+placement band. Bosses stop pursuit during their fixed-circle warning, then resume
+in recovery; no new attack/counter/health/damage/body. These are game decisions,
+not real material/handling/abundance claims. No quiz, currency, new roster, saved
+field/ID, guide framework or sprite work. [G3_REPORT](content/G3_REPORT.md) records
+verification, pressure/XP trade-offs and aided/timed model limits. G3 locally
+complete; [reviewed G4 handoff](MASTER_BUILD_PLAN.md#readable-gameplay-g4) is current, G4/art unstarted.
+
+## G4 — useful reviews and optional reference / 2026-10-22
+
+Locally verified G4 adds a concise run review: actual committed direct/splash
+damage by tool, other effects as the remaining partition, recorded voluntary
+site/curse pressure and an attainable next experiment. The old damage ledger,
+metrics and upgrade tally remain in Details (click or Tab); R/Enter restarts.
+A death source describes the recorded final hit at elapsed time, including
+endless overtime; it is not a diagnosis of the whole run. Final-boss success
+appears only from its recorded flag and can coexist with a later death.
+
+Info and the pause Field Guide/Grimoire now include one paged enemy entry at a
+time and read-only progress toward the existing finished-attempt/kill unlocks.
+Enemy descriptions/relations come from the current theme; health, speed and
+contact harm come from difficulty-resolved definitions, displayed to two decimals
+and explicitly labelled game values. They are reference values, not every live
+actor's time/world/elite-scaled state. Previous/Next and PgUp/PgDn navigate;
+Tab/arrows switch sections and Escape returns. Reading is optional and changes
+no progress. No new fact, ranking, disposal/handling advice, discovered-material
+record, ID remap or permanent stat economy was selected. Existing environmental
+copy has not received a new factual review in this phase.
+
+[Report](content/G4_REPORT.md) owns checks/limits; [next handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md)
+is current. G1–G4 are locally complete; new sprite generation remains unstarted.
+
+
+## Tool presentation and menu exit — 2026-10-23
+
+Owner selects bounded procedural suction/dust on eco vacuum pulses and snapping
+multi-prong Collection Sweep cues. Precise attack guides are presentation only,
+behind Show attack radius (default OFF). Actual hit selection, reach/caps, damage,
+clocks and material identities remain unchanged. Reduced motion/Low have quieter
+variants. Escape pause menu adds pointer/Q Quit to Main Menu; it abandons the
+active run without counting a finished run or granting an unlock. Saved settings/
+progress remain. Generated sprite sheets remain in review and knight content
+stays paused. [Implementation record](MASTER_BUILD_PLAN.md#tool-presentation-2026-10-23).
+
+## Owner-selected money and cleanup expansion —2026-10-27
+
+[V0.4.5](BUILD_PLAN_V0.4.5.md) selects money as run leveling, separate saved Impact
+and shop, rare magnet/food/Impact drops affected by Fortune, aura vacuum/bin/orbit
+rakes, detrimental material fragmentation, opening Cigarette Butts, late natural
+Microplastics, fleeing litter-carrying rat, real active-wall run clock, and an
+isolated testing area with interactive equipment trees and currency editors.
+Stable historical experience/statistic IDs retain their meaning as earned run
+progress; schema3 adds Impact/shop with explicit migration. Game rewards are
+fiction, not a claim that all waste qualifies for a real container refund.
+Knights and Magic remains paused; no new educational disposal claims.
+
+
+Owner correction2026-10-27: eco weapons now use one seven-level stepped path each.
+Orbiting Shovels replace the orbiting-rake identity; Rake Sweep travels outward
+in movement/last facing direction. Cleanup Vacuum has no Cyclone evolution.
+Bin art is character-sized; its landing DOT/burst remains. Map-magnet pull starts
+slow and accelerates. See [current report](content/MONEY_TOOLS_SANDBOX_REPORT.md) for tuning and acceptance.
+
+
+Owner phase6 correction2026-10-27: cigarettes/cans never produce Microplastics;
+glass retains Glass Shards. Single-cigarette opening; later Microplastics own
+three-piece natural arrivals. Wrappers pursue airborne through other rubbish.
+Compacted Waste summons ordinary litter excluding Bagged Waste/Glass Bottles;
+Colossus varies light/heavy/pressure patterns and releases one mixed load below
+20%health. Boss attack summons pay independently; bounded death-fragment budgets
+remain separate. Rare item chances lower; rake regenerated for readability.
+All are game abstractions, with no new real-world disposal/material claims.
+[Current implementation/checks](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+
+## Historical implementation notes moved from build/SAVE_DATA.md
+
+Dated source notes below preserve the original decisions; later V0.4.5 amendments
+above supersede old identities/counts/clock/evolution.
+
+## Q1 difficulty setting seam
+
+Session settings now include the stable `difficulty` value `beginner`, `normal`
+or `experienced`, defaulting to `normal`. Active run state snapshots this ID at
+creation; changing the session selection affects the next run. No storage adapter
+or migration is introduced here. Future profile/import validation must allow
+only those IDs and supply `normal` for older settings without the field, while
+retaining the ordinary backup/confirmation requirements above.
+
+## V0.4.3 C6 implementation checkpoint /2026-10-20
+
+Browser-local schema2 now retains six settings, terminal-only lifetime statistics,
+completed/death counts, longest run and stable identity/unlock IDs. Both themes
+unlock the existing secondary tool after one finished run and bloodlust after25
+finished-run kills, affecting the next run only. These are the planned mechanical
+content unlocks, distinct from exploratory educational cosmetic feats. No permanent
+stat bonus, active-run suspension, sprite or new factual content is added.
+Corrupt storage is preserved; denied/quota storage falls back to memory with visible
+warnings. Schema1 migration is deterministic. C7 portable export/import/preview/
+explicit backup recovery remains next; use the same validated profile model.
+
+## G2A compatibility note — 2026-10-22
+
+New neutral enemy ID `enemy.cluster_fodder` adds content only. No existing ID,
+schema2 field, profile adapter, unlock or discovery record is changed. Current
+portable unknown-ID preservation remains; no migration is required for this
+addition. G2A reruns affected profile/codec/replacement units as part of its278
+unit gate. This does not imply implementation of saved discoveries or new fields.
+
+## G2B compatibility — 2026-10-22
+
+`enemy.gust_drifter` is an additive content ID with actor-local transient motion.
+No saved ID remap, schema/field/migration/profile/unlock/discovery change. Existing
+unknown-ID portable round trips still pass in the affected persistence suite.
+
+## G2C compatibility / complete roster — 2026-10-22
+
+`enemy.committed_charger` is additive content, with fresh actor-local transient
+motion; no field/schema/profile/migration/import/export/unlock/discovery change.
+Existing IDs and unknown-ID round trips retain their meanings. Final686unit suite
+includes current persistence compatibility; no saved discovery system is implied.
+
+## G4 compatibility — 2026-10-22
+
+`RunStatistics.damageByWeapon` is transient run-local actual direct/splash damage.
+Session/profile folding still selects existing aggregate fields explicitly; no
+per-tool map enters schema2, exports, import previews or backups. No stable ID,
+unlock rule, setting, adapter, migration or discovery field changes. Results use
+the already-folded current profile for advice, and redraw/tab/resize/guide reads
+never fold/grant/write. Reset clears the map. Existing persistence/portable-save/
+replacement/unknown-ID units pass; browser fixtures demonstrate one terminal fold,
+read-only redraws, exact memory-adapter reload and restart. No portable save UI
+changed, so a new import/export browser campaign was not needed.
+
+
+## Additive attack-guide preference — 2026-10-23
+
+Schema2 settings now permit optional boolean showAttackRadius. Absent historical
+schema2 values hydrate false through createSettings; schema1 migration inherits
+that default. Present nonboolean values reject before hydration/storage replacement.
+New profiles/settings writes/export include the boolean; the current canonical
+codec round-trips it. Other unknown settings still reject and all prior required
+settings remain required. No schema bump, adapter or stable-ID change. Earlier
+strict binaries may reject exports containing the new setting; downgrade import
+compatibility is not promised. Quitting to menu does not call finished-run folding
+or grant finish-based unlocks; existing profile/settings remain authoritative.
+
+## Optional ranged content —2026-10-23
+
+`enemy.ranged_attacker` is an additive eco enemy ID with transient actor/shot state.
+No persistent field, schema2 adapter/migration, unlock, discovery or import/export
+change. Existing unknown-ID preservation remains; current full persistence units
+pass. Frozen knight content does not acquire the new optional role.
+
+## Owner-selected money and cleanup expansion —2026-10-27
+
+[V0.4.5](BUILD_PLAN_V0.4.5.md) selects money as run leveling, separate saved Impact
+and shop, rare magnet/food/Impact drops affected by Fortune, aura vacuum/bin/orbit
+rakes, detrimental material fragmentation, opening Cigarette Butts, late natural
+Microplastics, fleeing litter-carrying rat, real active-wall run clock, and an
+isolated testing area with interactive equipment trees and currency editors.
+Stable historical experience/statistic IDs retain their meaning as earned run
+progress; schema3 adds Impact/shop with explicit migration. Game rewards are
+fiction, not a claim that all waste qualifies for a real container refund.
+Knights and Magic remains paused; no new educational disposal claims.
+
+
+V0.4.5 implemented locally: `ProfileState.economy = { impact, upgrades }`, schema3.
+`impact` is a nonnegative bounded integer; shop upgrades are stable string IDs
+with bounded integer levels, unknown IDs preserved but not applied. Schema2 adds
+empty economy; schema1 uses its existing migration into current defaults. Shop
+purchases/save import/export/backup use the existing profile validation/storage
+adapter. Old run XP/stat IDs remain unchanged; money is run-local. Impact pickup
+credits save immediately; new-run bonuses read only known shop definitions and
+clamp to authored caps. Testing area initializes its own memory adapter before
+constructing the arena; its currency/shop/editor/reset never writes the normal
+profile. Normal outside-run shop uses the real adapter. See REC-133–135 and the
+[V0.4.5 report](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+
+
+2026-10-27 phase4: no schema change. Historical `weapon.orbiting_rake` now displays
+Orbiting Shovels at owner direction; new `weapon.rake_beam` is Rake Sweep. Removed
+active tool tracks/Cyclone IDs remain retained in saved history and statistics.
+Run-selected picks are transient; no saved run build requires migration. General
+stats, Impact/shop and isolated sandbox persistence retain their contracts.
+
+
+## Build-document consolidation — 2026-10-27
+
+Completed status/progress repetition was moved to the
+[historical progress log](logs/PROGRESS_HISTORY_20261027.md). Original product
+specification/content-map/optional-menu context is preserved in the
+[design history log](logs/PRODUCT_DESIGN_HISTORY_20261027.md). These preserve
+superseded proposals as history, not approval or evidence of implementation.
+Active authorities were rewritten to distinguish live code, unbuilt proposals,
+retired designs, verification gaps and the frozen theme. Detailed report/raw
+art/performance evidence stays in its original locations. Pre-existing local
+progression research remains unstaged and is identified as a dated draft.
+
+
+<a id="elite-guide-doc-audit"></a>
+## V0.4.5 phase7 — Elite Identities and build-document reconciliation
+
+Owner-selected2026-10-27. Field Guide gains an eco-only Elites section at title
+and pause, covering standard/no-symbol, Dispersing2, Wrapped◇ and Rolling» with
+actual shared health/damage/reward/size modifiers. Selector derives explanations
+from active definitions; theme owns wording. Optional copy/section preserves the
+frozen pack; no combat/tuning/save/art changes.
+
+All64pre-existing build Markdown files plus root progress were indexed, with
+current authorities reconciled to live code, dated evidence kept historical,
+completed phase notes moved here, and superseded product/progress documents
+preserved in build/logs. Current [status](BUILD_STATUS.md),
+[handoff](NEXT_READABLE_GAMEPLAY_HANDOFF.md),[product](PLAN.md),
+[content map](ECO_CONTENT_MAP.md),[remaining work](REMAINING_WORK.md) and
+[per-file audit](DOCS_AUDIT_20261027.md) replace the contradictory running appendices.
+Research draft/retired prompt/REC-132local edits are preserved unstaged, not adopted.
+
+743units/81files, types/lint/build and one focused serial real-Phaser browser case
+pass, zero retries. Dynamic modifier/source checks and missing optional-guide
+behaviour are covered. Pause/title/small viewport/scroll/fixed footer inspected.
+Initial browser assertions passed but cleanup called a nonexistent destroy method;
+fixture cleanup corrected to hide(), then the case passed. Final local Markdown
+file/anchor audit passes. Existing bundle-size advisory remains. Heavy full-app/
+stress/soak/device/current-head CI and a fresh production guard were deferred under
+the local resource budget, not marked passed; no new remote or device evidence.
+Owned browser/server cleaned. Next owner confirmation is which unbuilt proposals
+remain desired; no future feature or publication is selected by this audit.
+
+### Original phase7 ownership claim (completed)
+
+## Owner phase7 — Elite guide and build-document reconciliation, claimed2026-10-27
+
+Add eco Field Guide Elite Identities, available from title and pause, displaying
+actual active elite markers/modifiers with theme-owned explanations. Optional
+copy/section preserves frozen pack. Own optional copy contracts, eco copy, shared
+codex selector/pause UI, tests, documentation consolidation and audit. No combat,
+tuning, save, sprite or frozen-theme change. Audit every build Markdown file;
+move completed implementation records to the master build log, retain historical
+sources/evidence and separate genuinely unbuilt proposals from built-but-unverified
+acceptance. Preserve pre-existing local progression-research edits unstaged;
+record their dated snapshot limits without implementing them.
+Checks: units/types/lint/build, focused serial title/pause guide acceptance,
+Markdown file/anchor link audit and per-document disposition inventory. Existing
+full browser/stress/device/CI remain deferred. No publication.
+- [x] Phase7 Elite guide, consolidated build logs and owner remaining-work audit.
+
+## Completed-work PR preparation — 2026-10-29
+
+Owner selected publication of all completed branch work as a PR into `main`.
+Bounded claim: Git/PR metadata; current plan/status/progress/handoff/master and
+reconciliation; completed progression report/REC-132/retired prompt. No runtime,
+tuning, art, save or frozen-theme edits. Remote inspection found main an ancestor,
+23completed commits ahead before this record, no existing PR. Completed research
+is archived with a prominent dated732080a baseline warning, not adopted as current
+slot/evolution/clock authority or passive-system approval.
+
+Fresh verification:743unit tests/81files, typecheck, lint, production build,
+34sprite sheets and whitespace pass. Existing bundle-size advisory remains.
+Full browser regression runs in PR CI; obsolete fixtures remain a possible
+follow-up. No new local heavy browser campaign, stress/soak or external device
+checks claimed. Overall owner acceptance remains open. Normal push/PR publication
+selected; merge and deployment are not. See REC-140 and current status for limits.
+
+## PR30 CI repair checkpoint — 2026-10-29
+
+Failed run40825861165 on517f420 stopped at the exact-atlas unit test's5s limit:
+742other units passed and browser steps were not reached. Replaced generic deep
+Buffer comparisons with native byte equality, retaining every selected/accepted
+file comparison, every RGBA row, frame counts/dimensions and atlas bounds. No
+assets, runtime, timeouts, retries or frozen-theme files changed. Focused7sprite
+tests pass in556ms total; full743units/81files pass in1.78s locally. Types/lint/
+build/34sprite checks/whitespace pass; existing bundle advisory remains.
+Matching-head Actions must now reach and verify later steps; full CI repair is
+not yet complete. No heavy local browser campaign was run for this unit fix.
+
+## PR30 browser-fixture repair checkpoint — 2026-10-29
+
+Reconciled old Eco group/gust/cone/evolution/money-art assumptions with the active
+owner-selected contracts. Cumulatively21distinct focused eco/generic cases pass
+serially with zero retries, including4sandbox/shop cases with portable capture
+paths. Lint/types/whitespace pass; unit/runtime/art files unchanged after the
+verified unit repair. Audit high gate passes with2existing moderate Vitest
+findings. No timeouts/retries increased or frozen pack edited. Full matching-head
+CI remains pending; run40828495077 is still completing its browser campaign.
+[Repair report](performance/PR30_CI_REPAIR.md) records reproduction and scope.
+
+## Runtime repair and remaining-fixture checkpoint — 2026-10-29
+
+Superseded run40828495077 was canceled to release diagnostics after over20minutes
+of browser work; it is partial evidence, not a full failure/pass summary. Its
+listed failures were reproduced serially. Two actual runtime defects fixed:
+material selection now draws one child ID before lookup (previous changing RNG
+inside find could exhaust the list and crash boss kills), and preset scaling
+now survives nested authored weapon/cleanup level resolution. No tuning values
+changed. Every Eco weapon at all7levels/all3presets is covered; changing-RNG
+mini-boss runtime asserts exactly one choice per child and expected material IDs.
+The separation-only coincidence diagnostic excludes intentionally airborne actors.
+
+Additional fixtures now follow current idle frames, single-cigarette opening,
+late microplastic drift/group waves, proactive money merges, fixed upgrade pool,
+clean critical shrine rewards, boss attack summons, nonrecursive paid Bagged
+Waste fragments and live-keyboard/fixed-clock aided scenes. Historical Bagged
+five-child fixture preserved in build/history. No frozen pack/art/save changes,
+new skips, timeout or retry increases. Cumulative41distinct focused cases pass
+serially without retries. Full744units/81files pass; final diagnostic seam also
+passes24focused architecture/separation units. Types/lint/build/34sprite checks,
+whitespace and production guard pass (PR30_PRODUCTION_CHECK.json). Existing
+bundle advisory and2moderate audit findings retain prior status. Owned local
+servers/browsers cleaned. Matching-head full Actions still required after push;
+no overall owner/device/performance acceptance or merge/deployment inferred.
+
+## Hosted-renderer timing follow-up — 2026-10-29
+
+Completed run40830296454/c95d6f5 reports136passes/6existing opt-in skips/20failures
+and1flaky contact case. The runtime/fixture repair169c17f addresses18failures;
+the last two are the1.5s wall-window gait sample and monolithic sandbox30s test.
+Bounded follow-up owns sprites.spec.ts, testing-area-v045.spec.ts and
+phase-three.spec.ts plus these records. Use a controlled RAF clock with real
+physics/input/rendering to observe all4walk poses; split sandbox money/isolation,
+active-clock/lag and tree/mixed-combat into3independent cases, retaining assertions.
+Contact validation keeps its successful immunity/health snapshot atomically,
+rather than re-reading after the active-wall immunity window may expire.
+No increased test timeout/retries, new skips or gameplay changes.5focused cases
+pass serially/zero retries (28.6s total), types/lint/whitespace pass. Earlier
+744units/build/production evidence remains unchanged. Push and inspect final-head
+CI; full current-head browser/audit acceptance remains pending until it completes.
+
+## Observed intermittent input/reward follow-up — 2026-10-29
+
+Run40832103795/169c17f reports153passes/6existing opt-in skips/2timing failures
+(already addressed by b7e8e98) and2flaky paths: paused difficulty navigation lost a
+zero-duration Tab press; the surge reward fixture had no in-reach kills within
+its fixed wall window. Own difficulty-v043.spec.ts and phase-six.spec.ts plus
+repair records. Hold Tab/choice keys until their real game result is observed,
+then release in finally; place scripted surge enemies within reach instead of
+waiting on slow-runner travel. Keep real damage, provenance, exact rewards,
+100arrivals and restart assertions.2focused cases pass serial/zero retries (7.5s),
+types/lint/whitespace pass. No source/tuning/art/save changes, increased limits or
+new skips. Push final fixture follow-up; matching-head full CI remains pending.
+
+## Completed-run trace repair — 2026-10-30
+
+Fully completed run40834008030 (7559741):156passed,2failed sandbox cases,
+1menu retry pass,6existing opt-in skips. Downloaded browser-failures traces
+show~3.2s per native checkbox and~2s per pointer click;30s expired during
+fixture setup, not a failed gameplay assertion. Sandbox loadout/spawn setup
+now batches existing DOM change handlers, re-querying rebuilt checkbox nodes.
+Native upgrade/root clicks, spawn/resume/clear, exact actor count, bounded field,
+clock, screenshot, save isolation and error assertions remain. Menu Tab stays
+held until the observed tab changes, then releases in finally. This is fixture
+setup coverage; it does not claim native checkbox pointer coverage in these two
+cases. Other sandbox checkbox interactions remain unchanged. No runtime,
+art/tuning/save/frozen-pack edits, increased limits/retries or new skips.
+
+3affected cases pass serially/zero retries (15.2s); types/lint/whitespace pass.
+744unit and prior production evidence are unchanged historical checks; this
+test-only batch relies on the upcoming full Actions run for fresh full gates.
+Push once, then wait until that matching-head run fully completes before any
+further repair. No remote runs canceled or concurrent repair pushes.

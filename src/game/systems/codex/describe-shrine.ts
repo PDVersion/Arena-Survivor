@@ -122,7 +122,7 @@ export interface CodexEnemyEntry {
 
 /** Enemy catalogue data comes only from live definitions and their themed copy. */
 export function selectEnemyCodex(
-  theme: Pick<ThemeManifest, "enemies" | "copy">,
+  theme: Pick<ThemeManifest, "enemies" | "copy" | "economy">,
 ): readonly CodexEnemyEntry[] {
   const enemyName = (id: EnemyId) => theme.copy.content[id]?.name ?? id;
   return Object.freeze(theme.enemies.map((enemy) => {
@@ -132,10 +132,10 @@ export function selectEnemyCodex(
         kind: "fractures_into" as const,
         enemyId: enemy.fragmentInto,
         name: enemyName(enemy.fragmentInto),
-        count: 1,
+        count: theme.economy?.fragmentation.childCount ?? 1,
       }));
     }
-    for (const child of enemy.deathSpawns ?? []) {
+    for (const child of theme.economy ? [] : enemy.deathSpawns ?? []) {
       relations.push(Object.freeze({
         kind: "releases_on_death" as const,
         enemyId: child.enemyId,
@@ -235,4 +235,30 @@ export function describeShrineChoice(
   if (shrine.effectKind === "duplicate_living") lines.push(`${theme.copy.codex.duplicates}: ${eligibleLivingCount}`);
   if (shrine.effectKind !== "world_multiplier") lines.push(`${theme.copy.codex.reward}: ${multiplier(shrine.rewardMultiplier * after.shrineRewardMultiplier)}`);
   return lines.join("\n");
+}
+
+
+export interface CodexEliteEntry {
+  readonly id: string; readonly marker: string; readonly name: string;
+  readonly description: string; readonly effects: readonly CodexEffect[];
+}
+/** Reads the same live modifiers as combat, with optional theme-owned explanatory copy. */
+export function selectEliteCodex(theme: Pick<ThemeManifest, "elites" | "copy">): readonly CodexEliteEntry[] {
+  const copy = theme.copy.eliteGuide;
+  if (!copy) return [];
+  const format = (template: string, values: Readonly<Record<string, string | number>>) =>
+    template.replace(/\{(\w+)\}/g, (match, key: string) => String(values[key] ?? match));
+  return theme.elites.map((elite) => ({
+    id: elite.id, marker: elite.marker ?? copy.noMarker, name: elite.name ?? copy.standardName,
+    description: elite.split ? format(copy.split, { count: elite.split.childCount, depth: elite.split.maxDepth, reward: multiplier(elite.split.rewardMultiplier) })
+      : elite.shield ? format(copy.shield, { damage: round(elite.shield.damageMultiplier * 100), health: round(elite.shield.untilHealthFraction * 100) })
+      : elite.acceleration ? format(copy.acceleration, { speed: multiplier(elite.acceleration.maxSpeedMultiplier), seconds: round(elite.acceleration.durationMs / 1000) })
+      : copy.standardDescription,
+    effects: [
+      { label: copy.health, display: multiplier(elite.healthMultiplier) },
+      { label: copy.harm, display: multiplier(elite.damageMultiplier) },
+      { label: copy.money, display: multiplier(elite.rewardMultiplier) },
+      { label: copy.size, display: multiplier(elite.radiusMultiplier) },
+    ],
+  }));
 }

@@ -27,14 +27,14 @@ test("sprite browser freezes every frame, compares the set, filters and retains 
   await expect(page.locator(".card")).toHaveCount(1);
   await page.locator(".card").click();
   await expect(page.locator("#selected-pose")).toHaveAttribute("data-loaded", "true");
-  await expect(page.locator("#frame-caption")).toContainText("Frame 3");
+  await expect(page.locator("#frame-caption")).toContainText("Frame 0");
   expect(errors).toEqual([]);
 });
 
 test("sprite browser exposes fallbacks and exports review data", async ({ page }) => {
   await page.goto("/sprite-browser.html");
   await page.locator("#art").selectOption("fallback");
-  await expect(page.locator(".card").first()).toContainText("Primitive fallback");
+  await expect(page.locator(".card")).toHaveCount(0);
   const downloaded = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export reviews" }).click();
   expect((await downloaded).suggestedFilename()).toBe("arena-sprite-reviews.json");

@@ -241,6 +241,7 @@ export function simulatePacing(options: PacingOptions): PacingReport {
       weaponCooldownMs: weapon.cooldownMs,
       baseCritChance: character.baseStats.critChance,
       critDamage: character.baseStats.critDamage,
+      cappedCrit: Boolean(theme.economy),
       liveEnemies: liveCount(),
       collectionSweep,
     };
@@ -307,10 +308,10 @@ export function simulatePacing(options: PacingOptions): PacingReport {
     themeId: theme.id,
     buildId: options.build.id,
     durationMs: options.durationMs,
-    gameplayRate: theme.tuning.pace.gameplayRate,
+    gameplayRate: theme.economy ? 1 : theme.tuning.pace.gameplayRate,
     expectedRealDurationMs: expectedRealDurationMs(
       options.durationMs,
-      theme.tuning.pace.gameplayRate,
+      theme.economy ? 1 : theme.tuning.pace.gameplayRate,
     ),
     chaos: world.chaos,
     buckets: Object.freeze(buckets),
@@ -366,6 +367,7 @@ export function timeToKillTable(report: PacingReport, options: PacingOptions): r
         weaponCooldownMs: weapon.cooldownMs,
         baseCritChance: character.baseStats.critChance,
         critDamage: character.baseStats.critDamage,
+      cappedCrit: Boolean(theme.economy),
         liveEnemies: bucket.liveEnemies,
         collectionSweep: theme.skills?.find((entry) => entry.id === archetypeIds.skill.collectionSweep)?.effects?.find((effect) => effect.kind === "collection_sweep"),
       });

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { runtimeFrame, runtimeTextureKey } from "../systems/sprites/runtime-sprite";
 import type { SpawnCounts } from "../systems/statistics/spawn-statistics";
 import type { ThemeManifest } from "../core/archetypes/contracts";
 import type { RunState } from "../state/run-state";
@@ -6,6 +7,7 @@ import { selectHudValues } from "../state/statistics";
 import { addUiText, configureUiContainer, uiViewport } from "./ui-text";
 
 export interface HudExtras {
+  readonly savedCurrency?: { readonly name: string; readonly value: number };
   readonly spawnCounts: SpawnCounts;
   /** Discrete elapsed-time escalation step. */
   readonly threatStep: number;
@@ -16,6 +18,7 @@ export interface HudExtras {
 }
 
 interface HudTextInputs {
+  savedCurrency: number | undefined;
   health: number;
   maxHealth: number;
   xp: number;
@@ -51,6 +54,8 @@ export class Hud {
   private readonly container: Phaser.GameObjects.Container;
   private readonly barLeft: number;
   private readonly uiTop: number;
+  private readonly toolIcons: Phaser.GameObjects.Image[] = [];
+  private toolSignature = "";
   private textInputs?: HudTextInputs;
 
   private static readonly BAR_WIDTH = 200;
@@ -145,6 +150,23 @@ export class Hud {
   }
 
   update(state: RunState, extras: HudExtras): void {
+    const signature = state.weaponSlots.map((slot) => slot.weaponId).join(",");
+    if (signature !== this.toolSignature) {
+      this.toolSignature = signature;
+      for (const icon of this.toolIcons) icon.destroy();
+      this.toolIcons.length = 0;
+      for (const slot of state.weaponSlots) {
+        const sprite = this.theme.tokens.sprites?.[slot.weaponId];
+        if (!sprite || !this.scene.textures.exists(runtimeTextureKey(sprite))) continue;
+        const size = 40;
+        const scale = size / Math.max(sprite.frameWidth, sprite.frameHeight);
+        const icon = this.scene.add.image(this.barLeft + this.toolIcons.length * 48,
+          this.uiTop + Hud.XP_BAR_Y + 64, runtimeTextureKey(sprite), runtimeFrame(sprite, 0))
+          .setOrigin(0, 0.5).setDisplaySize(sprite.frameWidth * scale, sprite.frameHeight * scale).setScrollFactor(0);
+        this.container.add(icon);
+        this.toolIcons.push(icon);
+      }
+    }
     const previous = this.textInputs;
     const health = Math.ceil(state.player.health);
     const maxHealthText = Math.ceil(state.player.stats.maxHealth);
@@ -157,6 +179,7 @@ export class Hud {
     const counts = extras.spawnCounts;
     if (!previous || previous.health !== health || previous.maxHealth !== maxHealthText ||
         previous.xp !== progression.xp || previous.requiredXp !== progression.xpToNextLevel ||
+        previous.savedCurrency !== extras.savedCurrency?.value ||
         previous.level !== progression.level || previous.clockSecond !== clockSecond ||
         previous.mode !== state.mode || previous.status !== state.status ||
         previous.difficulty !== state.difficulty || previous.kills !== statistics.kills ||
@@ -165,6 +188,7 @@ export class Hud {
         previous.natural !== counts.natural || previous.fragmentation !== counts.fragmentation ||
         previous.environment !== counts.environment || previous.baggedWaste !== counts.baggedWaste) {
       this.textInputs = {
+        savedCurrency: extras.savedCurrency?.value,
         health, maxHealth: maxHealthText, xp: progression.xp, requiredXp: progression.xpToNextLevel,
         level: progression.level, clockSecond, mode: state.mode, status: state.status,
         difficulty: state.difficulty, kills: statistics.kills, enemies: statistics.liveEnemies,
@@ -205,6 +229,7 @@ export class Hud {
     if (extras.killChain > 1) {
       right.push(`${vocabulary.largestKillChain}: ${extras.killChain}`);
     }
+    if (extras.savedCurrency) right.push(`${extras.savedCurrency.name}: ${extras.savedCurrency.value}`);
     this.right.setText(right);
 
     this.levelLabel.setText(`${vocabulary.level} ${values.level}`);

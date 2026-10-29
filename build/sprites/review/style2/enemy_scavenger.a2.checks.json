@@ -1,0 +1,87 @@
+{
+  "source": "build/sprites/raw/enemy_scavenger.a2.png",
+  "sourceSha256": "600b1eb41a9c75b6433e771fe632c1c9beca505d52d5d13d7e39f4fd4693953d",
+  "output": "build/sprites/review/style2/enemy_scavenger.a2.png",
+  "outputSha256": "373a5fab121d744402636a36fccb114693f31e918b2569bfc85698097a1b1939",
+  "width": 256,
+  "height": 64,
+  "issues": [],
+  "frames": [
+    {
+      "frame": 0,
+      "left": 6,
+      "top": 17,
+      "width": 53,
+      "height": 31,
+      "opaquePixels": 1004
+    },
+    {
+      "frame": 1,
+      "left": 3,
+      "top": 14,
+      "width": 58,
+      "height": 35,
+      "opaquePixels": 1072
+    },
+    {
+      "frame": 2,
+      "left": 9,
+      "top": 12,
+      "width": 46,
+      "height": 40,
+      "opaquePixels": 1003
+    },
+    {
+      "frame": 3,
+      "left": 2,
+      "top": 17,
+      "width": 60,
+      "height": 29,
+      "opaquePixels": 964
+    }
+  ],
+  "recipe": {
+    "contentId": "enemy.scavenger",
+    "source": "build/sprites/raw/enemy_scavenger.a2.png",
+    "output": "build/sprites/review/style2/enemy_scavenger.a2.png",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "background": "transparent",
+    "keepLargestComponentPerFrame": true,
+    "outlineWidth": 2,
+    "palette": [
+      [
+        "#172d3c",
+        "#475569",
+        "#94a3b8",
+        "#e2e8f0"
+      ],
+      [
+        "#713f12",
+        "#ca8a04",
+        "#facc15",
+        "#fef08a"
+      ],
+      [
+        "#14532d",
+        "#16a34a",
+        "#86efac",
+        "#dcfce7"
+      ],
+      [
+        "#7f1d1d",
+        "#dc2626",
+        "#fb7185",
+        "#fecdd3"
+      ],
+      [
+        "#78350f",
+        "#b45309",
+        "#fb923c",
+        "#ffedd5"
+      ]
+    ],
+    "outline": "#172d3c"
+  }
+}

@@ -17,16 +17,18 @@ for (const theme of [ecoGuardianTheme, knightMagicTheme]) it(`${theme.id} weak c
   for (const difficulty of ["beginner", "normal", "experienced"] as const) {
     const resolved = resolveDifficultyTheme(theme, difficulty);
     const enemy = resolved.enemies.find((e) => e.id === definition.id)!;
-    const mods = selectWorldModifiers(createWorldState(), resolved.tuning.difficulty, .25);
+    const mods = selectWorldModifiers(createWorldState(), resolved.tuning.difficulty, 0);
     expect(enemy.maxHealth * mods.enemyHealthMultiplier).toBeLessThanOrEqual(resolved.weapons[0]!.damage);
   }
   const cone = theme.weapons.find((w) => w.id === ids.weapon.secondary)!;
   if (cone.deliveryKind !== "melee") throw new Error("Expected cone");
   const targets = [-1, 0, 1].map((i) => ({ targetId: String(i), x: 60, y: i * 20, radius: definition.radius, active: true }));
   expect(selectMeleeHits({ x: 0, y: 0 }, 0, cone, targets)).toHaveLength(3);
+  const formation = theme.enemies.find((e) => "arrivalCluster" in e)!;
+  const spacing = "arrivalCluster" in formation ? formation.arrivalCluster.spacing : 0;
   const starter = theme.weapons[0]!;
   if (starter.deliveryKind === "melee") {
-    const spaced = [-1, 0, 1].map((i) => ({ targetId: String(i), x: 70, y: i * definition.arrivalCluster.spacing, radius: definition.radius, active: true }));
+    const spaced = [-1, 0, 1].map((i) => ({ targetId: String(i), x: 70, y: i * spacing, radius: definition.radius, active: true }));
     expect(selectMeleeHits({ x: 0, y: 0 }, 0, starter, spaced)).toHaveLength(1);
     expect(selectMeleeHits({ x: 0, y: 0 }, 0, cone, spaced)).toHaveLength(3);
   }

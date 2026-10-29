@@ -28,7 +28,7 @@ export const upgrades = [
   },
   {
     id: archetypeIds.upgrade.critChance,
-    effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1 }],
+    effects: [{ kind: "stat.add", target: "player.critChance", value: 0.1, ceiling: 3 }],
     maxLevel: null, track: "general", rarity: "common", category: "critical", presentationToken: "critical",
   },
   {

@@ -1,4 +1,5 @@
 import { applyWorldChoice, createWorldState, selectWorldModifiers } from "../../../src/game/systems/chaos/world-modifiers";
+import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { describe, expect, it } from "vitest";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
 import { knightMagicTheme } from "../../../src/game/content/themes/knight-magic";
@@ -109,7 +110,7 @@ describe("upgrade codex", () => {
     // exists and how far it can be pushed, which is the reference value.
     expect(entries.map((entry) => entry.id)).toEqual(theme.upgrades.map((upgrade) => upgrade.id));
     for (const entry of entries) {
-      expect(entry.name).toBe(theme.copy.content[entry.id].name);
+      expect(entry.name).toBe((theme as ThemeManifest).copy.content[entry.id]?.name);
       expect(entry.sessionTotal).toBe(0);
       expect(entry.bestInRun).toBe(0);
       if (entry.maxPerRun !== null) expect(entry.maxPerRun).toBeGreaterThan(0);
@@ -164,9 +165,7 @@ describe("enemy codex", () => {
     const bag = entries.find(({ id }) => id === archetypeIds.enemy.deathSpawner)!;
     expect(bag.name).toBe(ecoGuardianTheme.copy.content[bag.id].name);
     expect(bag.relations.map(({ enemyId, count }) => ({ enemyId, count }))).toEqual([
-      { enemyId: archetypeIds.enemy.swarmBasic, count: 2 },
       { enemyId: archetypeIds.enemy.fastFragile, count: 2 },
-      { enemyId: archetypeIds.enemy.slowDurable, count: 1 },
     ]);
     for (const entry of entries) {
       const definition = ecoGuardianTheme.enemies.find(({ id }) => id === entry.id)!;

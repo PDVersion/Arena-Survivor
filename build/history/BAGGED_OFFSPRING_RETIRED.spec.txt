@@ -1,0 +1,22 @@
+Historical Eco five-child death-spawn fixture retired2026-10-29.
+Eco uses downside material fragments; legacy generic contracts remain covered.
+
+test("Bagged Waste queues and eventually spawns its finite five-child material mix", async ({ page }) => {
+  test.setTimeout(120_000);
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  // The subject is retained death-spawn work, not the time taken for a slow
+  // Broodmother to cross the off-screen spawn ring on a throttled CI runner.
+  await page.goto("/?enemyRoster=broodmother&spawnRadius=72&noContact&noXp&noHazards");
+  await expect.poll(async () => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().combat?.offspringSpawned), { timeout: 90_000 }).toBe(5);
+  const snapshot = await page.evaluate(() => window.__ARENA_TEST__?.getSnapshot());
+  expect(snapshot?.combat?.offspringQueued).toBe(5);
+  expect(snapshot?.spawnOrigins?.spawned.baggedWaste).toBe(5);
+  expect(snapshot?.spawnOrigins?.spawned.benchmark).toBe(1);
+  expect(snapshot?.combat?.rosterHighWater["enemy.death_spawner"]).toBe(1);
+  expect(snapshot?.combat?.rosterHighWater["enemy.swarm_basic"]).toBe(2);
+  expect(snapshot?.combat?.rosterHighWater["enemy.fast_fragile"]).toBe(2);
+  expect(snapshot?.combat?.rosterHighWater["enemy.slow_durable"]).toBe(1);
+  expect(snapshot?.run?.liveEnemies).toBeLessThanOrEqual(snapshot?.combat?.enemyCap ?? 0);
+  expect(errors).toEqual([]);
+});

@@ -55,10 +55,11 @@ export function upgradeLevel(
 export function isUpgradeAvailable(
   upgrade: UpgradeDefinition,
   selectedUpgradeIds: readonly UpgradeId[],
-  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills" | "weaponSlots" | "weaponSlotCount" | "world">,
+  context?: Pick<UpgradeSelectionContext, "skillLevels" | "skills" | "weaponSlots" | "weaponSlotCount" | "world" | "player">,
 ): boolean {
+  if (context?.player && upgrade.effects.length > 0 && upgrade.effects.every((effect) => effect.kind === "stat.add" && effect.target === "player.critChance" && effect.ceiling !== undefined && context.player!.stats.critChance >= effect.ceiling)) return false;
   if (upgrade.maxLevel !== null && upgradeLevel(selectedUpgradeIds, upgrade.id) >= upgrade.maxLevel) return false;
-  if (upgrade.ownerWeaponId && !context?.weaponSlots?.some((slot) => slot.weaponId === upgrade.ownerWeaponId)) return false;
+  if (upgrade.ownerWeaponId && !context?.weaponSlots?.some((slot) => slot.weaponId === upgrade.ownerWeaponId || upgrade.additionalOwnerWeaponIds?.includes(slot.weaponId))) return false;
   for (const effect of upgrade.effects) {
     if (effect.kind === "curse.accept") {
       if (context?.world?.acceptedCurseIds.includes(effect.curseId)) return false;
@@ -109,6 +110,7 @@ export function rarityWeight(rarity: UpgradeRarity, luck = 0): number {
 }
 
 export interface UpgradeSelectionContext {
+  readonly player?: { readonly stats: Pick<PlayerBaseStats, "critChance"> };
   readonly world?: WorldState;
   readonly weaponSlots?: readonly WeaponSlotState[];
   readonly weaponSlotCount?: number;
@@ -205,6 +207,16 @@ export function applyUpgrade<T extends UpgradeableState>(
   let world = state.world;
 
   for (const effect of upgrade.effects) {
+    if (effect.kind === "tool.upgrade") {
+      // Numeric weapon snapshots resolve from picks; exposed skill milestones also
+      // enter run state so the field guide and capability panel report the same level.
+      const progression = weapons.find((weapon) => weapon.id === effect.weaponId)?.progression;
+      if (progression?.skillId) {
+        const next = progression.levels[Math.min(progression.levels.length - 1, upgradeLevel(state.selectedUpgradeIds, upgrade.id) + 1)]!;
+        skillLevels = { ...skillLevels, [progression.skillId]: next.sweepLevel };
+      }
+      continue;
+    }
     if (effect.kind === "curse.accept") {
       const curse = curses.find((entry) => entry.id === effect.curseId);
       if (!curse) return state;
@@ -262,7 +274,7 @@ export function applyUpgrade<T extends UpgradeableState>(
         stats.attackSpeedBonus += value;
         break;
       case "player.critChance":
-        stats.critChance += value;
+        stats.critChance += effect.ceiling === undefined ? value : Math.min(value, Math.max(0, effect.ceiling - stats.critChance));
         break;
       case "player.luck":
         stats.luck += value;

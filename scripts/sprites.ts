@@ -1,4 +1,4 @@
-import { rangedSpriteRecipe } from "./ranged-sprite-recipe";
+import { ecoSpriteRecipes } from "./eco-sprite-recipes";
 /**
  * Inspect, verify, and build the sprite roster.
  *
@@ -45,98 +45,7 @@ const atlasTargets = {
   },
 } as const;
 
-const projectSprites: readonly ProjectSprite[] = [
-  { ...rangedSpriteRecipe, theme: "eco-guardian", textureKey: "eco_guardian.enemy.ranged_attacker", standalone: true },
-  {
-    theme: "eco-guardian",
-    textureKey: "eco_guardian.enemy.swarm_basic",
-    contentId: "enemy.swarm_basic",
-    source: "build/sprites/raw/enemy_swarm_basic.a1.png",
-    output: "public/sprites/eco-guardian/enemy_swarm_basic.png",
-    acceptedOutput: "build/sprites/accepted/enemy_swarm_basic.png",
-    frameWidth: 32,
-    frameHeight: 32,
-    frames: 4,
-    background: "transparent",
-    palette: [
-      ["#173b73", "#356fae", "#60a5fa", "#9ac8fb"],
-      ["#4b5563", "#9ca3af", "#e2e8f0", "#f8fafc"],
-    ],
-    outline: "#173b73",
-  },
-  {
-    theme: "eco-guardian",
-    textureKey: "eco_guardian.enemy.fast_fragile",
-    contentId: "enemy.fast_fragile",
-    source: "build/sprites/raw/enemy_fast_fragile.a3.png",
-    output: "public/sprites/eco-guardian/enemy_fast_fragile.png",
-    acceptedOutput: "build/sprites/accepted/enemy_fast_fragile.png",
-    frameWidth: 24,
-    frameHeight: 24,
-    frames: 4,
-    background: "transparent",
-    palette: [
-      ["#172d5f", "#64748b", "#e2e8f0", "#f8fafc"],
-      ["#7f1d1d", "#b91c1c", "#ef4444", "#fca5a5"],
-      ["#173b73", "#356fae", "#2563eb", "#93c5fd"],
-      ["#713f12", "#b7791f", "#facc15", "#fde68a"],
-    ],
-    outline: "#172d5f",
-  },
-  {
-    theme: "eco-guardian",
-    textureKey: "eco_guardian.enemy.slow_durable",
-    contentId: "enemy.slow_durable",
-    source: "build/sprites/raw/enemy_slow_durable.a2.png",
-    output: "public/sprites/eco-guardian/enemy_slow_durable.png",
-    acceptedOutput: "build/sprites/accepted/enemy_slow_durable.png",
-    frameWidth: 48,
-    frameHeight: 48,
-    frames: 4,
-    background: "light-checker",
-    palette: [["#0f4f52", "#169b91", "#2dd4bf", "#82eadc"]],
-    outline: "#0f4f52",
-  },
-  {
-    theme: "eco-guardian",
-    textureKey: "eco_guardian.enemy.death_spawner",
-    contentId: "enemy.death_spawner",
-    source: "build/sprites/raw/enemy_death_spawner.a2.png",
-    output: "public/sprites/eco-guardian/enemy_death_spawner.png",
-    acceptedOutput: "build/sprites/accepted/enemy_death_spawner.png",
-    frameWidth: 48,
-    frameHeight: 48,
-    frames: 4,
-    background: "light-checker",
-    palette: [
-      ["#3b1762", "#8050bd", "#c084fc", "#dcb5fd"],
-      ["#374151", "#6b7280", "#d1d5db", "#f8fafc"],
-      ["#3f4b26", "#68753b", "#91a657", "#c0d187"],
-      ["#713f12", "#b7791f", "#fb923c", "#fdba74"],
-    ],
-    outline: "#3b1762",
-  },
-  {
-    theme: "eco-guardian",
-    textureKey: "eco_guardian.character.starter",
-    contentId: "character.starter",
-    source: "build/sprites/raw/character_starter.a2.png",
-    output: "public/sprites/eco-guardian/character_starter.png",
-    acceptedOutput: "build/sprites/accepted/character_starter.png",
-    frameWidth: 48,
-    frameHeight: 48,
-    frames: 8,
-    background: "black",
-    keepLargestComponentPerFrame: true,
-    palette: [
-      ["#14532d", "#22a34e", "#4ade80", "#8df0ac"],
-      ["#111827", "#374151", "#6b7280", "#d1d5db"],
-      ["#713f12", "#b7791f", "#fde047", "#fef08a"],
-      ["#7c2d12", "#c65d1a", "#fb923c", "#fdba74"],
-    ],
-    outline: "#14532d",
-  },
-];
+const projectSprites: readonly ProjectSprite[] = ecoSpriteRecipes;
 
 function parseArgs(argv: readonly string[]): Options {
   let command: Command = "status";

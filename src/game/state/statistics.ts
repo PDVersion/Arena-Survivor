@@ -30,6 +30,7 @@ export function selectHudValues(state: RunState): HudValues {
       ? formatRunTime(state.durationMs - state.elapsedMs)
       // Past the limit the clock counts up, because a negative countdown reads
       // as a bug and overtime is the thing worth showing.
+      : state.mode === "endless" && state.elapsedMs < state.durationMs ? formatRunTime(state.elapsedMs)
       : `+${formatRunTime(state.elapsedMs - state.durationMs)}`,
     kills: String(state.statistics.kills),
     enemies: String(state.statistics.liveEnemies),

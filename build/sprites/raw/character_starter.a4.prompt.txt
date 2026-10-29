@@ -1,0 +1,65 @@
+STYLE LOCK — ARENA SURVIVOR ECO-GUARDIAN v2
+Create production pixel-art sprite artwork for one subject only. Use the exact
+frame size, strip dimensions, frame count and left-to-right order in the subject
+block. One horizontal strip; equal cells; no gaps, margins, borders or numbering.
+The frame size is already doubled; do not double it again.
+Clean chunky outdoor-cleanup pixel art. Recognizable real discarded materials
+and practical protective equipment. Match the attached approved style references.
+Fixed slight top-down arena view; top-left light in every frame. Flat four-tone
+material ramps exactly as supplied. Bold hue-dark 2px outer outline at the target
+native resolution; restrained 1px interior detail, no pure black outline.
+Use the increased pixel budget for clearer contours and small connected details,
+while retaining the reference's proportions and chunky read at game display size.
+Every cell depicts the SAME individual object: identical cap, label, dents,
+seams, folds, colour regions and equipment. Only the requested pose/state changes.
+Lock scale, camera, perspective and reference anchor across the strip. Never fit
+each frame independently. No pose may be clipped or cross into another cell.
+For replacements match normalized old-frame placement and silhouette footprint.
+For new subjects leave at least 4px transparent clearance on each edge; use one
+common pose envelope and scale, approximately 80–85% of the cell's longest side.
+Opaque artwork on genuinely transparent RGBA background; alpha only 0 or 255.
+No anti-aliasing, gradients, blur, dithering, photorealism, glow haze, shadows,
+text, branding, watermark, scenery, UI, checkerboard or detached motion marks.
+No new faces or limbs on rubbish. No debris in intact poses. Death may separate
+material pieces, contained within that frame and recognizably from the same object.
+Enemy hit frame preserves idle geometry and material identity; runtime tint supplies
+hit feedback, so do not repaint the whole frame white. Keep gameplay warning
+rings, direction lines and damage areas out of the artwork; the game draws them.
+Output the requested strip, not a contact sheet, perspective mockup or animation.
+
+SUBJECT ID: character.starter — Environment Protector. Gait correction a4.
+Use case: identity-preserve. Asset: transparent eight-cell player sprite strip.
+REFERENCE 1: existing player sheet, exact identity/colours/equipment/hood reference, NOT a reference for its defective nearly-identical foot poses.
+REFERENCE 2: existing bottle, pixel-art style reference only.
+Native layout: EIGHT equal 96x96 cells, one 768x96 horizontal strip, no gaps.
+The SAME hooded cleanup worker: green protective jacket, round hood and pale face,
+black-grey sturdy boots, collection backpack with yellow trim, green gloves, orange
+compact grabber held in the same hands. Face/hood/backpack/held tool should be
+nearly identical in frames0–4. No recolouring between frames. No new anatomy.
+CRITICAL CORRECTION: first FOUR frames are a proper walk cycle with DIFFERENT
+leg silhouettes. Existing art has the SAME feet and flickers; do NOT repeat that.
+Feet must visibly exchange forward/back positions at the small 42-world-unit size.
+Fixed torso/hood anchor at(48,48), body silhouette uppermost approx y6, soles y88.
+Keep torso absolutely stable; move legs at the hips and knees, not colour patches.
+Frames0,1,2,3 are played cyclically0→1→2→3→0 (both feet take a step).
+0 RIGHT-FACING WALK A: left/near boot well forward to right (toe x70,y86),
+  right/far boot behind left (toe x28,y81), clear wide stride, knees separated.
+1 RIGHT-FACING PASS A: near boot planted beneath hip (toe x52,y88), far knee bent
+  with boot visibly lifted behind (toe x37,y72). Narrower stance; soles at different heights.
+2 RIGHT-FACING WALK B: near boot now BACK to left (toe x28,y86), far boot forward
+  to right (toe x69,y81). Opposite legs exchange positions; same coat, gear and lighting.
+3 RIGHT-FACING PASS B: far boot planted beneath hip (toe x52,y88), near knee bent
+  with boot lifted FORWARD (toe x65,y72). This is the added distinct second passing step.
+4 right-facing idle, both boots planted under body, stable hood/pack/gear.
+5 left-facing hit/recoil, same worker and clothing, hood anchor still fixed.
+6 right-facing reserved standing pose, no dash or new mechanic.
+7 fallen/death pose of same worker with same equipment, confined to cell.
+The 0vs2 and1vs3 changes must be real knee/boot silhouettes of opposite steps,
+not highlighting, bobbing, scaling, entire-body sliding or an equipment change.
+Keep all cells equal and transparently separate. No detached marks or shadows.
+Exactly four-tone materials: green #14532d #22a34e #4ade80 #8df0ac;
+gear #111827 #374151 #6b7280 #d1d5db;
+yellow #713f12 #b7791f #facc15 #fde68a;
+orange #7c2d12 #c65d1a #fb923c #fdba74.
+If returning a larger canvas, maintain one fixed equal horizontal cell grid,
+common scale/baseline and generous full-canvas transparent clearance. Do not crop.

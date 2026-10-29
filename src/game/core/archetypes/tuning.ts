@@ -283,6 +283,7 @@ export interface UpgradeTiersTuning {
 /** Optional theme-authored tool artwork. Never consumed by combat selectors. */
 export interface ToolEffectsTuning {
   readonly suction: {
+    readonly durationMs?: number; readonly fadeMs?: number; readonly cycleMs?: number;
     readonly streams: number; readonly lowStreams: number; readonly strokeWidth: number;
     readonly dustRadius: number; readonly opacity: number; readonly nozzleLength: number;
     readonly nozzleWidth: number; readonly twist: number; readonly tailFraction: number;

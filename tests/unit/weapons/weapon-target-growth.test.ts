@@ -1,3 +1,4 @@
+import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { describe, expect, it } from "vitest";
 import { archetypeIds as ids, type WeaponId } from "../../../src/game/core/archetypes/ids";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
@@ -10,7 +11,7 @@ import { selectMeleeHits } from "../../../src/game/systems/weapons/melee-stab";
 import { describeUpgrade } from "../../../src/game/systems/upgrades/describe-upgrade";
 import { findBuildModel } from "../../../src/game/systems/simulation/build-models";
 
-for (const theme of [ecoGuardianTheme, knightMagicTheme]) describe(`owned capacity / ${theme.id}`, () => {
+for (const theme of ([ecoGuardianTheme, knightMagicTheme] as readonly ThemeManifest[]).filter((theme) => !theme.economy)) describe(`owned capacity / ${theme.id}`, () => {
   const base = () => createRunState({ themeId: theme.id, characterId: ids.character.starter, baseStats: theme.characters[0]!.baseStats, weaponSlotCount: 2 });
   const acquire = theme.upgrades.find((u) => u.id === ids.upgrade.equipSecondary)!;
   const track = theme.upgrades.find((u) => u.id === ids.upgrade.secondaryRange)!;

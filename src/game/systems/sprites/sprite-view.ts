@@ -49,6 +49,8 @@ export interface SpriteViewOptions {
    * depends on.
    */
   readonly diameter: number;
+  /** Keep essential code-owned area/boundary beneath a centre decoration. */
+  readonly keepPrimitive?: boolean;
   /** Frame shown before any state is played. Defaults to `idle`. */
   readonly initialState?: SpriteState;
   /** Alternate idle/move while the actor lives. Presentation only. */
@@ -73,6 +75,7 @@ export class SpriteView {
   private playerStep = 0;
   private playerDistance = 0;
   private detached = false;
+  private explicitState?: SpriteState;
   private attackPhase?: "prepare" | "release" | "recover";
 
   setAttackPhase(phase?: "prepare" | "release" | "recover", headingX = 0): void {
@@ -121,7 +124,7 @@ export class SpriteView {
       runtimeFrame(definition, definition.states[state]),
     );
     // The primitive stays alive and keeps its body; it simply stops drawing.
-    source.setVisible(false);
+    if (!options.keepPrimitive) source.setVisible(false);
     this.sync();
     register(scene, this);
     this.sourceDestroyHandler = () => this.destroy();
@@ -143,6 +146,11 @@ export class SpriteView {
 
   /** Show a named frame. Callers name a state; frame indices stay in the data. */
   setState(state: SpriteState): void {
+    this.explicitState = state;
+    if (!(this.animation.transient && this.image.scene.time.now < this.animation.transient.untilMs)) this.showState(state);
+  }
+
+  private showState(state: SpriteState): void {
     this.setFrame(this.definition.states[state]);
   }
 
@@ -158,7 +166,7 @@ export class SpriteView {
       state: "hit",
       untilMs: this.image.scene.time.now + durationMs,
     };
-    this.setState("hit");
+    this.showState("hit");
     this.image.setTintFill(colour);
     this.image.scene.time.delayedCall(durationMs, () => {
       if (this.image.active) this.image.clearTint();
@@ -210,7 +218,7 @@ export class SpriteView {
       this.playerDistance = next.distance;
       const transient = this.animation.transient;
       if (transient && this.image.scene.time.now < transient.untilMs) {
-        this.setState(transient.state);
+        this.showState(transient.state);
         // Some generated poses face differently from the clean walk strip.
         // Preserve the chosen direction rather than flipping on a hit flash.
         const facing = this.definition.stateFacing?.[transient.state];
@@ -223,7 +231,11 @@ export class SpriteView {
     } else {
       this.animation.moving = this.animateMovement && moving;
       const state = resolveAnimatedSpriteState(this.image.scene.time.now, this.animation);
-      this.setState(state);
+      this.showState(state);
+    }
+    if (this.explicitState &&
+      !(this.animation.transient && this.image.scene.time.now < this.animation.transient.untilMs)) {
+      this.showState(this.explicitState);
     }
     if (this.attackPhase && this.definition.attackFrames &&
       !(this.animation.transient && this.image.scene.time.now < this.animation.transient.untilMs)) {

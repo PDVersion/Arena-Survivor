@@ -1,3 +1,5 @@
+import type { OptionalContentId } from "./ids";
+import type { EconomyDefinition, DropKind } from "../../systems/economy/economy";
 import type {
   CharacterId,
   ContentId,
@@ -157,7 +159,14 @@ export const masteryCopyKeys = ["review", "details", "tools", "choices", "nextEx
   "tryFirst", "tryEquip", "tryEvolve", "tryReady", "tryRisk", "tryRecovery", "tryCalm", "bossDefeated"] as const;
 export type MasteryCopy = Readonly<Record<(typeof masteryCopyKeys)[number], string>>;
 
+export interface EliteGuideCopy {
+  readonly tab: string; readonly title: string; readonly introduction: string;
+  readonly standardName: string; readonly standardDescription: string; readonly noMarker: string;
+  readonly health: string; readonly harm: string; readonly money: string; readonly size: string;
+  readonly split: string; readonly shield: string; readonly acceleration: string;
+}
 export interface ThemeCopy {
+  readonly eliteGuide?: EliteGuideCopy;
   readonly mastery: MasteryCopy;
   readonly saveManager: SaveManagerCopy;
   readonly profile: { readonly saved: string; readonly memory: string; readonly blocked: string; readonly changedElsewhere: string; readonly browserSave: string; readonly completedRuns: string; readonly deaths: string; readonly longestRun: string; readonly unlocked: string; readonly locked: string; readonly finishedRuns: string; readonly lifetimeKills: string; readonly unlockedPrefix: string };
@@ -184,7 +193,7 @@ export interface ThemeCopy {
   readonly codex: ThemeCodexCopy;
   /** Player-facing name for each roll tier, e.g. "Legendary". */
   readonly tiers: Readonly<Record<UpgradeTier, string>>;
-  readonly content: Readonly<Record<Exclude<ContentId, "enemy.ranged_attacker">, ContentCopy> & Partial<Record<"enemy.ranged_attacker", ContentCopy>>>;
+  readonly content: Readonly<Record<Exclude<ContentId, OptionalContentId>, ContentCopy> & Partial<Record<OptionalContentId, ContentCopy>>>;
 }
 
 /**
@@ -257,6 +266,10 @@ export type SpriteState = (typeof spriteStates)[number];
 
 /** Where a sprite sheet lives and how it is cut. Optional per theme. */
 export interface SpriteDefinition {
+  /** Optional tool icon row in the same atlas; not a content or saved ID. */
+  readonly iconFrameKey?: string;
+  /** Pixel distance represented by a tool action display width; presentation only. */
+  readonly toolSpan?: number;
   readonly attackFrames?: Readonly<Record<"prepare" | "release" | "recover", number>>;
   /** Actual facing of the authored pixels; never inferred by gameplay. */
   /** Authored pixel anchors; presentation only, never fed back to bodies. */
@@ -412,7 +425,20 @@ export interface OnHitSplashDefinition {
   readonly targetCap: number;
 }
 
+export interface CleanupToolDefinition {
+  readonly kind: "aura" | "bin" | "orbit" | "beam";
+  readonly progression?: { readonly id: UpgradeId; readonly levels: readonly (Partial<Omit<CleanupToolDefinition, "progression" | "tracks">> & { readonly description: string })[] };
+  readonly radius: number; readonly damage: number; readonly tickMs: number; readonly slow: number;
+  readonly count: number; readonly rows: number; readonly speed: number;
+  readonly throwDistance: number; readonly flightMs: number; readonly fuseMs: number; readonly dotMs: number; readonly dotDamage: number;
+  readonly headRadius: number; readonly rowSpacing: number; readonly displayWidth: number;
+  readonly tracks: readonly { readonly id: UpgradeId; readonly stat: "radius" | "damage" | "tickMs" | "slow" | "count" | "rows" | "speed" | "dotDamage"; readonly step: number }[];
+}
+
 interface WeaponDefinitionBase {
+  readonly progression?: { readonly id: UpgradeId; readonly skillId?: SkillId; readonly levels: readonly { readonly damage: number; readonly range: number; readonly cooldownMs: number; readonly sweepLevel: number; readonly description: string }[] };
+  readonly sweepLevel?: number;
+  readonly cleanup?: CleanupToolDefinition;
   /** Authored beside its weapon; manifest merges these into the offer registry. */
   readonly upgrades?: readonly UpgradeDefinition[];
   readonly splash?: OnHitSplashDefinition;
@@ -466,7 +492,13 @@ export interface MeleeWeaponDefinition extends WeaponDefinitionBase {
 /** Theme-owned weapon data with delivery-specific fields kept type-safe. */
 export type WeaponDefinition = ProjectileWeaponDefinition | MeleeWeaponDefinition;
 
+export interface BossSummonPattern {
+  readonly name: string;
+  readonly spreadRadius: number;
+  readonly entries: readonly { readonly enemyId: EnemyId; readonly count: number; readonly rewardMultiplier: number }[];
+}
 export interface BossDefinition {
+  readonly summons?: { readonly patterns: readonly BossSummonPattern[]; readonly nearDeath?: BossSummonPattern & { readonly healthFraction: number } };
   readonly kind: "mini" | "final";
   /** Normalized authored progress; unique encounter, not an ambient role. */
   readonly appearAt: number;
@@ -513,6 +545,10 @@ export interface RangedAttackDefinition {
 }
 
 export interface EnemyDefinition {
+  /** Airborne litter ignores ground crowd/obstacle blocking, but still harms the player and takes weapon hits. */
+  readonly airborne?: boolean;
+  readonly fragmentation?: { readonly pool: readonly EnemyId[]; readonly chanceBonus: number; readonly minimumChance: number; readonly childCount: number; readonly spreadRadius: number };
+  readonly scavenger?: Readonly<{ wanderMs: number; fleeMs: number; fleeSpeed: number; leakValue: number; leakBudget: number; itemMultiplier: number }>;
   readonly rangedAttack?: RangedAttackDefinition;
   readonly committedMotion?: CommittedMotionDefinition;
   /** Only natural director selections expand a group; causal spawns never do. */
@@ -547,9 +583,12 @@ export interface EnemyDefinition {
 }
 
 export interface PickupDefinition {
+  readonly kind?: DropKind;
+  readonly denominations?: readonly [number, number];
   readonly id: PickupId;
   readonly radius: number;
   readonly magnetSpeed: number;
+  readonly magnetPull?: { readonly startSpeed: number; readonly acceleration: number; readonly maxSpeed: number };
   readonly presentationToken: keyof Pick<ThemePalette, "pickup">;
 }
 
@@ -569,6 +608,8 @@ export const upgradeCategories = [
 export type UpgradeCategory = (typeof upgradeCategories)[number];
 
 export interface UpgradeDefinition {
+  /** An evolved tool can continue the same fixed progression tracks. */
+  readonly additionalOwnerWeaponIds?: readonly WeaponId[];
   /** Own stat gains affect only this equipped weapon. Global cards omit it. */
   readonly ownerWeaponId?: WeaponId;
   readonly id: UpgradeId;
@@ -606,6 +647,7 @@ export interface ShrineDefinition {
 }
 
 export interface ThemeManifest {
+  readonly economy?: EconomyDefinition;
   readonly unlocks?: readonly { readonly kind: "weapon" | "upgrade"; readonly id: WeaponId | UpgradeId; readonly metric: "runsPlayed" | "totalKills"; readonly required: number }[];
   readonly id: string;
   readonly schemaVersion: 1;

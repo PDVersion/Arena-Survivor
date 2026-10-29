@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-26",
+  "contentId": "character.starter",
+  "attempt": 4,
+  "styleVersion": 2,
+  "tool": "image_gen built-in",
+  "model": "not exposed",
+  "seed": "n/a (not exposed)",
+  "rawSource": "build/sprites/raw/character_starter.a4.png",
+  "rawSha256": "2854aafdedac64a96f6fffdf0e320490bc7567fda909119569178d2b8f170179",
+  "rawWidth": 2172,
+  "rawHeight": 724,
+  "prompt": "build/sprites/raw/character_starter.a4.prompt.txt",
+  "promptSha256": "999bb69e6f126001e4f1f6508d4512f105b98c0aff1ff9905315ea9e8ed87fe3",
+  "references": [
+    {
+      "path": "build/sprites/review/style2/character_starter.a3.png",
+      "sha256": "fd28a38bad43fef6ccc8f9aad7db49e8c657d326cc680efd78fea7e324654ae0"
+    },
+    {
+      "path": "build/sprites/review/style2/enemy_swarm_basic.a2.png",
+      "sha256": "0527e10aa4ce12289ff6d2bbb4babc4de99d2d98346fb11be1ffe0d2043d7092"
+    }
+  ],
+  "sourceGrid": {
+    "left": 0,
+    "top": 232,
+    "cellWidth": 272,
+    "cellHeight": 288,
+    "fit": "contain",
+    "allowTransparentPadding": true
+  },
+  "reviewOutput": "build/sprites/review/style2/character_starter.a4.png",
+  "reviewSha256": "27d03db9be7df7fad496a308aa86ead1db8b45834d8f5cd3d669741ce5cf6671",
+  "formatIssues": [],
+  "status": "live; owner playtest pending",
+  "notes": "Owner-selected leg-silhouette correction; four different poses replace repeated first three walk poses. Common source grid, no painting or per-pose fitting. Body occupancy84\u201386px vs previous85\u201386px; preserve world42/body18 and distance20. Runtime cycles0,1,2,3. Mirrored/hood continuity remains owner playtest refinement."
+}

@@ -1,0 +1,44 @@
+{
+  "contentId": "weapon.rake_beam",
+  "source": "build/sprites/raw/weapon_rake_beam.a2.png",
+  "output": "build/sprites/review/style2/weapon_rake_beam.a2.png",
+  "frameWidth": 96,
+  "frameHeight": 32,
+  "frames": 1,
+  "background": "transparent",
+  "keepLargestComponentPerFrame": true,
+  "outlineWidth": 2,
+  "palette": [
+    [
+      "#172d3c",
+      "#475569",
+      "#94a3b8",
+      "#e2e8f0"
+    ],
+    [
+      "#713f12",
+      "#ca8a04",
+      "#facc15",
+      "#fef08a"
+    ],
+    [
+      "#14532d",
+      "#16a34a",
+      "#86efac",
+      "#dcfce7"
+    ],
+    [
+      "#7f1d1d",
+      "#dc2626",
+      "#fb7185",
+      "#fecdd3"
+    ],
+    [
+      "#78350f",
+      "#b45309",
+      "#fb923c",
+      "#ffedd5"
+    ]
+  ],
+  "outline": "#172d3c"
+}

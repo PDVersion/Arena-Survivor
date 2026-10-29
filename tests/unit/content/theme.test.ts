@@ -13,7 +13,7 @@ describe("theme manifests", () => {
       expect(validateTheme({ ...alternateTheme, weaponSlotCount: capacity }))
         .toContain("weaponSlotCount must be a positive safe integer");
     }
-    expect(ecoGuardianTheme.weaponSlotCount).toBe(2);
+    expect(ecoGuardianTheme.weaponSlotCount).toBe(4);
     expect(knightMagicTheme.weaponSlotCount).toBe(2);
   });
 
@@ -35,7 +35,7 @@ describe("theme manifests", () => {
     // Both packs are production-shaped content, so the boundary is proven by
     // real themes rather than only by the synthetic fixture.
     const roleIds = (theme: ThemeManifest): readonly string[] =>
-      theme.enemies.filter((enemy) => enemy.id !== archetypeIds.enemy.rangedAttacker).map((enemy) => enemy.id).sort();
+      theme.enemies.filter((enemy) => enemy.id !== archetypeIds.enemy.scavenger && enemy.id !== archetypeIds.enemy.rangedAttacker).map((enemy) => enemy.id).sort();
 
     expect(roleIds(ecoGuardianTheme)).toEqual(roleIds(knightMagicTheme));
     expect(ecoGuardianTheme.characters[0]?.id).toBe(knightMagicTheme.characters[0]?.id);
@@ -80,7 +80,7 @@ describe("theme manifests", () => {
 
     // Glass is the highest health in the roster and among the lowest harm:
     // effectively permanent, but chemically inert.
-    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.filter((e) => !("boss" in e)).map((e) => e.maxHealth)));
+    expect(glass?.maxHealth).toBe(Math.max(...ecoGuardianTheme.enemies.filter((e) => !("boss" in e) && !("scavenger" in e)).map((e) => e.maxHealth)));
     expect(glass?.contactDamage).toBeLessThan(bottle!.contactDamage);
   });
 
@@ -303,9 +303,17 @@ describe("theme manifests", () => {
 
 it("rejects incomplete/nonfinite/out-of-frame presentation anchors", () => {
   const sprite = ecoGuardianTheme.tokens.sprites![archetypeIds.character.starter]!;
-  for (const frameAnchors of [[], [{ x: NaN, y: 0 }], Array(8).fill({ x: 49, y: 0 })]) {
+  for (const frameAnchors of [[], [{ x: NaN, y: 0 }], Array(sprite.frames).fill({ x: sprite.frameWidth + 1, y: 0 })]) {
     expect(validateTheme({ ...ecoGuardianTheme, tokens: { ...ecoGuardianTheme.tokens, sprites: {
       ...ecoGuardianTheme.tokens.sprites, [archetypeIds.character.starter]: { ...sprite, frameAnchors },
     } } }).join()).toContain("frame anchors must cover the sheet within frame bounds");
   }
+});
+
+it("validates suction timing independently of claw duration", () => {
+  const effects = ecoGuardianTheme.tuning.view.toolEffects!;
+  const broken = { ...ecoGuardianTheme, tuning: { ...ecoGuardianTheme.tuning, view: {
+    ...ecoGuardianTheme.tuning.view, toolEffects: { ...effects, suction: { ...effects.suction, durationMs: -1 } },
+  } } };
+  expect(validateTheme(broken)).toContain("tuning.view.toolEffects.durationMs must be positive");
 });

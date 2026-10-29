@@ -85,3 +85,15 @@ it("keeps authored anchors fixed when mirroring a pose, with unchanged legacy or
   }
   expect(resolveFrameOrigin({ ...definition, frameAnchors: undefined }, 0, true)).toEqual({ x: 0.5, y: 0.5 });
 });
+
+it("plays all four eco gait poses, including the second passing step", async () => {
+  const { ecoGuardianTheme } = await import("../../../src/game/content/themes/eco-guardian");
+  const walk = ecoGuardianTheme.tokens.sprites!["character.starter"]!.walkAnimation!;
+  let state = { step: 0, distance: 0, frame: 0 };
+  const frames = [];
+  for (let step = 0; step < 8; step++) {
+    state = advancePlayerMovementFrame(state, walk.distancePerFrame, true, walk.distancePerFrame, walk.frames);
+    frames.push(state.frame);
+  }
+  expect(frames).toEqual([1,2,3,0,1,2,3,0]);
+});

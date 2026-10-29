@@ -33,8 +33,9 @@ test("changing difficulty while paused takes effect on the next run", async ({ p
   await page.keyboard.press("Escape");
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseOpen)).toBe(true);
   for (const tab of ["upgrades", "world", "codex", "settings"]) {
-    await page.keyboard.press("Tab");
-    await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe(tab);
+    await page.keyboard.down("Tab");
+    try { await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe(tab); }
+    finally { await page.keyboard.up("Tab"); }
   }
   await expect.poll(() => page.evaluate(() => window.__ARENA_TEST__?.getSnapshot().ui?.pauseTab)).toBe("settings");
   await clickSettingControl(page, "difficulty");

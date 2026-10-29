@@ -48,7 +48,10 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) test(`${themeKey} choos
       class WorldRun extends RunScene {
         resetTransientRuntime() { this.runTheme = theme; super.resetTransientRuntime(); }
         create() { super.create(); this.physics.world.pause(); ready(this); }
-        update(time: number, delta: number) { super.update(time, activePlay ? delta : 0); }
+        update(time: number, delta: number) {
+          if (!activePlay) this.activeClock = undefined; // Fixed clock, live keyboard/UI.
+          super.update(time, activePlay ? delta : 0);
+        }
       }
       class Load extends Phaser.Scene {
         constructor() { super("load-c3"); }

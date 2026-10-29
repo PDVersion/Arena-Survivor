@@ -97,6 +97,11 @@ export class MenuScene extends Phaser.Scene {
       this.bounds.push({ action: action.action, rect: new Phaser.Geom.Rectangle(centreX - width / 2, action.y - 27, width, 54) });
     }
 
+    if (activeTheme.economy) {
+      for (const [index, link] of [{ label: "Impact Shop", url: "/impact-shop.html" }, { label: "Testing area", url: "/testing-area.html" }, { label: "Sprite browser", url: "/sprite-browser.html" }].entries()) {
+        children.push(addUiText(this, centreX + (index - 1) * 240, viewport.top + 766, link.label, { color: palette.accent, fontSize: "21px" }).setOrigin(.5).setInteractive({ useHandCursor: true }).on("pointerdown", () => window.location.assign(link.url)));
+      }
+    }
     this.menuContainer = configureUiContainer(this, this.add.container(0, 0, children)).setDepth(10);
     this.overlay = new PauseMenuUi(this, activeTheme);
     this.input.keyboard?.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.handleKey, this);

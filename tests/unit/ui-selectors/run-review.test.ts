@@ -33,9 +33,10 @@ for (const { theme } of themeRegistry) {
     const available = selectRunReview(initial, theme, [ids.weapon.secondary]);
     expect(available.next).toBe(theme.copy.mastery.tryEquip.replace("{name}", theme.copy.content[ids.weapon.secondary].name));
     const owned = { ...initial, weaponSlots: [...initial.weaponSlots, { weaponId: ids.weapon.secondary, nextAttackAtMs: 0 }] };
-    expect(selectRunReview(owned, theme, []).next).toContain("0/4");
+    if (theme.economy) expect(selectRunReview(owned, theme, []).next).toBe(theme.copy.mastery.tryRisk);
+    else expect(selectRunReview(owned, theme, []).next).toContain("0/4");
     const ready = { ...owned, selectedUpgradeIds: Array(4).fill(ids.upgrade.secondaryRange) };
-    expect(selectRunReview(ready, theme, []).next).toBe(theme.copy.mastery.tryReady.replace("{name}", theme.copy.content[ids.weapon.secondaryEvolved].name));
+    if (!theme.economy) expect(selectRunReview(ready, theme, []).next).toBe(theme.copy.mastery.tryReady.replace("{name}", theme.copy.content[ids.weapon.secondaryEvolved].name));
     const evolved = { ...initial, weaponSlots: [{ weaponId: ids.weapon.secondaryEvolved, nextAttackAtMs: 0 }] };
     expect(selectRunReview(evolved, theme, []).next).toBe(theme.copy.mastery.tryRisk);
     const shrine = theme.shrines[0]!;

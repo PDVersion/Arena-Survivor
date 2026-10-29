@@ -296,17 +296,26 @@ export async function buildSpriteAtlas(
     entry,
     image: await readSpritePng(entry.output),
   })));
-  const width = Math.max(...sheets.map(({ image }) => image.width));
-  const height = sheets.reduce((sum, { image }) => sum + image.height, 0);
+  const width = Math.min(2048, sheets.reduce((sum, { image }) => sum + image.width, 0));
+  let rowX = 0, rowY = 0, rowHeight = 0;
+  const placements = sheets.map(({ image }) => {
+    if (image.width > width) throw new Error("Sprite strip exceeds 2048px atlas limit");
+    if (rowX + image.width > width) { rowY += rowHeight; rowX = 0; rowHeight = 0; }
+    const placement = { x: rowX, y: rowY };
+    rowX += image.width;
+    rowHeight = Math.max(rowHeight, image.height);
+    return placement;
+  });
+  const height = rowY + rowHeight;
+  if (height > 2048) throw new Error("Sprite atlas exceeds 2048px height limit");
   const pixels = Buffer.alloc(width * height * 4);
   const frames: Record<string, unknown> = {};
-  let top = 0;
-
-  for (const { entry, image } of sheets) {
+  for (const [index, { entry, image }] of sheets.entries()) {
+    const { x: left, y: top } = placements[index]!;
     for (let y = 0; y < image.height; y += 1) {
       image.data.copy(
         pixels,
-        ((top + y) * width) * 4,
+        ((top + y) * width + left) * 4,
         y * image.width * 4,
         (y + 1) * image.width * 4,
       );
@@ -314,7 +323,7 @@ export async function buildSpriteAtlas(
     for (let frame = 0; frame < entry.frames; frame += 1) {
       frames[`${entry.textureKey}/${frame}`] = {
         frame: {
-          x: frame * entry.frameWidth,
+          x: left + frame * entry.frameWidth,
           y: top,
           w: entry.frameWidth,
           h: entry.frameHeight,
@@ -325,7 +334,6 @@ export async function buildSpriteAtlas(
         sourceSize: { w: entry.frameWidth, h: entry.frameHeight },
       };
     }
-    top += image.height;
   }
 
   await mkdir(dirname(atlasOutput), { recursive: true });

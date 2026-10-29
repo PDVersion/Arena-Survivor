@@ -1,3 +1,4 @@
+import { validateCleanupTool } from "../systems/weapons/cleanup-tools";
 import { archetypeIds, v02ContentIds } from "../core/archetypes/ids";
 import { eliteIds, feedbackCategories } from "../core/archetypes/categories";
 import {
@@ -10,6 +11,7 @@ import {
   type EnemyPrimitivePart,
   type EnemyDefinition,
   type ThemeManifest,
+  type WeaponDefinition,
   type UpgradeDefinition,
 } from "../core/archetypes/contracts";
 import { playerStatKeys, type PlayerBaseStats } from "../core/stats/player-stats";
@@ -137,6 +139,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   for (const key of worldKeys) {
     if (!theme.copy.world?.[key]?.trim()) issues.push(`world.${key} label is required`);
   }
+  if (theme.copy.eliteGuide && Object.values(theme.copy.eliteGuide).some((value) => typeof value !== "string" || !value.trim())) issues.push("eliteGuide labels must be nonempty");
   for (const key of masteryCopyKeys) {
     if (!theme.copy.mastery?.[key]?.trim()) issues.push(`mastery.${key} label is required`);
   }
@@ -215,7 +218,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     issues.push("weaponSlotCount must be a positive safe integer");
   }
   const weaponIds = new Set<string>();
-  const weapons = Array.isArray(theme.weapons) ? theme.weapons : [];
+  const weapons: readonly WeaponDefinition[] = Array.isArray(theme.weapons) ? theme.weapons : [];
   if (!Array.isArray(theme.weapons)) issues.push("weapons registry is required");
   for (const weapon of weapons) {
     if (weaponIds.has(weapon.id)) issues.push(`duplicate weapon id: ${weapon.id}`);
@@ -223,6 +226,14 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
     if (!Number.isFinite(weapon.damage) || weapon.damage <= 0) {
       issues.push(`${weapon.id} damage must be greater than zero`);
     }
+    const progression = weapon.progression ?? weapon.cleanup?.progression;
+    if (progression) {
+      const upgrade = weapon.upgrades?.find((u) => u.id === progression.id);
+      if (progression.levels.length !== 7 || upgrade?.maxLevel !== 6 || weapon.upgrades?.length !== 1) issues.push(`${weapon.id} requires one seven-level progression`);
+      if (progression.levels.some((level) => !level.description.trim())) issues.push(`${weapon.id} requires a description at every level`);
+    }
+    if (weapon.progression && weapon.progression.levels.some((level) => ![level.damage, level.range, level.cooldownMs].every((value) => Number.isFinite(value) && value > 0) || !Number.isInteger(level.sweepLevel) || level.sweepLevel < 0)) issues.push(`${weapon.id} has unsafe progression values`);
+    if (weapon.cleanup) issues.push(...validateCleanupTool(weapon.cleanup).map((issue) => `${weapon.id} ${issue}`));
     if (!Number.isFinite(weapon.cooldownMs) || weapon.cooldownMs <= 0) {
       issues.push(`${weapon.id} cooldownMs must be greater than zero`);
     }
@@ -404,12 +415,23 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   if (!enemyIds.has(archetypeIds.enemy.swarmBasic)) {
     issues.push(`missing required enemy: ${archetypeIds.enemy.swarmBasic}`);
   }
-  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss && id !== archetypeIds.enemy.rangedAttacker)) {
+  for (const requiredId of Object.values(archetypeIds.enemy).filter((id) => id !== archetypeIds.enemy.miniBoss && id !== archetypeIds.enemy.finalBoss && id !== archetypeIds.enemy.rangedAttacker && id !== archetypeIds.enemy.scavenger)) {
     if (!enemyIds.has(requiredId)) issues.push(`missing required enemy: ${requiredId}`);
   }
   for (const enemy of enemies) {
     for (const child of enemy.deathSpawns ?? []) {
       if (!enemyIds.has(child.enemyId)) issues.push(`${enemy.id} references missing death-spawn enemy: ${child.enemyId}`);
+    }
+    if (enemy.airborne !== undefined && typeof enemy.airborne !== "boolean") issues.push(`${enemy.id} airborne must be boolean`);
+    const fragments = enemy.fragmentation;
+    if (fragments && (!fragments.pool.length || fragments.pool.some((id) => !enemyIds.has(id) || enemies.find((e) => e.id === id)?.boss) || !Number.isSafeInteger(fragments.childCount) || fragments.childCount < 1 || fragments.childCount > 32 || !Number.isFinite(fragments.spreadRadius) || fragments.spreadRadius <= 0 || ![fragments.chanceBonus, fragments.minimumChance].every((n) => Number.isFinite(n) && n >= 0 && n <= 1))) issues.push(`${enemy.id} invalid bounded material fragments`);
+    const summons = enemy.boss?.summons;
+    if (summons) {
+      if (!summons.patterns.length) issues.push(`${enemy.id} summon cycle needs patterns`);
+      for (const pattern of [...summons.patterns, ...(summons.nearDeath ? [summons.nearDeath] : [])]) {
+        if (!pattern.name.trim() || !Number.isFinite(pattern.spreadRadius) || pattern.spreadRadius <= 0 || !pattern.entries.length || pattern.entries.reduce((sum, entry) => sum + entry.count, 0) > 32 || pattern.entries.some((entry) => !enemyIds.has(entry.enemyId) || enemies.find((e) => e.id === entry.enemyId)?.boss || !Number.isSafeInteger(entry.count) || entry.count < 1 || !Number.isFinite(entry.rewardMultiplier) || entry.rewardMultiplier <= 0)) issues.push(`${enemy.id} invalid bounded boss summons`);
+      }
+      if (summons.nearDeath && (!Number.isFinite(summons.nearDeath.healthFraction) || summons.nearDeath.healthFraction <= 0 || summons.nearDeath.healthFraction >= 1)) issues.push(`${enemy.id} invalid near-death summon threshold`);
     }
     if (enemy.fragmentInto && !enemyIds.has(enemy.fragmentInto)) {
       issues.push(`${enemy.id} references missing fragment enemy: ${enemy.fragmentInto}`);
@@ -417,7 +439,7 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
   }
   const spawnEdges = new Map<string, string[]>(enemies.map((enemy) => [
     enemy.id,
-    [...(enemy.deathSpawns ?? []).map((child: { enemyId: string }) => child.enemyId), ...(enemy.fragmentInto ? [enemy.fragmentInto] : [])],
+    [...(enemy.deathSpawns ?? []).map((child: { enemyId: string }) => child.enemyId), ...(enemy.fragmentInto ? [enemy.fragmentInto] : []), ...(enemy.fragmentation?.pool ?? [])],
   ]));
   const visiting = new Set<string>();
   const visited = new Set<string>();
@@ -538,10 +560,17 @@ export function validateTheme(theme: ThemeManifest): readonly string[] {
           }
           continue;
         }
+        if (effect.kind === "tool.upgrade") {
+          const weapon = theme.weapons.find((weapon) => weapon.id === effect.weaponId);
+          const tool = weapon?.cleanup;
+          if (!(weapon?.progression?.id === upgrade.id || tool?.progression?.id === upgrade.id || tool?.tracks.some((track) => track.id === upgrade.id))) issues.push(`${upgrade.id} has no tool track`);
+          continue;
+        }
         if (effect.kind !== "stat.add") {
           issues.push(`${upgrade.id} has unsupported effect kind: ${String(effect.kind)}`);
           continue;
         }
+        if (effect.ceiling !== undefined && (effect.target !== "player.critChance" || !Number.isFinite(effect.ceiling) || effect.ceiling <= 0)) issues.push(`${upgrade.id} has invalid critical chance ceiling`);
         if (upgrade.ownerWeaponId && !effect.target.startsWith("weapon.")) {
           issues.push(`${upgrade.id} owned stat effect must target a weapon`);
         }
@@ -842,6 +871,12 @@ function validateSprites(
         issues.push(`sprites.${contentId} atlas frame alias must match an existing direct atlas row`);
       }
     }
+    if (sprite.toolSpan !== undefined && (!Number.isFinite(sprite.toolSpan) || sprite.toolSpan <= 0 || sprite.toolSpan > sprite.frameWidth)) {
+      issues.push(`sprites.${contentId} tool span must be within frame width`);
+    }
+    if (sprite.iconFrameKey !== undefined && (!sprite.path.endsWith("/atlas.png") || !sprite.iconFrameKey.trim())) {
+      issues.push(`sprites.${contentId} icon must name an atlas row`);
+    }
     if (sprite.attackFrames && (["prepare", "release", "recover"] as const).some((phase) => { const frame = sprite.attackFrames![phase]; return !Number.isInteger(frame) || frame < 0 || frame >= sprite.frames; })) {
       issues.push(`sprites.${contentId} attack frames must be within sheet bounds`);
     }
@@ -895,7 +930,7 @@ function validateTuning(
 
   if (tuning.view?.toolEffects) {
     const { suction, claw } = tuning.view.toolEffects;
-    for (const [key, value] of Object.entries({ ...suction, ...claw })) {
+    for (const [key, value] of [...Object.entries(suction), ...Object.entries(claw)]) {
       if (!Number.isFinite(value) || value <= 0) issues.push(`tuning.view.toolEffects.${key} must be positive`);
     }
     if (![2, 3].includes(claw.prongs) || !Number.isInteger(suction.streams)

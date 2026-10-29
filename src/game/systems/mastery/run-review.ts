@@ -9,7 +9,7 @@ export function selectCapabilityProgress(theme: ThemeManifest, profile: ProfileS
   return (theme.unlocks ?? []).map((grant) => {
     const unlocked = (grant.kind === "weapon" ? profile.unlockedWeaponIds : profile.unlockedUpgradeIds).includes(grant.id);
     const value = grant.metric === "runsPlayed" ? profile.statistics.runsPlayed : profile.statistics.totalKills;
-    return { name: theme.copy.content[grant.id].name, description: theme.copy.content[grant.id].description,
+    return { name: theme.copy.content[grant.id]?.name ?? grant.id, description: theme.copy.content[grant.id]?.description ?? "",
       display: unlocked ? theme.copy.profile.unlocked : `${Math.min(value, grant.required)}/${grant.required} ${grant.metric === "runsPlayed" ? theme.copy.profile.finishedRuns : theme.copy.profile.lifetimeKills}` };
   });
 }

@@ -1,3 +1,4 @@
+import { resolveCleanupTool } from "./cleanup-tools";
 import type { UpgradeId } from "../../core/archetypes/ids";
 import type { WeaponDefinition } from "../../core/archetypes/contracts";
 import type { WeaponStatModifiers } from "../upgrades";
@@ -14,6 +15,15 @@ export function resolveWeaponDefinition(
   owned?: WeaponStatModifiers,
   selectedUpgradeIds: readonly UpgradeId[] = [],
 ): WeaponDefinition {
+  if (definition.progression && definition.deliveryKind === "melee") {
+    const step = definition.progression.levels[Math.min(definition.progression.levels.length - 1, selectedUpgradeIds.filter((id) => id === definition.progression!.id).length)]!;
+    return Object.freeze({ ...definition, ...step, reach: step.range + modifiers.range + (owned?.range ?? 0), range: step.range + modifiers.range + (owned?.range ?? 0) });
+  }
+  if (definition.cleanup && definition.deliveryKind === "melee") {
+    const tool = resolveCleanupTool(definition.cleanup, selectedUpgradeIds);
+    return Object.freeze({ ...definition, cleanup: tool, damage: tool.damage, range: tool.radius, reach: tool.radius,
+      cooldownMs: tool.kind === "bin" ? definition.cooldownMs : tool.tickMs, targetCap: null });
+  }
   if (definition.deliveryKind === "melee") {
     return Object.freeze({
       ...definition,

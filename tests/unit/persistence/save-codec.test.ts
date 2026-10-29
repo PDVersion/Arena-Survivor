@@ -21,22 +21,23 @@ function reverseKeys(value: unknown): unknown {
 
 describe("portable save codec", () => {
   it("round trips every persistent field without mutating the original", async () => {
-    const profile: ProfileState = { ...initial(), activeThemeId: "future_theme", selectedCharacterId: "character.future",
+    const profile: ProfileState = { ...initial(), economy: { impact: 57, upgrades: { "shop.safety": 2 } }, activeThemeId: "future_theme", selectedCharacterId: "character.future",
       unlockedCharacterIds: ["character.starter", "character.future"], unlockedWeaponIds: ["weapon.starter", "weapon.secondary"], unlockedUpgradeIds: ["upgrade.bloodlust"],
       settings: { difficulty: "experienced", presentationQuality: "low", detailedUpgradeCards: false, showAttackRadius: true, reducedMotion: true, muted: true, minimapOpacity: 0.85 },
       completedRuns: 2, deaths: 3, bestDurationMs: 300000.125, createdAt: "2026-10-20T00:00:00.000Z", updatedAt: "2026-10-20T03:00:00.000Z",
       statistics: { runsPlayed: 5, totalKills: 123, totalDamage: 456.875, bestLevel: 12, bestKills: 99, bestDamage: 234.5, upgrades: { "upgrade.damage": { total: 9, bestInRun: 4 } } },
     };
     const before = structuredClone(profile); const code = await encodeProfile(profile); const decoded = await decodeProfile(code);
-    expect(decoded).toEqual({ profile, warnings: [], sourceSchemaVersion: 2 });
+    expect(decoded).toEqual({ profile, warnings: [], sourceSchemaVersion: 3 });
     expect(profile).toEqual(before); expect(Object.isFrozen(decoded.profile.statistics)).toBe(true);
     expect(code.split("\n")).toHaveLength(3); expect(code.split("\n")[2]).toMatch(/^[a-f0-9]{64}$/);
   });
   it("imports pre-guide schema2 settings with the radius guide OFF", async () => {
     const old = JSON.parse(JSON.stringify(initial()));
     delete old.settings.showAttackRadius;
+    old.schemaVersion = 2; delete old.economy;
     const decoded = await decodeProfile(pack(old));
-    expect(decoded.profile.schemaVersion).toBe(2);
+    expect(decoded.profile.schemaVersion).toBe(3);
     expect(decoded.profile.settings.showAttackRadius).toBe(false);
     const roundTrip = await decodeProfile(await encodeProfile(decoded.profile));
     expect(roundTrip.profile).toEqual(decoded.profile);
@@ -102,7 +103,7 @@ describe("portable save codec", () => {
   it.each(["not JSON", "{} trailing", "{", "\uFEFF{}"])("rejects malformed JSON %j", async (text) => {
     await expect(decodeProfile(envelope(text))).rejects.toThrow("UTF-8 JSON");
   });
-  it.each([null, [], 4, "profile", {}, { ...initial(), schemaVersion: 0 }, { ...initial(), schemaVersion: 3 }])("rejects unsupported profile shape/version %j", async (value) => {
+  it.each([null, [], 4, "profile", {}, { ...initial(), schemaVersion: 0 }, { ...initial(), schemaVersion: 4 }])("rejects unsupported profile shape/version %j", async (value) => {
     await expect(decodeProfile(pack(value))).rejects.toThrow("schema version");
   });
   it.each([-1, 1e16])("rejects out-of-range persisted numbers %s", async (bestDurationMs) => {

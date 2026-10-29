@@ -11,7 +11,7 @@
     "prompt": "../../raw/enemy_swarm_basic.a2.prompt.txt",
     "metadata": "../../raw/enemy_swarm_basic.a2.metadata.json",
     "checks": "enemy_swarm_basic.a2.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.fast_fragile",
@@ -25,7 +25,7 @@
     "prompt": "../../raw/enemy_fast_fragile.a4.prompt.txt",
     "metadata": "../../raw/enemy_fast_fragile.a4.metadata.json",
     "checks": "enemy_fast_fragile.a4.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.slow_durable",
@@ -39,7 +39,7 @@
     "prompt": "../../raw/enemy_slow_durable.a4.prompt.txt",
     "metadata": "../../raw/enemy_slow_durable.a4.metadata.json",
     "checks": "enemy_slow_durable.a4.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.death_spawner",
@@ -53,21 +53,21 @@
     "prompt": "../../raw/enemy_death_spawner.a3.prompt.txt",
     "metadata": "../../raw/enemy_death_spawner.a3.metadata.json",
     "checks": "enemy_death_spawner.a3.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "character.starter",
     "name": "Environment Protector",
-    "attempt": 3,
+    "attempt": 4,
     "frameWidth": 96,
     "frameHeight": 96,
     "frames": 8,
-    "native": "character_starter.a3.png",
-    "raw": "../../raw/character_starter.a3.png",
-    "prompt": "../../raw/character_starter.a3.prompt.txt",
-    "metadata": "../../raw/character_starter.a3.metadata.json",
-    "checks": "character_starter.a3.checks.json",
-    "status": "review"
+    "native": "character_starter.a4.png",
+    "raw": "../../raw/character_starter.a4.png",
+    "prompt": "../../raw/character_starter.a4.prompt.txt",
+    "metadata": "../../raw/character_starter.a4.metadata.json",
+    "checks": "character_starter.a4.checks.json",
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.stationary_fragment",
@@ -81,7 +81,7 @@
     "prompt": "../../raw/enemy_stationary_fragment.a1.prompt.txt",
     "metadata": "../../raw/enemy_stationary_fragment.a1.metadata.json",
     "checks": "enemy_stationary_fragment.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.cluster_fodder",
@@ -95,7 +95,7 @@
     "prompt": "../../raw/enemy_cluster_fodder.a1.prompt.txt",
     "metadata": "../../raw/enemy_cluster_fodder.a1.metadata.json",
     "checks": "enemy_cluster_fodder.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.gust_drifter",
@@ -109,7 +109,7 @@
     "prompt": "../../raw/enemy_gust_drifter.a1.prompt.txt",
     "metadata": "../../raw/enemy_gust_drifter.a1.metadata.json",
     "checks": "enemy_gust_drifter.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.committed_charger",
@@ -123,7 +123,7 @@
     "prompt": "../../raw/enemy_committed_charger.a1.prompt.txt",
     "metadata": "../../raw/enemy_committed_charger.a1.metadata.json",
     "checks": "enemy_committed_charger.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.mini_boss",
@@ -137,7 +137,7 @@
     "prompt": "../../raw/enemy_mini_boss.a1.prompt.txt",
     "metadata": "../../raw/enemy_mini_boss.a1.metadata.json",
     "checks": "enemy_mini_boss.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "enemy.final_boss",
@@ -151,7 +151,7 @@
     "prompt": "../../raw/enemy_final_boss.a1.prompt.txt",
     "metadata": "../../raw/enemy_final_boss.a1.metadata.json",
     "checks": "enemy_final_boss.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "weapon.starter",
@@ -165,7 +165,7 @@
     "prompt": "../../raw/weapon_starter.a1.prompt.txt",
     "metadata": "../../raw/weapon_starter.a1.metadata.json",
     "checks": "weapon_starter.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "weapon.secondary",
@@ -179,7 +179,7 @@
     "prompt": "../../raw/weapon_secondary.a1.prompt.txt",
     "metadata": "../../raw/weapon_secondary.a1.metadata.json",
     "checks": "weapon_secondary.a1.checks.json",
-    "status": "review"
+    "status": "existing weapon frame reused for HUD; cone attack remains parked"
   },
   {
     "id": "weapon.secondary_evolved",
@@ -193,11 +193,11 @@
     "prompt": "../../raw/weapon_secondary_evolved.a1.prompt.txt",
     "metadata": "../../raw/weapon_secondary_evolved.a1.metadata.json",
     "checks": "weapon_secondary_evolved.a1.checks.json",
-    "status": "review"
+    "status": "parked design; preserved review history"
   },
   {
-    "id": "pickup.experience",
-    "name": "Impact Point",
+    "id": "pickup.impact",
+    "name": "Impact Point (saved currency)",
     "attempt": 1,
     "frameWidth": 32,
     "frameHeight": 32,
@@ -207,7 +207,7 @@
     "prompt": "../../raw/pickup_experience.a1.prompt.txt",
     "metadata": "../../raw/pickup_experience.a1.metadata.json",
     "checks": "pickup_experience.a1.checks.json",
-    "status": "review"
+    "status": "repurposed live; playtest pending"
   },
   {
     "id": "shrine.spawn_surge",
@@ -221,7 +221,7 @@
     "prompt": "../../raw/shrine_spawn_surge.a1.prompt.txt",
     "metadata": "../../raw/shrine_spawn_surge.a1.metadata.json",
     "checks": "shrine_spawn_surge.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.greed",
@@ -235,7 +235,7 @@
     "prompt": "../../raw/shrine_greed.a1.prompt.txt",
     "metadata": "../../raw/shrine_greed.a1.metadata.json",
     "checks": "shrine_greed.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.multiplicity",
@@ -249,7 +249,7 @@
     "prompt": "../../raw/shrine_multiplicity.a1.prompt.txt",
     "metadata": "../../raw/shrine_multiplicity.a1.metadata.json",
     "checks": "shrine_multiplicity.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.duplication",
@@ -263,7 +263,7 @@
     "prompt": "../../raw/shrine_duplication.a1.prompt.txt",
     "metadata": "../../raw/shrine_duplication.a1.metadata.json",
     "checks": "shrine_duplication.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "shrine.escalation",
@@ -277,7 +277,7 @@
     "prompt": "../../raw/shrine_escalation.a1.prompt.txt",
     "metadata": "../../raw/shrine_escalation.a1.metadata.json",
     "checks": "shrine_escalation.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "hazard.damage_zone",
@@ -291,7 +291,7 @@
     "prompt": "../../raw/hazard_damage_zone.a1.prompt.txt",
     "metadata": "../../raw/hazard_damage_zone.a1.metadata.json",
     "checks": "hazard_damage_zone.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "hazard.obstacle",
@@ -305,7 +305,7 @@
     "prompt": "../../raw/hazard_obstacle.a1.prompt.txt",
     "metadata": "../../raw/hazard_obstacle.a1.metadata.json",
     "checks": "hazard_obstacle.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "hazard.periodic_burst",
@@ -319,7 +319,7 @@
     "prompt": "../../raw/hazard_periodic_burst.a1.prompt.txt",
     "metadata": "../../raw/hazard_periodic_burst.a1.metadata.json",
     "checks": "hazard_periodic_burst.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "icon.weapon.starter",
@@ -333,7 +333,7 @@
     "prompt": "../../raw/icon_weapon_starter.a1.prompt.txt",
     "metadata": "../../raw/icon_weapon_starter.a1.metadata.json",
     "checks": "icon_weapon_starter.a1.checks.json",
-    "status": "review"
+    "status": "live; playtest pending"
   },
   {
     "id": "icon.weapon.secondary",
@@ -347,7 +347,7 @@
     "prompt": "../../raw/icon_weapon_secondary.a1.prompt.txt",
     "metadata": "../../raw/icon_weapon_secondary.a1.metadata.json",
     "checks": "icon_weapon_secondary.a1.checks.json",
-    "status": "review"
+    "status": "parked design; preserved review history"
   },
   {
     "id": "icon.weapon.secondary_evolved",
@@ -361,7 +361,7 @@
     "prompt": "../../raw/icon_weapon_secondary_evolved.a1.prompt.txt",
     "metadata": "../../raw/icon_weapon_secondary_evolved.a1.metadata.json",
     "checks": "icon_weapon_secondary_evolved.a1.checks.json",
-    "status": "review"
+    "status": "parked design; preserved review history"
   },
   {
     "id": "enemy.ranged_attacker",
@@ -375,6 +375,102 @@
     "prompt": "../../raw/enemy_ranged_attacker.a3.prompt.txt",
     "metadata": "../../raw/enemy_ranged_attacker.a3.metadata.json",
     "checks": "enemy_ranged_attacker.a3.checks.json",
-    "status": "live draft"
+    "status": "live; playtest pending"
+  },
+  {
+    "id": "pickup.experience",
+    "name": "pickup_money",
+    "attempt": 1,
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 3,
+    "native": "pickup_money.a1.png",
+    "raw": "../../raw/pickup_money.a1.png",
+    "prompt": "../../raw/pickup_money.a1.prompt.txt",
+    "metadata": "../../raw/pickup_money.a1.metadata.json",
+    "checks": "pickup_money.a1.checks.json",
+    "status": "live; playtest pending"
+  },
+  {
+    "id": "pickup.magnet",
+    "name": "pickup_magnet",
+    "attempt": 1,
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 4,
+    "native": "pickup_magnet.a1.png",
+    "raw": "../../raw/pickup_magnet.a1.png",
+    "prompt": "../../raw/pickup_magnet.a1.prompt.txt",
+    "metadata": "../../raw/pickup_magnet.a1.metadata.json",
+    "checks": "pickup_magnet.a1.checks.json",
+    "status": "live; playtest pending"
+  },
+  {
+    "id": "pickup.food",
+    "name": "pickup_food",
+    "attempt": 1,
+    "frameWidth": 32,
+    "frameHeight": 32,
+    "frames": 1,
+    "native": "pickup_food.a1.png",
+    "raw": "../../raw/pickup_food.a1.png",
+    "prompt": "../../raw/pickup_food.a1.prompt.txt",
+    "metadata": "../../raw/pickup_food.a1.metadata.json",
+    "checks": "pickup_food.a1.checks.json",
+    "status": "live; playtest pending"
+  },
+  {
+    "id": "enemy.scavenger",
+    "name": "enemy_scavenger",
+    "attempt": 2,
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "native": "enemy_scavenger.a2.png",
+    "raw": "../../raw/enemy_scavenger.a2.png",
+    "prompt": "../../raw/enemy_scavenger.a2.prompt.txt",
+    "metadata": "../../raw/enemy_scavenger.a2.metadata.json",
+    "checks": "enemy_scavenger.a2.checks.json",
+    "status": "live; playtest pending"
+  },
+  {
+    "id": "weapon.cleaning_bin",
+    "name": "weapon_cleaning_bin",
+    "attempt": 1,
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 3,
+    "native": "weapon_cleaning_bin.a1.png",
+    "raw": "../../raw/weapon_cleaning_bin.a1.png",
+    "prompt": "../../raw/weapon_cleaning_bin.a1.prompt.txt",
+    "metadata": "../../raw/weapon_cleaning_bin.a1.metadata.json",
+    "checks": "weapon_cleaning_bin.a1.checks.json",
+    "status": "live; playtest pending"
+  },
+  {
+    "id": "weapon.rake_beam",
+    "name": "Rake Sweep",
+    "attempt": 2,
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "native": "weapon_rake_beam.a2.png",
+    "raw": "../../raw/weapon_rake_beam.a2.png",
+    "prompt": "../../raw/weapon_rake_beam.a2.prompt.txt",
+    "checks": "weapon_rake_beam.a2.checks.json",
+    "status": "live: compact handle and broad separated teeth"
+  },
+  {
+    "id": "weapon.orbiting_rake",
+    "name": "weapon_orbiting_shovel",
+    "attempt": 1,
+    "frameWidth": 96,
+    "frameHeight": 32,
+    "frames": 1,
+    "native": "weapon_orbiting_shovel.a1.png",
+    "raw": "../../raw/weapon_orbiting_shovel.a1.png",
+    "prompt": "../../raw/weapon_orbiting_shovel.a1.prompt.txt",
+    "checks": "weapon_orbiting_shovel.a1.checks.json",
+    "status": "live: orbiting shovel"
   }
 ]

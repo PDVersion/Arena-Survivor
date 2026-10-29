@@ -174,7 +174,7 @@ describe("upgrades that do not roll", () => {
     // Scaling one half of "more pressure for more reward" changes the deal;
     // scaling both changes nothing. So these always roll common.
     for (const upgrade of ecoGuardianTheme.upgrades) {
-      const hasWorldEffect = upgrade.effects.some((effect) => effect.kind === "curse.accept" || effect.kind === "world.modify" || effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
+      const hasWorldEffect = upgrade.effects.some((effect) => effect.kind === "curse.accept" || effect.kind === "tool.upgrade" || effect.kind === "world.modify" || effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
       expect(isTiered(upgrade)).toBe(!hasWorldEffect);
     }
   });

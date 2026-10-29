@@ -1,9 +1,11 @@
+import { emptyMetaEconomy, type MetaEconomy } from "../systems/economy/economy";
 import type { CharacterId } from "../core/archetypes/ids";
 import { createSettings, type RunSettings } from "./settings-state";
 import { createSessionStatistics, type SessionStatistics } from "./session-statistics";
 
-export const PROFILE_SCHEMA_VERSION = 2 as const;
+export const PROFILE_SCHEMA_VERSION = 3 as const;
 export interface ProfileState {
+  readonly economy: MetaEconomy;
   readonly schemaVersion: typeof PROFILE_SCHEMA_VERSION;
   readonly gameVersion: string;
   readonly activeThemeId: string;
@@ -28,7 +30,7 @@ export interface InitialProfileOptions {
 }
 export function createInitialProfile(options: InitialProfileOptions): ProfileState {
   const now = options.now ?? "1970-01-01T00:00:00.000Z";
-  return { schemaVersion: PROFILE_SCHEMA_VERSION, gameVersion: "0.4.3", activeThemeId: options.activeThemeId,
+  return { schemaVersion: PROFILE_SCHEMA_VERSION, economy: emptyMetaEconomy(), gameVersion: "0.4.5", activeThemeId: options.activeThemeId,
     contentSchemaVersion: options.contentSchemaVersion, selectedCharacterId: options.starterCharacterId,
     unlockedCharacterIds: [options.starterCharacterId], unlockedWeaponIds: ["weapon.starter"],
     unlockedUpgradeIds: [], settings: createSettings(), statistics: createSessionStatistics(),

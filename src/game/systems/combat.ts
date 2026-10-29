@@ -1,4 +1,5 @@
 export interface DamageRollOptions {
+  readonly cappedLinear?: boolean;
   readonly baseDamage: number;
   readonly damageBonus: number;
   readonly critChance: number;
@@ -30,12 +31,13 @@ export interface PierceState {
 export function rollDamage(options: DamageRollOptions): DamageRoll {
   const modifiedDamage = options.baseDamage * (1 + options.damageBonus);
   const crit = resolveCritTier(options.critChance, options.random);
-  const multiplier = crit.tier === 0 ? 1 : options.critDamage ** crit.tier;
+  const tier = options.cappedLinear ? Math.min(3, crit.tier) : crit.tier;
+  const multiplier = tier === 0 ? 1 : options.cappedLinear ? Math.min(4, 1 + (options.critDamage - 1) * tier) : options.critDamage ** crit.tier;
   const damage = modifiedDamage * multiplier;
   return {
     damage,
     critical: crit.tier > 0,
-    tier: crit.tier,
+    tier,
     multiplier,
     baseDamage: modifiedDamage,
     bonusDamage: damage - modifiedDamage,

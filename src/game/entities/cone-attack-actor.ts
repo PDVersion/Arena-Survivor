@@ -1,5 +1,7 @@
 import Phaser from "phaser";
-import type { ToolEffectOptions } from "./tool-effects";
+import { addToolSprite, type ToolEffectOptions } from "./tool-effects";
+import { resolveSprite } from "../systems/sprites/resolve-sprite";
+import { runtimeFrame } from "../systems/sprites/runtime-sprite";
 import type { MeleeWeaponDefinition, ThemeTokens } from "../core/archetypes/contracts";
 
 /** Tool pulse artwork and optional geometry guide; never owns hit selection. */
@@ -29,44 +31,52 @@ export class ConeAttackActor extends Phaser.GameObjects.Container {
     this.add([sector, nozzle, marks]).setRotation(angle).setDepth(45);
     const air = scene.add.graphics();
     this.add(air);
-    let pulsing = true;
+    const art = addToolSprite(this, tokens, definition.id, suction?.nozzleLength ?? nozzle.width, "hit");
+    const sprite = resolveSprite(tokens, definition.id);
+    if (art) nozzle.setVisible(false);
+    const gustDuration = suction?.durationMs ?? definition.extendMs;
+    const fadeDuration = suction?.fadeMs ?? definition.retractMs;
     if (suction) {
       const count = options.quality === "low" ? suction.lowStreams : suction.streams;
-      const draw = (progress: number) => {
-        air.clear().lineStyle(suction.strokeWidth, airColour, suction.opacity);
+      const draw = (elapsedMs: number) => {
+        air.clear();
         for (let index = 0; index < count; index += 1) {
           const lane = (index + 0.5) / count;
-          const travel = options.reducedMotion ? lane : (progress + lane) % 1;
+          const travel = options.reducedMotion ? lane : (elapsedMs / (suction.cycleMs ?? gustDuration) + lane) % 1;
+          const envelope = Math.sin(travel * Math.PI);
           const distance = definition.reach * (1 - travel * (1 - suction.innerFraction));
-          const spread = Phaser.Math.Clamp(-half + lane * half * 2 + Math.sin(progress * Math.PI * 2) * suction.twist, -half, half);
-          const tail = Math.min(definition.reach, distance + definition.reach * suction.tailFraction);
-          air.lineBetween(Math.cos(spread) * distance, Math.sin(spread) * distance,
-            Math.cos(spread) * tail, Math.sin(spread) * tail);
-          if (!options.reducedMotion) air.fillStyle(airColour, suction.opacity)
-            .fillCircle(Math.cos(spread) * distance, Math.sin(spread) * distance, suction.dustRadius);
+          const spread = Math.sin(half) * distance;
+          // Overlapping translucent air banks form a broad inward gust. No
+          // bullet-like streaks or tiny dust points, and never a new hit area.
+          air.fillStyle(airColour, suction.opacity * envelope)
+            .fillEllipse(distance, 0, definition.reach * suction.tailFraction,
+              Math.max(suction.strokeWidth, spread * 2));
+          air.fillStyle(airColour, suction.opacity * envelope * 0.5)
+            .fillEllipse(distance + definition.reach * suction.tailFraction / 4,
+              Math.sin(travel * Math.PI * 2) * spread / 4,
+              definition.reach * suction.tailFraction, Math.max(suction.strokeWidth, spread * 1.5));
         }
       };
       draw(0);
       if (!options.reducedMotion) {
-        const pulse = { value: 0 };
-        scene.tweens.add({ targets: pulse, value: 1, duration: definition.extendMs,
-          onUpdate: () => { if (this.active && pulsing) draw(pulse.value); } });
+        const clock = { elapsedMs: 0 };
+        scene.tweens.add({ targets: clock, elapsedMs: gustDuration, duration: gustDuration,
+          onUpdate: () => { if (this.active) draw(clock.elapsedMs); } });
       }
     }
     scene.time.delayedCall(definition.extendMs, () => {
       if (!this.active) return;
       // Damage happened once. Only a faint outline/selected-hit trace lingers.
-      pulsing = false;
       sector.clear();
-      air.clear().setVisible(false);
       if (showGuide) {
         sector.lineStyle(1, colour, 0.25);
         sector.slice(0, 0, definition.reach, -half, half, false).strokePath();
       }
       nozzle.setVisible(false);
+      if (art && sprite) art.setFrame(runtimeFrame(sprite, sprite.states.death));
     });
     scene.add.existing(this);
-    scene.tweens.add({ targets: this, alpha: 0, duration: definition.extendMs + definition.retractMs,
+    scene.tweens.add({ targets: this, alpha: 0, delay: gustDuration, duration: fadeDuration,
       onComplete: () => { this.destroy(); onComplete(); } });
   }
 }

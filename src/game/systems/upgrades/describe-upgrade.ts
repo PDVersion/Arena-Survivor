@@ -118,7 +118,7 @@ export function selectEquippedWeaponStats(
 ): readonly StatLine[] {
   return Object.freeze((state.weaponSlots ?? []).filter((slot) => slot.weaponId !== archetypeIds.weapon.starter).flatMap((slot) =>
     selectPlayerStats(state, theme, slot.weaponId).filter((line) => ["damage", "attackRate", "primaryTargets", "range"].includes(line.key))
-      .map((line) => Object.freeze({ ...line, label: `${theme.copy.content[slot.weaponId].name} · ${line.label}` }))));
+      .map((line) => Object.freeze({ ...line, label: `${(theme.copy.content[slot.weaponId]?.name ?? slot.weaponId)} · ${line.label}` }))));
 }
 
 /** World pressure, as shown in the pause menu. */
@@ -157,6 +157,10 @@ export interface UpgradeDescription {
   readonly name: string;
   readonly summary: string;
   readonly rarity: UpgradeRarity;
+  /** True when existing application rules allow the roll to change gains. */
+  readonly qualityRelevant: boolean;
+  /** Related tool/skill/item name for identity on fixed-value cards. */
+  readonly association: string;
   /** This offer's roll, which decides its colour and how much it gives. */
   readonly tier: UpgradeTier;
   /** Themed name for the tier, e.g. "Legendary". */
@@ -182,9 +186,10 @@ export interface UpgradeDescription {
 export function describeUpgrade(
   state: UpgradeableState,
   upgrade: UpgradeDefinition,
-  theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning" | "curses">,
+  theme: Pick<ThemeManifest, "weapons" | "copy" | "skills" | "tuning" | "curses" | "economy">,
   tier: UpgradeTier = "common",
 ): UpgradeDescription {
+  const ownerId = state.weaponSlots?.find((slot) => slot.weaponId === upgrade.ownerWeaponId || upgrade.additionalOwnerWeaponIds?.includes(slot.weaponId))?.weaponId ?? upgrade.ownerWeaponId;
   const picks = upgradeLevel(state.selectedUpgradeIds, upgrade.id);
   const acquisition = upgrade.effects.find((effect) => effect.kind === "weapon.equip" || effect.kind === "weapon.evolve");
   const evolution = upgrade.effects.find((effect) => effect.kind === "weapon.evolve");
@@ -202,8 +207,8 @@ export function describeUpgrade(
     theme.curses,
   );
 
-  const beforeStats = selectPlayerStats(state, theme, evolution?.fromWeaponId ?? upgrade.ownerWeaponId);
-  const afterStats = selectPlayerStats(after, theme, evolution?.weaponId ?? upgrade.ownerWeaponId);
+  const beforeStats = selectPlayerStats(state, theme, evolution?.fromWeaponId ?? ownerId);
+  const afterStats = selectPlayerStats(after, theme, evolution?.weaponId ?? ownerId);
   const lines: UpgradeChangeLine[] = [];
 
   afterStats.forEach((next, index) => {
@@ -239,13 +244,20 @@ export function describeUpgrade(
       }
     }
   }
+  const ownedWeapon = theme.weapons.find((weapon) => weapon.id === ownerId);
+  const progression = ownedWeapon?.progression ?? ownedWeapon?.cleanup?.progression;
+  const step = progression?.id === upgrade.id ? progression.levels[Math.min(picks + 1, progression.levels.length - 1)] : undefined;
+  if (step) lines.push({ label: "Next weapon level", to: step.description });
   lines.push(...describeSkillChange(state, after, upgrade, theme));
 
   return Object.freeze({
     id: upgrade.id,
     name: theme.copy.content[upgrade.id]?.name ?? upgrade.id,
-    summary: theme.copy.content[upgrade.id]?.description ?? "",
+    summary: step?.description ?? theme.copy.content[upgrade.id]?.description ?? "",
     rarity: upgrade.rarity,
+    qualityRelevant: isTiered(upgrade),
+    association: theme.copy.content[ownerId ?? acquisition?.weaponId ??
+      upgrade.effects.find((effect) => effect.kind === "skill.level")?.skillId ?? upgrade.id]?.name ?? "",
     tier: resolvedTier,
     tierLabel: theme.copy.tiers[resolvedTier],
     tierMultiplier: multiplier,
@@ -264,7 +276,7 @@ function describeSkillChange(
   before: UpgradeableState,
   after: UpgradeableState,
   upgrade: UpgradeDefinition,
-  theme: Pick<ThemeManifest, "copy" | "skills">,
+  theme: Pick<ThemeManifest, "copy" | "skills" | "economy">,
 ): readonly UpgradeChangeLine[] {
   const lines: UpgradeChangeLine[] = [];
 
@@ -315,6 +327,10 @@ function describeSkillChange(
     }
 
     const fracture = findSkillEffect(theme.skills, effect.skillId, "fracture");
+    if (fracture && theme.economy) {
+      lines.push({ label: "Breakage chance reduction", from: percent(previous * theme.economy.fragmentation.careReduction), to: percent(next * theme.economy.fragmentation.careReduction) });
+      continue;
+    }
     if (fracture) {
       lines.push(Object.freeze({
         label: labels.luck,

@@ -5,7 +5,7 @@ import type { DirectorTuning } from "../../../core/archetypes/tuning";
  * Curves, not a phase list. Everything resolves from normalized run progress,
  * so a run of any length restretches without new authoring.
  *
- * Microplastics open the run. Bottles quietly enter at 10% progress (30 s on
+ * Single Cigarette Butts open the run. Bottles quietly enter at 10% progress (30 s on
  * the five-minute timer), with a low initial weight and a gradual ramp.
  * G3 spaces heavier introductions before the later mini-boss.
  */
@@ -21,6 +21,7 @@ export const director = {
   waveBurstGrowth: 15,
   spawnMargin: 40,
   roles: [
+    { enemyId: archetypeIds.enemy.scavenger, waveMovement: "chase", unlockAt: .20, milestoneWave: false, baseWeight: .25, weightGrowth: 0, chaosWeightBias: 0 },
     { enemyId: archetypeIds.enemy.rangedAttacker, waveMovement: "chase", unlockAt: 0.66,
       introductionCount: 1, baseWeight: 1, weightGrowth: 0.2, chaosWeightBias: 0 },
     { enemyId: archetypeIds.enemy.committedCharger, waveMovement: "chase", unlockAt: 0.60,
@@ -38,11 +39,10 @@ export const director = {
       weightGrowth: 9,
       chaosWeightBias: 0,
     },
-    // Small opening enemy. Keep drift for any authored milestone burst;
-    // ordinary spawns chase but remain below player movement speed.
+    // Single opening enemy; Microplastics own natural three-piece groups later.
     {
-      enemyId: archetypeIds.enemy.fastFragile,
-      waveMovement: "drift",
+      enemyId: archetypeIds.enemy.clusterFodder,
+      waveMovement: "chase",
       unlockAt: 0,
       baseWeight: 100,
       weightGrowth: -0.6,
@@ -67,7 +67,7 @@ export const director = {
       weightGrowth: 2.6,
       chaosWeightBias: 0.5,
     },
-    { enemyId: archetypeIds.enemy.clusterFodder, waveMovement: "chase", unlockAt: 0.25,
+    { enemyId: archetypeIds.enemy.fastFragile, waveMovement: "drift", unlockAt: 0.28,
       introductionCount: 3, baseWeight: 2, weightGrowth: 0.5, chaosWeightBias: 0 },
   ],
 } as const satisfies DirectorTuning;

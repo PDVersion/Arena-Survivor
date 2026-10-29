@@ -1,0 +1,25 @@
+{
+  "impactShopLoads": true,
+  "testingAreaLoads": true,
+  "testingAreaProfileIsolated": true,
+  "checkedAt": "2026-10-29T06:53:34.524Z",
+  "browserVersion": "151.0.7922.34",
+  "bundlesChecked": [
+    "combat-CovibT9_.js",
+    "config-DjVSa7lp.js",
+    "game-CCmxhzNy.js",
+    "index-CuS9Jbf_.js",
+    "profile-service-4dSdB-OA.js",
+    "shop-yddOrCN2.js",
+    "sprites-DPjtIcuN.js",
+    "start-game-LQySXwq7.js",
+    "testing-BWCKM0Nj.js"
+  ],
+  "diagnosticMarkersAbsent": true,
+  "testInterfaceAbsent": true,
+  "productionBootPlayPause": true,
+  "spriteBrowserLoads": true,
+  "startingStatsVerified": true,
+  "architectureNavigation": true,
+  "errors": []
+}

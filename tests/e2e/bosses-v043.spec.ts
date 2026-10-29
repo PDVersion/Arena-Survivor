@@ -25,8 +25,11 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const ending of ["
         class Probe extends RunScene {
           resetTransientRuntime() { this.runTheme = theme; super.resetTransientRuntime(); }
           create() { super.create(); this.physics.world.pause(); ready(this); }
-          update(time: number) { super.update(time, 0); }
-          tick(delta: number) { super.update(performance.now(), delta); this.physics.world.pause(); }
+          update(time: number) { this.activeClock = undefined; super.update(time, 0); }
+          tick(delta: number) {
+            this.activeClock = { at: performance.now() - delta, active: ["playing", "boss_fight"].includes(this.runState.status) };
+            super.update(performance.now(), delta); this.physics.world.pause();
+          }
         }
         class Load extends Phaser.Scene {
           constructor() { super("c5-load"); }
@@ -40,6 +43,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const ending of ["
         let timeout: ReturnType<typeof setTimeout> | undefined;
         const scene = await Promise.race([started, new Promise<never>((_, reject) => { timeout = setTimeout(() => reject(new Error("C5 startup timeout")), 8000); })]); clearTimeout(timeout);
         const actors = (): { rewardMultiplier: number; definition: { id: string; xpReward: number; boss?: { kind: string; attack: { recoveryMs: number; telegraphMs: number; radius: number } } }; x: number; y: number; health: number; maxHealth: number; defeated: boolean; targetId: string; destroy(): void }[] => Array.from(scene.enemies);
+        // Material shedding has its own changing-RNG runtime regression.
+        scene.effectRandom = () => 1 - Number.EPSILON;
         const observations: Record<string, unknown> = {};
         const ordinary = theme.enemies.find((enemy: { id: string }) => enemy.id === "enemy.swarm_basic");
         scene.enemyCapacity = 1;
@@ -100,6 +105,11 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const ending of ["
         scene.runState = { ...scene.runState, elapsedMs: dodgeWarning.releaseAtMs };
         scene.updateBossAttacks();
         observations.dodge = { before: beforeDodge, after: scene.runState.player.health, pulses: scene.bossPulses };
+        scene.processCausalEvents();
+        const summoned = actors().filter((enemy) => !enemy.definition.boss);
+        observations.attackSummons = { count: summoned.length, expected: theme.economy
+          ? theme.enemies.find((e: { id: string }) => e.id === final.definition.id).boss.summons.patterns.slice(0, 2).reduce((sum: number, p: { entries: { count: number }[] }) => sum + p.entries.reduce((n, e) => n + e.count, 0), 0) : 0 };
+        for (const child of summoned) child.destroy();
         const duplication = theme.shrines.find((site: { effectKind: string }) => site.effectKind === "duplicate_living");
         const shrine = new ShrineActor(scene, scene.player.x, scene.player.y, duplication, theme.tokens, "", "");
         scene.activateShrine(shrine); shrine.destroy(); scene.processCausalEvents();
@@ -150,6 +160,8 @@ for (const themeKey of ["eco-guardian", "knight-magic"]) for (const ending of ["
       expect(result.pause).toEqual({ status: "paused", frozen: true }); expect(result.resume).toBe("boss_fight");
       expect(result.levelUp).toBe("level_up"); expect(result.afterChoice).toBe("boss_fight");
       expect(result.dodge.after).toBe(result.dodge.before); expect(result.dodge.pulses).toBe(2);
+      const summoned = result.attackSummons as { count: number; expected: number };
+      expect(summoned.count).toBe(summoned.expected);
       expect(result.duplication).toEqual({ count: 1, backlog: 0 });
       expect(result.pressure.actual).toBe(result.pressure.hud); expect(Number(result.pressure.pause)).toBe(result.pressure.actual); expect(result.pressure.progress).toBe(1);
       expect(result.finalKill).toMatchObject({ kills: 1, defeated: true, duplicateAdded: 0, status: "time_up", decision: true, live: 0, warnings: 0, cues: 0 });

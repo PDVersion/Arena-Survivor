@@ -30,6 +30,8 @@ for (const { theme } of themeRegistry) describe(`${theme.id} HUD change detectio
     const run = createRunState({ themeId: theme.id, characterId: theme.characters[0]!.id, baseStats: theme.characters[0]!.baseStats });
     const hud = Object.create(Hud.prototype);
     hud.theme = theme;
+    hud.toolIcons = [];
+    hud.toolSignature = run.weaponSlots.map((slot) => slot.weaponId).join(",");
     for (const key of ["healthLabel", "experienceLabel", "right", "status", "levelLabel"]) {
       hud[key] = { text: "", setText: vi.fn(function(this: { text: string }, value: string | string[]) { this.text = Array.isArray(value) ? value.join("\n") : value; }) };
     }

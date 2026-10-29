@@ -1,0 +1,21 @@
+{
+  "RECONCILIATION.md": "289f064cd88a1ffe8aa123e054a2414406604fb0742c4bd03df61c9e39282a05",
+  "build/BUILD_PLAN_V0.4.md": "c89e2bb2a1aaef57eb21eb6f914f31d51ee03be1a50edf9da946ca1a61d6c0d7",
+  "build/BUILD_STATUS.md": "a7f3492cc511b1c86c9e937d811b83c8dc068a2e6aaf8e0cccbcc620c8ba7c6d",
+  "build/MASTER_BUILD_PLAN.md": "e3a458d8ed03c2d3662aee1a3c15be6062574cfa74b765b4b06602dad03d0135",
+  "build/NEXT_READABLE_GAMEPLAY_HANDOFF.md": "6ad4e3b80e6b8a399f41af35ffa89adc6f12c2fc131d77e2681546657c973a51",
+  "build/SPRITE_PLAN_V0.4.4.md": "12ae786c45124ef9a1e2aeac03e56e01957f86cc5ab60201979bbfa39cd3d277",
+  "src/game/content/define-theme.ts": "092c31b772d23bbf642340dde4b874d118f21ca34e74cc4038e1fa38c8466be4",
+  "src/game/content/themes/eco-guardian/view.ts": "39271efc58ee154889ee9d1aca4086d36a678539d979ea9c2e491ca71b285a85",
+  "src/game/core/archetypes/tuning.ts": "681a41f5d098383ad03a69c9c2e0165bb3761795be24a235c4c5af09032f0e9d",
+  "src/game/entities/cone-attack-actor.ts": "a7c444730cd4b8574097a00dced320a1c33182f9df2636beee3a872913fb2c5a",
+  "src/game/systems/upgrades/describe-upgrade.ts": "48f27bf6c32351942d450515acf00921afb12037110a9d3932c1fe6fe2d70e02",
+  "src/game/ui/level-up-choice-ui.ts": "16b2306995f66850706c02b6c144b7631a2d13d6af2fcccadce51d220939c41f",
+  "src/game/ui/pause-menu-ui.ts": "183a38bb2d42fea410accda7e3ebdb2f6bfe78bbe36ea8ebbdf25cea3ea69fd5",
+  "tests/e2e/g4-mastery.spec.ts": "0b453f8c28422398dad9f1b076ddcc55043bbddcd7f9d4f238db185f108d1e31",
+  "tests/e2e/tool-presentation.spec.ts": "bf16fc28a1d79e96f8d7cc5125edde0427f0db1a1c7bc86d7f94f7065c0a09af",
+  "tests/unit/content/theme.test.ts": "3cdf1585b881cfad54a5136b09a7e78985081e2745331d52afca61799f91960e",
+  "tests/unit/ui-selectors/describe-upgrade.test.ts": "a9032bcf28b38021f2ca514907752ab7d418bb7b38203a5dcc36f318e0782181",
+  "build/prompts/PROGRESSION_SYSTEM_RESEARCH.md": "413f3c80a6b3c24d08c24232c7e860fca9e788d70a292810be5b6c12c0042cf1",
+  "build/content/PLAYTEST_CORRECTIONS_REPORT.md": "25be17d0a4029763e448c36c5abf40010b50a79ea420ed64932f6381f478c37b"
+}

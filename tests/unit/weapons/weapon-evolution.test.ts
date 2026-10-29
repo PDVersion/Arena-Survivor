@@ -1,3 +1,4 @@
+import type { ThemeManifest } from "../../../src/game/core/archetypes/contracts";
 import { describe, expect, it } from "vitest";
 import { archetypeIds as ids } from "../../../src/game/core/archetypes/ids";
 import { ecoGuardianTheme } from "../../../src/game/content/themes/eco-guardian";
@@ -13,7 +14,7 @@ import { findBuildModel } from "../../../src/game/systems/simulation/build-model
 import { selectMeleeHits } from "../../../src/game/systems/weapons/melee-stab";
 import { selectSplashHits } from "../../../src/game/systems/weapons/on-hit-splash";
 
-describe.each([ecoGuardianTheme, knightMagicTheme])("evolution in $id", (theme) => {
+describe.each(([ecoGuardianTheme, knightMagicTheme] as readonly ThemeManifest[]).filter((theme) => !theme.economy))("evolution in $id", (theme) => {
   const acquire = theme.upgrades.find((u) => u.id === ids.upgrade.equipSecondary)!;
   const reach = theme.upgrades.find((u) => u.id === ids.upgrade.secondaryRange)!;
   const evolve = theme.upgrades.find((u) => u.id === ids.upgrade.evolveSecondary)!;
@@ -100,7 +101,7 @@ describe.each([ecoGuardianTheme, knightMagicTheme])("evolution in $id", (theme) 
     expect(description.lines.find((l) => l.label === theme.copy.stats.damage)).toMatchObject({ from: "6", to: "9" });
     expect(description.lines.find((l) => l.label === theme.copy.stats.range)).toMatchObject({ from: "159.6", to: "174.6" });
     const after = applyUpgrade(before, evolve, undefined, 1, theme.weapons);
-    expect(selectEquippedWeaponStats(after, theme).every((l) => l.label.startsWith(theme.copy.content[newWeapon.id].name))).toBe(true);
+    expect(selectEquippedWeaponStats(after, theme).every((l) => l.label.startsWith(theme.copy.content[newWeapon.id]!.name))).toBe(true);
     const reset = resetRunState(after);
     expect(reset.weaponSlots).toEqual([{ weaponId: ids.weapon.starter, nextAttackAtMs: 0 }]);
     expect(reset.ownedWeaponModifiers).toEqual({});

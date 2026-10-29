@@ -81,7 +81,7 @@ for (const { theme } of themeRegistry) describe(`${theme.id} presentation isolat
     const allLow = { ...theme, tuning: { ...theme.tuning, view: { ...theme.tuning.view, minimapEnemyShapes: { default: "square" as const, low: "square" as const } } } };
     expect(simulatePacing({ ...options, theme: allLow })).toEqual(baseline);
     expect(baseline.peakLiveEnemies).toBeLessThanOrEqual(300);
-    expect(baseline.gameplayRate).toBe(0.5);
+    expect(baseline.gameplayRate).toBe("economy" in theme ? 1 : .5);
   });
 
   it("validates both presentation modes at the theme boundary", () => {

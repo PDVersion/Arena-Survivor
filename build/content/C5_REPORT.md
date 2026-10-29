@@ -1,3 +1,7 @@
+> Historical evidence at its recorded revision/date. Old “current”, “next” and
+> unchecked gates below are not the live work queue. See [current status](../BUILD_STATUS.md)
+> and the remaining-work audit; later owner waivers/corrections supersede old status.
+
 # C5 — unique bosses and post-victory choice /2026-10-20
 
 Verified local phase on codex/v0.4.3 fromb0ff7e9. No publication or later matching-head CI claim. Remote39189877476 covers2806720 only. Exact source/compiled/image hashes, durable raw observations and60 coarse TTK summaries are in [C5_RESULTS.json](C5_RESULTS.json).

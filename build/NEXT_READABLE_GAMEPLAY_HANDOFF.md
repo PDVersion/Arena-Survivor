@@ -1,27 +1,29 @@
-# Current handoff — generation complete, art acceptance/integration open
+# Current handoff — 2026-10-29
 
-Fresh audit2026-10-23 confirms **27/27 subjects generated,102 frames,31 raw attempts**.
-All27 native format/hash/rebuild checks pass; no generation claim or missing subject.
-[Audit/remaining work](sprites/review/style2/PROGRESS_REPORT.md),
-[evidence JSON](sprites/review/style2/PROGRESS_AUDIT.json),
-[gallery](sprites/review/style2/index.html), [manifest](sprites/MANIFEST.md).
+All currently owner-selected eco implementation, Elite guide and documentation
+consolidation are built locally. 743unit tests/81files, types/lint/build and focused serial pause/title Elite-guide acceptance pass (zero retries). The compact rake appearance is
+owner-accepted; general combat/roster acceptance remains open.
 
-Takeaway Cup alone is live style2 draft;26 others remain review-only. Five original
-style1 sheets still ship; Shards aliases old Glass death art.719units/three cup
-browser cases remain historical runtime evidence, not a new full-app pass.
+## Next owner playthrough
 
-Next: owner playtest/individual corrections, then a bounded claim for doubled
-replacement/remaining integration under [active plan](SPRITE_PLAN_V0.4.4.md).
-Check Impact Point drift, grip/nozzle/hood anchors, idle-hit/movement matching,
-world painted cues/palettes, and cup mirrored poses/ranged pacing. Do not regenerate
-or promote all subjects automatically. Cup next attempta5, preserve old sources.
+Use [Testing area / normal-play checklist](content/MONEY_TOOLS_SANDBOX_REPORT.md).
+Compare single-cigarette early pacing, late micro groups, airborne wrappers,
+boss wave density/near-death mix, drop rarity, tool coverage and seven-level picks.
+Elite meanings are now under Field Guide → Elites from title or pause.
 
-Tools/sites/hazards need real phase mappings; keep physics/damage/areas independent
-of sprites. After several integrations, perform one necessary serial consolidated
-roster/quality/fallback/texture-performance gate. External Safari/browser-OS/older
-physical-GPU evidence stays waived/unverified. Inspect remote/head CI when delivery
-is selected; this audit does not publish/merge/deploy or select optional features.
+## PR delivery and next technical gate
 
-Completed contracts/history live in the [master](MASTER_BUILD_PLAN.md#sprite-progress-audit-2026-10-23).
-Raw prompt files are immutable reproduction evidence, not stale session prompts.
-Knights and Magic remains paused indefinitely until explicit owner reopening.
+Owner selected PR delivery into `main` on2026-10-29. Fresh743unit tests/81files,
+types/lint/build and34sprite sheets pass. Full browser regression runs in PR CI.
+Reconcile obsolete cone/evolution/gust/group browser fixtures as needed, then one consolidated
+current-head regression/stress/soak/performance/CI campaign. Keep heavy checks
+serial and clean owned resources. Native Safari/missing branded browser-OS/older
+physical GPU gaps remain waived/unverified. Read actual remote/head evidence only
+when evaluating selected delivery. No merge/deployment is selected.
+
+## Next feature decision
+
+[Remaining work](REMAINING_WORK.md) contains every unbuilt planned proposal,
+distinguishes partially shipped foundations and separates acceptance from missing
+code. Choose a bounded feature before implementation; passive-system research is
+not automatically approved. Knights and Magic remains paused indefinitely.

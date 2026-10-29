@@ -7,10 +7,10 @@ import { applyDamage, reduceByArmour, rollDamage } from "../../../src/game/syste
 import { createWorldState, selectWorldModifiers } from "../../../src/game/systems/chaos/world-modifiers";
 import { contentStatRows } from "../../../src/tools/content-stats";
 
-describe("opening Microplastics", () => {
+describe("opening Cigarette Butts", () => {
   it.each(difficultyIds)("dies to one unupgraded non-critical hit throughout the opening step in %s", (difficulty) => {
     const theme = resolveDifficultyTheme(ecoGuardianTheme, difficulty);
-    const enemy = theme.enemies.find((entry) => entry.id === archetypeIds.enemy.fastFragile)!;
+    const enemy = theme.enemies.find((entry) => entry.id === archetypeIds.enemy.clusterFodder)!;
     const weapon = theme.weapons[0]!;
     const player = theme.characters[0]!.baseStats;
     const roll = rollDamage({ baseDamage: weapon.damage, damageBonus: player.damageBonus,
@@ -29,7 +29,7 @@ describe("opening Microplastics", () => {
 
   it("retains time-only escalation past one-hit in Experienced", () => {
     const theme = resolveDifficultyTheme(ecoGuardianTheme, "experienced");
-    const enemy = theme.enemies.find((entry) => entry.id === archetypeIds.enemy.fastFragile)!;
+    const enemy = theme.enemies.find((entry) => entry.id === archetypeIds.enemy.clusterFodder)!;
     const modifiers = selectWorldModifiers(createWorldState(), theme.tuning.difficulty, 0.1);
     expect(applyDamage(enemy.maxHealth * modifiers.enemyHealthMultiplier, theme.weapons[0]!.damage).killed).toBe(false);
   });
